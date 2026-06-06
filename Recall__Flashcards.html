@@ -617,6 +617,8 @@ const BAK_INTERVAL=600000; // 10 min in ms
 let lastBackupAt=0;
 
 function tryParse(str){try{return JSON.parse(str);}catch(e){return null;}}
+function safeGet(k){try{return localStorage.getItem(k);}catch(e){return null;}}
+function safePut(k,v){try{localStorage.setItem(k,v);return true;}catch(e){return false;}}
 
 /* MIGRATIONS: key = source version → fn upgrades state to next version */
 const MIGRATIONS={
@@ -632,17 +634,17 @@ function freshState(){const s=buildSeed();return{v:SCHEMA_VERSION,decks:s.decks,
 
 function load(){
   // Try current-schema key
-  let s=tryParse(localStorage.getItem(LS));
+  let s=tryParse(safeGet(LS));
   // Fall back to legacy v3 key (first launch after upgrade)
-  if(!s||!s.cards||!s.cards.length) s=tryParse(localStorage.getItem(LS_LEGACY));
+  if(!s||!s.cards||!s.cards.length) s=tryParse(safeGet(LS_LEGACY));
   if(s&&s.cards&&s.cards.length){
     try{return migrate(s);}catch(e){}
   }
   // Try rolling auto-backups in reverse order (most-recent first)
-  const last=+(localStorage.getItem(BAK_IDX_KEY)||0);
+  const last=+(safeGet(BAK_IDX_KEY)||0);
   for(let i=0;i<BAK_SLOTS;i++){
     const idx=(last-i+BAK_SLOTS)%BAK_SLOTS;
-    const bak=tryParse(localStorage.getItem(BAK_KEY+idx));
+    const bak=tryParse(safeGet(BAK_KEY+idx));
     if(bak&&bak.cards&&bak.cards.length){
       try{
         const rec=migrate(bak);
@@ -658,28 +660,19 @@ function writeBackup(){
   const now=Date.now();
   if(now-lastBackupAt<BAK_INTERVAL)return;
   lastBackupAt=now;
-  try{
-    const idx=(+(localStorage.getItem(BAK_IDX_KEY)||0)+1)%BAK_SLOTS;
-    localStorage.setItem(BAK_KEY+idx,JSON.stringify({...state,_bakAt:now}));
-    localStorage.setItem(BAK_IDX_KEY,String(idx));
-  }catch(e){/* best-effort */}
+  const idx=(+(safeGet(BAK_IDX_KEY)||0)+1)%BAK_SLOTS;
+  safePut(BAK_KEY+idx,JSON.stringify({...state,_bakAt:now}));
+  safePut(BAK_IDX_KEY,String(idx));
 }
 
 function save(){
   writeBackup();
   const json=JSON.stringify(state);
-  try{
-    localStorage.setItem(LS,json);
-  }catch(e){
-    // Quota exceeded: trim review log to last 1000 entries and retry
-    state.rev=state.rev.slice(-1000);
-    try{
-      localStorage.setItem(LS,JSON.stringify(state));
-      toast('Storage near limit — review history trimmed. Export a backup.');
-    }catch(e2){
-      toast('Storage full — export a backup from Settings');
-    }
-  }
+  if(safePut(LS,json))return;
+  // Quota exceeded or storage unavailable: trim rev log and retry
+  state.rev=state.rev.slice(-1000);
+  if(safePut(LS,JSON.stringify(state))){toast('Storage near limit — review history trimmed. Export a backup.');return;}
+  toast('Storage full — export a backup from Settings');
 }
 
 state=load(); state.cfg={...state_defaults,...state.cfg}; document.body.dataset.theme=state.theme||'midnight';
@@ -1354,11 +1347,11 @@ function generateSyntheticDeck(count){
 
 /* ---------- auto-backup browser & restore ---------- */
 function getBackupSlots(){
-  const last=+(localStorage.getItem(BAK_IDX_KEY)||0);
+  const last=+(safeGet(BAK_IDX_KEY)||0);
   const slots=[];
   for(let i=0;i<BAK_SLOTS;i++){
     const idx=(last-i+BAK_SLOTS)%BAK_SLOTS;
-    const raw=localStorage.getItem(BAK_KEY+idx);
+    const raw=safeGet(BAK_KEY+idx);
     if(!raw)continue;
     const s=tryParse(raw);
     if(!s||!s.cards)continue;
@@ -1389,7 +1382,7 @@ function showAutoBackups(){
 
 function restoreBackupSlot(idx,modalEl){
   if(!confirm('Restore this backup? Your current data will be overwritten.'))return;
-  const raw=localStorage.getItem(BAK_KEY+idx);
+  const raw=safeGet(BAK_KEY+idx);
   const s=tryParse(raw);
   if(!s||!s.cards){toast('Backup slot is empty or corrupted');return;}
   try{
