@@ -196,7 +196,7 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
   padding:20px;cursor:pointer;overflow:hidden;transition:transform .26s var(--spring),box-shadow .26s var(--ease),border-color .2s;
   animation:deckIn .5s var(--ease) both}
 @keyframes deckIn{from{opacity:0;transform:translateY(14px) scale(.98)}to{opacity:1;transform:none}}
-.deck::before{content:"";position:absolute;inset:0;opacity:0;transition:.3s var(--ease);
+.deck::before{content:"";position:absolute;inset:0;opacity:0;transition:.3s var(--ease);pointer-events:none;
   background:radial-gradient(120% 90% at 0% 0%,color-mix(in srgb,var(--dc,var(--brand)) 16%,transparent),transparent 55%)}
 .deck:hover{transform:translateY(-5px);box-shadow:var(--shadow-lg),0 0 44px color-mix(in srgb,var(--dc,var(--brand)) 18%,transparent);border-color:color-mix(in srgb,var(--dc) 45%,var(--line))}
 .deck:hover::before{opacity:1}
