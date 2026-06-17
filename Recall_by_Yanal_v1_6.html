@@ -1881,36 +1881,70 @@ function updatePreview(){
   }
   const c=previewCardObj();const pf=$('#pvFront'),pb=$('#pvBack');if(pf)pf.innerHTML=frontHTML(c)||'<span style="color:var(--muted)">…</span>';if(pb)pb.innerHTML=backHTML(c)||'<span style="color:var(--muted)">…</span>';}
 /* ---------- SMART AUTO-FORMAT ----------
-   Cleans spacing, highlights numbers+units, and emphasises key study phrases
-   automatically when a card is saved. Uses class="sf" so formatting can be
-   stripped cleanly when re-editing and re-applied idempotently on re-save. */
+   Runs on every card save AND on import. Cleans up raw/imported text and adds
+   visual emphasis so cards look polished in study. Uses class="sf" markers so
+   formatting is idempotent (safe to re-apply) and stripped cleanly when editing. */
 function sfStrip(t){return (t||'').replace(/<b class="sf"[^>]*>([\s\S]*?)<\/b>/g,'$1');}
 function smartFormat(text){
   if(!text||!text.trim())return text;
   let t=sfStrip(text);
-  // Protect cloze markers and existing HTML from being mangled
-  const clozes=[],tags=[];
+  // Protect cloze markers and existing non-sf HTML from being mangled
+  const clozes=[],htmlTags=[];
   t=t.replace(/\{\{c\d+::[\s\S]*?(?:::[\s\S]*?)?\}\}/g,m=>{clozes.push(m);return '\x01C'+(clozes.length-1)+'\x01';});
-  t=t.replace(/<[^>]+>/g,m=>{tags.push(m);return '\x01T'+(tags.length-1)+'\x01';});
-  // 1) Spacing
-  t=t.replace(/ {2,}/g,' ').trim();
-  t=t.replace(/ +([.,;:!?)\]"])/g,'$1');
-  t=t.replace(/([.,;:!?])([A-Za-z\d([])/g,'$1 $2');
-  if(/^[a-z]/.test(t))t=t[0].toUpperCase()+t.slice(1);
-  // 2) Numbers + medical units → brand color
-  t=t.replace(/\b(\d+(?:[.,]\d+)?(?:\s*[-–]\s*\d+(?:[.,]\d+)?)?)\s*(mg\/dL|mmol\/L|mEq\/L|g\/dL|mL\/min|mL|mm³|mmHg|bpm|IU\/L|U\/L|cells\/mm³|ng\/mL|pg\/mL|µg\/dL|µg|mcg|mg|mm|cm|kg|g|%|°[CF])\b/gi,
+  t=t.replace(/<[^>]+>/g,m=>{htmlTags.push(m);return '\x01T'+(htmlTags.length-1)+'\x01';});
+
+  // ── 1) CLEAN UP: spacing, whitespace, punctuation ──
+  t=t.replace(/\t/g,' ');                       // tabs → space
+  t=t.replace(/ {2,}/g,' ');                     // collapse runs of spaces
+  t=t.replace(/^\s+|\s+$/gm,'');                 // trim each line
+  t=t.replace(/ +([.,;:!?)\]"])/g,'$1');         // no space before punctuation
+  t=t.replace(/([.,;:!?])([A-Za-z\d([\x01])/g,'$1 $2'); // space after punctuation
+  t=t.replace(/([–—])/g,' $1 ');                 // space around dashes
+  t=t.replace(/ {2,}/g,' ').trim();              // re-collapse after dash fix
+  if(/^[a-z]/.test(t))t=t[0].toUpperCase()+t.slice(1); // capitalize first char
+  // Fix ALL-CAPS sentences (>60% uppercase → title-case the sentence)
+  t=t.replace(/^([A-Z][A-Z\s.,;:!?]{15,})$/gm,m=>{
+    if((m.match(/[A-Z]/g)||[]).length/m.replace(/\s/g,'').length>0.6)
+      return m.charAt(0)+m.slice(1).toLowerCase();
+    return m;
+  });
+
+  // ── 2) NUMBERS + MEDICAL UNITS → brand color ──
+  t=t.replace(/\b(\d+(?:[.,]\d+)?(?:\s*[-–]\s*\d+(?:[.,]\d+)?)?)\s*(mg\/dL|mmol\/L|mEq\/L|g\/dL|mL\/min|mL\/kg|mL|mm³|mmHg|bpm|beats\/min|breaths\/min|IU\/L|U\/L|cells\/mm³|ng\/mL|pg\/mL|µg\/dL|µg\/L|µg|mcg|mg|mm|cm|m²|kg|g\/L|g|L\/min|L|%|°[CF]|kPa|diopters?|weeks?|days?|hours?|minutes?|min|sec|seconds?|mo(?:nths?)?|years?|yr)\b/gi,
     (m,n,u)=>'<b class="sf" style="color:var(--brand)">'+n.trim()+' '+u+'</b>');
-  // 3) Key study phrases → good color
-  ['most common','most frequent','gold standard','first[- ]line','second[- ]line','drug of choice',
-   'treatment of choice','investigation of choice','most important','most likely','best initial',
-   'next best step','most sensitive','most specific','pathognomonic','hallmark','characteristic',
-   'definitive diagnosis','definitive treatment','contraindicated','classic presentation',
-   'classic triad','classic finding','red flag','emergency','life[- ]threatening','immediately']
-  .forEach(p=>{t=t.replace(new RegExp('\\b('+p+')\\b','gi'),'<b class="sf" style="color:var(--good)">$1</b>');});
-  // 4) Standalone medical abbreviations (2-6 uppercase letters) → bold
-  t=t.replace(/(?<![<\/\w])([A-Z]{2,6})(?![^<]*>)(?=[\s.,;:!?)"\x01]|$)/g,'<b class="sf">$1</b>');
+  // Ranges like "> 140" or "≥ 90"
+  t=t.replace(/([><≥≤])\s*(\d+(?:[.,]\d+)?)\s*(mg\/dL|mmol\/L|mEq\/L|mmHg|bpm|%|°[CF]|cells\/mm³|mL|mm|kg)\b/gi,
+    (m,op,n,u)=>'<b class="sf" style="color:var(--brand)">'+op+' '+n+' '+u+'</b>');
+
+  // ── 3) KEY STUDY PHRASES → green (--good) ──
+  ['most common','most frequent','gold standard','first[- ]line','second[- ]line',
+   'drug of choice','treatment of choice','investigation of choice',
+   'most important','most likely','best initial','next best step',
+   'most sensitive','most specific','pathognomonic','hallmark',
+   'characteristic(?:\\s+finding)?','definitive(?:\\s+(?:diagnosis|treatment))?',
+   'contraindicated','classic(?:\\s+(?:presentation|triad|finding|sign|feature))?',
+   'red flag','life[- ]threatening','medical emergency',
+   'always','never','only','must','immediately','urgently',
+   'dx of exclusion','sine qua non','key feature','cardinal sign',
+   'initial(?:\\s+(?:investigation|management|treatment|step))',
+   'primary cause','secondary to','complication of',
+   'risk factor','protective factor','poor prognosis','good prognosis',
+   'presents with','associated with','leads to','results in',
+   'triggered by','exacerbated by','relieved by','worsened by',
+   'increases?','decreases?','elevated','reduced','absent','present']
+  .forEach(p=>{t=t.replace(new RegExp('(?<![\\w\x01])\\b('+p+')\\b(?![\\w\x01])','gi'),
+    '<b class="sf" style="color:var(--good)">$1</b>');});
+
+  // ── 4) MEDICAL ABBREVIATIONS (2-6 uppercase) → bold ──
+  t=t.replace(/(?<![<\/\w\x01])([A-Z]{2,6})(?![^<]*>)(?=[\s.,;:!?)"\x01]|$)/g,
+    '<b class="sf">$1</b>');
+
+  // ── 5) DASH-SEPARATED LISTS → cleaner bullets ──
+  // Lines starting with "- " get a styled bullet
+  t=t.replace(/(^|\n)- /g,'$1• ');
+
   // Restore protected tokens
-  tags.forEach((v,i)=>{t=t.replace('\x01T'+i+'\x01',v);});
+  htmlTags.forEach((v,i)=>{t=t.replace('\x01T'+i+'\x01',v);});
   clozes.forEach((v,i)=>{t=t.replace('\x01C'+i+'\x01',v);});
   return t;
 }
@@ -2043,6 +2077,7 @@ function renderSettings(){
       <button class="btn btn-ghost" onclick="exportJSON()">${ICON.download} Export backup</button>
       <button class="btn btn-ghost" onclick="$('#importFile').click()">${ICON.upload} Import / merge</button>
       <button class="btn btn-ghost" onclick="showAutoBackups()">${ICON.layers} Auto-backups</button>
+      <button class="btn btn-ghost" onclick="reformatAllCards()">${ICON.sparkle} Reformat all cards</button>
       <button class="btn btn-danger" onclick="resetAll()">${ICON.trash} Reset everything</button>
     </div>
     <p style="font-size:12px;color:var(--muted)">Exports include schema version &amp; timestamp. Import supports merging with your existing cards (newest review wins).</p>
@@ -2387,8 +2422,10 @@ function commitCardImport(parsed,opts){
     if(opts.dedupe&&existing.has(key)){dupes++;return;}
     existing.add(key);
     state.cards.push({
-      id:uid(),deckId:deck.id,type:pc.type,front:pc.front,back:pc.back,
-      opts:pc.opts,answer:pc.answer,extra:pc.extra||'',
+      id:uid(),deckId:deck.id,type:pc.type,
+      front:smartFormat(pc.front),back:smartFormat(pc.back||''),
+      opts:Array.isArray(pc.opts)?pc.opts.map(o=>smartFormat(o)):pc.opts,
+      answer:pc.answer,extra:pc.extra?smartFormat(pc.extra):'',
       tags:[...new Set([...(pc.tags||[]),'by_Yanal'])],
       state:'new',interval:0,ease:state.cfg.startEase,S:0,D:0,reps:0,lapses:0,stepIndex:0,
       due:now+i,created:now+i,flag:0,suspended:false,buriedUntil:0,lastReviewed:0,history:[]
@@ -2586,6 +2623,11 @@ function mergeImport(importedState){
   const localMap=new Map(state.cards.map(c=>[c.id,c]));
   let added=0,updated=0,skipped=0;
   importedState.cards.forEach(ic=>{
+    // Smart-format every incoming card
+    if(ic.front)ic.front=smartFormat(ic.front);
+    if(ic.back)ic.back=smartFormat(ic.back);
+    if(ic.extra)ic.extra=smartFormat(ic.extra);
+    if(Array.isArray(ic.opts))ic.opts=ic.opts.map(o=>smartFormat(o));
     const lc=localMap.get(ic.id);
     if(!lc){state.cards.push(ic);added++;}
     else{
@@ -2636,6 +2678,22 @@ function showImportDialog(importedState){
 }
 
 function resetAll(){if(!confirm('Reset ALL cards and progress to the original Internal Medicine deck? This cannot be undone.'))return;state=freshState();save();go('home');toast('Reset complete');}
+function reformatAllCards(){
+  const n=state.cards.length;
+  if(!n)return toast('No cards to format');
+  if(!confirm('Run smart formatting on all '+n+' cards? This cleans spacing, highlights values & key phrases, and bolds abbreviations. Your review progress is not affected.'))return;
+  let changed=0;
+  state.cards.forEach(c=>{
+    if(c.type==='occlusion')return;
+    const oldF=c.front, oldB=c.back;
+    c.front=smartFormat(c.front);
+    c.back=smartFormat(c.back||'');
+    if(c.extra)c.extra=smartFormat(c.extra);
+    if(Array.isArray(c.opts))c.opts=c.opts.map(o=>smartFormat(o));
+    if(c.front!==oldF||c.back!==oldB)changed++;
+  });
+  save();renderSettings();toast('✨ Formatted '+changed+' of '+n+' cards');
+}
 
 /* ---------- synthetic deck generator (performance testing) ---------- */
 function generateSyntheticDeck(count){
