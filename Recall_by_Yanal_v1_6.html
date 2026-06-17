@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 <meta name="theme-color" content="#0a0c16" />
-<title>Recall · Spaced Repetition</title>
+<title>Yanal · Study Space</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;0,9..144,900;1,9..144,500&family=Hanken+Grotesk:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&family=Great+Vibes&display=swap" rel="stylesheet">
@@ -593,7 +593,7 @@ input[type=date]::-webkit-calendar-picker-indicator{filter:invert(.55) sepia(.4)
   <div class="wrap nav-in">
     <div class="logo" onclick="go('home')">
       <span class="mark"><svg viewBox="0 0 24 24" fill="none"><path d="M5 4h9l5 5v11a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1Z" stroke="#fff" stroke-width="1.6"/><path d="M13 4v5h5" stroke="#fff" stroke-width="1.6"/><path d="M8 13.5l2.2 2.2L15 11" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-      <span>Recall<small>SPACED REPETITION</small></span>
+      <span>Yanal<small>STUDY SPACE</small></span>
     </div>
     <div class="nav-links">
       <button data-nav="home" onclick="go('home')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 10l8-6 8 6v9a1 1 0 0 1-1 1h-4v-6h-6v6H5a1 1 0 0 1-1-1z"/></svg>Decks</button>
@@ -899,7 +899,7 @@ function load(){
     // Unknown-schema guard: data from a NEWER build than this file understands.
     // Keep the user's data, but warn — and avoid pretending we fully understand it.
     if(typeof s.v==='number'&&s.v>SCHEMA_VERSION){
-      setTimeout(()=>toast('⚠ This data is from a newer version of Recall. Update to the latest copy to avoid issues.'),700);
+      setTimeout(()=>toast('⚠ This data is from a newer version of Yanal. Update to the latest copy to avoid issues.'),700);
     }
     try{return migrate(s);}catch(e){}
   }
@@ -1789,7 +1789,14 @@ function openEditor(id,ret){if(isReadonly())return;
       editing={_id:c.id,type:'occlusion',deckId:c.deckId,tags:(c.tags||[]).slice(),opts:['','','',''],answer:0,
         _occGroupId:c.groupId,_occImageId:c.imageId,_occImg:im?{src:im.src,w:im.w,h:im.h}:null,
         _occMasks:(c.masks||[]).map(m=>({...m})),label:c.label||'',_occBack:c.back||''};
-    }else editing={...JSON.parse(JSON.stringify(c)),_id:id};
+    }else{
+      editing={...JSON.parse(JSON.stringify(c)),_id:id};
+      // Strip smart-format tags so textarea shows clean text
+      if(editing.front)editing.front=sfStrip(editing.front);
+      if(editing.back)editing.back=sfStrip(editing.back);
+      if(editing.extra)editing._extraRaw=stripHTML(sfStrip(editing.extra));
+      if(Array.isArray(editing.opts))editing.opts=editing.opts.map(o=>sfStrip(o));
+    }
   }
   else editing={_id:null,type:'cloze',deckId:state.lastDeck||state.decks[0].id,front:'',back:'',extra:'',opts:['','','',''],answer:0,tags:[]};
   if(!editing.opts||!editing.opts.length)editing.opts=['','','',''];
@@ -1873,20 +1880,59 @@ function updatePreview(){
     return;
   }
   const c=previewCardObj();const pf=$('#pvFront'),pb=$('#pvBack');if(pf)pf.innerHTML=frontHTML(c)||'<span style="color:var(--muted)">…</span>';if(pb)pb.innerHTML=backHTML(c)||'<span style="color:var(--muted)">…</span>';}
+/* ---------- SMART AUTO-FORMAT ----------
+   Cleans spacing, highlights numbers+units, and emphasises key study phrases
+   automatically when a card is saved. Uses class="sf" so formatting can be
+   stripped cleanly when re-editing and re-applied idempotently on re-save. */
+function sfStrip(t){return (t||'').replace(/<b class="sf"[^>]*>([\s\S]*?)<\/b>/g,'$1');}
+function smartFormat(text){
+  if(!text||!text.trim())return text;
+  let t=sfStrip(text);
+  // Protect cloze markers and existing HTML from being mangled
+  const clozes=[],tags=[];
+  t=t.replace(/\{\{c\d+::[\s\S]*?(?:::[\s\S]*?)?\}\}/g,m=>{clozes.push(m);return '\x01C'+(clozes.length-1)+'\x01';});
+  t=t.replace(/<[^>]+>/g,m=>{tags.push(m);return '\x01T'+(tags.length-1)+'\x01';});
+  // 1) Spacing
+  t=t.replace(/ {2,}/g,' ').trim();
+  t=t.replace(/ +([.,;:!?)\]"])/g,'$1');
+  t=t.replace(/([.,;:!?])([A-Za-z\d([])/g,'$1 $2');
+  if(/^[a-z]/.test(t))t=t[0].toUpperCase()+t.slice(1);
+  // 2) Numbers + medical units → brand color
+  t=t.replace(/\b(\d+(?:[.,]\d+)?(?:\s*[-–]\s*\d+(?:[.,]\d+)?)?)\s*(mg\/dL|mmol\/L|mEq\/L|g\/dL|mL\/min|mL|mm³|mmHg|bpm|IU\/L|U\/L|cells\/mm³|ng\/mL|pg\/mL|µg\/dL|µg|mcg|mg|mm|cm|kg|g|%|°[CF])\b/gi,
+    (m,n,u)=>'<b class="sf" style="color:var(--brand)">'+n.trim()+' '+u+'</b>');
+  // 3) Key study phrases → good color
+  ['most common','most frequent','gold standard','first[- ]line','second[- ]line','drug of choice',
+   'treatment of choice','investigation of choice','most important','most likely','best initial',
+   'next best step','most sensitive','most specific','pathognomonic','hallmark','characteristic',
+   'definitive diagnosis','definitive treatment','contraindicated','classic presentation',
+   'classic triad','classic finding','red flag','emergency','life[- ]threatening','immediately']
+  .forEach(p=>{t=t.replace(new RegExp('\\b('+p+')\\b','gi'),'<b class="sf" style="color:var(--good)">$1</b>');});
+  // 4) Standalone medical abbreviations (2-6 uppercase letters) → bold
+  t=t.replace(/(?<![<\/\w])([A-Z]{2,6})(?![^<]*>)(?=[\s.,;:!?)"\x01]|$)/g,'<b class="sf">$1</b>');
+  // Restore protected tokens
+  tags.forEach((v,i)=>{t=t.replace('\x01T'+i+'\x01',v);});
+  clozes.forEach((v,i)=>{t=t.replace('\x01C'+i+'\x01',v);});
+  return t;
+}
+
 function saveCard(){
   if(editing.type==='occlusion')return saveOcclusion();
   editSync(); const e=editing;
   if(!stripHTML(e.front).trim()){toast('⚠️ Front cannot be empty');return;}
   if(e.type==='cloze'&&!/\{\{c\d+::/.test(e.front)){toast('⚠️ Add at least one cloze {{c1::…}}');return;}
   if(e.type==='mcq'&&e.opts.filter(o=>o.trim()).length<2){toast('⚠️ Need at least 2 options');return;}
-  const extra=e._extraRaw&&e._extraRaw.trim()?'<div class="aexp">'+esc(e._extraRaw.trim())+'</div>':(e.type==='mcq'?'':e.extra||'');
+  // Smart auto-format: clean spacing, highlight values & key phrases
+  const fmtFront=smartFormat(e.front);
+  const fmtBack=smartFormat(e.back||'');
+  const fmtOpts=e.type==='mcq'?e.opts.filter(o=>o.trim()).map(o=>smartFormat(o)):null;
+  const fmtExtra=e._extraRaw&&e._extraRaw.trim()?'<div class="aexp">'+smartFormat(esc(e._extraRaw.trim()))+'</div>':(e.type==='mcq'?'':e.extra||'');
   if(e._id){
     const c=state.cards.find(x=>x.id===e._id);
-    Object.assign(c,{type:e.type,front:e.front,back:e.back,extra:e.type==='mcq'&&e._extraRaw?('<div class="aexp">'+esc(e._extraRaw)+'</div>'):extra,opts:e.type==='mcq'?e.opts.filter(o=>o.trim()):null,answer:Math.min(e.answer,(e.opts.filter(o=>o.trim()).length||1)-1),deckId:e.deckId,tags:e.tags});
+    Object.assign(c,{type:e.type,front:fmtFront,back:fmtBack,extra:e.type==='mcq'&&e._extraRaw?('<div class="aexp">'+smartFormat(esc(e._extraRaw))+'</div>'):fmtExtra,opts:fmtOpts,answer:Math.min(e.answer,(e.opts.filter(o=>o.trim()).length||1)-1),deckId:e.deckId,tags:e.tags});
     save();toast('✓ Saved');go(editReturn);
   }else{
-    const card={id:uid(),deckId:e.deckId,type:e.type,front:e.front,back:e.back,extra:e.type==='mcq'&&e._extraRaw?('<div class="aexp">'+esc(e._extraRaw)+'</div>'):extra,opts:e.type==='mcq'?e.opts.filter(o=>o.trim()):null,answer:Math.min(e.answer,(e.opts.filter(o=>o.trim()).length||1)-1),tags:e.tags,state:'new',interval:0,ease:state.cfg.startEase,reps:0,lapses:0,stepIndex:0,due:Date.now(),created:Date.now(),flag:0,suspended:false,buriedUntil:0,lastReviewed:0,history:[]};
-    state.cards.push(card);save();toast('✓ Card added');
+    const card={id:uid(),deckId:e.deckId,type:e.type,front:fmtFront,back:fmtBack,extra:e.type==='mcq'&&e._extraRaw?('<div class="aexp">'+smartFormat(esc(e._extraRaw))+'</div>'):fmtExtra,opts:fmtOpts,answer:Math.min(e.answer,(e.opts.filter(o=>o.trim()).length||1)-1),tags:e.tags,state:'new',interval:0,ease:state.cfg.startEase,reps:0,lapses:0,stepIndex:0,due:Date.now(),created:Date.now(),flag:0,suspended:false,buriedUntil:0,lastReviewed:0,history:[]};
+    state.cards.push(card);save();toast('✓ Card added — auto-formatted');
     editing={_id:null,type:e.type,deckId:e.deckId,front:'',back:'',extra:'',_extraRaw:'',opts:['','','',''],answer:0,tags:e.tags};renderEditor();
   }
 }
@@ -1984,7 +2030,7 @@ function renderSettings(){
       </div>
     </div>
   </div>
-  <div class="panel" style="margin-top:18px"><h3>Exam planner</h3><div class="ph-sub">Tie a deck to an exam date — Recall shows a countdown and the daily target to finish in time</div>
+  <div class="panel" style="margin-top:18px"><h3>Exam planner</h3><div class="ph-sub">Tie a deck to an exam date — Yanal shows a countdown and the daily target to finish in time</div>
     ${examPlannerHTML()}
   </div>
   <div class="panel" style="margin-top:18px"><h3>Decks</h3><div class="ph-sub">${state.decks.length} decks · ${state.cards.length} cards</div>
@@ -2013,10 +2059,10 @@ function renderSettings(){
       <b>Privacy:</b> every card, review and setting is stored only on this device (your browser). Nothing is uploaded, tracked, or shared. A redundant on-device backup is kept automatically, and you can download a backup file any time from <b>Data</b> above.
     </p>
     <p style="font-size:11.5px;color:var(--muted);line-height:1.65;margin-bottom:8px">Copy protection here is a deterrent and a way to trace leaks — not an absolute guarantee. Any code that runs in a browser can be extracted by a determined attacker; this build aims to make casual copying not worth the trouble and any leak traceable to one buyer.</p>
-    <p style="font-size:12px;color:var(--muted)">Recall <b>v${APP_VERSION}</b> · schema v${SCHEMA_VERSION} · FSRS-5 scheduler · ${isSealed()?(__sealOK?'sealed copy ✓':'⚠ modified copy'):'unsealed master'}</p>
-    <button class="btn btn-ghost btn-sm" style="margin-top:10px" onclick="showIntro(true)">${ICON.bolt} How Recall works</button>
+    <p style="font-size:12px;color:var(--muted)">Yanal <b>v${APP_VERSION}</b> · schema v${SCHEMA_VERSION} · FSRS-5 scheduler · ${isSealed()?(__sealOK?'sealed copy ✓':'⚠ modified copy'):'unsealed master'}</p>
+    <button class="btn btn-ghost btn-sm" style="margin-top:10px" onclick="showIntro(true)">${ICON.bolt} How Yanal works</button>
   </div>
-  <p style="text-align:center;color:var(--muted);font-size:12.5px;margin-top:26px">Recall · spaced-repetition flashcards — crafted by <b style="color:var(--text-2)">Yanal</b></p>`;
+  <p style="text-align:center;color:var(--muted);font-size:12.5px;margin-top:26px">Yanal · study space — crafted by <b style="color:var(--text-2)">Yanal</b></p>`;
 }
 function themeChip(id,label,cols){return `<div class="theme-chip ${state.theme===id?'on':''}" onclick="setTheme('${id}')"><div class="sw">${cols.map(c=>`<i style="background:${c}"></i>`).join('')}</div><span>${label}</span></div>`;}
 function setRetention(pct){state.cfg.desiredRetention=Math.min(0.97,Math.max(0.80,(+pct||90)/100));save();toast('Desired retention: '+Math.round(state.cfg.desiredRetention*100)+'%');}
@@ -2528,7 +2574,7 @@ $('#importFile').addEventListener('change',function(){
       // Support both versioned export wrapper and bare state objects
       const raw=parsed.recall_export?parsed.state:parsed;
       if(!raw||!raw.cards)throw new Error('no cards');
-      if(typeof raw.v==='number'&&raw.v>SCHEMA_VERSION){toast('⚠ This backup is from a newer version of Recall. Update to the latest copy first.');return;}
+      if(typeof raw.v==='number'&&raw.v>SCHEMA_VERSION){toast('⚠ This backup is from a newer version of Yanal. Update to the latest copy first.');return;}
       const importedState=migrate({...raw,cfg:{...state_defaults,...(raw.cfg||{})}});
       showImportDialog(importedState);
     }catch(e){toast('⚠️ Invalid backup file');}
@@ -2748,10 +2794,10 @@ function showIntro(force){
   bg.className='modal-bg on'; bg.id='introModal';
   bg.onclick=e=>{if(e.target===bg)closeIntro();};
   bg.innerHTML=`<div class="modal" style="max-width:480px">
-    <h3>${ICON.bolt} Welcome to Recall</h3>
-    <p style="color:var(--text-2);font-size:13.5px;line-height:1.7;margin:-2px 0 16px">Recall shows each card right before you'd forget it — so you study less and remember more. Here's the whole idea in 30 seconds:</p>
+    <h3>${ICON.bolt} Welcome to Yanal</h3>
+    <p style="color:var(--text-2);font-size:13.5px;line-height:1.7;margin:-2px 0 16px">Yanal shows each card right before you'd forget it — so you study less and remember more. Here's the whole idea in 30 seconds:</p>
     <div class="intro-step"><span class="n">1</span><div><b>You rate how well you knew each answer.</b> Again, Hard, Good, or Easy.</div></div>
-    <div class="intro-step"><span class="n">2</span><div><b>Recall schedules the next review.</b> Knew it well? It waits longer. Struggled? It comes back soon.</div></div>
+    <div class="intro-step"><span class="n">2</span><div><b>Yanal schedules the next review.</b> Knew it well? It waits longer. Struggled? It comes back soon.</div></div>
     <div class="intro-step"><span class="n">3</span><div><b>Intervals grow as memory strengthens</b> — days, then weeks, then months. The little <b>S · D · R%</b> on the answer shows the memory math.</div></div>
     <div class="intro-step"><span class="n">4</span><div><b>Just study a few minutes daily.</b> Import an Anki/CSV deck or add cards, then tap a deck to begin.</div></div>
     <button class="btn btn-primary" style="width:100%;justify-content:center;margin-top:18px" onclick="closeIntro()">Got it — let's go</button>
