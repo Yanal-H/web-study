@@ -6,6 +6,7 @@
 <meta name="theme-color" content="#0a0c16" />
 <title>Study Hub · Med School, Together</title>
 <link rel="stylesheet" href="/css/styles.css">
+<link rel="stylesheet" href="/vendor/katex/katex.min.css">
 </head>
 <body>
 <div class="bg"></div>
@@ -187,7 +188,13 @@
           <span id="notesUpdateText"></span>
           <button class="btn sm primary" id="notesUpdateReload">Load latest</button>
         </div>
+        <div class="row tight" style="margin-bottom:10px">
+          <button class="btn sm" id="notesTabSource">Source</button>
+          <button class="btn sm" id="notesTabPreview">Preview</button>
+          <span class="muted" style="font-size:.72rem;align-self:center;margin-left:6px">Markdown + LaTeX (<code>$x^2$</code> or <code>$$\\int f\\,dx$$</code>) supported</span>
+        </div>
         <textarea class="textarea" id="notesTextarea" style="min-height:440px;font-family:'JetBrains Mono',monospace" placeholder="Start writing…"></textarea>
+        <div class="prose" id="notesPreview" style="display:none;min-height:440px"></div>
       </div>
     </section>
 
@@ -210,7 +217,24 @@
     <section class="view" id="view-practice">
       <div class="topbar">
         <div><h1>Practice Questions</h1><div class="sub">Community-written, USMLE-style. Tutor mode — instant feedback after each answer.</div></div>
-        <button class="btn primary" id="qAddToggle">+ Write a question</button>
+        <div class="row tight">
+          <button class="btn" id="qImportToggle">Import CSV</button>
+          <button class="btn" id="qExportBtn">Export CSV</button>
+          <button class="btn primary" id="qAddToggle">+ Write a question</button>
+        </div>
+      </div>
+
+      <div class="card" id="qImportForm" style="display:none;margin-bottom:18px">
+        <div class="field" style="margin-bottom:10px"><label>Subject for imported questions</label><select class="select" id="qImportSubject"></select></div>
+        <div class="field" style="margin-bottom:10px">
+          <label>CSV — columns: stem, choice_a, choice_b, choice_c, choice_d, choice_e, choice_f, correct, explanation, tags</label>
+          <textarea class="textarea" id="qImportText" style="min-height:120px;font-family:'JetBrains Mono',monospace" placeholder="stem,choice_a,choice_b,choice_c,choice_d,choice_e,choice_f,correct,explanation,tags&#10;What is the powerhouse of the cell?,Mitochondria,Nucleus,Ribosome,Golgi,,,A,Mitochondria produce ATP via oxidative phosphorylation.,biochem;cell biology"></textarea>
+        </div>
+        <div class="row tight" style="margin-bottom:8px">
+          <input type="file" id="qImportFile" accept=".csv,text/csv" class="input" style="max-width:260px">
+          <span class="muted" style="font-size:.75rem">"correct" is the letter (A–F) of the right choice. Tags separated by <code>;</code>.</span>
+        </div>
+        <div class="row"><button class="btn primary" id="qImportRun">Import</button><button class="btn ghost" id="qImportCancel">Cancel</button></div>
       </div>
 
       <div class="card" id="qAddForm" style="display:none;margin-bottom:18px">
@@ -259,8 +283,22 @@
     <!-- FLASHCARDS -->
     <section class="view" id="view-flashcards">
       <div class="topbar">
-        <div><h1>Flashcards</h1><div class="sub">Spaced repetition — cards you rate "Again" come back sooner, "Easy" comes back much later.</div></div>
-        <button class="btn primary" id="fcAddToggle">+ New card</button>
+        <div><h1>Flashcards</h1><div class="sub">Spaced repetition (FSRS-5, the algorithm behind modern Anki) — cards you rate "Again" come back sooner, "Easy" comes back much later.</div></div>
+        <div class="row tight">
+          <button class="btn" id="fcImportToggle">Import CSV</button>
+          <button class="btn" id="fcExportBtn">Export CSV</button>
+          <button class="btn primary" id="fcAddToggle">+ New card</button>
+        </div>
+      </div>
+
+      <div class="card" id="fcImportForm" style="display:none;margin-bottom:18px">
+        <div class="field" style="margin-bottom:10px"><label>Subject for imported cards</label><select class="select" id="fcImportSubject"></select></div>
+        <div class="field" style="margin-bottom:10px">
+          <label>CSV — columns: front, back <span class="muted">(also accepts a plain Anki/Quizlet export: two columns, no header)</span></label>
+          <textarea class="textarea" id="fcImportText" style="min-height:120px;font-family:'JetBrains Mono',monospace" placeholder="front,back&#10;Phrenic nerve roots,C3 C4 C5 (&quot;C3, 4, 5 keeps the diaphragm alive&quot;)"></textarea>
+        </div>
+        <input type="file" id="fcImportFile" accept=".csv,text/csv" class="input" style="max-width:260px;margin-bottom:10px">
+        <div class="row"><button class="btn primary" id="fcImportRun">Import</button><button class="btn ghost" id="fcImportCancel">Cancel</button></div>
       </div>
 
       <div class="card" id="fcAddForm" style="display:none;margin-bottom:18px">
@@ -450,6 +488,9 @@
 
 <div class="toast" id="toast"></div>
 
+<script src="/vendor/katex/katex.min.js"></script>
+<script src="/vendor/katex/auto-render.min.js"></script>
+<script src="/vendor/marked/marked.umd.js"></script>
 <script src="/socket.io/socket.io.js"></script>
 <script src="/js/app.js"></script>
 </body>

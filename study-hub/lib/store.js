@@ -2,7 +2,10 @@
 const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
+const { fsrs, createEmptyCard, Rating: FSRSRating } = require('ts-fsrs');
 const { buildSeedSubjects, COLORS } = require('./seedData');
+
+const scheduler = fsrs(); // FSRS-5, default parameters (~90% target retention) — the same algorithm Anki itself now uses
 
 const DB_PATH = path.join(__dirname, '..', 'data', 'db.json');
 
@@ -87,21 +90,24 @@ function ensureProgress(userId) {
   return db.progress[userId];
 }
 
-/* ---- spaced repetition (simplified SM-2) ---- */
-function reviewCard(prev, rating) {
-  let { ease, interval, reps } = prev || { ease: 2.5, interval: 0, reps: 0 };
-  if (rating === 'again') {
-    reps = 0; interval = 0; ease = Math.max(1.3, ease - 0.2);
-  } else {
-    reps += 1;
-    if (rating === 'hard') { ease = Math.max(1.3, ease - 0.15); interval = Math.max(1, Math.round((interval || 1) * 1.2)); }
-    else if (rating === 'good') { interval = reps === 1 ? 1 : reps === 2 ? 6 : Math.round((interval || 1) * ease); }
-    else if (rating === 'easy') { ease = ease + 0.15; interval = reps === 1 ? 4 : Math.round((interval || 1) * ease * 1.3); }
-  }
-  interval = Math.max(rating === 'again' ? 0 : 1, interval);
-  const now = Date.now();
-  const dueInMs = rating === 'again' ? 60 * 1000 : interval * 86400000;
-  return { ease, interval, reps, due: now + dueInMs, lastReviewed: now };
+/* ---- spaced repetition: FSRS-5 (open-spaced-repetition/ts-fsrs) ---- */
+const FSRS_RATING = { again: FSRSRating.Again, hard: FSRSRating.Hard, good: FSRSRating.Good, easy: FSRSRating.Easy };
+const FSRS_STATE_NAME = ['New', 'Learning', 'Review', 'Relearning'];
+function reviewCard(prevRaw, rating) {
+  const grade = FSRS_RATING[rating];
+  if (grade === undefined) throw new Error('Invalid rating');
+  const now = new Date();
+  const card = prevRaw
+    ? { ...prevRaw, due: new Date(prevRaw.due), last_review: prevRaw.last_review ? new Date(prevRaw.last_review) : undefined }
+    : createEmptyCard(now);
+  const { card: next } = scheduler.next(card, now, grade);
+  return next; // due/last_review are Date objects; JSON.stringify serializes them to ISO strings on persist()
+}
+function cardIsDue(srsState, now) {
+  return !srsState || new Date(srsState.due).getTime() <= now;
+}
+function cardStateName(srsState) {
+  return srsState ? FSRS_STATE_NAME[srsState.state] || 'New' : 'New';
 }
 
 /* ---- invites ---- */
@@ -120,5 +126,7 @@ module.exports = {
   ensurePersonal,
   ensureProgress,
   makeInviteCode,
-  reviewCard
+  reviewCard,
+  cardIsDue,
+  cardStateName
 };

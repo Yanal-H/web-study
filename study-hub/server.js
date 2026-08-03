@@ -8,7 +8,7 @@ const http = require('http');
 const { Server } = require('socket.io');
 
 const store = require('./lib/store');
-const { uid, COLORS, persist, findUserByUsername, findUserById, publicUser, ensurePersonal, ensureProgress, makeInviteCode, reviewCard } = store;
+const { uid, COLORS, persist, findUserByUsername, findUserById, publicUser, ensurePersonal, ensureProgress, makeInviteCode, reviewCard, cardIsDue, cardStateName } = store;
 
 const PORT = process.env.PORT || 3000;
 const SESSION_SECRET = process.env.SESSION_SECRET || crypto.randomBytes(32).toString('hex');
@@ -248,6 +248,12 @@ app.delete('/api/qbank/:id', requireAuth, (req, res) => {
   res.json({ ok: true });
 });
 
+app.get('/api/questions/export', requireAuth, (req, res) => {
+  // Full question data including the correct answer — an explicit export action, unlike the
+  // spoiler-safe list returned by /api/state, which withholds correctChoiceId/explanation.
+  res.json({ questions: store.db.questions });
+});
+
 app.post('/api/questions/:id/answer', requireAuth, (req, res) => {
   const q = store.db.questions.find((x) => x.id === req.params.id);
   if (!q) return res.status(404).json({ error: 'Not found' });
@@ -263,11 +269,12 @@ app.post('/api/questions/:id/answer', requireAuth, (req, res) => {
 app.get('/api/srs/due', requireAuth, (req, res) => {
   const p = ensurePersonal(req.user.id);
   const now = Date.now();
-  const due = store.db.flashcards.filter((c) => {
-    const s = p.srs[c.id];
-    return !s || s.due <= now;
+  const due = store.db.flashcards.filter((c) => cardIsDue(p.srs[c.id], now));
+  res.json({
+    due: due.map((c) => ({ ...c, srs: p.srs[c.id] || null, srsState: cardStateName(p.srs[c.id]) })),
+    totalCards: store.db.flashcards.length,
+    dueCount: due.length
   });
-  res.json({ due: due.map((c) => ({ ...c, srs: p.srs[c.id] || null })), totalCards: store.db.flashcards.length, dueCount: due.length });
 });
 app.post('/api/srs/review', requireAuth, (req, res) => {
   const { cardId, rating } = req.body || {};
@@ -277,7 +284,7 @@ app.post('/api/srs/review', requireAuth, (req, res) => {
   const p = ensurePersonal(req.user.id);
   p.srs[cardId] = reviewCard(p.srs[cardId], rating);
   persist();
-  res.json({ srs: p.srs[cardId] });
+  res.json({ srs: p.srs[cardId], srsState: cardStateName(p.srs[cardId]), intervalDays: p.srs[cardId].scheduled_days });
 });
 
 /* ================= ADMIN ================= */
@@ -564,6 +571,30 @@ io.on('connection', (socket) => {
     persist();
     io.emit('question:added', { question: safeQuestion(q) });
   });
+  socket.on('question:bulkAdd', ({ subjectId, items }) => {
+    if (!Array.isArray(items)) return;
+    const created = [];
+    for (const raw of items.slice(0, 500)) {
+      const stem = String((raw && raw.stem) || '').trim().slice(0, 1000);
+      const rawChoices = Array.isArray(raw && raw.choices) ? raw.choices.map((c) => String(c || '').trim().slice(0, 300)).filter(Boolean) : [];
+      if (!stem || rawChoices.length < 2 || rawChoices.length > 6) continue;
+      const idx = +raw.correctIndex;
+      if (!(idx >= 0 && idx < rawChoices.length)) continue;
+      const choiceObjs = rawChoices.map((text) => ({ id: uid('c'), text }));
+      const q = {
+        id: uid('q'), subjectId: subjectId || null, stem, choices: choiceObjs, correctChoiceId: choiceObjs[idx].id,
+        explanation: String((raw && raw.explanation) || '').trim().slice(0, 2000),
+        tags: Array.isArray(raw && raw.tags) ? raw.tags.map((t) => String(t).trim().slice(0, 30)).filter(Boolean).slice(0, 6) : [],
+        authorId: user.id, authorName: user.username, createdAt: Date.now()
+      };
+      store.db.questions.push(q);
+      created.push(safeQuestion(q));
+    }
+    if (!created.length) return socket.emit('bulk:result', { kind: 'question', added: 0, skipped: items.length });
+    persist();
+    io.emit('question:bulkAdded', { questions: created });
+    socket.emit('bulk:result', { kind: 'question', added: created.length, skipped: items.length - created.length });
+  });
   socket.on('question:delete', ({ id }) => {
     const q = store.db.questions.find((x) => x.id === id);
     if (!q) return;
@@ -580,6 +611,22 @@ io.on('connection', (socket) => {
     store.db.flashcards.push(card);
     persist();
     io.emit('flashcard:added', { card });
+  });
+  socket.on('flashcard:bulkAdd', ({ subjectId, cards }) => {
+    if (!Array.isArray(cards)) return;
+    const created = [];
+    for (const raw of cards.slice(0, 500)) {
+      const f = String((raw && raw.front) || '').trim().slice(0, 500);
+      const b = String((raw && raw.back) || '').trim().slice(0, 1000);
+      if (!f || !b) continue;
+      const card = { id: uid('fc'), subjectId: subjectId || null, front: f, back: b, authorId: user.id, authorName: user.username, createdAt: Date.now() };
+      store.db.flashcards.push(card);
+      created.push(card);
+    }
+    if (!created.length) return socket.emit('bulk:result', { kind: 'flashcard', added: 0, skipped: cards.length });
+    persist();
+    io.emit('flashcard:bulkAdded', { cards: created });
+    socket.emit('bulk:result', { kind: 'flashcard', added: created.length, skipped: cards.length - created.length });
   });
   socket.on('flashcard:delete', ({ id }) => {
     const c = store.db.flashcards.find((x) => x.id === id);

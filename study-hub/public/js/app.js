@@ -25,7 +25,51 @@ function timeAgo(ts) {
   return Math.floor(s / 86400) + 'd ago';
 }
 function initials(name) { return String(name || '?').trim().slice(0, 2).toUpperCase(); }
+function renderMathIn(el) {
+  if (window.renderMathInElement && el) {
+    try { renderMathInElement(el, { delimiters: [{ left: '$$', right: '$$', display: true }, { left: '$', right: '$', display: false }], throwOnError: false }); } catch (e) { /* ignore malformed LaTeX */ }
+  }
+}
+function renderMarkdownSafe(raw) {
+  // Escape HTML first so markdown syntax still works but raw <tags> from other users can't inject script/HTML.
+  const escaped = escapeHTML(raw);
+  return window.marked ? marked.parse(escaped) : escaped.replace(/\n/g, '<br>');
+}
 function todayStr(d = new Date()) { const x = new Date(d); x.setMinutes(x.getMinutes() - x.getTimezoneOffset()); return x.toISOString().slice(0, 10); }
+
+/* ================= CSV HELPERS ================= */
+function parseCSV(text) {
+  const rows = [];
+  let row = [], field = '', inQuotes = false;
+  for (let i = 0; i < text.length; i++) {
+    const c = text[i], next = text[i + 1];
+    if (inQuotes) {
+      if (c === '"' && next === '"') { field += '"'; i++; }
+      else if (c === '"') inQuotes = false;
+      else field += c;
+    } else if (c === '"') inQuotes = true;
+    else if (c === ',') { row.push(field); field = ''; }
+    else if (c === '\n') { row.push(field); rows.push(row); row = []; field = ''; }
+    else if (c === '\r') { /* skip */ }
+    else field += c;
+  }
+  if (field.length || row.length) { row.push(field); rows.push(row); }
+  return rows.filter((r) => r.some((f) => f.trim() !== ''));
+}
+function toCSVField(v) { const s = String(v ?? ''); return /[",\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s; }
+function toCSV(rows) { return rows.map((r) => r.map(toCSVField).join(',')).join('\r\n'); }
+function downloadCSV(filename, rows) {
+  const blob = new Blob([toCSV(rows)], { type: 'text/csv' });
+  const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = filename; a.click(); URL.revokeObjectURL(a.href);
+}
+function wireFileToTextarea(fileInputId, textareaId) {
+  document.getElementById(fileInputId).addEventListener('change', (e) => {
+    const file = e.target.files[0]; if (!file) return;
+    const reader = new FileReader();
+    reader.onload = () => { document.getElementById(textareaId).value = reader.result; };
+    reader.readAsText(file);
+  });
+}
 
 /* ================= API HELPERS ================= */
 async function api(path, opts) {
@@ -224,6 +268,7 @@ function connectSocket() {
       } else {
         ta.value = text;
         updateNotesMeta(subj);
+        if (notesTab === 'preview') renderNotesPreview();
       }
     }
   });
@@ -269,6 +314,9 @@ function connectSocket() {
   socket.on('question:deleted', ({ id }) => { STATE.questions = STATE.questions.filter((q) => q.id !== id); document.getElementById('cnt-questions').textContent = STATE.questions.length; if (STATE.currentView === 'practice') renderQuestionList(); });
   socket.on('flashcard:added', ({ card }) => { STATE.flashcards.push(card); if (STATE.currentView === 'flashcards') renderFlashcardList(); loadSrsDue(); });
   socket.on('flashcard:deleted', ({ id }) => { STATE.flashcards = STATE.flashcards.filter((c) => c.id !== id); if (STATE.currentView === 'flashcards') renderFlashcardList(); loadSrsDue(); });
+  socket.on('question:bulkAdded', ({ questions }) => { STATE.questions.push(...questions); document.getElementById('cnt-questions').textContent = STATE.questions.length; if (STATE.currentView === 'practice') { renderQuestionList(); populateQFilterSubjects(); } });
+  socket.on('flashcard:bulkAdded', ({ cards }) => { STATE.flashcards.push(...cards); if (STATE.currentView === 'flashcards') renderFlashcardList(); loadSrsDue(); });
+  socket.on('bulk:result', ({ kind, added, skipped }) => { toast(`Imported ${added} ${kind}${added === 1 ? '' : 's'}${skipped ? ` (${skipped} row${skipped === 1 ? '' : 's'} skipped)` : ''}`); });
 
   socket.on('activity:feed', (item) => {
     STATE.activity.unshift(item);
@@ -347,7 +395,7 @@ function renderStreakHeatmap() {
   (STATE.personal.pomodoro.sessions || []).forEach((s) => bump(s.date));
   (STATE.personal.qbank || []).forEach((q) => bump(q.date));
   (STATE.personal.qAnswers || []).forEach((a) => bump(todayStr(new Date(a.ts))));
-  Object.values(STATE.personal.srs || {}).forEach((s) => bump(todayStr(new Date(s.lastReviewed))));
+  Object.values(STATE.personal.srs || {}).forEach((s) => { if (s.last_review) bump(todayStr(new Date(s.last_review))); });
 
   const days = 126;
   const today = new Date();
@@ -540,6 +588,7 @@ function subjectById(id) { return STATE.subjects.find((s) => s.id === id); }
 /* ================= NOTES (live collaborative) ================= */
 let pendingNoteText = null;
 let noteSaveTimer = null;
+let notesTab = 'source';
 function openNotes(subjectId) {
   const s = subjectById(subjectId);
   if (!s) return;
@@ -548,12 +597,28 @@ function openNotes(subjectId) {
   document.getElementById('notesTextarea').value = s.notes || '';
   updateNotesMeta(s);
   document.getElementById('notesUpdateBanner').classList.remove('show');
+  setNotesTab('source');
   setView('notes');
   switchRoom('subject:' + subjectId);
 }
 function updateNotesMeta(s) {
   document.getElementById('notesUpdatedMeta').textContent = s.notesUpdatedBy ? `Last edited by ${s.notesUpdatedBy} · ${timeAgo(s.notesUpdatedAt)}` : 'No edits yet';
 }
+function setNotesTab(tab) {
+  notesTab = tab;
+  document.getElementById('notesTabSource').classList.toggle('tab-active', tab === 'source');
+  document.getElementById('notesTabPreview').classList.toggle('tab-active', tab === 'preview');
+  document.getElementById('notesTextarea').style.display = tab === 'source' ? 'block' : 'none';
+  document.getElementById('notesPreview').style.display = tab === 'preview' ? 'block' : 'none';
+  if (tab === 'preview') renderNotesPreview();
+}
+function renderNotesPreview() {
+  const preview = document.getElementById('notesPreview');
+  preview.innerHTML = renderMarkdownSafe(document.getElementById('notesTextarea').value);
+  renderMathIn(preview);
+}
+document.getElementById('notesTabSource').addEventListener('click', () => setNotesTab('source'));
+document.getElementById('notesTabPreview').addEventListener('click', () => setNotesTab('preview'));
 document.getElementById('notesBack').addEventListener('click', () => { switchRoom(null); setView('subjects'); });
 document.getElementById('notesTextarea').addEventListener('input', () => {
   clearTimeout(noteSaveTimer);
@@ -568,6 +633,7 @@ document.getElementById('notesUpdateReload').addEventListener('click', () => {
   document.getElementById('notesUpdateBanner').classList.remove('show');
   const s = subjectById(STATE.currentSubjectId);
   if (s) updateNotesMeta(s);
+  if (notesTab === 'preview') renderNotesPreview();
 });
 
 /* ================= PLANNER ================= */
@@ -964,6 +1030,8 @@ function renderCurrentQuestion() {
   document.getElementById('qNext').style.display = 'none';
   document.getElementById('qChoicesDisplay').innerHTML = q.choices.map((c, i) => `<button class="choice-btn" data-choice="${c.id}"><span class="letter">${String.fromCharCode(65 + i)}</span><span>${escapeHTML(c.text)}</span></button>`).join('');
   document.querySelectorAll('#qChoicesDisplay [data-choice]').forEach((btn) => btn.addEventListener('click', () => answerCurrentQuestion(q, btn.dataset.choice)));
+  renderMathIn(document.getElementById('qStemDisplay'));
+  renderMathIn(document.getElementById('qChoicesDisplay'));
 }
 async function answerCurrentQuestion(q, choiceId) {
   const s = STATE.qSessionState;
@@ -981,6 +1049,7 @@ async function answerCurrentQuestion(q, choiceId) {
   const expBox = document.getElementById('qExplanationDisplay');
   expBox.style.display = 'block';
   expBox.innerHTML = `<strong style="color:${result.correct ? 'var(--good)' : 'var(--danger)'}">${result.correct ? 'Correct!' : 'Not quite.'}</strong><div style="margin-top:6px;font-size:.85rem;line-height:1.6">${escapeHTML(result.explanation || 'No explanation was written for this question.')}</div>`;
+  renderMathIn(expBox);
   const nextBtn = document.getElementById('qNext');
   nextBtn.style.display = 'inline-flex';
   nextBtn.textContent = s.idx + 1 < s.queue.length ? 'Next question →' : 'Finish session';
@@ -990,6 +1059,47 @@ async function answerCurrentQuestion(q, choiceId) {
     else renderCurrentQuestion();
   };
 }
+
+document.getElementById('qImportToggle').addEventListener('click', () => {
+  const f = document.getElementById('qImportForm');
+  f.style.display = f.style.display === 'none' ? 'block' : 'none';
+  document.getElementById('qImportSubject').innerHTML = subjectOptionsHTML();
+});
+document.getElementById('qImportCancel').addEventListener('click', () => (document.getElementById('qImportForm').style.display = 'none'));
+wireFileToTextarea('qImportFile', 'qImportText');
+document.getElementById('qImportRun').addEventListener('click', () => {
+  const subjectId = document.getElementById('qImportSubject').value;
+  const raw = parseCSV(document.getElementById('qImportText').value);
+  if (!raw.length) return toast('Paste or upload some CSV first');
+  let rows = raw;
+  if ((rows[0][0] || '').trim().toLowerCase() === 'stem') rows = rows.slice(1);
+  const items = [];
+  rows.forEach((r) => {
+    const stem = (r[0] || '').trim();
+    const choices = r.slice(1, 7).map((c) => (c || '').trim()).filter(Boolean);
+    const correctLetter = (r[7] || '').trim().toUpperCase();
+    const correctIndex = correctLetter.charCodeAt(0) - 65;
+    const explanation = (r[8] || '').trim();
+    const tags = (r[9] || '').split(';').map((t) => t.trim()).filter(Boolean);
+    if (stem && choices.length >= 2 && correctIndex >= 0 && correctIndex < choices.length) items.push({ stem, choices, correctIndex, explanation, tags });
+  });
+  if (!items.length) return toast('No valid rows found — check the column order');
+  STATE.socket.emit('question:bulkAdd', { subjectId, items });
+  document.getElementById('qImportForm').style.display = 'none';
+  document.getElementById('qImportText').value = '';
+});
+document.getElementById('qExportBtn').addEventListener('click', async () => {
+  if (!STATE.questions.length) return toast('No questions to export yet');
+  const { questions } = await apiGet('/api/questions/export');
+  const rows = [['stem', 'choice_a', 'choice_b', 'choice_c', 'choice_d', 'choice_e', 'choice_f', 'correct', 'explanation', 'tags']];
+  questions.forEach((q) => {
+    const choices = q.choices.map((c) => c.text);
+    while (choices.length < 6) choices.push('');
+    const correctIdx = q.choices.findIndex((c) => c.id === q.correctChoiceId);
+    rows.push([q.stem, ...choices, String.fromCharCode(65 + Math.max(0, correctIdx)), q.explanation || '', (q.tags || []).join(';')]);
+  });
+  downloadCSV('study-hub-questions.csv', rows);
+});
 
 /* ================= FLASHCARDS ================= */
 document.getElementById('fcAddToggle').addEventListener('click', () => { const f = document.getElementById('fcAddForm'); f.style.display = f.style.display === 'none' ? 'block' : 'none'; });
@@ -1003,6 +1113,31 @@ document.getElementById('fcSave').addEventListener('click', () => {
   document.getElementById('fcFront').value = ''; document.getElementById('fcBack').value = '';
   document.getElementById('fcAddForm').style.display = 'none';
 });
+document.getElementById('fcImportToggle').addEventListener('click', () => {
+  const f = document.getElementById('fcImportForm');
+  f.style.display = f.style.display === 'none' ? 'block' : 'none';
+  document.getElementById('fcImportSubject').innerHTML = subjectOptionsHTML();
+});
+document.getElementById('fcImportCancel').addEventListener('click', () => (document.getElementById('fcImportForm').style.display = 'none'));
+wireFileToTextarea('fcImportFile', 'fcImportText');
+document.getElementById('fcImportRun').addEventListener('click', () => {
+  const subjectId = document.getElementById('fcImportSubject').value;
+  const raw = parseCSV(document.getElementById('fcImportText').value);
+  if (!raw.length) return toast('Paste or upload some CSV first');
+  let rows = raw;
+  if ((rows[0][0] || '').trim().toLowerCase() === 'front') rows = rows.slice(1);
+  const cards = rows.map((r) => ({ front: (r[0] || '').trim(), back: (r[1] || '').trim() })).filter((c) => c.front && c.back);
+  if (!cards.length) return toast('No valid rows found — expected two columns: front, back');
+  STATE.socket.emit('flashcard:bulkAdd', { subjectId, cards });
+  document.getElementById('fcImportForm').style.display = 'none';
+  document.getElementById('fcImportText').value = '';
+});
+document.getElementById('fcExportBtn').addEventListener('click', () => {
+  if (!STATE.flashcards.length) return toast('No flashcards to export yet');
+  const rows = [['front', 'back']].concat(STATE.flashcards.map((c) => [c.front, c.back]));
+  downloadCSV('study-hub-flashcards.csv', rows);
+});
+
 function renderFlashcardList() {
   document.getElementById('fcTotalCount').textContent = STATE.flashcards.length;
   const wrap = document.getElementById('fcList');
@@ -1043,12 +1178,14 @@ function renderCurrentFlashcard() {
   }
   const card = queue[0];
   const s = subjectById(card.subjectId);
-  document.getElementById('fcReviewMeta').textContent = `${queue.length} left${s ? ' · ' + s.name : ''}`;
+  document.getElementById('fcReviewMeta').textContent = `${queue.length} left${s ? ' · ' + s.name : ''} · ${card.srsState || 'New'}`;
   document.getElementById('fcFrontDisplay').textContent = card.front;
   document.getElementById('fcBackDisplay').textContent = card.back;
   document.getElementById('fcBackDisplay').style.display = 'none';
   document.getElementById('fcFlipRow').style.display = 'flex';
   document.getElementById('fcRateRow').style.display = 'none';
+  renderMathIn(document.getElementById('fcFrontDisplay'));
+  renderMathIn(document.getElementById('fcBackDisplay'));
 }
 document.getElementById('fcFlip').addEventListener('click', () => {
   document.getElementById('fcBackDisplay').style.display = 'flex';
@@ -1057,7 +1194,12 @@ document.getElementById('fcFlip').addEventListener('click', () => {
 });
 document.querySelectorAll('#fcRateRow [data-rate]').forEach((b) => b.addEventListener('click', async () => {
   const card = STATE.fcQueue[0];
-  try { const { srs } = await apiPost('/api/srs/review', { cardId: card.id, rating: b.dataset.rate }); STATE.personal.srs[card.id] = srs; } catch (e) { toast(e.message); }
+  try {
+    const { srs, intervalDays } = await apiPost('/api/srs/review', { cardId: card.id, rating: b.dataset.rate });
+    STATE.personal.srs[card.id] = srs;
+    const days = intervalDays < 1 ? 'a few minutes' : intervalDays === 1 ? '1 day' : `${intervalDays} days`;
+    toast(`See you again in ${days}`);
+  } catch (e) { toast(e.message); }
   STATE.fcQueue.shift();
   renderCurrentFlashcard();
 }));

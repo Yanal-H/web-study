@@ -54,10 +54,22 @@ invite code, which the admin generates from **Manage → Invites**.
   breakdown) — correct answers/explanations are only sent to the client
   *after* you submit an answer, so browsing the question list doesn't spoil it.
 - **Flashcards** — community-created front/back cards per subject, reviewed
-  with a simplified SM-2 spaced-repetition scheduler (own due dates per
-  learner, independent of who wrote the card). "Again" brings a card back in
-  a minute; "Easy" pushes it out multiplicatively. The sidebar badge shows
-  how many cards are due right now.
+  with **[FSRS-5](https://github.com/open-spaced-repetition/ts-fsrs)**, the
+  open-source, evidence-based scheduler that Anki itself switched to as its
+  default algorithm (replacing the older SM-2). Scheduling (due dates,
+  stability, difficulty) is tracked per learner, independent of who wrote the
+  card. The sidebar badge shows how many cards are due right now, and each
+  rating shows you the next interval it just earned.
+- **CSV import/export** — bulk-add questions or flashcards by pasting or
+  uploading a CSV instead of typing one at a time (handy for bringing in an
+  existing Anki/Quizlet export or a set a professor handed out), and export
+  either bank back out to CSV any time. Format is documented inline on each
+  import panel.
+- **Math & markdown** — subject notes have a Source/Preview toggle that
+  renders Markdown (via [marked](https://github.com/markedjs/marked)) and
+  LaTeX math (via [KaTeX](https://katex.org), `$x^2$` / `$$...$$`); the same
+  LaTeX rendering applies to question stems/explanations and flashcard
+  fronts/backs, so dosage formulas and biochem equations render properly.
 - **Lab values & search** — a static, searchable reference table of standard
   normal ranges, plus a sidebar search box that does an instant, client-side
   search across subjects, topics, notes, mnemonics, resources, questions,
@@ -66,9 +78,10 @@ invite code, which the admin generates from **Manage → Invites**.
   dashboard, built from your pomodoro sessions, Q-bank log entries, practice
   question answers, and flashcard reviews.
 - **Data** — a small hand-rolled JSON-file store (`lib/store.js`,
-  `data/db.json`), atomic-write on every mutation. No native dependencies,
-  so `npm install` never needs a compiler. Fine for a study group's scale;
-  see "Scaling up" below if you outgrow it.
+  `data/db.json`), atomic-write on every mutation. Every dependency (FSRS
+  scheduling, KaTeX, Markdown) is pure JavaScript, so `npm install` never
+  needs a C/C++ compiler. Fine for a study group's scale; see "Production
+  hardening" below if you outgrow it.
 - **Personal vs. shared** — subjects, topics (the catalog), notes,
   mnemonics, resources, and chat are shared/community-editable. Topic
   *completion* is personal per learner (with a small "3/12 learners have
@@ -89,20 +102,37 @@ invite code, which the admin generates from **Manage → Invites**.
 | `SESSION_SECRET` | random per boot | Set this explicitly in production so logged-in sessions survive a restart |
 | `COOKIE_SECURE` | unset (`0`) | Set to `1` when served over HTTPS, so session cookies are marked `Secure` |
 
-## Deploying
+## Deploying — get a real URL without a terminal
 
-This is a plain Node.js + Express app — deploy it anywhere that runs Node 18+:
+There's a [`render.yaml`](../render.yaml) blueprint at the repo root, so you
+can deploy on [Render](https://render.com) with clicks, not commands:
 
-**Render / Railway / Fly.io / a PaaS**
-1. Push this `study-hub/` folder to a Git repo (or point the platform at
-   this subfolder).
-2. Build command: `npm install`. Start command: `npm start`.
-3. Set `SESSION_SECRET` and `COOKIE_SECURE=1` in the platform's environment
-   variables.
-4. Attach a persistent volume/disk mounted at `study-hub/data` — otherwise
-   the JSON database resets on every redeploy.
+1. Create a free Render account (GitHub sign-in is fastest).
+2. In the Render dashboard: **New +** → **Blueprint**.
+3. Connect this GitHub repo and pick the branch you want deployed.
+4. Render reads `render.yaml` automatically — it already knows to build from
+   the `study-hub/` folder, run `npm install` / `npm start`, and generate a
+   random `SESSION_SECRET` for you. Click **Apply**.
+5. In a few minutes you'll get a live URL like `study-hub-xxxx.onrender.com`.
+   Open it, register the first account (it becomes admin), and generate
+   invite codes for everyone else from **Manage → Invites**.
 
-**Your own VPS**
+**Important free-tier caveat:** Render's free web services don't get a
+persistent disk, and they spin down after inactivity — so `data/db.json`
+(everyone's accounts, notes, questions, flashcards) **resets** whenever the
+service restarts or redeploys. That's fine for trying it out or a short-lived
+study session, but not for anything you want to keep. To make it durable:
+in the Render dashboard, upgrade the service to the **Starter** plan (~$7/mo)
+and add a **Disk** (Render docs: [Persistent Disks](https://render.com/docs/disks))
+mounted at `/opt/render/project/src/study-hub/data` — then the JSON store
+survives restarts and redeploys like it would on a VPS.
+
+**Railway / Fly.io / any other Node host** work the same way manually:
+build command `npm install` (run inside `study-hub/`), start command
+`npm start`, set `SESSION_SECRET` and `COOKIE_SECURE=1`, and attach whatever
+that platform calls a persistent volume/disk to `study-hub/data`.
+
+**Your own VPS** (fully persistent by default, no disk caveats):
 ```bash
 git clone <your fork>
 cd study-hub && npm install
@@ -131,12 +161,15 @@ tightening if the group grows or the hub becomes higher-stakes:
 ## Project layout
 
 ```
-study-hub/
-  server.js            Express app, REST API, Socket.IO wiring
-  lib/store.js          JSON-file datastore (users, subjects, chat, etc.)
-  lib/seedData.js        Seed subjects/topics/notes content
-  public/index.html      App shell (auth screen + SPA)
-  public/css/styles.css  Six color themes + all component styles
-  public/js/app.js       All client-side logic (fetch + socket.io client)
-  data/db.json            Runtime database (git-ignored, created on first run)
+web-study/
+  render.yaml              Render blueprint (deploys study-hub/ as a web service)
+  study-hub/
+    server.js              Express app, REST API, Socket.IO wiring
+    lib/store.js            JSON-file datastore + FSRS scheduling (users, subjects, chat, etc.)
+    lib/seedData.js          Seed subjects/topics/notes content
+    public/index.html        App shell (auth screen + SPA)
+    public/css/styles.css    Six color themes + all component styles
+    public/js/app.js         All client-side logic (fetch + socket.io client)
+    public/vendor/           Self-hosted KaTeX + marked browser bundles (no CDN)
+    data/db.json              Runtime database (git-ignored, created on first run)
 ```
