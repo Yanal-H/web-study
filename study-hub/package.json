@@ -1,0 +1,20 @@
+{
+  "name": "study-hub",
+  "version": "1.0.0",
+  "description": "Invite-only, real-time med school study platform: shared subjects, live chat, collaborative notes, mnemonics, resources, and an admin panel.",
+  "private": true,
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "express": "^4.19.2",
+    "express-session": "^1.18.0",
+    "socket.io": "^4.7.5"
+  }
+}
