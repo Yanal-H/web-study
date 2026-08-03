@@ -57,8 +57,8 @@
     <div class="online-pill"><span class="blip"></span><span id="onlineCount">0</span> studying now</div>
 
     <div class="search-wrap">
-      <input class="input search-input" id="globalSearch" placeholder="Search everything…" autocomplete="off">
-      <div class="search-results" id="globalSearchResults" hidden></div>
+      <input class="input search-input" id="globalSearch" placeholder="Search everything…" autocomplete="off" readonly>
+      <kbd class="search-kbd">⌘K</kbd>
     </div>
 
     <div class="navgroup">
@@ -131,9 +131,15 @@
         </div>
       </div>
 
-      <div class="card">
-        <div class="section-title">Focus areas</div>
-        <div id="weakSubjects"><div class="empty">Answer a few practice questions to see your strong and weak subjects here.</div></div>
+      <div class="grid cols-2">
+        <div class="card">
+          <div class="section-title">Focus areas</div>
+          <div id="weakSubjects"><div class="empty">Answer a few practice questions to see your strong and weak subjects here.</div></div>
+        </div>
+        <div class="card">
+          <div class="section-title">Accuracy trend — last 14 days</div>
+          <div id="accuracyTrend"><div class="empty">Answer some practice questions to see your trend here.</div></div>
+        </div>
       </div>
     </section>
 
@@ -149,8 +155,9 @@
           </div>
           <div class="chat-messages" id="chatMessages"></div>
           <div class="typing-indicator" id="typingIndicator" hidden></div>
-          <div class="chat-input-row">
-            <input class="input" id="chatInput" placeholder="Say something…" maxlength="1000">
+          <div class="chat-input-row" style="position:relative">
+            <div class="mention-menu" id="mentionMenu" hidden></div>
+            <input class="input" id="chatInput" placeholder="Say something… (@ to mention)" maxlength="1000">
             <button class="btn primary icon" id="chatSend"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 2-7 20-4-9-9-4 20-7Z"/></svg></button>
           </div>
         </div>
@@ -178,7 +185,18 @@
     <section class="view" id="view-notes">
       <div class="topbar">
         <div><h1 id="notesSubjectName">Notes</h1><div class="sub">Shared, live-editing wiki for this subject.</div></div>
-        <button class="btn ghost" id="notesBack">← Back to subjects</button>
+        <div class="row tight">
+          <button class="btn" id="notesHistoryBtn">History</button>
+          <button class="btn ghost" id="notesBack">← Back to subjects</button>
+        </div>
+      </div>
+
+      <div class="card" id="notesHistoryPanel" style="display:none;margin-bottom:18px">
+        <div class="row" style="justify-content:space-between;align-items:center;margin-bottom:10px">
+          <div class="section-title" style="margin:0">Version history</div>
+          <button class="btn sm ghost" id="notesHistoryClose">Close</button>
+        </div>
+        <div id="notesHistoryList"></div>
       </div>
       <div class="card">
         <div class="notes-meta">
@@ -255,7 +273,8 @@
       <div class="card" id="qSessionSetup" style="margin-bottom:18px">
         <div class="row">
           <div class="field"><label>Subject</label><select class="select" id="qFilterSubject"><option value="">All subjects</option></select></div>
-          <div class="field"><label>Question pool</label><select class="select" id="qFilterMode"><option value="all">All questions</option><option value="unanswered">Unanswered only</option><option value="incorrect">Previously missed</option></select></div>
+          <div class="field"><label>Question pool</label><select class="select" id="qFilterMode"><option value="all">All questions</option><option value="unanswered">Unanswered only</option><option value="incorrect">Previously missed</option><option value="flagged">Flagged for review</option></select></div>
+          <label class="row tight" style="align-items:center;cursor:pointer"><input type="checkbox" id="qTimedMode" style="width:16px;height:16px"><span style="font-size:.83rem;font-weight:600">Timed mode</span></label>
           <button class="btn primary" id="qStartSession">Start practicing</button>
         </div>
         <div class="muted" style="font-size:.8rem;margin-top:10px" id="qPoolCount"></div>
@@ -265,7 +284,9 @@
         <div class="row" style="justify-content:space-between;margin-bottom:14px">
           <span class="badge" id="qProgress">Q1</span>
           <span class="badge" id="qScore">0/0</span>
-          <button class="btn sm ghost" id="qEndSession">End session</button>
+          <span class="badge mono" id="qTimer" hidden>00:00</span>
+          <button class="btn sm ghost" id="qFlagBtn">🏳 Flag</button>
+          <button class="btn sm ghost" id="qEndSession" style="margin-left:auto">End session</button>
         </div>
         <div id="qStemDisplay" style="font-size:.95rem;line-height:1.6;margin-bottom:16px"></div>
         <div id="qChoicesDisplay" style="display:flex;flex-direction:column;gap:8px"></div>
@@ -304,8 +325,16 @@
 
       <div class="card" id="fcAddForm" style="display:none;margin-bottom:18px">
         <div class="field" style="margin-bottom:10px"><label>Subject</label><select class="select" id="fcSubject"></select></div>
-        <div class="field" style="margin-bottom:10px"><label>Front</label><textarea class="textarea" id="fcFront" style="min-height:60px" placeholder="Term or question…"></textarea></div>
-        <div class="field" style="margin-bottom:12px"><label>Back</label><textarea class="textarea" id="fcBack" style="min-height:80px" placeholder="Answer…"></textarea></div>
+        <label class="row tight" style="align-items:center;cursor:pointer;margin-bottom:10px"><input type="checkbox" id="fcClozeToggle" style="width:16px;height:16px"><span style="font-size:.83rem;font-weight:600">Cloze deletion (Anki-style {{c1::text}})</span></label>
+        <div id="fcNormalFields">
+          <div class="field" style="margin-bottom:10px"><label>Front</label><textarea class="textarea" id="fcFront" style="min-height:60px" placeholder="Term or question…"></textarea></div>
+          <div class="field" style="margin-bottom:12px"><label>Back</label><textarea class="textarea" id="fcBack" style="min-height:80px" placeholder="Answer…"></textarea></div>
+        </div>
+        <div class="field" id="fcClozeField" style="margin-bottom:12px;display:none">
+          <label>Text with cloze deletions</label>
+          <textarea class="textarea" id="fcClozeText" style="min-height:90px" placeholder="The {{c1::phrenic nerve}} (roots {{c2::C3, C4, C5}}) innervates the diaphragm."></textarea>
+          <div class="muted" style="font-size:.72rem;margin-top:6px">Each <code>{{c1::…}}</code>, <code>{{c2::…}}</code>, etc. becomes its own card, blanking that piece while showing the rest.</div>
+        </div>
         <div class="row"><button class="btn primary" id="fcSave">Save card</button><button class="btn ghost" id="fcCancel">Cancel</button></div>
       </div>
 
@@ -463,7 +492,15 @@
         <button class="admin-tab" data-admintab="moderation">Moderation</button>
       </div>
 
-      <div class="admin-view active" id="admin-stats"><div class="grid cols-4" id="adminStats"></div></div>
+      <div class="admin-view active" id="admin-stats">
+        <div class="grid cols-4" id="adminStats" style="margin-bottom:16px"></div>
+        <div class="card">
+          <div class="row" style="justify-content:space-between;align-items:center">
+            <div><div class="section-title" style="margin:0">Backup</div><div class="muted" style="font-size:.8rem;margin-top:4px">Download a full JSON snapshot of every account, subject, note, question, and card.</div></div>
+            <a class="btn primary" id="adminExportBtn" href="/api/admin/export" download="study-hub-backup.json">Download full backup</a>
+          </div>
+        </div>
+      </div>
 
       <div class="admin-view" id="admin-users">
         <div class="card"><div style="overflow-x:auto"><table id="adminUsersTable"></table></div></div>
@@ -488,6 +525,17 @@
 </div>
 
 <div class="toast" id="toast"></div>
+
+<div class="cmdk-overlay" id="cmdkOverlay" hidden>
+  <div class="cmdk-modal">
+    <div class="cmdk-input-row">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px;flex:none;opacity:.6"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+      <input id="cmdkInput" class="cmdk-input" placeholder="Search subjects, notes, questions, flashcards, lab values, or jump anywhere…" autocomplete="off">
+      <kbd class="cmdk-esc">Esc</kbd>
+    </div>
+    <div id="cmdkResults" class="cmdk-results"></div>
+  </div>
+</div>
 
 <script src="/vendor/katex/katex.min.js"></script>
 <script src="/vendor/katex/auto-render.min.js"></script>

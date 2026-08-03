@@ -144,7 +144,8 @@ const STATE = {
   joinedRoom: null,
   socket: null,
   qSessionState: null,
-  fcQueue: null
+  fcQueue: null,
+  unreadByRoom: {}
 };
 
 /* ================= THEME ================= */
@@ -309,7 +310,13 @@ function connectSocket() {
     if (room === STATE.joinedRoom) renderChatPresence(users);
   });
   socket.on('chat:message', (msg) => {
-    if (msg.room === STATE.activeChatRoom) { renderChatMessage(msg); scrollChatBottom(); typingUsers.delete(msg.username); renderTypingIndicator(); }
+    const viewingThisRoom = STATE.currentView === 'chat' && msg.room === STATE.activeChatRoom;
+    if (viewingThisRoom) { renderChatMessage(msg); scrollChatBottom(); typingUsers.delete(msg.username); renderTypingIndicator(); }
+    else if (msg.userId !== STATE.me.id) {
+      STATE.unreadByRoom[msg.room] = (STATE.unreadByRoom[msg.room] || 0) + 1;
+      updateUnreadBadges();
+      if (messageMentionsMe(msg.text)) toast(`${msg.username} mentioned you in chat`);
+    }
   });
   socket.on('chat:typing', ({ room, username }) => {
     if (room === STATE.activeChatRoom && username !== STATE.me.username) showTyping(username);
@@ -394,6 +401,13 @@ function setOnline(n) {
   if (STATE.currentView === 'dashboard') renderDashboard();
 }
 
+function updateUnreadBadges() {
+  const total = Object.values(STATE.unreadByRoom).reduce((a, n) => a + n, 0);
+  const badge = document.getElementById('chatUnread');
+  if (total > 0) { badge.hidden = false; badge.textContent = total > 99 ? '99+' : total; } else badge.hidden = true;
+  if (STATE.currentView === 'chat') renderChatRooms();
+}
+
 function switchRoom(room) {
   if (STATE.joinedRoom === room) return;
   if (STATE.joinedRoom) STATE.socket.emit('room:leave', { room: STATE.joinedRoom });
@@ -452,6 +466,7 @@ function renderDashboard() {
   renderActivityFeed('activityFeed');
   renderStreakHeatmap();
   renderWeakSubjects();
+  renderAccuracyTrend();
   const nav = [['subjects', 'Subjects', ICONS.book], ['practice', 'Practice Qs', ICONS.target], ['flashcards', 'Flashcards', ICONS.book], ['chat', 'Chat', ICONS.chat]];
   document.getElementById('quickNav').innerHTML = nav.map(([v, l, i]) => `<button class="btn" data-jump="${v}" style="justify-content:flex-start">${i}${l}</button>`).join('');
   document.querySelectorAll('[data-jump]').forEach((b) => b.addEventListener('click', () => setView(b.dataset.jump)));
@@ -498,6 +513,47 @@ function renderWeakSubjects() {
     return `<div class="weak-row"><span class="dot" style="background:${r.subject.color}"></span><span class="name">${escapeHTML(r.subject.name)}</span><span class="muted mono" style="font-size:.72rem">${r.total} answered</span><span class="acc" style="background:${color}22;color:${color}">${r.pct}%</span></div>`;
   }).join('');
 }
+
+/* ---- accuracy trend chart ---- */
+function renderAccuracyTrend() {
+  const wrap = document.getElementById('accuracyTrend');
+  const days = 14;
+  const today = new Date();
+  const byDate = {};
+  (STATE.personal.qAnswers || []).forEach((a) => {
+    const key = todayStr(new Date(a.ts));
+    byDate[key] = byDate[key] || { total: 0, correct: 0 };
+    byDate[key].total++;
+    if (a.correct) byDate[key].correct++;
+  });
+  const points = [];
+  for (let i = days - 1; i >= 0; i--) {
+    const d = new Date(today); d.setDate(d.getDate() - i);
+    const key = todayStr(d);
+    const stat = byDate[key];
+    points.push({ key, total: stat ? stat.total : 0, pct: stat && stat.total ? (stat.correct / stat.total) * 100 : null });
+  }
+  if (!points.some((p) => p.total > 0)) { wrap.innerHTML = `<div class="empty">Answer some practice questions to see your trend here.</div>`; return; }
+
+  const w = 560, h = 130, pad = 6, baseline = h - 22;
+  const maxTotal = Math.max(1, ...points.map((p) => p.total));
+  const barW = (w - pad * 2) / points.length;
+  const bars = points.map((p, i) => {
+    const bh = p.total ? (p.total / maxTotal) * (baseline - 14) : 0;
+    const x = pad + i * barW;
+    return `<rect x="${(x + 2).toFixed(1)}" y="${(baseline - bh).toFixed(1)}" width="${(barW - 4).toFixed(1)}" height="${bh.toFixed(1)}" rx="2" fill="var(--surface-3)"><title>${p.key}: ${p.total} answered</title></rect>`;
+  }).join('');
+  const lp = points.map((p, i) => ({ x: pad + i * barW + barW / 2, y: p.pct === null ? null : baseline - (p.pct / 100) * (baseline - 14) })).filter((p) => p.y !== null);
+  const pathD = lp.map((p, i) => (i === 0 ? 'M' : 'L') + p.x.toFixed(1) + ',' + p.y.toFixed(1)).join(' ');
+  const dots = lp.map((p) => `<circle cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="3" fill="var(--brand)"/>`).join('');
+  wrap.innerHTML = `<svg viewBox="0 0 ${w} ${h}" style="width:100%;height:130px" preserveAspectRatio="none">
+      ${bars}
+      ${pathD ? `<path d="${pathD}" fill="none" stroke="var(--brand)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>` : ''}
+      ${dots}
+    </svg>
+    <div class="row" style="justify-content:space-between;font-size:.68rem;color:var(--muted);margin-top:2px"><span>${points[0].key}</span><span class="muted">bars = questions/day · line = accuracy</span><span>Today</span></div>`;
+}
+
 function renderActivityFeed(elId) {
   const wrap = document.getElementById(elId);
   if (!STATE.activity.length) { wrap.innerHTML = `<div class="empty">No study sessions logged yet today.</div>`; return; }
@@ -510,7 +566,7 @@ function renderActivityFeed(elId) {
 /* ================= CHAT ================= */
 function renderChatRooms() {
   const rooms = [{ id: 'global', name: 'Study Hall', color: 'var(--brand)' }].concat(STATE.subjects.map((s) => ({ id: 'subject:' + s.id, name: s.name, color: s.color })));
-  document.getElementById('chatRoomList').innerHTML = rooms.map((r) => `<button class="chat-room-btn ${STATE.activeChatRoom === r.id ? 'active' : ''}" data-room="${r.id}"><span class="dot" style="background:${r.color}"></span>${escapeHTML(r.name)}</button>`).join('');
+  document.getElementById('chatRoomList').innerHTML = rooms.map((r) => `<button class="chat-room-btn ${STATE.activeChatRoom === r.id ? 'active' : ''}" data-room="${r.id}"><span class="dot" style="background:${r.color}"></span>${escapeHTML(r.name)}${STATE.unreadByRoom[r.id] ? `<span class="room-unread">${STATE.unreadByRoom[r.id] > 9 ? '9+' : STATE.unreadByRoom[r.id]}</span>` : ''}</button>`).join('');
   document.querySelectorAll('.chat-room-btn').forEach((b) => b.addEventListener('click', () => openChatRoom(b.dataset.room)));
 }
 function openChatRoom(room) {
@@ -522,21 +578,37 @@ function openChatRoom(room) {
   typingUsers.forEach((t) => clearTimeout(t));
   typingUsers.clear();
   renderTypingIndicator();
+  delete STATE.unreadByRoom[room];
+  updateUnreadBadges();
   switchRoom(room);
+}
+function linkifyMentions(text) {
+  const escaped = escapeHTML(text);
+  const usernames = STATE.users.map((u) => u.username).sort((a, b) => b.length - a.length);
+  if (!usernames.length) return escaped;
+  const pattern = new RegExp('@(' + usernames.map((n) => n.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|') + ')\\b', 'gi');
+  return escaped.replace(pattern, (m) => `<span class="mention">${m}</span>`);
+}
+function messageMentionsMe(text) {
+  if (!STATE.me) return false;
+  const re = new RegExp('@' + STATE.me.username.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '\\b', 'i');
+  return re.test(text);
 }
 function renderChatMessage(msg) {
   const wrap = document.getElementById('chatMessages');
   const mine = msg.userId === STATE.me.id;
+  const mentioned = !mine && messageMentionsMe(msg.text);
   const div = document.createElement('div');
-  div.className = 'msg' + (mine ? ' mine' : '');
+  div.className = 'msg' + (mine ? ' mine' : '') + (mentioned ? ' mentions-me' : '');
   div.dataset.msg = msg.id;
   div.innerHTML = `
     <span class="avatar" style="background:${msg.color}">${initials(msg.username)}</span>
     <div><div class="meta">${mine ? 'You' : escapeHTML(msg.username)} · ${timeAgo(msg.ts)}</div>
-    <div class="bubble">${escapeHTML(msg.text)}${(STATE.me.role === 'admin') ? `<button class="msg-del btn icon ghost sm" data-del-msg="${msg.id}" title="Delete">${ICONS.trash}</button>` : ''}</div></div>`;
+    <div class="bubble">${linkifyMentions(msg.text)}${(STATE.me.role === 'admin') ? `<button class="msg-del btn icon ghost sm" data-del-msg="${msg.id}" title="Delete">${ICONS.trash}</button>` : ''}</div></div>`;
   wrap.appendChild(div);
   const delBtn = div.querySelector('[data-del-msg]');
   if (delBtn) delBtn.addEventListener('click', () => apiDel('/api/admin/messages/' + msg.id).catch(() => {}));
+  if (mentioned) toast(`${msg.username} mentioned you`);
 }
 function scrollChatBottom() { const wrap = document.getElementById('chatMessages'); wrap.scrollTop = wrap.scrollHeight; }
 function renderChatPresence(users) {
@@ -548,15 +620,66 @@ function sendChat() {
   if (!text || !STATE.activeChatRoom) return;
   STATE.socket.emit('chat:send', { room: STATE.activeChatRoom, text });
   input.value = '';
+  document.getElementById('mentionMenu').hidden = true;
+  mentionMatches = [];
 }
 document.getElementById('chatSend').addEventListener('click', sendChat);
-document.getElementById('chatInput').addEventListener('keydown', (e) => { if (e.key === 'Enter') sendChat(); });
+document.getElementById('chatInput').addEventListener('keydown', (e) => { if (e.key === 'Enter' && !mentionMatches.length) sendChat(); });
 
 let lastTypingEmit = 0;
 document.getElementById('chatInput').addEventListener('input', () => {
   if (!STATE.activeChatRoom) return;
   const now = Date.now();
   if (now - lastTypingEmit > 1500) { STATE.socket.emit('chat:typing', { room: STATE.activeChatRoom }); lastTypingEmit = now; }
+  updateMentionMenu();
+});
+
+/* ---- @mention autocomplete ---- */
+let mentionMatches = [];
+let mentionSel = 0;
+function currentMentionQuery() {
+  const input = document.getElementById('chatInput');
+  const upToCursor = input.value.slice(0, input.selectionStart);
+  const m = upToCursor.match(/(?:^|\s)@([a-zA-Z0-9 _.-]{0,24})$/);
+  return m ? m[1] : null;
+}
+function updateMentionMenu() {
+  const q = currentMentionQuery();
+  const menu = document.getElementById('mentionMenu');
+  if (q === null) { menu.hidden = true; mentionMatches = []; return; }
+  mentionMatches = STATE.users.filter((u) => u.username.toLowerCase().startsWith(q.toLowerCase())).slice(0, 6);
+  if (!mentionMatches.length) { menu.hidden = true; return; }
+  mentionSel = 0;
+  menu.hidden = false;
+  menu.innerHTML = mentionMatches.map((u, i) => `<button class="mention-item ${i === 0 ? 'sel' : ''}" data-idx="${i}"><span class="avatar" style="width:20px;height:20px;font-size:.58rem;background:${u.color}">${initials(u.username)}</span>${escapeHTML(u.username)}</button>`).join('');
+  menu.querySelectorAll('.mention-item').forEach((el) => el.addEventListener('click', () => insertMention(+el.dataset.idx)));
+}
+function insertMention(idx) {
+  const u = mentionMatches[idx];
+  if (!u) return;
+  const input = document.getElementById('chatInput');
+  const cursor = input.selectionStart;
+  const before = input.value.slice(0, cursor).replace(/@([a-zA-Z0-9 _.-]{0,24})$/, '@' + u.username + ' ');
+  const after = input.value.slice(cursor);
+  input.value = before + after;
+  input.focus();
+  const newPos = before.length;
+  input.setSelectionRange(newPos, newPos);
+  document.getElementById('mentionMenu').hidden = true;
+  mentionMatches = [];
+}
+document.getElementById('chatInput').addEventListener('keydown', (e) => {
+  if (!mentionMatches.length) return;
+  if (e.key === 'ArrowDown') { e.preventDefault(); mentionSel = (mentionSel + 1) % mentionMatches.length; highlightMentionSel(); }
+  else if (e.key === 'ArrowUp') { e.preventDefault(); mentionSel = (mentionSel - 1 + mentionMatches.length) % mentionMatches.length; highlightMentionSel(); }
+  else if (e.key === 'Tab' || e.key === 'Enter') { e.preventDefault(); insertMention(mentionSel); }
+  else if (e.key === 'Escape') { document.getElementById('mentionMenu').hidden = true; mentionMatches = []; }
+});
+function highlightMentionSel() {
+  document.querySelectorAll('.mention-item').forEach((el) => el.classList.toggle('sel', +el.dataset.idx === mentionSel));
+}
+document.getElementById('chatInput').addEventListener('blur', () => {
+  setTimeout(() => { document.getElementById('mentionMenu').hidden = true; mentionMatches = []; }, 150);
 });
 const typingUsers = new Map(); // username -> timeout id, per current room
 function showTyping(username) {
@@ -691,6 +814,7 @@ function openNotes(subjectId) {
   document.getElementById('notesTextarea').value = s.notes || '';
   updateNotesMeta(s);
   document.getElementById('notesUpdateBanner').classList.remove('show');
+  document.getElementById('notesHistoryPanel').style.display = 'none';
   setNotesTab('source');
   setView('notes');
   switchRoom('subject:' + subjectId);
@@ -714,6 +838,44 @@ function renderNotesPreview() {
 document.getElementById('notesTabSource').addEventListener('click', () => setNotesTab('source'));
 document.getElementById('notesTabPreview').addEventListener('click', () => setNotesTab('preview'));
 document.getElementById('notesBack').addEventListener('click', () => { switchRoom(null); setView('subjects'); });
+
+document.getElementById('notesHistoryBtn').addEventListener('click', async () => {
+  const panel = document.getElementById('notesHistoryPanel');
+  const opening = panel.style.display === 'none';
+  panel.style.display = opening ? 'block' : 'none';
+  if (opening) await loadNotesHistory();
+});
+document.getElementById('notesHistoryClose').addEventListener('click', () => (document.getElementById('notesHistoryPanel').style.display = 'none'));
+async function loadNotesHistory() {
+  const list = document.getElementById('notesHistoryList');
+  list.innerHTML = `<div class="muted" style="font-size:.85rem;padding:8px 4px">Loading…</div>`;
+  try {
+    const { history } = await apiGet(`/api/subjects/${STATE.currentSubjectId}/history`);
+    if (!history.length) { list.innerHTML = `<div class="empty">No earlier versions yet — history builds up as edits happen over time.</div>`; return; }
+    list.innerHTML = history.map((h) => `
+      <div class="list-item">
+        <div style="flex:1"><div style="font-weight:600;font-size:.85rem">${escapeHTML(h.authorName)}</div><div class="muted" style="font-size:.72rem">${timeAgo(h.ts)} · ${h.text.length} chars</div></div>
+        <button class="btn sm ghost" data-history-preview="${h.index}">Preview</button>
+        <button class="btn sm primary" data-history-restore="${h.index}">Restore</button>
+      </div>`).join('');
+    list.querySelectorAll('[data-history-preview]').forEach((b) => b.addEventListener('click', () => {
+      const entry = history.find((h) => h.index === +b.dataset.historyPreview);
+      if (entry) { setNotesTab('source'); document.getElementById('notesTextarea').value = entry.text; toast('Previewing an old version — click Restore to keep it, or reopen Notes to discard'); }
+    }));
+    list.querySelectorAll('[data-history-restore]').forEach((b) => b.addEventListener('click', async () => {
+      if (!confirm('Restore this version? The current text will be saved to history first, so nothing is lost.')) return;
+      try {
+        const res = await apiPost(`/api/subjects/${STATE.currentSubjectId}/restore`, { index: +b.dataset.historyRestore });
+        document.getElementById('notesTextarea').value = res.notes;
+        const subj = subjectById(STATE.currentSubjectId);
+        if (subj) { subj.notes = res.notes; subj.notesUpdatedBy = res.notesUpdatedBy; subj.notesUpdatedAt = res.notesUpdatedAt; updateNotesMeta(subj); }
+        if (notesTab === 'preview') renderNotesPreview();
+        document.getElementById('notesHistoryPanel').style.display = 'none';
+        toast('Restored');
+      } catch (e) { toast(e.message); }
+    }));
+  } catch (e) { list.innerHTML = `<div class="empty">Couldn't load history.</div>`; }
+}
 document.getElementById('notesTextarea').addEventListener('input', () => {
   clearTimeout(noteSaveTimer);
   noteSaveTimer = setTimeout(() => {
@@ -1090,6 +1252,7 @@ function getQPool() {
     if (subjectId && q.subjectId !== subjectId) return false;
     if (mode === 'unanswered') return !(q.id in lastResultByQ);
     if (mode === 'incorrect') return lastResultByQ[q.id] === false;
+    if (mode === 'flagged') return (STATE.personal.flags || []).includes(q.id);
     return true;
   });
 }
@@ -1098,17 +1261,29 @@ function updateQPoolCount() {
   document.getElementById('qPoolCount').textContent = n ? `${n} question${n === 1 ? '' : 's'} in this pool.` : 'No questions match this filter yet.';
 }
 
+let qTimerInterval = null;
 document.getElementById('qStartSession').addEventListener('click', () => {
   const pool = getQPool();
   if (!pool.length) return toast('No questions in this pool');
   const queue = pool.slice().sort(() => Math.random() - 0.5);
-  STATE.qSessionState = { queue, idx: 0, correct: 0, answered: 0 };
+  const timed = document.getElementById('qTimedMode').checked;
+  STATE.qSessionState = { queue, idx: 0, correct: 0, answered: 0, timed, startedAt: Date.now() };
   document.getElementById('qSessionSetup').style.display = 'none';
   document.getElementById('qSession').style.display = 'block';
+  const timerEl = document.getElementById('qTimer');
+  if (timed) {
+    timerEl.hidden = false;
+    clearInterval(qTimerInterval);
+    qTimerInterval = setInterval(() => {
+      const secs = Math.floor((Date.now() - STATE.qSessionState.startedAt) / 1000);
+      timerEl.textContent = `${String(Math.floor(secs / 60)).padStart(2, '0')}:${String(secs % 60).padStart(2, '0')}`;
+    }, 1000);
+  } else timerEl.hidden = true;
   renderCurrentQuestion();
 });
 document.getElementById('qEndSession').addEventListener('click', endQSession);
 function endQSession() {
+  clearInterval(qTimerInterval);
   STATE.qSessionState = null;
   document.getElementById('qSession').style.display = 'none';
   document.getElementById('qSessionSetup').style.display = 'block';
@@ -1126,6 +1301,19 @@ function renderCurrentQuestion() {
   document.querySelectorAll('#qChoicesDisplay [data-choice]').forEach((btn) => btn.addEventListener('click', () => answerCurrentQuestion(q, btn.dataset.choice)));
   renderMathIn(document.getElementById('qStemDisplay'));
   renderMathIn(document.getElementById('qChoicesDisplay'));
+  const flagBtn = document.getElementById('qFlagBtn');
+  const flagged = (STATE.personal.flags || []).includes(q.id);
+  flagBtn.textContent = flagged ? '🏴 Flagged' : '🏳 Flag';
+  flagBtn.classList.toggle('primary', flagged);
+  flagBtn.onclick = async () => {
+    try {
+      const { flagged: nowFlagged } = await apiPost(`/api/questions/${q.id}/flag`, {});
+      STATE.personal.flags = STATE.personal.flags || [];
+      if (nowFlagged) STATE.personal.flags.push(q.id); else STATE.personal.flags = STATE.personal.flags.filter((id) => id !== q.id);
+      flagBtn.textContent = nowFlagged ? '🏴 Flagged' : '🏳 Flag';
+      flagBtn.classList.toggle('primary', nowFlagged);
+    } catch (e) { toast(e.message); }
+  };
 }
 async function answerCurrentQuestion(q, choiceId) {
   const s = STATE.qSessionState;
@@ -1203,8 +1391,33 @@ document.getElementById('qExportBtn').addEventListener('click', async () => {
 /* ================= FLASHCARDS ================= */
 document.getElementById('fcAddToggle').addEventListener('click', () => { const f = document.getElementById('fcAddForm'); f.style.display = f.style.display === 'none' ? 'block' : 'none'; });
 document.getElementById('fcCancel').addEventListener('click', () => (document.getElementById('fcAddForm').style.display = 'none'));
+document.getElementById('fcClozeToggle').addEventListener('change', (e) => {
+  document.getElementById('fcNormalFields').style.display = e.target.checked ? 'none' : 'block';
+  document.getElementById('fcClozeField').style.display = e.target.checked ? 'block' : 'none';
+});
+function parseClozeText(raw) {
+  const re = /\{\{c(\d+)::(.*?)(?:::(.*?))?\}\}/gs;
+  const numbers = new Set();
+  let m;
+  while ((m = re.exec(raw))) numbers.add(m[1]);
+  return Array.from(numbers).sort((a, b) => a - b).map((num) => ({
+    front: raw.replace(/\{\{c(\d+)::(.*?)(?:::(.*?))?\}\}/gs, (full, n, answer, hint) => (n === num ? `[${hint || '…'}]` : answer)),
+    back: raw.replace(/\{\{c(\d+)::(.*?)(?:::(.*?))?\}\}/gs, (full, n, answer) => (n === num ? `**${answer}**` : answer))
+  }));
+}
 document.getElementById('fcSave').addEventListener('click', () => {
   const subjectId = document.getElementById('fcSubject').value;
+  if (document.getElementById('fcClozeToggle').checked) {
+    const raw = document.getElementById('fcClozeText').value.trim();
+    if (!raw) return toast('Add some text with {{c1::…}} cloze markers');
+    const cards = parseClozeText(raw);
+    if (!cards.length) return toast('No {{c1::…}} cloze deletions found — check the syntax');
+    cards.forEach((c) => STATE.socket.emit('flashcard:add', { subjectId, front: c.front, back: c.back }));
+    toast(`${cards.length} cloze card${cards.length === 1 ? '' : 's'} added`);
+    document.getElementById('fcClozeText').value = '';
+    document.getElementById('fcAddForm').style.display = 'none';
+    return;
+  }
   const front = document.getElementById('fcFront').value.trim();
   const back = document.getElementById('fcBack').value.trim();
   if (!front || !back) return toast('Fill in both sides of the card');
@@ -1278,8 +1491,8 @@ function renderCurrentFlashcard() {
   const card = queue[0];
   const s = subjectById(card.subjectId);
   document.getElementById('fcReviewMeta').textContent = `${queue.length} left${s ? ' · ' + s.name : ''} · ${card.srsState || 'New'}`;
-  document.getElementById('fcFrontDisplay').textContent = card.front;
-  document.getElementById('fcBackDisplay').textContent = card.back;
+  document.getElementById('fcFrontDisplay').innerHTML = renderMarkdownSafe(card.front);
+  document.getElementById('fcBackDisplay').innerHTML = renderMarkdownSafe(card.back);
   document.getElementById('fcBackDisplay').style.display = 'none';
   document.getElementById('fcFlipRow').style.display = 'flex';
   document.getElementById('fcRateRow').style.display = 'none';
@@ -1366,18 +1579,9 @@ function renderLabValues() {
 }
 document.getElementById('labSearch').addEventListener('input', renderLabValues);
 
-/* ================= GLOBAL SEARCH ================= */
-const searchInput = document.getElementById('globalSearch');
-const searchResults = document.getElementById('globalSearchResults');
-let searchTimer = null;
-searchInput.addEventListener('input', () => { clearTimeout(searchTimer); searchTimer = setTimeout(runGlobalSearch, 120); });
-searchInput.addEventListener('focus', () => { if (searchInput.value.trim()) runGlobalSearch(); });
-document.addEventListener('click', (e) => { if (!e.target.closest('.search-wrap')) searchResults.hidden = true; });
-document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { searchResults.hidden = true; searchInput.blur(); } });
-
-function runGlobalSearch() {
-  const q = searchInput.value.trim().toLowerCase();
-  if (!q) { searchResults.hidden = true; return; }
+/* ================= GLOBAL SEARCH / COMMAND PALETTE ================= */
+function buildSearchGroups(q) {
+  if (!q) return [];
   const groups = [];
 
   const subjHits = STATE.subjects.filter((s) => s.name.toLowerCase().includes(q)).slice(0, 4);
@@ -1405,14 +1609,69 @@ function runGlobalSearch() {
   const labHits = LAB_VALUES.filter((l) => l.test.toLowerCase().includes(q)).slice(0, 4);
   if (labHits.length) groups.push({ label: 'Lab values', items: labHits.map((l) => ({ text: `${l.test} — ${l.range}`, action: () => { setView('labvalues'); document.getElementById('labSearch').value = l.test; renderLabValues(); } })) });
 
-  if (!groups.length) { searchResults.innerHTML = `<div class="search-empty">No matches for "${escapeHTML(searchInput.value)}"</div>`; searchResults.hidden = false; return; }
-  searchResults.innerHTML = groups.map((g, gi) => `<div class="search-group">${g.label}</div>${g.items.map((it, ii) => `<button class="search-hit" data-hit="${gi}-${ii}">${escapeHTML(it.text)}</button>`).join('')}`).join('');
-  searchResults.querySelectorAll('[data-hit]').forEach((btn) => {
-    const [gi, ii] = btn.dataset.hit.split('-').map(Number);
-    btn.addEventListener('click', () => { groups[gi].items[ii].action(); searchResults.hidden = true; searchInput.value = ''; });
-  });
-  searchResults.hidden = false;
+  const navTargets = [
+    ['dashboard', 'Dashboard'], ['chat', 'Chat'], ['subjects', 'Subjects'], ['planner', 'Planner'],
+    ['practice', 'Practice Questions'], ['flashcards', 'Flashcards'], ['qbank', 'Q-Bank Tracker'],
+    ['pomodoro', 'Focus Timer'], ['tasks', 'My Tasks'], ['calculators', 'Calculators'],
+    ['labvalues', 'Lab Values'], ['mnemonics', 'Mnemonics'], ['resources', 'Resources']
+  ];
+  const navHits = navTargets.filter(([, label]) => label.toLowerCase().includes(q));
+  if (navHits.length) groups.push({ label: 'Go to', items: navHits.map(([view, label]) => ({ text: label, action: () => setView(view) })) });
+
+  return groups;
 }
+
+/* ---- sidebar trigger ---- */
+const searchInput = document.getElementById('globalSearch');
+searchInput.addEventListener('focus', (e) => { e.target.blur(); openCmdk(); });
+searchInput.addEventListener('click', () => openCmdk());
+
+/* ---- command palette modal ---- */
+const cmdkOverlay = document.getElementById('cmdkOverlay');
+const cmdkInput = document.getElementById('cmdkInput');
+const cmdkResultsEl = document.getElementById('cmdkResults');
+let cmdkFlat = [];
+let cmdkSel = 0;
+
+function openCmdk() {
+  if (!STATE.me) return;
+  cmdkOverlay.hidden = false;
+  cmdkInput.value = '';
+  renderCmdk('');
+  requestAnimationFrame(() => cmdkInput.focus());
+}
+function closeCmdk() { cmdkOverlay.hidden = true; }
+function renderCmdk(qRaw) {
+  const q = qRaw.trim().toLowerCase();
+  const groups = buildSearchGroups(q);
+  cmdkFlat = [];
+  groups.forEach((g) => g.items.forEach((it) => cmdkFlat.push(it)));
+  cmdkSel = 0;
+  if (!q) { cmdkResultsEl.innerHTML = `<div class="search-empty">Type to search subjects, notes, questions, flashcards, mnemonics, resources, lab values — or jump to any page.</div>`; return; }
+  if (!groups.length) { cmdkResultsEl.innerHTML = `<div class="search-empty">No matches for "${escapeHTML(qRaw)}"</div>`; return; }
+  let idx = 0;
+  cmdkResultsEl.innerHTML = groups.map((g) => `<div class="search-group">${g.label}</div>` + g.items.map((it) => `<button class="cmdk-hit" data-idx="${idx++}">${escapeHTML(it.text)}</button>`).join('')).join('');
+  cmdkResultsEl.querySelectorAll('.cmdk-hit').forEach((el) => {
+    el.addEventListener('mouseenter', () => { cmdkSel = +el.dataset.idx; highlightCmdkSel(); });
+    el.addEventListener('click', () => { cmdkFlat[+el.dataset.idx].action(); closeCmdk(); });
+  });
+  highlightCmdkSel();
+}
+function highlightCmdkSel() {
+  cmdkResultsEl.querySelectorAll('.cmdk-hit').forEach((el) => el.classList.toggle('sel', +el.dataset.idx === cmdkSel));
+  const sel = cmdkResultsEl.querySelector('.cmdk-hit.sel');
+  if (sel) sel.scrollIntoView({ block: 'nearest' });
+}
+cmdkInput.addEventListener('input', () => renderCmdk(cmdkInput.value));
+cmdkOverlay.addEventListener('mousedown', (e) => { if (e.target === cmdkOverlay) closeCmdk(); });
+document.addEventListener('keydown', (e) => {
+  if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') { e.preventDefault(); cmdkOverlay.hidden ? openCmdk() : closeCmdk(); return; }
+  if (cmdkOverlay.hidden) return;
+  if (e.key === 'Escape') closeCmdk();
+  else if (e.key === 'ArrowDown') { e.preventDefault(); if (cmdkFlat.length) { cmdkSel = (cmdkSel + 1) % cmdkFlat.length; highlightCmdkSel(); } }
+  else if (e.key === 'ArrowUp') { e.preventDefault(); if (cmdkFlat.length) { cmdkSel = (cmdkSel - 1 + cmdkFlat.length) % cmdkFlat.length; highlightCmdkSel(); } }
+  else if (e.key === 'Enter') { e.preventDefault(); const hit = cmdkFlat[cmdkSel]; if (hit) { hit.action(); closeCmdk(); } }
+});
 
 /* ================= RENDER ALL ================= */
 function renderAll() {

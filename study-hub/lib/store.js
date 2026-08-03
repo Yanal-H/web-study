@@ -77,12 +77,14 @@ function ensurePersonal(userId) {
       planner: { blocks: ['Morning', 'Midday', 'Afternoon', 'Evening', 'Night'], cells: {}, exams: [] },
       qbank: [],
       qAnswers: [],
-      srs: {}
+      srs: {},
+      flags: []
     };
   }
   const p = db.personal[userId];
   if (!p.qAnswers) p.qAnswers = [];
   if (!p.srs) p.srs = {};
+  if (!p.flags) p.flags = [];
   return p;
 }
 function ensureProgress(userId) {

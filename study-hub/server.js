@@ -254,6 +254,29 @@ app.get('/api/questions/export', requireAuth, (req, res) => {
   res.json({ questions: store.db.questions });
 });
 
+app.get('/api/subjects/:id/history', requireAuth, (req, res) => {
+  const subject = store.db.subjects.find((s) => s.id === req.params.id);
+  if (!subject) return res.status(404).json({ error: 'Not found' });
+  const withIndex = (subject.notesHistory || []).map((h, index) => ({ ...h, index }));
+  res.json({ history: withIndex.reverse() });
+});
+app.post('/api/subjects/:id/restore', requireAuth, (req, res) => {
+  const subject = store.db.subjects.find((s) => s.id === req.params.id);
+  if (!subject) return res.status(404).json({ error: 'Not found' });
+  const idx = (req.body || {}).index;
+  const entry = subject.notesHistory && subject.notesHistory[idx];
+  if (!entry) return res.status(400).json({ error: 'Invalid version' });
+  if (!subject.notesHistory) subject.notesHistory = [];
+  subject.notesHistory.push({ text: subject.notes, authorName: subject.notesUpdatedBy || 'Unknown', ts: subject.notesUpdatedAt || Date.now() });
+  if (subject.notesHistory.length > 20) subject.notesHistory.shift();
+  subject.notes = entry.text;
+  subject.notesUpdatedBy = `${req.user.username} (restored)`;
+  subject.notesUpdatedAt = Date.now();
+  persist();
+  io.to('subject:' + subject.id).emit('note:updated', { subjectId: subject.id, text: subject.notes, updatedBy: subject.notesUpdatedBy, updatedAt: subject.notesUpdatedAt });
+  res.json({ ok: true, notes: subject.notes, notesUpdatedBy: subject.notesUpdatedBy, notesUpdatedAt: subject.notesUpdatedAt });
+});
+
 app.post('/api/questions/:id/answer', requireAuth, (req, res) => {
   const q = store.db.questions.find((x) => x.id === req.params.id);
   if (!q) return res.status(404).json({ error: 'Not found' });
@@ -264,6 +287,17 @@ app.post('/api/questions/:id/answer', requireAuth, (req, res) => {
   if (p.qAnswers.length > 3000) p.qAnswers.length = 3000;
   persist();
   res.json({ correct, correctChoiceId: q.correctChoiceId, explanation: q.explanation });
+});
+
+app.post('/api/questions/:id/flag', requireAuth, (req, res) => {
+  const q = store.db.questions.find((x) => x.id === req.params.id);
+  if (!q) return res.status(404).json({ error: 'Not found' });
+  const p = ensurePersonal(req.user.id);
+  const idx = p.flags.indexOf(q.id);
+  let flagged;
+  if (idx === -1) { p.flags.push(q.id); flagged = true; } else { p.flags.splice(idx, 1); flagged = false; }
+  persist();
+  res.json({ flagged });
 });
 
 app.get('/api/srs/due', requireAuth, (req, res) => {
@@ -471,9 +505,17 @@ io.on('connection', (socket) => {
   socket.on('note:update', ({ subjectId, text }) => {
     const subject = store.db.subjects.find((s) => s.id === subjectId);
     if (!subject || typeof text !== 'string') return;
+    if (!subject.notesHistory) subject.notesHistory = [];
+    const now = Date.now();
+    const lastSnap = subject.notesHistory[subject.notesHistory.length - 1];
+    const staleEnough = !subject.notesUpdatedAt || now - subject.notesUpdatedAt > 60000;
+    if (subject.notes && subject.notes.trim() && subject.notes !== text && staleEnough && (!lastSnap || lastSnap.text !== subject.notes)) {
+      subject.notesHistory.push({ text: subject.notes, authorName: subject.notesUpdatedBy || 'Unknown', ts: subject.notesUpdatedAt || now });
+      if (subject.notesHistory.length > 20) subject.notesHistory.shift();
+    }
     subject.notes = text.slice(0, 20000);
     subject.notesUpdatedBy = user.username;
-    subject.notesUpdatedAt = Date.now();
+    subject.notesUpdatedAt = now;
     persist();
     socket.to('subject:' + subjectId).emit('note:updated', { subjectId, text: subject.notes, updatedBy: user.username, updatedAt: subject.notesUpdatedAt });
   });
@@ -605,6 +647,10 @@ io.on('connection', (socket) => {
     if (!q) return;
     if (q.authorId !== user.id && user.role !== 'admin') return;
     store.db.questions = store.db.questions.filter((x) => x.id !== id);
+    for (const uidKey of Object.keys(store.db.personal)) {
+      const idx = store.db.personal[uidKey].flags.indexOf(id);
+      if (idx !== -1) store.db.personal[uidKey].flags.splice(idx, 1);
+    }
     persist();
     io.emit('question:deleted', { id });
   });

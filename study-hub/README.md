@@ -77,6 +77,27 @@ invite code, which the admin generates from **Manage → Invites**.
 - **Study streak heatmap** — a GitHub-style contribution calendar on the
   dashboard, built from your pomodoro sessions, Q-bank log entries, practice
   question answers, and flashcard reviews.
+- **Command palette (Ctrl/Cmd+K)** — search subjects, topics, notes,
+  mnemonics, resources, questions, flashcards, lab values, or jump straight
+  to any page, all from one keyboard-driven modal.
+- **@mentions in chat** — type `@` for an autocomplete dropdown; mentioning
+  someone highlights it in the message and pings them with a toast even if
+  they're in a different room or view. Unread messages show a badge on the
+  Chat nav item and a per-room counter in the room list.
+- **Notes version history** — the collaborative notes wiki now snapshots
+  itself periodically as people edit, so a bad edit is never destructive.
+  Open **History** on any subject's notes to preview or restore an earlier
+  version (the current text is saved first, so restoring never loses work).
+- **Timed practice + flag for review** — toggle "Timed mode" before a
+  practice session for a running clock (UWorld-style), and flag any
+  question mid-session to revisit later via a "Flagged for review" pool
+  filter.
+- **Cloze-deletion flashcards** — toggle "Cloze deletion" in the card form
+  and write `{{c1::answer}}` Anki-style; one note automatically becomes one
+  card per blank, each hiding that piece while revealing the rest.
+- **Personal accuracy trend chart** — a 14-day bar+line chart on the
+  dashboard showing daily practice volume and accuracy, next to the
+  weak/strong subject breakdown.
 - **Eight color themes, and a live-feeling UI** — Midnight, Aurora, Sunset,
   Forest, Neon, Bloom, Ocean, and Paper, each a deliberate 3-color accent
   chord rather than a re-tinted default. On top of that: a slowly drifting

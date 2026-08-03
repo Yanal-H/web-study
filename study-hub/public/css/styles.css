@@ -339,6 +339,7 @@ tr:last-child td{border-bottom:none}
 .chat-room-btn{display:flex;align-items:center;gap:8px;padding:9px 10px;border-radius:10px;font-size:.83rem;font-weight:600;color:var(--text-2);text-align:left}
 .chat-room-btn:hover{background:var(--surface-2)}
 .chat-room-btn.active{background:var(--grad-brand);color:#0b0d17}
+.room-unread{margin-left:auto;background:var(--danger);color:#fff;font-size:.65rem;font-weight:800;border-radius:99px;padding:1px 6px;min-width:16px;text-align:center}
 .chat-panel{display:flex;flex-direction:column;min-height:0}
 .chat-head{display:flex;align-items:center;justify-content:space-between;padding-bottom:10px;border-bottom:1px solid var(--line-soft);margin-bottom:10px}
 .chat-presence{display:flex;gap:-6px}
@@ -348,6 +349,11 @@ tr:last-child td{border-bottom:none}
 .msg.mine{align-self:flex-end;flex-direction:row-reverse}
 .msg .avatar{width:28px;height:28px;font-size:.68rem;flex:none}
 .msg .bubble{background:var(--surface-2);border:1px solid var(--line-soft);border-radius:14px;padding:8px 12px;font-size:.86rem}
+.msg.mentions-me .bubble{border-color:var(--brand);box-shadow:0 0 0 1px var(--brand)}
+.mention{color:var(--brand);font-weight:700;background:var(--brand)1a;border-radius:5px;padding:0 3px}
+.mention-menu{position:absolute;bottom:calc(100% + 6px);left:0;width:220px;max-height:220px;overflow-y:auto;background:var(--bg-1);border:1px solid var(--line-2);border-radius:12px;box-shadow:var(--shadow-lg);z-index:60;padding:6px}
+.mention-item{display:flex;align-items:center;gap:8px;width:100%;text-align:left;padding:7px 9px;border-radius:8px;font-size:.83rem;color:var(--text-2)}
+.mention-item.sel{background:var(--surface-2);color:var(--text)}
 .msg.mine .bubble{background:var(--grad-brand);color:#0b0d17;border-color:transparent}
 .msg .meta{font-size:.66rem;color:var(--muted);margin-bottom:2px;font-weight:700}
 .msg.mine .meta{text-align:right}
@@ -394,15 +400,23 @@ tr:last-child td{border-bottom:none}
 .admin-view.active{display:block}
 .invite-code{font-family:'JetBrains Mono',monospace;font-weight:700;letter-spacing:.05em;font-size:.9rem}
 
-/* ---- GLOBAL SEARCH ---- */
-.search-wrap{position:relative;margin-bottom:12px}
-.search-input{font-size:.82rem;padding:8px 12px}
-.search-results{position:absolute;top:calc(100% + 6px);left:0;right:0;max-height:60vh;overflow-y:auto;background:var(--bg-1);border:1px solid var(--line-2);border-radius:12px;box-shadow:var(--shadow-lg);z-index:60;padding:6px}
+/* ---- GLOBAL SEARCH TRIGGER + COMMAND PALETTE ---- */
+.search-wrap{position:relative;margin-bottom:12px;display:flex;align-items:center}
+.search-input{font-size:.82rem;padding:8px 34px 8px 12px;cursor:pointer}
+.search-kbd{position:absolute;right:8px;font-size:.66rem;color:var(--muted);border:1px solid var(--line);border-radius:5px;padding:1px 5px;font-family:'JetBrains Mono',monospace;pointer-events:none}
 .search-group{padding:6px 8px 2px;font-size:.66rem;text-transform:uppercase;letter-spacing:.07em;color:var(--faint);font-weight:700}
-.search-hit{display:block;width:100%;text-align:left;padding:7px 8px;border-radius:8px;font-size:.8rem;color:var(--text-2)}
-.search-hit:hover{background:var(--surface-2);color:var(--text)}
-.search-hit b{color:var(--brand)}
-.search-empty{padding:14px 10px;font-size:.8rem;color:var(--muted);text-align:center}
+.search-empty{padding:22px 14px;font-size:.83rem;color:var(--muted);text-align:center;line-height:1.6}
+
+.cmdk-overlay{position:fixed;inset:0;z-index:150;background:#000000b3;backdrop-filter:blur(3px);display:flex;align-items:flex-start;justify-content:center;padding-top:12vh}
+.cmdk-modal{width:min(600px,92vw);max-height:68vh;background:var(--bg-1);border:1px solid var(--line-2);border-radius:16px;box-shadow:var(--shadow-lg);overflow:hidden;display:flex;flex-direction:column;animation:cmdkIn .18s var(--spring)}
+@keyframes cmdkIn{from{opacity:0;transform:translateY(-10px) scale(.97)}to{opacity:1;transform:none}}
+.cmdk-input-row{display:flex;align-items:center;gap:10px;padding:15px 16px;border-bottom:1px solid var(--line-soft);flex:none}
+.cmdk-input{flex:1;background:none;border:none;font-size:1rem;color:var(--text);outline:none}
+.cmdk-input::placeholder{color:var(--faint)}
+.cmdk-esc{font-size:.68rem;color:var(--muted);border:1px solid var(--line);border-radius:5px;padding:2px 6px;font-family:'JetBrains Mono',monospace;flex:none}
+.cmdk-results{overflow-y:auto;padding:8px}
+.cmdk-hit{display:block;width:100%;text-align:left;padding:10px 12px;border-radius:10px;font-size:.87rem;color:var(--text-2);transition:background .1s}
+.cmdk-hit.sel{background:var(--grad-brand);color:#0b0d17;font-weight:600}
 
 /* ---- PRACTICE QUESTIONS ---- */
 .choice-btn{display:flex;align-items:center;gap:10px;width:100%;text-align:left;padding:11px 14px;border-radius:12px;background:var(--surface-2);border:1.5px solid var(--line-soft);font-size:.87rem;transition:border-color .15s,background .15s}
