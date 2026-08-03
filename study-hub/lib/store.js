@@ -18,7 +18,9 @@ function defaultDB() {
     messages: [],
     mnemonics: [],
     resources: [],
-    personal: {}, // userId -> { tasks:[], pomodoro:{focus,short,long,sessions:[]}, planner:{blocks,cells}, qbank:[] }
+    questions: [],   // {id, subjectId, stem, choices:[{id,text}], correctChoiceId, explanation, tags:[], authorId, authorName, createdAt}
+    flashcards: [],  // {id, subjectId, front, back, authorId, authorName, createdAt}
+    personal: {}, // userId -> { tasks, pomodoro, planner, qbank, qAnswers, srs }
     progress: {}  // userId -> { [topicId]: true }
   };
 }
@@ -70,14 +72,36 @@ function ensurePersonal(userId) {
       tasks: [],
       pomodoro: { focus: 25, short: 5, long: 15, sessions: [] },
       planner: { blocks: ['Morning', 'Midday', 'Afternoon', 'Evening', 'Night'], cells: {}, exams: [] },
-      qbank: []
+      qbank: [],
+      qAnswers: [],
+      srs: {}
     };
   }
-  return db.personal[userId];
+  const p = db.personal[userId];
+  if (!p.qAnswers) p.qAnswers = [];
+  if (!p.srs) p.srs = {};
+  return p;
 }
 function ensureProgress(userId) {
   if (!db.progress[userId]) db.progress[userId] = {};
   return db.progress[userId];
+}
+
+/* ---- spaced repetition (simplified SM-2) ---- */
+function reviewCard(prev, rating) {
+  let { ease, interval, reps } = prev || { ease: 2.5, interval: 0, reps: 0 };
+  if (rating === 'again') {
+    reps = 0; interval = 0; ease = Math.max(1.3, ease - 0.2);
+  } else {
+    reps += 1;
+    if (rating === 'hard') { ease = Math.max(1.3, ease - 0.15); interval = Math.max(1, Math.round((interval || 1) * 1.2)); }
+    else if (rating === 'good') { interval = reps === 1 ? 1 : reps === 2 ? 6 : Math.round((interval || 1) * ease); }
+    else if (rating === 'easy') { ease = ease + 0.15; interval = reps === 1 ? 4 : Math.round((interval || 1) * ease * 1.3); }
+  }
+  interval = Math.max(rating === 'again' ? 0 : 1, interval);
+  const now = Date.now();
+  const dueInMs = rating === 'again' ? 60 * 1000 : interval * 86400000;
+  return { ease, interval, reps, due: now + dueInMs, lastReviewed: now };
 }
 
 /* ---- invites ---- */
@@ -95,5 +119,6 @@ module.exports = {
   publicUser,
   ensurePersonal,
   ensureProgress,
-  makeInviteCode
+  makeInviteCode,
+  reviewCard
 };

@@ -1,10 +1,16 @@
 # Study Hub
 
-A real-time, invite-only study platform for a med school group: shared subjects
-with a community topic checklist, live group chat (global + one room per
-subject), a collaborative notes wiki per subject that everyone edits together,
-a shared mnemonics vault, a shared resource link vault, a group Q-bank
-leaderboard, personal tools (planner, pomodoro timer, task list, clinical
+A real-time, invite-only study platform for a med school group, built to cover
+the same ground as AMBOSS/UWorld (question bank), Anki (spaced-repetition
+flashcards), and a shared study wiki — plus the collaboration those don't do:
+shared subjects with a community topic checklist, live group chat (global +
+one room per subject), a collaborative notes wiki per subject that everyone
+edits together, a **community question bank** with tutor-mode instant
+feedback, **spaced-repetition flashcards** (SM-2-style scheduling per
+learner), a **lab values quick reference**, **global search** across
+everything, a shared mnemonics vault, a shared resource link vault, a group
+Q-bank leaderboard, a **study streak heatmap** and weak/strong subject
+breakdown, personal tools (planner, pomodoro timer, task list, clinical
 calculators), and an admin panel to manage members, invites, and moderation.
 
 No build step, no external database — it's a single Node.js process with a
@@ -39,6 +45,26 @@ invite code, which the admin generates from **Manage → Invites**.
     note — Load latest" banner instead of a silent overwrite.
   - Presence: each room tracks who's currently in it; the sidebar shows a
     live "N studying now" count across the whole hub.
+- **Question bank** — anyone can write a multiple-choice question (stem, 2–6
+  choices, explanation, tags). Practicing is tutor-mode: answer, see the
+  correct choice highlighted immediately with the explanation, then move on.
+  Filter a practice session by subject and by "unanswered only" or
+  "previously missed" to focus review. Every answer feeds personal accuracy
+  stats (dashboard "Readiness estimate" and the per-subject weak/strong
+  breakdown) — correct answers/explanations are only sent to the client
+  *after* you submit an answer, so browsing the question list doesn't spoil it.
+- **Flashcards** — community-created front/back cards per subject, reviewed
+  with a simplified SM-2 spaced-repetition scheduler (own due dates per
+  learner, independent of who wrote the card). "Again" brings a card back in
+  a minute; "Easy" pushes it out multiplicatively. The sidebar badge shows
+  how many cards are due right now.
+- **Lab values & search** — a static, searchable reference table of standard
+  normal ranges, plus a sidebar search box that does an instant, client-side
+  search across subjects, topics, notes, mnemonics, resources, questions,
+  flashcards, and lab values, and jumps you straight to the hit.
+- **Study streak heatmap** — a GitHub-style contribution calendar on the
+  dashboard, built from your pomodoro sessions, Q-bank log entries, practice
+  question answers, and flashcard reviews.
 - **Data** — a small hand-rolled JSON-file store (`lib/store.js`,
   `data/db.json`), atomic-write on every mutation. No native dependencies,
   so `npm install` never needs a compiler. Fine for a study group's scale;

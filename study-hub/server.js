@@ -8,7 +8,7 @@ const http = require('http');
 const { Server } = require('socket.io');
 
 const store = require('./lib/store');
-const { uid, COLORS, persist, findUserByUsername, findUserById, publicUser, ensurePersonal, ensureProgress, makeInviteCode } = store;
+const { uid, COLORS, persist, findUserByUsername, findUserById, publicUser, ensurePersonal, ensureProgress, makeInviteCode, reviewCard } = store;
 
 const PORT = process.env.PORT || 3000;
 const SESSION_SECRET = process.env.SESSION_SECRET || crypto.randomBytes(32).toString('hex');
@@ -60,6 +60,9 @@ function topicPayload(subject, topic, userId) {
     totalUsers: activeUserCount(),
     mine: !!(userId && progress[userId] && progress[userId][topic.id])
   };
+}
+function safeQuestion(q) {
+  return { id: q.id, subjectId: q.subjectId, stem: q.stem, choices: q.choices, tags: q.tags, authorId: q.authorId, authorName: q.authorName, createdAt: q.createdAt };
 }
 function subjectPayload(subject, userId) {
   return {
@@ -142,6 +145,8 @@ app.get('/api/state', requireAuth, (req, res) => {
     subjects: store.db.subjects.map((s) => subjectPayload(s, req.user.id)),
     mnemonics: store.db.mnemonics,
     resources: store.db.resources,
+    questions: store.db.questions.map(safeQuestion),
+    flashcards: store.db.flashcards,
     users: store.db.users.filter((u) => !u.banned).map(publicUser)
   });
 });
@@ -243,6 +248,38 @@ app.delete('/api/qbank/:id', requireAuth, (req, res) => {
   res.json({ ok: true });
 });
 
+app.post('/api/questions/:id/answer', requireAuth, (req, res) => {
+  const q = store.db.questions.find((x) => x.id === req.params.id);
+  if (!q) return res.status(404).json({ error: 'Not found' });
+  const choiceId = (req.body || {}).choiceId;
+  const correct = choiceId === q.correctChoiceId;
+  const p = ensurePersonal(req.user.id);
+  p.qAnswers.unshift({ id: uid('qa'), questionId: q.id, subjectId: q.subjectId, choiceId, correct, ts: Date.now() });
+  if (p.qAnswers.length > 3000) p.qAnswers.length = 3000;
+  persist();
+  res.json({ correct, correctChoiceId: q.correctChoiceId, explanation: q.explanation });
+});
+
+app.get('/api/srs/due', requireAuth, (req, res) => {
+  const p = ensurePersonal(req.user.id);
+  const now = Date.now();
+  const due = store.db.flashcards.filter((c) => {
+    const s = p.srs[c.id];
+    return !s || s.due <= now;
+  });
+  res.json({ due: due.map((c) => ({ ...c, srs: p.srs[c.id] || null })), totalCards: store.db.flashcards.length, dueCount: due.length });
+});
+app.post('/api/srs/review', requireAuth, (req, res) => {
+  const { cardId, rating } = req.body || {};
+  const card = store.db.flashcards.find((c) => c.id === cardId);
+  if (!card) return res.status(404).json({ error: 'Not found' });
+  if (!['again', 'hard', 'good', 'easy'].includes(rating)) return res.status(400).json({ error: 'Invalid rating' });
+  const p = ensurePersonal(req.user.id);
+  p.srs[cardId] = reviewCard(p.srs[cardId], rating);
+  persist();
+  res.json({ srs: p.srs[cardId] });
+});
+
 /* ================= ADMIN ================= */
 app.get('/api/admin/users', requireAdmin, (req, res) => {
   res.json({ users: store.db.users.map(publicUser) });
@@ -310,7 +347,9 @@ app.get('/api/admin/stats', requireAdmin, (req, res) => {
       messages: store.db.messages.length,
       mnemonics: store.db.mnemonics.length,
       resources: store.db.resources.length,
-      qbankEntries: Object.values(store.db.personal).reduce((a, p) => a + p.qbank.length, 0)
+      qbankEntries: Object.values(store.db.personal).reduce((a, p) => a + p.qbank.length, 0),
+      questions: store.db.questions.length,
+      flashcards: store.db.flashcards.length
     }
   });
 });
@@ -330,9 +369,12 @@ app.delete('/api/admin/messages/:id', requireAdmin, (req, res) => {
 });
 
 app.delete('/api/admin/subjects/:id', requireAdmin, (req, res) => {
-  store.db.subjects = store.db.subjects.filter((s) => s.id !== req.params.id);
+  const id = req.params.id;
+  store.db.subjects = store.db.subjects.filter((s) => s.id !== id);
+  store.db.questions = store.db.questions.filter((q) => q.subjectId !== id);
+  store.db.flashcards = store.db.flashcards.filter((c) => c.subjectId !== id);
   persist();
-  io.emit('subject:deleted', { id: req.params.id });
+  io.emit('subject:deleted', { id });
   res.json({ ok: true });
 });
 
@@ -497,6 +539,56 @@ io.on('connection', (socket) => {
     store.db.resources = store.db.resources.filter((x) => x.id !== id);
     persist();
     io.emit('resource:deleted', { id });
+  });
+
+  socket.on('question:add', ({ subjectId, stem, choices, correctIndex, explanation, tags }) => {
+    const cleanStem = String(stem || '').trim().slice(0, 1000);
+    const cleanChoices = Array.isArray(choices) ? choices.map((c) => String(c || '').trim().slice(0, 300)).filter(Boolean) : [];
+    if (!cleanStem || cleanChoices.length < 2 || cleanChoices.length > 6) return;
+    const idx = +correctIndex;
+    if (!(idx >= 0 && idx < cleanChoices.length)) return;
+    const choiceObjs = cleanChoices.map((text) => ({ id: uid('c'), text }));
+    const q = {
+      id: uid('q'),
+      subjectId: subjectId || null,
+      stem: cleanStem,
+      choices: choiceObjs,
+      correctChoiceId: choiceObjs[idx].id,
+      explanation: String(explanation || '').trim().slice(0, 2000),
+      tags: Array.isArray(tags) ? tags.map((t) => String(t).trim().slice(0, 30)).filter(Boolean).slice(0, 6) : [],
+      authorId: user.id,
+      authorName: user.username,
+      createdAt: Date.now()
+    };
+    store.db.questions.push(q);
+    persist();
+    io.emit('question:added', { question: safeQuestion(q) });
+  });
+  socket.on('question:delete', ({ id }) => {
+    const q = store.db.questions.find((x) => x.id === id);
+    if (!q) return;
+    if (q.authorId !== user.id && user.role !== 'admin') return;
+    store.db.questions = store.db.questions.filter((x) => x.id !== id);
+    persist();
+    io.emit('question:deleted', { id });
+  });
+
+  socket.on('flashcard:add', ({ subjectId, front, back }) => {
+    const f = String(front || '').trim().slice(0, 500), b = String(back || '').trim().slice(0, 1000);
+    if (!f || !b) return;
+    const card = { id: uid('fc'), subjectId: subjectId || null, front: f, back: b, authorId: user.id, authorName: user.username, createdAt: Date.now() };
+    store.db.flashcards.push(card);
+    persist();
+    io.emit('flashcard:added', { card });
+  });
+  socket.on('flashcard:delete', ({ id }) => {
+    const c = store.db.flashcards.find((x) => x.id === id);
+    if (!c) return;
+    if (c.authorId !== user.id && user.role !== 'admin') return;
+    store.db.flashcards = store.db.flashcards.filter((x) => x.id !== id);
+    for (const uidKey of Object.keys(store.db.personal)) delete store.db.personal[uidKey].srs[id];
+    persist();
+    io.emit('flashcard:deleted', { id });
   });
 
   socket.on('pomodoro:complete', ({ minutes, subjectId }) => {

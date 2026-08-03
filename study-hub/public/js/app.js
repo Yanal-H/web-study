@@ -54,15 +54,20 @@ const STATE = {
   subjects: [],
   mnemonics: [],
   resources: [],
+  questions: [],
+  flashcards: [],
   users: [],
-  personal: { tasks: [], pomodoro: { focus: 25, short: 5, long: 15, sessions: [] }, planner: { blocks: [], cells: {}, exams: [] }, qbank: [] },
+  personal: { tasks: [], pomodoro: { focus: 25, short: 5, long: 15, sessions: [] }, planner: { blocks: [], cells: {}, exams: [] }, qbank: [], qAnswers: [], srs: {} },
   qbank: [],
+  srsDue: { due: [], totalCards: 0, dueCount: 0 },
   activity: [],
   currentView: 'dashboard',
   currentSubjectId: null,
   activeChatRoom: null,
   joinedRoom: null,
-  socket: null
+  socket: null,
+  qSessionState: null,
+  fcQueue: null
 };
 
 /* ================= THEME ================= */
@@ -148,6 +153,8 @@ async function bootApp() {
   STATE.subjects = state.subjects;
   STATE.mnemonics = state.mnemonics;
   STATE.resources = state.resources;
+  STATE.questions = state.questions;
+  STATE.flashcards = state.flashcards;
   STATE.users = state.users;
   STATE.me = state.me;
   STATE.personal = personalRes.personal;
@@ -164,6 +171,7 @@ async function bootApp() {
   renderAll();
   setView('dashboard');
   loadQBank();
+  loadSrsDue();
 }
 
 (async function initial() {
@@ -257,6 +265,11 @@ function connectSocket() {
   socket.on('resource:added', ({ resource }) => { STATE.resources.unshift(resource); if (STATE.currentView === 'resources') renderResources(); });
   socket.on('resource:deleted', ({ id }) => { STATE.resources = STATE.resources.filter((r) => r.id !== id); if (STATE.currentView === 'resources') renderResources(); });
 
+  socket.on('question:added', ({ question }) => { STATE.questions.push(question); document.getElementById('cnt-questions').textContent = STATE.questions.length; if (STATE.currentView === 'practice') { renderQuestionList(); populateQFilterSubjects(); } });
+  socket.on('question:deleted', ({ id }) => { STATE.questions = STATE.questions.filter((q) => q.id !== id); document.getElementById('cnt-questions').textContent = STATE.questions.length; if (STATE.currentView === 'practice') renderQuestionList(); });
+  socket.on('flashcard:added', ({ card }) => { STATE.flashcards.push(card); if (STATE.currentView === 'flashcards') renderFlashcardList(); loadSrsDue(); });
+  socket.on('flashcard:deleted', ({ id }) => { STATE.flashcards = STATE.flashcards.filter((c) => c.id !== id); if (STATE.currentView === 'flashcards') renderFlashcardList(); loadSrsDue(); });
+
   socket.on('activity:feed', (item) => {
     STATE.activity.unshift(item);
     if (STATE.activity.length > 60) STATE.activity.length = 60;
@@ -277,7 +290,7 @@ function switchRoom(room) {
 }
 
 /* ================= NAV / ROUTING ================= */
-const VIEWS = ['dashboard', 'chat', 'subjects', 'notes', 'planner', 'qbank', 'pomodoro', 'tasks', 'calculators', 'mnemonics', 'resources', 'admin'];
+const VIEWS = ['dashboard', 'chat', 'subjects', 'notes', 'planner', 'practice', 'flashcards', 'qbank', 'pomodoro', 'tasks', 'calculators', 'labvalues', 'mnemonics', 'resources', 'admin'];
 function setView(name) {
   if (!VIEWS.includes(name)) name = 'dashboard';
   STATE.currentView = name;
@@ -290,6 +303,7 @@ function setView(name) {
   if (name === 'chat') { renderChatRooms(); openChatRoom(STATE.activeChatRoom || 'global'); }
   if (name === 'admin') { loadAdminAll(); }
   if (name === 'qbank') loadQBank();
+  if (name === 'labvalues') renderLabValues();
 }
 document.querySelectorAll('.navitem[data-view]').forEach((b) => b.addEventListener('click', () => setView(b.dataset.view)));
 document.getElementById('menuToggle').addEventListener('click', () => document.getElementById('sidebar').classList.add('open'));
@@ -305,19 +319,67 @@ function renderDashboard() {
   const todaySessions = STATE.personal.pomodoro.sessions.filter((s) => s.date === todayStr());
   const todayMin = todaySessions.reduce((a, s) => a + s.minutes, 0);
 
+  const qAnswers = STATE.personal.qAnswers || [];
+  const readiness = qAnswers.length ? Math.round((qAnswers.filter((a) => a.correct).length / qAnswers.length) * 100) : null;
+
   const stats = [
     { label: 'Members online', value: document.getElementById('onlineCount').textContent, icon: ICONS.chat, color: 'var(--good)' },
     { label: 'Subjects', value: STATE.subjects.length, icon: ICONS.book, color: 'var(--brand)' },
     { label: 'My topics done', value: `${myDone}/${totalTopics}`, icon: ICONS.check, color: 'var(--brand-3)' },
-    { label: 'My focus today', value: `${todayMin}m`, icon: ICONS.clock, color: 'var(--info)' }
+    { label: 'My focus today', value: `${todayMin}m`, icon: ICONS.clock, color: 'var(--info)' },
+    { label: 'Readiness estimate', value: readiness === null ? '—' : readiness + '%', icon: ICONS.target, color: readiness === null ? 'var(--muted)' : readiness >= 75 ? 'var(--good)' : readiness >= 55 ? 'var(--warn)' : 'var(--danger)' }
   ];
   document.getElementById('dashStats').innerHTML = stats.map((s) => `
     <div class="card stat-card"><div class="ico" style="background:${s.color}22;color:${s.color}">${s.icon}</div><div><div class="num">${s.value}</div><div class="lbl">${s.label}</div></div></div>`).join('');
 
   renderActivityFeed('activityFeed');
-  const nav = [['subjects', 'Subjects', ICONS.book], ['chat', 'Chat', ICONS.chat], ['qbank', 'Q-Bank', ICONS.target], ['pomodoro', 'Focus Timer', ICONS.clock]];
+  renderStreakHeatmap();
+  renderWeakSubjects();
+  const nav = [['subjects', 'Subjects', ICONS.book], ['practice', 'Practice Qs', ICONS.target], ['flashcards', 'Flashcards', ICONS.book], ['chat', 'Chat', ICONS.chat]];
   document.getElementById('quickNav').innerHTML = nav.map(([v, l, i]) => `<button class="btn" data-jump="${v}" style="justify-content:flex-start">${i}${l}</button>`).join('');
   document.querySelectorAll('[data-jump]').forEach((b) => b.addEventListener('click', () => setView(b.dataset.jump)));
+}
+
+/* ---- streak heatmap ---- */
+function renderStreakHeatmap() {
+  const counts = {};
+  const bump = (dateStr) => { if (dateStr) counts[dateStr] = (counts[dateStr] || 0) + 1; };
+  (STATE.personal.pomodoro.sessions || []).forEach((s) => bump(s.date));
+  (STATE.personal.qbank || []).forEach((q) => bump(q.date));
+  (STATE.personal.qAnswers || []).forEach((a) => bump(todayStr(new Date(a.ts))));
+  Object.values(STATE.personal.srs || {}).forEach((s) => bump(todayStr(new Date(s.lastReviewed))));
+
+  const days = 126;
+  const today = new Date();
+  const cells = [];
+  for (let i = days - 1; i >= 0; i--) {
+    const d = new Date(today); d.setDate(d.getDate() - i);
+    const key = todayStr(d);
+    const c = counts[key] || 0;
+    const level = c === 0 ? 0 : c <= 1 ? 1 : c <= 3 ? 2 : c <= 6 ? 3 : 4;
+    cells.push({ key, level, c });
+  }
+  document.getElementById('streakHeatmap').innerHTML = cells.map((c) => `<span class="heatmap-cell" data-level="${c.level}" title="${c.key}: ${c.c} ${c.c === 1 ? 'activity' : 'activities'}"></span>`).join('');
+  const first = cells[0].key, last = cells[cells.length - 1].key;
+  document.getElementById('heatmapRange').textContent = `${first} → ${last}`;
+}
+
+/* ---- weak/strong subjects ---- */
+function renderWeakSubjects() {
+  const bySubj = {};
+  (STATE.personal.qAnswers || []).forEach((a) => {
+    if (!a.subjectId) return;
+    bySubj[a.subjectId] = bySubj[a.subjectId] || { total: 0, correct: 0 };
+    bySubj[a.subjectId].total++;
+    if (a.correct) bySubj[a.subjectId].correct++;
+  });
+  const rows = Object.entries(bySubj).filter(([, d]) => d.total >= 3).map(([sid, d]) => ({ subject: subjectById(sid), pct: Math.round((d.correct / d.total) * 100), total: d.total })).filter((r) => r.subject).sort((a, b) => a.pct - b.pct);
+  const wrap = document.getElementById('weakSubjects');
+  if (!rows.length) { wrap.innerHTML = `<div class="empty">Answer a few practice questions to see your strong and weak subjects here.</div>`; return; }
+  wrap.innerHTML = rows.slice(0, 8).map((r) => {
+    const color = r.pct < 60 ? 'var(--danger)' : r.pct < 80 ? 'var(--warn)' : 'var(--good)';
+    return `<div class="weak-row"><span class="dot" style="background:${r.subject.color}"></span><span class="name">${escapeHTML(r.subject.name)}</span><span class="muted mono" style="font-size:.72rem">${r.total} answered</span><span class="acc" style="background:${color}22;color:${color}">${r.pct}%</span></div>`;
+  }).join('');
 }
 function renderActivityFeed(elId) {
   const wrap = document.getElementById(elId);
@@ -458,8 +520,17 @@ function refreshSubjectDependents() {
   document.getElementById('qbSubject').innerHTML = subjectOptionsHTML();
   document.getElementById('pomoSubject').innerHTML = subjectOptionsHTML();
   document.getElementById('mnemoSubject').innerHTML = subjectOptionsHTML();
+  document.getElementById('qSubject').innerHTML = subjectOptionsHTML();
+  document.getElementById('fcSubject').innerHTML = subjectOptionsHTML();
+  populateQFilterSubjects();
   renderChatRooms();
   renderDashboard();
+}
+function populateQFilterSubjects() {
+  const sel = document.getElementById('qFilterSubject');
+  const current = sel.value;
+  sel.innerHTML = '<option value="">All subjects</option>' + subjectOptionsHTML();
+  sel.value = current;
 }
 function subjectOptionsHTML(selectedId) {
   return STATE.subjects.map((s) => `<option value="${s.id}" ${s.id === selectedId ? 'selected' : ''}>${escapeHTML(s.name)}</option>`).join('');
@@ -794,18 +865,333 @@ async function loadAdminMessages() {
   tbl.querySelectorAll('[data-admin-msg-del]').forEach((b) => b.addEventListener('click', async () => { await apiDel('/api/admin/messages/' + b.dataset.adminMsgDel); loadAdminMessages(); }));
 }
 
+/* ================= PRACTICE QUESTIONS ================= */
+document.getElementById('qAddToggle').addEventListener('click', () => {
+  const f = document.getElementById('qAddForm');
+  const opening = f.style.display === 'none';
+  f.style.display = opening ? 'block' : 'none';
+  if (opening && !document.getElementById('qChoices').children.length) { addQChoiceRow(); addQChoiceRow(); }
+});
+document.getElementById('qCancel').addEventListener('click', () => (document.getElementById('qAddForm').style.display = 'none'));
+document.getElementById('qAddChoice').addEventListener('click', () => addQChoiceRow());
+function addQChoiceRow() {
+  const wrap = document.getElementById('qChoices');
+  if (wrap.children.length >= 6) return toast('Max 6 choices');
+  const idx = wrap.children.length;
+  const row = document.createElement('div');
+  row.className = 'row tight';
+  row.innerHTML = `<input type="radio" name="qCorrect" value="${idx}" ${idx === 0 ? 'checked' : ''} style="width:18px;height:18px;flex:none">
+    <input class="input" placeholder="Choice ${String.fromCharCode(65 + idx)}" style="flex:1" data-qchoice>
+    <button class="btn icon ghost danger" data-qchoice-del type="button">${ICONS.trash}</button>`;
+  row.querySelector('[data-qchoice-del]').addEventListener('click', () => { if (wrap.children.length > 2) row.remove(); else toast('At least 2 choices needed'); });
+  wrap.appendChild(row);
+}
+document.getElementById('qSave').addEventListener('click', () => {
+  const subjectId = document.getElementById('qSubject').value;
+  const stem = document.getElementById('qStem').value.trim();
+  const explanation = document.getElementById('qExplanation').value.trim();
+  const tags = document.getElementById('qTags').value.split(',').map((t) => t.trim()).filter(Boolean);
+  const rows = Array.from(document.getElementById('qChoices').children);
+  const choices = rows.map((r) => r.querySelector('[data-qchoice]').value.trim());
+  const correctRadio = document.querySelector('input[name="qCorrect"]:checked');
+  const correctIndex = correctRadio ? +correctRadio.value : 0;
+  if (!stem) return toast('Add a question stem');
+  if (choices.filter(Boolean).length < 2) return toast('Add at least 2 answer choices');
+  if (!choices[correctIndex]) return toast('Fill in the choice you marked correct');
+  STATE.socket.emit('question:add', { subjectId, stem, choices, correctIndex, explanation, tags });
+  document.getElementById('qStem').value = ''; document.getElementById('qExplanation').value = ''; document.getElementById('qTags').value = '';
+  document.getElementById('qChoices').innerHTML = ''; addQChoiceRow(); addQChoiceRow();
+  document.getElementById('qAddForm').style.display = 'none';
+  toast('Question added');
+});
+
+function renderQuestionList() {
+  document.getElementById('qTotalCount').textContent = STATE.questions.length;
+  document.getElementById('cnt-questions').textContent = STATE.questions.length;
+  const wrap = document.getElementById('qList');
+  if (!STATE.questions.length) { wrap.innerHTML = `<div class="empty">No questions yet — write the first one above.</div>`; return; }
+  wrap.innerHTML = STATE.questions.slice().reverse().map((q) => {
+    const s = subjectById(q.subjectId);
+    const canDel = q.authorId === STATE.me.id || STATE.me.role === 'admin';
+    return `<div class="q-row"><span class="dot" style="background:${s ? s.color : 'var(--muted)'}"></span><span class="stem">${escapeHTML(q.stem)}</span>${(q.tags || []).slice(0, 2).map((t) => `<span class="badge">${escapeHTML(t)}</span>`).join('')}<span class="muted" style="font-size:.7rem">${escapeHTML(q.authorName)}</span>${canDel ? `<button class="btn icon ghost danger" data-q-del="${q.id}">${ICONS.trash}</button>` : ''}</div>`;
+  }).join('');
+  wrap.querySelectorAll('[data-q-del]').forEach((b) => b.addEventListener('click', () => STATE.socket.emit('question:delete', { id: b.dataset.qDel })));
+}
+
+document.getElementById('qFilterSubject').addEventListener('change', updateQPoolCount);
+document.getElementById('qFilterMode').addEventListener('change', updateQPoolCount);
+function getQPool() {
+  const subjectId = document.getElementById('qFilterSubject').value;
+  const mode = document.getElementById('qFilterMode').value;
+  const answers = STATE.personal.qAnswers || [];
+  const lastResultByQ = {};
+  answers.forEach((a) => { if (!(a.questionId in lastResultByQ)) lastResultByQ[a.questionId] = a.correct; });
+  return STATE.questions.filter((q) => {
+    if (subjectId && q.subjectId !== subjectId) return false;
+    if (mode === 'unanswered') return !(q.id in lastResultByQ);
+    if (mode === 'incorrect') return lastResultByQ[q.id] === false;
+    return true;
+  });
+}
+function updateQPoolCount() {
+  const n = getQPool().length;
+  document.getElementById('qPoolCount').textContent = n ? `${n} question${n === 1 ? '' : 's'} in this pool.` : 'No questions match this filter yet.';
+}
+
+document.getElementById('qStartSession').addEventListener('click', () => {
+  const pool = getQPool();
+  if (!pool.length) return toast('No questions in this pool');
+  const queue = pool.slice().sort(() => Math.random() - 0.5);
+  STATE.qSessionState = { queue, idx: 0, correct: 0, answered: 0 };
+  document.getElementById('qSessionSetup').style.display = 'none';
+  document.getElementById('qSession').style.display = 'block';
+  renderCurrentQuestion();
+});
+document.getElementById('qEndSession').addEventListener('click', endQSession);
+function endQSession() {
+  STATE.qSessionState = null;
+  document.getElementById('qSession').style.display = 'none';
+  document.getElementById('qSessionSetup').style.display = 'block';
+  updateQPoolCount();
+}
+function renderCurrentQuestion() {
+  const s = STATE.qSessionState;
+  const q = s.queue[s.idx];
+  document.getElementById('qProgress').textContent = `Q${s.idx + 1} / ${s.queue.length}`;
+  document.getElementById('qScore').textContent = `${s.correct}/${s.answered}`;
+  document.getElementById('qStemDisplay').textContent = q.stem;
+  document.getElementById('qExplanationDisplay').style.display = 'none';
+  document.getElementById('qNext').style.display = 'none';
+  document.getElementById('qChoicesDisplay').innerHTML = q.choices.map((c, i) => `<button class="choice-btn" data-choice="${c.id}"><span class="letter">${String.fromCharCode(65 + i)}</span><span>${escapeHTML(c.text)}</span></button>`).join('');
+  document.querySelectorAll('#qChoicesDisplay [data-choice]').forEach((btn) => btn.addEventListener('click', () => answerCurrentQuestion(q, btn.dataset.choice)));
+}
+async function answerCurrentQuestion(q, choiceId) {
+  const s = STATE.qSessionState;
+  document.querySelectorAll('#qChoicesDisplay [data-choice]').forEach((b) => (b.disabled = true));
+  let result;
+  try { result = await apiPost(`/api/questions/${q.id}/answer`, { choiceId }); } catch (e) { return toast(e.message); }
+  s.answered++;
+  if (result.correct) s.correct++;
+  STATE.personal.qAnswers.unshift({ id: 'local', questionId: q.id, subjectId: q.subjectId, choiceId, correct: result.correct, ts: Date.now() });
+  document.getElementById('qScore').textContent = `${s.correct}/${s.answered}`;
+  document.querySelectorAll('#qChoicesDisplay [data-choice]').forEach((b) => {
+    if (b.dataset.choice === result.correctChoiceId) b.classList.add('correct');
+    else if (b.dataset.choice === choiceId) b.classList.add('incorrect');
+  });
+  const expBox = document.getElementById('qExplanationDisplay');
+  expBox.style.display = 'block';
+  expBox.innerHTML = `<strong style="color:${result.correct ? 'var(--good)' : 'var(--danger)'}">${result.correct ? 'Correct!' : 'Not quite.'}</strong><div style="margin-top:6px;font-size:.85rem;line-height:1.6">${escapeHTML(result.explanation || 'No explanation was written for this question.')}</div>`;
+  const nextBtn = document.getElementById('qNext');
+  nextBtn.style.display = 'inline-flex';
+  nextBtn.textContent = s.idx + 1 < s.queue.length ? 'Next question →' : 'Finish session';
+  nextBtn.onclick = () => {
+    s.idx++;
+    if (s.idx >= s.queue.length) { toast(`Session complete — ${s.correct}/${s.answered} correct`); endQSession(); if (STATE.currentView === 'dashboard') renderDashboard(); }
+    else renderCurrentQuestion();
+  };
+}
+
+/* ================= FLASHCARDS ================= */
+document.getElementById('fcAddToggle').addEventListener('click', () => { const f = document.getElementById('fcAddForm'); f.style.display = f.style.display === 'none' ? 'block' : 'none'; });
+document.getElementById('fcCancel').addEventListener('click', () => (document.getElementById('fcAddForm').style.display = 'none'));
+document.getElementById('fcSave').addEventListener('click', () => {
+  const subjectId = document.getElementById('fcSubject').value;
+  const front = document.getElementById('fcFront').value.trim();
+  const back = document.getElementById('fcBack').value.trim();
+  if (!front || !back) return toast('Fill in both sides of the card');
+  STATE.socket.emit('flashcard:add', { subjectId, front, back });
+  document.getElementById('fcFront').value = ''; document.getElementById('fcBack').value = '';
+  document.getElementById('fcAddForm').style.display = 'none';
+});
+function renderFlashcardList() {
+  document.getElementById('fcTotalCount').textContent = STATE.flashcards.length;
+  const wrap = document.getElementById('fcList');
+  if (!STATE.flashcards.length) { wrap.innerHTML = `<div class="empty">No cards yet — add the first one above.</div>`; return; }
+  wrap.innerHTML = STATE.flashcards.slice().reverse().map((c) => {
+    const s = subjectById(c.subjectId);
+    const canDel = c.authorId === STATE.me.id || STATE.me.role === 'admin';
+    return `<div class="fc-row"><span class="dot" style="background:${s ? s.color : 'var(--muted)'}"></span><span class="front">${escapeHTML(c.front)}</span><span class="muted" style="font-size:.7rem">${escapeHTML(c.authorName)}</span>${canDel ? `<button class="btn icon ghost danger" data-fc-del="${c.id}">${ICONS.trash}</button>` : ''}</div>`;
+  }).join('');
+  wrap.querySelectorAll('[data-fc-del]').forEach((b) => b.addEventListener('click', () => STATE.socket.emit('flashcard:delete', { id: b.dataset.fcDel })));
+}
+async function loadSrsDue() {
+  try {
+    const res = await apiGet('/api/srs/due');
+    STATE.srsDue = res;
+    const badge = document.getElementById('cnt-due');
+    if (res.dueCount > 0) { badge.hidden = false; badge.textContent = res.dueCount; } else badge.hidden = true;
+    const summary = document.getElementById('fcDueSummary');
+    if (summary) summary.textContent = res.totalCards === 0 ? 'No cards yet — add some below.' : `${res.dueCount} of ${res.totalCards} cards due right now.`;
+  } catch (e) { /* not logged in yet */ }
+}
+document.getElementById('fcStartReview').addEventListener('click', () => {
+  if (!STATE.srsDue.due.length) return toast('Nothing due right now — nice work');
+  STATE.fcQueue = STATE.srsDue.due.slice();
+  document.getElementById('fcReviewCard').style.display = 'block';
+  renderCurrentFlashcard();
+});
+function renderCurrentFlashcard() {
+  const queue = STATE.fcQueue;
+  if (!queue.length) {
+    document.getElementById('fcReviewMeta').textContent = 'All caught up! 🎉';
+    document.getElementById('fcFrontDisplay').textContent = "You're done reviewing for now.";
+    document.getElementById('fcBackDisplay').style.display = 'none';
+    document.getElementById('fcFlipRow').style.display = 'none';
+    document.getElementById('fcRateRow').style.display = 'none';
+    loadSrsDue();
+    return;
+  }
+  const card = queue[0];
+  const s = subjectById(card.subjectId);
+  document.getElementById('fcReviewMeta').textContent = `${queue.length} left${s ? ' · ' + s.name : ''}`;
+  document.getElementById('fcFrontDisplay').textContent = card.front;
+  document.getElementById('fcBackDisplay').textContent = card.back;
+  document.getElementById('fcBackDisplay').style.display = 'none';
+  document.getElementById('fcFlipRow').style.display = 'flex';
+  document.getElementById('fcRateRow').style.display = 'none';
+}
+document.getElementById('fcFlip').addEventListener('click', () => {
+  document.getElementById('fcBackDisplay').style.display = 'flex';
+  document.getElementById('fcFlipRow').style.display = 'none';
+  document.getElementById('fcRateRow').style.display = 'flex';
+});
+document.querySelectorAll('#fcRateRow [data-rate]').forEach((b) => b.addEventListener('click', async () => {
+  const card = STATE.fcQueue[0];
+  try { const { srs } = await apiPost('/api/srs/review', { cardId: card.id, rating: b.dataset.rate }); STATE.personal.srs[card.id] = srs; } catch (e) { toast(e.message); }
+  STATE.fcQueue.shift();
+  renderCurrentFlashcard();
+}));
+
+/* ================= LAB VALUES ================= */
+const LAB_VALUES = [
+  { cat: 'Electrolytes', test: 'Sodium (Na+)', range: '136–145 mEq/L' },
+  { cat: 'Electrolytes', test: 'Potassium (K+)', range: '3.5–5.0 mEq/L' },
+  { cat: 'Electrolytes', test: 'Chloride (Cl-)', range: '98–106 mEq/L' },
+  { cat: 'Electrolytes', test: 'Bicarbonate (HCO3-)', range: '22–28 mEq/L' },
+  { cat: 'Electrolytes', test: 'Calcium, total', range: '8.4–10.2 mg/dL' },
+  { cat: 'Electrolytes', test: 'Magnesium', range: '1.5–2.0 mEq/L' },
+  { cat: 'Electrolytes', test: 'Phosphate', range: '3.0–4.5 mg/dL' },
+  { cat: 'Renal / Metabolic', test: 'BUN', range: '7–20 mg/dL' },
+  { cat: 'Renal / Metabolic', test: 'Creatinine', range: '0.6–1.2 mg/dL' },
+  { cat: 'Renal / Metabolic', test: 'Glucose, fasting', range: '70–110 mg/dL' },
+  { cat: 'Renal / Metabolic', test: 'Osmolality, serum', range: '275–295 mOsm/kg' },
+  { cat: 'Liver / Pancreas', test: 'AST', range: '8–20 U/L' },
+  { cat: 'Liver / Pancreas', test: 'ALT', range: '8–20 U/L' },
+  { cat: 'Liver / Pancreas', test: 'Alkaline phosphatase', range: '20–70 U/L' },
+  { cat: 'Liver / Pancreas', test: 'Total bilirubin', range: '0.1–1.0 mg/dL' },
+  { cat: 'Liver / Pancreas', test: 'Albumin', range: '3.5–5.5 g/dL' },
+  { cat: 'Liver / Pancreas', test: 'Amylase', range: '25–125 U/L' },
+  { cat: 'Liver / Pancreas', test: 'Lipase', range: '10–140 U/L' },
+  { cat: 'CBC', test: 'Hemoglobin (men)', range: '13.5–17.5 g/dL' },
+  { cat: 'CBC', test: 'Hemoglobin (women)', range: '12.0–16.0 g/dL' },
+  { cat: 'CBC', test: 'Hematocrit (men)', range: '41–53%' },
+  { cat: 'CBC', test: 'Hematocrit (women)', range: '36–46%' },
+  { cat: 'CBC', test: 'Leukocyte count (WBC)', range: '4,500–11,000 /mm³' },
+  { cat: 'CBC', test: 'Platelet count', range: '150,000–400,000 /mm³' },
+  { cat: 'CBC', test: 'MCV', range: '80–100 fL' },
+  { cat: 'CBC', test: 'Reticulocyte count', range: '0.5–1.5% of RBCs' },
+  { cat: 'Coagulation', test: 'PT', range: '11–15 sec' },
+  { cat: 'Coagulation', test: 'PTT', range: '25–40 sec' },
+  { cat: 'Coagulation', test: 'INR', range: '0.8–1.2 (therapeutic 2–3)' },
+  { cat: 'Coagulation', test: 'Bleeding time', range: '2–7 min' },
+  { cat: 'ABG', test: 'pH, arterial', range: '7.35–7.45' },
+  { cat: 'ABG', test: 'PaCO2', range: '33–45 mmHg' },
+  { cat: 'ABG', test: 'PaO2', range: '75–105 mmHg' },
+  { cat: 'ABG', test: 'HCO3-, arterial', range: '22–28 mEq/L' },
+  { cat: 'Lipids', test: 'Total cholesterol', range: '<200 mg/dL (desirable)' },
+  { cat: 'Lipids', test: 'LDL', range: '<100 mg/dL (optimal)' },
+  { cat: 'Lipids', test: 'HDL', range: '>40 mg/dL (men), >50 (women)' },
+  { cat: 'Lipids', test: 'Triglycerides', range: '<150 mg/dL' },
+  { cat: 'Endocrine', test: 'TSH', range: '0.4–4.0 μU/mL' },
+  { cat: 'Endocrine', test: 'Free T4', range: '0.8–1.8 ng/dL' },
+  { cat: 'Endocrine', test: 'Cortisol, AM', range: '5–23 μg/dL' },
+  { cat: 'Endocrine', test: 'HbA1c', range: '4–5.9% (normal)' },
+  { cat: 'CSF', test: 'CSF pressure', range: '70–180 mm H2O' },
+  { cat: 'CSF', test: 'CSF protein', range: '15–60 mg/dL' },
+  { cat: 'CSF', test: 'CSF glucose', range: '40–70 mg/dL (⅔ serum)' },
+  { cat: 'CSF', test: 'CSF cell count', range: '0–5 cells/mm³' },
+  { cat: 'Urinalysis', test: 'Urine specific gravity', range: '1.003–1.030' },
+  { cat: 'Urinalysis', test: 'Urine pH', range: '4.6–8.0' },
+  { cat: 'Urinalysis', test: 'Urine protein', range: '<150 mg/day' }
+];
+function renderLabValues() {
+  const q = (document.getElementById('labSearch').value || '').toLowerCase().trim();
+  const filtered = LAB_VALUES.filter((r) => !q || r.test.toLowerCase().includes(q) || r.cat.toLowerCase().includes(q));
+  const cats = [...new Set(filtered.map((r) => r.cat))];
+  const wrap = document.getElementById('labValuesList');
+  if (!cats.length) { wrap.innerHTML = `<div class="empty">No matching lab values.</div>`; return; }
+  wrap.innerHTML = cats.map((cat) => `<div class="card lab-cat"><div class="section-title">${cat}</div>${filtered.filter((r) => r.cat === cat).map((r) => `<div class="lab-row"><span class="test">${escapeHTML(r.test)}</span><span class="range">${escapeHTML(r.range)}</span></div>`).join('')}</div>`).join('');
+}
+document.getElementById('labSearch').addEventListener('input', renderLabValues);
+
+/* ================= GLOBAL SEARCH ================= */
+const searchInput = document.getElementById('globalSearch');
+const searchResults = document.getElementById('globalSearchResults');
+let searchTimer = null;
+searchInput.addEventListener('input', () => { clearTimeout(searchTimer); searchTimer = setTimeout(runGlobalSearch, 120); });
+searchInput.addEventListener('focus', () => { if (searchInput.value.trim()) runGlobalSearch(); });
+document.addEventListener('click', (e) => { if (!e.target.closest('.search-wrap')) searchResults.hidden = true; });
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { searchResults.hidden = true; searchInput.blur(); } });
+
+function runGlobalSearch() {
+  const q = searchInput.value.trim().toLowerCase();
+  if (!q) { searchResults.hidden = true; return; }
+  const groups = [];
+
+  const subjHits = STATE.subjects.filter((s) => s.name.toLowerCase().includes(q)).slice(0, 4);
+  if (subjHits.length) groups.push({ label: 'Subjects', items: subjHits.map((s) => ({ text: s.name, action: () => { setView('subjects'); } })) });
+
+  const topicHits = [];
+  STATE.subjects.forEach((s) => s.topics.forEach((t) => { if (t.name.toLowerCase().includes(q)) topicHits.push({ text: `${t.name} — ${s.name}`, action: () => { openSubjectId = s.id; setView('subjects'); renderSubjects(); } }); }));
+  if (topicHits.length) groups.push({ label: 'Topics', items: topicHits.slice(0, 4) });
+
+  const noteHits = STATE.subjects.filter((s) => (s.notes || '').toLowerCase().includes(q)).slice(0, 3);
+  if (noteHits.length) groups.push({ label: 'Notes', items: noteHits.map((s) => ({ text: `Notes — ${s.name}`, action: () => openNotes(s.id) })) });
+
+  const mnemoHits = STATE.mnemonics.filter((m) => m.term.toLowerCase().includes(q) || m.prompt.toLowerCase().includes(q)).slice(0, 4);
+  if (mnemoHits.length) groups.push({ label: 'Mnemonics', items: mnemoHits.map((m) => ({ text: m.term, action: () => setView('mnemonics') })) });
+
+  const resHits = STATE.resources.filter((r) => r.title.toLowerCase().includes(q)).slice(0, 4);
+  if (resHits.length) groups.push({ label: 'Resources', items: resHits.map((r) => ({ text: r.title, action: () => setView('resources') })) });
+
+  const qHits = STATE.questions.filter((qq) => qq.stem.toLowerCase().includes(q)).slice(0, 4);
+  if (qHits.length) groups.push({ label: 'Practice questions', items: qHits.map((qq) => ({ text: qq.stem.slice(0, 70), action: () => setView('practice') })) });
+
+  const fcHits = STATE.flashcards.filter((c) => c.front.toLowerCase().includes(q)).slice(0, 4);
+  if (fcHits.length) groups.push({ label: 'Flashcards', items: fcHits.map((c) => ({ text: c.front.slice(0, 70), action: () => setView('flashcards') })) });
+
+  const labHits = LAB_VALUES.filter((l) => l.test.toLowerCase().includes(q)).slice(0, 4);
+  if (labHits.length) groups.push({ label: 'Lab values', items: labHits.map((l) => ({ text: `${l.test} — ${l.range}`, action: () => { setView('labvalues'); document.getElementById('labSearch').value = l.test; renderLabValues(); } })) });
+
+  if (!groups.length) { searchResults.innerHTML = `<div class="search-empty">No matches for "${escapeHTML(searchInput.value)}"</div>`; searchResults.hidden = false; return; }
+  searchResults.innerHTML = groups.map((g, gi) => `<div class="search-group">${g.label}</div>${g.items.map((it, ii) => `<button class="search-hit" data-hit="${gi}-${ii}">${escapeHTML(it.text)}</button>`).join('')}`).join('');
+  searchResults.querySelectorAll('[data-hit]').forEach((btn) => {
+    const [gi, ii] = btn.dataset.hit.split('-').map(Number);
+    btn.addEventListener('click', () => { groups[gi].items[ii].action(); searchResults.hidden = true; searchInput.value = ''; });
+  });
+  searchResults.hidden = false;
+}
+
 /* ================= RENDER ALL ================= */
 function renderAll() {
   renderSubjects();
   document.getElementById('qbSubject').innerHTML = subjectOptionsHTML();
   document.getElementById('pomoSubject').innerHTML = subjectOptionsHTML();
   document.getElementById('mnemoSubject').innerHTML = subjectOptionsHTML();
+  document.getElementById('qSubject').innerHTML = subjectOptionsHTML();
+  document.getElementById('fcSubject').innerHTML = subjectOptionsHTML();
+  populateQFilterSubjects();
   renderChatRooms();
   renderPlanner();
   renderTasks();
   renderCalculators();
+  renderLabValues();
   renderMnemonics();
   renderResources();
+  renderQuestionList();
+  renderFlashcardList();
+  updateQPoolCount();
+  addQChoiceRow(); addQChoiceRow();
   document.getElementById('setFocus').value = STATE.personal.pomodoro.focus;
   document.getElementById('setShort').value = STATE.personal.pomodoro.short;
   document.getElementById('setLong').value = STATE.personal.pomodoro.long;
