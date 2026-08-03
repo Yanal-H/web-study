@@ -77,6 +77,13 @@ invite code, which the admin generates from **Manage → Invites**.
 - **Study streak heatmap** — a GitHub-style contribution calendar on the
   dashboard, built from your pomodoro sessions, Q-bank log entries, practice
   question answers, and flashcard reviews.
+- **Eight color themes, and a live-feeling UI** — Midnight, Aurora, Sunset,
+  Forest, Neon, Bloom, Ocean, and Paper, each a deliberate 3-color accent
+  chord rather than a re-tinted default. On top of that: a slowly drifting
+  aurora background, a cursor-tracked spotlight glow on cards, count-up
+  dashboard stats, a chat typing indicator, staggered list entrances, and a
+  confetti burst when you finish a practice session 100% correct or clear
+  your flashcard queue. All motion respects `prefers-reduced-motion`.
 - **Data** — a small hand-rolled JSON-file store (`lib/store.js`,
   `data/db.json`), atomic-write on every mutation. Every dependency (FSRS
   scheduling, KaTeX, Markdown) is pure JavaScript, so `npm install` never

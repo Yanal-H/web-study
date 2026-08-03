@@ -13,7 +13,7 @@ const ICONS = {
   clock: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l3 2M9 2h6"/></svg>',
   chat: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5Z"/></svg>'
 };
-const THEMES = ['midnight', 'aurora', 'sunset', 'forest', 'neon', 'paper'];
+const THEMES = ['midnight', 'aurora', 'sunset', 'forest', 'neon', 'bloom', 'ocean', 'paper'];
 
 function escapeHTML(str) { return String(str ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c])); }
 function timeAgo(ts) {
@@ -25,6 +25,39 @@ function timeAgo(ts) {
   return Math.floor(s / 86400) + 'd ago';
 }
 function initials(name) { return String(name || '?').trim().slice(0, 2).toUpperCase(); }
+function animateCountUp(el) {
+  const raw = el.textContent;
+  const match = raw.match(/^(\d+)/);
+  if (!match || prefersReducedMotion) return;
+  const target = parseInt(match[1], 10);
+  const suffix = raw.slice(match[1].length);
+  const duration = 550;
+  const start = performance.now();
+  function tick(now) {
+    const p = Math.min(1, (now - start) / duration);
+    const eased = 1 - Math.pow(1 - p, 3);
+    el.textContent = Math.round(eased * target) + suffix;
+    if (p < 1) requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+}
+function celebrate() {
+  if (prefersReducedMotion) return;
+  const colors = ['var(--brand)', 'var(--brand-2)', 'var(--brand-3)', 'var(--good)', 'var(--warn)'];
+  for (let i = 0; i < 28; i++) {
+    const el = document.createElement('div');
+    el.className = 'confetti-piece';
+    const duration = 1.6 + Math.random() * 1.2;
+    const delay = Math.random() * 0.3;
+    el.style.left = Math.random() * 100 + 'vw';
+    el.style.background = colors[Math.floor(Math.random() * colors.length)];
+    el.style.animationDuration = duration + 's';
+    el.style.animationDelay = delay + 's';
+    el.style.setProperty('--rot', (Math.random() * 720 - 360) + 'deg');
+    document.body.appendChild(el);
+    setTimeout(() => el.remove(), (duration + delay) * 1000 + 100);
+  }
+}
 function renderMathIn(el) {
   if (window.renderMathInElement && el) {
     try { renderMathInElement(el, { delimiters: [{ left: '$$', right: '$$', display: true }, { left: '$', right: '$', display: false }], throwOnError: false }); } catch (e) { /* ignore malformed LaTeX */ }
@@ -120,10 +153,38 @@ function applyTheme(theme) {
   localStorage.setItem('studyhub_theme', theme);
   document.querySelectorAll('.theme-swatch').forEach((el) => el.classList.toggle('active', el.dataset.theme === theme));
 }
+
+/* ---- card cursor spotlight ---- */
+let spotCard = null;
+const prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+if (!prefersReducedMotion) {
+  document.addEventListener('pointermove', (e) => {
+    const card = e.target.closest && e.target.closest('.card');
+    if (card !== spotCard) {
+      if (spotCard) spotCard.classList.remove('spot');
+      spotCard = card;
+      if (card) card.classList.add('spot');
+    }
+    if (card) {
+      const r = card.getBoundingClientRect();
+      card.style.setProperty('--mx', ((e.clientX - r.left) / r.width * 100).toFixed(1) + '%');
+      card.style.setProperty('--my', ((e.clientY - r.top) / r.height * 100).toFixed(1) + '%');
+    }
+  }, { passive: true });
+}
 function renderThemeSwatches() {
   const wrap = document.getElementById('themeSwatches');
-  const grads = { midnight: 'linear-gradient(135deg,#8b9eff,#c4a7ff)', aurora: 'linear-gradient(135deg,#4fd6ff,#8b7bff)', sunset: 'linear-gradient(135deg,#ff7a59,#ff5c98)', forest: 'linear-gradient(135deg,#5ad19a,#9ad67e)', neon: 'linear-gradient(135deg,#00ffc8,#ff00c8)', paper: 'linear-gradient(135deg,#5b54d6,#cf5f9e)' };
-  wrap.innerHTML = THEMES.map((t) => `<span class="theme-swatch" data-theme="${t}" title="${t}" style="background:${grads[t]}"></span>`).join('');
+  const grads = {
+    midnight: 'linear-gradient(135deg,#7c83ff,#b083ff,#ff8fd0)',
+    aurora: 'linear-gradient(135deg,#22d3ee,#818cf8,#34d399)',
+    sunset: 'linear-gradient(135deg,#fb7185,#fb923c,#fbbf24)',
+    forest: 'linear-gradient(135deg,#10b981,#a3e635,#fbbf24)',
+    neon: 'linear-gradient(135deg,#00f5d4,#00c8ff,#ff2ec4)',
+    bloom: 'linear-gradient(135deg,#fb6f92,#c084fc,#ffd166)',
+    ocean: 'linear-gradient(135deg,#22d3ee,#2dd4bf,#ff8a65)',
+    paper: 'linear-gradient(135deg,#4f46e5,#c026d3,#0d9488)'
+  };
+  wrap.innerHTML = THEMES.map((t) => `<span class="theme-swatch" data-theme="${t}" title="${t[0].toUpperCase() + t.slice(1)}" style="background:${grads[t]}"></span>`).join('');
   wrap.querySelectorAll('.theme-swatch').forEach((el) => el.addEventListener('click', () => applyTheme(el.dataset.theme)));
 }
 
@@ -248,7 +309,10 @@ function connectSocket() {
     if (room === STATE.joinedRoom) renderChatPresence(users);
   });
   socket.on('chat:message', (msg) => {
-    if (msg.room === STATE.activeChatRoom) { renderChatMessage(msg); scrollChatBottom(); }
+    if (msg.room === STATE.activeChatRoom) { renderChatMessage(msg); scrollChatBottom(); typingUsers.delete(msg.username); renderTypingIndicator(); }
+  });
+  socket.on('chat:typing', ({ room, username }) => {
+    if (room === STATE.activeChatRoom && username !== STATE.me.username) showTyping(username);
   });
   socket.on('chat:deleted', ({ id, room }) => {
     const el = document.querySelector(`[data-msg="${id}"]`);
@@ -343,7 +407,11 @@ function setView(name) {
   if (!VIEWS.includes(name)) name = 'dashboard';
   STATE.currentView = name;
   VIEWS.forEach((v) => document.getElementById('view-' + v).classList.toggle('active', v === name));
-  document.querySelectorAll('.navitem[data-view]').forEach((b) => b.classList.toggle('active', b.dataset.view === name));
+  document.querySelectorAll('.navitem[data-view]').forEach((b) => {
+    const becomingActive = b.dataset.view === name && !b.classList.contains('active');
+    b.classList.toggle('active', b.dataset.view === name);
+    if (becomingActive && !prefersReducedMotion) { b.classList.remove('pop'); void b.offsetWidth; b.classList.add('pop'); }
+  });
   document.getElementById('sidebar').classList.remove('open');
   window.scrollTo(0, 0);
   if (name !== 'chat' && name !== 'notes') switchRoom(null);
@@ -379,6 +447,7 @@ function renderDashboard() {
   ];
   document.getElementById('dashStats').innerHTML = stats.map((s) => `
     <div class="card stat-card"><div class="ico" style="background:${s.color}22;color:${s.color}">${s.icon}</div><div><div class="num">${s.value}</div><div class="lbl">${s.label}</div></div></div>`).join('');
+  document.querySelectorAll('#dashStats .num').forEach(animateCountUp);
 
   renderActivityFeed('activityFeed');
   renderStreakHeatmap();
@@ -407,7 +476,7 @@ function renderStreakHeatmap() {
     const level = c === 0 ? 0 : c <= 1 ? 1 : c <= 3 ? 2 : c <= 6 ? 3 : 4;
     cells.push({ key, level, c });
   }
-  document.getElementById('streakHeatmap').innerHTML = cells.map((c) => `<span class="heatmap-cell" data-level="${c.level}" title="${c.key}: ${c.c} ${c.c === 1 ? 'activity' : 'activities'}"></span>`).join('');
+  document.getElementById('streakHeatmap').innerHTML = cells.map((c, i) => `<span class="heatmap-cell" data-level="${c.level}" style="animation-delay:${Math.min(i * 3, 600)}ms" title="${c.key}: ${c.c} ${c.c === 1 ? 'activity' : 'activities'}"></span>`).join('');
   const first = cells[0].key, last = cells[cells.length - 1].key;
   document.getElementById('heatmapRange').textContent = `${first} → ${last}`;
 }
@@ -450,6 +519,9 @@ function openChatRoom(room) {
   document.getElementById('chatRoomTitle').textContent = (rooms.find((r) => r.id === room) || {}).name || room;
   document.querySelectorAll('.chat-room-btn').forEach((b) => b.classList.toggle('active', b.dataset.room === room));
   document.getElementById('chatMessages').innerHTML = '';
+  typingUsers.forEach((t) => clearTimeout(t));
+  typingUsers.clear();
+  renderTypingIndicator();
   switchRoom(room);
 }
 function renderChatMessage(msg) {
@@ -479,6 +551,28 @@ function sendChat() {
 }
 document.getElementById('chatSend').addEventListener('click', sendChat);
 document.getElementById('chatInput').addEventListener('keydown', (e) => { if (e.key === 'Enter') sendChat(); });
+
+let lastTypingEmit = 0;
+document.getElementById('chatInput').addEventListener('input', () => {
+  if (!STATE.activeChatRoom) return;
+  const now = Date.now();
+  if (now - lastTypingEmit > 1500) { STATE.socket.emit('chat:typing', { room: STATE.activeChatRoom }); lastTypingEmit = now; }
+});
+const typingUsers = new Map(); // username -> timeout id, per current room
+function showTyping(username) {
+  clearTimeout(typingUsers.get(username));
+  typingUsers.set(username, setTimeout(() => { typingUsers.delete(username); renderTypingIndicator(); }, 2500));
+  renderTypingIndicator();
+}
+function renderTypingIndicator() {
+  const el = document.getElementById('typingIndicator');
+  const names = Array.from(typingUsers.keys());
+  if (!names.length) { el.classList.remove('show'); el.textContent = ''; el.hidden = true; return; }
+  const label = names.length === 1 ? `${names[0]} is typing` : names.length === 2 ? `${names.join(' and ')} are typing` : `${names.length} people are typing`;
+  el.hidden = false;
+  el.innerHTML = `${escapeHTML(label)}<span class="typing-dots"><span></span><span></span><span></span></span>`;
+  requestAnimationFrame(() => el.classList.add('show'));
+}
 
 /* ================= SUBJECTS ================= */
 let chosenColor = '#8b9eff';
@@ -1055,7 +1149,12 @@ async function answerCurrentQuestion(q, choiceId) {
   nextBtn.textContent = s.idx + 1 < s.queue.length ? 'Next question →' : 'Finish session';
   nextBtn.onclick = () => {
     s.idx++;
-    if (s.idx >= s.queue.length) { toast(`Session complete — ${s.correct}/${s.answered} correct`); endQSession(); if (STATE.currentView === 'dashboard') renderDashboard(); }
+    if (s.idx >= s.queue.length) {
+      toast(`Session complete — ${s.correct}/${s.answered} correct`);
+      if (s.answered > 0 && s.correct === s.answered) celebrate();
+      endQSession();
+      if (STATE.currentView === 'dashboard') renderDashboard();
+    }
     else renderCurrentQuestion();
   };
 }
@@ -1201,6 +1300,7 @@ document.querySelectorAll('#fcRateRow [data-rate]').forEach((b) => b.addEventLis
     toast(`See you again in ${days}`);
   } catch (e) { toast(e.message); }
   STATE.fcQueue.shift();
+  if (STATE.fcQueue.length === 0) celebrate();
   renderCurrentFlashcard();
 }));
 

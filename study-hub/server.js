@@ -463,6 +463,11 @@ io.on('connection', (socket) => {
     io.to(room).emit('chat:message', msg);
   });
 
+  socket.on('chat:typing', ({ room }) => {
+    if (typeof room !== 'string') return;
+    socket.to(room).emit('chat:typing', { room, username: user.username, color: user.color });
+  });
+
   socket.on('note:update', ({ subjectId, text }) => {
     const subject = store.db.subjects.find((s) => s.id === subjectId);
     if (!subject || typeof text !== 'string') return;
