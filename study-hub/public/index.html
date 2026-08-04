@@ -11,6 +11,13 @@
 <body>
 <div class="bg"></div>
 
+<!-- ================= BOOT SPLASH ================= -->
+<div class="boot-splash" id="bootSplash">
+  <div class="boot-mark"><svg viewBox="0 0 24 24" fill="none" stroke="#0b0d17" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 2 8l10 5 10-5-10-5Z"/><path d="M6 10.5V16c0 1.5 2.7 3 6 3s6-1.5 6-3v-5.5"/></svg></div>
+  <div class="boot-name">Study Hub</div>
+  <div class="boot-bar"><i></i></div>
+</div>
+
 <!-- ================= AUTH SCREEN ================= -->
 <div class="auth-wrap" id="authScreen">
   <div class="auth-card">
@@ -98,6 +105,11 @@
 
     <div class="sidebar-foot">
       <div class="theme-swatches" id="themeSwatches"></div>
+      <div class="read-size" role="group" aria-label="Text size">
+        <button class="read-btn" id="readDown" title="Smaller text" aria-label="Smaller text">A<span>−</span></button>
+        <div class="read-track"><i id="readFill"></i></div>
+        <button class="read-btn" id="readUp" title="Larger text" aria-label="Larger text">A<span>+</span></button>
+      </div>
       <button class="btn logout" id="btnLogout">Sign out</button>
     </div>
   </aside>

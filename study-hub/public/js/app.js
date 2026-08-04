@@ -156,6 +156,19 @@ function applyTheme(theme) {
   document.querySelectorAll('.theme-swatch').forEach((el) => el.classList.toggle('active', el.dataset.theme === theme));
 }
 
+/* ---- reading-comfort text size ---- */
+const READ_MIN = 0.9, READ_MAX = 1.3, READ_STEP = 0.05;
+function applyReadScale(scale) {
+  const clamped = Math.min(READ_MAX, Math.max(READ_MIN, Math.round(scale * 100) / 100));
+  document.documentElement.style.setProperty('--read', clamped);
+  localStorage.setItem('studyhub_read', clamped);
+  const fill = document.getElementById('readFill');
+  if (fill) fill.style.width = Math.round(((clamped - READ_MIN) / (READ_MAX - READ_MIN)) * 100) + '%';
+}
+function currentReadScale() { return parseFloat(localStorage.getItem('studyhub_read')) || 1; }
+document.getElementById('readDown').addEventListener('click', () => applyReadScale(currentReadScale() - READ_STEP));
+document.getElementById('readUp').addEventListener('click', () => applyReadScale(currentReadScale() + READ_STEP));
+
 /* ---- card cursor spotlight ---- */
 let spotCard = null;
 const prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -276,10 +289,16 @@ async function bootApp() {
   connectSocket();
   renderThemeSwatches();
   applyTheme(localStorage.getItem('studyhub_theme') || 'midnight');
+  applyReadScale(currentReadScale());
   renderAll();
   setView('dashboard');
   loadQBank();
   loadSrsDue();
+  hideBootSplash();
+}
+function hideBootSplash() {
+  const s = document.getElementById('bootSplash');
+  if (s) { s.classList.add('gone'); setTimeout(() => s.remove(), 600); }
 }
 
 (async function initial() {
@@ -290,6 +309,7 @@ async function bootApp() {
   } catch (e) {
     authScreen.hidden = false;
     refreshBootstrapHint();
+    hideBootSplash();
   }
 })();
 
