@@ -133,6 +133,7 @@ const STATE = {
   resources: [],
   questions: [],
   flashcards: [],
+  diagrams: [],
   users: [],
   personal: { tasks: [], pomodoro: { focus: 25, short: 5, long: 15, sessions: [] }, planner: { blocks: [], cells: {}, exams: [] }, qbank: [], qAnswers: [], srs: {} },
   qbank: [],
@@ -261,6 +262,7 @@ async function bootApp() {
   STATE.resources = state.resources;
   STATE.questions = state.questions;
   STATE.flashcards = state.flashcards;
+  STATE.diagrams = state.diagrams;
   STATE.users = state.users;
   STATE.me = state.me;
   STATE.personal = personalRes.personal;
@@ -385,6 +387,8 @@ function connectSocket() {
   socket.on('question:deleted', ({ id }) => { STATE.questions = STATE.questions.filter((q) => q.id !== id); document.getElementById('cnt-questions').textContent = STATE.questions.length; if (STATE.currentView === 'practice') renderQuestionList(); });
   socket.on('flashcard:added', ({ card }) => { STATE.flashcards.push(card); if (STATE.currentView === 'flashcards') renderFlashcardList(); loadSrsDue(); });
   socket.on('flashcard:deleted', ({ id }) => { STATE.flashcards = STATE.flashcards.filter((c) => c.id !== id); if (STATE.currentView === 'flashcards') renderFlashcardList(); loadSrsDue(); });
+  socket.on('diagram:added', ({ diagram }) => { STATE.diagrams.push(diagram); if (STATE.currentView === 'diagrams') renderDiagrams(); });
+  socket.on('diagram:deleted', ({ id }) => { STATE.diagrams = STATE.diagrams.filter((d) => d.id !== id); if (STATE.currentView === 'diagrams') renderDiagrams(); });
   socket.on('question:bulkAdded', ({ questions }) => { STATE.questions.push(...questions); document.getElementById('cnt-questions').textContent = STATE.questions.length; if (STATE.currentView === 'practice') { renderQuestionList(); populateQFilterSubjects(); } });
   socket.on('flashcard:bulkAdded', ({ cards }) => { STATE.flashcards.push(...cards); if (STATE.currentView === 'flashcards') renderFlashcardList(); loadSrsDue(); });
   socket.on('bulk:result', ({ kind, added, skipped }) => { toast(`Imported ${added} ${kind}${added === 1 ? '' : 's'}${skipped ? ` (${skipped} row${skipped === 1 ? '' : 's'} skipped)` : ''}`); });
@@ -416,7 +420,7 @@ function switchRoom(room) {
 }
 
 /* ================= NAV / ROUTING ================= */
-const VIEWS = ['dashboard', 'chat', 'subjects', 'notes', 'planner', 'practice', 'flashcards', 'qbank', 'pomodoro', 'tasks', 'calculators', 'labvalues', 'mnemonics', 'resources', 'admin'];
+const VIEWS = ['dashboard', 'chat', 'subjects', 'notes', 'planner', 'practice', 'flashcards', 'qbank', 'pomodoro', 'tasks', 'calculators', 'labvalues', 'diagrams', 'mnemonics', 'resources', 'admin'];
 function setView(name) {
   if (!VIEWS.includes(name)) name = 'dashboard';
   STATE.currentView = name;
@@ -787,6 +791,7 @@ function refreshSubjectDependents() {
   document.getElementById('mnemoSubject').innerHTML = subjectOptionsHTML();
   document.getElementById('qSubject').innerHTML = subjectOptionsHTML();
   document.getElementById('fcSubject').innerHTML = subjectOptionsHTML();
+  document.getElementById('dgSubject').innerHTML = subjectOptionsHTML();
   populateQFilterSubjects();
   renderChatRooms();
   renderDashboard();
@@ -1070,6 +1075,65 @@ function renderCalculators() {
     inputs.forEach((el) => el.addEventListener('input', recompute));
     recompute();
   });
+}
+
+/* ================= DIAGRAMS ================= */
+function sanitizeSVG(raw) {
+  try {
+    const doc = new DOMParser().parseFromString(String(raw || ''), 'image/svg+xml');
+    if (doc.querySelector('parsererror')) return null;
+    const svg = doc.documentElement;
+    if (!svg || svg.nodeName.toLowerCase() !== 'svg') return null;
+    ['script', 'foreignObject', 'iframe', 'embed', 'object'].forEach((tag) => doc.querySelectorAll(tag).forEach((el) => el.remove()));
+    doc.querySelectorAll('*').forEach((el) => {
+      Array.from(el.attributes).forEach((attr) => {
+        const name = attr.name.toLowerCase();
+        const val = attr.value || '';
+        if (name.startsWith('on')) el.removeAttribute(attr.name);
+        else if ((name === 'href' || name === 'xlink:href') && !val.trim().startsWith('#')) el.removeAttribute(attr.name);
+        else if (/javascript:/i.test(val)) el.removeAttribute(attr.name);
+      });
+    });
+    if (!svg.getAttribute('role')) svg.setAttribute('role', 'img');
+    return new XMLSerializer().serializeToString(svg);
+  } catch (e) { return null; }
+}
+document.getElementById('dgAddToggle').addEventListener('click', () => {
+  const f = document.getElementById('dgAddForm');
+  f.style.display = f.style.display === 'none' ? 'block' : 'none';
+  document.getElementById('dgSubject').innerHTML = subjectOptionsHTML();
+});
+document.getElementById('dgCancel').addEventListener('click', () => (document.getElementById('dgAddForm').style.display = 'none'));
+document.getElementById('dgSvg').addEventListener('input', () => {
+  const clean = sanitizeSVG(document.getElementById('dgSvg').value);
+  document.getElementById('dgPreview').innerHTML = clean || '';
+});
+document.getElementById('dgSave').addEventListener('click', () => {
+  const subjectId = document.getElementById('dgSubject').value;
+  const title = document.getElementById('dgTitle').value.trim();
+  const caption = document.getElementById('dgCaption').value.trim();
+  const svg = document.getElementById('dgSvg').value.trim();
+  if (!title) return toast('Give the diagram a title');
+  if (!sanitizeSVG(svg)) return toast('That doesn\'t look like valid, safe SVG markup');
+  STATE.socket.emit('diagram:add', { subjectId, title, caption, svg });
+  document.getElementById('dgTitle').value = ''; document.getElementById('dgCaption').value = ''; document.getElementById('dgSvg').value = ''; document.getElementById('dgPreview').innerHTML = '';
+  document.getElementById('dgAddForm').style.display = 'none';
+});
+function renderDiagrams() {
+  const grid = document.getElementById('dgGrid');
+  if (!STATE.diagrams.length) { grid.innerHTML = `<div class="empty" style="grid-column:1/-1"><div class="big">📐</div>No diagrams yet — add the first one above.</div>`; return; }
+  grid.innerHTML = STATE.diagrams.map((d) => {
+    const s = subjectById(d.subjectId);
+    const clean = sanitizeSVG(d.svg);
+    const canDel = d.authorId === STATE.me.id || STATE.me.role === 'admin';
+    return `<div class="card dg-card">
+      <div class="dg-head">${s ? `<span class="badge"><span class="dot" style="background:${s.color}"></span>${escapeHTML(s.name)}</span>` : ''}<div style="font-weight:700;margin-top:6px">${escapeHTML(d.title)}</div></div>
+      <figure class="diagram-figure">${clean || '<div class="empty">Could not render this diagram</div>'}</figure>
+      ${d.caption ? `<figcaption>${escapeHTML(d.caption)}</figcaption>` : ''}
+      <div class="dg-meta"><span>by ${escapeHTML(d.authorName)}</span>${canDel ? `<button class="btn icon ghost danger" data-dg-del="${d.id}" style="margin-left:auto">${ICONS.trash}</button>` : ''}</div>
+    </div>`;
+  }).join('');
+  grid.querySelectorAll('[data-dg-del]').forEach((b) => b.addEventListener('click', () => STATE.socket.emit('diagram:delete', { id: b.dataset.dgDel })));
 }
 
 /* ================= MNEMONICS ================= */
@@ -1609,6 +1673,9 @@ function buildSearchGroups(q) {
   const labHits = LAB_VALUES.filter((l) => l.test.toLowerCase().includes(q)).slice(0, 4);
   if (labHits.length) groups.push({ label: 'Lab values', items: labHits.map((l) => ({ text: `${l.test} — ${l.range}`, action: () => { setView('labvalues'); document.getElementById('labSearch').value = l.test; renderLabValues(); } })) });
 
+  const dgHits = STATE.diagrams.filter((d) => d.title.toLowerCase().includes(q)).slice(0, 4);
+  if (dgHits.length) groups.push({ label: 'Diagrams', items: dgHits.map((d) => ({ text: d.title, action: () => setView('diagrams') })) });
+
   const navTargets = [
     ['dashboard', 'Dashboard'], ['chat', 'Chat'], ['subjects', 'Subjects'], ['planner', 'Planner'],
     ['practice', 'Practice Questions'], ['flashcards', 'Flashcards'], ['qbank', 'Q-Bank Tracker'],
@@ -1681,12 +1748,14 @@ function renderAll() {
   document.getElementById('mnemoSubject').innerHTML = subjectOptionsHTML();
   document.getElementById('qSubject').innerHTML = subjectOptionsHTML();
   document.getElementById('fcSubject').innerHTML = subjectOptionsHTML();
+  document.getElementById('dgSubject').innerHTML = subjectOptionsHTML();
   populateQFilterSubjects();
   renderChatRooms();
   renderPlanner();
   renderTasks();
   renderCalculators();
   renderLabValues();
+  renderDiagrams();
   renderMnemonics();
   renderResources();
   renderQuestionList();

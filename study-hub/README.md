@@ -77,6 +77,21 @@ invite code, which the admin generates from **Manage → Invites**.
 - **Study streak heatmap** — a GitHub-style contribution calendar on the
   dashboard, built from your pomodoro sessions, Q-bank log entries, practice
   question answers, and flashcard reviews.
+- **Diagrams** — a dedicated gallery for hand-authored, native inline SVG
+  diagrams (rects, lines, paths, text — no raster images, no diagram-library
+  auto-layout). Paste a complete `<svg>…</svg>` element with a live preview
+  before saving; it's sanitized both server-side (rejects `<script>`, event
+  handlers, `javascript:` URIs, `foreignObject`, non-fragment `href`s
+  outright) and client-side at render time (defense in depth), and themes
+  automatically since diagrams are expected to draw in `currentColor`.
+- **Bulk import API** (`POST /api/import`) — populate an entire subject in
+  one authenticated HTTP call: topics, notes, mnemonics, resources,
+  questions, flashcards, and diagrams all in a single JSON payload, found-
+  or-created by subject name so repeat imports don't duplicate a subject.
+  Built so a research/authoring session (human or AI) can fill the app
+  reliably via `curl`/`fetch` instead of clicking through forms — every
+  item it creates broadcasts live to connected users exactly like a manual
+  add would.
 - **Command palette (Ctrl/Cmd+K)** — search subjects, topics, notes,
   mnemonics, resources, questions, flashcards, lab values, or jump straight
   to any page, all from one keyboard-driven modal.

@@ -23,6 +23,7 @@ function defaultDB() {
     resources: [],
     questions: [],   // {id, subjectId, stem, choices:[{id,text}], correctChoiceId, explanation, tags:[], authorId, authorName, createdAt}
     flashcards: [],  // {id, subjectId, front, back, authorId, authorName, createdAt}
+    diagrams: [],    // {id, subjectId, title, caption, svg, authorId, authorName, createdAt}
     personal: {}, // userId -> { tasks, pomodoro, planner, qbank, qAnswers, srs }
     progress: {}  // userId -> { [topicId]: true }
   };

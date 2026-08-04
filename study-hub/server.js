@@ -61,6 +61,14 @@ function topicPayload(subject, topic, userId) {
     mine: !!(userId && progress[userId] && progress[userId][topic.id])
   };
 }
+const SVG_BLOCKLIST = /<script|<foreignobject|<iframe|<embed|<object|javascript:|on\w+\s*=/i;
+function looksLikeSafeSvg(svg) {
+  const trimmed = (svg || '').trim();
+  if (!trimmed.startsWith('<svg') || !trimmed.endsWith('</svg>')) return false;
+  if (SVG_BLOCKLIST.test(trimmed)) return false;
+  if (trimmed.length > 40000) return false;
+  return true;
+}
 function safeQuestion(q) {
   return { id: q.id, subjectId: q.subjectId, stem: q.stem, choices: q.choices, tags: q.tags, authorId: q.authorId, authorName: q.authorName, createdAt: q.createdAt };
 }
@@ -147,6 +155,7 @@ app.get('/api/state', requireAuth, (req, res) => {
     resources: store.db.resources,
     questions: store.db.questions.map(safeQuestion),
     flashcards: store.db.flashcards,
+    diagrams: store.db.diagrams,
     users: store.db.users.filter((u) => !u.banned).map(publicUser)
   });
 });
@@ -390,7 +399,8 @@ app.get('/api/admin/stats', requireAdmin, (req, res) => {
       resources: store.db.resources.length,
       qbankEntries: Object.values(store.db.personal).reduce((a, p) => a + p.qbank.length, 0),
       questions: store.db.questions.length,
-      flashcards: store.db.flashcards.length
+      flashcards: store.db.flashcards.length,
+      diagrams: store.db.diagrams.length
     }
   });
 });
@@ -414,6 +424,7 @@ app.delete('/api/admin/subjects/:id', requireAdmin, (req, res) => {
   store.db.subjects = store.db.subjects.filter((s) => s.id !== id);
   store.db.questions = store.db.questions.filter((q) => q.subjectId !== id);
   store.db.flashcards = store.db.flashcards.filter((c) => c.subjectId !== id);
+  store.db.diagrams = store.db.diagrams.filter((d) => d.subjectId !== id);
   persist();
   io.emit('subject:deleted', { id });
   res.json({ ok: true });
@@ -422,6 +433,144 @@ app.delete('/api/admin/subjects/:id', requireAdmin, (req, res) => {
 app.get('/api/admin/export', requireAdmin, (req, res) => {
   res.setHeader('Content-Disposition', 'attachment; filename="study-hub-backup.json"');
   res.json(store.db);
+});
+
+/* ================= BULK IMPORT =================
+ * One call to populate a subject with everything at once — built for a
+ * research/authoring session (human or AI) to fill the app via simple HTTP
+ * calls instead of clicking through forms. Requires only a normal logged-in
+ * session; every item is broadcast live via the same socket events a manual
+ * add would trigger, and content is attributed to the calling user. */
+app.post('/api/import', requireAuth, (req, res) => {
+  const body = req.body || {};
+  const created = { topics: 0, mnemonics: 0, resources: 0, questions: 0, flashcards: 0, diagrams: 0 };
+  const skipped = { topics: 0, mnemonics: 0, resources: 0, questions: 0, flashcards: 0, diagrams: 0 };
+  const errors = [];
+
+  // resolve or create the subject
+  let subject = null;
+  if (body.subject && body.subject.id) {
+    subject = store.db.subjects.find((s) => s.id === body.subject.id);
+    if (!subject) errors.push(`subject.id "${body.subject.id}" not found`);
+  } else if (body.subject && body.subject.name) {
+    const name = String(body.subject.name).trim().slice(0, 60);
+    subject = store.db.subjects.find((s) => s.name.toLowerCase() === name.toLowerCase());
+    if (!subject && name) {
+      subject = {
+        id: uid('subj'), name, color: (body.subject.color && /^#[0-9a-f]{6}$/i.test(body.subject.color)) ? body.subject.color : randomColor(),
+        topics: [], notes: '', notesUpdatedBy: null, notesUpdatedAt: null, notesHistory: []
+      };
+      store.db.subjects.push(subject);
+      io.emit('subject:created', { subject: subjectPayload(subject, null) });
+    }
+  }
+  const subjectId = subject ? subject.id : (body.subjectId || null);
+  if (body.subject && !subject && !subjectId) return res.status(400).json({ error: 'Could not resolve or create the subject', errors });
+
+  // topics
+  if (subject && Array.isArray(body.topics)) {
+    body.topics.forEach((raw) => {
+      const name = String(raw || '').trim().slice(0, 100);
+      if (!name) { skipped.topics++; return; }
+      if (subject.topics.some((t) => t.name.toLowerCase() === name.toLowerCase())) { skipped.topics++; return; }
+      const topic = { id: uid('top'), name };
+      subject.topics.push(topic);
+      created.topics++;
+      io.emit('topic:added', { subjectId: subject.id, topic: topicPayload(subject, topic, null) });
+    });
+  }
+
+  // notes (replace or append)
+  if (subject && body.notes && typeof body.notes.text === 'string') {
+    const mode = body.notes.mode === 'append' ? 'append' : 'replace';
+    const now = Date.now();
+    if (subject.notes && subject.notes.trim()) {
+      if (!subject.notesHistory) subject.notesHistory = [];
+      subject.notesHistory.push({ text: subject.notes, authorName: subject.notesUpdatedBy || 'Unknown', ts: subject.notesUpdatedAt || now });
+      if (subject.notesHistory.length > 20) subject.notesHistory.shift();
+    }
+    subject.notes = (mode === 'append' && subject.notes ? subject.notes + '\n\n' : '') + body.notes.text.slice(0, 20000);
+    subject.notes = subject.notes.slice(0, 20000);
+    subject.notesUpdatedBy = req.user.username;
+    subject.notesUpdatedAt = now;
+    io.to('subject:' + subject.id).emit('note:updated', { subjectId: subject.id, text: subject.notes, updatedBy: subject.notesUpdatedBy, updatedAt: now });
+  }
+
+  // mnemonics
+  if (Array.isArray(body.mnemonics)) {
+    body.mnemonics.forEach((raw) => {
+      const term = String((raw && raw.term) || '').trim().slice(0, 80);
+      const prompt = String((raw && raw.prompt) || '').trim().slice(0, 300);
+      if (!term || !prompt) { skipped.mnemonics++; return; }
+      const m = { id: uid('mn'), subjectId, term, prompt, answer: String((raw && raw.answer) || '').trim().slice(0, 600), authorId: req.user.id, authorName: req.user.username, createdAt: Date.now() };
+      store.db.mnemonics.unshift(m);
+      created.mnemonics++;
+      io.emit('mnemonic:added', { mnemonic: m });
+    });
+  }
+
+  // resources
+  if (Array.isArray(body.resources)) {
+    body.resources.forEach((raw) => {
+      const title = String((raw && raw.title) || '').trim().slice(0, 100);
+      let url = String((raw && raw.url) || '').trim().slice(0, 400);
+      if (!title || !url) { skipped.resources++; return; }
+      if (!/^https?:\/\//i.test(url)) url = 'https://' + url;
+      const r = { id: uid('res'), subjectId, title, url, category: String((raw && raw.category) || 'Other').slice(0, 30), authorId: req.user.id, authorName: req.user.username, createdAt: Date.now() };
+      store.db.resources.unshift(r);
+      created.resources++;
+      io.emit('resource:added', { resource: r });
+    });
+  }
+
+  // questions
+  if (Array.isArray(body.questions)) {
+    body.questions.forEach((raw) => {
+      const stem = String((raw && raw.stem) || '').trim().slice(0, 1000);
+      const choices = Array.isArray(raw && raw.choices) ? raw.choices.map((c) => String(c || '').trim().slice(0, 300)).filter(Boolean) : [];
+      const idx = +(raw && raw.correctIndex);
+      if (!stem || choices.length < 2 || choices.length > 6 || !(idx >= 0 && idx < choices.length)) { skipped.questions++; return; }
+      const choiceObjs = choices.map((text) => ({ id: uid('c'), text }));
+      const q = {
+        id: uid('q'), subjectId, stem, choices: choiceObjs, correctChoiceId: choiceObjs[idx].id,
+        explanation: String((raw && raw.explanation) || '').trim().slice(0, 2000),
+        tags: Array.isArray(raw && raw.tags) ? raw.tags.map((t) => String(t).trim().slice(0, 30)).filter(Boolean).slice(0, 6) : [],
+        authorId: req.user.id, authorName: req.user.username, createdAt: Date.now()
+      };
+      store.db.questions.push(q);
+      created.questions++;
+      io.emit('question:added', { question: safeQuestion(q) });
+    });
+  }
+
+  // flashcards
+  if (Array.isArray(body.flashcards)) {
+    body.flashcards.forEach((raw) => {
+      const front = String((raw && raw.front) || '').trim().slice(0, 500);
+      const back = String((raw && raw.back) || '').trim().slice(0, 1000);
+      if (!front || !back) { skipped.flashcards++; return; }
+      const card = { id: uid('fc'), subjectId, front, back, authorId: req.user.id, authorName: req.user.username, createdAt: Date.now() };
+      store.db.flashcards.push(card);
+      created.flashcards++;
+      io.emit('flashcard:added', { card });
+    });
+  }
+
+  // diagrams — hand-authored inline SVG only (see server-side looksLikeSafeSvg guard)
+  if (Array.isArray(body.diagrams)) {
+    body.diagrams.forEach((raw) => {
+      const title = String((raw && raw.title) || '').trim().slice(0, 100);
+      const svg = (raw && raw.svg) || '';
+      if (!title || !looksLikeSafeSvg(svg)) { skipped.diagrams++; return; }
+      const d = { id: uid('dg'), subjectId, title, caption: String((raw && raw.caption) || '').trim().slice(0, 300), svg: svg.trim().slice(0, 40000), authorId: req.user.id, authorName: req.user.username, createdAt: Date.now() };
+      store.db.diagrams.push(d);
+      created.diagrams++;
+      io.emit('diagram:added', { diagram: d });
+    });
+  }
+
+  persist();
+  res.json({ ok: true, subjectId, subjectName: subject ? subject.name : null, created, skipped, errors });
 });
 
 /* ================= static frontend ================= */
@@ -687,6 +836,23 @@ io.on('connection', (socket) => {
     for (const uidKey of Object.keys(store.db.personal)) delete store.db.personal[uidKey].srs[id];
     persist();
     io.emit('flashcard:deleted', { id });
+  });
+
+  socket.on('diagram:add', ({ subjectId, title, caption, svg }) => {
+    const cleanTitle = String(title || '').trim().slice(0, 100);
+    if (!cleanTitle || !looksLikeSafeSvg(svg)) return socket.emit('bulk:result', { kind: 'diagram', added: 0, skipped: 1 });
+    const d = { id: uid('dg'), subjectId: subjectId || null, title: cleanTitle, caption: String(caption || '').trim().slice(0, 300), svg: svg.trim().slice(0, 40000), authorId: user.id, authorName: user.username, createdAt: Date.now() };
+    store.db.diagrams.push(d);
+    persist();
+    io.emit('diagram:added', { diagram: d });
+  });
+  socket.on('diagram:delete', ({ id }) => {
+    const d = store.db.diagrams.find((x) => x.id === id);
+    if (!d) return;
+    if (d.authorId !== user.id && user.role !== 'admin') return;
+    store.db.diagrams = store.db.diagrams.filter((x) => x.id !== id);
+    persist();
+    io.emit('diagram:deleted', { id });
   });
 
   socket.on('pomodoro:complete', ({ minutes, subjectId }) => {
