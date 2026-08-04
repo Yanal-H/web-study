@@ -71,8 +71,15 @@ body{
   letter-spacing:-0.006em;
   transition:background .5s var(--ease), color .5s var(--ease);
 }
-.bg{position:fixed;inset:0;z-index:-2;background:var(--aurora);background-size:180% 180%;background-color:var(--bg-0);transition:background-color .6s var(--ease);animation:auroraDrift 50s ease-in-out infinite alternate}
+.bg{position:fixed;inset:0;z-index:-2;overflow:hidden;background:var(--aurora);background-size:180% 180%;background-color:var(--bg-0);transition:background-color .6s var(--ease);animation:auroraDrift 50s ease-in-out infinite alternate}
+.bg::before,.bg::after{content:'';position:absolute;border-radius:50%;filter:blur(70px);opacity:.5;pointer-events:none;mix-blend-mode:screen}
+.bg::before{width:46vw;height:46vw;left:-8vw;top:-10vw;background:radial-gradient(circle,var(--brand),transparent 68%);animation:orbA 34s ease-in-out infinite alternate}
+.bg::after{width:40vw;height:40vw;right:-6vw;bottom:-12vw;background:radial-gradient(circle,var(--brand-2),transparent 68%);animation:orbB 42s ease-in-out infinite alternate}
+[data-theme="paper"] .bg::before,[data-theme="paper"] .bg::after{opacity:.2;mix-blend-mode:normal}
+@keyframes orbA{0%{transform:translate(0,0) scale(1)}100%{transform:translate(22vw,18vh) scale(1.15)}}
+@keyframes orbB{0%{transform:translate(0,0) scale(1.1)}100%{transform:translate(-18vw,-14vh) scale(.9)}}
 @keyframes auroraDrift{0%{background-position:0% 20%}50%{background-position:100% 60%}100%{background-position:40% 100%}}
+@media (prefers-reduced-motion: reduce){ .bg::before,.bg::after{animation:none} }
 @media (prefers-reduced-motion: reduce){ .bg{animation:none} }
 h1,h2,h3,.display{font-family:'Fraunces',serif;letter-spacing:-0.021em;line-height:1.2;font-optical-sizing:auto}
 button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}

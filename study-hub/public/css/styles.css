@@ -9,7 +9,22 @@
    re-tinted defaults): a triadic or analogous 3-color harmony for
    --brand/--brand-2/--brand-3, tuned for both a punchy gradient AND
    individually legible accent chips. */
-:root, [data-theme="midnight"]{
+/* Cosmos — premium default: deep-space indigo, luminous periwinkle→violet→aqua */
+:root, [data-theme="cosmos"]{
+  --bg-0:#06060f; --bg-1:#0b0b1c; --bg-2:#111025;
+  --surface:#15152fe3; --surface-2:#1c1c3ee6; --surface-3:#26264fcc;
+  --line:#2d2d5e; --line-2:#41417f; --line-soft:#242450;
+  --text:#f1f1ff; --text-2:#b6b6e6; --muted:#7878ab; --faint:#4c4c78;
+  --brand:#8b8dff; --brand-2:#c58bff; --brand-3:#54e6d6;
+  --danger:#ff6b8b; --warn:#ffc16b; --good:#4ee39a; --info:#6ba8ff;
+  --grad-brand:linear-gradient(135deg,#8b8dff 0%,#c58bff 50%,#ff97cf 100%);
+  --grad-card:linear-gradient(160deg,#1a1948 0%,#121130 100%);
+  --aurora:radial-gradient(55% 50% at 12% 0%, #8b8dff36 0%, transparent 62%),radial-gradient(48% 55% at 88% 8%, #c58bff30 0%, transparent 60%),radial-gradient(65% 55% at 50% 105%, #54e6d620 0%, transparent 66%),radial-gradient(38% 38% at 82% 78%, #ff97cf24 0%, transparent 60%);
+  --shadow-sm:0 1px 2px #0008; --shadow-md:0 12px 34px #0009,0 3px 10px #000a; --shadow-lg:0 34px 80px #000c,0 8px 20px #000a;
+  --shadow-glow:0 0 0 1px #8b8dff38, 0 20px 55px #8b8dff40;
+  color-scheme:dark;
+}
+[data-theme="midnight"]{
   --bg-0:#07070f; --bg-1:#0c0c1e; --bg-2:#101026;
   --surface:#151532e0; --surface-2:#1c1c40e0; --surface-3:#26264fcc;
   --line:#2c2c58; --line-2:#3d3d78; --line-soft:#242452;
@@ -149,7 +164,15 @@ body{
   font-size:var(--fs-base);letter-spacing:-0.006em;
   transition:background .5s, color .5s;
 }
-.bg{position:fixed;inset:0;z-index:-2;background:var(--aurora);background-size:180% 180%;background-color:var(--bg-0);transition:background-color .6s;animation:auroraDrift 50s ease-in-out infinite alternate}
+.bg{position:fixed;inset:0;z-index:-2;background:var(--aurora);background-size:180% 180%;background-color:var(--bg-0);transition:background-color .6s;animation:auroraDrift 50s ease-in-out infinite alternate;overflow:hidden}
+/* slow floating ambient orbs — depth behind the UI (2026 look) */
+.bg::before,.bg::after{content:'';position:absolute;border-radius:50%;filter:blur(70px);opacity:.5;pointer-events:none;mix-blend-mode:screen}
+.bg::before{width:46vw;height:46vw;left:-8vw;top:-10vw;background:radial-gradient(circle,var(--brand),transparent 68%);animation:orbA 34s ease-in-out infinite alternate}
+.bg::after{width:40vw;height:40vw;right:-6vw;bottom:-12vw;background:radial-gradient(circle,var(--brand-2),transparent 68%);animation:orbB 42s ease-in-out infinite alternate}
+[data-theme="paper"] .bg::before,[data-theme="paper"] .bg::after{opacity:.22;mix-blend-mode:normal}
+@keyframes orbA{0%{transform:translate(0,0) scale(1)}100%{transform:translate(22vw,18vh) scale(1.15)}}
+@keyframes orbB{0%{transform:translate(0,0) scale(1.1)}100%{transform:translate(-18vw,-14vh) scale(.9)}}
+@media (prefers-reduced-motion: reduce){ .bg::before,.bg::after{animation:none} }
 @keyframes auroraDrift{
   0%{background-position:0% 20%}
   50%{background-position:100% 60%}
@@ -487,6 +510,22 @@ tr:last-child td{border-bottom:none}
 .cmdk-hit{display:block;width:100%;text-align:left;padding:10px 12px;border-radius:10px;font-size:.87rem;color:var(--text-2);transition:background .1s}
 .cmdk-hit.sel{background:var(--grad-brand);color:#0b0d17;font-weight:600}
 
+.help-fab{position:fixed;right:20px;bottom:20px;width:38px;height:38px;border-radius:50%;background:var(--surface);border:1px solid var(--line-2);color:var(--text-2);font-weight:800;font-size:1rem;box-shadow:var(--shadow-md);backdrop-filter:blur(12px);z-index:90;transition:transform .2s var(--spring),color .2s,border-color .2s}
+.help-fab:hover{transform:translateY(-2px) scale(1.06);color:var(--text);border-color:var(--brand)}
+@media (max-width:900px){ .help-fab{display:none} }
+
+/* ---- SHORTCUTS OVERLAY ---- */
+.shortcuts-modal{width:min(480px,92vw);background:var(--bg-1);border:1px solid var(--line-2);border-radius:16px;box-shadow:var(--shadow-lg);overflow:hidden;animation:cmdkIn .18s var(--spring)}
+.shortcuts-head{display:flex;align-items:center;justify-content:space-between;padding:15px 18px;border-bottom:1px solid var(--line-soft);font-size:var(--fs-md);font-family:'Fraunces',serif}
+.shortcuts-body{padding:8px 18px 18px;max-height:70vh;overflow-y:auto}
+.shortcuts-group{margin-top:14px}
+.shortcuts-title{font-size:.66rem;text-transform:uppercase;letter-spacing:.08em;color:var(--faint);font-weight:700;margin-bottom:8px}
+.sc{display:flex;align-items:center;justify-content:space-between;padding:7px 0;font-size:var(--fs-sm);color:var(--text-2);border-bottom:1px solid var(--line-soft)}
+.sc:last-child{border-bottom:none}
+.sc-keys{display:flex;align-items:center;gap:4px}
+.sc-or{color:var(--faint);font-size:.72rem;margin:0 2px}
+.shortcuts-body kbd,.cmdk-esc{font-family:'JetBrains Mono',monospace;font-size:.7rem;font-weight:700;background:var(--surface-2);border:1px solid var(--line);border-bottom-width:2px;border-radius:6px;padding:2px 7px;color:var(--text);min-width:18px;text-align:center;display:inline-block}
+
 /* ---- PRACTICE QUESTIONS ---- */
 .choice-btn{display:flex;align-items:center;gap:10px;width:100%;text-align:left;padding:11px 14px;border-radius:12px;background:var(--surface-2);border:1.5px solid var(--line-soft);font-size:.87rem;transition:border-color .15s,background .15s}
 .choice-btn:hover:not(:disabled){border-color:var(--brand)}
@@ -502,6 +541,28 @@ tr:last-child td{border-bottom:none}
 
 /* ---- FLASHCARDS ---- */
 .flash-card{border:1px solid var(--line-soft);border-radius:16px;background:var(--grad-card);overflow:hidden}
+.review-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.review-progress{height:6px;border-radius:99px;background:var(--surface-3);overflow:hidden;margin-bottom:18px}
+.review-progress > i{display:block;height:100%;width:0;background:var(--grad-brand);border-radius:99px;transition:width .35s var(--ease-out)}
+/* 3D flip card */
+.flip3d{perspective:1400px;max-width:560px;margin:0 auto;cursor:pointer}
+.flip3d-inner{position:relative;transform-style:preserve-3d;transition:transform .55s var(--spring);min-height:240px}
+.flip3d.flipped .flip3d-inner{transform:rotateY(180deg)}
+.flip-face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border:1px solid var(--line-2);border-radius:18px;background:var(--grad-card);box-shadow:var(--shadow-md);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:28px 26px;overflow:auto}
+.flip-front{background:linear-gradient(160deg,var(--surface-2),var(--surface))}
+.flip-back{transform:rotateY(180deg);border-color:var(--brand)}
+.flip-back::before{content:'ANSWER';position:absolute;top:12px;left:16px;font-size:.6rem;font-weight:800;letter-spacing:.12em;color:var(--brand)}
+.flip-content{font-size:var(--fs-md);line-height:var(--lh-relaxed);width:100%}
+.flip-hint{position:absolute;bottom:12px;left:0;right:0;text-align:center;font-size:.68rem;color:var(--faint);letter-spacing:.02em}
+.kbd-inline{font-size:.62rem;font-weight:700;font-family:'JetBrains Mono',monospace;background:#0b0d1733;border-radius:5px;padding:1px 5px;margin-left:2px}
+.rate-row{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;max-width:560px;margin:18px auto 0}
+.rate-btn{position:relative;flex-direction:column;gap:3px;padding:11px 6px;font-size:var(--fs-sm)}
+.rate-btn .rk{display:grid;place-items:center;width:20px;height:20px;border-radius:6px;background:var(--surface-3);font-family:'JetBrains Mono',monospace;font-size:.68rem;font-weight:700;margin-bottom:2px}
+.rate-btn[data-rate="again"]{color:var(--danger)} .rate-btn[data-rate="again"]:hover{border-color:var(--danger);box-shadow:0 0 0 1px var(--danger)}
+.rate-btn[data-rate="hard"]{color:var(--warn)} .rate-btn[data-rate="hard"]:hover{border-color:var(--warn);box-shadow:0 0 0 1px var(--warn)}
+.rate-btn[data-rate="good"]{color:var(--good)} .rate-btn[data-rate="good"]:hover{border-color:var(--good);box-shadow:0 0 0 1px var(--good)}
+.rate-btn[data-rate="easy"]{color:var(--info)} .rate-btn[data-rate="easy"]:hover{border-color:var(--info);box-shadow:0 0 0 1px var(--info)}
+@media (prefers-reduced-motion: reduce){ .flip3d-inner{transition:none} }
 .fc-row{display:flex;align-items:center;gap:10px;padding:9px 4px;border-bottom:1px solid var(--line-soft);font-size:.83rem}
 .fc-row:last-child{border-bottom:none}
 .fc-row .front{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}

@@ -13,7 +13,7 @@ const ICONS = {
   clock: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l3 2M9 2h6"/></svg>',
   chat: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5Z"/></svg>'
 };
-const THEMES = ['midnight', 'aurora', 'sunset', 'forest', 'neon', 'bloom', 'ocean', 'paper'];
+const THEMES = ['cosmos', 'midnight', 'aurora', 'sunset', 'forest', 'neon', 'bloom', 'ocean', 'paper'];
 
 function escapeHTML(str) { return String(str ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c])); }
 function timeAgo(ts) {
@@ -190,6 +190,7 @@ if (!prefersReducedMotion) {
 function renderThemeSwatches() {
   const wrap = document.getElementById('themeSwatches');
   const grads = {
+    cosmos: 'linear-gradient(135deg,#8b8dff,#c58bff,#ff97cf)',
     midnight: 'linear-gradient(135deg,#7c83ff,#b083ff,#ff8fd0)',
     aurora: 'linear-gradient(135deg,#22d3ee,#818cf8,#34d399)',
     sunset: 'linear-gradient(135deg,#fb7185,#fb923c,#fbbf24)',
@@ -285,10 +286,11 @@ async function bootApp() {
   document.getElementById('meUsername').textContent = STATE.me.username;
   document.getElementById('meRole').textContent = STATE.me.role;
   document.getElementById('adminNavGroup').hidden = STATE.me.role !== 'admin';
+  document.getElementById('helpFab').hidden = false;
 
   connectSocket();
   renderThemeSwatches();
-  applyTheme(localStorage.getItem('studyhub_theme') || 'midnight');
+  applyTheme(localStorage.getItem('studyhub_theme') || 'cosmos');
   applyReadScale(currentReadScale());
   renderAll();
   setView('dashboard');
@@ -1376,9 +1378,11 @@ function endQSession() {
 function renderCurrentQuestion() {
   const s = STATE.qSessionState;
   const q = s.queue[s.idx];
+  s.answeredCurrent = false;
   document.getElementById('qProgress').textContent = `Q${s.idx + 1} / ${s.queue.length}`;
   document.getElementById('qScore').textContent = `${s.correct}/${s.answered}`;
-  document.getElementById('qStemDisplay').textContent = q.stem;
+  document.getElementById('qProgressBar').style.width = Math.round((s.idx / s.queue.length) * 100) + '%';
+  document.getElementById('qStemDisplay').innerHTML = renderMarkdownSafe(q.stem);
   document.getElementById('qExplanationDisplay').style.display = 'none';
   document.getElementById('qNext').style.display = 'none';
   document.getElementById('qChoicesDisplay').innerHTML = q.choices.map((c, i) => `<button class="choice-btn" data-choice="${c.id}"><span class="letter">${String.fromCharCode(65 + i)}</span><span>${escapeHTML(c.text)}</span></button>`).join('');
@@ -1401,9 +1405,11 @@ function renderCurrentQuestion() {
 }
 async function answerCurrentQuestion(q, choiceId) {
   const s = STATE.qSessionState;
+  if (s.answeredCurrent) return;
+  s.answeredCurrent = true;
   document.querySelectorAll('#qChoicesDisplay [data-choice]').forEach((b) => (b.disabled = true));
   let result;
-  try { result = await apiPost(`/api/questions/${q.id}/answer`, { choiceId }); } catch (e) { return toast(e.message); }
+  try { result = await apiPost(`/api/questions/${q.id}/answer`, { choiceId }); } catch (e) { s.answeredCurrent = false; document.querySelectorAll('#qChoicesDisplay [data-choice]').forEach((b) => (b.disabled = false)); return toast(e.message); }
   s.answered++;
   if (result.correct) s.correct++;
   STATE.personal.qAnswers.unshift({ id: 'local', questionId: q.id, subjectId: q.subjectId, choiceId, correct: result.correct, ts: Date.now() });
@@ -1418,10 +1424,12 @@ async function answerCurrentQuestion(q, choiceId) {
   renderMathIn(expBox);
   const nextBtn = document.getElementById('qNext');
   nextBtn.style.display = 'inline-flex';
-  nextBtn.textContent = s.idx + 1 < s.queue.length ? 'Next question →' : 'Finish session';
-  nextBtn.onclick = () => {
+  const last = s.idx + 1 >= s.queue.length;
+  nextBtn.innerHTML = last ? 'Finish session' : 'Next question <kbd class="kbd-inline">Enter</kbd>';
+  s.advance = () => {
     s.idx++;
     if (s.idx >= s.queue.length) {
+      document.getElementById('qProgressBar').style.width = '100%';
       toast(`Session complete — ${s.correct}/${s.answered} correct`);
       if (s.answered > 0 && s.correct === s.answered) celebrate();
       endQSession();
@@ -1429,7 +1437,27 @@ async function answerCurrentQuestion(q, choiceId) {
     }
     else renderCurrentQuestion();
   };
+  nextBtn.onclick = s.advance;
 }
+/* keyboard: 1-6 or A-F select a choice, Enter advances after answering */
+document.addEventListener('keydown', (e) => {
+  const s = STATE.qSessionState;
+  if (!s || STATE.currentView !== 'practice') return;
+  if (document.getElementById('qSession').style.display === 'none') return;
+  if (document.getElementById('cmdkOverlay') && !document.getElementById('cmdkOverlay').hidden) return;
+  const tag = (e.target.tagName || '').toLowerCase();
+  if (tag === 'input' || tag === 'textarea' || tag === 'select') return;
+  const q = s.queue[s.idx];
+  if (!s.answeredCurrent) {
+    let idx = -1;
+    if (/^[1-9]$/.test(e.key)) idx = +e.key - 1;
+    else if (/^[a-fA-F]$/.test(e.key)) idx = e.key.toLowerCase().charCodeAt(0) - 97;
+    if (idx >= 0 && idx < q.choices.length) { e.preventDefault(); answerCurrentQuestion(q, q.choices[idx].id); }
+  } else if (e.key === 'Enter' || e.key === 'ArrowRight') {
+    e.preventDefault();
+    if (s.advance) s.advance();
+  }
+});
 
 document.getElementById('qImportToggle').addEventListener('click', () => {
   const f = document.getElementById('qImportForm');
@@ -1555,51 +1583,83 @@ async function loadSrsDue() {
     if (summary) summary.textContent = res.totalCards === 0 ? 'No cards yet — add some below.' : `${res.dueCount} of ${res.totalCards} cards due right now.`;
   } catch (e) { /* not logged in yet */ }
 }
+let fcSessionTotal = 0, fcFlipped = false, fcRating = false;
 document.getElementById('fcStartReview').addEventListener('click', () => {
   if (!STATE.srsDue.due.length) return toast('Nothing due right now — nice work');
   STATE.fcQueue = STATE.srsDue.due.slice();
+  fcSessionTotal = STATE.fcQueue.length;
   document.getElementById('fcReviewCard').style.display = 'block';
+  document.getElementById('fcReviewCard').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   renderCurrentFlashcard();
 });
+function reviewActive() {
+  const card = document.getElementById('fcReviewCard');
+  return STATE.currentView === 'flashcards' && card && card.style.display !== 'none' && STATE.fcQueue && STATE.fcQueue.length;
+}
 function renderCurrentFlashcard() {
   const queue = STATE.fcQueue;
+  const flip = document.getElementById('fcFlip3d');
+  flip.classList.remove('flipped'); fcFlipped = false;
   if (!queue.length) {
     document.getElementById('fcReviewMeta').textContent = 'All caught up! 🎉';
+    document.getElementById('fcReviewCounter').textContent = `${fcSessionTotal}/${fcSessionTotal}`;
+    document.getElementById('fcReviewProgress').style.width = '100%';
     document.getElementById('fcFrontDisplay').textContent = "You're done reviewing for now.";
-    document.getElementById('fcBackDisplay').style.display = 'none';
+    document.getElementById('fcBackDisplay').textContent = '';
     document.getElementById('fcFlipRow').style.display = 'none';
     document.getElementById('fcRateRow').style.display = 'none';
+    document.querySelector('#fcFlip3d .flip-hint').style.display = 'none';
     loadSrsDue();
     return;
   }
+  const done = fcSessionTotal - queue.length;
   const card = queue[0];
   const s = subjectById(card.subjectId);
-  document.getElementById('fcReviewMeta').textContent = `${queue.length} left${s ? ' · ' + s.name : ''} · ${card.srsState || 'New'}`;
+  document.getElementById('fcReviewMeta').textContent = `${s ? s.name + ' · ' : ''}${card.srsState || 'New'}`;
+  document.getElementById('fcReviewCounter').textContent = `${done + 1} / ${fcSessionTotal}`;
+  document.getElementById('fcReviewProgress').style.width = Math.round((done / fcSessionTotal) * 100) + '%';
   document.getElementById('fcFrontDisplay').innerHTML = renderMarkdownSafe(card.front);
   document.getElementById('fcBackDisplay').innerHTML = renderMarkdownSafe(card.back);
-  document.getElementById('fcBackDisplay').style.display = 'none';
   document.getElementById('fcFlipRow').style.display = 'flex';
   document.getElementById('fcRateRow').style.display = 'none';
+  document.querySelector('#fcFlip3d .flip-hint').style.display = 'block';
   renderMathIn(document.getElementById('fcFrontDisplay'));
   renderMathIn(document.getElementById('fcBackDisplay'));
 }
-document.getElementById('fcFlip').addEventListener('click', () => {
-  document.getElementById('fcBackDisplay').style.display = 'flex';
+function flipFlashcard() {
+  if (fcFlipped || !reviewActive()) return;
+  fcFlipped = true;
+  document.getElementById('fcFlip3d').classList.add('flipped');
   document.getElementById('fcFlipRow').style.display = 'none';
-  document.getElementById('fcRateRow').style.display = 'flex';
-});
-document.querySelectorAll('#fcRateRow [data-rate]').forEach((b) => b.addEventListener('click', async () => {
+  setTimeout(() => { document.getElementById('fcRateRow').style.display = 'grid'; }, 180);
+}
+document.getElementById('fcFlip').addEventListener('click', flipFlashcard);
+document.getElementById('fcFlip3d').addEventListener('click', () => { if (!fcFlipped) flipFlashcard(); });
+async function rateFlashcard(rating) {
+  if (!fcFlipped || fcRating || !reviewActive()) return;
+  fcRating = true;
   const card = STATE.fcQueue[0];
   try {
-    const { srs, intervalDays } = await apiPost('/api/srs/review', { cardId: card.id, rating: b.dataset.rate });
+    const { srs, intervalDays } = await apiPost('/api/srs/review', { cardId: card.id, rating });
     STATE.personal.srs[card.id] = srs;
     const days = intervalDays < 1 ? 'a few minutes' : intervalDays === 1 ? '1 day' : `${intervalDays} days`;
     toast(`See you again in ${days}`);
   } catch (e) { toast(e.message); }
   STATE.fcQueue.shift();
   if (STATE.fcQueue.length === 0) celebrate();
+  fcRating = false;
   renderCurrentFlashcard();
-}));
+}
+document.querySelectorAll('#fcRateRow [data-rate]').forEach((b) => b.addEventListener('click', () => rateFlashcard(b.dataset.rate)));
+/* keyboard: Space/Enter flips, 1-4 rates */
+document.addEventListener('keydown', (e) => {
+  if (!reviewActive()) return;
+  if (document.getElementById('cmdkOverlay') && !document.getElementById('cmdkOverlay').hidden) return;
+  const tag = (e.target.tagName || '').toLowerCase();
+  if (tag === 'input' || tag === 'textarea' || tag === 'select') return;
+  if (!fcFlipped && (e.key === ' ' || e.key === 'Enter')) { e.preventDefault(); flipFlashcard(); }
+  else if (fcFlipped && ['1', '2', '3', '4'].includes(e.key)) { e.preventDefault(); rateFlashcard({ '1': 'again', '2': 'hard', '3': 'good', '4': 'easy' }[e.key]); }
+});
 
 /* ================= LAB VALUES ================= */
 const LAB_VALUES = [
@@ -1758,6 +1818,21 @@ document.addEventListener('keydown', (e) => {
   else if (e.key === 'ArrowDown') { e.preventDefault(); if (cmdkFlat.length) { cmdkSel = (cmdkSel + 1) % cmdkFlat.length; highlightCmdkSel(); } }
   else if (e.key === 'ArrowUp') { e.preventDefault(); if (cmdkFlat.length) { cmdkSel = (cmdkSel - 1 + cmdkFlat.length) % cmdkFlat.length; highlightCmdkSel(); } }
   else if (e.key === 'Enter') { e.preventDefault(); const hit = cmdkFlat[cmdkSel]; if (hit) { hit.action(); closeCmdk(); } }
+});
+
+/* ---- keyboard shortcuts help overlay (?) ---- */
+const shortcutsOverlay = document.getElementById('shortcutsOverlay');
+shortcutsOverlay.addEventListener('mousedown', (e) => { if (e.target === shortcutsOverlay) shortcutsOverlay.hidden = true; });
+document.getElementById('helpFab').addEventListener('click', () => { shortcutsOverlay.hidden = false; });
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && !shortcutsOverlay.hidden) { shortcutsOverlay.hidden = true; return; }
+  if (e.key !== '?') return;
+  if (!STATE.me) return;
+  const tag = (e.target.tagName || '').toLowerCase();
+  if (tag === 'input' || tag === 'textarea' || tag === 'select' || e.target.isContentEditable) return;
+  if (!cmdkOverlay.hidden) return;
+  e.preventDefault();
+  shortcutsOverlay.hidden = !shortcutsOverlay.hidden;
 });
 
 /* ================= RENDER ALL ================= */
