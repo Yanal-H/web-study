@@ -10,25 +10,35 @@
 <!-- Fully offline: no web-font fetches. Typography uses tuned system stacks (see --font-* tokens). -->
 <style>
 /* ============================================================
-   FOUNDATION — med school study toolkit  ·  v7 (Study Engine)
+   FOUNDATION — med school study toolkit  ·  v8 (Study Engine, hardened)
    Single-file. Offline. localStorage-persisted. Zero dependencies.
-   Study Engine (baked chapter modules · textbook Reader · Recall
-   drill · MCQ practice) · Dashboard (contribution heatmap · streak
-   engine · due queue) · Subjects · Planner · SM-2 Flashcards ·
-   Q-Bank · Focus Timer (Web Audio ambient · tab-title · presets) ·
-   Markdown Notes (wikilinks · backlinks · callouts · TOC · cloze) ·
+   Study Engine (baked chapter modules · textbook Reader · SM-2+ Recall
+   drill · tutor-mode MCQ v2) · configurable scheduler + Settings drawer ·
+   Dashboard (heatmap · streak · due queue · 14-day forecast · weak spots) ·
+   Subjects · Planner · Flashcards · Q-Bank · Focus Timer · Markdown Notes ·
    Clinical Calculators (cited) · Mnemonics · Resources · ⌘K palette.
 
-   ── v7 changelog ──────────────────────────────────────────────
-   1. Offline fix: removed all Google-Fonts fetches; typography now
-      uses tuned system stacks via --font-display/-ui/-mono tokens.
-   2. Study Engine: baked MODULES array (wound-healing chapter),
-      Library + textbook Reader with sticky TOC, tables and callouts.
-   3. Recall drill (SM-2) and MCQ practice wired into the existing
-      state.flashcards and state.qbank — no parallel stores.
-   4. Schema v3: additive study{progress,drills}; dashboard "Due
-      from your chapters" widget; study actions feed streak/heatmap.
-   5. New Clinic theme; every emoji replaced with inline stroke SVGs.
+   ── v8 changelog ──────────────────────────────────────────────
+   1. Scheduler: replaced bare SM-2 with a configurable SM-2+ engine —
+      learning/relearning steps, ease deltas, hard/easy multipliers, fuzz,
+      daily new/review caps, leech handling and sibling burying. sm2() kept
+      as a thin wrapper. All tunables live in state.settings.scheduler.
+   2. Schema v4 (additive, deep-merged): new state.settings (scheduler /
+      session / mcq / appearance / goals), per-day caps, per-MCQ Leitner
+      store. Cards upgraded to foundation.card/v2 fields preserving every
+      existing ef/interval/reps/due; MCQs upgraded to foundation.mcq/v2.
+   3. Settings drawer (gear icon): live-applying controls for the scheduler,
+      session, MCQ behaviour, appearance (theme/font scale/density/reduced
+      motion), goals, plus data export/import, Anki TSV + MCQ JSON export,
+      reset-progress and hard-reset with typed confirmation.
+   4. MCQ v2: vignette+stem, per-option rationale (right & wrong), ordered
+      explanation beats, key facts, difficulty badges, single/multi/EMQ
+      types, confidence tracking, immediate/end-of-set feedback, flag+note,
+      light Leitner spacing (wrong resurfaces). Wound-healing chapter now
+      carries 95 cards + 46 MCQs (schema-validated, self-checked).
+   5. Features: undo last review, 14-day review forecast, weak-spot tag
+      analytics, cram mode, printable chapter view, ⌘K search over MCQs,
+      keyboard cheat-sheet. British spelling; no emoji; brand preserved.
    ────────────────────────────────────────────────────────────── */
 
 /* ══════════════════════════════════════════════════════════════
@@ -44,10 +54,15 @@
    4. High-yield — 3–6 exam-facing one-liners per section.
    5. Tables — convert every ≥3-item comparison into a table.
    6. Mnemonics — original, useful; never copyrighted commercial sets.
-   7. Cloze cards — 6–12 per chapter, {{c1::…}} syntax, tagged to section.
-   8. MCQs — 5–10 single-best-answer, options A–E, 0-based answer,
-      one–two-sentence explanation. Determine every answer independently
-      from medical knowledge, never from a source answer key.
+   7. Cards (foundation.card/v2) — ≥70 per chapter: basic, reversed, cloze
+      ({{c1::…}} syntax) and a few type-answer; front/back/extra/hint/
+      keyFacts/tags, tagged to section. Cover every high-yield fact and
+      comparison-table row.
+   8. MCQs (foundation.mcq/v2) — ≥45 per chapter, difficulty 1/2/3 (~40/40/20),
+      4–6 options each carrying a per-option `why` (right AND wrong), an
+      ordered `explanation[]`, `keyFacts[]`, a `teachingPoint`, and ≥1 EMQ set.
+      Determine every answer independently from medical knowledge, never from
+      a source answer key; self-check each option's rationale before baking.
    9. Faithful + safe — no fabricated facts/figures/citations; describe
       figures in words (the app renders no images); British spelling.
    10. Validate — parse JSON; assert every mcq.answer is in range and
@@ -468,7 +483,72 @@ tr:last-child td{border-bottom:none}
 .cmdk-empty{padding:22px;text-align:center;color:var(--muted);font-size:.85rem}
 .search-trigger{position:relative;margin-bottom:12px}
 .search-trigger input{width:100%;background:var(--surface-2);border:1px solid var(--line-soft);border-radius:10px;padding:8px 34px 8px 12px;font-size:.82rem;color:var(--text-2);cursor:pointer}
-.search-trigger .kbd{position:absolute;right:8px;top:50%;transform:translateY(-50%);pointer-events:none}
+.search-trigger .kbd{position:absolute;right:34px;top:50%;transform:translateY(-50%);pointer-events:none}
+.search-trigger input{padding-right:64px}
+.gear-btn{position:absolute;right:6px;top:50%;transform:translateY(-50%);width:26px;height:26px;display:grid;place-items:center;border-radius:7px;color:var(--muted);background:none}
+.gear-btn:hover{color:var(--text);background:var(--surface-3)}
+.gear-btn svg{width:16px;height:16px}
+/* Settings drawer */
+.settings-overlay{position:fixed;inset:0;z-index:160;background:#000a;backdrop-filter:blur(3px);display:flex;justify-content:flex-end}
+.settings-modal{width:min(560px,100vw);height:100%;background:var(--bg-1);border-left:1px solid var(--line-2);box-shadow:var(--shadow-lg);display:flex;flex-direction:column;animation:drawerIn .22s var(--ease)}
+@keyframes drawerIn{from{transform:translateX(30px);opacity:0}to{transform:none;opacity:1}}
+.settings-head{display:flex;align-items:center;justify-content:space-between;padding:16px 18px;border-bottom:1px solid var(--line-soft)}
+.settings-tabs{display:flex;gap:4px;padding:10px 14px;overflow-x:auto;border-bottom:1px solid var(--line-soft)}
+.settings-tab{padding:6px 12px;border-radius:8px;font-size:.8rem;font-weight:600;color:var(--text-2);background:none;white-space:nowrap}
+.settings-tab.active{background:var(--grad-brand);color:#0b0d17}
+.settings-body{flex:1;overflow-y:auto;padding:16px 18px}
+.set-group{margin-bottom:8px}
+.set-row{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:10px 0;border-bottom:1px solid var(--line-soft)}
+.set-row:last-child{border-bottom:none}
+.set-label{font-size:.86rem;font-weight:600;color:var(--text)}
+.set-desc{font-size:.72rem;color:var(--muted);margin-top:2px;max-width:300px}
+.set-ctl{flex:none;display:flex;align-items:center;gap:6px}
+.set-ctl input[type=number]{width:78px;background:var(--surface-2);border:1px solid var(--line-2);border-radius:8px;padding:6px 8px;color:var(--text);font-size:.82rem}
+.set-ctl input[type=text]{width:120px;background:var(--surface-2);border:1px solid var(--line-2);border-radius:8px;padding:6px 8px;color:var(--text);font-size:.82rem;font-family:var(--font-mono)}
+.set-ctl select{background:var(--surface-2);border:1px solid var(--line-2);border-radius:8px;padding:6px 8px;color:var(--text);font-size:.82rem}
+.switch{width:42px;height:24px;border-radius:99px;background:var(--surface-3);border:1px solid var(--line-2);position:relative;transition:background .2s;flex:none}
+.switch.on{background:var(--good);border-color:transparent}
+.switch::after{content:'';position:absolute;top:2px;left:2px;width:18px;height:18px;border-radius:50%;background:#fff;transition:transform .2s var(--spring)}
+.switch.on::after{transform:translateX(18px)}
+.set-seg{display:flex;gap:4px}
+.set-seg button{padding:5px 11px;border-radius:7px;font-size:.78rem;font-weight:600;background:var(--surface-2);border:1px solid var(--line-2);color:var(--text-2)}
+.set-seg button.on{background:var(--grad-brand);color:#0b0d17;border-color:transparent}
+.set-sec-head{display:flex;align-items:center;justify-content:space-between;margin:18px 0 4px}
+.set-sec-head:first-child{margin-top:0}
+.set-sec-title{font-size:.66rem;text-transform:uppercase;letter-spacing:.08em;color:var(--faint);font-weight:700}
+.set-restore{font-size:.7rem;color:var(--brand);font-weight:600}
+.multi-chips{display:flex;gap:5px}
+.multi-chips .chip{cursor:pointer}
+/* appearance controls */
+:root{--fs-base:1}
+[data-fs="S"]{font-size:15px}[data-fs="M"]{font-size:16px}[data-fs="L"]{font-size:17.5px}
+[data-fs="S"] .reader-prose{font-size:16px}[data-fs="L"] .reader-prose{font-size:19px}
+[data-density="compact"] .card{padding:13px}
+[data-density="compact"] .set-row{padding:7px 0}
+.reduce-motion *,.reduce-motion *::before,.reduce-motion *::after{animation:none!important;transition:none!important}
+/* review forecast + weak spots */
+.forecast{display:flex;align-items:flex-end;gap:4px;height:110px;padding-top:8px}
+.forecast .fc-bar{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;height:100%;justify-content:flex-end}
+.forecast .fc-fill{width:100%;max-width:20px;border-radius:4px 4px 0 0;background:var(--grad-brand);min-height:2px;transition:height .4s var(--ease)}
+.forecast .fc-day{font-size:.56rem;color:var(--faint);font-family:var(--font-mono)}
+.forecast .fc-n{font-size:.6rem;color:var(--muted);font-weight:700}
+.weak-row{display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:1px solid var(--line-soft)}
+.weak-row:last-child{border-bottom:none}
+.weak-row .wk-tag{flex:1;font-size:.82rem;font-weight:600}
+.weak-row .wk-bar{width:90px;height:7px;border-radius:99px;background:var(--surface-3);overflow:hidden}
+.weak-row .wk-bar i{display:block;height:100%;border-radius:99px}
+.weak-row .wk-pct{font-size:.74rem;color:var(--muted);width:34px;text-align:right;font-family:var(--font-mono)}
+@media print{
+  body *{visibility:hidden!important}
+  #printArea,#printArea *{visibility:visible!important}
+  #printArea{position:absolute;inset:0;padding:0 8mm;background:#fff;color:#000;display:block!important}
+  .bg,.sidebar,.help-fab,.gear-btn{display:none!important}
+}
+#printArea{display:none}
+#printArea h1{font-size:20pt;margin:0 0 2mm}#printArea h2{font-size:14pt;margin:5mm 0 2mm;border-bottom:1px solid #999}
+#printArea table{border-collapse:collapse;width:100%;font-size:9pt;margin:3mm 0}#printArea th,#printArea td{border:1px solid #999;padding:2mm;text-align:left;vertical-align:top}
+#printArea .p-src{font-size:9pt;color:#444;margin-bottom:4mm}#printArea .p-hy{background:#f2f2f2;padding:2mm 3mm;border-left:2pt solid #333;margin:2mm 0}
+#printArea ul{margin:1mm 0 2mm 5mm}
 
 /* --- disclaimer + misc --- */
 .disclaimer{font-size:.74rem;color:var(--muted);background:var(--surface-2);border:1px solid var(--line-soft);border-radius:10px;padding:10px 14px;margin-bottom:16px;display:flex;gap:8px;align-items:flex-start}
@@ -568,6 +648,44 @@ table.reader-table tbody tr:last-child td{border-bottom:none}
 .mcq-opt.wrong .mk{background:var(--danger);color:#1a0a0e}
 .mcq-opt:disabled{cursor:default}
 .mcq-feedback{margin:6px 0 18px}
+/* v8 MCQ additions */
+.mcq-vignette{font-size:.95rem;line-height:1.6;color:var(--text-2);background:var(--surface-2);border-left:3px solid var(--brand);border-radius:8px;padding:11px 14px;margin-bottom:12px}
+.mcq-opt.picked{border-color:var(--brand);background:color-mix(in srgb,var(--brand) 14%,transparent)}
+.mcq-opt.picked .mk{background:var(--brand);color:#0b0d17}
+.diff-badge{display:inline-block;font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;padding:2px 7px;border-radius:99px;margin-left:4px;vertical-align:1px}
+.diff-badge.d1{background:color-mix(in srgb,var(--good) 22%,transparent);color:var(--good)}
+.diff-badge.d2{background:color-mix(in srgb,var(--warn) 22%,transparent);color:var(--warn)}
+.diff-badge.d3{background:color-mix(in srgb,var(--danger) 22%,transparent);color:var(--danger)}
+.conf-row{display:flex;align-items:center;gap:8px;margin:-4px 0 14px}
+.conf-row .conf-lbl{font-size:.78rem;color:var(--muted)}
+.chip{padding:4px 12px;border-radius:99px;background:var(--surface-2);border:1px solid var(--line-2);font-size:.78rem;font-weight:600;color:var(--text-2)}
+.chip.on{background:var(--grad-brand);color:#0b0d17;border-color:transparent}
+.mcq-exp{margin:2px 0 8px;padding-left:1.2em;font-size:.9rem;line-height:1.55;color:var(--text-2)}
+.mcq-exp li{margin:.3em 0}
+.mcq-keyfacts,.mcq-whys{margin-top:10px}
+.kf-lbl{font-size:.64rem;text-transform:uppercase;letter-spacing:.07em;color:var(--faint);font-weight:700;margin-bottom:4px}
+.mcq-keyfacts ul{margin:0;padding-left:1.2em;font-size:.86rem;color:var(--text-2)}
+.why-row{font-size:.84rem;line-height:1.5;color:var(--text-2);padding:5px 0;border-top:1px solid var(--line-soft)}
+.why-row .why-tag{display:inline-block;font-size:.6rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;padding:1px 6px;border-radius:5px;margin-right:5px;vertical-align:1px}
+.why-row.wc .why-tag{background:color-mix(in srgb,var(--good) 24%,transparent);color:var(--good)}
+.why-row.ww .why-tag{background:color-mix(in srgb,var(--danger) 22%,transparent);color:var(--danger)}
+.mcq-note-wrap{margin-top:12px}
+.mcq-note{font-size:.82rem}
+.emq-bank{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:6px;margin-bottom:14px;padding:12px;background:var(--surface-2);border-radius:10px;border:1px solid var(--line-soft)}
+.emq-bank-item{display:flex;align-items:flex-start;gap:8px;font-size:.82rem;color:var(--text-2)}
+.emq-bank-item .mk{flex:none;width:20px;height:20px;border-radius:6px;display:grid;place-items:center;background:var(--surface-3);font-weight:700;font-size:.72rem;font-family:var(--font-mono)}
+.mcq-substem{font-size:1rem;font-weight:600;margin-bottom:12px}
+.emq-opts{display:grid;grid-template-columns:repeat(auto-fill,minmax(52px,1fr));gap:8px}
+.mcq-opt.sm{justify-content:center;padding:10px;font-weight:700}
+.mcq-review{max-width:720px;margin:14px auto 0}
+.mcq-review-item{border:1px solid var(--line-soft);border-radius:10px;margin-bottom:8px;background:var(--surface-2);overflow:hidden}
+.mcq-review-item summary{cursor:pointer;padding:10px 12px;font-size:.85rem;list-style:none;display:flex;align-items:center;gap:9px}
+.mcq-review-item summary::-webkit-details-marker{display:none}
+.mcq-review-item .rv-dot{width:9px;height:9px;border-radius:50%;flex:none}
+.mcq-review-item.ok .rv-dot{background:var(--good)} .mcq-review-item.bad .rv-dot{background:var(--danger)}
+.mcq-review-item .rv-body{padding:0 12px 12px 30px;font-size:.85rem;line-height:1.55;color:var(--text-2)}
+.btn.on,.mcq-opt.on{color:var(--warn)}
+#mcqFlag.on{color:var(--warn);border-color:var(--warn)}
 .sm-summary{text-align:center;padding:26px 18px}
 .sm-summary .big-score{font-family:var(--font-display);font-size:2.6rem;font-weight:700;line-height:1}
 .drill-card{min-height:230px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:30px 22px;border-radius:var(--r-lg);background:var(--grad-card);border:1px solid var(--line);gap:14px;cursor:pointer}
@@ -607,6 +725,7 @@ table.reader-table tbody tr:last-child td{border-bottom:none}
     <div class="search-trigger">
       <input id="searchTrigger" readonly placeholder="Search / jump to…">
       <span class="kbd">⌘K</span>
+      <button class="gear-btn" id="gearBtn" title="Settings" aria-label="Settings"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1Z"/></svg></button>
     </div>
 
     <div class="navgroup">
@@ -712,6 +831,17 @@ table.reader-table tbody tr:last-child td{border-bottom:none}
           <span class="badge" id="chapterDueBadge"></span>
         </div>
         <div id="chapterDueList"></div>
+      </div>
+
+      <div class="grid cols-2" style="margin-bottom:18px">
+        <div class="card">
+          <div class="section-title">Review forecast · next 14 days</div>
+          <div class="forecast" id="forecast"></div>
+        </div>
+        <div class="card">
+          <div class="toolbar" style="margin-bottom:8px"><div class="section-title" style="margin:0">Focus areas</div><span class="muted" style="font-size:.72rem">weakest tags</span></div>
+          <div id="weakSpots"></div>
+        </div>
       </div>
 
       <div class="card">
@@ -980,6 +1110,20 @@ table.reader-table tbody tr:last-child td{border-bottom:none}
 </div>
 <button class="help-fab" id="helpFab" title="Search & shortcuts (⌘K)">⌘K</button>
 
+<!-- SETTINGS DRAWER -->
+<div class="settings-overlay" id="settingsOverlay" style="display:none">
+  <div class="settings-modal" role="dialog" aria-label="Settings">
+    <div class="settings-head">
+      <div class="section-title" style="margin:0">Settings</div>
+      <button class="btn icon ghost" id="settingsClose" aria-label="Close"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+    </div>
+    <div class="settings-tabs" id="settingsTabs"></div>
+    <div class="settings-body" id="settingsBody"></div>
+  </div>
+</div>
+
+<div id="printArea"></div>
+
 <script>
 (function(){
 'use strict';
@@ -1008,7 +1152,26 @@ const SEED_SUBJECTS = [
 /* ---- STORAGE WRAPPER (namespaced, quota-safe) ---- */
 const LS_KEY = 'foundation_med_study_v1';
 const THEME_KEY = 'foundation_theme';
-const SCHEMA_VERSION = 3;
+const SCHEMA_VERSION = 4;
+/* ---- v8 default settings (additive; every tunable lives here) ---- */
+const SCHED_DEFAULTS = {
+  algorithm:'sm2plus',            // 'sm2plus' | 'fsrs'
+  newPerDay:20, reviewsPerDay:200,
+  learningSteps:[1,10], relearnSteps:[10],   // minutes
+  easeStart:2.5, easeFloor:1.3,
+  againDelta:-0.20, hardDelta:-0.15, easyDelta:0.15,
+  hardMult:1.2, easyBonus:1.3, intervalModifier:1.0,
+  maxInterval:36500, lapseMult:0.5, minInterval:1,
+  graduatingInterval:1, easyInterval:4,
+  fuzz:true, leechThreshold:8, leechAction:'suspend', burySiblings:true
+};
+const SETTINGS_DEFAULTS = {
+  scheduler: Object.assign({}, SCHED_DEFAULTS),
+  session:   { queueOrder:'due-first', showIntervalPreview:true, autoReveal:0, showTimer:true, keyboardShortcuts:true },
+  mcq:       { shuffleOptions:false, feedbackMode:'immediate', tutorMode:true, confidenceTracking:false, difficultyFilter:[1,2,3] },
+  appearance:{ theme:null, fontScale:'M', density:'comfortable', reducedMotion:false },
+  goals:     { dailyGoal:50 }
+};
 const Store = {
   get(k){ try{ return localStorage.getItem(k); }catch(e){ return null; } },
   set(k,v){ try{ localStorage.setItem(k,v); return true; }catch(e){ console.warn('storage write failed (quota?)', e); return false; } },
@@ -1036,7 +1199,10 @@ function defaultState(){
     activity: {},            // dateStr -> count (intensity)
     // v3 Study Engine: progress[moduleId] = { sections:{s1:true,…}, mcqScore:{correct,total}, drilledCards:[cardId], lastOpened:'YYYY-MM-DD' }
     // drills = session log: { moduleId, when, correct, total }
-    study: { progress: {}, drills: [] }
+    // v4: study.daily = per-day cap counters; progress[mid].mcqs = per-MCQ leitner state
+    study: { progress: {}, drills: [], daily: { date: todayStr(), newDone: 0, revDone: 0 }, savedFilters: [] },
+    // v4 settings — every tunable (scheduler / session / mcq / appearance / goals)
+    settings: JSON.parse(JSON.stringify(SETTINGS_DEFAULTS))
   };
 }
 
@@ -1056,8 +1222,39 @@ function runMigrations(s){
   s.study = Object.assign({ progress:{}, drills:[] }, s.study||{});
   if(!s.study.progress || typeof s.study.progress!=='object') s.study.progress = {};
   if(!Array.isArray(s.study.drills)) s.study.drills = [];
+  // v3 -> v4: settings (deep-merged), per-day caps, per-MCQ leitner, richer card fields.
+  if(!s.study.daily || typeof s.study.daily!=='object') s.study.daily = { date: todayStr(), newDone:0, revDone:0 };
+  if(!Array.isArray(s.study.savedFilters)) s.study.savedFilters = [];
+  for(const mid in s.study.progress){ const p=s.study.progress[mid]; if(p && !p.mcqs) p.mcqs = {}; }
+  s.settings = deepMergeSettings(SETTINGS_DEFAULTS, s.settings||{});
+  // upgrade every card to v2 scheduling fields WITHOUT touching existing ef/interval/reps/due
+  (s.flashcards||[]).forEach(c=>{
+    if(c.ef==null) c.ef = s.settings.scheduler.easeStart;
+    if(c.interval==null) c.interval = 0;
+    if(c.reps==null) c.reps = 0;
+    if(c.lapses==null) c.lapses = 0;
+    if(c.state==null) c.state = (c.reps>0 ? 'review' : 'new');
+    if(c.step==null) c.step = 0;
+    if(!Array.isArray(c.history)) c.history = [];
+    if(c.schema==null) c.schema = 'foundation.card/v2';
+    if(!Array.isArray(c.tags)) c.tags = [];
+  });
   s.schemaVersion = SCHEMA_VERSION;
   return s;
+}
+/* deep-merge settings: fill any missing key from defaults, keep user values, recurse one level */
+function deepMergeSettings(def, cur){
+  const out = {};
+  for(const k in def){
+    if(def[k] && typeof def[k]==='object' && !Array.isArray(def[k])){
+      out[k] = deepMergeSettings(def[k], (cur && cur[k]) || {});
+    } else {
+      out[k] = (cur && k in cur) ? cur[k] : (Array.isArray(def[k]) ? def[k].slice() : def[k]);
+    }
+  }
+  // preserve any extra user keys not in defaults
+  for(const k in (cur||{})){ if(!(k in out)) out[k] = cur[k]; }
+  return out;
 }
 let state = load();
 function load(){
@@ -1122,25 +1319,89 @@ function subjectById(id){ return state.subjects.find(s=>s.id===id); }
 function subjectByName(name){ const n=String(name||'').trim().toLowerCase(); return state.subjects.find(s=>s.name.toLowerCase()===n); }
 const slug = s => String(s).toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
 
-/* ================= SM-2 SPACED-REPETITION SCHEDULER ================= */
-/* Classic SuperMemo-2 (the algorithm Anki used pre-FSRS). Grades:
-   Again=0 (lapse), Hard=3, Good=4, Easy=5. Quality <3 resets reps. */
-function sm2(card, quality){
-  let ef = card.ef==null ? 2.5 : card.ef;
-  let interval = card.interval || 0;
-  let reps = card.reps || 0;
-  if(quality < 3){ reps = 0; interval = 0; }
-  else {
-    reps += 1;
-    interval = reps===1 ? 1 : reps===2 ? 6 : Math.max(1, Math.round(interval * ef));
-  }
-  ef = Math.max(1.3, ef + (0.1 - (5-quality)*(0.08 + (5-quality)*0.02)));
-  const dueMs = quality < 3 ? Date.now() + 60*1000 : Date.now() + interval*86400000;
-  return Object.assign({}, card, { ef:+ef.toFixed(2), interval, reps, due:dueMs, lastGrade:quality, lastReviewed:Date.now() });
+/* ================= SM-2+ SPACED-REPETITION SCHEDULER (v8) =================
+   A configurable SuperMemo-2 with the pieces Anki users expect: learning &
+   relearning steps, four grades with previewable intervals, ease adjustments,
+   interval multipliers, fuzz, daily caps, leech handling and sibling burying.
+   All tunables live in state.settings.scheduler. The classic sm2(card,quality)
+   entry point is kept as a thin wrapper so older call-sites keep working. */
+const DAY_MS = 86400000, MIN_MS = 60000;
+function sched(){ return (state.settings && state.settings.scheduler) || SCHED_DEFAULTS; }
+function gradeName(q){ return q==='again'||q==='hard'||q==='good'||q==='easy' ? q : (q<3?'again':q===3?'hard':q===4?'good':'easy'); }
+function gradeQuality(g){ return {again:0,hard:3,good:4,easy:5}[g]; }
+function clampInterval(d){ const S=sched(); return Math.min(S.maxInterval, Math.max(S.minInterval, Math.round(d))); }
+function fuzzInterval(d){
+  const S=sched(); if(!S.fuzz || d<2) return d;
+  const pct = d<7 ? 0.25 : d<30 ? 0.15 : 0.05;
+  let delta = Math.max(1, Math.round(d*pct));
+  const r = Math.floor(Math.random()*(2*delta+1)) - delta;
+  return Math.max(1, d + r);
 }
-function cardDue(card, at){ return (card.due||0) <= (at==null?Date.now():at); }
+/* the engine: returns a NEW card object with updated scheduling state */
+function scheduleCard(card, grade){
+  const S=sched(), g=gradeName(grade), now=Date.now();
+  const c=Object.assign({}, card);
+  c.ef = c.ef==null ? S.easeStart : c.ef;
+  c.interval = c.interval||0; c.reps=c.reps||0; c.lapses=c.lapses||0;
+  c.state = c.state || (c.reps>0?'review':'new'); c.step = c.step||0;
+  if(!Array.isArray(c.history)) c.history = [];
+  const learn=S.learningSteps.length?S.learningSteps:[1,10], relearn=S.relearnSteps.length?S.relearnSteps:[10];
+  const prevInterval=c.interval;
+  const graduate=(iv)=>{ c.state='review'; c.interval=clampInterval(iv); c.reps+=1; c.due=now + fuzzInterval(c.interval)*DAY_MS; };
+
+  if(c.state==='new'||c.state==='learning'){
+    if(c.state==='new') c.state='learning';
+    if(g==='again'){ c.step=0; c.due=now+learn[0]*MIN_MS; }
+    else if(g==='hard'){ c.due=now+learn[Math.min(c.step,learn.length-1)]*MIN_MS; }
+    else if(g==='good'){ c.step+=1; if(c.step>=learn.length) graduate(S.graduatingInterval); else c.due=now+learn[c.step]*MIN_MS; }
+    else /*easy*/ graduate(S.easyInterval);
+  } else if(c.state==='relearning'){
+    if(g==='again'){ c.step=0; c.due=now+relearn[0]*MIN_MS; }
+    else if(g==='hard'){ c.due=now+relearn[Math.min(c.step,relearn.length-1)]*MIN_MS; }
+    else if(g==='good'){ c.step+=1; if(c.step>=relearn.length){ c.state='review'; c.interval=clampInterval(c._lapsed||Math.max(S.minInterval,Math.round(prevInterval*S.lapseMult))); c.due=now+fuzzInterval(c.interval)*DAY_MS; } else c.due=now+relearn[c.step]*MIN_MS; }
+    else { c.state='review'; c.interval=clampInterval((c._lapsed||S.minInterval)+1); c.due=now+fuzzInterval(c.interval)*DAY_MS; }
+  } else { /* review */
+    if(g==='again'){
+      c.lapses+=1; c.ef=Math.max(S.easeFloor, c.ef+S.againDelta);
+      c._lapsed=Math.max(S.minInterval, Math.round(prevInterval*S.lapseMult));
+      if(c.lapses>=S.leechThreshold){ if(!c.tags) c.tags=[]; if(!c.tags.includes('leech')) c.tags.push('leech'); if(S.leechAction==='suspend') c.state='suspended'; }
+      if(c.state!=='suspended'){ c.state='relearning'; c.step=0; c.due=now+relearn[0]*MIN_MS; c.interval=c._lapsed; }
+    } else if(g==='hard'){
+      c.ef=Math.max(S.easeFloor, c.ef+S.hardDelta);
+      c.interval=clampInterval(Math.max(prevInterval+1, prevInterval*S.hardMult*S.intervalModifier));
+      c.reps+=1; c.due=now+fuzzInterval(c.interval)*DAY_MS;
+    } else if(g==='good'){
+      c.interval=clampInterval(Math.max(prevInterval+1, prevInterval*c.ef*S.intervalModifier));
+      c.reps+=1; c.due=now+fuzzInterval(c.interval)*DAY_MS;
+    } else { /* easy */
+      c.ef=c.ef+S.easyDelta;
+      c.interval=clampInterval(Math.max(prevInterval+1, prevInterval*c.ef*S.easyBonus*S.intervalModifier));
+      c.reps+=1; c.due=now+fuzzInterval(c.interval)*DAY_MS;
+    }
+  }
+  c.ef=+Math.max(S.easeFloor,c.ef).toFixed(2);
+  c.lastGrade=gradeQuality(g); c.lastReviewed=now;
+  c.history.push({ t:now, g, interval:c.interval, ef:c.ef, state:c.state });
+  if(c.history.length>40) c.history=c.history.slice(-40);
+  return c;
+}
+/* back-compat wrapper: existing call-sites pass quality 0/3/4/5 */
+function sm2(card, quality){ return scheduleCard(card, quality); }
+function cardDue(card, at){ return card.state!=='suspended' && (card.due||0) <= (at==null?Date.now():at); }
 function dueCards(at){ return state.flashcards.filter(c=>cardDue(c, at)); }
+function isNewCard(c){ return (c.state==='new') || (!c.reps && c.state!=='review' && c.state!=='relearning'); }
+/* daily caps */
+function resetDailyIfNeeded(){ const d=todayStr(); if(!state.study.daily||state.study.daily.date!==d) state.study.daily={ date:d, newDone:0, revDone:0 }; }
+function remainingNew(){ resetDailyIfNeeded(); return Math.max(0, sched().newPerDay - state.study.daily.newDone); }
+function remainingRev(){ resetDailyIfNeeded(); return Math.max(0, sched().reviewsPerDay - state.study.daily.revDone); }
+function countGraded(card){ resetDailyIfNeeded(); if(isNewCard(card)) state.study.daily.newDone++; else state.study.daily.revDone++; }
 function fmtInterval(days){ return days<1 ? 'soon' : days===1 ? '1 day' : days<30 ? days+' days' : days<365 ? Math.round(days/30)+' mo' : (days/365).toFixed(1)+' yr'; }
+/* format the delay a grade will produce, in human terms (min for sub-day, else days) */
+function gradeLabel(card, grade){
+  const next=scheduleCard(card, grade), ms=next.due-Date.now();
+  if(ms < DAY_MS){ const m=Math.max(1,Math.round(ms/MIN_MS)); return m<60?m+' min':Math.round(m/60)+' h'; }
+  return fmtInterval(Math.round(ms/DAY_MS));
+}
 
 /* ================= MARKDOWN SUBSET (snarkdown-style, escaped first) ================= */
 /* HTML is escaped BEFORE parsing, so user notes can never inject markup (XSS-safe). */
@@ -1324,6 +1585,8 @@ function renderDashboard(){
   renderStreak();
   renderDueToday();
   renderChapterDue();
+  renderForecast();
+  renderWeakSpots();
   renderTasks();
 
   const nav = [
@@ -1657,16 +1920,31 @@ function renderFlashcards(){
 }
 /* --- review session --- */
 let review = { queue:[], total:0, flipped:false, busy:false };
-function startReview(){
+function startReview(opts){
+  opts=opts||{};
   const due=dueCards();
-  const pool = due.length ? due : state.flashcards.slice();
-  if(!pool.length){ toast('No cards to review — add some first'); return; }
-  review = { queue: pool.slice().sort(()=>Math.random()-0.5), total: pool.length, flipped:false, busy:false, practice: due.length===0 };
+  let pool;
+  if(opts.pool){ pool=opts.pool; }
+  else if(due.length){
+    // respect daily caps: split into new vs review, cap each, honour queue order
+    const newDue=due.filter(isNewCard).slice(0, remainingNew());
+    const revDue=due.filter(c=>!isNewCard(c)).slice(0, remainingRev());
+    const order=state.settings.session.queueOrder;
+    if(order==='new-first') pool=newDue.concat(revDue);
+    else if(order==='interleave'){ pool=[]; const mx=Math.max(newDue.length,revDue.length); for(let i=0;i<mx;i++){ if(revDue[i])pool.push(revDue[i]); if(newDue[i])pool.push(newDue[i]); } }
+    else pool=revDue.concat(newDue); // due-first (default)
+  } else { pool=state.flashcards.filter(c=>c.state!=='suspended'); }
+  if(!pool.length){ toast(due.length?'Daily limit reached — adjust it in Settings':'No cards to review — add some first'); return; }
+  const practice = !opts.pool && due.length===0;
+  if(!opts.pool && (state.settings.scheduler.burySiblings)){
+    const seen=new Set(); pool=pool.filter(c=>{ const g=c.siblingGroup; if(!g) return true; if(seen.has(g)) return false; seen.add(g); return true; });
+  }
+  review = { queue: pool.slice().sort(()=>Math.random()-0.5), total: pool.length, flipped:false, busy:false, practice, label:opts.label||'' , started:Date.now(), graded:[] };
   document.getElementById('fcReview').style.display='block';
   document.getElementById('fcReview').scrollIntoView({behavior:'smooth',block:'nearest'});
   renderCurrentCard();
 }
-document.getElementById('fcStartReview').addEventListener('click', startReview);
+document.getElementById('fcStartReview').addEventListener('click', ()=>startReview());
 function reviewActive(){ const r=document.getElementById('fcReview'); return currentView()==='flashcards' && r.style.display!=='none' && review.queue.length; }
 function currentView(){ const a=document.querySelector('.view.active'); return a?a.id.replace('view-',''):''; }
 function renderCurrentCard(){
@@ -1693,11 +1971,10 @@ function renderCurrentCard(){
   document.getElementById('fcFlipRow').style.display='flex';
   document.getElementById('fcRateRow').style.display='none';
   document.querySelector('#fcFlip3d .flip-hint').style.display='block';
-  // preview intervals on the rate buttons
+  // preview intervals on the rate buttons (respect settings toggle)
+  const showPrev = state.settings.session.showIntervalPreview;
   document.querySelectorAll('#fcRateRow .rate-btn').forEach(b=>{
-    const g=+b.dataset.rate; const next=sm2(card,g);
-    const days=Math.max(0,Math.round((next.due-Date.now())/86400000));
-    b.querySelector('.ri').textContent = g<3?'<10m':fmtInterval(days||next.interval);
+    b.querySelector('.ri').textContent = showPrev ? gradeLabel(card, +b.dataset.rate) : '';
   });
 }
 function flipCard(){ if(review.flipped||!reviewActive()) return; review.flipped=true; document.getElementById('fcFlip3d').classList.add('flipped'); document.getElementById('fcFlipRow').style.display='none'; setTimeout(()=>{document.getElementById('fcRateRow').style.display='grid';},180); }
@@ -1708,14 +1985,30 @@ function rateCard(grade){
   review.busy=true;
   const card=review.queue.shift();
   const idx=state.flashcards.findIndex(c=>c.id===card.id);
-  if(idx>=0){ const updated=sm2(state.flashcards[idx], grade); state.flashcards[idx]=updated;
-    if(grade<3) review.queue.push(updated); // lapse: see it again this session
+  if(idx>=0){
+    lastReviewUndo={ scope:'deck', prev:JSON.parse(JSON.stringify(state.flashcards[idx])), queueCard:card };
+    countGraded(state.flashcards[idx]);
+    const updated=scheduleCard(state.flashcards[idx], grade); state.flashcards[idx]=updated;
+    if(gradeName(grade)==='again') review.queue.push(updated); // lapse: see it again this session
   }
   markActivity(); save();
-  const days=idx>=0?Math.max(0,Math.round((state.flashcards[idx].due-Date.now())/86400000)):0;
-  toast(grade<3?'Again — back soon':'Next in '+fmtInterval(days||state.flashcards[idx].interval));
+  toast((gradeName(grade)==='again'?'Again — ':'Next in ')+gradeLabel(card, grade));
   review.busy=false;
   renderCurrentCard();
+}
+/* ---- undo the last review (deck or drill) ---- */
+let lastReviewUndo=null;
+function undoLastReview(){
+  if(!lastReviewUndo){ toast('Nothing to undo'); return; }
+  const u=lastReviewUndo, idx=state.flashcards.findIndex(c=>c.id===u.prev.id);
+  if(idx>=0) state.flashcards[idx]=u.prev;
+  // roll back the daily counter
+  resetDailyIfNeeded();
+  if(isNewCard(u.prev)) state.study.daily.newDone=Math.max(0,state.study.daily.newDone-1);
+  else state.study.daily.revDone=Math.max(0,state.study.daily.revDone-1);
+  if(u.scope==='deck'){ review.queue.unshift(u.prev); review.busy=false; renderCurrentCard(); }
+  else if(u.scope==='drill' && studyState.drill){ studyState.drill.queue.unshift(u.prev); renderDrillCard(); }
+  lastReviewUndo=null; save(); toast('Undone — card restored');
 }
 document.querySelectorAll('#fcRateRow .rate-btn').forEach(b=>b.addEventListener('click', ()=>rateCard(+b.dataset.rate)));
 // reveal cloze on click inside review
@@ -1723,8 +2016,10 @@ document.getElementById('fcReview').addEventListener('click', e=>{ const cz=e.ta
 // keyboard: Space/Enter flip, 1-4 rate
 document.addEventListener('keydown', e=>{
   if(!reviewActive()) return;
+  if(!state.settings.session.keyboardShortcuts) return;
   if(document.getElementById('cmdk') && document.getElementById('cmdk').style.display!=='none') return;
   const tag=(e.target.tagName||'').toLowerCase(); if(tag==='input'||tag==='textarea'||tag==='select') return;
+  if(e.key.toLowerCase()==='u'){ e.preventDefault(); undoLastReview(); return; }
   if(!review.flipped && (e.key===' '||e.key==='Enter')){ e.preventDefault(); flipCard(); }
   else if(review.flipped && ['1','2','3','4'].includes(e.key)){ e.preventDefault(); rateCard({'1':0,'2':3,'3':4,'4':5}[e.key]); }
 });
@@ -2395,170 +2690,3037 @@ const MODULES = [
     ],
     "cards": [
       {
+        "type": "basic",
+        "tag": "s1",
         "front": "Which cell drives wound contraction, and what protein does it contain?",
         "back": "Myofibroblasts; they contain the smooth-muscle protein actin.",
+        "extra": "Contraction starts at once and runs 2–3 weeks.",
+        "hint": "A smooth-muscle protein.",
+        "difficulty": 1
+      },
+      {
+        "type": "basic",
+        "tag": "s1",
+        "front": "Name the three components shared by every healing wound.",
+        "back": "Contraction, granulation tissue formation, and epithelialisation.",
+        "extra": "Their proportion differs by wound type.",
+        "hint": "",
+        "difficulty": 1
+      },
+      {
+        "type": "basic",
+        "tag": "s1",
+        "front": "How long does a clean sutured wound take to epithelialise?",
+        "back": "~48 hours, with little contraction or granulation.",
+        "extra": "Primary intention.",
+        "hint": "",
+        "difficulty": 1
+      },
+      {
+        "type": "basic",
+        "tag": "s1",
+        "front": "List the three phases of wound healing in order.",
+        "back": "Haemostasis & inflammation → proliferation → maturation & remodelling.",
+        "extra": "Mnemonic: HIP-R.",
+        "hint": "",
+        "difficulty": 1
+      },
+      {
+        "type": "basic",
+        "tag": "s1",
+        "front": "How long does the haemostasis & inflammation phase last?",
+        "back": "About 5 days.",
+        "extra": "",
+        "hint": "",
+        "difficulty": 1
+      },
+      {
+        "type": "basic",
+        "tag": "s1",
+        "front": "What triggers the coagulation cascade at the very start of healing?",
+        "back": "Platelets adhering to subendothelial collagen.",
+        "extra": "They also release growth factors.",
+        "hint": "",
+        "difficulty": 1
+      },
+      {
+        "type": "basic",
+        "tag": "s1",
+        "front": "Which cell phagocytoses, debrides, and releases growth factors that recruit fibroblasts and endothelial cells?",
+        "back": "The macrophage.",
+        "extra": "Central orchestrator of healing.",
+        "hint": "",
+        "difficulty": 2
+      },
+      {
+        "type": "basic",
+        "tag": "s1",
+        "front": "What forms granulation tissue?",
+        "back": "Endothelial buds from intact venules plus fibroblasts.",
+        "extra": "Fibroblasts secrete collagen.",
+        "hint": "",
+        "difficulty": 1
+      },
+      {
+        "type": "basic",
+        "tag": "s1",
+        "front": "Young regenerating epithelium lacks which three skin appendages?",
+        "back": "Sebaceous glands, sweat glands and hair follicles.",
+        "extra": "",
+        "hint": "",
+        "difficulty": 2
+      },
+      {
+        "type": "basic",
+        "tag": "s1",
+        "front": "Which collagen type is laid down first, and what replaces it during remodelling?",
+        "back": "Type III first, replaced by type I as remodelling proceeds.",
+        "extra": "Raises tensile strength.",
+        "hint": "Roman numerals.",
+        "difficulty": 1
+      },
+      {
+        "type": "basic",
+        "tag": "s1",
+        "front": "What percentage of final strength does a wound reach at 3 weeks?",
+        "back": "About 20%.",
+        "extra": "80% of original at 3 months.",
+        "hint": "",
+        "difficulty": 1
+      },
+      {
+        "type": "basic",
+        "tag": "s1",
+        "front": "What percentage of original strength does a wound reach at 3 months?",
+        "back": "About 80%; it never regains full original strength.",
+        "extra": "",
+        "hint": "",
+        "difficulty": 1
+      },
+      {
+        "type": "basic",
+        "tag": "s1",
+        "front": "Define healing by primary intention.",
+        "back": "A clean wound closed immediately (sutures/clips) → minimal fibrosis, neat scar.",
+        "extra": "",
+        "hint": "",
+        "difficulty": 1
+      },
+      {
+        "type": "basic",
+        "tag": "s1",
+        "front": "Define healing by secondary intention.",
+        "back": "Edges not approximated or gaping from infection → granulation infill and an ugly scar.",
+        "extra": "",
+        "hint": "",
+        "difficulty": 1
+      },
+      {
+        "type": "basic",
+        "tag": "s1",
+        "front": "What is tertiary (delayed primary) intention?",
+        "back": "A contaminated wound left open ~5 days, then sutured if no infection supervenes.",
+        "extra": "",
+        "hint": "",
+        "difficulty": 2
+      },
+      {
+        "type": "basic",
+        "tag": "s1",
+        "front": "Distinguish a keloid from a hypertrophic scar by extent.",
+        "back": "Keloid extends beyond the original wound margin; hypertrophic scar stays within it.",
+        "extra": "Mnemonic: Keloid Krosses.",
+        "hint": "",
+        "difficulty": 1
+      },
+      {
+        "type": "basic",
+        "tag": "s1",
+        "front": "Which scar may regress within months, keloid or hypertrophic?",
+        "back": "Hypertrophic scar may regress; a keloid does not.",
+        "extra": "",
+        "hint": "",
+        "difficulty": 2
+      },
+      {
+        "type": "basic",
+        "tag": "s1",
+        "front": "Which patients are more prone to keloids?",
+        "back": "Those with darker skin and a familial predisposition.",
+        "extra": "Sites: ear lobule, shoulder, presternal.",
+        "hint": "",
+        "difficulty": 2
+      },
+      {
+        "type": "basic",
+        "tag": "s1",
+        "front": "Name four growth factors involved in wound healing.",
+        "back": "PDGF, TNF-α, IL-1 and FGF.",
+        "extra": "",
+        "hint": "",
+        "difficulty": 2
+      },
+      {
+        "type": "basic",
+        "tag": "s1",
+        "front": "Which vitamin is needed for protocollagen maturation, and which for epithelialisation?",
+        "back": "Vitamin C for protocollagen maturation; vitamin A for epithelialisation.",
+        "extra": "",
+        "hint": "Two different vitamins.",
+        "difficulty": 2
+      },
+      {
+        "type": "basic",
+        "tag": "s1",
+        "front": "Name four trace elements important for wound healing.",
+        "back": "Calcium, zinc, copper and manganese.",
+        "extra": "",
+        "hint": "",
+        "difficulty": 3
+      },
+      {
+        "type": "basic",
+        "tag": "s1",
+        "front": "How does irradiation impair local wound healing?",
+        "back": "It causes endarteritis obliterans → ischaemia.",
+        "extra": "",
+        "hint": "",
+        "difficulty": 3
+      },
+      {
+        "type": "basic",
+        "tag": "s1",
+        "front": "Does immobilisation help or harm wound healing?",
+        "back": "It helps — it protects granulation tissue; movement/shear damages the granulation blood supply.",
+        "extra": "Common exam catch.",
+        "hint": "",
+        "difficulty": 2
+      },
+      {
+        "type": "basic",
+        "tag": "s1",
+        "front": "Name three debilitating diseases that slow healing.",
+        "back": "Uraemia, jaundice, cirrhosis, diabetes or malignancy (any three).",
+        "extra": "",
+        "hint": "",
+        "difficulty": 2
+      },
+      {
+        "type": "basic",
+        "tag": "s1",
+        "front": "Which classes of drug impair wound healing?",
+        "back": "Steroids, chemotherapy and immunosuppressants.",
+        "extra": "",
+        "hint": "",
+        "difficulty": 1
+      },
+      {
+        "type": "cloze",
+        "tag": "s1",
         "cloze": "Wound contraction is driven by {{c1::myofibroblasts}}, which contain the protein {{c2::actin}}.",
-        "tag": "s1"
+        "extra": "",
+        "difficulty": 1
       },
       {
-        "front": "Tensile strength at 3 weeks and 3 months?",
-        "back": "20% of final strength at 3 weeks; 80% of original at 3 months; never regains full strength.",
+        "type": "cloze",
+        "tag": "s1",
         "cloze": "A wound reaches {{c1::20%}} of final strength at 3 weeks and {{c2::80%}} of original at 3 months.",
-        "tag": "s1"
+        "extra": "",
+        "difficulty": 1
       },
       {
-        "front": "Which collagen is deposited first, and what replaces it?",
-        "back": "Collagen III first, later replaced as collagen I increases.",
+        "type": "cloze",
+        "tag": "s1",
         "cloze": "Collagen {{c1::III}} is deposited first, then replaced by collagen {{c2::I}}.",
-        "tag": "s1"
+        "extra": "",
+        "difficulty": 1
       },
       {
-        "front": "Define healing by tertiary intention.",
-        "back": "Delayed primary closure: a contaminated wound is left open ~5 days, then sutured if no infection.",
-        "cloze": "Tertiary intention = {{c1::delayed primary closure}} of a contaminated wound after ~5 days.",
-        "tag": "s1"
+        "type": "cloze",
+        "tag": "s1",
+        "cloze": "Tertiary intention = {{c1::delayed primary closure}} of a contaminated wound after ~{{c2::5}} days.",
+        "extra": "",
+        "difficulty": 2
       },
       {
-        "front": "Formula for the kinetic energy of a missile?",
-        "back": "KE = MV²/2g — velocity matters more than mass.",
-        "cloze": "Missile kinetic energy = {{c1::MV²/2g}}.",
-        "tag": "s2"
+        "type": "cloze",
+        "tag": "s1",
+        "cloze": "The growth factors of healing include {{c1::PDGF}}, {{c2::TNF-α}}, {{c3::IL-1}} and {{c4::FGF}}.",
+        "extra": "",
+        "difficulty": 2
       },
       {
-        "front": "Four don'ts in a contaminated wound?",
-        "back": "No nerve repair, no tendon repair, don't close the deep fascia, don't close the skin.",
+        "type": "cloze",
+        "tag": "s1",
+        "cloze": "{{c1::Keloid}} scar extends beyond the wound margin; {{c2::hypertrophic}} scar stays within it.",
+        "extra": "",
+        "difficulty": 1
+      },
+      {
+        "type": "basic",
+        "tag": "s2",
+        "front": "What is a contusion?",
+        "back": "A closed wound from a blunt blow → capillary extravasation; painful, swollen, bluish then brown/green.",
+        "extra": "Manage: elevation + anti-inflammatory ointment.",
+        "hint": "",
+        "difficulty": 1
+      },
+      {
+        "type": "basic",
+        "tag": "s2",
+        "front": "How does a small haematoma differ in management from a large one?",
+        "back": "Small → aspirate with a wide-bore needle; large → surgical evacuation under asepsis.",
+        "extra": "",
+        "hint": "",
+        "difficulty": 2
+      },
+      {
+        "type": "basic",
+        "tag": "s2",
+        "front": "Describe the natural course of a haematoma.",
+        "back": "Cystic at first → clots within hours → later liquefies.",
+        "extra": "",
+        "hint": "",
+        "difficulty": 2
+      },
+      {
+        "type": "basic",
+        "tag": "s2",
+        "front": "What is an abrasion and why is it so painful?",
+        "back": "Superficial layers scraped off by friction; painful because nerve endings are exposed.",
+        "extra": "Clean with bland antiseptic + non-adherent dressing.",
+        "hint": "",
+        "difficulty": 1
+      },
+      {
+        "type": "basic",
+        "tag": "s2",
+        "front": "Give the key features of an incised wound.",
+        "back": "Sharp object; longer than deep; clean edges; little tissue destruction; extensive haemorrhage; tendons/nerves liable to be cut.",
+        "extra": "",
+        "hint": "",
+        "difficulty": 1
+      },
+      {
+        "type": "basic",
+        "tag": "s2",
+        "front": "Why is a lacerated wound high-risk for infection?",
+        "back": "Irregular, devascularised and contaminated; inflammatory oedema raises tension → secondary ischaemia.",
+        "extra": "Often a degloving injury.",
+        "hint": "",
+        "difficulty": 2
+      },
+      {
+        "type": "basic",
+        "tag": "s2",
+        "front": "What defines a penetrating wound geometrically, and why is it dangerous?",
+        "back": "It is deeper than long; small opening + poor drainage → infection, and a viscus may be missed.",
+        "extra": "",
+        "hint": "Compare depth vs length.",
+        "difficulty": 1
+      },
+      {
+        "type": "basic",
+        "tag": "s2",
+        "front": "State the missile kinetic-energy relationship and its clinical meaning.",
+        "back": "KE = MV²/2g; velocity dominates, so high-velocity rifles are far more serious than pistols.",
+        "extra": "",
+        "hint": "",
+        "difficulty": 2
+      },
+      {
+        "type": "basic",
+        "tag": "s2",
+        "front": "List the mechanisms of tissue damage in a missile injury.",
+        "back": "Direct track injury, shock waves, temporary cavitation, and bone fragments acting as secondary missiles.",
+        "extra": "",
+        "hint": "",
+        "difficulty": 3
+      },
+      {
+        "type": "basic",
+        "tag": "s2",
+        "front": "Why are bite wounds problematic?",
+        "back": "They are lacerated and contaminated → high incidence of infection.",
+        "extra": "",
+        "hint": "",
+        "difficulty": 1
+      },
+      {
+        "type": "cloze",
+        "tag": "s2",
+        "cloze": "A penetrating wound is {{c1::deeper than long}}, so always suspect deep-structure injury.",
+        "extra": "",
+        "difficulty": 1
+      },
+      {
+        "type": "cloze",
+        "tag": "s2",
+        "cloze": "Missile kinetic energy = {{c1::MV²/2g}}, so {{c2::velocity}} matters more than mass.",
+        "extra": "",
+        "difficulty": 2
+      },
+      {
+        "type": "cloze",
+        "tag": "s2",
+        "cloze": "A small haematoma is treated by {{c1::wide-bore needle aspiration}}; a large one by {{c2::surgical evacuation}}.",
+        "extra": "",
+        "difficulty": 2
+      },
+      {
+        "type": "cloze",
+        "tag": "s2",
+        "cloze": "An {{c1::incised}} wound is longer than deep with clean edges; a {{c1::lacerated}} wound is irregular and devascularised.",
+        "extra": "",
+        "difficulty": 2
+      },
+      {
+        "type": "basic",
+        "tag": "s3",
+        "front": "State the contaminated-wound rule for repair and closure.",
+        "back": "No nerve repair, no tendon repair, do not close the deep fascia, and do not close the skin.",
+        "extra": "",
+        "hint": "",
+        "difficulty": 1
+      },
+      {
+        "type": "basic",
+        "tag": "s3",
+        "front": "How do you recognise necrotic muscle that must be excised?",
+        "back": "Dark red/grey colour, no contraction when pinched, and no bleeding when cut.",
+        "extra": "",
+        "hint": "",
+        "difficulty": 2
+      },
+      {
+        "type": "basic",
+        "tag": "s3",
+        "front": "Skin decision: clean and early (<6 h) versus contaminated/late?",
+        "back": "Clean & early <6 h → primary closure; contaminated or late → delayed primary closure.",
+        "extra": "",
+        "hint": "",
+        "difficulty": 1
+      },
+      {
+        "type": "basic",
+        "tag": "s3",
+        "front": "How is bleeding controlled first-aid in an open wound?",
+        "back": "Direct compression (sterile dressing + tight bandage); a tourniquet is only a temporary bridge to theatre.",
+        "extra": "",
+        "hint": "",
+        "difficulty": 1
+      },
+      {
+        "type": "basic",
+        "tag": "s3",
+        "front": "An associated fracture with infection risk should be fixed how, and why?",
+        "back": "External fixation — internal fixation would spread infection to bone.",
+        "extra": "",
+        "hint": "",
+        "difficulty": 2
+      },
+      {
+        "type": "basic",
+        "tag": "s3",
+        "front": "What is done for all missile injuries?",
+        "back": "They all require exploration.",
+        "extra": "",
+        "hint": "",
+        "difficulty": 1
+      },
+      {
+        "type": "basic",
+        "tag": "s3",
+        "front": "What must be given as prophylaxis in a dirty wound, beyond antibiotics?",
+        "back": "Tetanus prophylaxis; add anaerobic cover in deep/lacerated wounds.",
+        "extra": "",
+        "hint": "",
+        "difficulty": 2
+      },
+      {
+        "type": "basic",
+        "tag": "s3",
+        "front": "What is done for a degloving injury of doubtful viability?",
+        "back": "Leave it open and take a second look at 3–4 days.",
+        "extra": "",
+        "hint": "",
+        "difficulty": 2
+      },
+      {
+        "type": "basic",
+        "tag": "s3",
+        "front": "If distal pulses are absent after a limb wound, what is the next step?",
+        "back": "Urgent duplex ultrasound (suspect vascular injury).",
+        "extra": "",
+        "hint": "",
+        "difficulty": 2
+      },
+      {
+        "type": "basic",
+        "tag": "s3",
+        "front": "In theatre, how are major vessels versus small vessels handled?",
+        "back": "Repair a major artery/vein; ligate small vessels.",
+        "extra": "",
+        "hint": "",
+        "difficulty": 2
+      },
+      {
+        "type": "cloze",
+        "tag": "s3",
         "cloze": "Contaminated wound: don't repair {{c1::nerves}} or {{c2::tendons}}, and don't close the {{c3::deep fascia}} or {{c4::skin}}.",
-        "tag": "s3"
+        "extra": "",
+        "difficulty": 1
       },
       {
-        "front": "Commonest type of chronic leg ulcer?",
-        "back": "Venous ulcer.",
+        "type": "cloze",
+        "tag": "s3",
+        "cloze": "Necrotic muscle is {{c1::dark red/grey}}, shows no {{c2::contraction}} when pinched and no {{c3::bleeding}} when cut.",
+        "extra": "",
+        "difficulty": 2
+      },
+      {
+        "type": "cloze",
+        "tag": "s3",
+        "cloze": "A fracture with infection risk is managed by {{c1::external}} fixation because internal fixation spreads infection to {{c2::bone}}.",
+        "extra": "",
+        "difficulty": 2
+      },
+      {
+        "type": "basic",
+        "tag": "s4",
+        "front": "Define a chronic wound.",
+        "back": "One that fails to heal within a reasonable time (~3 months), arrested at the inflammatory/proliferative phases.",
+        "extra": "Shares local hypoxia.",
+        "hint": "",
+        "difficulty": 1
+      },
+      {
+        "type": "basic",
+        "tag": "s4",
+        "front": "What is the commonest chronic leg ulcer?",
+        "back": "The venous ulcer.",
+        "extra": "Others: ischaemic, neuropathic, neoplastic.",
+        "hint": "",
+        "difficulty": 1
+      },
+      {
+        "type": "basic",
+        "tag": "s4",
+        "front": "Which malignancy classically arises in a chronic ulcer?",
+        "back": "Squamous cell carcinoma (rarely basal cell carcinoma).",
+        "extra": "",
+        "hint": "",
+        "difficulty": 2
+      },
+      {
+        "type": "basic",
+        "tag": "s4",
+        "front": "List the four stages of a pressure sore.",
+        "back": "1 erythema → 2 partial-thickness loss → 3 full-thickness short of fascia → 4 muscle/bone/joint destruction.",
+        "extra": "",
+        "hint": "",
+        "difficulty": 2
+      },
+      {
+        "type": "basic",
+        "tag": "s4",
+        "front": "Name four classic sites of pressure sores.",
+        "back": "Ischial tuberosity, greater trochanter, sacrum, heel and malleoli (any four).",
+        "extra": "",
+        "hint": "",
+        "difficulty": 1
+      },
+      {
+        "type": "basic",
+        "tag": "s4",
+        "front": "Give four risk factors for pressure sores.",
+        "back": "Old age, poor nutrition, anaemia, denervation/paraplegia, ICU stay, immobilisation, soiling by stool/urine (any four).",
+        "extra": "",
+        "hint": "",
+        "difficulty": 2
+      },
+      {
+        "type": "basic",
+        "tag": "s4",
+        "front": "What are the mainstays of pressure-sore prevention and treatment?",
+        "back": "Correct general factors + skilled nursing (regular turning), keep skin dry, air mattresses, debridement + VAC, and flaps.",
+        "extra": "",
+        "hint": "",
+        "difficulty": 2
+      },
+      {
+        "type": "basic",
+        "tag": "s4",
+        "front": "What is an ulcer, by definition?",
+        "back": "A break in epithelial or mucosal continuity.",
+        "extra": "",
+        "hint": "",
+        "difficulty": 1
+      },
+      {
+        "type": "cloze",
+        "tag": "s4",
+        "cloze": "A chronic wound fails to heal within about {{c1::3 months}}.",
+        "extra": "",
+        "difficulty": 1
+      },
+      {
+        "type": "cloze",
+        "tag": "s4",
         "cloze": "The commonest chronic leg ulcer is the {{c1::venous}} ulcer.",
-        "tag": "s4"
+        "extra": "",
+        "difficulty": 1
       },
       {
-        "front": "Slowest-absorbing absorbable suture?",
-        "back": "Polydioxanone (PDS).",
+        "type": "cloze",
+        "tag": "s4",
+        "cloze": "Pressure sores favour the {{c1::ischial tuberosity}}, {{c2::greater trochanter}}, {{c3::sacrum}}, heel and malleoli.",
+        "extra": "",
+        "difficulty": 2
+      },
+      {
+        "type": "basic",
+        "tag": "s5",
+        "front": "What is the most important way of classifying a suture?",
+        "back": "By absorption (absorbable vs non-absorbable).",
+        "extra": "",
+        "hint": "",
+        "difficulty": 1
+      },
+      {
+        "type": "basic",
+        "tag": "s5",
+        "front": "How much more contamination does a multifilament suture pick up than an equivalent monofilament?",
+        "back": "About 10× more organisms (capillary spaces harbour bacteria).",
+        "extra": "",
+        "hint": "",
+        "difficulty": 2
+      },
+      {
+        "type": "basic",
+        "tag": "s5",
+        "front": "Which is the slowest-absorbing absorbable suture?",
+        "back": "Polydioxanone (PDS); it loses 50% tensile strength at 6 weeks.",
+        "extra": "Monofilament.",
+        "hint": "Mnemonic: PDS.",
+        "difficulty": 1
+      },
+      {
+        "type": "basic",
+        "tag": "s5",
+        "front": "What is chromic catgut and its drawback?",
+        "back": "A natural absorbable suture (absorbed ~3 weeks; loses 50–80% strength in 2 weeks); provokes reaction, uncommon now.",
+        "extra": "",
+        "hint": "",
+        "difficulty": 2
+      },
+      {
+        "type": "basic",
+        "tag": "s5",
+        "front": "Which absorbable suture is typically used for GI anastomoses per the book?",
+        "back": "Polyglactin (Vicryl) — multifilament, absorption ~4 months.",
+        "extra": "",
+        "hint": "",
+        "difficulty": 2
+      },
+      {
+        "type": "basic",
+        "tag": "s5",
+        "front": "Give the key facts about polyglycolic acid (Dexon).",
+        "back": "Synthetic multifilament absorbable; good tensile strength; absorbed in 2–3 months.",
+        "extra": "",
+        "hint": "",
+        "difficulty": 2
+      },
+      {
+        "type": "basic",
+        "tag": "s5",
+        "front": "Why is silk a classic exam catch?",
+        "back": "It sits in the non-absorbable list but is in fact very slowly absorbable; being protein it provokes marked reaction.",
+        "extra": "Remove if infected.",
+        "hint": "",
+        "difficulty": 2
+      },
+      {
+        "type": "basic",
+        "tag": "s5",
+        "front": "Which suture is ideal for abdominal wound closure and hernia repair?",
+        "back": "Polypropylene (Prolene) — monofilament and inert.",
+        "extra": "Mnemonic: Prolene for the Peritoneum.",
+        "hint": "",
+        "difficulty": 1
+      },
+      {
+        "type": "basic",
+        "tag": "s5",
+        "front": "Why need Prolene not be removed even if the wound is infected?",
+        "back": "It is inert (non-reactive) and does not harbour infection.",
+        "extra": "",
+        "hint": "",
+        "difficulty": 2
+      },
+      {
+        "type": "basic",
+        "tag": "s5",
+        "front": "Which suture material is used to close a sternotomy?",
+        "back": "Stainless steel — very high tensile strength and very inert.",
+        "extra": "",
+        "hint": "",
+        "difficulty": 1
+      },
+      {
+        "type": "basic",
+        "tag": "s5",
+        "front": "What is a drawback of nylon (polyamide) sutures?",
+        "back": "Good tensile strength but the knot is not very secure.",
+        "extra": "",
+        "hint": "",
+        "difficulty": 2
+      },
+      {
+        "type": "basic",
+        "tag": "s5",
+        "front": "Name four non-suture methods of skin closure.",
+        "back": "Clips, staplers, adhesive tapes and skin glue.",
+        "extra": "",
+        "hint": "",
+        "difficulty": 1
+      },
+      {
+        "type": "cloze",
+        "tag": "s5",
+        "cloze": "{{c1::Absorption}} is the most important classifier of a suture.",
+        "extra": "",
+        "difficulty": 1
+      },
+      {
+        "type": "cloze",
+        "tag": "s5",
         "cloze": "The slowest-absorbing absorbable suture is {{c1::polydioxanone (PDS)}}.",
-        "tag": "s5"
+        "extra": "",
+        "difficulty": 1
       },
       {
-        "front": "Ideal suture for abdominal closure and hernia repair?",
-        "back": "Polypropylene (Prolene).",
-        "cloze": "{{c1::Polypropylene (Prolene)}} is ideal for abdominal closure and hernia repair.",
-        "tag": "s5"
+        "type": "cloze",
+        "tag": "s5",
+        "cloze": "{{c1::Prolene}} (polypropylene) is ideal for abdominal closure and hernia repair.",
+        "extra": "",
+        "difficulty": 1
       },
       {
-        "front": "Which dressings are unsuitable for infected/highly exudative wounds?",
-        "back": "Occlusive dressings.",
-        "cloze": "{{c1::Occlusive}} dressings are unsuitable for infected or highly exudative wounds.",
-        "tag": "s6"
+        "type": "cloze",
+        "tag": "s5",
+        "cloze": "A multifilament suture picks up about {{c1::10×}} more organisms than an equivalent monofilament.",
+        "extra": "",
+        "difficulty": 2
+      },
+      {
+        "type": "cloze",
+        "tag": "s5",
+        "cloze": "A {{c1::sternotomy}} is closed with stainless steel.",
+        "extra": "",
+        "difficulty": 1
+      },
+      {
+        "type": "basic",
+        "tag": "s6",
+        "front": "What is the purpose of a wound dressing?",
+        "back": "To provide the ideal healing environment and prevent bacterial overgrowth.",
+        "extra": "",
+        "hint": "",
+        "difficulty": 1
+      },
+      {
+        "type": "basic",
+        "tag": "s6",
+        "front": "When are occlusive dressings contraindicated?",
+        "back": "In infected or highly exudative wounds.",
+        "extra": "They maintain hydration + autolysis.",
+        "hint": "",
+        "difficulty": 1
+      },
+      {
+        "type": "basic",
+        "tag": "s6",
+        "front": "What is special about a semi-occlusive dressing?",
+        "back": "Permeable to water vapour and gases but impermeable to bacteria (e.g. hydrocolloid → moist bed).",
+        "extra": "",
+        "hint": "",
+        "difficulty": 2
+      },
+      {
+        "type": "basic",
+        "tag": "s6",
+        "front": "What are alginate dressings made from, and how do they work?",
+        "back": "Seaweed-derived; they form a fibrous gel on contact with exudate.",
+        "extra": "",
+        "hint": "",
+        "difficulty": 1
+      },
+      {
+        "type": "basic",
+        "tag": "s6",
+        "front": "Name three osmotic dressing agents.",
+        "back": "Debrisan, urea crystals and honey.",
+        "extra": "",
+        "hint": "",
+        "difficulty": 2
+      },
+      {
+        "type": "basic",
+        "tag": "s6",
+        "front": "How does VAC (negative-pressure) therapy aid healing, and where is it useful?",
+        "back": "Negative pressure boosts granulation and wound contraction; good in bed sores and diabetic ulcers.",
+        "extra": "",
+        "hint": "",
+        "difficulty": 1
+      },
+      {
+        "type": "cloze",
+        "tag": "s6",
+        "cloze": "Occlusive dressings are unsuitable for {{c1::infected}} or {{c2::highly exudative}} wounds.",
+        "extra": "",
+        "difficulty": 1
+      },
+      {
+        "type": "cloze",
+        "tag": "s6",
+        "cloze": "{{c1::VAC}} (negative pressure) boosts granulation and contraction, useful in bed sores and diabetic ulcers.",
+        "extra": "",
+        "difficulty": 1
+      },
+      {
+        "type": "cloze",
+        "tag": "s6",
+        "cloze": "{{c1::Alginate}} dressings come from seaweed and gel with exudate.",
+        "extra": "",
+        "difficulty": 2
       }
     ],
     "mcqs": [
       {
-        "stem": "Which suture material is the slowest to absorb?",
+        "schema": "foundation.mcq/v2",
+        "id": "sur-ch1-mcq-001",
+        "moduleId": "sur-ch1-wound-healing",
+        "subject": "Surgery",
+        "type": "single",
+        "highYield": true,
+        "sectionTag": "s1",
+        "difficulty": 1,
+        "stem": "Which cell is chiefly responsible for wound contraction?",
         "options": [
-          "Chromic catgut",
-          "Polyglycolic acid (Dexon)",
-          "Polyglactin (Vicryl)",
+          {
+            "text": "Myofibroblast",
+            "correct": true,
+            "why": "Contains the smooth-muscle protein actin and pulls wound edges together."
+          },
+          {
+            "text": "Neutrophil",
+            "correct": false,
+            "why": "A first-responder of acute inflammation; it does not contract the wound."
+          },
+          {
+            "text": "Macrophage",
+            "correct": false,
+            "why": "Debrides and releases growth factors, but does not physically contract the wound."
+          },
+          {
+            "text": "Endothelial cell",
+            "correct": false,
+            "why": "Forms new capillaries (granulation), not contraction."
+          },
+          {
+            "text": "Keratinocyte",
+            "correct": false,
+            "why": "Drives epithelialisation, a separate component from contraction."
+          }
+        ],
+        "explanation": [
+          "Contraction is produced by myofibroblasts, which contain actin.",
+          "It begins at once and runs over 2–3 weeks."
+        ],
+        "keyFacts": [
+          "Myofibroblast = actin = contraction."
+        ],
+        "teachingPoint": "Contraction is a myofibroblast/actin phenomenon.",
+        "tags": [
+          "wound-healing",
+          "physiology"
+        ]
+      },
+      {
+        "schema": "foundation.mcq/v2",
+        "id": "sur-ch1-mcq-002",
+        "moduleId": "sur-ch1-wound-healing",
+        "subject": "Surgery",
+        "type": "single",
+        "highYield": true,
+        "sectionTag": "s1",
+        "difficulty": 2,
+        "stem": "Which collagen type predominates first in a healing wound?",
+        "options": [
+          {
+            "text": "Type III",
+            "correct": true,
+            "why": "Laid down rapidly in the proliferative phase to bridge the gap."
+          },
+          {
+            "text": "Type I",
+            "correct": false,
+            "why": "Predominates only later, after remodelling replaces type III."
+          },
+          {
+            "text": "Type II",
+            "correct": false,
+            "why": "A cartilage collagen, not central to skin wound healing."
+          },
+          {
+            "text": "Type IV",
+            "correct": false,
+            "why": "A basement-membrane collagen, not the provisional wound matrix."
+          },
+          {
+            "text": "Type V",
+            "correct": false,
+            "why": "A minor collagen; not the one that predominates early."
+          }
+        ],
+        "explanation": [
+          "Type III collagen is deposited first.",
+          "During remodelling it is progressively replaced by type I, raising tensile strength."
+        ],
+        "keyFacts": [
+          "III first → I later."
+        ],
+        "teachingPoint": "Fresh wounds are weak because early collagen is type III.",
+        "tags": [
+          "collagen",
+          "physiology"
+        ]
+      },
+      {
+        "schema": "foundation.mcq/v2",
+        "id": "sur-ch1-mcq-003",
+        "moduleId": "sur-ch1-wound-healing",
+        "subject": "Surgery",
+        "type": "single",
+        "highYield": true,
+        "sectionTag": "s1",
+        "difficulty": 1,
+        "stem": "Approximately what proportion of final strength has a wound regained at 3 weeks?",
+        "options": [
+          {
+            "text": "20%",
+            "correct": true,
+            "why": "Classic figure: ~20% at 3 weeks."
+          },
+          {
+            "text": "50%",
+            "correct": false,
+            "why": "Overestimates early strength."
+          },
+          {
+            "text": "80%",
+            "correct": false,
+            "why": "80% is the figure at 3 months, not 3 weeks."
+          },
+          {
+            "text": "100%",
+            "correct": false,
+            "why": "A wound never regains full original strength."
+          },
+          {
+            "text": "5%",
+            "correct": false,
+            "why": "Underestimates 3-week strength."
+          }
+        ],
+        "explanation": [
+          "At 3 weeks a wound has ~20% of final strength; at 3 months ~80% of original."
+        ],
+        "keyFacts": [
+          "20% at 3 weeks; 80% at 3 months; never 100%."
+        ],
+        "teachingPoint": "Remember 20-at-3-weeks, 80-at-3-months.",
+        "tags": [
+          "strength"
+        ]
+      },
+      {
+        "schema": "foundation.mcq/v2",
+        "id": "sur-ch1-mcq-004",
+        "moduleId": "sur-ch1-wound-healing",
+        "subject": "Surgery",
+        "type": "single",
+        "highYield": true,
+        "sectionTag": "s1",
+        "difficulty": 2,
+        "stem": "A contaminated laceration is left open for 5 days and then sutured because it looks clean. This is healing by:",
+        "options": [
+          {
+            "text": "Tertiary (delayed primary) intention",
+            "correct": true,
+            "why": "Delayed primary closure of a contaminated wound after ~5 days is tertiary intention."
+          },
+          {
+            "text": "Primary intention",
+            "correct": false,
+            "why": "Primary intention closes a clean wound immediately, not after a delay."
+          },
+          {
+            "text": "Secondary intention",
+            "correct": false,
+            "why": "Secondary intention is left to granulate without surgical closure."
+          },
+          {
+            "text": "Quaternary intention",
+            "correct": false,
+            "why": "Not a recognised category."
+          },
+          {
+            "text": "Regeneration",
+            "correct": false,
+            "why": "Regeneration restores original tissue without scar; not applicable to a sutured skin wound."
+          }
+        ],
+        "explanation": [
+          "Delayed primary (tertiary) closure suits a contaminated wound: leave open ~5 days, then suture if no infection."
+        ],
+        "keyFacts": [
+          "Tertiary = delayed primary closure ~day 5."
+        ],
+        "teachingPoint": "Delay-then-close = tertiary intention.",
+        "tags": [
+          "healing-types"
+        ]
+      },
+      {
+        "schema": "foundation.mcq/v2",
+        "id": "sur-ch1-mcq-005",
+        "moduleId": "sur-ch1-wound-healing",
+        "subject": "Surgery",
+        "type": "single",
+        "highYield": true,
+        "sectionTag": "s1",
+        "difficulty": 2,
+        "stem": "A raised scar that extends well beyond the original wound margin and does not regress is best described as:",
+        "options": [
+          {
+            "text": "Keloid",
+            "correct": true,
+            "why": "Keloids cross the original margin and do not regress."
+          },
+          {
+            "text": "Hypertrophic scar",
+            "correct": false,
+            "why": "Hypertrophic scars stay within the wound margin and may regress."
+          },
+          {
+            "text": "Contracture",
+            "correct": false,
+            "why": "A contracture is a tightening across a joint, not a scar that overspills margins."
+          },
+          {
+            "text": "Atrophic scar",
+            "correct": false,
+            "why": "Atrophic scars are depressed, not raised and overgrown."
+          },
+          {
+            "text": "Normal maturation",
+            "correct": false,
+            "why": "Overgrowth beyond the margin is abnormal."
+          }
+        ],
+        "explanation": [
+          "Keloid extends beyond the wound and does not regress; hypertrophic stays within and may regress."
+        ],
+        "keyFacts": [
+          "Keloid crosses the margin; hypertrophic is held within."
+        ],
+        "teachingPoint": "Cross the margin = keloid.",
+        "tags": [
+          "scar"
+        ]
+      },
+      {
+        "schema": "foundation.mcq/v2",
+        "id": "sur-ch1-mcq-006",
+        "moduleId": "sur-ch1-wound-healing",
+        "subject": "Surgery",
+        "type": "single",
+        "highYield": true,
+        "sectionTag": "s1",
+        "difficulty": 3,
+        "vignette": "A patient on long-term corticosteroids has a surgical wound that is slow to heal.",
+        "stem": "Which single factor here most directly impairs healing?",
+        "options": [
+          {
+            "text": "Corticosteroid therapy",
+            "correct": true,
+            "why": "Steroids impair the inflammatory/proliferative response and collagen synthesis."
+          },
+          {
+            "text": "Good nutrition",
+            "correct": false,
+            "why": "Adequate protein and vitamins aid, not impair, healing."
+          },
+          {
+            "text": "Immobilisation of the wound",
+            "correct": false,
+            "why": "Immobilisation actually protects granulation tissue."
+          },
+          {
+            "text": "Youth",
+            "correct": false,
+            "why": "Younger age favours healing; the elderly heal more slowly."
+          },
+          {
+            "text": "High local vascularity",
+            "correct": false,
+            "why": "Good blood supply speeds healing."
+          }
+        ],
+        "explanation": [
+          "Steroids, chemotherapy and immunosuppressants are the classic drug impairers of healing."
+        ],
+        "keyFacts": [
+          "Steroids/chemo/immunosuppressants slow healing."
+        ],
+        "teachingPoint": "Steroids blunt inflammation and collagen synthesis.",
+        "tags": [
+          "factors"
+        ]
+      },
+      {
+        "schema": "foundation.mcq/v2",
+        "id": "sur-ch1-mcq-007",
+        "moduleId": "sur-ch1-wound-healing",
+        "subject": "Surgery",
+        "type": "single",
+        "highYield": true,
+        "sectionTag": "s1",
+        "difficulty": 3,
+        "stem": "Which statement about immobilisation and wound healing is correct?",
+        "options": [
+          {
+            "text": "Immobilisation aids healing by protecting granulation tissue",
+            "correct": true,
+            "why": "Movement/shear damages the granulation blood supply, so rest helps."
+          },
+          {
+            "text": "Immobilisation harms healing by reducing blood flow",
+            "correct": false,
+            "why": "It is movement, not rest, that damages granulation."
+          },
+          {
+            "text": "Movement improves healing by stimulating collagen",
+            "correct": false,
+            "why": "Shear injures the fragile granulation supply."
+          },
+          {
+            "text": "Immobilisation has no effect on healing",
+            "correct": false,
+            "why": "It has a definite protective effect locally."
+          },
+          {
+            "text": "Only systemic factors affect healing",
+            "correct": false,
+            "why": "Local mechanical factors matter too."
+          }
+        ],
+        "explanation": [
+          "Immobilisation protects granulation tissue; shear from movement damages its blood supply."
+        ],
+        "keyFacts": [
+          "Rest protects granulation tissue."
+        ],
+        "teachingPoint": "A classic catch — immobilisation helps.",
+        "tags": [
+          "factors"
+        ]
+      },
+      {
+        "schema": "foundation.mcq/v2",
+        "id": "sur-ch1-mcq-008",
+        "moduleId": "sur-ch1-wound-healing",
+        "subject": "Surgery",
+        "type": "single",
+        "highYield": true,
+        "sectionTag": "s1",
+        "difficulty": 2,
+        "stem": "Which vitamin deficiency most specifically impairs protocollagen maturation?",
+        "options": [
+          {
+            "text": "Vitamin C",
+            "correct": true,
+            "why": "Vitamin C is required for collagen (protocollagen) hydroxylation/maturation."
+          },
+          {
+            "text": "Vitamin A",
+            "correct": false,
+            "why": "Vitamin A supports epithelialisation, a different step."
+          },
+          {
+            "text": "Vitamin K",
+            "correct": false,
+            "why": "Vitamin K concerns clotting factors, not collagen maturation."
+          },
+          {
+            "text": "Vitamin D",
+            "correct": false,
+            "why": "Vitamin D governs calcium/bone, not collagen cross-linking here."
+          },
+          {
+            "text": "Vitamin B12",
+            "correct": false,
+            "why": "B12 relates to haematopoiesis/neurology, not collagen maturation."
+          }
+        ],
+        "explanation": [
+          "Vitamin C is needed for protocollagen maturation; vitamin A aids epithelialisation."
+        ],
+        "keyFacts": [
+          "Vit C → collagen; Vit A → epithelium."
+        ],
+        "teachingPoint": "Scurvy impairs collagen and wound strength.",
+        "tags": [
+          "nutrition"
+        ]
+      },
+      {
+        "schema": "foundation.mcq/v2",
+        "id": "sur-ch1-mcq-009",
+        "moduleId": "sur-ch1-wound-healing",
+        "subject": "Surgery",
+        "type": "multi",
+        "highYield": true,
+        "sectionTag": "s1",
+        "difficulty": 2,
+        "stem": "Which of the following are growth factors involved in wound healing? (Select all that apply.)",
+        "options": [
+          {
+            "text": "PDGF",
+            "correct": true,
+            "why": "Platelet-derived growth factor is released early and recruits fibroblasts."
+          },
+          {
+            "text": "TNF-α",
+            "correct": true,
+            "why": "Tumour necrosis factor-α is part of the inflammatory signalling."
+          },
+          {
+            "text": "IL-1",
+            "correct": true,
+            "why": "Interleukin-1 is an inflammatory mediator of healing."
+          },
+          {
+            "text": "FGF",
+            "correct": true,
+            "why": "Fibroblast growth factor drives fibroblast/endothelial activity."
+          },
+          {
+            "text": "Insulin",
+            "correct": false,
+            "why": "Insulin is a metabolic hormone, not listed among the healing growth factors."
+          }
+        ],
+        "explanation": [
+          "The chapter lists PDGF, TNF-α, IL-1 and FGF as growth factors of healing."
+        ],
+        "keyFacts": [
+          "PDGF, TNF-α, IL-1, FGF."
+        ],
+        "teachingPoint": "Know the four named growth factors.",
+        "tags": [
+          "growth-factors"
+        ]
+      },
+      {
+        "schema": "foundation.mcq/v2",
+        "id": "sur-ch1-mcq-010",
+        "moduleId": "sur-ch1-wound-healing",
+        "subject": "Surgery",
+        "type": "single",
+        "highYield": true,
+        "sectionTag": "s1",
+        "difficulty": 1,
+        "stem": "Which phase of healing lasts approximately 5 days and features macrophage debridement?",
+        "options": [
+          {
+            "text": "Haemostasis & inflammation",
+            "correct": true,
+            "why": "The inflammatory phase runs ~5 days with macrophage debridement and growth-factor release."
+          },
+          {
+            "text": "Proliferation",
+            "correct": false,
+            "why": "Proliferation follows, forming granulation and epithelium."
+          },
+          {
+            "text": "Maturation & remodelling",
+            "correct": false,
+            "why": "Remodelling takes ~1 year."
+          },
+          {
+            "text": "Contraction",
+            "correct": false,
+            "why": "Contraction is a component, not the ~5-day inflammatory phase."
+          },
+          {
+            "text": "Epithelialisation",
+            "correct": false,
+            "why": "A component of proliferation, not the inflammatory phase."
+          }
+        ],
+        "explanation": [
+          "Haemostasis & inflammation ≈ 5 days; macrophages debride and release growth factors."
+        ],
+        "keyFacts": [
+          "Inflammatory phase ≈ 5 days."
+        ],
+        "teachingPoint": "Macrophage is the key inflammatory-phase cell.",
+        "tags": [
+          "phases"
+        ]
+      },
+      {
+        "schema": "foundation.mcq/v2",
+        "id": "sur-ch1-mcq-011",
+        "moduleId": "sur-ch1-wound-healing",
+        "subject": "Surgery",
+        "type": "single",
+        "highYield": true,
+        "sectionTag": "s1",
+        "difficulty": 2,
+        "stem": "Roughly how long does the maturation & remodelling phase continue?",
+        "options": [
+          {
+            "text": "About 1 year",
+            "correct": true,
+            "why": "Remodelling continues for approximately a year as collagen realigns."
+          },
+          {
+            "text": "About 5 days",
+            "correct": false,
+            "why": "That is the inflammatory phase."
+          },
+          {
+            "text": "About 48 hours",
+            "correct": false,
+            "why": "That is the time to epithelialise a clean sutured wound."
+          },
+          {
+            "text": "About 3 weeks",
+            "correct": false,
+            "why": "3 weeks is when ~20% strength is reached, not the end of remodelling."
+          },
+          {
+            "text": "About 5 years",
+            "correct": false,
+            "why": "Overstates the usual remodelling period."
+          }
+        ],
+        "explanation": [
+          "Remodelling runs ~1 year; fibres thicken and align to lines of stress."
+        ],
+        "keyFacts": [
+          "Remodelling ≈ 1 year."
+        ],
+        "teachingPoint": "Scar keeps maturing for about a year.",
+        "tags": [
+          "phases"
+        ]
+      },
+      {
+        "schema": "foundation.mcq/v2",
+        "id": "sur-ch1-mcq-012",
+        "moduleId": "sur-ch1-wound-healing",
+        "subject": "Surgery",
+        "type": "single",
+        "highYield": true,
+        "sectionTag": "s2",
+        "difficulty": 1,
+        "stem": "A wound that is deeper than it is long, with a small skin opening, is a:",
+        "options": [
+          {
+            "text": "Penetrating wound",
+            "correct": true,
+            "why": "Penetrating wounds are deeper than long with poor drainage; suspect a hidden visceral injury."
+          },
+          {
+            "text": "Incised wound",
+            "correct": false,
+            "why": "Incised wounds are longer than deep with clean edges."
+          },
+          {
+            "text": "Abrasion",
+            "correct": false,
+            "why": "An abrasion is a superficial friction injury."
+          },
+          {
+            "text": "Contusion",
+            "correct": false,
+            "why": "A contusion is a closed blunt injury with capillary extravasation."
+          },
+          {
+            "text": "Laceration",
+            "correct": false,
+            "why": "A laceration is irregular and devascularised, not specifically deeper-than-long."
+          }
+        ],
+        "explanation": [
+          "Penetrating = deeper than long; small opening → poor drainage and possible missed viscus."
+        ],
+        "keyFacts": [
+          "Penetrating wound is deeper than long."
+        ],
+        "teachingPoint": "Depth > length → look deeper.",
+        "tags": [
+          "wound-types"
+        ]
+      },
+      {
+        "schema": "foundation.mcq/v2",
+        "id": "sur-ch1-mcq-013",
+        "moduleId": "sur-ch1-wound-healing",
+        "subject": "Surgery",
+        "type": "single",
+        "highYield": true,
+        "sectionTag": "s2",
+        "difficulty": 2,
+        "stem": "Regarding missile injuries, which factor contributes most to tissue damage?",
+        "options": [
+          {
+            "text": "Projectile velocity",
+            "correct": true,
+            "why": "KE = MV²/2g, so velocity (squared) dominates energy transfer."
+          },
+          {
+            "text": "Projectile mass",
+            "correct": false,
+            "why": "Mass matters, but velocity is squared and dominates."
+          },
+          {
+            "text": "Projectile colour",
+            "correct": false,
+            "why": "Irrelevant to energy transfer."
+          },
+          {
+            "text": "Entry-wound diameter",
+            "correct": false,
+            "why": "Entry size poorly predicts internal damage."
+          },
+          {
+            "text": "Ambient temperature",
+            "correct": false,
+            "why": "Not a determinant of missile energy."
+          }
+        ],
+        "explanation": [
+          "Kinetic energy = MV²/2g; velocity is squared, so high-velocity rifles are far more destructive than pistols."
+        ],
+        "keyFacts": [
+          "KE = MV²/2g; velocity dominates."
+        ],
+        "teachingPoint": "Velocity, squared, drives wounding energy.",
+        "tags": [
+          "missile"
+        ]
+      },
+      {
+        "schema": "foundation.mcq/v2",
+        "id": "sur-ch1-mcq-014",
+        "moduleId": "sur-ch1-wound-healing",
+        "subject": "Surgery",
+        "type": "single",
+        "highYield": true,
+        "sectionTag": "s2",
+        "difficulty": 1,
+        "stem": "A small, fluctuant collection of blood after blunt trauma is best managed initially by:",
+        "options": [
+          {
+            "text": "Wide-bore needle aspiration",
+            "correct": true,
+            "why": "A small haematoma can be aspirated with a wide-bore needle."
+          },
+          {
+            "text": "Immediate surgical evacuation",
+            "correct": false,
+            "why": "Reserved for large haematomas."
+          },
+          {
+            "text": "Primary excision of overlying skin",
+            "correct": false,
+            "why": "Unnecessary and destructive for a small haematoma."
+          },
+          {
+            "text": "Long-term compression only",
+            "correct": false,
+            "why": "Aspiration is the described first step for a small collection."
+          },
+          {
+            "text": "Antibiotics alone",
+            "correct": false,
+            "why": "Does not evacuate the collection."
+          }
+        ],
+        "explanation": [
+          "Small haematoma → wide-bore needle aspiration; large → surgical evacuation under asepsis."
+        ],
+        "keyFacts": [
+          "Small = aspirate; large = evacuate."
+        ],
+        "teachingPoint": "Size decides aspirate vs evacuate.",
+        "tags": [
+          "haematoma"
+        ]
+      },
+      {
+        "schema": "foundation.mcq/v2",
+        "id": "sur-ch1-mcq-015",
+        "moduleId": "sur-ch1-wound-healing",
+        "subject": "Surgery",
+        "type": "single",
+        "highYield": true,
+        "sectionTag": "s2",
+        "difficulty": 2,
+        "stem": "Which wound type is typically the most heavily contaminated and devascularised?",
+        "options": [
+          {
+            "text": "Lacerated wound",
+            "correct": true,
+            "why": "Blunt violence/RTA produces irregular, devascularised, contaminated tissue with high infection risk."
+          },
+          {
+            "text": "Incised wound",
+            "correct": false,
+            "why": "Incised wounds are clean-edged with little tissue destruction."
+          },
+          {
+            "text": "Abrasion",
+            "correct": false,
+            "why": "Superficial and generally not devascularised."
+          },
+          {
+            "text": "Surgical wound",
+            "correct": false,
+            "why": "Made under asepsis, minimally contaminated."
+          },
+          {
+            "text": "Contusion",
+            "correct": false,
+            "why": "A closed injury, not an open contaminated wound."
+          }
+        ],
+        "explanation": [
+          "Lacerated wounds are irregular, devascularised and contaminated; oedema raises tension → ischaemia."
+        ],
+        "keyFacts": [
+          "Laceration = devascularised + contaminated."
+        ],
+        "teachingPoint": "Lacerations carry the highest infection risk of the open wounds listed.",
+        "tags": [
+          "wound-types"
+        ]
+      },
+      {
+        "schema": "foundation.mcq/v2",
+        "id": "sur-ch1-mcq-016",
+        "moduleId": "sur-ch1-wound-healing",
+        "subject": "Surgery",
+        "type": "single",
+        "highYield": true,
+        "sectionTag": "s2",
+        "difficulty": 1,
+        "stem": "Why is an abrasion characteristically very painful?",
+        "options": [
+          {
+            "text": "Exposed nerve endings",
+            "correct": true,
+            "why": "Superficial scraping exposes cutaneous nerve endings."
+          },
+          {
+            "text": "Deep arterial bleeding",
+            "correct": false,
+            "why": "Abrasions are superficial, not deep arterial injuries."
+          },
+          {
+            "text": "Bone involvement",
+            "correct": false,
+            "why": "Abrasions do not reach bone."
+          },
+          {
+            "text": "Nerve transection",
+            "correct": false,
+            "why": "Nerves are exposed, not necessarily transected as in incised wounds."
+          },
+          {
+            "text": "Compartment syndrome",
+            "correct": false,
+            "why": "Not a feature of a superficial abrasion."
+          }
+        ],
+        "explanation": [
+          "Abrasions scrape away superficial layers, exposing nerve endings → marked pain."
+        ],
+        "keyFacts": [
+          "Abrasion pain = exposed nerve endings."
+        ],
+        "teachingPoint": "Superficial but very painful.",
+        "tags": [
+          "abrasion"
+        ]
+      },
+      {
+        "schema": "foundation.mcq/v2",
+        "id": "sur-ch1-mcq-017",
+        "moduleId": "sur-ch1-wound-healing",
+        "subject": "Surgery",
+        "type": "multi",
+        "highYield": true,
+        "sectionTag": "s3",
+        "difficulty": 1,
+        "stem": "In a heavily contaminated limb wound, which actions are correct at first surgery? (Select all that apply.)",
+        "options": [
+          {
+            "text": "Leave the deep fascia open",
+            "correct": true,
+            "why": "Contaminated wounds: leave the deep fascia open."
+          },
+          {
+            "text": "Do not close the skin primarily",
+            "correct": true,
+            "why": "Skin should not be closed primarily in a contaminated wound."
+          },
+          {
+            "text": "Defer tendon repair",
+            "correct": true,
+            "why": "Tendon repair is deferred in contaminated wounds."
+          },
+          {
+            "text": "Primarily repair divided nerves",
+            "correct": false,
+            "why": "Nerve repair is deferred in contaminated wounds; repair clean incised wounds instead."
+          },
+          {
+            "text": "Excise clearly necrotic muscle",
+            "correct": true,
+            "why": "Necrotic muscle (dark, non-contractile, non-bleeding) is excised."
+          }
+        ],
+        "explanation": [
+          "Contaminated-wound rule: no nerve/tendon repair, leave fascia and skin open, and excise dead muscle."
+        ],
+        "keyFacts": [
+          "No nerve/tendon repair; fascia + skin open; excise dead muscle."
+        ],
+        "teachingPoint": "Deferring repair in contaminated wounds is correct, not negligent.",
+        "tags": [
+          "management"
+        ]
+      },
+      {
+        "schema": "foundation.mcq/v2",
+        "id": "sur-ch1-mcq-018",
+        "moduleId": "sur-ch1-wound-healing",
+        "subject": "Surgery",
+        "type": "single",
+        "highYield": true,
+        "sectionTag": "s3",
+        "difficulty": 2,
+        "stem": "During debridement, which finding indicates muscle that should be excised?",
+        "options": [
+          {
+            "text": "No bleeding when cut and no contraction when pinched",
+            "correct": true,
+            "why": "Dark red/grey, non-contractile, non-bleeding muscle is dead and must be excised."
+          },
+          {
+            "text": "Brisk bleeding and brisk contraction",
+            "correct": false,
+            "why": "These indicate viable muscle to preserve."
+          },
+          {
+            "text": "Bright red colour",
+            "correct": false,
+            "why": "Suggests viable, well-perfused muscle."
+          },
+          {
+            "text": "Pain on handling",
+            "correct": false,
+            "why": "Not one of the four classic viability signs."
+          },
+          {
+            "text": "Warmth to touch",
+            "correct": false,
+            "why": "Not part of the described criteria."
+          }
+        ],
+        "explanation": [
+          "Dead muscle: dark red/grey, no contraction when pinched, no bleeding when cut."
+        ],
+        "keyFacts": [
+          "4 Cs of dead muscle: colour, contractility, consistency, capacity to bleed."
+        ],
+        "teachingPoint": "Non-contractile, non-bleeding muscle is dead.",
+        "tags": [
+          "debridement"
+        ]
+      },
+      {
+        "schema": "foundation.mcq/v2",
+        "id": "sur-ch1-mcq-019",
+        "moduleId": "sur-ch1-wound-healing",
+        "subject": "Surgery",
+        "type": "single",
+        "highYield": true,
+        "sectionTag": "s3",
+        "difficulty": 2,
+        "stem": "An open fracture with a high infection risk is best stabilised by:",
+        "options": [
+          {
+            "text": "External fixation",
+            "correct": true,
+            "why": "External fixation avoids seeding metalwork into potentially infected bone."
+          },
+          {
+            "text": "Internal plate fixation",
+            "correct": false,
+            "why": "Internal fixation risks spreading infection to bone."
+          },
+          {
+            "text": "Intramedullary nail",
+            "correct": false,
+            "why": "Also internal metalwork — risks deep bone infection."
+          },
+          {
+            "text": "No fixation at all",
+            "correct": false,
+            "why": "The fracture still needs stabilisation."
+          },
+          {
+            "text": "Primary joint fusion",
+            "correct": false,
+            "why": "Not the described management of an infected-risk open fracture."
+          }
+        ],
+        "explanation": [
+          "Use external fixation when infection risk is high; internal fixation could spread infection to bone."
+        ],
+        "keyFacts": [
+          "Infection risk → external fixation."
+        ],
+        "teachingPoint": "Keep metal out of contaminated bone.",
+        "tags": [
+          "fracture"
+        ]
+      },
+      {
+        "schema": "foundation.mcq/v2",
+        "id": "sur-ch1-mcq-020",
+        "moduleId": "sur-ch1-wound-healing",
+        "subject": "Surgery",
+        "type": "single",
+        "highYield": true,
+        "sectionTag": "s3",
+        "difficulty": 1,
+        "stem": "What is the correct first-aid method to control external haemorrhage from an open wound?",
+        "options": [
+          {
+            "text": "Direct compression with a sterile dressing",
+            "correct": true,
+            "why": "Direct compression is first-line; a tourniquet is only a temporary bridge to theatre."
+          },
+          {
+            "text": "Immediate proximal tourniquet as definitive care",
+            "correct": false,
+            "why": "A tourniquet is temporary only, not definitive."
+          },
+          {
+            "text": "Blind clamping in the wound",
+            "correct": false,
+            "why": "Risks damaging nerves/vessels."
+          },
+          {
+            "text": "Elevation alone",
+            "correct": false,
+            "why": "Insufficient for significant bleeding without compression."
+          },
+          {
+            "text": "Topical antibiotics",
+            "correct": false,
+            "why": "Do not stop bleeding."
+          }
+        ],
+        "explanation": [
+          "Stop bleeding by direct compression; reserve the tourniquet as a temporary measure before theatre."
+        ],
+        "keyFacts": [
+          "Compression first; tourniquet is temporary."
+        ],
+        "teachingPoint": "Press first, tourniquet only to buy time.",
+        "tags": [
+          "first-aid"
+        ]
+      },
+      {
+        "schema": "foundation.mcq/v2",
+        "id": "sur-ch1-mcq-021",
+        "moduleId": "sur-ch1-wound-healing",
+        "subject": "Surgery",
+        "type": "single",
+        "highYield": true,
+        "sectionTag": "s3",
+        "difficulty": 2,
+        "stem": "A stab wound to the femoral triangle mandates particular concern for injury to which structures?",
+        "options": [
+          {
+            "text": "The femoral vessels",
+            "correct": true,
+            "why": "Timing and site predict injured structures; a femoral-triangle stab risks the femoral vessels."
+          },
+          {
+            "text": "The brachial artery",
+            "correct": false,
+            "why": "That is in the arm, not the femoral triangle."
+          },
+          {
+            "text": "The carotid sheath",
+            "correct": false,
+            "why": "A neck structure, not the femoral triangle."
+          },
+          {
+            "text": "The popliteal vein only",
+            "correct": false,
+            "why": "The popliteal fossa is behind the knee, not the femoral triangle."
+          },
+          {
+            "text": "The portal vein",
+            "correct": false,
+            "why": "An abdominal structure, unrelated to a thigh stab."
+          }
+        ],
+        "explanation": [
+          "Ask timing and cause to predict injured structures; a femoral-triangle stab endangers the femoral vessels."
+        ],
+        "keyFacts": [
+          "Site predicts injured structures."
+        ],
+        "teachingPoint": "Anatomy of the wound predicts what is hurt.",
+        "tags": [
+          "assessment"
+        ]
+      },
+      {
+        "schema": "foundation.mcq/v2",
+        "id": "sur-ch1-mcq-022",
+        "moduleId": "sur-ch1-wound-healing",
+        "subject": "Surgery",
+        "type": "single",
+        "highYield": true,
+        "sectionTag": "s4",
+        "difficulty": 1,
+        "stem": "What is the commonest type of chronic leg ulcer?",
+        "options": [
+          {
+            "text": "Venous ulcer",
+            "correct": true,
+            "why": "Venous ulcers are the commonest chronic leg ulcer."
+          },
+          {
+            "text": "Ischaemic (arterial) ulcer",
+            "correct": false,
+            "why": "Important but less common than venous."
+          },
+          {
+            "text": "Neuropathic ulcer",
+            "correct": false,
+            "why": "Common in diabetes but not the commonest leg ulcer overall."
+          },
+          {
+            "text": "Neoplastic ulcer",
+            "correct": false,
+            "why": "Uncommon (e.g. SCC in a chronic ulcer)."
+          },
+          {
+            "text": "Traumatic ulcer",
+            "correct": false,
+            "why": "Not the commonest chronic leg ulcer category."
+          }
+        ],
+        "explanation": [
+          "The commonest chronic leg ulcer is venous."
+        ],
+        "keyFacts": [
+          "Venous = commonest chronic leg ulcer."
+        ],
+        "teachingPoint": "Think venous first for a chronic leg ulcer.",
+        "tags": [
+          "ulcer"
+        ]
+      },
+      {
+        "schema": "foundation.mcq/v2",
+        "id": "sur-ch1-mcq-023",
+        "moduleId": "sur-ch1-wound-healing",
+        "subject": "Surgery",
+        "type": "single",
+        "highYield": true,
+        "sectionTag": "s4",
+        "difficulty": 2,
+        "stem": "A pressure sore with full-thickness skin loss that stops short of the fascia is which stage?",
+        "options": [
+          {
+            "text": "Stage 3",
+            "correct": true,
+            "why": "Stage 3 = full-thickness skin loss short of fascia."
+          },
+          {
+            "text": "Stage 1",
+            "correct": false,
+            "why": "Stage 1 is erythema only."
+          },
+          {
+            "text": "Stage 2",
+            "correct": false,
+            "why": "Stage 2 is partial-thickness loss."
+          },
+          {
+            "text": "Stage 4",
+            "correct": false,
+            "why": "Stage 4 involves muscle, bone or joints."
+          },
+          {
+            "text": "Stage 5",
+            "correct": false,
+            "why": "There is no stage 5 in this scheme."
+          }
+        ],
+        "explanation": [
+          "Stages: 1 erythema → 2 partial-thickness → 3 full-thickness short of fascia → 4 muscle/bone/joint."
+        ],
+        "keyFacts": [
+          "Stage 3 = full-thickness short of fascia."
+        ],
+        "teachingPoint": "Depth defines pressure-sore stage.",
+        "tags": [
+          "pressure-sore"
+        ]
+      },
+      {
+        "schema": "foundation.mcq/v2",
+        "id": "sur-ch1-mcq-024",
+        "moduleId": "sur-ch1-wound-healing",
+        "subject": "Surgery",
+        "type": "single",
+        "highYield": true,
+        "sectionTag": "s4",
+        "difficulty": 2,
+        "stem": "Which malignancy most classically develops within a long-standing chronic ulcer?",
+        "options": [
+          {
+            "text": "Squamous cell carcinoma",
+            "correct": true,
+            "why": "SCC is the classic malignant change in a chronic ulcer (a Marjolin-type ulcer)."
+          },
+          {
+            "text": "Basal cell carcinoma",
+            "correct": false,
+            "why": "Possible but rare compared with SCC."
+          },
+          {
+            "text": "Malignant melanoma",
+            "correct": false,
+            "why": "Not the classic ulcer-related malignancy here."
+          },
+          {
+            "text": "Kaposi sarcoma",
+            "correct": false,
+            "why": "Not the described association."
+          },
+          {
+            "text": "Osteosarcoma",
+            "correct": false,
+            "why": "A bone tumour, not a chronic-ulcer skin malignancy."
+          }
+        ],
+        "explanation": [
+          "Chronic leg ulcers may be neoplastic — usually SCC, rarely BCC."
+        ],
+        "keyFacts": [
+          "Chronic ulcer → SCC (rarely BCC)."
+        ],
+        "teachingPoint": "A non-healing ulcer can harbour SCC.",
+        "tags": [
+          "ulcer",
+          "malignancy"
+        ]
+      },
+      {
+        "schema": "foundation.mcq/v2",
+        "id": "sur-ch1-mcq-025",
+        "moduleId": "sur-ch1-wound-healing",
+        "subject": "Surgery",
+        "type": "single",
+        "highYield": true,
+        "sectionTag": "s4",
+        "difficulty": 1,
+        "stem": "Which is a recognised classic site for a pressure sore?",
+        "options": [
+          {
+            "text": "Ischial tuberosity",
+            "correct": true,
+            "why": "A classic pressure-sore site along with sacrum, greater trochanter, heel and malleoli."
+          },
+          {
+            "text": "Anterior abdominal wall",
+            "correct": false,
+            "why": "Not a typical pressure-bearing site in a bedridden patient."
+          },
+          {
+            "text": "Palm of the hand",
+            "correct": false,
+            "why": "Not a pressure-sore site."
+          },
+          {
+            "text": "Dorsum of the nose",
+            "correct": false,
+            "why": "Not a classic decubitus site."
+          },
+          {
+            "text": "Anterior thigh",
+            "correct": false,
+            "why": "Not a listed pressure point."
+          }
+        ],
+        "explanation": [
+          "Sites: ischial tuberosity, greater trochanter, sacrum, heel, malleoli."
+        ],
+        "keyFacts": [
+          "Bony prominences bear pressure."
+        ],
+        "teachingPoint": "Pressure sores sit over bony prominences.",
+        "tags": [
+          "pressure-sore"
+        ]
+      },
+      {
+        "schema": "foundation.mcq/v2",
+        "id": "sur-ch1-mcq-026",
+        "moduleId": "sur-ch1-wound-healing",
+        "subject": "Surgery",
+        "type": "single",
+        "highYield": true,
+        "sectionTag": "s4",
+        "difficulty": 2,
+        "stem": "A wound that remains unhealed at roughly which time is defined as chronic?",
+        "options": [
+          {
+            "text": "~3 months",
+            "correct": true,
+            "why": "A chronic wound fails the acute sequence within ~3 months."
+          },
+          {
+            "text": "~3 days",
+            "correct": false,
+            "why": "Far too short to define chronicity."
+          },
+          {
+            "text": "~3 weeks",
+            "correct": false,
+            "why": "This is when a wound has ~20% strength, not the chronicity threshold."
+          },
+          {
+            "text": "~3 years",
+            "correct": false,
+            "why": "Overstates the threshold."
+          },
+          {
+            "text": "~6 weeks",
+            "correct": false,
+            "why": "Not the figure given for chronicity."
+          }
+        ],
+        "explanation": [
+          "Chronic wounds fail to heal within a reasonable time (~3 months), arrested at inflammatory/proliferative phases."
+        ],
+        "keyFacts": [
+          "Chronic ≈ unhealed at 3 months."
+        ],
+        "teachingPoint": "Three months marks chronicity.",
+        "tags": [
+          "chronic"
+        ]
+      },
+      {
+        "schema": "foundation.mcq/v2",
+        "id": "sur-ch1-mcq-027",
+        "moduleId": "sur-ch1-wound-healing",
+        "subject": "Surgery",
+        "type": "single",
+        "highYield": true,
+        "sectionTag": "s5",
+        "difficulty": 1,
+        "stem": "What is the single most important way to classify a suture material?",
+        "options": [
+          {
+            "text": "By absorption (absorbable vs non-absorbable)",
+            "correct": true,
+            "why": "Absorption is stated as the most important classifier."
+          },
+          {
+            "text": "By colour",
+            "correct": false,
+            "why": "Colour aids handling but is not the key classifier."
+          },
+          {
+            "text": "By manufacturer",
+            "correct": false,
+            "why": "Irrelevant to the classification scheme."
+          },
+          {
+            "text": "By needle shape",
+            "correct": false,
+            "why": "A property of the needle, not the suture classification."
+          },
+          {
+            "text": "By packaging",
+            "correct": false,
+            "why": "Not a classification of the material."
+          }
+        ],
+        "explanation": [
+          "Sutures are classified by origin, synthesis and — most importantly — absorption."
+        ],
+        "keyFacts": [
+          "Absorption is the key classifier."
+        ],
+        "teachingPoint": "Absorbable vs non-absorbable first.",
+        "tags": [
+          "sutures"
+        ]
+      },
+      {
+        "schema": "foundation.mcq/v2",
+        "id": "sur-ch1-mcq-028",
+        "moduleId": "sur-ch1-wound-healing",
+        "subject": "Surgery",
+        "type": "single",
+        "highYield": true,
+        "sectionTag": "s5",
+        "difficulty": 1,
+        "stem": "Which is the slowest-absorbing absorbable suture?",
+        "options": [
+          {
+            "text": "Polydioxanone (PDS)",
+            "correct": true,
+            "why": "PDS is the slowest absorbable; it loses ~50% tensile strength at 6 weeks."
+          },
+          {
+            "text": "Chromic catgut",
+            "correct": false,
+            "why": "Absorbed in ~3 weeks — fast."
+          },
+          {
+            "text": "Polyglycolic acid (Dexon)",
+            "correct": false,
+            "why": "Absorbed in 2–3 months, faster than PDS."
+          },
+          {
+            "text": "Polyglactin (Vicryl)",
+            "correct": false,
+            "why": "Absorption ~4 months, but PDS lasts longest."
+          },
+          {
+            "text": "Silk",
+            "correct": false,
+            "why": "Silk is classed non-absorbable (though slowly absorbable in fact)."
+          }
+        ],
+        "explanation": [
+          "PDS (polydioxanone) is the slowest-absorbing absorbable suture."
+        ],
+        "keyFacts": [
+          "PDS = slowest absorbable."
+        ],
+        "teachingPoint": "Choose PDS when prolonged support is needed.",
+        "tags": [
+          "sutures"
+        ]
+      },
+      {
+        "schema": "foundation.mcq/v2",
+        "id": "sur-ch1-mcq-029",
+        "moduleId": "sur-ch1-wound-healing",
+        "subject": "Surgery",
+        "type": "single",
+        "highYield": true,
+        "sectionTag": "s5",
+        "difficulty": 2,
+        "stem": "Which suture is considered ideal for abdominal wall closure and hernia repair?",
+        "options": [
+          {
+            "text": "Polypropylene (Prolene)",
+            "correct": true,
+            "why": "Monofilament and inert; ideal for abdominal closure and hernia repair."
+          },
+          {
+            "text": "Silk",
+            "correct": false,
+            "why": "Provokes marked reaction; must be removed if infected."
+          },
+          {
+            "text": "Chromic catgut",
+            "correct": false,
+            "why": "Absorbs too quickly and reacts."
+          },
+          {
+            "text": "Polyglactin (Vicryl)",
+            "correct": false,
+            "why": "Absorbable; used for GI anastomoses, not durable abdominal closure."
+          },
+          {
+            "text": "Stainless steel",
+            "correct": false,
+            "why": "Reserved for sternotomy; difficult handling for abdominal closure."
+          }
+        ],
+        "explanation": [
+          "Prolene is inert, monofilament and ideal for abdominal closure and hernia repair."
+        ],
+        "keyFacts": [
+          "Prolene for the peritoneum."
+        ],
+        "teachingPoint": "Inert monofilament suits the abdominal wall.",
+        "tags": [
+          "sutures"
+        ]
+      },
+      {
+        "schema": "foundation.mcq/v2",
+        "id": "sur-ch1-mcq-030",
+        "moduleId": "sur-ch1-wound-healing",
+        "subject": "Surgery",
+        "type": "single",
+        "highYield": true,
+        "sectionTag": "s5",
+        "difficulty": 3,
+        "stem": "Compared with an equivalent monofilament, a multifilament (braided) suture picks up approximately how many more organisms?",
+        "options": [
+          {
+            "text": "About 10 times more",
+            "correct": true,
+            "why": "Capillary spaces between filaments harbour bacteria — roughly 10× more."
+          },
+          {
+            "text": "About the same",
+            "correct": false,
+            "why": "Braided sutures harbour markedly more bacteria."
+          },
+          {
+            "text": "About half as many",
+            "correct": false,
+            "why": "The opposite is true."
+          },
+          {
+            "text": "About 100 times more",
+            "correct": false,
+            "why": "Overstates the figure given (~10×)."
+          },
+          {
+            "text": "About 2 times more",
+            "correct": false,
+            "why": "Understates the ~10× figure."
+          }
+        ],
+        "explanation": [
+          "Multifilament sutures pick up ~10× more organisms than an equivalent monofilament."
+        ],
+        "keyFacts": [
+          "Braided = ~10× more organisms."
+        ],
+        "teachingPoint": "Braid harbours bacteria in capillary spaces.",
+        "tags": [
+          "sutures",
+          "infection"
+        ]
+      },
+      {
+        "schema": "foundation.mcq/v2",
+        "id": "sur-ch1-mcq-031",
+        "moduleId": "sur-ch1-wound-healing",
+        "subject": "Surgery",
+        "type": "single",
+        "highYield": true,
+        "sectionTag": "s5",
+        "difficulty": 2,
+        "stem": "Which suture is used to close a sternotomy?",
+        "options": [
+          {
+            "text": "Stainless steel",
+            "correct": true,
+            "why": "Very high tensile strength and very inert — used for sternotomy closure."
+          },
+          {
+            "text": "Prolene",
+            "correct": false,
+            "why": "Ideal for abdominal closure, not the standard sternal wire."
+          },
+          {
+            "text": "Vicryl",
+            "correct": false,
+            "why": "Absorbable; unsuitable for sternal fixation."
+          },
+          {
+            "text": "Nylon",
+            "correct": false,
+            "why": "Good tensile strength but not the sternotomy material."
+          },
+          {
+            "text": "Catgut",
+            "correct": false,
+            "why": "Absorbs quickly; wholly unsuitable."
+          }
+        ],
+        "explanation": [
+          "Stainless steel closes a sternotomy: very high tensile strength, very inert."
+        ],
+        "keyFacts": [
+          "Steel wires close the sternum."
+        ],
+        "teachingPoint": "Sternum → steel.",
+        "tags": [
+          "sutures"
+        ]
+      },
+      {
+        "schema": "foundation.mcq/v2",
+        "id": "sur-ch1-mcq-032",
+        "moduleId": "sur-ch1-wound-healing",
+        "subject": "Surgery",
+        "type": "single",
+        "highYield": true,
+        "sectionTag": "s5",
+        "difficulty": 3,
+        "stem": "Which statement about silk is the classic exam catch?",
+        "options": [
+          {
+            "text": "It is listed non-absorbable but is in fact very slowly absorbable",
+            "correct": true,
+            "why": "Silk sits in the non-absorbable list yet is slowly absorbable and provokes marked reaction."
+          },
+          {
+            "text": "It is fully inert like steel",
+            "correct": false,
+            "why": "Silk is protein and provokes marked tissue reaction."
+          },
+          {
+            "text": "It is a monofilament",
+            "correct": false,
+            "why": "Silk is multifilament (braided)."
+          },
+          {
+            "text": "It should never be removed if infected",
+            "correct": false,
+            "why": "Silk should be removed if the wound is infected."
+          },
+          {
+            "text": "It is the strongest suture available",
+            "correct": false,
+            "why": "Not its defining feature; steel has very high tensile strength."
+          }
+        ],
+        "explanation": [
+          "Silk is classed non-absorbable but is slowly absorbable and highly reactive; remove if infected."
+        ],
+        "keyFacts": [
+          "Silk: \"non-absorbable\" but slowly absorbable."
+        ],
+        "teachingPoint": "Silk is the exam trap in the suture list.",
+        "tags": [
+          "sutures"
+        ]
+      },
+      {
+        "schema": "foundation.mcq/v2",
+        "id": "sur-ch1-mcq-033",
+        "moduleId": "sur-ch1-wound-healing",
+        "subject": "Surgery",
+        "type": "single",
+        "highYield": true,
+        "sectionTag": "s6",
+        "difficulty": 1,
+        "stem": "In which situation is an occlusive dressing contraindicated?",
+        "options": [
+          {
+            "text": "An infected, highly exudative wound",
+            "correct": true,
+            "why": "Occlusive dressings are unsuitable for infected or highly exudative wounds."
+          },
+          {
+            "text": "A clean, dry superficial wound",
+            "correct": false,
+            "why": "A reasonable use for an occlusive dressing."
+          },
+          {
+            "text": "A wound needing a moist environment",
+            "correct": false,
+            "why": "Occlusion maintains hydration — appropriate here."
+          },
+          {
+            "text": "A closed surgical incision",
+            "correct": false,
+            "why": "Not a contraindication."
+          },
+          {
+            "text": "A minor abrasion",
+            "correct": false,
+            "why": "Not contraindicated for a clean minor abrasion."
+          }
+        ],
+        "explanation": [
+          "Occlusive dressings maintain hydration and autolysis but are not for infected or highly exudative wounds."
+        ],
+        "keyFacts": [
+          "No occlusion on infected/exudative wounds."
+        ],
+        "teachingPoint": "Don't seal an infected or weepy wound.",
+        "tags": [
+          "dressings"
+        ]
+      },
+      {
+        "schema": "foundation.mcq/v2",
+        "id": "sur-ch1-mcq-034",
+        "moduleId": "sur-ch1-wound-healing",
+        "subject": "Surgery",
+        "type": "single",
+        "highYield": true,
+        "sectionTag": "s6",
+        "difficulty": 1,
+        "stem": "VAC (negative-pressure) therapy promotes healing chiefly by:",
+        "options": [
+          {
+            "text": "Increasing granulation and wound contraction",
+            "correct": true,
+            "why": "Negative pressure boosts granulation and contraction; useful in bed sores and diabetic ulcers."
+          },
+          {
+            "text": "Sterilising the wound completely",
+            "correct": false,
+            "why": "It does not sterilise the wound."
+          },
+          {
+            "text": "Replacing surgical debridement entirely",
+            "correct": false,
+            "why": "Debridement is still needed; VAC complements it."
+          },
+          {
+            "text": "Delivering systemic antibiotics",
+            "correct": false,
+            "why": "VAC is a topical negative-pressure device, not a drug route."
+          },
+          {
+            "text": "Cooling the wound bed",
+            "correct": false,
+            "why": "Not its mechanism."
+          }
+        ],
+        "explanation": [
+          "VAC applies negative pressure → more granulation and contraction; good in bed sores and diabetic ulcers."
+        ],
+        "keyFacts": [
+          "VAC → granulation + contraction."
+        ],
+        "teachingPoint": "Negative pressure grows granulation tissue.",
+        "tags": [
+          "dressings",
+          "vac"
+        ]
+      },
+      {
+        "schema": "foundation.mcq/v2",
+        "id": "sur-ch1-mcq-035",
+        "moduleId": "sur-ch1-wound-healing",
+        "subject": "Surgery",
+        "type": "single",
+        "highYield": true,
+        "sectionTag": "s6",
+        "difficulty": 2,
+        "stem": "Which dressing is seaweed-derived and forms a gel on contact with exudate?",
+        "options": [
+          {
+            "text": "Alginate",
+            "correct": true,
+            "why": "Alginates are seaweed-derived and gel with exudate."
+          },
+          {
+            "text": "Hydrocolloid",
+            "correct": false,
+            "why": "A semi-occlusive dressing giving a moist bed, not seaweed-derived gel."
+          },
+          {
+            "text": "Gauze",
+            "correct": false,
+            "why": "A simple occlusive material, not a gelling alginate."
+          },
+          {
+            "text": "Honey",
+            "correct": false,
+            "why": "An osmotic agent, not an alginate."
+          },
+          {
+            "text": "Film dressing",
+            "correct": false,
+            "why": "A semi-permeable film, not an alginate."
+          }
+        ],
+        "explanation": [
+          "Alginates come from seaweed and form a fibrous gel with exudate."
+        ],
+        "keyFacts": [
+          "Alginate = seaweed gel."
+        ],
+        "teachingPoint": "Alginate suits exudative wounds.",
+        "tags": [
+          "dressings"
+        ]
+      },
+      {
+        "schema": "foundation.mcq/v2",
+        "id": "sur-ch1-mcq-036",
+        "moduleId": "sur-ch1-wound-healing",
+        "subject": "Surgery",
+        "type": "single",
+        "highYield": true,
+        "sectionTag": "s6",
+        "difficulty": 2,
+        "stem": "A semi-occlusive dressing is characterised by being:",
+        "options": [
+          {
+            "text": "Permeable to gases/vapour but impermeable to bacteria",
+            "correct": true,
+            "why": "Semi-occlusive dressings let vapour and gases through but keep bacteria out."
+          },
+          {
+            "text": "Impermeable to everything",
+            "correct": false,
+            "why": "That describes a fully occlusive dressing."
+          },
+          {
+            "text": "Permeable to bacteria",
+            "correct": false,
+            "why": "They are specifically impermeable to bacteria."
+          },
+          {
+            "text": "Only used on infected wounds",
+            "correct": false,
+            "why": "Not their defining feature."
+          },
+          {
+            "text": "Made from seaweed",
+            "correct": false,
+            "why": "That describes alginate dressings."
+          }
+        ],
+        "explanation": [
+          "Semi-occlusive: permeable to water vapour/gases, impermeable to bacteria (e.g. hydrocolloid)."
+        ],
+        "keyFacts": [
+          "Semi-occlusive: gases yes, bacteria no."
+        ],
+        "teachingPoint": "Breathable but a bacterial barrier.",
+        "tags": [
+          "dressings"
+        ]
+      },
+      {
+        "schema": "foundation.mcq/v2",
+        "id": "sur-ch1-mcq-037",
+        "moduleId": "sur-ch1-wound-healing",
+        "subject": "Surgery",
+        "type": "emq",
+        "highYield": true,
+        "sectionTag": "s5",
+        "difficulty": 2,
+        "stem": "For each clinical requirement, select the single most appropriate suture material.",
+        "optionBank": [
+          "Polypropylene (Prolene)",
           "Polydioxanone (PDS)",
-          "Silk"
+          "Stainless steel",
+          "Chromic catgut",
+          "Silk",
+          "Polyglactin (Vicryl)"
         ],
-        "answer": 3,
-        "explanation": "PDS is a monofilament and the slowest-absorbing absorbable suture (loses ~50% tensile strength at 6 weeks). Silk is classed as non-absorbable, though it is in fact very slowly absorbable.",
-        "tag": "s5"
+        "stems": [
+          {
+            "stem": "A monofilament, inert suture for closing the abdominal wall and repairing a hernia.",
+            "answer": 0,
+            "why": "Prolene is inert monofilament — ideal for abdominal closure and hernia repair."
+          },
+          {
+            "stem": "Closure of a median sternotomy after cardiac surgery.",
+            "answer": 2,
+            "why": "Stainless steel has very high tensile strength and inertness for the sternum."
+          },
+          {
+            "stem": "The slowest-absorbing absorbable suture, for a wound needing prolonged support.",
+            "answer": 1,
+            "why": "PDS is the slowest absorbable, losing ~50% tensile strength at 6 weeks."
+          },
+          {
+            "stem": "A multifilament absorbable suture the book favours for gastrointestinal anastomoses.",
+            "answer": 5,
+            "why": "Vicryl (polyglactin) is a multifilament absorbable used for GI anastomoses."
+          }
+        ],
+        "explanation": [
+          "Match durability and reactivity to the task: inert monofilament (Prolene) for the abdomen, steel for the sternum, PDS for prolonged support, Vicryl for gut."
+        ],
+        "keyFacts": [
+          "Prolene→abdomen; steel→sternum; PDS→slowest; Vicryl→GI."
+        ],
+        "teachingPoint": "Pick the suture by absorption profile and reactivity.",
+        "tags": [
+          "sutures",
+          "emq"
+        ]
       },
       {
-        "stem": "Which feature best distinguishes a keloid from a hypertrophic scar?",
+        "schema": "foundation.mcq/v2",
+        "id": "sur-ch1-mcq-038",
+        "moduleId": "sur-ch1-wound-healing",
+        "subject": "Surgery",
+        "type": "single",
+        "highYield": true,
+        "sectionTag": "s4",
+        "difficulty": 3,
+        "vignette": "A bedridden 78-year-old with poor nutrition develops a deep sacral wound exposing bone.",
+        "stem": "What single measure is most central to preventing further pressure sores in such a patient?",
         "options": [
-          "It is raised above the surface",
-          "It commonly regresses within months",
-          "It extends beyond the original wound margins",
-          "It occurs on the shoulder and presternal area",
-          "It responds to silicone gel sheets"
+          {
+            "text": "Regular turning by skilled nursing",
+            "correct": true,
+            "why": "Relieving sustained pressure by regular turning is central; support surfaces and nutrition also help."
+          },
+          {
+            "text": "Long-term systemic antibiotics",
+            "correct": false,
+            "why": "Antibiotics treat infection but do not prevent pressure necrosis."
+          },
+          {
+            "text": "Strict bed rest without turning",
+            "correct": false,
+            "why": "Immobility without turning worsens pressure sores."
+          },
+          {
+            "text": "Occlusive dressing over the sore",
+            "correct": false,
+            "why": "Occlusion is wrong for an exudative/infected deep sore and does not offload pressure."
+          },
+          {
+            "text": "Daily massage of the sore",
+            "correct": false,
+            "why": "Massaging established sores is not the described preventive measure."
+          }
         ],
-        "answer": 2,
-        "explanation": "Both scars are raised, favour the shoulder/presternal area, and respond to pressure/silicone. The keloid extends beyond the wound margins and does not regress; the hypertrophic scar stays within the confines and may regress.",
-        "tag": "s1"
+        "explanation": [
+          "Prevention centres on relieving pressure (regular turning), correcting general factors, air mattresses and skin care."
+        ],
+        "keyFacts": [
+          "Turn the patient to offload pressure."
+        ],
+        "teachingPoint": "Pressure relief prevents pressure sores.",
+        "tags": [
+          "pressure-sore"
+        ]
       },
       {
-        "stem": "Healing by tertiary intention refers to:",
+        "schema": "foundation.mcq/v2",
+        "id": "sur-ch1-mcq-039",
+        "moduleId": "sur-ch1-wound-healing",
+        "subject": "Surgery",
+        "type": "single",
+        "highYield": true,
+        "sectionTag": "s1",
+        "difficulty": 3,
+        "vignette": "A sutured clean laparotomy wound looks well at 3 weeks, but the patient asks when it will be \"as strong as before\".",
+        "stem": "What is the most accurate answer about its ultimate strength?",
         "options": [
-          "Immediate closure of a clean wound",
-          "Granulation infill of a gaping wound",
-          "Delayed primary closure of a contaminated wound after ~5 days",
-          "Skin grafting of a skin defect",
-          "Secondary suturing of a chronic ulcer"
+          {
+            "text": "It will never regain full original strength",
+            "correct": true,
+            "why": "A healed wound never returns to 100% of original tensile strength."
+          },
+          {
+            "text": "It is already at full strength by 3 weeks",
+            "correct": false,
+            "why": "Only ~20% of final strength is present at 3 weeks."
+          },
+          {
+            "text": "It reaches full strength at 3 months",
+            "correct": false,
+            "why": "~80% of original at 3 months, not 100%."
+          },
+          {
+            "text": "It reaches full strength at 1 year",
+            "correct": false,
+            "why": "Remodelling continues ~1 year but never reaches 100%."
+          },
+          {
+            "text": "Strength is irrelevant once epithelialised",
+            "correct": false,
+            "why": "Tensile strength continues to rise long after epithelial cover."
+          }
         ],
-        "answer": 2,
-        "explanation": "A contaminated wound is left open for ~5 days; if there are no signs of infection, delayed primary sutures are placed — tertiary (delayed primary) intention.",
-        "tag": "s1"
+        "explanation": [
+          "A wound gains ~20% strength at 3 weeks and ~80% at 3 months, and never regains full original strength."
+        ],
+        "keyFacts": [
+          "Never 100%."
+        ],
+        "teachingPoint": "Scar is permanently weaker than intact skin.",
+        "tags": [
+          "strength"
+        ]
       },
       {
-        "stem": "Which statement about the tensile strength of a healing wound is correct?",
+        "schema": "foundation.mcq/v2",
+        "id": "sur-ch1-mcq-040",
+        "moduleId": "sur-ch1-wound-healing",
+        "subject": "Surgery",
+        "type": "single",
+        "highYield": true,
+        "sectionTag": "s2",
+        "difficulty": 3,
+        "vignette": "A high-velocity rifle round passes through a soldier's thigh. The entry and exit wounds look small, but there is extensive deep muscle damage.",
+        "stem": "Which mechanism best explains damage remote from the visible track?",
         "options": [
-          "Full original strength is regained at one year",
-          "At 3 weeks the wound has 80% of final strength",
-          "At 3 months the wound has 20% of original strength",
-          "At 3 weeks the wound has 20% of its final strength",
-          "Collagen I is deposited before collagen III"
+          {
+            "text": "Temporary cavitation and shock waves",
+            "correct": true,
+            "why": "High-velocity rounds create a temporary cavity and shock waves damaging tissue beyond the track."
+          },
+          {
+            "text": "Direct laceration only",
+            "correct": false,
+            "why": "Direct track injury alone cannot explain remote damage."
+          },
+          {
+            "text": "Thermal burn from the skin",
+            "correct": false,
+            "why": "Not the described mechanism of remote injury."
+          },
+          {
+            "text": "Chemical toxicity of lead",
+            "correct": false,
+            "why": "Not the acute wounding mechanism here."
+          },
+          {
+            "text": "Secondary infection",
+            "correct": false,
+            "why": "Infection is a later complication, not the immediate remote damage."
+          }
         ],
-        "answer": 3,
-        "explanation": "The wound has 20% of final strength at 3 weeks and 80% of original at 3 months, and never regains full strength. Collagen III is deposited before collagen I.",
-        "tag": "s1"
+        "explanation": [
+          "High-velocity missiles damage tissue by track injury, shock waves, temporary cavitation and secondary bone fragments."
+        ],
+        "keyFacts": [
+          "Cavitation damages tissue away from the track."
+        ],
+        "teachingPoint": "Small holes can hide huge internal cavitation.",
+        "tags": [
+          "missile"
+        ]
       },
       {
-        "stem": "In a heavily contaminated wound, which action is appropriate?",
+        "schema": "foundation.mcq/v2",
+        "id": "sur-ch1-mcq-041",
+        "moduleId": "sur-ch1-wound-healing",
+        "subject": "Surgery",
+        "type": "single",
+        "highYield": true,
+        "sectionTag": "s3",
+        "difficulty": 3,
+        "vignette": "A patient arrives 10 hours after a heavily contaminated farmyard leg wound with devitalised muscle.",
+        "stem": "Which management combination is most appropriate?",
         "options": [
-          "Primary skin closure",
-          "Primary tendon repair",
-          "Leaving the deep fascia open",
-          "Immediate nerve repair",
-          "Internal fixation of an associated fracture"
+          {
+            "text": "Debride, leave fascia and skin open, plan delayed primary closure, give tetanus + anaerobic cover",
+            "correct": true,
+            "why": "Contaminated/late wounds: debride, leave open, delayed primary closure, tetanus and anaerobic prophylaxis."
+          },
+          {
+            "text": "Primary closure of skin and fascia now",
+            "correct": false,
+            "why": "Primary closure is wrong for a contaminated, late wound."
+          },
+          {
+            "text": "Immediate nerve and tendon repair",
+            "correct": false,
+            "why": "These repairs are deferred in contaminated wounds."
+          },
+          {
+            "text": "Internal fixation of any fracture",
+            "correct": false,
+            "why": "Internal fixation risks spreading infection to bone."
+          },
+          {
+            "text": "Close skin, no antibiotics",
+            "correct": false,
+            "why": "Both closing skin and withholding prophylaxis are wrong here."
+          }
         ],
-        "answer": 2,
-        "explanation": "In contaminated wounds the deep fascia and skin are left open, and nerve/tendon repair is deferred. An associated fracture with infection risk is managed by external — not internal — fixation.",
-        "tag": "s3"
+        "explanation": [
+          "Late contaminated wound: debride, leave fascia/skin open, delayed primary closure, tetanus prophylaxis and anaerobic cover."
+        ],
+        "keyFacts": [
+          "Contaminated + late → open + delayed primary."
+        ],
+        "teachingPoint": "Never close a dirty, late wound primarily.",
+        "tags": [
+          "management"
+        ]
       },
       {
-        "stem": "The commonest type of chronic leg ulcer is:",
+        "schema": "foundation.mcq/v2",
+        "id": "sur-ch1-mcq-042",
+        "moduleId": "sur-ch1-wound-healing",
+        "subject": "Surgery",
+        "type": "single",
+        "highYield": true,
+        "sectionTag": "s5",
+        "difficulty": 1,
+        "stem": "Which of these is a NON-absorbable suture?",
         "options": [
-          "Ischaemic ulcer",
-          "Neuropathic ulcer",
-          "Venous ulcer",
-          "Neoplastic (squamous cell) ulcer",
-          "Diabetic ulcer"
+          {
+            "text": "Polypropylene (Prolene)",
+            "correct": true,
+            "why": "Prolene is non-absorbable and inert."
+          },
+          {
+            "text": "Polydioxanone (PDS)",
+            "correct": false,
+            "why": "PDS is absorbable (the slowest)."
+          },
+          {
+            "text": "Polyglactin (Vicryl)",
+            "correct": false,
+            "why": "Vicryl is absorbable."
+          },
+          {
+            "text": "Chromic catgut",
+            "correct": false,
+            "why": "Catgut is absorbable."
+          },
+          {
+            "text": "Polyglycolic acid (Dexon)",
+            "correct": false,
+            "why": "Dexon is absorbable."
+          }
         ],
-        "answer": 2,
-        "explanation": "Venous ulcers are the commonest chronic leg ulcer. Ischaemic, neuropathic and neoplastic (SCC/BCC) ulcers occur but are less common.",
-        "tag": "s4"
+        "explanation": [
+          "Prolene is non-absorbable; PDS, Vicryl, Dexon and catgut are absorbable."
+        ],
+        "keyFacts": [
+          "Prolene = non-absorbable."
+        ],
+        "teachingPoint": "Sort sutures by absorption first.",
+        "tags": [
+          "sutures"
+        ]
       },
       {
-        "stem": "Compared with an equivalent monofilament, a multifilament suture in the presence of infection:",
+        "schema": "foundation.mcq/v2",
+        "id": "sur-ch1-mcq-043",
+        "moduleId": "sur-ch1-wound-healing",
+        "subject": "Surgery",
+        "type": "multi",
+        "highYield": true,
+        "sectionTag": "s6",
+        "difficulty": 2,
+        "stem": "Which agents act as osmotic dressings that draw down exudate?",
         "options": [
-          "Picks up fewer organisms",
-          "Picks up about 10 times more organisms",
-          "Causes less tissue reaction",
-          "Is always absorbable",
-          "Has a more secure knot than nylon"
+          {
+            "text": "Honey",
+            "correct": true,
+            "why": "Honey is listed as an osmotic agent that absorbs exudate."
+          },
+          {
+            "text": "Urea crystals",
+            "correct": true,
+            "why": "Urea crystals act osmotically to absorb exudate."
+          },
+          {
+            "text": "Debrisan",
+            "correct": true,
+            "why": "Debrisan is an osmotic agent."
+          },
+          {
+            "text": "Alginate",
+            "correct": false,
+            "why": "Alginate gels with exudate but is classed separately, not as an osmotic agent."
+          },
+          {
+            "text": "Hydrocolloid film",
+            "correct": false,
+            "why": "A semi-occlusive dressing, not an osmotic agent."
+          }
         ],
-        "answer": 1,
-        "explanation": "The capillary spaces between filaments harbour bacteria, so a multifilament suture can pick up ~10× more organisms and provokes more tissue reaction than an equivalent monofilament.",
-        "tag": "s5"
+        "explanation": [
+          "Osmotic agents — Debrisan, urea crystals and honey — absorb exudate."
+        ],
+        "keyFacts": [
+          "Debrisan, urea, honey = osmotic."
+        ],
+        "teachingPoint": "Osmotic dressings pull fluid out of the wound.",
+        "tags": [
+          "dressings"
+        ]
       },
       {
-        "stem": "Deficiency of which vitamin impairs maturation of protocollagen?",
+        "schema": "foundation.mcq/v2",
+        "id": "sur-ch1-mcq-044",
+        "moduleId": "sur-ch1-wound-healing",
+        "subject": "Surgery",
+        "type": "single",
+        "highYield": true,
+        "sectionTag": "s4",
+        "difficulty": 2,
+        "stem": "Which sequence correctly orders pressure-sore stages by increasing depth?",
         "options": [
-          "Vitamin A",
-          "Vitamin C",
-          "Vitamin D",
-          "Vitamin K",
-          "Vitamin B12"
+          {
+            "text": "Erythema → partial-thickness → full-thickness short of fascia → muscle/bone",
+            "correct": true,
+            "why": "This is the correct staging order 1→4."
+          },
+          {
+            "text": "Full-thickness → erythema → muscle → partial-thickness",
+            "correct": false,
+            "why": "Out of order."
+          },
+          {
+            "text": "Muscle/bone → full-thickness → partial-thickness → erythema",
+            "correct": false,
+            "why": "Reversed order."
+          },
+          {
+            "text": "Partial-thickness → erythema → muscle → fascia",
+            "correct": false,
+            "why": "Erythema is stage 1, before partial-thickness."
+          },
+          {
+            "text": "Erythema → muscle → partial-thickness → full-thickness",
+            "correct": false,
+            "why": "Muscle involvement is the deepest stage, not second."
+          }
         ],
-        "answer": 1,
-        "explanation": "Vitamin C deficiency impairs protocollagen maturation. Vitamin A deficiency instead leads to deficient epithelialisation.",
-        "tag": "s1"
+        "explanation": [
+          "Stages progress 1 erythema → 2 partial-thickness → 3 full-thickness short of fascia → 4 muscle/bone/joint."
+        ],
+        "keyFacts": [
+          "1 erythema, 4 muscle/bone."
+        ],
+        "teachingPoint": "Stage rises with depth.",
+        "tags": [
+          "pressure-sore"
+        ]
+      },
+      {
+        "schema": "foundation.mcq/v2",
+        "id": "sur-ch1-mcq-045",
+        "moduleId": "sur-ch1-wound-healing",
+        "subject": "Surgery",
+        "type": "single",
+        "highYield": true,
+        "sectionTag": "s1",
+        "difficulty": 1,
+        "stem": "Which is the correct order of the phases of wound healing?",
+        "options": [
+          {
+            "text": "Haemostasis/inflammation → proliferation → maturation",
+            "correct": true,
+            "why": "The phases run inflammation → proliferation → remodelling."
+          },
+          {
+            "text": "Proliferation → inflammation → maturation",
+            "correct": false,
+            "why": "Inflammation comes first."
+          },
+          {
+            "text": "Maturation → proliferation → inflammation",
+            "correct": false,
+            "why": "Reversed order."
+          },
+          {
+            "text": "Proliferation → maturation → inflammation",
+            "correct": false,
+            "why": "Inflammation is first, not last."
+          },
+          {
+            "text": "Inflammation → maturation → proliferation",
+            "correct": false,
+            "why": "Proliferation precedes maturation."
+          }
+        ],
+        "explanation": [
+          "Order: haemostasis & inflammation → proliferation → maturation & remodelling (HIP-R)."
+        ],
+        "keyFacts": [
+          "HIP-R order."
+        ],
+        "teachingPoint": "Inflammation always leads.",
+        "tags": [
+          "phases"
+        ]
+      },
+      {
+        "schema": "foundation.mcq/v2",
+        "id": "sur-ch1-mcq-046",
+        "moduleId": "sur-ch1-wound-healing",
+        "subject": "Surgery",
+        "type": "single",
+        "highYield": true,
+        "sectionTag": "s3",
+        "difficulty": 1,
+        "stem": "A patient with a limb wound has absent distal pulses. What is the most appropriate immediate investigation?",
+        "options": [
+          {
+            "text": "Urgent duplex ultrasound",
+            "correct": true,
+            "why": "Absent distal pulses demand urgent duplex to assess vascular injury."
+          },
+          {
+            "text": "Routine outpatient venogram",
+            "correct": false,
+            "why": "Too slow for a limb-threatening vascular concern."
+          },
+          {
+            "text": "Plain X-ray only",
+            "correct": false,
+            "why": "X-ray addresses fracture, not the absent pulse."
+          },
+          {
+            "text": "No investigation; observe",
+            "correct": false,
+            "why": "Absent pulses are an emergency, not for observation."
+          },
+          {
+            "text": "Skin biopsy",
+            "correct": false,
+            "why": "Irrelevant to acute vascular assessment."
+          }
+        ],
+        "explanation": [
+          "Feel distal pulses; if absent, arrange urgent duplex ultrasound."
+        ],
+        "keyFacts": [
+          "Absent pulse → urgent duplex."
+        ],
+        "teachingPoint": "No pulse = urgent vascular imaging.",
+        "tags": [
+          "assessment"
+        ]
       }
     ]
   }
@@ -2811,6 +5973,10 @@ function contentHits(q){
   state.flashcards.forEach(c=>hits.push({group:'Flashcards', label:c.front.replace(/[*_`#>{}]/g,'').slice(0,60), sub:'card', icon:ICONS.target, text:c.front+' '+c.back, run:()=>setView('flashcards')}));
   state.mnemonics.forEach(m=>hits.push({group:'Mnemonics', label:m.term, sub:'mnemonic', icon:ICONS.flame, text:m.term+' '+m.prompt, run:()=>setView('mnemonics')}));
   state.resources.forEach(r=>hits.push({group:'Resources', label:r.title, sub:r.category, icon:ICONS.ext, text:r.title, run:()=>setView('resources')}));
+  // v8: search across baked module MCQs — jump straight into the chapter's MCQ set
+  MODULES.forEach(m=>moduleMcqs(m).forEach(q=>{
+    hits.push({group:'MCQs', label:q.stem.slice(0,64), sub:m.subject, icon:ICONS.target, text:q.stem+' '+(q.vignette||'')+' '+(q.tags||[]).join(' '), run:()=>{ studyState.moduleId=m.id; setView('study'); startMcq(m); }});
+  }));
   return hits;
 }
 function openCmdk(){ cmdk.style.display='flex'; cmdkInput.value=''; renderCmdk(''); requestAnimationFrame(()=>cmdkInput.focus()); }
@@ -2890,11 +6056,21 @@ function clozeBlank(txt){ return String(txt||'').replace(/\{\{c\d+::(.*?)(?:::(.
 function clozeReveal(txt){ return String(txt||'').replace(/\{\{c\d+::(.*?)(?:::(.*?))?\}\}/gs,(f,ans)=>`**${ans}**`); }
 function ensureModuleCard(m,i){
   const id=moduleCardId(m,i), src=m.cards[i];
+  const sec = src.sectionTag || src.tag || null;
   const front = src.front || clozeBlank(src.cloze||'');
   const back  = src.back  || clozeReveal(src.cloze||'');
   let c=state.flashcards.find(x=>x.id===id);
-  if(!c){ c={ id, subjectId:studySubjectId(m), front, back, cloze:src.cloze||'', ef:2.5, interval:0, reps:0, due:0, lastGrade:null, moduleId:m.id, section:src.tag||null, created:Date.now() }; state.flashcards.push(c); }
-  else { c.front=front; c.back=back; if(c.subjectId==null) c.subjectId=studySubjectId(m); c.moduleId=m.id; c.section=src.tag||null; }
+  if(!c){
+    c={ schema:'foundation.card/v2', id, subjectId:studySubjectId(m), type:src.type||(src.cloze?'cloze':'basic'),
+        front, back, cloze:src.cloze||'', extra:src.extra||'', hint:src.hint||'', keyFacts:src.keyFacts||[],
+        tags:(src.tags||[]).concat(sec?[sec]:[]), difficulty:src.difficulty||1,
+        ef:state.settings.scheduler.easeStart, interval:0, reps:0, lapses:0, state:'new', step:0,
+        due:0, lastGrade:null, lastReviewed:null, history:[], moduleId:m.id, section:sec, created:Date.now() };
+    state.flashcards.push(c);
+  } else {
+    c.front=front; c.back=back; c.cloze=src.cloze||c.cloze; c.extra=src.extra||c.extra;
+    if(c.subjectId==null) c.subjectId=studySubjectId(m); c.moduleId=m.id; c.section=sec;
+  }
   return c;
 }
 function moduleDueCards(m){ return state.flashcards.filter(c=>c.moduleId===m.id && cardDue(c)); }
@@ -2982,7 +6158,9 @@ function renderReader(){
       <div class="reader-progress-lbl" id="readerBarLbl">${moduleSectionsDone(m)} of ${m.sections.length} sections reviewed · ${pct}%</div>
       <div class="reader-actions">
         <button class="btn primary" id="btnDrill">Recall drill${due?` · ${due} due`:''}</button>
-        <button class="btn" id="btnMcq">MCQ practice · ${m.mcqs.length}</button>
+        <button class="btn" id="btnMcq">MCQ practice · ${moduleMcqs(m).length}</button>
+        <button class="btn ghost" id="btnCram" title="Front-load every card, ignoring daily caps (does not change scheduling)">Cram all</button>
+        <button class="btn ghost" id="btnPrint" title="Open a clean printable version">Print</button>
       </div>
     </div>
     <div class="reader-shell">
@@ -2992,6 +6170,8 @@ function renderReader(){
   document.getElementById('readerBack').addEventListener('click',renderStudyLibrary);
   document.getElementById('btnDrill').addEventListener('click',()=>startDrill(m));
   document.getElementById('btnMcq').addEventListener('click',()=>startMcq(m));
+  document.getElementById('btnCram').addEventListener('click',()=>startDrill(m,{cram:true}));
+  document.getElementById('btnPrint').addEventListener('click',()=>printModule(m));
   rd.querySelectorAll('.reader-toc a').forEach(a=>a.addEventListener('click',e=>{ e.preventDefault(); const sec=document.getElementById('sec-'+a.dataset.sec); if(sec) sec.scrollIntoView({behavior:prefersReduced()?'auto':'smooth',block:'start'}); }));
   rd.querySelectorAll('[data-review]').forEach(b=>b.addEventListener('click',()=>toggleSectionReviewed(m,b.dataset.review)));
   rd.addEventListener('click',e=>{ const cz=e.target.closest('.cloze'); if(cz&&cz.dataset.ans){ cz.textContent=cz.dataset.ans; cz.classList.add('revealed'); } });
@@ -3028,12 +6208,16 @@ function showStudyMode(){
   document.getElementById('studyMode').style.display='';
   window.scrollTo(0,0);
 }
-function startDrill(m){
+function startDrill(m, opts){
+  opts=opts||{};
   const cards=m.cards.map((c,i)=>ensureModuleCard(m,i)); save();
   const due=cards.filter(c=>cardDue(c));
-  const queue=(due.length?due:cards).slice().sort(()=>Math.random()-0.5);
+  let queue;
+  if(opts.cram){ queue=cards.slice(); }                 // cram: every card, ignore caps
+  else queue=(due.length?due:cards).slice();
+  queue=queue.sort(()=>Math.random()-0.5);
   studyState.mode='drill';
-  studyState.drill={ m, queue, total:queue.length, flipped:false, correct:0, practice:due.length===0 };
+  studyState.drill={ m, queue, total:queue.length, flipped:false, correct:0, practice:opts.cram||due.length===0, cram:!!opts.cram };
   showStudyMode(); renderDrillCard();
 }
 function renderDrillCard(){
@@ -3060,10 +6244,10 @@ function renderDrillCard(){
   d.flipped=false;
   document.getElementById('drillBack').addEventListener('click',()=>{ studyState.mode=null; renderReader(); });
   document.getElementById('drillCard').addEventListener('click',revealDrill);
+  const showPrev = state.settings.session.showIntervalPreview;
   mode.querySelectorAll('#drillRate .rate-btn').forEach(b=>{
     b.addEventListener('click',()=>gradeDrill(+b.dataset.g));
-    const g=+b.dataset.g, next=sm2(card,g), days=Math.max(0,Math.round((next.due-Date.now())/86400000));
-    b.querySelector('.ri').textContent = g<3?'<10m':fmtInterval(days||next.interval);
+    b.querySelector('.ri').textContent = showPrev ? gradeLabel(card, +b.dataset.g) : '';
   });
 }
 function revealDrill(){
@@ -3076,9 +6260,13 @@ function gradeDrill(g){
   const d=studyState.drill; if(!d||!d.flipped) return;
   const card=d.queue.shift();
   const idx=state.flashcards.findIndex(c=>c.id===card.id);
-  if(idx>=0){ const upd=sm2(state.flashcards[idx],g); state.flashcards[idx]=upd; if(g<3) d.queue.push(upd); }
+  if(idx>=0){
+    lastReviewUndo={ scope:'drill', prev:JSON.parse(JSON.stringify(state.flashcards[idx])), queueCard:card };
+    countGraded(state.flashcards[idx]);
+    const upd=scheduleCard(state.flashcards[idx],g); state.flashcards[idx]=upd; if(gradeName(g)==='again') d.queue.push(upd);
+  }
   const p=ensureModuleProgress(d.m.id); if(!p.drilledCards.includes(card.id)) p.drilledCards.push(card.id);
-  if(g>=4) d.correct++;
+  if(gradeName(g)==='good'||gradeName(g)==='easy') d.correct++;
   save(); renderDrillCard();
 }
 function finishDrill(){
@@ -3099,65 +6287,219 @@ function finishDrill(){
   renderFlashcards(); renderDashboard();
 }
 
-/* ---- MCQ practice (single-best-answer, into shared state.qbank) ---- */
-function startMcq(m){
+/* ================= MCQ v2 ENGINE (tutor mode, per-option rationale) =================
+   Consumes foundation.mcq/v2 objects; upgrades legacy flat MCQs on the fly. Supports
+   single / multi / EMQ types, immediate vs end-of-set feedback, confidence tracking,
+   difficulty filtering, and light Leitner spacing (wrong resurfaces, right retires). */
+const DIFF_LABEL={1:'Core',2:'Harder',3:'Exam-killer'};
+function asArr(x){ return Array.isArray(x)?x:(x==null||x===''?[]:[x]); }
+function normalizeMcq(q){
+  if(q._norm) return q;
+  const out=Object.assign({}, q); out._norm=true;
+  out.type=q.type||'single'; out.difficulty=q.difficulty||1;
+  out.stem=q.stem||''; out.vignette=q.vignette||'';
+  out.keyFacts=asArr(q.keyFacts); out.explanation=asArr(q.explanation);
+  out.distractors=asArr(q.distractors); out.teachingPoint=q.teachingPoint||'';
+  out.tags=q.tags||[]; out.sectionTag=q.sectionTag||q.tag||null;
+  out.id=q.id||('mcq-'+slug(out.stem).slice(0,34));
+  if(out.type==='emq'){
+    out.optionBank=q.optionBank||[]; out.stems=(q.stems||[]).map(st=>Object.assign({},st));
+    return out;
+  }
+  if(q.options && q.options.length && typeof q.options[0]==='string'){
+    out.options=q.options.map((t,i)=>({text:t, correct:i===q.answer, why:''}));
+  } else { out.options=(q.options||[]).map(o=>({text:o.text, correct:!!o.correct, why:o.why||''})); }
+  out.correctSet=out.options.map((o,i)=>o.correct?i:-1).filter(i=>i>=0);
+  out.answer=out.correctSet.length?out.correctSet[0]:0;
+  return out;
+}
+function moduleMcqs(m){ return (m.mcqs||[]).map(normalizeMcq); }
+/* per-MCQ leitner store */
+function mcqProg(mid){ const p=ensureModuleProgress(mid); if(!p.mcqs) p.mcqs={}; return p.mcqs; }
+function mcqDue(mid,qid){ const st=mcqProg(mid)[qid]; return !st || !st.nextDue || st.nextDue<=Date.now(); }
+function recordMcq(mid,qid,ok){
+  const store=mcqProg(mid); const st=store[qid]||{seen:0,correct:0,box:0};
+  st.seen++; if(ok){ st.correct++; st.box=Math.min(5,(st.box||0)+1); } else st.box=0;
+  st.lastResult=ok; const days=ok?[0,1,3,7,16,35][st.box]:0;
+  st.nextDue=Date.now()+ (ok?days*DAY_MS:8*60*1000);
+  store[qid]=st;
+}
+
+function flagSvg(){ return '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px"><path d="M4 22V4a1 1 0 0 1 .5-.9c2.5-1.4 5-1.4 7.5 0s5 1.4 7.5 0V14c-2.5 1.4-5 1.4-7.5 0S6.5 12.6 4 14"/></svg>'; }
+function mcqFlags(mid){ const p=ensureModuleProgress(mid); if(!p.mcqFlags) p.mcqFlags={}; return p.mcqFlags; }
+function toggleMcqFlag(mid,qid){ const f=mcqFlags(mid); f[qid]=!f[qid]; save(); }
+function isMcqFlagged(mid,qid){ return !!mcqFlags(mid)[qid]; }
+function mcqNotesStore(mid){ const p=ensureModuleProgress(mid); if(!p.mcqNotes) p.mcqNotes={}; return p.mcqNotes; }
+function mcqNote(mid,qid){ return mcqNotesStore(mid)[qid]||''; }
+function setMcqNote(mid,qid,v){ const s=mcqNotesStore(mid); if(v&&v.trim()) s[qid]=v.trim(); else delete s[qid]; save(); }
+
+function startMcq(m, opts){
+  opts=opts||{};
+  const all=moduleMcqs(m);
+  const df=state.settings.mcq.difficultyFilter||[1,2,3];
+  let pool=all.filter(q=>df.includes(q.difficulty));
+  if(opts.dueOnly) pool=pool.filter(q=>mcqDue(m.id,q.id));
+  if(!pool.length) pool=all;
+  if(opts.shuffle!==false && state.settings.mcq.shuffleOptions) { /* option shuffle handled per-render */ }
+  const order=pool.map(q=>q.id);
+  if(opts.shuffleQ) order.sort(()=>Math.random()-0.5);
   studyState.mode='mcq';
-  studyState.mcq={ m, order:m.mcqs.map((q,i)=>i), i:0, correct:0, answered:false };
+  studyState.mcq={ m, pool, order, i:0, correct:0, answered:false, results:[], started:Date.now(),
+                   feedback:state.settings.mcq.feedbackMode, confidence:null };
   showStudyMode(); renderMcq();
 }
+function curMcq(){ const s=studyState.mcq; return s.pool[s.i]; }
 function renderMcq(){
   const s=studyState.mcq, mode=document.getElementById('studyMode');
-  if(s.i>=s.order.length){ finishMcq(); return; }
-  const q=s.m.mcqs[s.order[s.i]];
+  if(s.i>=s.pool.length){ finishMcq(); return; }
+  const q=curMcq();
+  if(q.type==='emq'){ return renderEmq(q); }
+  const conf=state.settings.mcq.confidenceTracking;
+  const multi=q.type==='multi';
+  // optional option shuffle (stable within a render via saved order)
+  if(!q._display){ q._display=q.options.map((o,i)=>i); if(state.settings.mcq.shuffleOptions) q._display.sort(()=>Math.random()-0.5); }
+  const optsHtml=q._display.map((oi,pos)=>{
+    const o=q.options[oi];
+    return `<button class="mcq-opt" data-oi="${oi}"><span class="mk">${String.fromCharCode(65+pos)}</span><span class="ot">${mdInline(escapeHTML(o.text))}</span></button>`;
+  }).join('');
   mode.innerHTML=`
     <button class="reader-back" id="mcqBack">${backSvg()} Back to chapter</button>
-    <div class="sm-top"><span class="sm-meta">MCQ practice · ${escapeHTML(s.m.source.title)}</span><span class="badge" id="mcqScore">Score ${s.correct}/${s.i}</span></div>
-    <div class="sm-progress"><i style="width:${Math.round(s.i/s.order.length*100)}%"></i></div>
+    <div class="sm-top"><span class="sm-meta">MCQ · ${escapeHTML(s.m.source.title)} <span class="diff-badge d${q.difficulty}">${DIFF_LABEL[q.difficulty]}</span>${multi?' · select all':''}</span><span class="badge" id="mcqScore">Score ${s.correct}/${s.i}</span></div>
+    <div class="sm-progress"><i style="width:${Math.round(s.i/s.pool.length*100)}%"></i></div>
+    ${q.vignette?`<div class="mcq-vignette">${mdInline(escapeHTML(q.vignette))}</div>`:''}
     <div class="mcq-stem">${mdInline(escapeHTML(q.stem))}</div>
-    <div id="mcqOpts">${q.options.map((o,oi)=>`<button class="mcq-opt" data-oi="${oi}"><span class="mk">${String.fromCharCode(65+oi)}</span><span>${mdInline(escapeHTML(o))}</span></button>`).join('')}</div>
+    ${conf?`<div class="conf-row" id="confRow"><span class="conf-lbl">Confidence:</span><button class="chip conf-chip" data-conf="sure">Sure</button><button class="chip conf-chip" data-conf="unsure">Unsure</button></div>`:''}
+    <div id="mcqOpts">${optsHtml}</div>
+    ${multi?`<div class="row" style="margin:4px 0 2px"><button class="btn primary" id="mcqSubmit">Submit answer <span class="kbd-inline">Enter</span></button></div>`:''}
+    <div class="mcq-feedback" id="mcqFeedback"></div>
+    <div id="mcqNav"></div>`;
+  s.answered=false; s.picked=multi?[]:null; s.confidence=null;
+  document.getElementById('mcqBack').addEventListener('click',()=>{ studyState.mode=null; renderReader(); });
+  if(conf) mode.querySelectorAll('.conf-chip').forEach(b=>b.addEventListener('click',()=>{ s.confidence=b.dataset.conf; mode.querySelectorAll('.conf-chip').forEach(x=>x.classList.toggle('on',x===b)); }));
+  mode.querySelectorAll('.mcq-opt').forEach(b=>b.addEventListener('click',()=>{
+    if(multi){ if(s.answered) return; b.classList.toggle('picked'); const oi=+b.dataset.oi; const k=s.picked.indexOf(oi); if(k>=0) s.picked.splice(k,1); else s.picked.push(oi); }
+    else answerMcq([+b.dataset.oi]);
+  }));
+  const sub=document.getElementById('mcqSubmit'); if(sub) sub.addEventListener('click',()=>answerMcq(s.picked));
+}
+function answerMcq(picked){
+  const s=studyState.mcq; if(s.answered) return; if(!picked||!picked.length) return;
+  s.answered=true;
+  const q=curMcq();
+  const correctSet=new Set(q.correctSet), pickSet=new Set(picked);
+  const ok = correctSet.size===pickSet.size && [...correctSet].every(i=>pickSet.has(i));
+  if(ok) s.correct++;
+  recordMcq(s.m.id, q.id, ok);
+  s.results.push({ q, picked:picked.slice(), ok, confidence:s.confidence });
+  document.getElementById('mcqScore').textContent=`Score ${s.correct}/${s.i+1}`;
+  // mark options
+  document.querySelectorAll('#mcqOpts .mcq-opt').forEach(b=>{ const oi=+b.dataset.oi; b.disabled=true;
+    if(correctSet.has(oi)) b.classList.add('correct'); else if(pickSet.has(oi)) b.classList.add('wrong');
+  });
+  const sub=document.getElementById('mcqSubmit'); if(sub) sub.style.display='none';
+  const tutor=state.settings.mcq.tutorMode, endMode=s.feedback==='end-of-set';
+  if(!endMode){
+    document.getElementById('mcqFeedback').innerHTML=mcqFeedbackHtml(q, ok, picked, tutor);
+    wireOptionWhys();
+  }
+  const last=s.i>=s.pool.length-1;
+  document.getElementById('mcqNav').innerHTML=`<div class="row" style="gap:10px;align-items:center;flex-wrap:wrap">
+      <button class="btn sm ghost" id="mcqFlag">${flagSvg()} Flag</button>
+      ${!ok?`<button class="btn sm" id="mcqAddReview">Add to review</button>`:''}
+      <button class="btn primary" id="mcqNext" style="margin-left:auto">${last?'See results':'Next'} <span class="kbd-inline">Enter</span></button></div>`;
+  document.getElementById('mcqNext').addEventListener('click',nextMcq);
+  const add=document.getElementById('mcqAddReview'); if(add) add.addEventListener('click',()=>addMcqToReview(s.m,q,add));
+  const fl=document.getElementById('mcqFlag'); if(fl) fl.addEventListener('click',()=>{ toggleMcqFlag(s.m.id,q.id); fl.classList.toggle('on'); });
+}
+function mcqFeedbackHtml(q, ok, picked, tutor){
+  const correctLetters=q.correctSet.map(i=>{ const pos=(q._display||q.options.map((o,x)=>x)).indexOf(i); return String.fromCharCode(65+(pos<0?i:pos)); }).join(', ');
+  let html=`<div class="callout callout-${ok?'clinical-pearl':'warning'}"><div class="callout-title"><span>${ok?CIC.star:CIC.warning}</span>${ok?'Correct':'Not quite — answer: '+correctLetters}</div>`;
+  if(q.teachingPoint) html+=`<div style="font-weight:600;margin-bottom:6px">${mdInline(escapeHTML(q.teachingPoint))}</div>`;
+  if(tutor){
+    if(q.explanation.length) html+=`<ol class="mcq-exp">${q.explanation.map(e=>`<li>${mdInline(escapeHTML(e))}</li>`).join('')}</ol>`;
+    if(q.keyFacts.length) html+=`<div class="mcq-keyfacts"><div class="kf-lbl">Key facts</div><ul>${q.keyFacts.map(k=>`<li>${mdInline(escapeHTML(k))}</li>`).join('')}</ul></div>`;
+    // per-option rationale (right and wrong)
+    html+=`<div class="mcq-whys"><div class="kf-lbl">Why each option</div>${q.options.map(o=>o.why?`<div class="why-row ${o.correct?'wc':'ww'}"><span class="why-tag">${o.correct?'Correct':'Wrong'}</span> <b>${escapeHTML(o.text)}</b> — ${mdInline(escapeHTML(o.why))}</div>`:'').join('')}</div>`;
+  }
+  html+=`</div>`;
+  const noteVal=mcqNote(studyState.mcq.m.id,q.id);
+  html+=`<div class="mcq-note-wrap"><textarea class="textarea mcq-note" id="mcqNote" placeholder="Your note on this question…" style="min-height:44px">${escapeHTML(noteVal)}</textarea></div>`;
+  return html;
+}
+function wireOptionWhys(){
+  const ta=document.getElementById('mcqNote');
+  if(ta) ta.addEventListener('change',()=>{ const s=studyState.mcq; setMcqNote(s.m.id, curMcq().id, ta.value); });
+}
+function renderEmq(q){
+  const s=studyState.mcq, mode=document.getElementById('studyMode');
+  if(s.emqI==null) s.emqI=0;
+  const bank=q.optionBank, st=q.stems[s.emqI];
+  const bankHtml=bank.map((b,i)=>`<div class="emq-bank-item"><span class="mk">${String.fromCharCode(65+i)}</span>${mdInline(escapeHTML(b))}</div>`).join('');
+  mode.innerHTML=`
+    <button class="reader-back" id="mcqBack">${backSvg()} Back to chapter</button>
+    <div class="sm-top"><span class="sm-meta">EMQ · ${escapeHTML(s.m.source.title)} <span class="diff-badge d${q.difficulty}">${DIFF_LABEL[q.difficulty]}</span></span><span class="badge">Item ${s.emqI+1}/${q.stems.length}</span></div>
+    <div class="mcq-stem">${mdInline(escapeHTML(q.stem||'Match each scenario to the single best option.'))}</div>
+    <div class="emq-bank">${bankHtml}</div>
+    <div class="mcq-substem">${mdInline(escapeHTML(st.stem))}</div>
+    <div id="mcqOpts" class="emq-opts">${bank.map((b,i)=>`<button class="mcq-opt sm" data-oi="${i}"><span class="mk">${String.fromCharCode(65+i)}</span></button>`).join('')}</div>
     <div class="mcq-feedback" id="mcqFeedback"></div>
     <div id="mcqNav"></div>`;
   s.answered=false;
   document.getElementById('mcqBack').addEventListener('click',()=>{ studyState.mode=null; renderReader(); });
-  mode.querySelectorAll('.mcq-opt').forEach(b=>b.addEventListener('click',()=>answerMcq(+b.dataset.oi)));
+  mode.querySelectorAll('.mcq-opt').forEach(b=>b.addEventListener('click',()=>answerEmq(+b.dataset.oi)));
 }
-function answerMcq(oi){
+function answerEmq(oi){
   const s=studyState.mcq; if(s.answered) return; s.answered=true;
-  const q=s.m.mcqs[s.order[s.i]], correct=q.answer, ok=oi===correct;
-  document.querySelectorAll('#mcqOpts .mcq-opt').forEach((b,bi)=>{ b.disabled=true; if(bi===correct) b.classList.add('correct'); else if(bi===oi) b.classList.add('wrong'); });
-  if(ok) s.correct++;
-  document.getElementById('mcqScore').textContent=`Score ${s.correct}/${s.i+1}`;
-  document.getElementById('mcqFeedback').innerHTML=`<div class="callout callout-${ok?'clinical-pearl':'warning'}"><div class="callout-title"><span>${ok?CIC.star:CIC.warning}</span>${ok?'Correct':'Not quite — best answer is '+String.fromCharCode(65+correct)}</div><div>${mdInline(escapeHTML(q.explanation||''))}</div></div>`;
-  const last=s.i>=s.order.length-1;
-  document.getElementById('mcqNav').innerHTML=`<div class="row" style="gap:10px;align-items:center">${!ok?`<button class="btn" id="mcqAddReview">Add to review</button>`:''}<button class="btn primary" id="mcqNext" style="margin-left:auto">${last?'See results':'Next question'} <span class="kbd-inline">Enter</span></button></div>`;
-  document.getElementById('mcqNext').addEventListener('click',nextMcq);
-  const add=document.getElementById('mcqAddReview'); if(add) add.addEventListener('click',()=>addMcqToReview(s.m,q,add));
+  const q=curMcq(), st=q.stems[s.emqI], ok=oi===st.answer;
+  if(ok && s.emqI===0) {} // scoring counted per whole EMQ below
+  document.querySelectorAll('#mcqOpts .mcq-opt').forEach(b=>{ const i=+b.dataset.oi; b.disabled=true; if(i===st.answer) b.classList.add('correct'); else if(i===oi) b.classList.add('wrong'); });
+  st._ok=ok;
+  document.getElementById('mcqFeedback').innerHTML=`<div class="callout callout-${ok?'clinical-pearl':'warning'}"><div class="callout-title"><span>${ok?CIC.star:CIC.warning}</span>${ok?'Correct':'Answer: '+String.fromCharCode(65+st.answer)}</div><div>${mdInline(escapeHTML(st.why||''))}</div></div>`;
+  const lastItem=s.emqI>=q.stems.length-1;
+  document.getElementById('mcqNav').innerHTML=`<div class="row"><button class="btn primary" id="mcqNext" style="margin-left:auto">${lastItem?'Next question':'Next item'} <span class="kbd-inline">Enter</span></button></div>`;
+  document.getElementById('mcqNext').addEventListener('click',()=>{
+    if(lastItem){ const allOk=q.stems.every(x=>x._ok); if(allOk) s.correct++; recordMcq(s.m.id,q.id,allOk); s.results.push({q,ok:allOk}); s.emqI=null; nextMcq(); }
+    else { s.emqI++; renderEmq(q); }
+  });
 }
 function addMcqToReview(m,q,btn){
-  const id='mcqrev-'+m.id+'-'+slug(q.stem).slice(0,28)+'-'+q.answer;
+  const id='mcqrev-'+m.id+'-'+slug(q.stem).slice(0,28);
   if(state.flashcards.find(c=>c.id===id)){ if(btn){ btn.disabled=true; btn.textContent='Added'; } toast('Already in your review deck'); return; }
-  state.flashcards.push({ id, subjectId:studySubjectId(m), front:q.stem, back:'**'+q.options[q.answer]+'** — '+(q.explanation||''), cloze:'', ef:2.5, interval:0, reps:0, due:0, lastGrade:null, moduleId:m.id, section:q.tag||null, created:Date.now() });
+  const ans=q.options?q.options[q.answer].text:'';
+  state.flashcards.push({ schema:'foundation.card/v2', id, subjectId:studySubjectId(m), front:(q.vignette?q.vignette+' ':'')+q.stem, back:'**'+ans+'** — '+(q.explanation[0]||''), cloze:'', extra:(q.keyFacts||[]).join(' · '), hint:'', tags:q.tags||[], ef:state.settings.scheduler.easeStart, interval:0, reps:0, lapses:0, state:'new', step:0, due:0, lastGrade:null, history:[], moduleId:m.id, section:q.sectionTag||null, created:Date.now() });
   save(); renderFlashcards(); renderDueToday();
   if(btn){ btn.disabled=true; btn.textContent='Added to review'; }
   toast('Added to your review deck');
 }
-function nextMcq(){ studyState.mcq.i++; renderMcq(); }
+function nextMcq(){ const s=studyState.mcq; s.i++; s.confidence=null; renderMcq(); }
 function finishMcq(){
-  const s=studyState.mcq, total=s.order.length;
+  const s=studyState.mcq, total=s.pool.length;
   markActivity();
   state.qbank.unshift({ id:uid(), subjectId:studySubjectId(s.m), total, correct:s.correct, date:todayStr() });
   const p=ensureModuleProgress(s.m.id); p.mcqScore.correct+=s.correct; p.mcqScore.total+=total;
   state.study.drills.push({ moduleId:s.m.id, when:todayStr(), correct:s.correct, total, kind:'mcq' });
   save(); renderQBank();
   const pctv=total?Math.round(s.correct/total*100):0;
+  const mins=Math.max(1,Math.round((Date.now()-s.started)/60000));
+  // per-question review list (also serves end-of-set feedback)
+  const reviewList=s.results.map((r,idx)=>{
+    const q=r.q; const letters=q.correctSet?q.correctSet.map(i=>String.fromCharCode(65+i)).join(', '):'';
+    return `<details class="mcq-review-item ${r.ok?'ok':'bad'}"><summary><span class="rv-dot"></span>${idx+1}. ${escapeHTML(q.stem.slice(0,90))}${q.stem.length>90?'…':''}</summary>
+      <div class="rv-body">${q.correctSet?`<div class="muted" style="font-size:.78rem;margin-bottom:4px">Answer: ${letters}</div>`:''}
+      ${(q.explanation||[]).map(e=>`<div>${mdInline(escapeHTML(e))}</div>`).join('')}</div></details>`;
+  }).join('');
   document.getElementById('studyMode').innerHTML=`<div class="sm-summary">
-    <div class="big-score">${s.correct}/${total}</div>
-    <div class="muted" style="margin-top:6px">${pctv}% · logged to your Q-Bank Tracker</div>
-    <div class="reader-actions" style="justify-content:center;margin-top:20px">
-      <button class="btn primary" id="mcqAgain">Practise again</button>
-      <button class="btn" id="mcqDone">Back to chapter</button>
-    </div></div>`;
-  document.getElementById('mcqAgain').addEventListener('click',()=>startMcq(s.m));
+      <div class="big-score">${s.correct}/${total}</div>
+      <div class="muted" style="margin-top:6px">${pctv}% · ${mins} min · logged to your Q-Bank</div>
+      <div class="reader-actions" style="justify-content:center;margin:18px 0">
+        <button class="btn primary" id="mcqAgain">Practise again</button>
+        <button class="btn" id="mcqWrong">Redo wrong only</button>
+        <button class="btn" id="mcqDone">Back to chapter</button>
+      </div>
+    </div>
+    <div class="mcq-review">${reviewList}</div>`;
+  document.getElementById('mcqAgain').addEventListener('click',()=>startMcq(s.m,{shuffleQ:true}));
+  document.getElementById('mcqWrong').addEventListener('click',()=>startMcq(s.m,{dueOnly:true}));
   document.getElementById('mcqDone').addEventListener('click',()=>{ studyState.mode=null; renderReader(); });
   renderDashboard();
 }
@@ -3168,11 +6510,23 @@ document.addEventListener('keydown',e=>{
   const tag=(e.target.tagName||'').toLowerCase(); if(tag==='input'||tag==='textarea'||tag==='select') return;
   if(studyState.mode==='drill'){
     const d=studyState.drill; if(!d) return;
+    if(e.key.toLowerCase()==='u'){ e.preventDefault(); undoLastReview(); return; }
     if(!d.flipped && (e.key===' '||e.key==='Enter')){ e.preventDefault(); revealDrill(); }
     else if(d.flipped && ['1','2','3','4'].includes(e.key)){ e.preventDefault(); gradeDrill({'1':0,'2':3,'3':4,'4':5}[e.key]); }
   } else if(studyState.mode==='mcq'){
-    const s=studyState.mcq; if(!s) return;
-    if(!s.answered && /^[1-5]$/.test(e.key)){ const q=s.m.mcqs[s.order[s.i]]; const oi=+e.key-1; if(oi<q.options.length){ e.preventDefault(); answerMcq(oi); } }
+    const s=studyState.mcq; if(!s) return; const q=curMcq(); if(!q) return;
+    if(q.type==='emq'){
+      if(!s.answered && /^[1-8]$/.test(e.key)){ const oi=+e.key-1; if(oi<q.optionBank.length){ e.preventDefault(); answerEmq(oi); } }
+      else if(s.answered && e.key==='Enter'){ e.preventDefault(); const nb=document.getElementById('mcqNext'); if(nb) nb.click(); }
+      return;
+    }
+    if(!s.answered && /^[1-9]$/.test(e.key)){
+      const disp=q._display||q.options.map((o,i)=>i), pos=+e.key-1;
+      if(pos<disp.length){ e.preventDefault(); const oi=disp[pos];
+        if(q.type==='multi'){ const btn=document.querySelector(`#mcqOpts .mcq-opt[data-oi="${oi}"]`); if(btn) btn.click(); }
+        else answerMcq([oi]);
+      }
+    } else if(!s.answered && e.key==='Enter' && q.type==='multi'){ e.preventDefault(); answerMcq(s.picked); }
     else if(s.answered && e.key==='Enter'){ e.preventDefault(); nextMcq(); }
   }
 });
@@ -3202,8 +6556,210 @@ function renderChapterDue(){
   }));
 }
 
+/* ---- Dashboard: 14-day review forecast ---- */
+function renderForecast(){
+  const el=document.getElementById('forecast'); if(!el) return;
+  const days=14, buckets=new Array(days).fill(0);
+  const now=new Date(); now.setHours(0,0,0,0); const t0=now.getTime();
+  state.flashcards.forEach(c=>{ if(c.state==='suspended') return; const d=Math.floor(((c.due||0)-t0)/DAY_MS); if(d<0){ buckets[0]++; } else if(d<days) buckets[d]++; });
+  const max=Math.max(1,...buckets);
+  const dow=['Su','Mo','Tu','We','Th','Fr','Sa'];
+  el.innerHTML=buckets.map((n,i)=>{ const dt=new Date(t0+i*DAY_MS); const h=Math.round(n/max*84);
+    return `<div class="fc-bar" title="${n} due"><span class="fc-n">${n||''}</span><div class="fc-fill" style="height:${h}px"></div><span class="fc-day">${i===0?'now':dow[dt.getDay()]}</span></div>`;
+  }).join('');
+}
+/* ---- Dashboard: weak-spot analytics (per-tag accuracy from MCQ leitner + card lapses) ---- */
+function computeTagAccuracy(){
+  const agg={}; // tag -> {right,total}
+  const add=(tag,right,total)=>{ if(!tag) return; const a=agg[tag]=agg[tag]||{right:0,total:0}; a.right+=right; a.total+=total; };
+  MODULES.forEach(m=>{
+    const store=(state.study.progress[m.id]||{}).mcqs||{};
+    moduleMcqs(m).forEach(q=>{ const st=store[q.id]; if(st&&st.seen){ (q.tags&&q.tags.length?q.tags:[q.sectionTag]).forEach(t=>add(t,st.correct,st.seen)); } });
+  });
+  return Object.entries(agg).filter(([,a])=>a.total>=2).map(([tag,a])=>({tag,pct:Math.round(a.right/a.total*100),total:a.total}));
+}
+function renderWeakSpots(){
+  const el=document.getElementById('weakSpots'); if(!el) return;
+  const rows=computeTagAccuracy().sort((a,b)=>a.pct-b.pct).slice(0,6);
+  if(!rows.length){ el.innerHTML=`<div class="muted" style="font-size:.8rem;padding:6px 0">Answer some MCQs to reveal your weakest tags.</div>`; return; }
+  el.innerHTML=rows.map(r=>{ const col=r.pct<50?'var(--danger)':r.pct<75?'var(--warn)':'var(--good)';
+    return `<div class="weak-row"><span class="wk-tag">${escapeHTML(r.tag)}</span><span class="wk-bar"><i style="width:${r.pct}%;background:${col}"></i></span><span class="wk-pct">${r.pct}%</span></div>`;
+  }).join('');
+}
+/* ---- Print a chapter to a clean printable view ---- */
+function printModule(m){
+  const esc=escapeHTML;
+  let h=`<h1>${esc(m.source.title)}</h1><div class="p-src">${esc(m.source.book)} · Chapter ${m.source.chapter} · pages ${esc(String(m.source.pages))} · ${esc(m.subject)} · ${esc(m.brand||'by Yanal · Cairo 2026')}</div>`;
+  m.sections.forEach(s=>{
+    h+=`<h2>${esc(s.n)} ${esc(s.title)}</h2>`;
+    h+=`<div>${renderMarkdown(s.digest||'')}</div>`;
+    if(s.highYield&&s.highYield.length) h+=`<div class="p-hy"><b>Must-know:</b><ul>${s.highYield.map(x=>`<li>${mdInline(esc(x))}</li>`).join('')}</ul></div>`;
+    (s.tables||[]).forEach(t=>{ h+=`<table><thead><tr>${t.columns.map(c=>`<th>${esc(c)}</th>`).join('')}</tr></thead><tbody>${t.rows.map(r=>`<tr>${r.map(c=>`<td>${esc(String(c))}</td>`).join('')}</tr>`).join('')}</tbody></table>`; });
+    if(s.pitfalls&&s.pitfalls.length) h+=`<div class="p-hy"><b>Pitfalls:</b><ul>${s.pitfalls.map(x=>`<li>${mdInline(esc(x))}</li>`).join('')}</ul></div>`;
+  });
+  document.getElementById('printArea').innerHTML=h;
+  window.print();
+}
+
+/* ================= SETTINGS DRAWER (v8) ================= */
+function applyAppearance(){
+  const a=state.settings.appearance;
+  document.documentElement.dataset.fs=a.fontScale||'M';
+  document.documentElement.dataset.density=a.density||'comfortable';
+  document.documentElement.classList.toggle('reduce-motion', !!a.reducedMotion);
+}
+let settingsTab='Scheduler';
+const SETTINGS_TABS=['Scheduler','Session','MCQ','Appearance','Goals','Data'];
+function openSettings(){ document.getElementById('settingsOverlay').style.display='flex'; renderSettings(); }
+function closeSettings(){ document.getElementById('settingsOverlay').style.display='none'; }
+function setSetting(path, val){
+  const parts=path.split('.'); let o=state.settings;
+  for(let i=0;i<parts.length-1;i++) o=o[parts[i]];
+  o[parts[parts.length-1]]=val; save();
+}
+function getSetting(path){ return path.split('.').reduce((o,k)=>o&&o[k], state.settings); }
+/* control builders */
+function rowNum(label,desc,path,min,max,step){ return `<div class="set-row"><div><div class="set-label">${label}</div><div class="set-desc">${desc}</div></div><div class="set-ctl"><input type="number" data-set="${path}" data-kind="num" value="${getSetting(path)}" min="${min}" max="${max}" step="${step||1}"></div></div>`; }
+function rowToggle(label,desc,path){ const on=getSetting(path); return `<div class="set-row"><div><div class="set-label">${label}</div><div class="set-desc">${desc}</div></div><div class="set-ctl"><button class="switch ${on?'on':''}" data-set="${path}" data-kind="toggle" role="switch" aria-checked="${on}"></button></div></div>`; }
+function rowSelect(label,desc,path,opts){ const v=getSetting(path); return `<div class="set-row"><div><div class="set-label">${label}</div><div class="set-desc">${desc}</div></div><div class="set-ctl"><select data-set="${path}" data-kind="select">${opts.map(o=>`<option value="${o[0]}" ${o[0]===v?'selected':''}>${o[1]}</option>`).join('')}</select></div></div>`; }
+function rowSeg(label,desc,path,opts){ const v=getSetting(path); return `<div class="set-row"><div><div class="set-label">${label}</div><div class="set-desc">${desc}</div></div><div class="set-ctl set-seg">${opts.map(o=>`<button data-set="${path}" data-kind="seg" data-val="${o[0]}" class="${o[0]===v?'on':''}">${o[1]}</button>`).join('')}</div></div>`; }
+function rowSteps(label,desc,path){ return `<div class="set-row"><div><div class="set-label">${label}</div><div class="set-desc">${desc}</div></div><div class="set-ctl"><input type="text" data-set="${path}" data-kind="steps" value="${(getSetting(path)||[]).join(', ')}"></div></div>`; }
+function rowMulti(label,desc,path,opts){ const v=getSetting(path)||[]; return `<div class="set-row"><div><div class="set-label">${label}</div><div class="set-desc">${desc}</div></div><div class="set-ctl multi-chips">${opts.map(o=>`<button class="chip ${v.includes(o[0])?'on':''}" data-set="${path}" data-kind="multi" data-val="${o[0]}">${o[1]}</button>`).join('')}</div></div>`; }
+function secHead(title,key){ return `<div class="set-sec-head"><span class="set-sec-title">${title}</span><button class="set-restore" data-restore="${key}">Restore defaults</button></div>`; }
+
+function renderSettings(){
+  document.getElementById('settingsTabs').innerHTML=SETTINGS_TABS.map(t=>`<button class="settings-tab ${t===settingsTab?'active':''}" data-stab="${t}">${t}</button>`).join('');
+  document.querySelectorAll('#settingsTabs .settings-tab').forEach(b=>b.addEventListener('click',()=>{ settingsTab=b.dataset.stab; renderSettings(); }));
+  const body=document.getElementById('settingsBody'); let h='';
+  if(settingsTab==='Scheduler'){
+    h+=secHead('Algorithm & limits','scheduler');
+    h+=rowSelect('Algorithm','SM-2+ is fully implemented; FSRS is reserved.','scheduler.algorithm',[['sm2plus','SM-2+'],['fsrs','FSRS (beta)']]);
+    h+=rowNum('New cards / day','Cap on brand-new cards introduced today.','scheduler.newPerDay',0,999);
+    h+=rowNum('Reviews / day','Cap on due reviews shown today.','scheduler.reviewsPerDay',0,9999);
+    h+=rowSteps('Learning steps (min)','Comma-separated minutes before a new card graduates.','scheduler.learningSteps');
+    h+=rowSteps('Relearning steps (min)','Steps after a lapse before returning to review.','scheduler.relearnSteps');
+    h+=secHead('Ease & intervals','scheduler');
+    h+=rowNum('Starting ease','Initial ease factor for new cards.','scheduler.easeStart',1.3,4,0.1);
+    h+=rowNum('Minimum ease','Ease can never drop below this.','scheduler.easeFloor',1.1,2.5,0.05);
+    h+=rowNum('Hard multiplier','Interval × this on Hard.','scheduler.hardMult',1,2,0.05);
+    h+=rowNum('Easy bonus','Extra multiplier on Easy.','scheduler.easyBonus',1,2,0.05);
+    h+=rowNum('Interval modifier','Global scaling of all intervals.','scheduler.intervalModifier',0.5,2,0.05);
+    h+=rowNum('Graduating interval (d)','First interval after learning.','scheduler.graduatingInterval',1,30);
+    h+=rowNum('Easy interval (d)','First interval when a new card is rated Easy.','scheduler.easyInterval',1,30);
+    h+=rowNum('Lapse multiplier','Interval × this after a lapse.','scheduler.lapseMult',0,1,0.05);
+    h+=rowNum('Max interval (d)','Cap on any interval.','scheduler.maxInterval',30,36500);
+    h+=secHead('Behaviour','scheduler');
+    h+=rowToggle('Interval fuzz','Spread due dates so cards don\'t clump.','scheduler.fuzz');
+    h+=rowNum('Leech threshold','Lapses before a card is flagged a leech.','scheduler.leechThreshold',1,20);
+    h+=rowSelect('Leech action','What to do at the leech threshold.','scheduler.leechAction',[['suspend','Suspend'],['tag-only','Tag only']]);
+    h+=rowToggle('Bury siblings','Avoid two cards from one note in a session.','scheduler.burySiblings');
+  } else if(settingsTab==='Session'){
+    h+=secHead('Session','session');
+    h+=rowSelect('Queue order','How new and due cards are ordered.','session.queueOrder',[['due-first','Due first'],['new-first','New first'],['interleave','Interleave']]);
+    h+=rowToggle('Show interval preview','Preview each grade\'s next interval on the buttons.','session.showIntervalPreview');
+    h+=rowToggle('Keyboard shortcuts','Enable 1–4 grade, space to flip, u to undo, etc.','session.keyboardShortcuts');
+    h+=rowToggle('Show session timer','Display elapsed time on summaries.','session.showTimer');
+    h+=`<div class="set-sec-head"><span class="set-sec-title">Keyboard cheat-sheet</span></div>
+      <div class="set-desc" style="max-width:none;line-height:1.9">
+        <b>Recall drill:</b> <kbd>Space</kbd>/<kbd>Enter</kbd> reveal · <kbd>1</kbd> Again · <kbd>2</kbd> Hard · <kbd>3</kbd> Good · <kbd>4</kbd> Easy · <kbd>u</kbd> undo<br>
+        <b>MCQ:</b> <kbd>1</kbd>–<kbd>9</kbd> pick option · <kbd>Enter</kbd> submit / next<br>
+        <b>Anywhere:</b> <kbd>⌘/Ctrl</kbd>+<kbd>K</kbd> command palette · <kbd>1</kbd>–<kbd>9</kbd> jump to view · <kbd>Esc</kbd> close
+      </div>`;
+  } else if(settingsTab==='MCQ'){
+    h+=secHead('MCQ practice','mcq');
+    h+=rowToggle('Shuffle options','Randomise option order each question.','mcq.shuffleOptions');
+    h+=rowSelect('Feedback','Immediate feedback or only at the end of the set.','mcq.feedbackMode',[['immediate','Immediate'],['end-of-set','End of set']]);
+    h+=rowToggle('Tutor mode','Show the explanation beats, key facts and per-option rationale.','mcq.tutorMode');
+    h+=rowToggle('Confidence tracking','Ask Sure/Unsure before revealing.','mcq.confidenceTracking');
+    h+=rowMulti('Difficulty filter','Which difficulties to include.','mcq.difficultyFilter',[[1,'Core'],[2,'Harder'],[3,'Exam-killer']]);
+  } else if(settingsTab==='Appearance'){
+    h+=secHead('Appearance','appearance');
+    h+=`<div class="set-row"><div><div class="set-label">Theme</div><div class="set-desc">Midnight, Paper or Clinic.</div></div><div class="set-ctl set-seg">${[['midnight','Midnight'],['paper','Paper'],['clinic','Clinic']].map(o=>`<button data-set="appearance._theme" data-kind="seg" data-val="${o[0]}" class="${o[0]===state.theme?'on':''}">${o[1]}</button>`).join('')}</div></div>`;
+    h+=rowSeg('Font scale','Base text size.','appearance.fontScale',[['S','Small'],['M','Medium'],['L','Large']]);
+    h+=rowSeg('Density','Spacing of cards and rows.','appearance.density',[['comfortable','Comfortable'],['compact','Compact']]);
+    h+=rowToggle('Reduce motion','Disable animations and transitions.','appearance.reducedMotion');
+  } else if(settingsTab==='Goals'){
+    h+=secHead('Study goals','goals');
+    h+=rowNum('Daily review goal','Target reviews per day (shown on the dashboard ring).','goals.dailyGoal',0,999);
+  } else if(settingsTab==='Data'){
+    h+=`<div class="set-sec-head"><span class="set-sec-title">Backup & export</span></div>
+      <div class="set-row"><div><div class="set-label">Export all data (JSON)</div><div class="set-desc">A full backup you can re-import.</div></div><div class="set-ctl"><button class="btn sm" id="setExport">Export</button></div></div>
+      <div class="set-row"><div><div class="set-label">Import data (JSON)</div><div class="set-desc">Restore from a backup file.</div></div><div class="set-ctl"><button class="btn sm" id="setImport">Import</button></div></div>
+      <div class="set-row"><div><div class="set-label">Export cards (Anki TSV)</div><div class="set-desc">Front / Back / Extra / Tags, tab-separated.</div></div><div class="set-ctl"><button class="btn sm" id="setAnki">Export TSV</button></div></div>
+      <div class="set-row"><div><div class="set-label">Export MCQs (JSON)</div><div class="set-desc">All baked MCQs in foundation.mcq/v2 form.</div></div><div class="set-ctl"><button class="btn sm" id="setMcqJson">Export MCQs</button></div></div>
+      <div class="set-sec-head"><span class="set-sec-title">Danger zone</span></div>
+      <div class="set-row"><div><div class="set-label">Reset progress</div><div class="set-desc">Wipes scheduling, activity and study progress. Keeps your content.</div></div><div class="set-ctl"><button class="btn sm danger" id="setResetProg">Reset progress</button></div></div>
+      <div class="set-row"><div><div class="set-label">Hard reset</div><div class="set-desc">Erases everything stored in this browser.</div></div><div class="set-ctl"><button class="btn sm danger" id="setHardReset">Hard reset</button></div></div>`;
+  }
+  body.innerHTML=h;
+  wireSettingsControls();
+}
+function wireSettingsControls(){
+  const body=document.getElementById('settingsBody');
+  body.querySelectorAll('[data-kind="num"]').forEach(el=>el.addEventListener('change',()=>{ setSetting(el.dataset.set, +el.value); applyLiveSettings(el.dataset.set); }));
+  body.querySelectorAll('[data-kind="toggle"]').forEach(el=>el.addEventListener('click',()=>{ const v=!getSetting(el.dataset.set); setSetting(el.dataset.set,v); el.classList.toggle('on',v); el.setAttribute('aria-checked',v); applyLiveSettings(el.dataset.set); }));
+  body.querySelectorAll('[data-kind="select"]').forEach(el=>el.addEventListener('change',()=>{ setSetting(el.dataset.set, el.value); applyLiveSettings(el.dataset.set); }));
+  body.querySelectorAll('[data-kind="steps"]').forEach(el=>el.addEventListener('change',()=>{ const arr=el.value.split(',').map(x=>parseInt(x.trim(),10)).filter(n=>!isNaN(n)&&n>0); setSetting(el.dataset.set, arr.length?arr:[1]); el.value=arr.join(', '); }));
+  body.querySelectorAll('[data-kind="seg"]').forEach(el=>el.addEventListener('click',()=>{
+    if(el.dataset.set==='appearance._theme'){ state.theme=el.dataset.val; applyTheme(); save(); }
+    else { setSetting(el.dataset.set, el.dataset.val); applyLiveSettings(el.dataset.set); }
+    el.parentElement.querySelectorAll('button').forEach(b=>b.classList.toggle('on',b===el));
+  }));
+  body.querySelectorAll('[data-kind="multi"]').forEach(el=>el.addEventListener('click',()=>{
+    const cur=(getSetting(el.dataset.set)||[]).slice(); const val=+el.dataset.val; const k=cur.indexOf(val);
+    if(k>=0){ if(cur.length>1) cur.splice(k,1); } else cur.push(val);
+    setSetting(el.dataset.set, cur.sort()); el.classList.toggle('on', cur.includes(val));
+  }));
+  body.querySelectorAll('[data-restore]').forEach(el=>el.addEventListener('click',()=>{
+    const key=el.dataset.restore; state.settings[key]=JSON.parse(JSON.stringify(SETTINGS_DEFAULTS[key])); save(); applyAppearance(); renderSettings();
+    toast('Restored '+key+' defaults');
+  }));
+  // data buttons
+  const byId=id=>document.getElementById(id);
+  if(byId('setExport')) byId('setExport').addEventListener('click',()=>document.getElementById('btnExport').click());
+  if(byId('setImport')) byId('setImport').addEventListener('click',()=>document.getElementById('btnImport').click());
+  if(byId('setAnki')) byId('setAnki').addEventListener('click',exportAnkiTSV);
+  if(byId('setMcqJson')) byId('setMcqJson').addEventListener('click',exportMcqJson);
+  if(byId('setResetProg')) byId('setResetProg').addEventListener('click',resetProgress);
+  if(byId('setHardReset')) byId('setHardReset').addEventListener('click',()=>document.getElementById('btnReset').click());
+}
+function applyLiveSettings(path){
+  if(path && path.indexOf('appearance')===0) applyAppearance();
+  if(path==='mcq.difficultyFilter'||path && path.indexOf('scheduler')===0){ /* used live at session build */ }
+  renderDashboard();
+}
+/* downloads (offline via Blob) */
+function download(name, text, type){ const blob=new Blob([text],{type:type||'text/plain'}); const url=URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url; a.download=name; a.click(); setTimeout(()=>URL.revokeObjectURL(url),500); }
+function exportAnkiTSV(){
+  const rows=state.flashcards.map(c=>{
+    const front=(c.cloze?clozeBlank(c.cloze):c.front)||'';
+    const back=(c.cloze?clozeReveal(c.cloze):c.back)||'';
+    const clean=s=>String(s).replace(/\t/g,' ').replace(/\r?\n/g,'<br>');
+    return [clean(front), clean(back), clean(c.extra||''), (c.tags||[]).join(' ')].join('\t');
+  });
+  download('foundation-cards.tsv', rows.join('\n'), 'text/tab-separated-values');
+  toast(rows.length+' cards exported as Anki TSV');
+}
+function exportMcqJson(){
+  const all=[]; MODULES.forEach(m=>moduleMcqs(m).forEach(q=>{ const c=Object.assign({},q); delete c._norm; delete c._display; all.push(c); }));
+  download('foundation-mcqs.json', JSON.stringify(all,null,2), 'application/json');
+  toast(all.length+' MCQs exported as JSON');
+}
+function resetProgress(){
+  const typed=prompt('This wipes all scheduling, activity and study progress but keeps your content. Type RESET to confirm.');
+  if(typed!=='RESET'){ toast('Reset cancelled'); return; }
+  state.flashcards.forEach(c=>{ c.ef=state.settings.scheduler.easeStart; c.interval=0; c.reps=0; c.lapses=0; c.state='new'; c.step=0; c.due=0; c.lastGrade=null; c.lastReviewed=null; c.history=[]; });
+  state.activity={}; state.qbank=[]; state.study.progress={}; state.study.drills=[]; state.study.daily={date:todayStr(),newDone:0,revDone:0};
+  save(); applyTheme(); renderAll(); closeSettings(); toast('Progress reset — your content is intact');
+}
+document.getElementById('gearBtn').addEventListener('click',openSettings);
+document.getElementById('settingsClose').addEventListener('click',closeSettings);
+document.getElementById('settingsOverlay').addEventListener('mousedown',e=>{ if(e.target.id==='settingsOverlay') closeSettings(); });
+document.addEventListener('keydown',e=>{ if(e.key==='Escape' && document.getElementById('settingsOverlay').style.display!=='none') closeSettings(); });
+
 /* ================= INIT ================= */
 function renderAll(){
+  applyAppearance();
   applyTheme();
   renderDashboard();
   renderAllSubjectDependents();
