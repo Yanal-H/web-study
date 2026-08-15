@@ -1,13 +1,27 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { getChapter, chapterCards, chapterMcqs } from '../../content/loader';
+import { getChapter, chapterCards, chapterMcqs, listChapters } from '../../content/loader';
 import { useUserContentVersion } from '../../content/userContent';
+import { useStore } from '../../state/useStore';
+import { update } from '../../state/store';
 import { Card, Button, Badge, Tabs } from '../../design/primitives';
-import { IconChevron, IconFlashcards, IconQbank } from '../../design/icons';
+import { IconChevron, IconFlashcards, IconQbank, IconCheck } from '../../design/icons';
 import { renderMarkdown } from '../../lib/markdown';
 import type { Figure, Table as TableT } from '../../content/schema';
 
 type Tab = 'read' | 'cards' | 'questions';
+
+/** Resolve a [[wikilink]] target to a chapter route (matches chapter or section title). */
+function resolveWikilink(target: string): string | null {
+  const t = target.trim().toLowerCase();
+  for (const ch of listChapters()) {
+    if (ch.title.toLowerCase() === t) return `/study/${encodeURIComponent(ch.id)}`;
+    for (const s of ch.sections) {
+      if (s.title.toLowerCase() === t) return `/study/${encodeURIComponent(ch.id)}`;
+    }
+  }
+  return null;
+}
 
 export default function ReaderView() {
   const { id } = useParams();
@@ -15,6 +29,20 @@ export default function ReaderView() {
   const uv = useUserContentVersion();
   const chapter = useMemo(() => (id ? getChapter(decodeURIComponent(id)) : undefined), [id, uv]);
   const [tab, setTab] = useState<Tab>('read');
+  const [focus, setFocus] = useState(false);
+  const [progress, setProgress] = useState(0);
+
+  // reading progress from window scroll
+  useEffect(() => {
+    const onScroll = () => {
+      const h = document.documentElement;
+      const max = h.scrollHeight - h.clientHeight;
+      setProgress(max > 0 ? Math.min(1, h.scrollTop / max) : 0);
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+    return () => window.removeEventListener('scroll', onScroll);
+  }, [tab, id]);
 
   if (!chapter) {
     return (
@@ -34,14 +62,21 @@ export default function ReaderView() {
   const mcqs = chapterMcqs(chapter);
 
   return (
-    <>
-      <button
-        className="btn btn--ghost btn--sm"
-        style={{ marginBottom: 12, paddingLeft: 6 }}
-        onClick={() => navigate('/study')}
-      >
-        <IconChevron size={15} style={{ transform: 'rotate(180deg)' }} /> Library
-      </button>
+    <div className={focus ? 'reader-focus' : ''}>
+      {tab === 'read' && <div className="reading-progress" style={{ width: `${progress * 100}%` }} />}
+      <div className="row spread no-print" style={{ marginBottom: 12 }}>
+        <button className="btn btn--ghost btn--sm" style={{ paddingLeft: 6 }} onClick={() => navigate('/study')}>
+          <IconChevron size={15} style={{ transform: 'rotate(180deg)' }} /> Library
+        </button>
+        <div className="row" style={{ gap: 8 }}>
+          <Button size="sm" variant="ghost" onClick={() => setFocus((f) => !f)}>
+            {focus ? 'Show contents' : 'Focus mode'}
+          </Button>
+          <Button size="sm" variant="ghost" onClick={() => window.print()}>
+            Print
+          </Button>
+        </div>
+      </div>
 
       <header className="page-head">
         <div className="card-eyebrow">
@@ -58,7 +93,7 @@ export default function ReaderView() {
         )}
       </header>
 
-      <div style={{ marginBottom: 'var(--sp-4)' }}>
+      <div style={{ marginBottom: 'var(--sp-4)' }} className="no-print">
         <Tabs
           value={tab}
           onChange={setTab}
@@ -70,15 +105,44 @@ export default function ReaderView() {
         />
       </div>
 
-      {tab === 'read' && <ReadTab chapter={chapter} />}
+      {tab === 'read' && <ReadTab chapter={chapter} onNavigate={navigate} />}
       {tab === 'cards' && <CardsTab cards={cards} />}
       {tab === 'questions' && <QuestionsTab mcqs={mcqs} />}
-    </>
+    </div>
   );
 }
 
-function ReadTab({ chapter }: { chapter: ReturnType<typeof getChapter> & object }) {
+function ReadTab({
+  chapter,
+  onNavigate,
+}: {
+  chapter: ReturnType<typeof getChapter> & object;
+  onNavigate: (to: string) => void;
+}) {
   const ch = chapter!;
+  const state = useStore();
+  const prog = state.study.progress[ch.id] || {};
+  const readSections: Record<string, boolean> = prog.sections || {};
+
+  function toggleRead(sectionId: string) {
+    update((s) => {
+      const p = (s.study.progress[ch.id] = s.study.progress[ch.id] || { sections: {} });
+      p.sections = p.sections || {};
+      p.sections[sectionId] = !p.sections[sectionId];
+      p.lastOpened = new Date().toISOString().slice(0, 10);
+    });
+  }
+
+  function onBodyClick(e: React.MouseEvent) {
+    const el = e.target as HTMLElement;
+    const wl = el.getAttribute('data-wikilink');
+    if (wl) {
+      e.preventDefault();
+      const route = resolveWikilink(wl);
+      if (route) onNavigate(route);
+    }
+  }
+
   return (
     <div className="reader-layout">
       <nav className="reader-toc" aria-label="Chapter contents">
@@ -98,12 +162,22 @@ function ReadTab({ chapter }: { chapter: ReturnType<typeof getChapter> & object 
         )}
       </nav>
 
-      <div className="reader-body">
+      <div className="reader-body" onClick={onBodyClick}>
         {ch.sections.map((s) => (
           <section id={`sec-${s.id}`} key={s.id} className="reader-section">
-            <h2>
-              {s.n ? <span className="sec-n">{s.n}</span> : null} {s.title}
-            </h2>
+            <div className="row spread" style={{ alignItems: 'flex-start' }}>
+              <h2 style={{ flex: 1 }}>
+                {s.n ? <span className="sec-n">{s.n}</span> : null} {s.title}
+              </h2>
+              <button
+                className={`btn btn--ghost btn--sm no-print ${readSections[s.id] ? 'read-on' : ''}`}
+                onClick={() => toggleRead(s.id)}
+                style={{ color: readSections[s.id] ? 'var(--success)' : undefined }}
+                aria-pressed={!!readSections[s.id]}
+              >
+                <IconCheck size={15} /> {readSections[s.id] ? 'Read' : 'Mark read'}
+              </button>
+            </div>
             <div className="md" dangerouslySetInnerHTML={{ __html: renderMarkdown(s.digest) }} />
 
             {s.highYield.length > 0 && (

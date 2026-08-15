@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useStore } from '../../state/useStore';
 import { markActivity, commit } from '../../state/store';
@@ -7,11 +8,14 @@ import {
   computeStreak,
   heatmapWeeks,
   heatLevel,
-  dueCounts,
   forecast,
   weakMcqs,
   todayProgress,
 } from '../../lib/stats';
+import { collectItems, queueStats } from '../flashcards/deck';
+import { allMcqs } from '../../content/loader';
+import { isDue as mcqDue } from '../qbank/perf';
+import { useUserContentVersion } from '../../content/userContent';
 
 const WEEKDAYS = ['', 'Mon', '', 'Wed', '', 'Fri', ''];
 
@@ -19,9 +23,13 @@ export default function DashboardView() {
   const state = useStore();
   const navigate = useNavigate();
 
+  const uv = useUserContentVersion();
   const streak = computeStreak(state.activity);
   const weeks = heatmapWeeks(state.activity, 17);
-  const due = dueCounts(state.flashcards);
+  // unified due across everything: flashcards (content + user) + MCQ reviews
+  const deck = useMemo(() => collectItems(), [uv, state.flashcards, state.schemaVersion]);
+  const due = queueStats(deck);
+  const mcqDueCount = useMemo(() => allMcqs().filter((q) => state.study.mcqPerf[q.id] && mcqDue(q.id)).length, [uv, state.study.mcqPerf]);
   const fc = forecast(state.flashcards, 14);
   const weak = weakMcqs(state.study.mcqPerf);
   const goal = todayProgress(state);
@@ -92,7 +100,7 @@ export default function DashboardView() {
           </div>
         </div>
         <Stat label="Cards due" value={due.due} />
-        <Stat label="New cards" value={due.neu} />
+        <Stat label="Questions due" value={mcqDueCount} />
         <Stat label="Active days" value={totalActive} />
       </div>
 

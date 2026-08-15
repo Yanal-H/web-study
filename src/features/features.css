@@ -664,6 +664,55 @@
   color: var(--text-faint);
   margin-top: 6px;
 }
+.reading-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  background: var(--accent);
+  z-index: 50;
+  transition: width 80ms linear;
+}
+.reader-focus .reader-toc {
+  display: none;
+}
+.reader-focus .reader-layout {
+  grid-template-columns: 1fr;
+}
+.reader-focus .reader-body {
+  max-width: 720px;
+  margin: 0 auto;
+}
+.read-on {
+  font-weight: 600;
+}
+
+@media print {
+  .sidebar,
+  .topbar,
+  .scrim,
+  .watermark,
+  .no-print,
+  .reading-progress {
+    display: none !important;
+  }
+  .app {
+    grid-template-columns: 1fr !important;
+  }
+  .main::before {
+    display: none;
+  }
+  .reader-layout {
+    grid-template-columns: 1fr !important;
+  }
+  .reader-toc {
+    display: none !important;
+  }
+  body {
+    background: #fff;
+    color: #000;
+  }
+}
 
 /* ---- FLASHCARD REVIEW ---- */
 .review-page {

@@ -108,6 +108,29 @@ function Shell() {
     ];
   }, [navigate, state.theme]);
 
+  // Global ⌘K content search — lazy-loaded so the content index stays out of the
+  // initial bundle. Built when the palette opens.
+  const [searchFn, setSearchFn] = useState<((q: string) => Command[]) | undefined>();
+  useEffect(() => {
+    if (!cmdOpen) return;
+    let alive = true;
+    void import('../lib/search').then((m) => {
+      if (!alive) return;
+      const docs = m.buildSearchDocs(state);
+      setSearchFn(() => (query: string) =>
+        m.searchDocs(docs, query, 18).map((d) => ({
+          id: d.id,
+          label: d.title.length > 80 ? d.title.slice(0, 80) + '…' : d.title,
+          hint: m.KIND_LABEL[d.kind],
+          run: () => navigate(d.route.replace(/#.*$/, '')),
+        }))
+      );
+    });
+    return () => {
+      alive = false;
+    };
+  }, [cmdOpen, navigate, state]);
+
   const NavList = () => (
     <>
       <div className="nav-group-label">Learn</div>
@@ -194,7 +217,7 @@ function Shell() {
 
       <Watermark />
 
-      {cmdOpen && <CommandPalette commands={commands} onClose={() => setCmdOpen(false)} />}
+      {cmdOpen && <CommandPalette commands={commands} search={searchFn} onClose={() => setCmdOpen(false)} />}
       {helpOpen && <ShortcutsHelp onClose={() => setHelpOpen(false)} />}
     </>
   );

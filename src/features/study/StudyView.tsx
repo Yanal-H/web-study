@@ -1,7 +1,9 @@
 import { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { chapterSummaries } from '../../content/loader';
+import { listChapters, type LoadedChapter } from '../../content/loader';
 import { useUserContentVersion, importChapterJson, removeUserChapter } from '../../content/userContent';
+import { useStore } from '../../state/useStore';
+import { chapterProgress } from './progress';
 import { Card, Button, Badge, IconButton, EmptyState, Textarea } from '../../design/primitives';
 import { Dialog } from '../../design/Dialog';
 import { useToast } from '../../design/Toast';
@@ -11,11 +13,21 @@ export default function StudyView() {
   const navigate = useNavigate();
   const toast = useToast();
   const uv = useUserContentVersion();
-  const chapters = useMemo(() => chapterSummaries(), [uv]);
+  const state = useStore();
+  const chapters = useMemo(() => listChapters(), [uv]);
   const [importing, setImporting] = useState(false);
 
+  const recent = useMemo(() => {
+    let best: { ch: LoadedChapter; when: string } | null = null;
+    for (const ch of chapters) {
+      const when = state.study.progress[ch.id]?.lastOpened;
+      if (when && (!best || when > best.when)) best = { ch, when };
+    }
+    return best?.ch;
+  }, [chapters, state.study.progress, state.schemaVersion]);
+
   const bySubject = useMemo(() => {
-    const map = new Map<string, typeof chapters>();
+    const map = new Map<string, LoadedChapter[]>();
     for (const c of chapters) {
       if (!map.has(c.subject)) map.set(c.subject, []);
       map.get(c.subject)!.push(c);
@@ -34,6 +46,20 @@ export default function StudyView() {
           <IconUpload size={17} /> Import chapter
         </Button>
       </header>
+
+      {recent && (
+        <Card interactive style={{ marginBottom: 'var(--sp-4)', borderColor: 'var(--accent)' }} onClick={() => navigate(`/study/${encodeURIComponent(recent.id)}`)}>
+          <div className="row spread wrap" style={{ gap: 12 }}>
+            <div>
+              <div className="card-eyebrow">Continue where you left off</div>
+              <div style={{ fontWeight: 600, fontSize: 15 }}>{recent.title}</div>
+            </div>
+            <Button variant="primary" size="sm">
+              Resume <IconChevron size={15} />
+            </Button>
+          </div>
+        </Card>
+      )}
 
       {chapters.length === 0 ? (
         <Card>
@@ -86,16 +112,12 @@ export default function StudyView() {
                     )}
                   </div>
                   <div className="row wrap" style={{ gap: 6 }}>
-                    <Badge>{c.sections} sections</Badge>
-                    <Badge tone="accent">{c.cards} cards</Badge>
-                    <Badge tone="info">{c.mcqs} MCQs</Badge>
-                    {c.emqs > 0 && <Badge tone="warning">{c.emqs} EMQs</Badge>}
+                    <Badge>{c.sections.length} sections</Badge>
+                    <Badge tone="accent">{c.cards.length} cards</Badge>
+                    <Badge tone="info">{c.mcqs.length} MCQs</Badge>
+                    {c.emqs.length > 0 && <Badge tone="warning">{c.emqs.length} EMQs</Badge>}
                   </div>
-                  <div className="row" style={{ justifyContent: 'flex-end', marginTop: 12 }}>
-                    <span className="row" style={{ gap: 4, color: 'var(--accent)', fontSize: 13, fontWeight: 600 }}>
-                      Open reader <IconChevron size={15} />
-                    </span>
-                  </div>
+                  <ChapterProgressBar chapter={c} />
                 </Card>
               ))}
             </div>
@@ -105,6 +127,24 @@ export default function StudyView() {
 
       {importing && <ImportDialog onClose={() => setImporting(false)} />}
     </>
+  );
+}
+
+function ChapterProgressBar({ chapter }: { chapter: LoadedChapter }) {
+  const p = chapterProgress(chapter);
+  return (
+    <div style={{ marginTop: 12 }}>
+      <div className="qb-bar-track" style={{ height: 6 }}>
+        <div className="qb-bar-fill" style={{ width: `${p.readPct * 100}%`, background: 'var(--accent)' }} />
+      </div>
+      <div className="row spread" style={{ marginTop: 6, fontSize: 12, color: 'var(--text-faint)' }}>
+        <span>{Math.round(p.readPct * 100)}% read</span>
+        <span>
+          {p.cardsDue} due
+          {p.mcqAccuracy != null ? ` · ${Math.round(p.mcqAccuracy * 100)}% MCQ` : ''}
+        </span>
+      </div>
+    </div>
   );
 }
 

@@ -32,9 +32,11 @@ function fuzzy(query: string, text: string): number {
 export function CommandPalette({
   commands,
   onClose,
+  search,
 }: {
   commands: Command[];
   onClose: () => void;
+  search?: (query: string) => Command[];
 }) {
   const [q, setQ] = useState('');
   const [sel, setSel] = useState(0);
@@ -47,12 +49,14 @@ export function CommandPalette({
 
   const results = useMemo(() => {
     if (!q.trim()) return commands;
-    return commands
+    const navMatches = commands
       .map((c) => ({ c, s: Math.max(fuzzy(q, c.label), fuzzy(q, c.hint || '')) }))
       .filter((r) => r.s >= 0)
       .sort((a, b) => b.s - a.s)
       .map((r) => r.c);
-  }, [q, commands]);
+    const contentMatches = search ? search(q) : [];
+    return [...navMatches, ...contentMatches];
+  }, [q, commands, search]);
 
   useEffect(() => {
     setSel(0);
