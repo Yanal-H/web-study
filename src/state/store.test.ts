@@ -48,7 +48,10 @@ describe('runMigrations — lossless v3→v6 upgrade', () => {
 
     // version bumped to current
     expect(s.schemaVersion).toBe(SCHEMA_VERSION);
-    expect(SCHEMA_VERSION).toBe(6);
+    expect(SCHEMA_VERSION).toBe(7);
+    // v7 additive: content-card scheduling map exists, user cards untouched
+    expect(s.study.cardSched).toEqual({});
+    expect(s.flashcards.find((c) => c.id === 'c1')!.interval).toBe(12);
 
     // untouched user content survives verbatim
     expect(s.subjects[0]!.name).toBe('Surgery');

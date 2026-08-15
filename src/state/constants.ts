@@ -19,7 +19,7 @@ export const THEME_KEY = 'foundation_theme';
  * no-op migration step (see runMigrations). Bumping the version does not change
  * any data semantics — it only reserves the slot for future additive work.
  */
-export const SCHEMA_VERSION = 6;
+export const SCHEMA_VERSION = 7;
 
 /* ---- v8 default settings (additive; every tunable lives here) ---- */
 export const SCHED_DEFAULTS: SchedulerSettings = {

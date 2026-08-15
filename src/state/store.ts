@@ -101,6 +101,7 @@ export function defaultState(): AppState {
       mcqPerf: {},
       mcqNotes: {},
       mcqSession: null,
+      cardSched: {},
     },
     // v4 settings — every tunable (scheduler / session / mcq / appearance / goals)
     settings: JSON.parse(JSON.stringify(SETTINGS_DEFAULTS)) as AppSettings,
@@ -200,9 +201,11 @@ export function runMigrations(s: any): AppState {
     const p = s.study.mcqPerf[qid];
     p.mastery = deriveMastery(p);
   }
-  // v5 -> v6: RESERVED. Additive slot for future work; intentionally a no-op so
-  // that bumping SCHEMA_VERSION does not alter any existing data semantics.
-  // (When real v6 fields arrive, add them here without removing anything.)
+  // v5 -> v6: RESERVED slot (Phase 0). No-op — carried forward unchanged.
+  // v6 -> v7: per-card scheduling for shipped/imported content cards (Phase 3).
+  //   Additive: shipped content cards are scheduled by id here, WITHOUT touching
+  //   the user's own s.flashcards (their ef/interval/reps/due stay exactly as-is).
+  if (!s.study.cardSched || typeof s.study.cardSched !== 'object') s.study.cardSched = {};
   s.schemaVersion = SCHEMA_VERSION;
   return s as AppState;
 }

@@ -123,6 +123,8 @@ export interface StudyState {
   mcqPerf: Record<string, McqPerf>;
   mcqNotes: Record<string, string>;
   mcqSession: any | null;
+  /** v7: per-card scheduling for shipped/imported content cards, keyed by card id */
+  cardSched: Record<string, any>;
   [k: string]: unknown;
 }
 
