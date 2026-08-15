@@ -3614,5 +3614,140 @@
       ]
     }
   ],
-  "emqs": []
+  "emqs": [
+    {
+      "schema": "foundation.emq/v1",
+      "id": "sur-ch1-emq-001",
+      "theme": "Types of wounds",
+      "instruction": "For each description, select the single most appropriate wound type.",
+      "sectionId": "s2",
+      "difficulty": 2,
+      "options": [
+        {
+          "id": "a",
+          "text": "Abrasion"
+        },
+        {
+          "id": "b",
+          "text": "Incised wound"
+        },
+        {
+          "id": "c",
+          "text": "Lacerated wound"
+        },
+        {
+          "id": "d",
+          "text": "Penetrating wound"
+        },
+        {
+          "id": "e",
+          "text": "Contusion"
+        },
+        {
+          "id": "f",
+          "text": "Haematoma"
+        },
+        {
+          "id": "g",
+          "text": "Missile wound"
+        }
+      ],
+      "stems": [
+        {
+          "stem": "A clean-edged wound from a knife that is longer than it is deep, bleeding briskly.",
+          "answer": "b",
+          "why": "A sharp edge gives clean margins with little tissue destruction and free bleeding."
+        },
+        {
+          "stem": "A wound from a pointed nail that is deeper than it is long, with a small skin opening and poor drainage.",
+          "answer": "d",
+          "why": "Penetrating wounds are deeper than long; the small opening drains poorly and hides deep injury."
+        },
+        {
+          "stem": "A collection of blood under intact skin that becomes cystic then clots within hours.",
+          "answer": "f",
+          "why": "A haematoma is a discrete blood collection; small ones can be aspirated with a wide-bore needle."
+        },
+        {
+          "stem": "Superficial layers scraped away by friction, exposing many nerve endings and very painful.",
+          "answer": "a",
+          "why": "Abrasions are painful because superficial nerve endings are exposed; clean and dress non-adherently."
+        },
+        {
+          "stem": "An irregular, devascularised, contaminated wound from a road-traffic blunt injury.",
+          "answer": "c",
+          "why": "Blunt violence tears tissue irregularly, leaving devascularised contaminated edges at high infection risk."
+        }
+      ],
+      "keyFacts": [
+        "Deeper-than-long = penetrating; longer-than-deep with clean edges = incised.",
+        "Missile severity scales with kinetic energy (½MV²)."
+      ]
+    },
+    {
+      "schema": "foundation.emq/v1",
+      "id": "sur-ch1-emq-002",
+      "theme": "Suture materials",
+      "instruction": "For each property, select the single most appropriate suture.",
+      "sectionId": "s5",
+      "difficulty": 3,
+      "options": [
+        {
+          "id": "a",
+          "text": "Polypropylene (Prolene)"
+        },
+        {
+          "id": "b",
+          "text": "Polydioxanone (PDS)"
+        },
+        {
+          "id": "c",
+          "text": "Silk"
+        },
+        {
+          "id": "d",
+          "text": "Polyglactin (Vicryl)"
+        },
+        {
+          "id": "e",
+          "text": "Chromic catgut"
+        },
+        {
+          "id": "f",
+          "text": "Stainless steel"
+        }
+      ],
+      "stems": [
+        {
+          "stem": "Inert monofilament that need not be removed even if the wound becomes infected; ideal for abdominal closure and hernia repair.",
+          "answer": "a",
+          "why": "Prolene is inert and monofilament, so it does not harbour organisms and can stay in an infected field."
+        },
+        {
+          "stem": "The slowest-absorbed synthetic, a monofilament losing about half its tensile strength at six weeks.",
+          "answer": "b",
+          "why": "PDS is a monofilament absorbable with the longest wound support of the absorbables."
+        },
+        {
+          "stem": "Braided absorbable synthetic commonly chosen for gastrointestinal anastomoses.",
+          "answer": "d",
+          "why": "Vicryl (polyglactin) is a multifilament absorbable widely used for bowel anastomoses."
+        },
+        {
+          "stem": "Very high tensile strength and very inert but hard to handle; used for sternotomy closure.",
+          "answer": "f",
+          "why": "Stainless steel is the strongest and most inert suture, used to close the sternum."
+        },
+        {
+          "stem": "A natural protein multifilament that provokes marked tissue reaction and should be removed if infected.",
+          "answer": "c",
+          "why": "Silk handles easily but its protein multifilament structure reacts and can maintain infection."
+        }
+      ],
+      "keyFacts": [
+        "Multifilament sutures pick up ~10× more organisms than an equivalent monofilament.",
+        "Absorbable vs non-absorbable is the single most important suture classification."
+      ]
+    }
+  ]
 }

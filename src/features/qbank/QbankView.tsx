@@ -1,53 +1,193 @@
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { useStore } from '../../state/useStore';
-import { Stat } from '../../design/primitives';
-import { IconQbank } from '../../design/icons';
-import { allMcqs } from '../../content/loader';
+import { Card, Button, Stat, Segmented } from '../../design/primitives';
 import { useUserContentVersion } from '../../content/userContent';
+import { allMcqs, allEmqs } from '../../content/loader';
+import {
+  buildPool,
+  poolCount,
+  startSession,
+  getSession,
+  type QMode,
+  type Special,
+} from './engine';
+import QuestionRunner from './QuestionRunner';
+import EmqRunner from './EmqRunner';
+
+type Screen = 'setup' | 'run' | 'emq';
+
+const MODES: Array<{ value: QMode; label: string; blurb: string }> = [
+  { value: 'study', label: 'Study', blurb: 'Immediate feedback + teaching' },
+  { value: 'practice', label: 'Practice', blurb: 'Immediate mark, lighter' },
+  { value: 'exam', label: 'Exam', blurb: 'Timed, feedback at the end' },
+  { value: 'cram', label: 'Cram', blurb: 'Rapid, immediate feedback' },
+];
+const POOLS: Array<{ value: Special; label: string }> = [
+  { value: 'all', label: 'All' },
+  { value: 'due', label: 'Due' },
+  { value: 'weak', label: 'Weak' },
+  { value: 'wrong', label: 'Wrong' },
+  { value: 'flagged', label: 'Flagged' },
+];
 
 export default function QbankView() {
   const state = useStore();
   const uv = useUserContentVersion();
+  const [screen, setScreen] = useState<Screen>(getSession() ? 'run' : 'setup');
+  const [mode, setMode] = useState<QMode>('study');
+  const [special, setSpecial] = useState<Special>('all');
+  const [subject, setSubject] = useState<string>('');
+  const [difficulties, setDifficulties] = useState<number[]>([1, 2, 3]);
+  const [size, setSize] = useState<number>(20);
+
   const bank = useMemo(() => allMcqs(), [uv]);
+  const emqs = useMemo(() => allEmqs(), [uv]);
+  const subjects = useMemo(() => [...new Set(bank.map((q) => q.subject))], [bank]);
   const perf = state.study.mcqPerf || {};
   const ids = Object.keys(perf);
   const attempted = ids.filter((q) => perf[q]!.attempts > 0).length;
   const mastered = ids.filter((q) => perf[q]!.mastery === 'mastered').length;
 
+  const filter = {
+    subjects: subject ? [subject] : undefined,
+    difficulties,
+    special,
+  };
+  const available = useMemo(() => poolCount(filter), [subject, difficulties, special, uv]);
+
+  function toggleDiff(d: number) {
+    setDifficulties((cur) => (cur.includes(d) ? cur.filter((x) => x !== d) : [...cur, d]).sort());
+  }
+
+  function begin() {
+    const pool = buildPool({ ...filter, shuffle: true, limit: size });
+    if (pool.length === 0) return;
+    const timed = mode === 'exam' ? { totalSeconds: Math.round(pool.length * (state.settings.mcq.examMinPerQ || 1.5) * 60) } : undefined;
+    startSession(mode, pool, timed);
+    setScreen('run');
+  }
+
+  if (screen === 'run') {
+    return <QuestionRunner onExit={() => setScreen('setup')} />;
+  }
+  if (screen === 'emq') {
+    return <EmqRunner emqs={emqs} onExit={() => setScreen('setup')} />;
+  }
+
+  const resumable = getSession();
+
   return (
     <>
       <header className="page-head">
         <h1>Question Bank</h1>
-        <div className="sub">MCQ and EMQ practice with tutor-mode rationale.</div>
+        <div className="sub">Single-best-answer, multi-answer and EMQ, with per-option rationale.</div>
       </header>
 
       <div className="stat-row" style={{ marginBottom: 'var(--sp-4)' }}>
-        <Stat label="Questions in bank" value={bank.length} />
+        <Stat label="Questions" value={bank.length} />
+        <Stat label="EMQ sets" value={emqs.length} />
         <Stat label="Attempted" value={attempted} />
         <Stat label="Mastered" value={mastered} />
-        <Stat label="Tracked" value={ids.length} />
       </div>
 
-      <div className="soon">
-        <span className="soon-badge">
-          <IconQbank size={14} /> Quiz-template-grade engine coming
-        </span>
-        <h2 style={{ marginTop: 0 }}>A full question-bank experience</h2>
-        <p className="muted" style={{ maxWidth: '60ch' }}>
-          Study, practice and exam modes; per-option rationale (correct answer, key points, why the
-          others are wrong); EMQ sets; timed and rapid runs; a question navigator and a score ring —
-          all rebuilt in a later phase on the stable question IDs your data already tracks.
-        </p>
-        <ul>
-          <li>Immediate or exam-style feedback, with confidence tracking</li>
-          <li>EMQ theme sets alongside single-best-answer MCQs</li>
-          <li>Smart review of due, wrong, weak and flagged questions</li>
-        </ul>
-        <div className="stub-note">
-          Per-question performance persists under{' '}
-          <code>foundation_med_study_v1 → study.mcqPerf</code> and loads losslessly.
+      {resumable && (
+        <Card style={{ marginBottom: 'var(--sp-4)', borderColor: 'var(--accent)' }}>
+          <div className="row spread wrap" style={{ gap: 12 }}>
+            <div>
+              <div className="card-eyebrow">Resume session</div>
+              <div style={{ fontWeight: 500 }}>
+                {resumable.mode} · {Object.keys(resumable.answers).length}/{resumable.ids.length} answered
+              </div>
+            </div>
+            <Button variant="primary" onClick={() => setScreen('run')}>
+              Resume
+            </Button>
+          </div>
+        </Card>
+      )}
+
+      <Card>
+        <div className="card-eyebrow">New session</div>
+        <div className="qb-setup">
+          <div>
+            <div className="setup-label">Mode</div>
+            <div className="mode-grid">
+              {MODES.map((m) => (
+                <button
+                  key={m.value}
+                  className={`mode-card ${mode === m.value ? 'active' : ''}`}
+                  onClick={() => setMode(m.value)}
+                >
+                  <span className="mode-name">{m.label}</span>
+                  <span className="mode-blurb">{m.blurb}</span>
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <div className="row wrap" style={{ gap: 20, marginTop: 18 }}>
+            <div>
+              <div className="setup-label">Pool</div>
+              <Segmented value={special} onChange={setSpecial} options={POOLS} ariaLabel="Pool" />
+            </div>
+            <div>
+              <div className="setup-label">Difficulty</div>
+              <div className="row" style={{ gap: 6 }}>
+                {[1, 2, 3].map((d) => (
+                  <button
+                    key={d}
+                    className={`chip ${difficulties.includes(d) ? 'on' : ''}`}
+                    onClick={() => toggleDiff(d)}
+                  >
+                    L{d}
+                  </button>
+                ))}
+              </div>
+            </div>
+            <div>
+              <div className="setup-label">Subject</div>
+              <select className="select" value={subject} onChange={(e) => setSubject(e.target.value)} style={{ minWidth: 160 }}>
+                <option value="">All subjects</option>
+                {subjects.map((s) => (
+                  <option key={s} value={s}>
+                    {s}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div>
+              <div className="setup-label">Length</div>
+              <Segmented
+                value={String(size)}
+                onChange={(v) => setSize(Number(v))}
+                options={[
+                  { value: '10', label: '10' },
+                  { value: '20', label: '20' },
+                  { value: '40', label: '40' },
+                  { value: '9999', label: 'All' },
+                ]}
+                ariaLabel="Length"
+              />
+            </div>
+          </div>
+
+          <div className="row spread wrap" style={{ marginTop: 22, gap: 12 }}>
+            <div className="muted" style={{ fontSize: 13.5 }}>
+              <strong style={{ color: 'var(--text)' }}>{Math.min(available, size)}</strong> question
+              {Math.min(available, size) === 1 ? '' : 's'} in this pool
+              {available === 0 && ' — nothing matches, widen the filters.'}
+            </div>
+            <div className="row" style={{ gap: 10 }}>
+              {emqs.length > 0 && (
+                <Button onClick={() => setScreen('emq')}>EMQ sets ({emqs.length})</Button>
+              )}
+              <Button variant="primary" disabled={available === 0} onClick={begin}>
+                Start {MODES.find((m) => m.value === mode)!.label}
+              </Button>
+            </div>
+          </div>
         </div>
-      </div>
+      </Card>
     </>
   );
 }

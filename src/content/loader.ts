@@ -1,7 +1,7 @@
 // Typed content loader. Build-time content is globbed and validated; personal
 // (imported) content is merged on top. Shipped and personal content are kept
 // clearly separated by `origin`.
-import { ChapterSchema, type Chapter, type Card, type Mcq } from './schema';
+import { ChapterSchema, type Chapter, type Card, type Mcq, type Emq } from './schema';
 import { getUserChapters } from './userContent';
 
 export type ContentOrigin = 'shipped' | 'personal';
@@ -68,6 +68,12 @@ export function allCards(): Array<Card & { chapterId: string; subject: string }>
 export function allMcqs(): Array<Mcq & { chapterId: string; subject: string }> {
   return listChapters().flatMap((ch) =>
     chapterMcqs(ch).map((q) => ({ ...q, chapterId: ch.id, subject: ch.subject }))
+  );
+}
+
+export function allEmqs(): Array<Emq & { chapterId: string; subject: string }> {
+  return listChapters().flatMap((ch) =>
+    ch.emqs.map((e) => ({ ...e, chapterId: ch.id, subject: ch.subject }))
   );
 }
 
