@@ -117,6 +117,16 @@
   --grad-hero: radial-gradient(1200px 520px at 78% -12%, var(--accent-soft), transparent 60%);
   --grad-accent: linear-gradient(135deg, var(--accent), var(--accent-strong));
   --heat-0: #171d25;
+
+  /* ---- HAKI / energy (Conqueror's haki — black core, crimson + violet arcs) ---- */
+  --haki-core: #07070c;
+  --haki-red: #ff2d55;
+  --haki-red-deep: #b3123b;
+  --haki-violet: #7c3aed;
+  --lightning: #ffe3ea;
+  --haki-glow: rgba(255, 45, 85, 0.55);
+  --grad-haki: linear-gradient(135deg, #ff2d55, #7c3aed 55%, #22d3ee);
+  --card-glow: 0 0 0 1px var(--border), 0 18px 50px -24px var(--accent-glow);
 }
 
 /* ===================================================================
@@ -170,6 +180,16 @@
   --grad-hero: radial-gradient(1200px 520px at 78% -12%, var(--accent-soft), transparent 60%);
   --grad-accent: linear-gradient(135deg, var(--accent), var(--accent-strong));
   --heat-0: #e7e3d6;
+
+  /* haki stays dramatic even on the light theme (the hero is always a dark panel) */
+  --haki-core: #07070c;
+  --haki-red: #ff2d55;
+  --haki-red-deep: #b3123b;
+  --haki-violet: #7c3aed;
+  --lightning: #ffe3ea;
+  --haki-glow: rgba(255, 45, 85, 0.5);
+  --grad-haki: linear-gradient(135deg, #ff2d55, #7c3aed 55%, #0d9488);
+  --card-glow: 0 0 0 1px var(--border), 0 18px 50px -28px var(--accent-glow);
 }
 
 /* Honour OS preference for the very first paint when no explicit choice is set.

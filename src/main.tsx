@@ -7,6 +7,7 @@ import './design/tokens.css';
 import './design/base.css';
 import './design/primitives.css';
 import './features/features.css';
+import './features/dashboard/hero.css';
 import './features/gate/watermark.css';
 
 import { state } from './state/store';

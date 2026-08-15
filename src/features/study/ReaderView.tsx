@@ -123,6 +123,25 @@ function ReadTab({
   const state = useStore();
   const prog = state.study.progress[ch.id] || {};
   const readSections: Record<string, boolean> = prog.sections || {};
+  const [activeSec, setActiveSec] = useState<string>(ch.sections[0]?.id ?? '');
+
+  // scroll-spy: highlight the section currently in view in the TOC
+  useEffect(() => {
+    const obs = new IntersectionObserver(
+      (entries) => {
+        const vis = entries
+          .filter((e) => e.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+        if (vis) setActiveSec(vis.target.id.replace('sec-', ''));
+      },
+      { rootMargin: '-20% 0px -70% 0px', threshold: [0, 0.3, 1] }
+    );
+    ch.sections.forEach((s) => {
+      const el = document.getElementById(`sec-${s.id}`);
+      if (el) obs.observe(el);
+    });
+    return () => obs.disconnect();
+  }, [ch.id]);
 
   function toggleRead(sectionId: string) {
     update((s) => {
@@ -150,7 +169,15 @@ function ReadTab({
           Contents
         </div>
         {ch.sections.map((s) => (
-          <a key={s.id} href={`#sec-${s.id}`} className="toc-link">
+          <a
+            key={s.id}
+            href={`#sec-${s.id}`}
+            className={`toc-link${activeSec === s.id ? ' active' : ''}`}
+            onClick={(e) => {
+              e.preventDefault();
+              document.getElementById(`sec-${s.id}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }}
+          >
             {s.n ? `${s.n} ` : ''}
             {s.title}
           </a>

@@ -16,6 +16,7 @@ import { collectItems, queueStats } from '../flashcards/deck';
 import { allMcqs } from '../../content/loader';
 import { isDue as mcqDue } from '../qbank/perf';
 import { useUserContentVersion } from '../../content/userContent';
+import Hero from './Hero';
 
 const WEEKDAYS = ['', 'Mon', '', 'Wed', '', 'Fri', ''];
 
@@ -72,25 +73,14 @@ export default function DashboardView() {
 
   return (
     <>
-      <section className="hero">
-        <div className="hero-sig">Yanal</div>
-        <h1>{greet}.</h1>
-        <p className="hero-sub">
-          Your offline study desk — spaced-repetition recall, a question bank, notes and planning,
-          all in one place. Pick up where the schedule left you.
-        </p>
-        <div className="hero-actions">
-          <Button variant="primary" onClick={() => navigate(nextAction.go)}>
-            {nextAction.icon} {nextAction.cta}
-          </Button>
-          <Button onClick={() => navigate('/study')}>
-            <IconStudy size={18} /> Browse study
-          </Button>
-        </div>
-      </section>
+      <Hero
+        greeting={`${greet}.`}
+        cta={{ text: nextAction.text, label: nextAction.cta, go: nextAction.go, icon: nextAction.icon }}
+      />
 
       {/* At-a-glance */}
-      <div className="stat-row">
+      <div className="stat-row enter">
+
         <div className="stat">
           <div className="stat-label">Current streak</div>
           <div className="stat-value" style={{ display: 'flex', alignItems: 'center', gap: 8 }}>

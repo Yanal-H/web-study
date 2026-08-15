@@ -274,6 +274,100 @@ hr {
   color: var(--text-faint);
 }
 
+/* ---- MOTION: entrance stagger, glow, alive bg ---- */
+@keyframes enterUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.enter > * {
+  animation: enterUp 460ms var(--ease) both;
+}
+.enter > *:nth-child(1) {
+  animation-delay: 30ms;
+}
+.enter > *:nth-child(2) {
+  animation-delay: 80ms;
+}
+.enter > *:nth-child(3) {
+  animation-delay: 130ms;
+}
+.enter > *:nth-child(4) {
+  animation-delay: 180ms;
+}
+.enter > *:nth-child(5) {
+  animation-delay: 230ms;
+}
+.enter > *:nth-child(6) {
+  animation-delay: 280ms;
+}
+
+/* interactive cards lift with an accent glow */
+.card--interactive:hover {
+  box-shadow: var(--card-glow);
+}
+
+/* active nav item gets a live accent bar + glow */
+.navitem.active {
+  position: relative;
+  box-shadow: inset 0 0 0 1px var(--border), 0 0 22px -12px var(--accent-glow);
+}
+.navitem.active::before {
+  content: '';
+  position: absolute;
+  left: -1px;
+  top: 8px;
+  bottom: 8px;
+  width: 3px;
+  border-radius: 3px;
+  background: var(--grad-accent);
+  box-shadow: 0 0 10px var(--accent-glow);
+}
+
+/* subtle living energy behind the main content */
+.main::after {
+  content: '';
+  position: fixed;
+  right: -8%;
+  top: 12%;
+  width: 460px;
+  height: 460px;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--accent-soft), transparent 68%);
+  filter: blur(30px);
+  pointer-events: none;
+  z-index: 0;
+  animation: floatOrb 16s ease-in-out infinite alternate;
+}
+@keyframes floatOrb {
+  from {
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 0.7;
+  }
+  to {
+    transform: translate3d(-30px, 40px, 0) scale(1.15);
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .enter > * {
+    animation: none;
+  }
+  .main::after {
+    animation: none;
+  }
+}
+:root.reduce-motion .enter > *,
+:root.reduce-motion .main::after {
+  animation: none;
+}
+
 /* ---- MOBILE ---- */
 .topbar {
   display: none;

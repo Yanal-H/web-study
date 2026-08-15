@@ -32,9 +32,9 @@ describe('App shell', () => {
       expect(screen.getByRole('link', { name: label })).toBeTruthy();
     }
 
-    // the lazily-loaded dashboard view eventually renders (hero + signature)
-    await waitFor(() => expect(document.querySelector('.hero')).toBeTruthy());
-    expect(document.querySelector('.hero-sig')?.textContent).toBe('Yanal');
+    // the lazily-loaded dashboard view eventually renders (haki hero + signature)
+    await waitFor(() => expect(document.querySelector('.haki-hero')).toBeTruthy());
+    expect(document.querySelector('.haki-name')?.textContent).toBe('Yanal');
 
     // watermark seal present
     expect(document.querySelector('.watermark')).toBeTruthy();

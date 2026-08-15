@@ -5,6 +5,13 @@ import type {
   TextareaHTMLAttributes,
   ReactNode,
 } from 'react';
+import { useCountUp } from '../lib/anim';
+
+/** Animated integer that counts up on mount. */
+export function CountUp({ value }: { value: number }) {
+  const v = useCountUp(value);
+  return <>{v}</>;
+}
 
 /* ---- BUTTON ---- */
 type Variant = 'default' | 'primary' | 'ghost' | 'danger';
@@ -274,11 +281,13 @@ export function Stat({
   value: ReactNode;
   unit?: string;
 }) {
+  // count up when the value is a plain number
+  const display = typeof value === 'number' ? <CountUp value={value} /> : value;
   return (
     <div className="stat">
       <div className="stat-label">{label}</div>
       <div className="stat-value">
-        {value}
+        {display}
         {unit && <span className="unit">{unit}</span>}
       </div>
     </div>
