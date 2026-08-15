@@ -4,10 +4,15 @@ An offline-first study website — flashcards, a question bank, notes, planner a
 more. **by Yanal · Cairo 2026.**
 
 This repository is mid-migration from a single-file HTML app to a multi-file,
-offline-capable Vite + React + TypeScript site. **Phase 0** (the scaffold) is
-complete: the project builds, the state layer is ported losslessly, the shell +
-router render every view, and the app boots and navigates fully offline after one
-visit.
+offline-capable Vite + React + TypeScript site.
+
+- **Phase 0** (scaffold) — complete: builds, lossless state port, offline shell.
+- **Phase 1** (design system + all-pages UI) — complete: a new token system
+  (retired the old aurora palette), self-hosted fonts, a primitive library, a
+  ⌘K command palette, and functional re-skinned pages (Dashboard, Subjects,
+  Planner, Notes, Calculators, Mnemonics, Resources, Settings) in light and dark.
+  The Study, Flashcards and Q-Bank engines are intentionally still placeholders —
+  they are built in Phases 3–4.
 
 ## Commands
 

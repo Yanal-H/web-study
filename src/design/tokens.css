@@ -1,88 +1,235 @@
 /*
- * Foundation · Med School Toolkit — Phase 0 design tokens.
+ * Foundation · Med School Toolkit — Design System (Phase 1).
  *
- * TEMPORARY neutral system (per Phase 0 guardrail: "no new colours yet; temporary
- * neutral tokens are fine"). The old midnight/paper/clinic aurora palette is
- * retired — these are elevated tinted neutrals plus a single teal accent. The full
- * design system lands in a later phase. Identity (Yanal, signature) stays; colours
- * are new.
- *
- * Two themes only in Phase 0: 'midnight' (dark, default) and 'paper' (light).
- * Selected pre-paint via data-theme on <html> (see index.html) — no flash.
+ * INTENT (per the Design Language Brief):
+ *  - Elevated, TINTED neutrals — never pure #000 / #fff. Dark theme sits on a cool
+ *    slate family with a faint blue undertone (technical, calm); light theme on a
+ *    warm stone/oatmeal (low-glare, long-reading). Each theme has 3-4 elevation
+ *    surfaces stepping up from the base.
+ *  - ONE loud colour: a jewel-toned "transformative teal", reserved for the primary
+ *    action and the active state. Everything else is neutral.
+ *  - Semantic set (success/warning/error/info) legible in both themes; the recall
+ *    grades (Again/Hard/Good/Easy) map onto them consistently.
+ *  - Micro-glow, not highlighter fills: energy appears as controlled accent glow on
+ *    focus rings, active tabs, small badges and CTA outlines.
+ *  - Gradients are built ONLY from palette tokens (hero, signature swash, rings).
+ *  - Purposeful, fast, reduced-motion-aware motion tokens.
+ *  - Full light/dark parity; the old midnight/paper/clinic aurora hexes are retired.
  */
 
 :root {
-  /* type */
-  --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial,
-    'Apple Color Emoji', 'Segoe UI Emoji', sans-serif;
-  --font-display: 'Iowan Old Style', 'Palatino Linotype', Palatino, 'Book Antiqua', Georgia, serif;
-  --font-mono: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace;
+  /* ---- type ---- */
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-display: 'Fraunces', 'Iowan Old Style', Georgia, serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  --font-signature: 'Great Vibes', 'Snell Roundhand', cursive;
 
+  /* fluid type scale */
+  --fs-xs: 0.78rem;
+  --fs-sm: 0.86rem;
+  --fs-base: 0.95rem;
+  --fs-md: 1.05rem;
+  --fs-lg: 1.2rem;
+  --fs-xl: 1.5rem;
+  --fs-2xl: clamp(1.7rem, 3.2vw, 2.1rem);
+  --fs-3xl: clamp(2.1rem, 5vw, 3rem);
+  --fs-hero: clamp(2.6rem, 6vw, 4rem);
+
+  /* ---- geometry ---- */
+  --radius-xs: 7px;
+  --radius-sm: 10px;
   --radius: 14px;
-  --radius-sm: 9px;
-  --radius-lg: 22px;
-  --space: 16px;
-  --maxw: 1180px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+  --radius-pill: 999px;
 
-  --transition: 180ms cubic-bezier(0.22, 0.61, 0.36, 1);
+  --sp-1: 4px;
+  --sp-2: 8px;
+  --sp-3: 12px;
+  --sp-4: 16px;
+  --sp-5: 24px;
+  --sp-6: 32px;
+  --sp-7: 48px;
+  --sp-8: 64px;
+
+  --maxw: 1200px;
+  --sidebar-w: 256px;
+
+  /* ---- motion ---- */
+  --dur-fast: 120ms;
+  --dur: 200ms;
+  --dur-slow: 340ms;
+  --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --transition: var(--dur) var(--ease);
 }
 
-/* ---- MIDNIGHT (dark) — default ---- */
+/* ===================================================================
+   DARK — cool slate, tinted near-black, 4 elevation surfaces (default)
+   =================================================================== */
 :root,
-[data-theme='midnight'] {
-  --bg: #0e1116;
-  --bg-elev: #161b23;
-  --bg-elev-2: #1c222c;
-  --surface: #12161d;
-  --border: #262e3a;
-  --border-soft: #1d242e;
+:root[data-theme='dark'],
+:root[data-theme='midnight'] {
+  color-scheme: dark;
 
-  --text: #e7ecf3;
-  --text-dim: #a6b0be;
-  --text-faint: #6f7987;
+  --bg: #0e1217;
+  --bg-2: #0b0e13;
+  --surface-1: #151a21;
+  --surface-2: #1b212a;
+  --surface-3: #222a34;
+  --surface-hover: #202834;
 
-  --accent: #4fd1c5; /* teal */
-  --accent-strong: #2fb6aa;
-  --accent-contrast: #06231f;
-  --accent-glow: rgba(79, 209, 197, 0.16);
+  --border: #2a333f;
+  --border-soft: #1e2530;
+  --border-strong: #38434f;
 
-  --warn: #f2b45e;
-  --danger: #f2778a;
-  --ok: #6fd39a;
+  --text: #e8edf3;
+  --text-dim: #a3aec0;
+  --text-faint: #6b7684;
+  --text-inverse: #0b0e13;
 
+  --accent: #2dd4bf; /* transformative teal */
+  --accent-strong: #14b8a6;
+  --accent-soft: rgba(45, 212, 191, 0.14);
+  --accent-contrast: #04211d;
+  --accent-glow: rgba(45, 212, 191, 0.28);
+
+  --success: #34d399;
+  --warning: #fbbf24;
+  --error: #f87171;
+  --info: #60a5fa;
+  --success-soft: rgba(52, 211, 153, 0.15);
+  --warning-soft: rgba(251, 191, 36, 0.15);
+  --error-soft: rgba(248, 113, 113, 0.15);
+  --info-soft: rgba(96, 165, 250, 0.15);
+
+  /* recall grades map onto semantics */
+  --grade-again: var(--error);
+  --grade-hard: var(--warning);
+  --grade-good: var(--success);
+  --grade-easy: var(--info);
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
   --shadow: 0 10px 30px -12px rgba(0, 0, 0, 0.55);
+  --shadow-lg: 0 24px 60px -24px rgba(0, 0, 0, 0.65);
   --ring: 0 0 0 3px var(--accent-glow);
+
+  --grad-hero: radial-gradient(1200px 520px at 78% -12%, var(--accent-soft), transparent 60%);
+  --grad-accent: linear-gradient(135deg, var(--accent), var(--accent-strong));
+  --heat-0: #171d25;
 }
 
-/* ---- PAPER (light) ---- */
-[data-theme='paper'] {
-  --bg: #f4f2ec;
-  --bg-elev: #fbfaf6;
-  --bg-elev-2: #ffffff;
-  --surface: #fdfcf8;
-  --border: #ddd8cc;
-  --border-soft: #e8e4da;
+/* ===================================================================
+   LIGHT — warm stone/oatmeal, low-glare, 4 elevation surfaces
+   =================================================================== */
+:root[data-theme='light'],
+:root[data-theme='paper'] {
+  color-scheme: light;
 
-  --text: #22262b;
-  --text-dim: #55606c;
-  --text-faint: #8a929c;
+  --bg: #f3f1ea;
+  --bg-2: #eceadf;
+  --surface-1: #faf9f4;
+  --surface-2: #ffffff;
+  --surface-3: #ffffff;
+  --surface-hover: #f1efe6;
 
-  --accent: #0f9e91;
-  --accent-strong: #0b7c72;
+  --border: #e0dccf;
+  --border-soft: #ebe8dd;
+  --border-strong: #cec9b9;
+
+  --text: #22282f;
+  --text-dim: #55606d;
+  --text-faint: #8a94a0;
+  --text-inverse: #faf9f4;
+
+  --accent: #0d9488;
+  --accent-strong: #0f766e;
+  --accent-soft: rgba(13, 148, 136, 0.12);
   --accent-contrast: #ffffff;
-  --accent-glow: rgba(15, 158, 145, 0.16);
+  --accent-glow: rgba(13, 148, 136, 0.22);
 
-  --warn: #b9791f;
-  --danger: #c0455a;
-  --ok: #2f8f5e;
+  --success: #0f9d63;
+  --warning: #b57314;
+  --error: #c93a4f;
+  --info: #2f6fd6;
+  --success-soft: rgba(15, 157, 99, 0.12);
+  --warning-soft: rgba(181, 115, 20, 0.12);
+  --error-soft: rgba(201, 58, 79, 0.12);
+  --info-soft: rgba(47, 111, 214, 0.12);
 
-  --shadow: 0 10px 30px -14px rgba(40, 40, 30, 0.28);
+  --grade-again: var(--error);
+  --grade-hard: var(--warning);
+  --grade-good: var(--success);
+  --grade-easy: var(--info);
+
+  --shadow-sm: 0 1px 2px rgba(60, 55, 40, 0.08);
+  --shadow: 0 10px 30px -16px rgba(60, 55, 40, 0.22);
+  --shadow-lg: 0 24px 60px -28px rgba(60, 55, 40, 0.26);
   --ring: 0 0 0 3px var(--accent-glow);
+
+  --grad-hero: radial-gradient(1200px 520px at 78% -12%, var(--accent-soft), transparent 60%);
+  --grad-accent: linear-gradient(135deg, var(--accent), var(--accent-strong));
+  --heat-0: #e7e3d6;
 }
 
-/* honour the reduced-motion appearance setting and OS preference */
+/* Honour OS preference for the very first paint when no explicit choice is set.
+   (index.html resolves the stored/OS theme pre-paint; this is the CSS fallback.) */
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme]) {
+    color-scheme: light;
+    --bg: #f3f1ea;
+    --bg-2: #eceadf;
+    --surface-1: #faf9f4;
+    --surface-2: #ffffff;
+    --surface-3: #ffffff;
+    --surface-hover: #f1efe6;
+    --border: #e0dccf;
+    --border-soft: #ebe8dd;
+    --border-strong: #cec9b9;
+    --text: #22282f;
+    --text-dim: #55606d;
+    --text-faint: #8a94a0;
+    --text-inverse: #faf9f4;
+    --accent: #0d9488;
+    --accent-strong: #0f766e;
+    --accent-soft: rgba(13, 148, 136, 0.12);
+    --accent-contrast: #ffffff;
+    --accent-glow: rgba(13, 148, 136, 0.22);
+    --success: #0f9d63;
+    --warning: #b57314;
+    --error: #c93a4f;
+    --info: #2f6fd6;
+    --heat-0: #e7e3d6;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   :root {
-    --transition: 0ms;
+    --dur-fast: 0ms;
+    --dur: 0ms;
+    --dur-slow: 0ms;
   }
+}
+
+/* explicit user opt-in (Settings › Reduce motion) */
+:root.reduce-motion {
+  --dur-fast: 0ms;
+  --dur: 0ms;
+  --dur-slow: 0ms;
+}
+:root.reduce-motion *,
+:root.reduce-motion *::before,
+:root.reduce-motion *::after {
+  animation-duration: 0.001ms !important;
+  transition-duration: 0.001ms !important;
+}
+
+/* compact density */
+:root.density-compact {
+  --sp-4: 12px;
+  --sp-5: 18px;
+  --sp-6: 24px;
+}
+:root.density-compact .card {
+  padding: var(--sp-4);
 }

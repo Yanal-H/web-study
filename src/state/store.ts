@@ -272,3 +272,36 @@ export function reloadState(): AppState {
   state = load();
   return state;
 }
+
+/* ---- REACTIVE LAYER (React subscription over the mutable state) ----
+   Pages mutate `state` directly, then call commit() to persist and notify.
+   A monotonic version number is the external-store snapshot. */
+const listeners = new Set<() => void>();
+let version = 0;
+
+export function subscribe(cb: () => void): () => void {
+  listeners.add(cb);
+  return () => listeners.delete(cb);
+}
+
+export function getVersion(): number {
+  return version;
+}
+
+/** Bump the version and notify subscribers WITHOUT persisting (transient UI state). */
+export function notify() {
+  version++;
+  listeners.forEach((l) => l());
+}
+
+/** Persist (debounced) AND notify subscribers. The normal "I changed data" call. */
+export function commit() {
+  save();
+  notify();
+}
+
+/** Convenience: mutate then commit in one call. */
+export function update(fn: (s: AppState) => void) {
+  fn(state);
+  commit();
+}

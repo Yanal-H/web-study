@@ -8,7 +8,7 @@
  * Hashed asset filenames make cache-first safe: a new build ships new URLs, so stale
  * assets are never served for changed code. Bump CACHE_VERSION to force a full refresh.
  */
-const CACHE_VERSION = 'foundation-v1';
+const CACHE_VERSION = 'foundation-v2';
 const SHELL_URL = '/index.html';
 
 self.addEventListener('install', (event) => {

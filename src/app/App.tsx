@@ -1,15 +1,22 @@
-import { Suspense, useEffect, useState } from 'react';
-import { NavLink, Route, Routes, useLocation } from 'react-router-dom';
+import { Suspense, useEffect, useMemo, useState } from 'react';
+import { NavLink, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import { ROUTES, prefetchRoutes } from './routes';
 import Watermark from '../features/gate/Watermark';
+import { ToastProvider } from '../design/Toast';
+import { CommandPalette } from '../design/CommandPalette';
+import type { Command } from '../design/CommandPalette';
+import { Dialog } from '../design/Dialog';
+import { NAV_ICONS, IconMenu, IconSun, IconMoon, IconCommand } from '../design/icons';
+import { useStore } from '../state/useStore';
+import { toggleTheme, isDark, applyTheme } from '../state/theme';
 
-function BrandMark() {
+function BrandMark({ size = 40 }: { size?: number }) {
   return (
-    <div className="mark">
+    <div className="mark" style={{ width: size, height: size }}>
       <svg
         viewBox="0 0 24 24"
-        width="22"
-        height="22"
+        width={size * 0.55}
+        height={size * 0.55}
         fill="none"
         stroke="var(--accent-contrast)"
         strokeWidth="2.4"
@@ -23,12 +30,29 @@ function BrandMark() {
   );
 }
 
-export default function App() {
-  const [navOpen, setNavOpen] = useState(false);
-  const location = useLocation();
+const PRIMARY = ['', 'study', 'subjects', 'flashcards', 'qbank'];
+const TOOLS = ['planner', 'notes', 'calculators', 'mnemonics', 'resources'];
 
-  // After first paint, warm every route chunk so the service worker caches the
-  // whole app and offline navigation works to any view after a single visit.
+export default function App() {
+  return (
+    <ToastProvider>
+      <Shell />
+    </ToastProvider>
+  );
+}
+
+function Shell() {
+  const [navOpen, setNavOpen] = useState(false);
+  const [cmdOpen, setCmdOpen] = useState(false);
+  const [helpOpen, setHelpOpen] = useState(false);
+  const location = useLocation();
+  const navigate = useNavigate();
+  const state = useStore();
+
+  useEffect(() => {
+    applyTheme();
+  }, [state.theme]);
+
   useEffect(() => {
     const win = window as unknown as { requestIdleCallback?: (cb: () => void) => void };
     const run = () => prefetchRoutes();
@@ -36,17 +60,80 @@ export default function App() {
     else setTimeout(run, 1200);
   }, []);
 
+  // global keyboard shortcuts
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      const target = e.target as HTMLElement;
+      const typing = /^(INPUT|TEXTAREA|SELECT)$/.test(target.tagName) || target.isContentEditable;
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        setCmdOpen((v) => !v);
+      } else if (!typing && e.key === '?') {
+        e.preventDefault();
+        setHelpOpen((v) => !v);
+      }
+    };
+    document.addEventListener('keydown', onKey);
+    return () => document.removeEventListener('keydown', onKey);
+  }, []);
+
+  const commands = useMemo<Command[]>(() => {
+    const dark = state.theme !== 'paper';
+    const navCmds: Command[] = ROUTES.map((r) => {
+      const Icon = NAV_ICONS[r.path];
+      return {
+        id: 'nav-' + (r.path || 'dashboard'),
+        label: 'Go to ' + r.label,
+        hint: 'Page',
+        icon: Icon ? <Icon size={16} /> : undefined,
+        run: () => navigate('/' + r.path),
+      };
+    });
+    return [
+      ...navCmds,
+      {
+        id: 'toggle-theme',
+        label: dark ? 'Switch to light theme' : 'Switch to dark theme',
+        hint: 'Theme',
+        icon: dark ? <IconSun size={16} /> : <IconMoon size={16} />,
+        run: () => toggleTheme(),
+      },
+      {
+        id: 'shortcuts',
+        label: 'Keyboard shortcuts',
+        hint: '?',
+        icon: <IconCommand size={16} />,
+        run: () => setHelpOpen(true),
+      },
+    ];
+  }, [navigate, state.theme]);
+
+  const NavList = () => (
+    <>
+      <div className="nav-group-label">Learn</div>
+      {ROUTES.filter((r) => PRIMARY.includes(r.path)).map((r) => (
+        <NavItem key={r.path} path={r.path} label={r.label} onGo={() => setNavOpen(false)} />
+      ))}
+      <div className="nav-group-label">Tools</div>
+      {ROUTES.filter((r) => TOOLS.includes(r.path)).map((r) => (
+        <NavItem key={r.path} path={r.path} label={r.label} onGo={() => setNavOpen(false)} />
+      ))}
+      <div className="nav-group-label">System</div>
+      {ROUTES.filter((r) => r.path === 'settings').map((r) => (
+        <NavItem key={r.path} path={r.path} label={r.label} onGo={() => setNavOpen(false)} />
+      ))}
+    </>
+  );
+
   return (
     <>
       <div className="topbar">
         <div className="brand">
-          <BrandMark />
-          <div className="name" style={{ fontFamily: 'var(--font-display)', fontWeight: 700 }}>
-            Yanal
-          </div>
+          <BrandMark size={32} />
+          <div className="name">Yanal</div>
         </div>
         <button className="menu-btn" type="button" onClick={() => setNavOpen(true)}>
-          Menu
+          <IconMenu size={18} /> Menu
         </button>
       </div>
 
@@ -65,29 +152,36 @@ export default function App() {
             </div>
           </div>
 
-          <nav>
-            {ROUTES.map((r) => (
-              <NavLink
-                key={r.path}
-                to={'/' + r.path}
-                end={r.path === ''}
-                className={({ isActive }) => 'navitem' + (isActive ? ' active' : '')}
-                onClick={() => setNavOpen(false)}
-              >
-                <span className="dot" />
-                {r.label}
-              </NavLink>
-            ))}
+          <nav aria-label="Primary">
+            <NavList />
           </nav>
 
-          <div className="sidebar-foot">by Yanal · Cairo 2026</div>
+          <button
+            className="btn btn--ghost btn--sm"
+            style={{ margin: 'var(--sp-3) var(--sp-2) 0', justifyContent: 'flex-start', gap: 10 }}
+            onClick={() => setCmdOpen(true)}
+          >
+            <IconCommand size={16} /> Command
+            <span style={{ marginLeft: 'auto', fontSize: 11, color: 'var(--text-faint)' }}>⌘K</span>
+          </button>
+          <button
+            className="btn btn--ghost btn--sm"
+            style={{ margin: '2px var(--sp-2) 0', justifyContent: 'flex-start', gap: 10 }}
+            onClick={() => toggleTheme()}
+            aria-label="Toggle theme"
+          >
+            {isDark() ? <IconSun size={16} /> : <IconMoon size={16} />}
+            {isDark() ? 'Light theme' : 'Dark theme'}
+          </button>
+
+          <div className="sidebar-foot">
+            <span className="sig">Yanal</span>
+            by Yanal · Cairo 2026
+          </div>
         </aside>
 
         <main className="main">
-          <Suspense
-            fallback={<div className="route-fallback">Loading…</div>}
-            key={location.pathname}
-          >
+          <Suspense fallback={<div className="route-fallback">Loading…</div>} key={location.pathname}>
             <Routes>
               {ROUTES.map((r) => (
                 <Route key={r.path} path={r.path} element={<r.Component />} />
@@ -99,7 +193,49 @@ export default function App() {
       </div>
 
       <Watermark />
+
+      {cmdOpen && <CommandPalette commands={commands} onClose={() => setCmdOpen(false)} />}
+      {helpOpen && <ShortcutsHelp onClose={() => setHelpOpen(false)} />}
     </>
+  );
+}
+
+function NavItem({ path, label, onGo }: { path: string; label: string; onGo: () => void }) {
+  const Icon = NAV_ICONS[path];
+  return (
+    <NavLink
+      to={'/' + path}
+      end={path === ''}
+      className={({ isActive }) => 'navitem' + (isActive ? ' active' : '')}
+      onClick={onGo}
+    >
+      {Icon && <Icon className="nav-ico" size={18} />}
+      {label}
+    </NavLink>
+  );
+}
+
+function ShortcutsHelp({ onClose }: { onClose: () => void }) {
+  const rows: Array<[string, string]> = [
+    ['⌘K / Ctrl+K', 'Open the command palette'],
+    ['?', 'Show this help'],
+    ['↑ ↓', 'Move within the palette'],
+    ['↵', 'Run the selected command'],
+    ['esc', 'Close any overlay'],
+  ];
+  return (
+    <Dialog title="Keyboard shortcuts" onClose={onClose}>
+      <div style={{ display: 'grid', gap: 10 }}>
+        {rows.map(([k, d]) => (
+          <div key={k} className="row spread">
+            <span className="muted" style={{ fontSize: 14 }}>
+              {d}
+            </span>
+            <kbd>{k}</kbd>
+          </div>
+        ))}
+      </div>
+    </Dialog>
   );
 }
 

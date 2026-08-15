@@ -1,60 +1,267 @@
-import { state } from '../../state/store';
-import { SCHEMA_VERSION } from '../../state/constants';
+import { useNavigate } from 'react-router-dom';
+import { useStore } from '../../state/useStore';
+import { markActivity, commit } from '../../state/store';
+import { Card, Stat, Badge, ProgressRing, Button, EmptyState } from '../../design/primitives';
+import { IconFlame, IconTarget, IconFlashcards, IconQbank, IconStudy, IconCheck } from '../../design/icons';
+import {
+  computeStreak,
+  heatmapWeeks,
+  heatLevel,
+  dueCounts,
+  forecast,
+  weakMcqs,
+  todayProgress,
+} from '../../lib/stats';
 
-/**
- * Phase 0 dashboard. Deliberately reads the live, migrated state so the acceptance
- * gate can eyeball that existing data loaded without loss (counts reflect whatever
- * was in localStorage under foundation_med_study_v1).
- */
+const WEEKDAYS = ['', 'Mon', '', 'Wed', '', 'Fri', ''];
+
 export default function DashboardView() {
-  const mcqPerfCount = Object.keys(state.study?.mcqPerf ?? {}).length;
-  const stats: Array<[string, number | string]> = [
-    ['Schema version', state.schemaVersion],
-    ['Subjects', state.subjects?.length ?? 0],
-    ['Flashcards', state.flashcards?.length ?? 0],
-    ['Tasks', state.tasks?.length ?? 0],
-    ['MCQ perf records', mcqPerfCount],
-    ['Notes', Object.keys(state.notes ?? {}).length],
-    ['Active days', Object.keys(state.activity ?? {}).length],
-    ['Theme', state.theme],
-  ];
+  const state = useStore();
+  const navigate = useNavigate();
+
+  const streak = computeStreak(state.activity);
+  const weeks = heatmapWeeks(state.activity, 17);
+  const due = dueCounts(state.flashcards);
+  const fc = forecast(state.flashcards, 14);
+  const weak = weakMcqs(state.study.mcqPerf);
+  const goal = todayProgress(state);
+  const maxFc = Math.max(1, ...fc);
+  const totalActive = Object.keys(state.activity).length;
+
+  const hour = new Date().getHours();
+  const greet = hour < 12 ? 'Good morning' : hour < 18 ? 'Good afternoon' : 'Good evening';
+
+  // Next best action — a single, decisive recommendation.
+  const nextAction = (() => {
+    if (due.due > 0)
+      return {
+        text: `${due.due} card${due.due > 1 ? 's' : ''} due for review`,
+        cta: 'Review now',
+        go: '/flashcards',
+        icon: <IconFlashcards size={18} />,
+      };
+    if (weak.length > 0)
+      return {
+        text: `${weak.length} weak question${weak.length > 1 ? 's' : ''} to shore up`,
+        cta: 'Practise weak spots',
+        go: '/qbank',
+        icon: <IconQbank size={18} />,
+      };
+    if (due.neu > 0)
+      return {
+        text: `${due.neu} new card${due.neu > 1 ? 's' : ''} waiting to be learned`,
+        cta: 'Start learning',
+        go: '/flashcards',
+        icon: <IconStudy size={18} />,
+      };
+    return {
+      text: 'You are all caught up. Explore a chapter or add new material.',
+      cta: 'Open Study',
+      go: '/study',
+      icon: <IconStudy size={18} />,
+    };
+  })();
 
   return (
     <>
-      <header className="page-head">
-        <h1>Dashboard</h1>
-        <div className="sub">Your study state loaded and migrated to schema v{SCHEMA_VERSION}.</div>
-      </header>
+      <section className="hero">
+        <div className="hero-sig">Yanal</div>
+        <h1>{greet}.</h1>
+        <p className="hero-sub">
+          Your offline study desk — spaced-repetition recall, a question bank, notes and planning,
+          all in one place. Pick up where the schedule left you.
+        </p>
+        <div className="hero-actions">
+          <Button variant="primary" onClick={() => navigate(nextAction.go)}>
+            {nextAction.icon} {nextAction.cta}
+          </Button>
+          <Button onClick={() => navigate('/study')}>
+            <IconStudy size={18} /> Browse study
+          </Button>
+        </div>
+      </section>
 
-      <div className="card">
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fill, minmax(150px, 1fr))',
-            gap: 14,
-          }}
-        >
-          {stats.map(([label, value]) => (
+      {/* At-a-glance */}
+      <div className="stat-row">
+        <div className="stat">
+          <div className="stat-label">Current streak</div>
+          <div className="stat-value" style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+            <IconFlame size={22} style={{ color: streak > 0 ? 'var(--warning)' : 'var(--text-faint)' }} />
+            {streak}
+            <span className="unit">days</span>
+          </div>
+        </div>
+        <Stat label="Cards due" value={due.due} />
+        <Stat label="New cards" value={due.neu} />
+        <Stat label="Active days" value={totalActive} />
+      </div>
+
+      <div className="cols cols-2" style={{ marginTop: 'var(--sp-4)' }}>
+        {/* Next best action */}
+        <Card>
+          <div className="card-eyebrow">Next best action</div>
+          <div className="row" style={{ gap: 14, alignItems: 'flex-start' }}>
             <div
-              key={label}
               style={{
-                border: '1px solid var(--border)',
-                borderRadius: 'var(--radius-sm)',
-                padding: '14px 16px',
-                background: 'var(--bg-elev)',
+                width: 42,
+                height: 42,
+                borderRadius: 12,
+                display: 'grid',
+                placeItems: 'center',
+                background: 'var(--accent-soft)',
+                color: 'var(--accent)',
+                flex: '0 0 auto',
               }}
             >
-              <div style={{ fontSize: 12, color: 'var(--text-faint)', letterSpacing: '0.03em' }}>
-                {label}
-              </div>
-              <div style={{ fontSize: 24, fontWeight: 700, marginTop: 4 }}>{value}</div>
+              {nextAction.icon}
             </div>
-          ))}
+            <div style={{ flex: 1 }}>
+              <div style={{ fontSize: 15, fontWeight: 500 }}>{nextAction.text}</div>
+              <Button
+                variant="primary"
+                size="sm"
+                style={{ marginTop: 12 }}
+                onClick={() => navigate(nextAction.go)}
+              >
+                {nextAction.cta}
+              </Button>
+            </div>
+          </div>
+        </Card>
+
+        {/* Daily goal ring */}
+        <Card>
+          <div className="card-eyebrow">Today&rsquo;s goal</div>
+          <div className="row" style={{ gap: 18 }}>
+            <ProgressRing
+              value={goal.ratio}
+              label={`${Math.round(goal.ratio * 100)}%`}
+              size={92}
+            />
+            <div>
+              <div style={{ fontSize: 15, fontWeight: 500 }}>
+                {goal.done} / {goal.goal} reviews
+              </div>
+              <div className="muted" style={{ fontSize: 13, marginTop: 4 }}>
+                <IconTarget size={14} style={{ verticalAlign: -2, marginRight: 4 }} />
+                {goal.ratio >= 1 ? 'Goal met — nicely done.' : 'Keep the streak alive.'}
+              </div>
+              <Button
+                size="sm"
+                style={{ marginTop: 12 }}
+                onClick={() => {
+                  markActivity();
+                  commit();
+                }}
+              >
+                <IconCheck size={15} /> Log a review
+              </Button>
+            </div>
+          </div>
+        </Card>
+      </div>
+
+      {/* Heatmap */}
+      <section className="section">
+        <div className="section-head">
+          <h2>Activity</h2>
+          <span className="see">{totalActive} active days recorded</span>
         </div>
-        <div className="stub-note">
-          These figures are read straight from the ported state layer — proof that data under{' '}
-          <code>foundation_med_study_v1</code> survives the v1→v6 migration chain intact.
-        </div>
+        <Card>
+          <div className="row" style={{ alignItems: 'flex-start', gap: 8 }}>
+            <div
+              style={{
+                display: 'grid',
+                gridTemplateRows: 'repeat(7, 13px)',
+                gap: 3,
+                marginRight: 2,
+                fontSize: 9.5,
+                color: 'var(--text-faint)',
+              }}
+            >
+              {WEEKDAYS.map((d, i) => (
+                <span key={i} style={{ lineHeight: '13px' }}>
+                  {d}
+                </span>
+              ))}
+            </div>
+            <div className="heatmap">
+              {weeks.map((col, ci) => (
+                <div className="heat-col" key={ci}>
+                  {col.map((cell) => (
+                    <div
+                      key={cell.key}
+                      className={`heat-cell heat-${heatLevel(cell.count)}`}
+                      title={`${cell.key}: ${cell.count} review${cell.count === 1 ? '' : 's'}`}
+                    />
+                  ))}
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="heat-legend">
+            Less
+            <span className="heat-cell heat-0" />
+            <span className="heat-cell heat-1" />
+            <span className="heat-cell heat-2" />
+            <span className="heat-cell heat-3" />
+            <span className="heat-cell heat-4" />
+            More
+          </div>
+        </Card>
+      </section>
+
+      {/* Forecast + weak spots */}
+      <div className="cols cols-2" style={{ marginTop: 'var(--sp-5)' }}>
+        <Card>
+          <div className="card-eyebrow">14-day forecast</div>
+          <p className="muted" style={{ fontSize: 13, marginTop: -2 }}>
+            Reviews coming due, by day.
+          </p>
+          {due.total === 0 ? (
+            <div className="muted" style={{ fontSize: 13, padding: '18px 0' }}>
+              No scheduled cards yet — your forecast fills in as you build a deck.
+            </div>
+          ) : (
+            <div className="forecast" style={{ marginTop: 18 }}>
+              {fc.map((n, i) => (
+                <div
+                  key={i}
+                  className={`fbar${i === 0 ? ' today' : ''}`}
+                  style={{ height: `${(n / maxFc) * 100}%` }}
+                  title={`+${i}d: ${n} due`}
+                >
+                  {i % 2 === 0 && <span>{i === 0 ? 'now' : `+${i}`}</span>}
+                </div>
+              ))}
+            </div>
+          )}
+        </Card>
+
+        <Card>
+          <div className="card-eyebrow">Weak spots</div>
+          {weak.length === 0 ? (
+            <EmptyState icon={<IconTarget size={22} />} title="Nothing flagged as weak">
+              Questions you miss repeatedly will surface here for targeted practice.
+            </EmptyState>
+          ) : (
+            <div className="list" style={{ marginTop: 10 }}>
+              {weak.map((w) => (
+                <div className="list-row" key={w.qid}>
+                  <div className="lr-main">
+                    <div className="lr-title mono" style={{ fontSize: 13 }}>
+                      {w.qid}
+                    </div>
+                    <div className="lr-sub">
+                      {w.attempts} attempts · {Math.round(w.accuracy * 100)}% correct
+                    </div>
+                  </div>
+                  <Badge tone="error">weak</Badge>
+                </div>
+              ))}
+            </div>
+          )}
+        </Card>
       </div>
     </>
   );
