@@ -1,67 +1,103 @@
 # Foundation · Med School Toolkit
 
-An offline-first study website — flashcards, a question bank, notes, planner and
-more. **by Yanal · Cairo 2026.**
+An offline-first study website — a textbook **Reader**, **Recall-grade flashcards**
+(with image occlusion), a **quiz-template-grade Q-Bank** (MCQ + EMQ), notes,
+planner, calculators and more. **by Yanal · Cairo 2026.**
 
-This repository is mid-migration from a single-file HTML app to a multi-file,
-offline-capable Vite + React + TypeScript site.
+Multi-file **Vite + React + TypeScript** static site, deployed on Vercel. Fully
+offline after first load, self-hosted fonts, no runtime third-party requests.
 
-- **Phase 0** (scaffold) — complete: builds, lossless state port, offline shell.
-- **Phase 1** (design system + all-pages UI) — complete: a new token system
-  (retired the old aurora palette), self-hosted fonts, a primitive library, a
-  ⌘K command palette, and functional re-skinned pages (Dashboard, Subjects,
-  Planner, Notes, Calculators, Mnemonics, Resources, Settings) in light and dark.
-  The Study, Flashcards and Q-Bank engines are intentionally still placeholders —
-  they are built in Phases 3–4.
+> **Honest caveat:** a static site is downloadable, so the built-in passphrase gate
+> is only a **deterrent**. Real access control needs Vercel Password Protection or
+> SSO (see _Deploying_ below).
 
 ## Commands
 
 ```bash
-npm install        # install dependencies
-npm run dev        # local dev server (http://localhost:5173)
-npm run build      # tsc --noEmit && vite build  → dist/
-npm run preview    # serve the production build (http://localhost:4173)
-npm run typecheck  # tsc --noEmit
-npm run lint       # eslint
-npm test           # vitest (migration + smoke tests)
-npm run validate:content  # JSON content integrity (no content yet in Phase 0)
+npm install
+npm run dev              # dev server (http://localhost:5173)
+npm run build            # validate content → tsc → vite build → dist/
+npm run preview          # serve the production build (http://localhost:4173)
+npm run typecheck        # tsc --noEmit
+npm run lint             # eslint
+npm test                 # vitest (scheduler, engines, schema, search, migrations…)
+npm run validate:content # validate every content/**/*.json against the Zod schema
+npm run make:schema      # emit content/_schema/chapter.schema.json + template.json
 ```
 
-## What Phase 0 delivers
+`prebuild` runs `validate:content`, so an invalid chapter JSON **fails the build**.
 
-- **Vite + React + TypeScript** project, `tsc --noEmit` clean, ESLint clean.
-- **App shell + router** with a lazy-loaded route (own chunk) for every view:
-  Dashboard, Study, Subjects, Flashcards, Question Bank, Planner, Notes,
-  Calculators, Mnemonics, Resources, Settings.
-- **State layer ported verbatim** (`src/state/`): same localStorage keys
-  (`foundation_med_study_v1`, `foundation_theme`), the full v1→v5 migration chain
-  untouched, plus one additive **reserved v6** step (no-op). Existing data loads
-  with zero loss — proven by `src/state/store.test.ts`.
-- **Passphrase gate** (flash-free pre-paint, session-only) and a **per-buyer
-  watermark seal** (signature + install id). The gate is a soft deterrent, not
-  real security — real gating belongs at the host (Vercel password / SSO).
-- **Offline**: a lean service worker (`public/sw.js`) caches the app shell and,
-  after first paint, every route chunk is warmed so the whole app works offline.
-  **Zero runtime third-party/network fetches** — system font stacks in Phase 0
-  (the Great Vibes signature woff2 lands in a later phase).
+## Architecture
+
+- **State** (`src/state/`) — a single localStorage blob (`foundation_med_study_v1`)
+  with a versioned, additive, lossless migration chain (v1 → v7). Never resets;
+  corrupt data is backed up, not destroyed. A tiny reactive layer (`useStore`,
+  `commit`) drives React re-renders.
+- **Content** (`src/content/`, `content/`) — chapters authored as JSON, validated
+  by one canonical **Zod schema** at build time and at runtime import. Loaded via
+  `import.meta.glob` (inlined, offline). See _Adding content_.
+- **Design** (`src/design/`) — token system (elevated tinted neutrals + one teal
+  accent, light/dark parity), primitives, ⌘K command palette, self-hosted fonts.
+- **Features** (`src/features/`) — dashboard, study (Library + Reader), flashcards
+  (SM-2+ engine, occlusion, Anki TSV/CSV), qbank (MCQ/EMQ engine), planner, notes,
+  calculators, mnemonics, resources, settings.
+- **Offline** — a lean service worker (`public/sw.js`) caches the shell and, after
+  first paint, every route chunk (incl. the content bundle) is warmed. Personal
+  imports live in localStorage, so they are available offline and survive redeploys.
+
+## Adding content
+
+**Build-time (shipped).** Drop a file at `content/<subject>/<chapter>.json`. On the
+next build it appears in the site — Reader sections, flashcards, and questions —
+**with no code changes**. Author against the emitted contract:
+
+```bash
+npm run make:schema     # writes content/_schema/chapter.schema.json + template.json
+```
+
+Point your editor's JSON Schema at `chapter.schema.json`, or copy `template.json`
+(it has inline field docs) and fill it in. A chapter carries `sections[]`
+(summarised digests, `highYield`, `tables`, `figures`), `cards[]`
+(`foundation.card/v2`: basic / reversed / cloze / type / image / occlusion),
+`mcqs[]` (`foundation.mcq/v2`: per-option rationale, ordered explanation,
+`keyFacts`, `teachingPoint`, difficulty, optional figure) and `emqs[]`
+(`foundation.emq/v1`: shared option bank + stems). Figures require `alt` text.
+
+**Runtime (personal).** In the app: **Study → Import chapter** (paste or file). The
+same Zod schema validates it in the browser — all-or-nothing — and stores it under
+a **separate** namespaced key (`foundation_user_content_v1`), so a redeploy never
+clobbers personal imports.
+
+## How migrations work
+
+`SCHEMA_VERSION` (currently 7) versions the state blob. `runMigrations` is additive:
+it only fills missing keys and upgrades shapes, never removing user data. Each load
+runs the full chain, so data from the original single-file app (v1) upgrades to the
+current shape with zero loss; a written round-trip re-reads identically. Content
+cards are scheduled in `study.cardSched` (v7) **without** touching the user's own
+`flashcards` (their SM-2 fields are preserved exactly).
 
 ## Deploying to Vercel
 
-The project is configured for a zero-config Vercel deploy (`vercel.json`):
+Zero-config via `vercel.json`: build `npm run build`, output `dist/`, SPA rewrites,
+`Cache-Control: no-cache` on `index.html`/`sw.js`, and immutable long-cache on
+hashed `/assets/*`. Import the repo in Vercel and point production at the branch.
 
-- Build command: `npm run build`, output: `dist/`.
-- SPA rewrites to `/index.html` (except `/assets`, `/sw.js`).
-- `Cache-Control: no-cache` on `index.html` and `sw.js`; long, immutable cache on
-  hashed `/assets/*`.
+For **real** access control (not just the passphrase deterrent), enable **Vercel
+Password Protection** or **SSO** in the project's Deployment Protection settings.
 
-To deploy: in the Vercel dashboard, import this repo and (once ready) point the
-production deployment at the appropriate branch. Vercel installs, runs
-`npm run build`, and serves `dist/`.
+## Offline & updates
 
-## Legacy / reference files (kept during migration)
+After the first online visit the app boots and navigates fully offline, including
+shipped chapters and any personally-imported chapter. On a redeploy, `index.html`
+is served `no-cache` so the new shell loads; a `vite:preloadError` guard reloads
+once if a lazy chunk hash changed. Open sessions and personal imports are never
+lost across a redeploy.
 
-- `Foundation__Med_School_Toolkit-8.html` — the shipped single-file app and the
-  source of truth for the ported state/migration layer and content.
-- `Foundation__Med_School_Toolkit.html`, `Recall__Flashcards.html` — earlier
-  prototypes.
-- `study-hub/` — a separate multi-user server experiment (not part of this site).
+## Reference / legacy files (kept during migration)
+
+- `Foundation__Med_School_Toolkit-8.html` — the shipped single-file app; source of
+  truth for the ported state/migration layer, scheduler, MCQ engine, and the
+  migrated Surgery ch.1 content.
+- `Recall__Flashcards.html`, earlier prototypes, and `study-hub/` (a separate
+  multi-user server experiment) are not part of this site.

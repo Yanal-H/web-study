@@ -1,4 +1,4 @@
-import { useMemo, useRef, useState } from 'react';
+import { lazy, Suspense, useMemo, useRef, useState } from 'react';
 import { useStore } from '../../state/useStore';
 import { Card, Button, Stat, Segmented } from '../../design/primitives';
 import { Dialog } from '../../design/Dialog';
@@ -9,10 +9,12 @@ import { allCards } from '../../content/loader';
 import { useUserContentVersion } from '../../content/userContent';
 import { collectItems, buildQueue, queueStats, type ReviewItem } from './deck';
 import ReviewSession from './ReviewSession';
-import { OcclusionEditor } from './Occlusion';
-import CardBrowser from './CardBrowser';
 import { exportTSV, parseDelimited, importCards } from './anki';
 import { makeUserCard } from './makeCard';
+
+// Heavy, occasionally-used views load on demand (Phase 6 perf).
+const OcclusionEditor = lazy(() => import('./OcclusionEditor').then((m) => ({ default: m.OcclusionEditor })));
+const CardBrowser = lazy(() => import('./CardBrowser'));
 
 type Mode = 'home' | 'review' | 'browse' | 'occlusion';
 
@@ -53,7 +55,12 @@ export default function FlashcardsView() {
       </div>
     );
   }
-  if (mode === 'browse') return <CardBrowser onBack={() => setMode('home')} />;
+  if (mode === 'browse')
+    return (
+      <Suspense fallback={<div className="route-fallback">Loading…</div>}>
+        <CardBrowser onBack={() => setMode('home')} />
+      </Suspense>
+    );
   if (mode === 'occlusion') {
     return (
       <>
@@ -62,7 +69,9 @@ export default function FlashcardsView() {
           <div className="sub">Draw boxes over a diagram — each region becomes a card.</div>
         </header>
         <Card>
-          <OcclusionEditor onDone={() => setMode('home')} />
+          <Suspense fallback={<div className="route-fallback">Loading…</div>}>
+            <OcclusionEditor onDone={() => setMode('home')} />
+          </Suspense>
         </Card>
       </>
     );

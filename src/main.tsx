@@ -39,3 +39,15 @@ if ('serviceWorker' in navigator && import.meta.env.PROD) {
     });
   });
 }
+
+// Stale-chunk recovery: after a redeploy, a lazy import may 404 because its hashed
+// filename changed. Reload ONCE to fetch the fresh shell (index.html is served
+// no-cache), which pulls the new chunk map. A sessionStorage guard prevents loops.
+window.addEventListener('vite:preloadError', (e) => {
+  e.preventDefault();
+  const KEY = 'foundation_reloaded_for_chunk';
+  if (!sessionStorage.getItem(KEY)) {
+    sessionStorage.setItem(KEY, '1');
+    window.location.reload();
+  }
+});
