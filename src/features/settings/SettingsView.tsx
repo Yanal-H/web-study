@@ -3,6 +3,7 @@ import { useStore } from '../../state/useStore';
 import { state as liveState, commit, update, reloadState, Store, runMigrations } from '../../state/store';
 import { LS_KEY } from '../../state/constants';
 import { setTheme, isDark } from '../../state/theme';
+import { getHaki, setHaki, type HakiLevel } from '../../state/haki';
 import { applyFontScale, applyDensity } from './appearance';
 import { Card, Button, Segmented, Input } from '../../design/primitives';
 import { useToast } from '../../design/Toast';
@@ -142,6 +143,18 @@ export default function SettingsView() {
               { value: 'compact', label: 'Compact' },
             ]}
             ariaLabel="Density"
+          />
+        </Row>
+        <Row label="Haki energy" desc="Lightning, embers and impact across the app.">
+          <Segmented
+            value={getHaki()}
+            onChange={(v) => setHaki(v as HakiLevel)}
+            options={[
+              { value: 'full', label: 'Full' },
+              { value: 'calm', label: 'Calm' },
+              { value: 'off', label: 'Off' },
+            ]}
+            ariaLabel="Haki energy"
           />
         </Row>
         <Row label="Reduce motion" desc="Minimise animations.">

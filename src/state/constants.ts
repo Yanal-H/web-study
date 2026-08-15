@@ -67,7 +67,7 @@ export const SETTINGS_DEFAULTS: AppSettings = {
     rapidSeconds: 45,
     examMinPerQ: 1.5,
   },
-  appearance: { theme: null, fontScale: 'M', density: 'comfortable', reducedMotion: false },
+  appearance: { theme: null, fontScale: 'M', density: 'comfortable', reducedMotion: false, haki: 'full' },
   goals: { dailyGoal: 50 },
 };
 

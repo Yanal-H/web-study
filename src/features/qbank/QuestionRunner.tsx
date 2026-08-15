@@ -25,6 +25,7 @@ export default function QuestionRunner({ onExit }: { onExit: () => void }) {
   const [submitted, setSubmitted] = useState(false);
   const [confidence, setConfidence] = useState<number | null>(null);
   const [showResults, setShowResults] = useState(false);
+  const [surge, setSurge] = useState<null | 'ok' | 'no'>(null);
   const [, force] = useState(0);
   const qStart = useRef(Date.now());
   const immediate = session ? session.mode !== 'exam' : true;
@@ -102,6 +103,8 @@ export default function QuestionRunner({ onExit }: { onExit: () => void }) {
     next.answers[q!.id] = { chosen, correct: ok, confidence, timeMs: Date.now() - qStart.current };
     if (immediate) {
       setSubmitted(true);
+      setSurge(ok ? 'ok' : 'no');
+      setTimeout(() => setSurge(null), 620);
       record(next);
     } else {
       // exam: store, advance
@@ -158,7 +161,7 @@ export default function QuestionRunner({ onExit }: { onExit: () => void }) {
       </div>
 
       <div className="qb-layout">
-        <Card className="qb-question">
+        <Card className={`qb-question${surge ? ` surge-${surge}` : ''}`}>
           <div className="row spread" style={{ marginBottom: 10 }}>
             <Badge tone={q.difficulty === 3 ? 'error' : q.difficulty === 2 ? 'warning' : 'success'}>
               Level {q.difficulty}

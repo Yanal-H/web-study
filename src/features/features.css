@@ -698,9 +698,17 @@
   top: 0;
   left: 0;
   height: 3px;
-  background: var(--accent);
+  background: var(--grad-haki);
+  background-size: 200% 100%;
+  box-shadow: 0 0 12px var(--haki-glow), 0 0 4px var(--haki-red);
   z-index: 50;
   transition: width 80ms linear;
+  animation: hakiSweep 2.6s linear infinite;
+}
+:root[data-haki='off'] .reading-progress {
+  background: var(--accent);
+  box-shadow: none;
+  animation: none;
 }
 .reader-focus .reader-toc {
   display: none;
@@ -941,6 +949,110 @@
   padding: var(--sp-7) var(--sp-4);
   max-width: 460px;
   margin: 0 auto;
+}
+
+/* ---- grade impact strike ---- */
+.impact-flash {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+  animation: impactFade 460ms ease forwards;
+}
+.impact-again {
+  background: radial-gradient(120% 90% at 50% 50%, transparent 52%, var(--error) 130%);
+}
+.impact-hard {
+  background: radial-gradient(120% 90% at 50% 50%, transparent 55%, var(--warning) 130%);
+}
+.impact-good {
+  background: radial-gradient(120% 90% at 50% 50%, transparent 55%, var(--success) 130%);
+}
+.impact-easy {
+  background: radial-gradient(120% 90% at 50% 50%, transparent 55%, var(--info) 130%);
+}
+@keyframes impactFade {
+  0% {
+    opacity: 0.85;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+.combo-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-right: 10px;
+  padding: 2px 9px;
+  border-radius: 999px;
+  background: var(--haki-glow);
+  color: #fff;
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 700;
+  box-shadow: 0 0 14px var(--haki-glow);
+  animation: comboPop 320ms var(--ease-spring);
+}
+@keyframes comboPop {
+  from {
+    transform: scale(0.6);
+    opacity: 0;
+  }
+}
+
+/* ---- qbank answer surge ---- */
+.qb-question.surge-ok {
+  animation: surgeOk 620ms ease;
+}
+.qb-question.surge-no {
+  animation: surgeNo 620ms ease;
+}
+@keyframes surgeOk {
+  30% {
+    box-shadow: 0 0 0 2px var(--success), 0 0 46px -6px var(--success);
+  }
+  100% {
+    box-shadow: var(--shadow-sm);
+  }
+}
+@keyframes surgeNo {
+  0%,
+  60% {
+    transform: translateX(0);
+  }
+  15% {
+    transform: translateX(-6px);
+  }
+  30% {
+    transform: translateX(6px);
+  }
+  45% {
+    transform: translateX(-4px);
+  }
+  30%,
+  100% {
+    box-shadow: 0 0 0 2px var(--error), 0 0 40px -8px var(--error);
+  }
+  100% {
+    box-shadow: var(--shadow-sm);
+    transform: translateX(0);
+  }
+}
+
+:root[data-haki='off'] .impact-flash {
+  display: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .impact-flash,
+  .qb-question.surge-ok,
+  .qb-question.surge-no,
+  .combo-chip {
+    animation: none;
+  }
+  .impact-flash {
+    display: none;
+  }
 }
 @media (max-width: 520px) {
   .grade-row {

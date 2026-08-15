@@ -65,19 +65,47 @@
         align-items: center;
         justify-content: center;
         padding: 24px;
+        overflow: hidden;
         background:
-          radial-gradient(1200px 600px at 70% -10%, rgba(45, 212, 191, 0.12), transparent 60%),
-          #0e1217;
+          radial-gradient(40% 55% at 22% 82%, rgba(255, 45, 85, 0.28), transparent 62%),
+          radial-gradient(42% 55% at 82% 18%, rgba(124, 58, 237, 0.28), transparent 64%),
+          radial-gradient(1200px 600px at 50% -10%, rgba(45, 212, 191, 0.06), transparent 60%),
+          #07070c;
         color: #e8edf3;
         font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial,
           sans-serif;
       }
-      html[data-theme='paper'] #gate {
-        background:
-          radial-gradient(1200px 600px at 70% -10%, rgba(13, 148, 136, 0.14), transparent 60%),
-          #f3f1ea;
-        color: #22282f;
+      #gate .gate-bolts {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        mix-blend-mode: screen;
+        opacity: 0.9;
       }
+      #gate .gbolt {
+        stroke: #ffe3ea;
+        stroke-width: 1.4;
+        fill: none;
+        filter: drop-shadow(0 0 6px rgba(255, 45, 85, 0.9));
+        opacity: 0;
+        animation: gbolt 5s infinite;
+      }
+      #gate .gbolt.b2 {
+        animation-delay: 2.4s;
+      }
+      @keyframes gbolt {
+        0%, 100% { opacity: 0; }
+        3% { opacity: 1; }
+        7% { opacity: 0.2; }
+        10% { opacity: 0.9; }
+        14% { opacity: 0; }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        #gate .gbolt { animation: none; opacity: 0.12; }
+      }
+      /* the lock screen stays dark + haki in every theme (a dramatic splash) */
       #gate .gate-card {
         width: 100%;
         max-width: 380px;
@@ -89,24 +117,26 @@
         box-shadow: 0 24px 60px -24px rgba(0, 0, 0, 0.6);
         backdrop-filter: blur(10px);
       }
-      html[data-theme='paper'] #gate .gate-card {
-        background: rgba(255, 255, 255, 0.82);
-        border-color: #ddd8cc;
-      }
+
       #gate .gate-mark {
         width: 46px;
         height: 46px;
         margin: 0 auto 14px;
         border-radius: 13px;
-        background: linear-gradient(140deg, #2dd4bf, #14b8a6);
+        background: linear-gradient(140deg, #ff2d55, #7c3aed);
         display: grid;
         place-items: center;
       }
       #gate .gate-sign {
         font-family: 'Great Vibes', 'Snell Roundhand', 'Segoe Script', cursive;
-        font-size: 40px;
+        font-size: 48px;
         line-height: 1;
         margin-bottom: 4px;
+        background: linear-gradient(135deg, #ff2d55, #7c3aed 60%, #2dd4bf);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        filter: drop-shadow(0 3px 14px rgba(255, 45, 85, 0.45));
       }
       #gate h1 {
         font-size: 19px;
@@ -129,10 +159,7 @@
         outline: none;
         text-align: center;
       }
-      html[data-theme='paper'] #gate input {
-        background: rgba(255, 255, 255, 0.7);
-        border-color: #cec9b9;
-      }
+
       #gate input:focus {
         border-color: #2dd4bf;
         box-shadow: 0 0 0 3px rgba(45, 212, 191, 0.18);
@@ -143,8 +170,8 @@
         padding: 12px 14px;
         border: none;
         border-radius: 11px;
-        background: linear-gradient(140deg, #2dd4bf, #14b8a6);
-        color: #04211d;
+        background: linear-gradient(140deg, #ff2d55, #7c3aed 60%, #2dd4bf);
+        color: #fff;
         font-size: 15px;
         font-weight: 600;
         cursor: pointer;
@@ -185,6 +212,10 @@
   <body>
     <!-- Soft access gate overlay -->
     <div id="gate" role="dialog" aria-modal="true" aria-label="Access">
+      <svg class="gate-bolts" viewBox="0 0 800 600" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+        <path class="gbolt" d="M250 -10 L240 120 L275 150 L235 260 L270 300 L245 460 L280 610" />
+        <path class="gbolt b2" d="M560 -10 L575 110 L540 160 L585 250 L550 320 L590 470 L560 610" />
+      </svg>
       <div class="gate-card" id="gateCard">
         <div class="gate-mark">
           <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="#04211d"

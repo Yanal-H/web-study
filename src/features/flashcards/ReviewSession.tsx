@@ -38,6 +38,8 @@ export default function ReviewSession({
   const undo = useRef<Array<{ item: ReviewItem; prev: CardSched | undefined; idx: number }>>([]);
   const [tally, setTally] = useState({ reviewed: 0, again: 0, hard: 0, good: 0, easy: 0 });
   const [swipeHint, setSwipeHint] = useState<Grade | null>(null);
+  const [impact, setImpact] = useState<{ g: Grade; key: number } | null>(null);
+  const [combo, setCombo] = useState(0);
 
   const done = idx >= queue.length;
   const item = queue[idx];
@@ -51,6 +53,8 @@ export default function ReviewSession({
       persistGrade(item, next);
       undo.current.push({ item, prev, idx });
       setTally((t) => ({ ...t, reviewed: t.reviewed + 1, [g]: (t as any)[g] + 1 }));
+      setImpact({ g, key: Date.now() });
+      setCombo((c) => (g === 'good' || g === 'easy' ? c + 1 : 0));
       setRevealed(false);
       setTyped('');
       setHint(false);
@@ -162,11 +166,13 @@ export default function ReviewSession({
 
   return (
     <div className="review-wrap">
+      {impact && <div key={impact.key} className={`impact-flash impact-${impact.g}`} aria-hidden="true" />}
       <div className="review-top">
         <Button variant="ghost" size="sm" onClick={onExit}>
           Exit
         </Button>
         <div className="review-progress">
+          {combo >= 2 && <span className="combo-chip">⚡ {combo} streak</span>}
           {idx + 1} / {queue.length}
         </div>
         <button

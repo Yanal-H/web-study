@@ -9,6 +9,8 @@ import { Dialog } from '../design/Dialog';
 import { NAV_ICONS, IconMenu, IconSun, IconMoon, IconCommand } from '../design/icons';
 import { useStore } from '../state/useStore';
 import { toggleTheme, isDark, applyTheme } from '../state/theme';
+import { applyHaki } from '../state/haki';
+import HakiField from '../features/effects/HakiField';
 
 function BrandMark({ size = 40 }: { size?: number }) {
   return (
@@ -52,6 +54,10 @@ function Shell() {
   useEffect(() => {
     applyTheme();
   }, [state.theme]);
+
+  useEffect(() => {
+    applyHaki();
+  }, [state.settings?.appearance?.haki]);
 
   useEffect(() => {
     const win = window as unknown as { requestIdleCallback?: (cb: () => void) => void };
@@ -150,6 +156,7 @@ function Shell() {
 
   return (
     <>
+      <HakiField />
       <div className="topbar">
         <div className="brand">
           <BrandMark size={32} />
