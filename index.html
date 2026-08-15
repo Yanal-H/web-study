@@ -7,6 +7,12 @@
 <title>Yanal · Med School Study Toolkit</title>
 <!-- flash-free theme: set data-theme before first paint (next-themes pattern) -->
 <script>(function(){try{var t=localStorage.getItem('foundation_theme');if(!t){t=(window.matchMedia&&matchMedia('(prefers-color-scheme: light)').matches)?'paper':'midnight';}document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
+<!-- SOFT ACCESS GATE (flash-free): decide locked/unlocked before first paint.
+     NOTE: this is a passphrase *deterrent*, not real security — the whole app
+     ships in this file. For true access control, enable Vercel password/SSO
+     protection. To change the passphrase, replace GATE_HASH with the FNV-1a of
+     your phrase: (s=>{let h=2166136261>>>0;for(let i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,16777619)>>>0;}return h>>>0})('yourphrase') -->
+<script>(function(){var GATE_HASH=4235919300;window.__GATE_HASH=GATE_HASH;try{if(localStorage.getItem('foundation_gate_'+GATE_HASH)==='1'){document.documentElement.classList.add('unlocked');return;}}catch(e){}document.documentElement.classList.add('locked');})();</script>
 <!-- Fully offline: no web-font fetches. Typography uses tuned system stacks (see --font-* tokens). -->
 <style>
 /* ============================================================
@@ -526,6 +532,22 @@ tr:last-child td{border-bottom:none}
 [data-density="compact"] .card{padding:13px}
 [data-density="compact"] .set-row{padding:7px 0}
 .reduce-motion *,.reduce-motion *::before,.reduce-motion *::after{animation:none!important;transition:none!important}
+/* soft access gate */
+html.locked .app,html.locked .help-fab{display:none!important}
+.gate-overlay{position:fixed;inset:0;z-index:300;display:none;align-items:center;justify-content:center;padding:24px;background:var(--bg-0)}
+html.locked .gate-overlay{display:flex}
+.gate-card{width:min(400px,92vw);background:var(--surface);border:1px solid var(--line-2);border-radius:var(--r-lg);box-shadow:var(--shadow-lg);padding:30px 26px;text-align:center}
+.gate-mark{width:46px;height:46px;border-radius:13px;margin:0 auto 14px;display:grid;place-items:center;background:var(--grad-brand)}
+.gate-mark svg{width:26px;height:26px}
+.gate-card h1{font-size:1.4rem;margin:0 0 4px}
+.gate-card .gate-sub{font-size:.84rem;color:var(--muted);margin-bottom:18px}
+.gate-card input{width:100%;background:var(--surface-2);border:1px solid var(--line-2);border-radius:10px;padding:11px 13px;font-size:.95rem;color:var(--text);text-align:center;letter-spacing:.02em}
+.gate-card input:focus{outline:2px solid var(--brand);outline-offset:1px;border-color:transparent}
+.gate-card .btn{width:100%;justify-content:center;margin-top:12px}
+.gate-err{display:none;color:var(--danger);font-size:.8rem;margin-top:10px;font-weight:600}
+.gate-foot{margin-top:16px;font-family:var(--font-display);font-style:italic;color:var(--faint);font-size:.8rem}
+@keyframes gshake{10%,90%{transform:translateX(-2px)}20%,80%{transform:translateX(4px)}30%,50%,70%{transform:translateX(-7px)}40%,60%{transform:translateX(7px)}}
+.gate-card.shake{animation:gshake .4s}
 /* review forecast + weak spots */
 .forecast{display:flex;align-items:flex-end;gap:4px;height:110px;padding-top:8px}
 .forecast .fc-bar{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;height:100%;justify-content:flex-end}
@@ -730,6 +752,43 @@ table.reader-table tbody tr:last-child td{border-bottom:none}
     if(mod && k === 'u') return block(e);                                 // View source
     if(mod && e.shiftKey && (k==='i'||k==='j'||k==='c')) return block(e); // devtools/inspect
   }, true);
+})();
+</script>
+<div class="gate-overlay" id="gate">
+  <div class="gate-card" id="gateCard">
+    <div class="gate-mark"><svg viewBox="0 0 24 24" fill="none" stroke="#0b0d17" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></div>
+    <h1>Yanal</h1>
+    <div class="gate-sub">Enter the passphrase to open your study toolkit.</div>
+    <input id="gateInput" type="password" placeholder="Passphrase" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Passphrase">
+    <button class="btn primary" id="gateBtn">Unlock</button>
+    <div class="gate-err" id="gateErr">Incorrect passphrase — try again.</div>
+    <div class="gate-foot">by Yanal · Cairo 2026</div>
+  </div>
+</div>
+<script>
+/* soft access gate — wiring (hash + storage decided pre-paint in <head>) */
+(function(){
+  var GATE_HASH = window.__GATE_HASH;
+  function fnv(s){ var h=2166136261>>>0; for(var i=0;i<s.length;i++){ h^=s.charCodeAt(i); h=Math.imul(h,16777619)>>>0; } return h>>>0; }
+  var gate=document.getElementById('gate'), inp=document.getElementById('gateInput'),
+      btn=document.getElementById('gateBtn'), err=document.getElementById('gateErr'), card=document.getElementById('gateCard');
+  if(!document.documentElement.classList.contains('locked')) return;  // already unlocked this browser
+  function unlock(){
+    var v=(inp.value||'').trim();
+    if(fnv(v)===GATE_HASH){
+      try{ localStorage.setItem('foundation_gate_'+GATE_HASH,'1'); }catch(e){}
+      document.documentElement.classList.remove('locked');
+      document.documentElement.classList.add('unlocked');
+      gate.style.display='none';
+    } else {
+      err.style.display='block'; card.classList.add('shake');
+      setTimeout(function(){ card.classList.remove('shake'); },420);
+      inp.select();
+    }
+  }
+  btn.addEventListener('click', unlock);
+  inp.addEventListener('keydown', function(e){ if(e.key==='Enter'){ e.preventDefault(); unlock(); } });
+  setTimeout(function(){ try{ inp.focus(); }catch(e){} }, 60);
 })();
 </script>
 <div class="bg"></div>
