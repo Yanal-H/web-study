@@ -38,13 +38,26 @@
       motion), goals, plus data export/import, Anki TSV + MCQ JSON export,
       reset-progress and hard-reset with typed confirmation.
    4. MCQ v2: vignette+stem, per-option rationale (right & wrong), ordered
-      explanation beats, key facts, difficulty badges, single/multi/EMQ
-      types, confidence tracking, immediate/end-of-set feedback, flag+note,
-      light Leitner spacing (wrong resurfaces). Wound-healing chapter now
-      carries 95 cards + 46 MCQs (schema-validated, self-checked).
+      explanation beats, key facts, difficulty badges, single/multi types,
+      confidence tracking, immediate/end-of-set feedback, flag+note, light
+      Leitner spacing (wrong resurfaces).
    5. Features: undo last review, 14-day review forecast, weak-spot tag
       analytics, cram mode, printable chapter view, ⌘K search over MCQs,
       keyboard cheat-sheet. British spelling; no emoji; brand preserved.
+
+   ── v8.1 changelog (Phase 1) ─────────────────────────────────
+   1. MCQ engine rebuilt around STABLE question ids and a persisted session
+      model (state.study.mcqSession): frozen question order + per-question
+      option order survive a refresh; source question data is never mutated.
+   2. Unified per-question performance store (state.study.mcqPerf) tracking
+      seen/attempts/correct/incorrect/lastResult/confidence/flagged/nextDue/
+      consecutiveCorrect/mastery — kept separate from the flashcard SM-2+.
+   3. Pool builder supports Practice / Exam / Wrong / Flagged / Weak / Mixed /
+      Rapid fire / Due review modes at the engine level.
+   4. Schema v5 migration folds legacy per-module leitner/flags/notes into the
+      unified store; corrupted data is backed up, never silently reset.
+   5. Question engine is now single- / multi-answer only — one clean code path,
+      no legacy matching-type machinery in data, rendering, state, keys or CSS.
    ────────────────────────────────────────────────────────────── */
 
 /* ══════════════════════════════════════════════════════════════
@@ -65,8 +78,9 @@
       keyFacts/tags, tagged to section. Cover every high-yield fact and
       comparison-table row.
    8. MCQs (foundation.mcq/v2) — ≥45 per chapter, difficulty 1/2/3 (~40/40/20),
-      4–6 options each carrying a per-option `why` (right AND wrong), an
-      ordered `explanation[]`, `keyFacts[]`, a `teachingPoint`, and ≥1 EMQ set.
+      single- or multi-answer, 4–6 options each carrying a per-option `why`
+      (right AND wrong), an ordered `explanation[]`, `keyFacts[]` and a
+      `teachingPoint`, each with a stable `id`.
       Determine every answer independently from medical knowledge, never from
       a source answer key; self-check each option's rationale before baking.
    9. Faithful + safe — no fabricated facts/figures/citations; describe
@@ -693,12 +707,6 @@ table.reader-table tbody tr:last-child td{border-bottom:none}
 .why-row.ww .why-tag{background:color-mix(in srgb,var(--danger) 22%,transparent);color:var(--danger)}
 .mcq-note-wrap{margin-top:12px}
 .mcq-note{font-size:.82rem}
-.emq-bank{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:6px;margin-bottom:14px;padding:12px;background:var(--surface-2);border-radius:10px;border:1px solid var(--line-soft)}
-.emq-bank-item{display:flex;align-items:flex-start;gap:8px;font-size:.82rem;color:var(--text-2)}
-.emq-bank-item .mk{flex:none;width:20px;height:20px;border-radius:6px;display:grid;place-items:center;background:var(--surface-3);font-weight:700;font-size:.72rem;font-family:var(--font-mono)}
-.mcq-substem{font-size:1rem;font-weight:600;margin-bottom:12px}
-.emq-opts{display:grid;grid-template-columns:repeat(auto-fill,minmax(52px,1fr));gap:8px}
-.mcq-opt.sm{justify-content:center;padding:10px;font-weight:700}
 .mcq-review{max-width:720px;margin:14px auto 0}
 .mcq-review-item{border:1px solid var(--line-soft);border-radius:10px;margin-bottom:8px;background:var(--surface-2);overflow:hidden}
 .mcq-review-item summary{cursor:pointer;padding:10px 12px;font-size:.85rem;list-style:none;display:flex;align-items:center;gap:9px}
@@ -1233,7 +1241,7 @@ const SEED_SUBJECTS = [
 /* ---- STORAGE WRAPPER (namespaced, quota-safe) ---- */
 const LS_KEY = 'foundation_med_study_v1';
 const THEME_KEY = 'foundation_theme';
-const SCHEMA_VERSION = 4;
+const SCHEMA_VERSION = 5;
 /* ---- v8 default settings (additive; every tunable lives here) ---- */
 const SCHED_DEFAULTS = {
   algorithm:'sm2plus',            // 'sm2plus' | 'fsrs'
@@ -1280,8 +1288,10 @@ function defaultState(){
     activity: {},            // dateStr -> count (intensity)
     // v3 Study Engine: progress[moduleId] = { sections:{s1:true,…}, mcqScore:{correct,total}, drilledCards:[cardId], lastOpened:'YYYY-MM-DD' }
     // drills = session log: { moduleId, when, correct, total }
-    // v4: study.daily = per-day cap counters; progress[mid].mcqs = per-MCQ leitner state
-    study: { progress: {}, drills: [], daily: { date: todayStr(), newDone: 0, revDone: 0 }, savedFilters: [] },
+    // v4: study.daily = per-day cap counters; progress[mid].mcqs = per-MCQ leitner state (legacy)
+    // v5: mcqPerf[qid] = unified per-question performance; mcqNotes[qid]; mcqSession = active MCQ session
+    study: { progress: {}, drills: [], daily: { date: todayStr(), newDone: 0, revDone: 0 }, savedFilters: [],
+             mcqPerf: {}, mcqNotes: {}, mcqSession: null },
     // v4 settings — every tunable (scheduler / session / mcq / appearance / goals)
     settings: JSON.parse(JSON.stringify(SETTINGS_DEFAULTS))
   };
@@ -1320,6 +1330,24 @@ function runMigrations(s){
     if(c.schema==null) c.schema = 'foundation.card/v2';
     if(!Array.isArray(c.tags)) c.tags = [];
   });
+  // v4 -> v5: unified MCQ performance + notes + active session. Migrate legacy per-module
+  // leitner (progress[mid].mcqs), flags (mcqFlags) and notes (mcqNotes); never destroy them.
+  if(!s.study.mcqPerf || typeof s.study.mcqPerf!=='object') s.study.mcqPerf = {};
+  if(!s.study.mcqNotes || typeof s.study.mcqNotes!=='object') s.study.mcqNotes = {};
+  if(!('mcqSession' in s.study)) s.study.mcqSession = null;
+  const blankPerf=()=>({ seen:0, attempts:0, correct:0, incorrect:0, lastResult:null, lastAnswered:null, confidence:null, flagged:false, nextDue:0, consecutiveCorrect:0, mastery:'new' });
+  for(const mid in s.study.progress){
+    const p=s.study.progress[mid]; if(!p) continue;
+    if(p.mcqs) for(const qid in p.mcqs){ const o=p.mcqs[qid]||{}; const np=s.study.mcqPerf[qid]||blankPerf();
+      np.seen=Math.max(np.seen, o.seen||0); np.attempts=Math.max(np.attempts, o.seen||0);
+      np.correct=Math.max(np.correct, o.correct||0); np.incorrect=Math.max(np.incorrect, (o.seen||0)-(o.correct||0));
+      if(o.lastResult!=null) np.lastResult=o.lastResult; if(o.nextDue) np.nextDue=o.nextDue;
+      np.consecutiveCorrect=Math.max(np.consecutiveCorrect||0, o.box||0);
+      s.study.mcqPerf[qid]=np; }
+    if(p.mcqFlags) for(const qid in p.mcqFlags){ if(p.mcqFlags[qid]){ const np=s.study.mcqPerf[qid]||blankPerf(); np.flagged=true; s.study.mcqPerf[qid]=np; } }
+    if(p.mcqNotes) for(const qid in p.mcqNotes){ if(!s.study.mcqNotes[qid] && p.mcqNotes[qid]) s.study.mcqNotes[qid]=p.mcqNotes[qid]; }
+  }
+  for(const qid in s.study.mcqPerf){ const p=s.study.mcqPerf[qid]; p.mastery = deriveMastery(p); }
   s.schemaVersion = SCHEMA_VERSION;
   return s;
 }
@@ -1339,10 +1367,17 @@ function deepMergeSettings(def, cur){
 }
 let state = load();
 function load(){
-  try{
-    const raw = Store.get(LS_KEY);
-    if(raw){ return runMigrations(JSON.parse(raw)); }
-  }catch(e){ console.warn('Could not load saved data', e); }
+  const raw = Store.get(LS_KEY);
+  if(raw){
+    try{
+      return runMigrations(JSON.parse(raw));
+    }catch(e){
+      // Corrupted or unreadable data — never silently reset. Keep the raw bytes in a
+      // timestamped backup so nothing is destroyed, then start fresh.
+      console.warn('Could not load saved data; backing it up before falling back', e);
+      try{ Store.set(LS_KEY+'__corrupt_'+Date.now(), raw); }catch(_){}
+    }
+  }
   return defaultState();
 }
 let saveTimer = null;
@@ -5317,58 +5352,6 @@ const MODULES = [
       },
       {
         "schema": "foundation.mcq/v2",
-        "id": "sur-ch1-mcq-037",
-        "moduleId": "sur-ch1-wound-healing",
-        "subject": "Surgery",
-        "type": "emq",
-        "highYield": true,
-        "sectionTag": "s5",
-        "difficulty": 2,
-        "stem": "For each clinical requirement, select the single most appropriate suture material.",
-        "optionBank": [
-          "Polypropylene (Prolene)",
-          "Polydioxanone (PDS)",
-          "Stainless steel",
-          "Chromic catgut",
-          "Silk",
-          "Polyglactin (Vicryl)"
-        ],
-        "stems": [
-          {
-            "stem": "A monofilament, inert suture for closing the abdominal wall and repairing a hernia.",
-            "answer": 0,
-            "why": "Prolene is inert monofilament — ideal for abdominal closure and hernia repair."
-          },
-          {
-            "stem": "Closure of a median sternotomy after cardiac surgery.",
-            "answer": 2,
-            "why": "Stainless steel has very high tensile strength and inertness for the sternum."
-          },
-          {
-            "stem": "The slowest-absorbing absorbable suture, for a wound needing prolonged support.",
-            "answer": 1,
-            "why": "PDS is the slowest absorbable, losing ~50% tensile strength at 6 weeks."
-          },
-          {
-            "stem": "A multifilament absorbable suture the book favours for gastrointestinal anastomoses.",
-            "answer": 5,
-            "why": "Vicryl (polyglactin) is a multifilament absorbable used for GI anastomoses."
-          }
-        ],
-        "explanation": [
-          "Match durability and reactivity to the task: inert monofilament (Prolene) for the abdomen, steel for the sternum, PDS for prolonged support, Vicryl for gut."
-        ],
-        "keyFacts": [
-          "Prolene→abdomen; steel→sternum; PDS→slowest; Vicryl→GI."
-        ],
-        "teachingPoint": "Pick the suture by absorption profile and reactivity.",
-        "tags": [
-          "sutures",
-          "emq"
-        ]
-      },
-      {
-        "schema": "foundation.mcq/v2",
         "id": "sur-ch1-mcq-038",
         "moduleId": "sur-ch1-wound-healing",
         "subject": "Surgery",
@@ -6037,6 +6020,13 @@ function buildCommandActions(){
   MODULES.forEach(m=>COMMAND_ACTIONS.push(
     {group:'Study', label:'Study → '+m.source.title, sub:m.subject, icon:ICONS.book, run:()=>openModule(m.id)}
   ));
+  // MCQ modes (mixed / all-chapter scope) — engine-level entry points, no extra UI
+  ['practice','exam','wrong','flagged','weak','rapid','due'].forEach(mode=>COMMAND_ACTIONS.push(
+    {group:'MCQ modes', label:'MCQ → '+MCQ_MODES[mode], sub:'all chapters', icon:ICONS.target, run:()=>{
+      studyState.moduleId=null; setView('study');
+      startMcqSession({ mode:mode, moduleIds:MODULES.map(m=>m.id), m:(MODULES.length===1?MODULES[0]:null), fresh:true });
+    }}
+  ));
   COMMAND_ACTIONS.push(
     {group:'Actions', label:'Open Study library', sub:'', icon:ICONS.book, run:()=>{ studyState.moduleId=null; setView('study'); renderStudyLibrary(); }},
     {group:'Actions', label:'Start review session', sub:'Flashcards', icon:ICONS.target, run:()=>{ setView('flashcards'); startReview(); }},
@@ -6368,25 +6358,30 @@ function finishDrill(){
   renderFlashcards(); renderDashboard();
 }
 
-/* ================= MCQ v2 ENGINE (tutor mode, per-option rationale) =================
-   Consumes foundation.mcq/v2 objects; upgrades legacy flat MCQs on the fly. Supports
-   single / multi / EMQ types, immediate vs end-of-set feedback, confidence tracking,
-   difficulty filtering, and light Leitner spacing (wrong resurfaces, right retires). */
+/* ================= MCQ ENGINE (v8.1 — MCQ-only, stable IDs, session model) =========
+   Single-best-answer and multi-select MCQs only. Every question is addressed by a
+   STABLE id, never by array position. A session (persisted to
+   state.study.mcqSession) freezes the question order and each question's option display
+   order, plus answers/results, so a refresh RESUMES rather than reshuffling. Per-question
+   performance lives in state.study.mcqPerf, kept deliberately separate from the flashcard
+   SM-2+ scheduler. Source question data is never mutated. */
 const DIFF_LABEL={1:'Core',2:'Harder',3:'Exam-killer'};
+const MCQ_MODES={practice:'Practice',exam:'Exam',wrong:'Wrong answers',flagged:'Flagged',weak:'Weak areas',mixed:'Mixed',rapid:'Rapid fire',due:'Due review'};
 function asArr(x){ return Array.isArray(x)?x:(x==null||x===''?[]:[x]); }
-function normalizeMcq(q){
-  if(q._norm) return q;
-  const out=Object.assign({}, q); out._norm=true;
-  out.type=q.type||'single'; out.difficulty=q.difficulty||1;
+
+/* ---- normalisation + stable index (built once; source arrays never mutated) ---- */
+function normalizeMcq(q, m){
+  const out=Object.assign({}, q);
+  out.type = (q.type==='multi') ? 'multi' : 'single';           // only two question types
+  out.difficulty=q.difficulty||1;
   out.stem=q.stem||''; out.vignette=q.vignette||'';
   out.keyFacts=asArr(q.keyFacts); out.explanation=asArr(q.explanation);
   out.distractors=asArr(q.distractors); out.teachingPoint=q.teachingPoint||'';
-  out.tags=q.tags||[]; out.sectionTag=q.sectionTag||q.tag||null;
-  out.id=q.id||('mcq-'+slug(out.stem).slice(0,34));
-  if(out.type==='emq'){
-    out.optionBank=q.optionBank||[]; out.stems=(q.stems||[]).map(st=>Object.assign({},st));
-    return out;
-  }
+  out.tags=(q.tags||[]).slice();
+  out.sectionTag=q.sectionTag||q.tag||null;
+  out.moduleId=q.moduleId||(m&&m.id)||null;
+  out.subject=q.subject||(m&&m.subject)||null;
+  out.id=q.id||('mcq-'+(out.moduleId?out.moduleId+'-':'')+slug(out.stem).slice(0,34));
   if(q.options && q.options.length && typeof q.options[0]==='string'){
     out.options=q.options.map((t,i)=>({text:t, correct:i===q.answer, why:''}));
   } else { out.options=(q.options||[]).map(o=>({text:o.text, correct:!!o.correct, why:o.why||''})); }
@@ -6394,59 +6389,153 @@ function normalizeMcq(q){
   out.answer=out.correctSet.length?out.correctSet[0]:0;
   return out;
 }
-function moduleMcqs(m){ return (m.mcqs||[]).map(normalizeMcq); }
-/* per-MCQ leitner store */
-function mcqProg(mid){ const p=ensureModuleProgress(mid); if(!p.mcqs) p.mcqs={}; return p.mcqs; }
-function mcqDue(mid,qid){ const st=mcqProg(mid)[qid]; return !st || !st.nextDue || st.nextDue<=Date.now(); }
-function recordMcq(mid,qid,ok){
-  const store=mcqProg(mid); const st=store[qid]||{seen:0,correct:0,box:0};
-  st.seen++; if(ok){ st.correct++; st.box=Math.min(5,(st.box||0)+1); } else st.box=0;
-  st.lastResult=ok; const days=ok?[0,1,3,7,16,35][st.box]:0;
-  st.nextDue=Date.now()+ (ok?days*DAY_MS:8*60*1000);
-  store[qid]=st;
+let MCQ_BANK=[], MCQ_BY_ID={}, MCQ_BY_MODULE={};
+function buildMcqIndex(){
+  MCQ_BANK=[]; MCQ_BY_ID={}; MCQ_BY_MODULE={};
+  MODULES.forEach(m=>{
+    MCQ_BY_MODULE[m.id]=[];
+    (m.mcqs||[]).forEach(raw=>{
+      if(!raw || !raw.options || !raw.options.length) return;    // defensive: skip malformed / legacy question shapes without an options list
+      const q=normalizeMcq(raw, m);
+      MCQ_BANK.push(q); MCQ_BY_ID[q.id]=q; MCQ_BY_MODULE[m.id].push(q);
+    });
+  });
 }
+function ensureMcqIndex(){ if(!MCQ_BANK.length) buildMcqIndex(); }
+function moduleMcqs(m){ ensureMcqIndex(); return MCQ_BY_MODULE[m.id] || []; }   // back-compat: normalised per-module list
+function mcqById(id){ ensureMcqIndex(); return MCQ_BY_ID[id]; }
 
+/* ---- per-question performance (separate from the flashcard SM-2+ engine) ---- */
+function blankPerf(){ return { seen:0, attempts:0, correct:0, incorrect:0, lastResult:null, lastAnswered:null, confidence:null, flagged:false, nextDue:0, consecutiveCorrect:0, mastery:'new' }; }
+function mcqPerf(qid){ const store=state.study.mcqPerf||(state.study.mcqPerf={}); return store[qid]||(store[qid]=blankPerf()); }
+function deriveMastery(p){
+  if(!p || !p.attempts) return 'new';
+  const acc=p.correct/p.attempts;
+  if(p.consecutiveCorrect>=4 && acc>=0.8) return 'mastered';
+  if(acc<0.6) return 'weak';
+  if(p.consecutiveCorrect>=2) return 'review';
+  return 'learning';
+}
+const MCQ_BOX_DAYS=[0,1,3,7,16,35];
+function recordMcqResult(qid, ok, confidence){
+  const p=mcqPerf(qid);
+  p.seen++; p.attempts++;
+  if(ok){ p.correct++; p.consecutiveCorrect=(p.consecutiveCorrect||0)+1; }
+  else { p.incorrect++; p.consecutiveCorrect=0; }
+  p.lastResult=ok; p.lastAnswered=Date.now();
+  if(confidence!=null) p.confidence=confidence;
+  const box=Math.min(MCQ_BOX_DAYS.length-1, p.consecutiveCorrect);
+  p.nextDue = ok ? Date.now()+MCQ_BOX_DAYS[box]*DAY_MS : Date.now()+8*60*1000;
+  p.mastery=deriveMastery(p);
+  state.study.mcqPerf[qid]=p;
+}
+function mcqDueById(qid){ const p=state.study.mcqPerf[qid]; return !p || !p.nextDue || p.nextDue<=Date.now(); }
+function isMcqFlagged(qid){ const p=state.study.mcqPerf[qid]; return !!(p&&p.flagged); }
+function toggleMcqFlag(qid){ const p=mcqPerf(qid); p.flagged=!p.flagged; state.study.mcqPerf[qid]=p; save(); return p.flagged; }
+function mcqNote(qid){ return (state.study.mcqNotes||{})[qid]||''; }
+function setMcqNote(qid,v){ const s=state.study.mcqNotes||(state.study.mcqNotes={}); if(v&&v.trim()) s[qid]=v.trim(); else delete s[qid]; save(); }
 function flagSvg(){ return '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px"><path d="M4 22V4a1 1 0 0 1 .5-.9c2.5-1.4 5-1.4 7.5 0s5 1.4 7.5 0V14c-2.5 1.4-5 1.4-7.5 0S6.5 12.6 4 14"/></svg>'; }
-function mcqFlags(mid){ const p=ensureModuleProgress(mid); if(!p.mcqFlags) p.mcqFlags={}; return p.mcqFlags; }
-function toggleMcqFlag(mid,qid){ const f=mcqFlags(mid); f[qid]=!f[qid]; save(); }
-function isMcqFlagged(mid,qid){ return !!mcqFlags(mid)[qid]; }
-function mcqNotesStore(mid){ const p=ensureModuleProgress(mid); if(!p.mcqNotes) p.mcqNotes={}; return p.mcqNotes; }
-function mcqNote(mid,qid){ return mcqNotesStore(mid)[qid]||''; }
-function setMcqNote(mid,qid,v){ const s=mcqNotesStore(mid); if(v&&v.trim()) s[qid]=v.trim(); else delete s[qid]; save(); }
 
+/* ---- pool building — every mode is expressible here ---- */
+function scopeQuestions(moduleIds){
+  ensureMcqIndex();
+  if(!moduleIds || !moduleIds.length) return MCQ_BANK.slice();
+  const set=new Set(moduleIds); return MCQ_BANK.filter(q=>set.has(q.moduleId));
+}
+function buildMcqPool(config){
+  const df=state.settings.mcq.difficultyFilter||[1,2,3];
+  const base=scopeQuestions(config.moduleIds).filter(q=>df.includes(q.difficulty));
+  const perf=id=>state.study.mcqPerf[id];
+  switch(config.mode){
+    case 'wrong':   return base.filter(q=>{const p=perf(q.id); return p&&p.attempts>0&&p.lastResult===false;});
+    case 'flagged': return base.filter(q=>isMcqFlagged(q.id));
+    case 'due':     return base.filter(q=>{const p=perf(q.id); return p&&p.attempts>0&&mcqDueById(q.id);});
+    case 'weak':    return base.filter(q=>{const p=perf(q.id); return p&&p.attempts>=2&&(p.correct/p.attempts)<0.6;})
+                               .sort((a,b)=>{const pa=perf(a.id),pb=perf(b.id); return (pa.correct/pa.attempts)-(pb.correct/pb.attempts);});
+    case 'rapid':   return base.slice();      // capped in newSession
+    case 'exam':    return base.slice();
+    case 'mixed':   return base.slice();
+    case 'practice':
+    default:        return base.slice();
+  }
+}
+function poolSignature(config){ return config.mode+'|'+((config.moduleIds||[]).slice().sort().join(',')); }
+
+/* ---- session lifecycle (persisted so a refresh resumes) ---- */
+function serializeSession(s){
+  return { sessionId:s.sessionId, mode:s.mode, moduleIds:s.moduleIds, sig:s.sig,
+    questionIds:s.questionIds, questionOrder:s.questionOrder, currentIndex:s.i,
+    answers:s.answers, optionOrders:s.optionOrders, results:s.results, correct:s.correct,
+    startedAt:s.started, finishedAt:s.finishedAt||null, feedback:s.feedback, timed:!!s.timed };
+}
+function persistSession(){ if(studyState.mcq){ state.study.mcqSession=serializeSession(studyState.mcq); save(); } }
+function newSession(config){
+  const pool=buildMcqPool(config);
+  let order=pool.map(q=>q.id);
+  order.sort(()=>Math.random()-0.5);
+  if(config.mode==='rapid') order=order.slice(0, config.limit||10);
+  const feedback = (config.mode==='exam') ? 'end-of-set' : (config.mode==='rapid' ? 'immediate' : state.settings.mcq.feedbackMode);
+  return { sessionId:uid(), mode:config.mode, moduleIds:config.moduleIds||[], sig:poolSignature(config),
+    m:config.m||null, questionIds:order.slice(), questionOrder:order, i:0, correct:0,
+    answered:false, picked:null, confidence:null, answers:{}, results:[], optionOrders:{},
+    started:Date.now(), finishedAt:null, feedback:feedback, timed:(config.mode==='rapid'||config.mode==='exam') };
+}
+function rehydrateSession(saved, config){
+  const s=newSession(config);
+  s.sessionId=saved.sessionId; s.mode=saved.mode; s.moduleIds=saved.moduleIds||[]; s.sig=saved.sig;
+  s.questionIds=saved.questionIds||[]; s.questionOrder=saved.questionOrder||saved.questionIds||[];
+  s.answers=saved.answers||{}; s.optionOrders=saved.optionOrders||{}; s.started=saved.startedAt||Date.now();
+  s.finishedAt=saved.finishedAt||null; s.feedback=saved.feedback||s.feedback; s.m=config.m||null;
+  // rebuild results + score from persisted answers, resume at first unanswered question
+  s.results=[]; s.correct=0;
+  s.questionOrder.forEach(qid=>{ const a=s.answers[qid]; if(a){ s.results.push({qid, picked:a.picked, ok:a.ok, confidence:a.confidence}); if(a.ok) s.correct++; } });
+  const firstUn=s.questionOrder.findIndex(qid=>!s.answers[qid]);
+  s.i = firstUn<0 ? s.questionOrder.length : firstUn;
+  return s;
+}
+function startMcqSession(config){
+  config=config||{}; if(!config.mode) config.mode='practice';
+  if(!config.moduleIds && config.m) config.moduleIds=[config.m.id];
+  ensureMcqIndex();
+  const sig=poolSignature(config), saved=state.study.mcqSession;
+  let s;
+  if(!config.fresh && saved && !saved.finishedAt && saved.sig===sig && saved.questionOrder && saved.questionOrder.length){
+    s=rehydrateSession(saved, config);
+  } else {
+    s=newSession(config);
+    if(!s.questionOrder.length){ toast('No questions available for '+(MCQ_MODES[config.mode]||config.mode)); return; }
+  }
+  studyState.mode='mcq'; studyState.mcq=s;
+  persistSession(); showStudyMode(); renderMcq();
+}
+/* back-compat entry point (module object + legacy opts) */
 function startMcq(m, opts){
   opts=opts||{};
-  const all=moduleMcqs(m);
-  const df=state.settings.mcq.difficultyFilter||[1,2,3];
-  let pool=all.filter(q=>df.includes(q.difficulty));
-  if(opts.dueOnly) pool=pool.filter(q=>mcqDue(m.id,q.id));
-  if(!pool.length) pool=all;
-  if(opts.shuffle!==false && state.settings.mcq.shuffleOptions) { /* option shuffle handled per-render */ }
-  const order=pool.map(q=>q.id);
-  if(opts.shuffleQ) order.sort(()=>Math.random()-0.5);
-  studyState.mode='mcq';
-  studyState.mcq={ m, pool, order, i:0, correct:0, answered:false, results:[], started:Date.now(),
-                   feedback:state.settings.mcq.feedbackMode, confidence:null };
-  showStudyMode(); renderMcq();
+  const mode = opts.dueOnly ? 'wrong' : (opts.mode||'practice');
+  startMcqSession({ mode:mode, moduleIds:[m.id], m:m, fresh:!!(opts.shuffleQ||opts.dueOnly||opts.fresh) });
 }
-function curMcq(){ const s=studyState.mcq; return s.pool[s.i]; }
+function curMcq(){ const s=studyState.mcq; if(!s) return null; return MCQ_BY_ID[s.questionOrder[s.i]]; }
+function mcqSessionTitle(s){
+  const scope = s.m ? s.m.source.title : (s.moduleIds.length>1?'Mixed':'All chapters');
+  return escapeHTML(MCQ_MODES[s.mode]||'MCQ')+' · '+escapeHTML(scope);
+}
 function renderMcq(){
   const s=studyState.mcq, mode=document.getElementById('studyMode');
-  if(s.i>=s.pool.length){ finishMcq(); return; }
-  const q=curMcq();
-  if(q.type==='emq'){ return renderEmq(q); }
-  const conf=state.settings.mcq.confidenceTracking;
-  const multi=q.type==='multi';
-  // optional option shuffle (stable within a render via saved order)
-  if(!q._display){ q._display=q.options.map((o,i)=>i); if(state.settings.mcq.shuffleOptions) q._display.sort(()=>Math.random()-0.5); }
-  const optsHtml=q._display.map((oi,pos)=>{
-    const o=q.options[oi];
-    return `<button class="mcq-opt" data-oi="${oi}"><span class="mk">${String.fromCharCode(65+pos)}</span><span class="ot">${mdInline(escapeHTML(o.text))}</span></button>`;
-  }).join('');
+  if(s.i>=s.questionOrder.length){ finishMcq(); return; }
+  const qid=s.questionOrder[s.i], q=MCQ_BY_ID[qid];
+  if(!q){ s.i++; persistSession(); return renderMcq(); }          // defensive: skip a missing id
+  const conf=state.settings.mcq.confidenceTracking, multi=q.type==='multi';
+  const exam=s.feedback==='end-of-set';
+  // option display order — frozen per question in the session (never mutates the source)
+  if(!s.optionOrders[qid]){ const ord=q.options.map((o,i)=>i); if(state.settings.mcq.shuffleOptions) ord.sort(()=>Math.random()-0.5); s.optionOrders[qid]=ord; persistSession(); }
+  const disp=s.optionOrders[qid];
+  const optsHtml=disp.map((oi,pos)=>{ const o=q.options[oi];
+    return `<button class="mcq-opt" data-oi="${oi}"><span class="mk">${String.fromCharCode(65+pos)}</span><span class="ot">${mdInline(escapeHTML(o.text))}</span></button>`; }).join('');
+  const scoreLabel = exam ? `Q ${s.i+1}/${s.questionOrder.length}` : `Score ${s.correct}/${s.i}`;
   mode.innerHTML=`
-    <button class="reader-back" id="mcqBack">${backSvg()} Back to chapter</button>
-    <div class="sm-top"><span class="sm-meta">MCQ · ${escapeHTML(s.m.source.title)} <span class="diff-badge d${q.difficulty}">${DIFF_LABEL[q.difficulty]}</span>${multi?' · select all':''}</span><span class="badge" id="mcqScore">Score ${s.correct}/${s.i}</span></div>
-    <div class="sm-progress"><i style="width:${Math.round(s.i/s.pool.length*100)}%"></i></div>
+    <button class="reader-back" id="mcqBack">${backSvg()} Back</button>
+    <div class="sm-top"><span class="sm-meta">${mcqSessionTitle(s)} <span class="diff-badge d${q.difficulty}">${DIFF_LABEL[q.difficulty]}</span>${multi?' · select all':''}</span><span class="badge" id="mcqScore">${scoreLabel}</span></div>
+    <div class="sm-progress"><i style="width:${Math.round(s.i/s.questionOrder.length*100)}%"></i></div>
     ${q.vignette?`<div class="mcq-vignette">${mdInline(escapeHTML(q.vignette))}</div>`:''}
     <div class="mcq-stem">${mdInline(escapeHTML(q.stem))}</div>
     ${conf?`<div class="conf-row" id="confRow"><span class="conf-lbl">Confidence:</span><button class="chip conf-chip" data-conf="sure">Sure</button><button class="chip conf-chip" data-conf="unsure">Unsure</button></div>`:''}
@@ -6464,123 +6553,92 @@ function renderMcq(){
   const sub=document.getElementById('mcqSubmit'); if(sub) sub.addEventListener('click',()=>answerMcq(s.picked));
 }
 function answerMcq(picked){
-  const s=studyState.mcq; if(s.answered) return; if(!picked||!picked.length) return;
+  const s=studyState.mcq; if(!s||s.answered) return; if(!picked||!picked.length) return;
   s.answered=true;
-  const q=curMcq();
+  const qid=s.questionOrder[s.i], q=MCQ_BY_ID[qid];
   const correctSet=new Set(q.correctSet), pickSet=new Set(picked);
   const ok = correctSet.size===pickSet.size && [...correctSet].every(i=>pickSet.has(i));
   if(ok) s.correct++;
-  recordMcq(s.m.id, q.id, ok);
-  s.results.push({ q, picked:picked.slice(), ok, confidence:s.confidence });
-  document.getElementById('mcqScore').textContent=`Score ${s.correct}/${s.i+1}`;
-  // mark options
+  s.answers[qid]={ picked:picked.slice(), ok:ok, confidence:s.confidence, at:Date.now() };
+  s.results.push({ qid, picked:picked.slice(), ok, confidence:s.confidence });
+  recordMcqResult(qid, ok, s.confidence);
+  persistSession();
+  const exam=s.feedback==='end-of-set';
   document.querySelectorAll('#mcqOpts .mcq-opt').forEach(b=>{ const oi=+b.dataset.oi; b.disabled=true;
-    if(correctSet.has(oi)) b.classList.add('correct'); else if(pickSet.has(oi)) b.classList.add('wrong');
+    if(exam){ if(pickSet.has(oi)) b.classList.add('picked'); }
+    else { if(correctSet.has(oi)) b.classList.add('correct'); else if(pickSet.has(oi)) b.classList.add('wrong'); }
   });
   const sub=document.getElementById('mcqSubmit'); if(sub) sub.style.display='none';
-  const tutor=state.settings.mcq.tutorMode, endMode=s.feedback==='end-of-set';
-  if(!endMode){
-    document.getElementById('mcqFeedback').innerHTML=mcqFeedbackHtml(q, ok, picked, tutor);
-    wireOptionWhys();
-  }
-  const last=s.i>=s.pool.length-1;
+  document.getElementById('mcqScore').textContent = exam ? `Q ${s.i+1}/${s.questionOrder.length}` : `Score ${s.correct}/${s.i+1}`;
+  if(!exam){ document.getElementById('mcqFeedback').innerHTML=mcqFeedbackHtml(q, ok, picked, state.settings.mcq.tutorMode); wireOptionWhys(); }
+  const last=s.i>=s.questionOrder.length-1;
   document.getElementById('mcqNav').innerHTML=`<div class="row" style="gap:10px;align-items:center;flex-wrap:wrap">
-      <button class="btn sm ghost" id="mcqFlag">${flagSvg()} Flag</button>
-      ${!ok?`<button class="btn sm" id="mcqAddReview">Add to review</button>`:''}
+      <button class="btn sm ghost ${isMcqFlagged(qid)?'on':''}" id="mcqFlag">${flagSvg()} Flag</button>
+      ${(!ok&&!exam)?`<button class="btn sm" id="mcqAddReview">Add to review</button>`:''}
       <button class="btn primary" id="mcqNext" style="margin-left:auto">${last?'See results':'Next'} <span class="kbd-inline">Enter</span></button></div>`;
   document.getElementById('mcqNext').addEventListener('click',nextMcq);
-  const add=document.getElementById('mcqAddReview'); if(add) add.addEventListener('click',()=>addMcqToReview(s.m,q,add));
-  const fl=document.getElementById('mcqFlag'); if(fl) fl.addEventListener('click',()=>{ toggleMcqFlag(s.m.id,q.id); fl.classList.toggle('on'); });
+  const add=document.getElementById('mcqAddReview'); if(add) add.addEventListener('click',()=>addMcqToReview(q,add));
+  const fl=document.getElementById('mcqFlag'); if(fl) fl.addEventListener('click',()=>{ const on=toggleMcqFlag(qid); fl.classList.toggle('on',on); });
 }
 function mcqFeedbackHtml(q, ok, picked, tutor){
-  const correctLetters=q.correctSet.map(i=>{ const pos=(q._display||q.options.map((o,x)=>x)).indexOf(i); return String.fromCharCode(65+(pos<0?i:pos)); }).join(', ');
+  const disp=(studyState.mcq&&studyState.mcq.optionOrders[q.id])||q.options.map((o,x)=>x);
+  const correctLetters=q.correctSet.map(i=>{ const pos=disp.indexOf(i); return String.fromCharCode(65+(pos<0?i:pos)); }).join(', ');
   let html=`<div class="callout callout-${ok?'clinical-pearl':'warning'}"><div class="callout-title"><span>${ok?CIC.star:CIC.warning}</span>${ok?'Correct':'Not quite — answer: '+correctLetters}</div>`;
   if(q.teachingPoint) html+=`<div style="font-weight:600;margin-bottom:6px">${mdInline(escapeHTML(q.teachingPoint))}</div>`;
   if(tutor){
     if(q.explanation.length) html+=`<ol class="mcq-exp">${q.explanation.map(e=>`<li>${mdInline(escapeHTML(e))}</li>`).join('')}</ol>`;
     if(q.keyFacts.length) html+=`<div class="mcq-keyfacts"><div class="kf-lbl">Key facts</div><ul>${q.keyFacts.map(k=>`<li>${mdInline(escapeHTML(k))}</li>`).join('')}</ul></div>`;
-    // per-option rationale (right and wrong)
     html+=`<div class="mcq-whys"><div class="kf-lbl">Why each option</div>${q.options.map(o=>o.why?`<div class="why-row ${o.correct?'wc':'ww'}"><span class="why-tag">${o.correct?'Correct':'Wrong'}</span> <b>${escapeHTML(o.text)}</b> — ${mdInline(escapeHTML(o.why))}</div>`:'').join('')}</div>`;
   }
   html+=`</div>`;
-  const noteVal=mcqNote(studyState.mcq.m.id,q.id);
-  html+=`<div class="mcq-note-wrap"><textarea class="textarea mcq-note" id="mcqNote" placeholder="Your note on this question…" style="min-height:44px">${escapeHTML(noteVal)}</textarea></div>`;
+  html+=`<div class="mcq-note-wrap"><textarea class="textarea mcq-note" id="mcqNote" placeholder="Your note on this question…" style="min-height:44px">${escapeHTML(mcqNote(q.id))}</textarea></div>`;
   return html;
 }
 function wireOptionWhys(){
   const ta=document.getElementById('mcqNote');
-  if(ta) ta.addEventListener('change',()=>{ const s=studyState.mcq; setMcqNote(s.m.id, curMcq().id, ta.value); });
+  if(ta) ta.addEventListener('change',()=>{ const q=curMcq(); if(q) setMcqNote(q.id, ta.value); });
 }
-function renderEmq(q){
-  const s=studyState.mcq, mode=document.getElementById('studyMode');
-  if(s.emqI==null) s.emqI=0;
-  const bank=q.optionBank, st=q.stems[s.emqI];
-  const bankHtml=bank.map((b,i)=>`<div class="emq-bank-item"><span class="mk">${String.fromCharCode(65+i)}</span>${mdInline(escapeHTML(b))}</div>`).join('');
-  mode.innerHTML=`
-    <button class="reader-back" id="mcqBack">${backSvg()} Back to chapter</button>
-    <div class="sm-top"><span class="sm-meta">EMQ · ${escapeHTML(s.m.source.title)} <span class="diff-badge d${q.difficulty}">${DIFF_LABEL[q.difficulty]}</span></span><span class="badge">Item ${s.emqI+1}/${q.stems.length}</span></div>
-    <div class="mcq-stem">${mdInline(escapeHTML(q.stem||'Match each scenario to the single best option.'))}</div>
-    <div class="emq-bank">${bankHtml}</div>
-    <div class="mcq-substem">${mdInline(escapeHTML(st.stem))}</div>
-    <div id="mcqOpts" class="emq-opts">${bank.map((b,i)=>`<button class="mcq-opt sm" data-oi="${i}"><span class="mk">${String.fromCharCode(65+i)}</span></button>`).join('')}</div>
-    <div class="mcq-feedback" id="mcqFeedback"></div>
-    <div id="mcqNav"></div>`;
-  s.answered=false;
-  document.getElementById('mcqBack').addEventListener('click',()=>{ studyState.mode=null; renderReader(); });
-  mode.querySelectorAll('.mcq-opt').forEach(b=>b.addEventListener('click',()=>answerEmq(+b.dataset.oi)));
-}
-function answerEmq(oi){
-  const s=studyState.mcq; if(s.answered) return; s.answered=true;
-  const q=curMcq(), st=q.stems[s.emqI], ok=oi===st.answer;
-  if(ok && s.emqI===0) {} // scoring counted per whole EMQ below
-  document.querySelectorAll('#mcqOpts .mcq-opt').forEach(b=>{ const i=+b.dataset.oi; b.disabled=true; if(i===st.answer) b.classList.add('correct'); else if(i===oi) b.classList.add('wrong'); });
-  st._ok=ok;
-  document.getElementById('mcqFeedback').innerHTML=`<div class="callout callout-${ok?'clinical-pearl':'warning'}"><div class="callout-title"><span>${ok?CIC.star:CIC.warning}</span>${ok?'Correct':'Answer: '+String.fromCharCode(65+st.answer)}</div><div>${mdInline(escapeHTML(st.why||''))}</div></div>`;
-  const lastItem=s.emqI>=q.stems.length-1;
-  document.getElementById('mcqNav').innerHTML=`<div class="row"><button class="btn primary" id="mcqNext" style="margin-left:auto">${lastItem?'Next question':'Next item'} <span class="kbd-inline">Enter</span></button></div>`;
-  document.getElementById('mcqNext').addEventListener('click',()=>{
-    if(lastItem){ const allOk=q.stems.every(x=>x._ok); if(allOk) s.correct++; recordMcq(s.m.id,q.id,allOk); s.results.push({q,ok:allOk}); s.emqI=null; nextMcq(); }
-    else { s.emqI++; renderEmq(q); }
-  });
-}
-function addMcqToReview(m,q,btn){
-  const id='mcqrev-'+m.id+'-'+slug(q.stem).slice(0,28);
+function addMcqToReview(q, btn){
+  const id='mcqrev-'+q.id;
   if(state.flashcards.find(c=>c.id===id)){ if(btn){ btn.disabled=true; btn.textContent='Added'; } toast('Already in your review deck'); return; }
+  const m=q.moduleId?moduleById(q.moduleId):null;
   const ans=q.options?q.options[q.answer].text:'';
-  state.flashcards.push({ schema:'foundation.card/v2', id, subjectId:studySubjectId(m), front:(q.vignette?q.vignette+' ':'')+q.stem, back:'**'+ans+'** — '+(q.explanation[0]||''), cloze:'', extra:(q.keyFacts||[]).join(' · '), hint:'', tags:q.tags||[], ef:state.settings.scheduler.easeStart, interval:0, reps:0, lapses:0, state:'new', step:0, due:0, lastGrade:null, history:[], moduleId:m.id, section:q.sectionTag||null, created:Date.now() });
+  state.flashcards.push({ schema:'foundation.card/v2', id, subjectId:(m?studySubjectId(m):null), front:(q.vignette?q.vignette+' ':'')+q.stem, back:'**'+ans+'** — '+(q.explanation[0]||''), cloze:'', extra:(q.keyFacts||[]).join(' · '), hint:'', tags:q.tags||[], ef:state.settings.scheduler.easeStart, interval:0, reps:0, lapses:0, state:'new', step:0, due:0, lastGrade:null, history:[], moduleId:q.moduleId||null, section:q.sectionTag||null, created:Date.now() });
   save(); renderFlashcards(); renderDueToday();
   if(btn){ btn.disabled=true; btn.textContent='Added to review'; }
   toast('Added to your review deck');
 }
-function nextMcq(){ const s=studyState.mcq; s.i++; s.confidence=null; renderMcq(); }
+function nextMcq(){ const s=studyState.mcq; if(!s) return; s.i++; s.answered=false; s.picked=null; s.confidence=null; persistSession(); renderMcq(); }
 function finishMcq(){
-  const s=studyState.mcq, total=s.pool.length;
+  const s=studyState.mcq; s.finishedAt=Date.now();
+  const answered=s.results.length, correct=s.results.filter(r=>r.ok).length, total=s.questionOrder.length;
   markActivity();
-  state.qbank.unshift({ id:uid(), subjectId:studySubjectId(s.m), total, correct:s.correct, date:todayStr() });
-  const p=ensureModuleProgress(s.m.id); p.mcqScore.correct+=s.correct; p.mcqScore.total+=total;
-  state.study.drills.push({ moduleId:s.m.id, when:todayStr(), correct:s.correct, total, kind:'mcq' });
-  save(); renderQBank();
-  const pctv=total?Math.round(s.correct/total*100):0;
-  const mins=Math.max(1,Math.round((Date.now()-s.started)/60000));
-  // per-question review list (also serves end-of-set feedback)
-  const reviewList=s.results.map((r,idx)=>{
-    const q=r.q; const letters=q.correctSet?q.correctSet.map(i=>String.fromCharCode(65+i)).join(', '):'';
+  state.qbank.unshift({ id:uid(), subjectId:(s.m?studySubjectId(s.m):null), total:(answered||total), correct:correct, date:todayStr() });
+  if(s.m){ const p=ensureModuleProgress(s.m.id); p.mcqScore.correct+=correct; p.mcqScore.total+=(answered||total); }
+  state.study.drills.push({ moduleId:(s.m?s.m.id:'mixed'), when:todayStr(), correct:correct, total:(answered||total), kind:'mcq', mode:s.mode });
+  persistSession();                          // finished session persists (finishedAt set → will not resume)
+  renderQBank();
+  const denom=answered||total, pctv=denom?Math.round(correct/denom*100):0, mins=Math.max(1,Math.round((Date.now()-s.started)/60000));
+  const reviewList=s.results.map((r,idx)=>{ const q=MCQ_BY_ID[r.qid]; if(!q) return '';
+    const letters=q.correctSet.map(i=>String.fromCharCode(65+i)).join(', ');
     return `<details class="mcq-review-item ${r.ok?'ok':'bad'}"><summary><span class="rv-dot"></span>${idx+1}. ${escapeHTML(q.stem.slice(0,90))}${q.stem.length>90?'…':''}</summary>
-      <div class="rv-body">${q.correctSet?`<div class="muted" style="font-size:.78rem;margin-bottom:4px">Answer: ${letters}</div>`:''}
-      ${(q.explanation||[]).map(e=>`<div>${mdInline(escapeHTML(e))}</div>`).join('')}</div></details>`;
+      <div class="rv-body"><div class="muted" style="font-size:.78rem;margin-bottom:4px">Answer: ${letters}</div>${(q.explanation||[]).map(e=>`<div>${mdInline(escapeHTML(e))}</div>`).join('')}</div></details>`;
   }).join('');
   document.getElementById('studyMode').innerHTML=`<div class="sm-summary">
-      <div class="big-score">${s.correct}/${total}</div>
-      <div class="muted" style="margin-top:6px">${pctv}% · ${mins} min · logged to your Q-Bank</div>
-      <div class="reader-actions" style="justify-content:center;margin:18px 0">
+      <div class="big-score">${correct}/${denom}</div>
+      <div class="muted" style="margin-top:6px">${pctv}% · ${mins} min · ${escapeHTML(MCQ_MODES[s.mode]||'MCQ')} · logged to your Q-Bank</div>
+      <div class="reader-actions" style="justify-content:center;margin:18px 0;flex-wrap:wrap">
         <button class="btn primary" id="mcqAgain">Practise again</button>
         <button class="btn" id="mcqWrong">Redo wrong only</button>
-        <button class="btn" id="mcqDone">Back to chapter</button>
+        <button class="btn" id="mcqFlagged">Flagged</button>
+        <button class="btn" id="mcqDone">Back</button>
       </div>
     </div>
     <div class="mcq-review">${reviewList}</div>`;
-  document.getElementById('mcqAgain').addEventListener('click',()=>startMcq(s.m,{shuffleQ:true}));
-  document.getElementById('mcqWrong').addEventListener('click',()=>startMcq(s.m,{dueOnly:true}));
+  const cfg=mode=>({mode:mode, moduleIds:s.moduleIds, m:s.m, fresh:true});
+  document.getElementById('mcqAgain').addEventListener('click',()=>startMcqSession(cfg('practice')));
+  document.getElementById('mcqWrong').addEventListener('click',()=>startMcqSession(cfg('wrong')));
+  document.getElementById('mcqFlagged').addEventListener('click',()=>startMcqSession(cfg('flagged')));
   document.getElementById('mcqDone').addEventListener('click',()=>{ studyState.mode=null; renderReader(); });
   renderDashboard();
 }
@@ -6596,13 +6654,9 @@ document.addEventListener('keydown',e=>{
     else if(d.flipped && ['1','2','3','4'].includes(e.key)){ e.preventDefault(); gradeDrill({'1':0,'2':3,'3':4,'4':5}[e.key]); }
   } else if(studyState.mode==='mcq'){
     const s=studyState.mcq; if(!s) return; const q=curMcq(); if(!q) return;
-    if(q.type==='emq'){
-      if(!s.answered && /^[1-8]$/.test(e.key)){ const oi=+e.key-1; if(oi<q.optionBank.length){ e.preventDefault(); answerEmq(oi); } }
-      else if(s.answered && e.key==='Enter'){ e.preventDefault(); const nb=document.getElementById('mcqNext'); if(nb) nb.click(); }
-      return;
-    }
+    if(e.key.toLowerCase()==='f'){ e.preventDefault(); const on=toggleMcqFlag(q.id); const fb=document.getElementById('mcqFlag'); if(fb) fb.classList.toggle('on',on); toast(on?'Flagged':'Unflagged'); return; }
     if(!s.answered && /^[1-9]$/.test(e.key)){
-      const disp=q._display||q.options.map((o,i)=>i), pos=+e.key-1;
+      const disp=s.optionOrders[q.id]||q.options.map((o,i)=>i), pos=+e.key-1;
       if(pos<disp.length){ e.preventDefault(); const oi=disp[pos];
         if(q.type==='multi'){ const btn=document.querySelector(`#mcqOpts .mcq-opt[data-oi="${oi}"]`); if(btn) btn.click(); }
         else answerMcq([oi]);
@@ -6649,14 +6703,12 @@ function renderForecast(){
     return `<div class="fc-bar" title="${n} due"><span class="fc-n">${n||''}</span><div class="fc-fill" style="height:${h}px"></div><span class="fc-day">${i===0?'now':dow[dt.getDay()]}</span></div>`;
   }).join('');
 }
-/* ---- Dashboard: weak-spot analytics (per-tag accuracy from MCQ leitner + card lapses) ---- */
+/* ---- Dashboard: weak-spot analytics (per-tag accuracy from the unified MCQ perf store) ---- */
 function computeTagAccuracy(){
+  ensureMcqIndex();
   const agg={}; // tag -> {right,total}
   const add=(tag,right,total)=>{ if(!tag) return; const a=agg[tag]=agg[tag]||{right:0,total:0}; a.right+=right; a.total+=total; };
-  MODULES.forEach(m=>{
-    const store=(state.study.progress[m.id]||{}).mcqs||{};
-    moduleMcqs(m).forEach(q=>{ const st=store[q.id]; if(st&&st.seen){ (q.tags&&q.tags.length?q.tags:[q.sectionTag]).forEach(t=>add(t,st.correct,st.seen)); } });
-  });
+  MCQ_BANK.forEach(q=>{ const p=state.study.mcqPerf[q.id]; if(p&&p.attempts>0){ (q.tags&&q.tags.length?q.tags:[q.sectionTag]).forEach(t=>add(t,p.correct,p.attempts)); } });
   return Object.entries(agg).filter(([,a])=>a.total>=2).map(([tag,a])=>({tag,pct:Math.round(a.right/a.total*100),total:a.total}));
 }
 function renderWeakSpots(){
@@ -6822,7 +6874,7 @@ function exportAnkiTSV(){
   toast(rows.length+' cards exported as Anki TSV');
 }
 function exportMcqJson(){
-  const all=[]; MODULES.forEach(m=>moduleMcqs(m).forEach(q=>{ const c=Object.assign({},q); delete c._norm; delete c._display; all.push(c); }));
+  ensureMcqIndex(); const all=MCQ_BANK.map(q=>Object.assign({},q));
   download('foundation-mcqs.json', JSON.stringify(all,null,2), 'application/json');
   toast(all.length+' MCQs exported as JSON');
 }
@@ -6840,6 +6892,7 @@ document.addEventListener('keydown',e=>{ if(e.key==='Escape' && document.getElem
 
 /* ================= INIT ================= */
 function renderAll(){
+  buildMcqIndex();          // stable MCQ id index (built once from MODULES)
   applyAppearance();
   applyTheme();
   renderDashboard();
