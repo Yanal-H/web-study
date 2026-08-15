@@ -11,8 +11,8 @@
      NOTE: this is a passphrase *deterrent*, not real security — the whole app
      ships in this file. For true access control, enable Vercel password/SSO
      protection. To change the passphrase, replace GATE_HASH with the FNV-1a of
-     your phrase: (s=>{let h=2166136261>>>0;for(let i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,16777619)>>>0;}return h>>>0})('yourphrase') -->
-<script>(function(){var GATE_HASH=4235919300;window.__GATE_HASH=GATE_HASH;try{if(localStorage.getItem('foundation_gate_'+GATE_HASH)==='1'){document.documentElement.classList.add('unlocked');return;}}catch(e){}document.documentElement.classList.add('locked');})();</script>
+     your phrase: (s=>{let h=2166136261>>>0;for(let i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,16777619)>>>0;}return h>>>0})('youcandoit') -->
+<script>(function(){var GATE_HASH=4082204366;window.__GATE_HASH=GATE_HASH;try{if(sessionStorage.getItem('foundation_gate_'+GATE_HASH)==='1'){document.documentElement.classList.add('unlocked');return;}}catch(e){}document.documentElement.classList.add('locked');})();</script>
 <!-- Fully offline: no web-font fetches. Typography uses tuned system stacks (see --font-* tokens). -->
 <style>
 /* ============================================================
@@ -776,7 +776,7 @@ table.reader-table tbody tr:last-child td{border-bottom:none}
   function unlock(){
     var v=(inp.value||'').trim();
     if(fnv(v)===GATE_HASH){
-      try{ localStorage.setItem('foundation_gate_'+GATE_HASH,'1'); }catch(e){}
+      try{ sessionStorage.setItem('foundation_gate_'+GATE_HASH,'1'); }catch(e){}
       document.documentElement.classList.remove('locked');
       document.documentElement.classList.add('unlocked');
       gate.style.display='none';
