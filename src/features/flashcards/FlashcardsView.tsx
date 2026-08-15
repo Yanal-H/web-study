@@ -1,11 +1,17 @@
+import { useMemo } from 'react';
 import { useStore } from '../../state/useStore';
 import { Stat } from '../../design/primitives';
 import { IconFlashcards } from '../../design/icons';
 import { dueCounts } from '../../lib/stats';
+import { allCards } from '../../content/loader';
+import { useUserContentVersion } from '../../content/userContent';
 
 export default function FlashcardsView() {
   const state = useStore();
+  const uv = useUserContentVersion();
+  const content = useMemo(() => allCards(), [uv]);
   const d = dueCounts(state.flashcards);
+  const cloze = content.filter((c) => c.type === 'cloze').length;
   return (
     <>
       <header className="page-head">
@@ -14,10 +20,10 @@ export default function FlashcardsView() {
       </header>
 
       <div className="stat-row" style={{ marginBottom: 'var(--sp-4)' }}>
-        <Stat label="Total cards" value={d.total} />
+        <Stat label="Cards in library" value={content.length} />
+        <Stat label="Cloze" value={cloze} />
+        <Stat label="In your deck" value={d.total} />
         <Stat label="Due" value={d.due} />
-        <Stat label="New" value={d.neu} />
-        <Stat label="Learning" value={d.learning} />
       </div>
 
       <div className="soon">

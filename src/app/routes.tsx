@@ -8,10 +8,11 @@ export interface RouteDef {
   label: string; // sidebar label
   load: Loader; // dynamic import factory (reused for lazy() and offline prefetch)
   Component: LazyExoticComponent<ComponentType>;
+  hidden?: boolean; // not shown in nav or the command palette (param/detail routes)
 }
 
-function route(path: string, label: string, load: Loader): RouteDef {
-  return { path, label, load, Component: lazy(load) };
+function route(path: string, label: string, load: Loader, hidden = false): RouteDef {
+  return { path, label, load, Component: lazy(load), hidden };
 }
 
 // Every view is code-split via React.lazy so each becomes its own chunk. The same
@@ -20,6 +21,7 @@ function route(path: string, label: string, load: Loader): RouteDef {
 export const ROUTES: RouteDef[] = [
   route('', 'Dashboard', () => import('../features/dashboard/DashboardView')),
   route('study', 'Study', () => import('../features/study/StudyView')),
+  route('study/:id', 'Reader', () => import('../features/study/ReaderView'), true),
   route('subjects', 'Subjects', () => import('../features/subjects/SubjectsView')),
   route('flashcards', 'Flashcards', () => import('../features/flashcards/FlashcardsView')),
   route('qbank', 'Question Bank', () => import('../features/qbank/QbankView')),

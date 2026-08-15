@@ -79,7 +79,7 @@ function Shell() {
 
   const commands = useMemo<Command[]>(() => {
     const dark = state.theme !== 'paper';
-    const navCmds: Command[] = ROUTES.map((r) => {
+    const navCmds: Command[] = ROUTES.filter((r) => !r.hidden).map((r) => {
       const Icon = NAV_ICONS[r.path];
       return {
         id: 'nav-' + (r.path || 'dashboard'),

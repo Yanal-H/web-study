@@ -6,12 +6,14 @@
   "description": "Foundation · Med School Study Toolkit — offline-first study website (by Yanal · Cairo 2026)",
   "scripts": {
     "dev": "vite",
+    "prebuild": "npm run validate:content",
     "build": "tsc --noEmit && vite build",
     "preview": "vite preview --port 4173",
     "typecheck": "tsc --noEmit",
     "lint": "eslint . --ext .ts,.tsx",
     "test": "vitest run",
-    "validate:content": "node scripts/validate-content.mjs"
+    "validate:content": "vite-node scripts/validate-content.ts",
+    "make:schema": "vite-node scripts/make-schema.ts"
   },
   "dependencies": {
     "react": "^18.3.1",
@@ -35,6 +37,7 @@
     "prettier": "^3.3.3",
     "typescript": "^5.5.4",
     "vite": "^5.4.8",
-    "vitest": "^2.1.2"
+    "vitest": "^2.1.2",
+    "zod-to-json-schema": "^3.25.2"
   }
 }

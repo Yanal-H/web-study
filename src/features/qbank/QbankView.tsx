@@ -1,14 +1,18 @@
+import { useMemo } from 'react';
 import { useStore } from '../../state/useStore';
 import { Stat } from '../../design/primitives';
 import { IconQbank } from '../../design/icons';
+import { allMcqs } from '../../content/loader';
+import { useUserContentVersion } from '../../content/userContent';
 
 export default function QbankView() {
   const state = useStore();
+  const uv = useUserContentVersion();
+  const bank = useMemo(() => allMcqs(), [uv]);
   const perf = state.study.mcqPerf || {};
   const ids = Object.keys(perf);
   const attempted = ids.filter((q) => perf[q]!.attempts > 0).length;
   const mastered = ids.filter((q) => perf[q]!.mastery === 'mastered').length;
-  const flagged = ids.filter((q) => perf[q]!.flagged).length;
 
   return (
     <>
@@ -18,9 +22,9 @@ export default function QbankView() {
       </header>
 
       <div className="stat-row" style={{ marginBottom: 'var(--sp-4)' }}>
+        <Stat label="Questions in bank" value={bank.length} />
         <Stat label="Attempted" value={attempted} />
         <Stat label="Mastered" value={mastered} />
-        <Stat label="Flagged" value={flagged} />
         <Stat label="Tracked" value={ids.length} />
       </div>
 
