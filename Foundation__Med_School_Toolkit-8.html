@@ -710,6 +710,28 @@ table.reader-table tbody tr:last-child td{border-bottom:none}
 </style>
 </head>
 <body>
+<script>
+/* ---- Casual-copy deterrents (NOT real protection) ------------------------
+   A static page is fully downloadable by design — the browser must receive it
+   to run it. This only discourages casual right-click / Save / View-Source and
+   the usual devtools shortcuts; it is trivially bypassed (disable JS, curl,
+   the view-source: prefix, the browser menu). For real gating, put the Vercel
+   deployment behind password / SSO protection. These handlers deliberately
+   avoid the app's own study shortcuts (plain 1–9, space, u), touching only
+   Ctrl/Cmd and F-key combinations. -------------------------------------------*/
+(function(){
+  var block = function(e){ e.preventDefault(); e.stopPropagation(); return false; };
+  document.addEventListener('contextmenu', block);
+  document.addEventListener('dragstart', block);
+  document.addEventListener('keydown', function(e){
+    var k = (e.key||'').toLowerCase(), mod = e.ctrlKey || e.metaKey;
+    if(e.key === 'F12') return block(e);                                  // devtools
+    if(mod && k === 's') return block(e);                                 // Save page
+    if(mod && k === 'u') return block(e);                                 // View source
+    if(mod && e.shiftKey && (k==='i'||k==='j'||k==='c')) return block(e); // devtools/inspect
+  }, true);
+})();
+</script>
 <div class="bg"></div>
 <div class="app">
 
