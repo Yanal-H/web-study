@@ -887,7 +887,9 @@ table.reader-table tbody tr:last-child td{border-bottom:none}
 .mc-mastery i{width:7px;height:7px;border-radius:50%;background:var(--muted)}
 .mc-mastery.mastered i{background:var(--good)}.mc-mastery.strong i{background:var(--brand-3)}.mc-mastery.familiar i{background:var(--brand)}.mc-mastery.learning i{background:var(--warn)}
 @media (max-width:640px){
-  .mcqx-bar{gap:8px}.mcqx-back .kbd-inline{display:none}
+  .mcqx-bar{gap:8px;flex-wrap:wrap}.mcqx-back .kbd-inline{display:none}
+  .mcqx-title{order:-1;flex:1 1 auto;text-align:left}
+  .mcqx-tools{width:100%;justify-content:flex-end;flex-wrap:wrap}
   .mcqx-options .mcq-opt{padding:14px;min-height:52px}
   .navsheet-inner{width:100%;height:auto;max-height:80vh;position:absolute;bottom:0;left:0;border-left:none;border-top:1px solid var(--line-2);border-radius:18px 18px 0 0;transform:translateY(20px)}
   .mcqx-navsheet{justify-content:center;align-items:flex-end}
@@ -6184,7 +6186,7 @@ function buildCommandActions(){
     {group:'Study', label:'Study → '+m.source.title, sub:m.subject, icon:ICONS.book, run:()=>openModule(m.id)}
   ));
   // MCQ modes (mixed / all-chapter scope) — engine-level entry points, no extra UI
-  ['practice','exam','wrong','flagged','weak','rapid','due'].forEach(mode=>COMMAND_ACTIONS.push(
+  ['smart','practice','exam','wrong','flagged','weak','rapid','due'].forEach(mode=>COMMAND_ACTIONS.push(
     {group:'MCQ modes', label:'MCQ → '+MCQ_MODES[mode], sub:'all chapters', icon:ICONS.target, run:()=>{
       studyState.moduleId=null; setView('study');
       startMcqSession({ mode:mode, moduleIds:MODULES.map(m=>m.id), m:(MODULES.length===1?MODULES[0]:null), fresh:true });
@@ -6556,7 +6558,7 @@ function finishDrill(){
    performance lives in state.study.mcqPerf, kept deliberately separate from the flashcard
    SM-2+ scheduler. Source question data is never mutated. */
 const DIFF_LABEL={1:'Core',2:'Harder',3:'Exam-killer'};
-const MCQ_MODES={practice:'Practice',exam:'Exam',wrong:'Wrong answers',flagged:'Flagged',weak:'Weak areas',mixed:'Mixed',rapid:'Rapid fire',due:'Due review'};
+const MCQ_MODES={practice:'Practice',exam:'Exam',wrong:'Wrong answers',flagged:'Flagged',weak:'Weak areas',mixed:'Mixed',rapid:'Rapid fire',due:'Due review',smart:'Smart review'};
 function asArr(x){ return Array.isArray(x)?x:(x==null||x===''?[]:[x]); }
 
 /* ---- normalisation + stable index (built once; source arrays never mutated) ---- */
@@ -6593,7 +6595,6 @@ function buildMcqIndex(){
 }
 function ensureMcqIndex(){ if(!MCQ_BANK.length) buildMcqIndex(); }
 function moduleMcqs(m){ ensureMcqIndex(); return MCQ_BY_MODULE[m.id] || []; }   // back-compat: normalised per-module list
-function mcqById(id){ ensureMcqIndex(); return MCQ_BY_ID[id]; }
 
 /* ---- per-question performance (separate from the flashcard SM-2+ engine) ---- */
 function blankPerf(){ return { seen:0, attempts:0, correct:0, incorrect:0, lastResult:null, lastAnswered:null, confidence:null, flagged:false, nextDue:0, consecutiveCorrect:0, mastery:'new' }; }
@@ -6646,6 +6647,14 @@ function buildMcqPool(config){
     case 'due':     return base.filter(q=>{const p=perf(q.id); return p&&p.attempts>0&&mcqDueById(q.id);});
     case 'weak':    return base.filter(q=>{const p=perf(q.id); return p&&p.attempts>=2&&(p.correct/p.attempts)<0.6;})
                                .sort((a,b)=>{const pa=perf(a.id),pb=perf(b.id); return (pa.correct/pa.attempts)-(pb.correct/pb.attempts);});
+    case 'smart': {   // intelligent revision: due, then wrong, then weak, then flagged — deduped, priority-ordered
+      const seen=new Set(), out=[], add=list=>list.forEach(q=>{ if(!seen.has(q.id)){ seen.add(q.id); out.push(q); } });
+      add(base.filter(q=>{const p=perf(q.id); return p&&p.attempts>0&&mcqDueById(q.id);}));
+      add(base.filter(q=>{const p=perf(q.id); return p&&p.attempts>0&&p.lastResult===false;}));
+      add(base.filter(q=>mcqIsWeak(q.id)));
+      add(base.filter(q=>isMcqFlagged(q.id)));
+      return out;
+    }
     case 'rapid':   return base.slice();      // capped in newSession
     case 'exam':    return base.slice();
     case 'mixed':   return base.slice();
@@ -6671,6 +6680,8 @@ function newSession(config){
   if(config.mode==='practice'||config.mode==='mixed'){
     const fresh=order.filter(id=>!mcqIsMastered(id)), done=order.filter(id=>mcqIsMastered(id));
     fresh.sort(()=>Math.random()-0.5); done.sort(()=>Math.random()-0.5); order=fresh.concat(done);
+  } else if(config.mode==='weak'||config.mode==='smart'){
+    /* keep the intelligent priority order from buildMcqPool (worst / most-urgent first) */
   } else { order.sort(()=>Math.random()-0.5); }
   // session size: rapid defaults to a short set; others honour an explicit limit
   let limit = config.limit;
@@ -6740,7 +6751,7 @@ function renderMcqSetup(scope){
   const m=scope.m||null, moduleIds=scope.moduleIds||(m?[m.id]:MODULES.map(x=>x.id));
   const avail=mode=>buildMcqPool({mode,moduleIds}).length;
   const total=m?moduleMcqs(m).length:MCQ_BANK.length;
-  const modes=[['practice','Practice','Immediate feedback and explanations'],['exam','Exam','No feedback until you submit'],['rapid','Rapid fire','Short and timed'],['wrong','Wrong answers','Questions you last got wrong'],['flagged','Flagged','Your bookmarked questions'],['weak','Weak areas','Your lowest-accuracy questions'],['due','Due review','Questions due for revision']];
+  const modes=[['practice','Practice','Immediate feedback and explanations'],['smart','Smart review','Due, wrong, weak and flagged combined'],['exam','Exam','No feedback until you submit'],['rapid','Rapid fire','Short and timed'],['wrong','Wrong answers','Questions you last got wrong'],['flagged','Flagged','Your bookmarked questions'],['weak','Weak areas','Your lowest-accuracy questions'],['due','Due review','Questions due for revision']];
   const sizes=[['10','10'],['20','20'],['30','30'],['all','All']];
   const defSize=String(state.settings.mcq.defaultSize||'all');
   host.innerHTML=`<div class="mcx-setup">
@@ -7083,8 +7094,9 @@ function renderNextBestAction(){
   ensureMcqIndex();
   const all=MODULES.map(m=>m.id);
   const count=mode=>buildMcqPool({mode,moduleIds:all}).length;
-  const dueCardsN=allChapterDue().length, wrongN=count('wrong'), weakN=count('weak'), flaggedN=count('flagged'), dueQ=count('due');
+  const dueCardsN=allChapterDue().length, wrongN=count('wrong'), weakN=count('weak'), flaggedN=count('flagged'), dueQ=count('due'), smartN=count('smart');
   const items=[];
+  if(smartN) items.push({k:'Recommended',t:'Smart review',n:smartN+' MCQs',run:()=>startMcqSession({mode:'smart',moduleIds:all,fresh:true})});
   if(dueCardsN) items.push({k:'Due review',t:'Flashcards due',n:dueCardsN+' cards',run:()=>{ setView('flashcards'); startReview(); }});
   if(dueQ) items.push({k:'Due review',t:'Questions due',n:dueQ+' MCQs',run:()=>startMcqSession({mode:'due',moduleIds:all,fresh:true})});
   if(wrongN) items.push({k:'Fix mistakes',t:'Wrong answers',n:wrongN+' MCQs',run:()=>startMcqSession({mode:'wrong',moduleIds:all,fresh:true})});
@@ -7293,6 +7305,7 @@ function resetProgress(){
   if(typed!=='RESET'){ toast('Reset cancelled'); return; }
   state.flashcards.forEach(c=>{ c.ef=state.settings.scheduler.easeStart; c.interval=0; c.reps=0; c.lapses=0; c.state='new'; c.step=0; c.due=0; c.lastGrade=null; c.lastReviewed=null; c.history=[]; });
   state.activity={}; state.qbank=[]; state.study.progress={}; state.study.drills=[]; state.study.daily={date:todayStr(),newDone:0,revDone:0};
+  state.study.mcqPerf={}; state.study.mcqNotes={}; state.study.mcqSession=null;   // clear MCQ performance, notes and any active session
   save(); applyTheme(); renderAll(); closeSettings(); toast('Progress reset — your content is intact');
 }
 document.getElementById('gearBtn').addEventListener('click',openSettings);
