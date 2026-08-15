@@ -181,6 +181,10 @@ h3 {
 .topbar {
   display: none;
 }
+/* Scrim is a mobile-only overlay; keep it out of the desktop grid entirely. */
+.scrim {
+  display: none;
+}
 
 @media (max-width: 860px) {
   .app {
@@ -223,6 +227,7 @@ h3 {
     transform: translateX(0);
   }
   .scrim {
+    display: block;
     position: fixed;
     inset: 0;
     background: rgba(0, 0, 0, 0.45);
