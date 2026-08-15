@@ -1,0 +1,88 @@
+/*
+ * Foundation · Med School Toolkit — Phase 0 design tokens.
+ *
+ * TEMPORARY neutral system (per Phase 0 guardrail: "no new colours yet; temporary
+ * neutral tokens are fine"). The old midnight/paper/clinic aurora palette is
+ * retired — these are elevated tinted neutrals plus a single teal accent. The full
+ * design system lands in a later phase. Identity (Yanal, signature) stays; colours
+ * are new.
+ *
+ * Two themes only in Phase 0: 'midnight' (dark, default) and 'paper' (light).
+ * Selected pre-paint via data-theme on <html> (see index.html) — no flash.
+ */
+
+:root {
+  /* type */
+  --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial,
+    'Apple Color Emoji', 'Segoe UI Emoji', sans-serif;
+  --font-display: 'Iowan Old Style', 'Palatino Linotype', Palatino, 'Book Antiqua', Georgia, serif;
+  --font-mono: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace;
+
+  --radius: 14px;
+  --radius-sm: 9px;
+  --radius-lg: 22px;
+  --space: 16px;
+  --maxw: 1180px;
+
+  --transition: 180ms cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+/* ---- MIDNIGHT (dark) — default ---- */
+:root,
+[data-theme='midnight'] {
+  --bg: #0e1116;
+  --bg-elev: #161b23;
+  --bg-elev-2: #1c222c;
+  --surface: #12161d;
+  --border: #262e3a;
+  --border-soft: #1d242e;
+
+  --text: #e7ecf3;
+  --text-dim: #a6b0be;
+  --text-faint: #6f7987;
+
+  --accent: #4fd1c5; /* teal */
+  --accent-strong: #2fb6aa;
+  --accent-contrast: #06231f;
+  --accent-glow: rgba(79, 209, 197, 0.16);
+
+  --warn: #f2b45e;
+  --danger: #f2778a;
+  --ok: #6fd39a;
+
+  --shadow: 0 10px 30px -12px rgba(0, 0, 0, 0.55);
+  --ring: 0 0 0 3px var(--accent-glow);
+}
+
+/* ---- PAPER (light) ---- */
+[data-theme='paper'] {
+  --bg: #f4f2ec;
+  --bg-elev: #fbfaf6;
+  --bg-elev-2: #ffffff;
+  --surface: #fdfcf8;
+  --border: #ddd8cc;
+  --border-soft: #e8e4da;
+
+  --text: #22262b;
+  --text-dim: #55606c;
+  --text-faint: #8a929c;
+
+  --accent: #0f9e91;
+  --accent-strong: #0b7c72;
+  --accent-contrast: #ffffff;
+  --accent-glow: rgba(15, 158, 145, 0.16);
+
+  --warn: #b9791f;
+  --danger: #c0455a;
+  --ok: #2f8f5e;
+
+  --shadow: 0 10px 30px -14px rgba(40, 40, 30, 0.28);
+  --ring: 0 0 0 3px var(--accent-glow);
+}
+
+/* honour the reduced-motion appearance setting and OS preference */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --transition: 0ms;
+  }
+}
