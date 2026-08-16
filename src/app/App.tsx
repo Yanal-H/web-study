@@ -13,6 +13,7 @@ import { applyHaki } from '../state/haki';
 import HakiField from '../features/effects/HakiField';
 import FocusTimer from '../features/timer/FocusTimer';
 import MusicPlayer from '../features/music/MusicPlayer';
+import { ensureContentLoaded } from '../data/bootstrap';
 
 function BrandMark({ size = 40 }: { size?: number }) {
   return (
@@ -83,6 +84,11 @@ function Shell() {
     };
     document.addEventListener('keydown', onKey);
     return () => document.removeEventListener('keydown', onKey);
+  }, []);
+
+  // Load the shipped packs into the card engine once, in the background.
+  useEffect(() => {
+    void ensureContentLoaded().catch((e) => console.error('content bootstrap failed', e));
   }, []);
 
   const commands = useMemo<Command[]>(() => {

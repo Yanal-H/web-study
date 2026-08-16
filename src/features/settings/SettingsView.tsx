@@ -8,6 +8,7 @@ import { applyFontScale, applyDensity, applyColourTerms } from './appearance';
 import { Card, Button, Segmented, Input } from '../../design/primitives';
 import { useToast } from '../../design/Toast';
 import { IconDownload, IconUpload, IconSun, IconMoon } from '../../design/icons';
+import LibraryPanel from './LibraryPanel';
 
 function Switch({ checked, onChange, label }: { checked: boolean; onChange: (v: boolean) => void; label: string }) {
   return (
@@ -271,6 +272,8 @@ export default function SettingsView() {
           />
         </Row>
       </Card>
+
+      <LibraryPanel />
 
       <Card className="settings-section">
         <h2>Your data</h2>

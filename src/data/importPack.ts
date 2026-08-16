@@ -1,0 +1,160 @@
+// Import a chapter pack into the card engine.
+//
+// Writes are idempotent puts keyed by id, so re-importing an updated pack
+// overwrites in place and never duplicates. Cards go in chunked transactions
+// with a yield between chunks, so importing a very large bank leaves the tab
+// responsive and can drive a progress bar.
+
+import {
+  CARDS,
+  CHAPTERS,
+  MCQS,
+  MEDIA,
+  SCHEDULING,
+  bulkPut,
+  openDB,
+  req,
+  type Scheduling,
+  type StoredCard,
+} from './db';
+import { newScheduling } from './fsrs';
+import type { Chapter } from '../content/schema';
+import { cardDeckPath, deckRoot } from '../content/loader';
+
+const CHUNK = 500;
+
+export interface ImportProgress {
+  chapterId: string;
+  title: string;
+  /** rows written so far for this pack */
+  written: number;
+  total: number;
+}
+
+const idle = () => new Promise<void>((r) => setTimeout(r, 0));
+
+/** Chapter metadata only — the reader's half of a pack, with the bulk stripped out. */
+export function chapterMeta(pack: Chapter) {
+  const { cards, mcqs, images, ...meta } = pack as Chapter & { images?: unknown };
+  void cards;
+  void mcqs;
+  void images;
+  return {
+    ...meta,
+    deck: deckRoot(pack),
+    counts: {
+      cards: pack.cards.length,
+      mcqs: pack.mcqs.length,
+      emqs: pack.emqs.length,
+      sections: pack.sections.length,
+    },
+  };
+}
+
+/** Flatten a pack's cards into storable rows with their full deck paths. */
+export function packCards(pack: Chapter): StoredCard[] {
+  return pack.cards.map((c, i) => ({
+    id: c.id || `${pack.id}-card-${String(i + 1).padStart(3, '0')}`,
+    chapterId: pack.id,
+    subject: pack.subject,
+    deck: cardDeckPath(pack, c),
+    sectionId: c.sectionId || c.tag,
+    type: c.type,
+    front: c.front,
+    back: c.back,
+    cloze: c.cloze,
+    extra: c.extra,
+    hint: c.hint,
+    difficulty: c.difficulty,
+    tags: c.tags,
+    image: c.image,
+    masks: c.masks,
+    target: c.target,
+    occMode: c.occMode,
+    label: c.label,
+  }));
+}
+
+/**
+ * Write one pack into the engine. Returns how many cards were new (i.e. gained
+ * a fresh scheduling row) so the caller can report what a re-import changed.
+ */
+export async function importPack(
+  pack: Chapter,
+  onProgress?: (p: ImportProgress) => void
+): Promise<{ cards: number; mcqs: number; seeded: number }> {
+  const cards = packCards(pack);
+  const mcqs = pack.mcqs.map((q, i) => ({
+    ...q,
+    id: q.id || `${pack.id}-mcq-${String(i + 1).padStart(3, '0')}`,
+    chapterId: pack.id,
+    subject: pack.subject,
+    sectionId: q.sectionId || q.sectionTag,
+  }));
+  const images = Object.entries((pack as Chapter & { images?: Record<string, { src: string }> }).images || {});
+  const total = cards.length + mcqs.length + images.length;
+  let written = 0;
+  const report = () =>
+    onProgress?.({ chapterId: pack.id, title: pack.title, written, total });
+
+  await bulkPut(CHAPTERS, [chapterMeta(pack)]);
+
+  for (let i = 0; i < cards.length; i += CHUNK) {
+    await bulkPut(CARDS, cards.slice(i, i + CHUNK));
+    written += Math.min(CHUNK, cards.length - i);
+    report();
+    await idle();
+  }
+
+  for (let i = 0; i < mcqs.length; i += CHUNK) {
+    await bulkPut(MCQS, mcqs.slice(i, i + CHUNK));
+    written += Math.min(CHUNK, mcqs.length - i);
+    report();
+    await idle();
+  }
+
+  if (images.length) {
+    await bulkPut(
+      MEDIA,
+      images.map(([imageId, img]) => ({ imageId: `${pack.id}:${imageId}`, ...img }))
+    );
+    written += images.length;
+    report();
+  }
+
+  const seeded = await seedScheduling(cards);
+  return { cards: cards.length, mcqs: mcqs.length, seeded };
+}
+
+/**
+ * Give every card without one a scheduling row, so it enters the new queue.
+ * Existing rows are left exactly as they are — re-importing a pack must never
+ * reset a student's progress.
+ */
+export async function seedScheduling(cards: StoredCard[]): Promise<number> {
+  const db = await openDB();
+  let seeded = 0;
+  for (let i = 0; i < cards.length; i += CHUNK) {
+    const slice = cards.slice(i, i + CHUNK);
+    const read = db.transaction([SCHEDULING], 'readonly').objectStore(SCHEDULING);
+    const existing = await Promise.all(
+      slice.map((c) => req<Scheduling | undefined>(read.get(c.id)))
+    );
+    const fresh: Scheduling[] = [];
+    slice.forEach((c, j) => {
+      const prev = existing[j];
+      if (!prev) {
+        fresh.push(newScheduling(c.id, c.deck));
+      } else if (prev.deck !== c.deck) {
+        // the pack moved this card to a different deck — keep its history
+        fresh.push({ ...prev, deck: c.deck });
+      }
+    });
+    if (fresh.length) {
+      await bulkPut(SCHEDULING, fresh);
+      seeded += fresh.filter((f) => f.state === 'new' && f.reps === 0).length;
+    }
+    await idle();
+  }
+  return seeded;
+}
