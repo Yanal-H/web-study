@@ -7,7 +7,15 @@ import { IconFlashcards, IconUpload, IconDownload, IconPlus } from '../../design
 import { heatmapWeeks, heatLevel } from '../../lib/stats';
 import { allCards } from '../../content/loader';
 import { useUserContentVersion } from '../../content/userContent';
-import { collectItems, buildQueue, queueStats, type ReviewItem } from './deck';
+import {
+  collectItems,
+  buildQueue,
+  queueStats,
+  buildDeckTree,
+  itemsInDeck,
+  type ReviewItem,
+} from './deck';
+import DeckTree from './DeckTree';
 import ReviewSession from './ReviewSession';
 import { exportTSV, parseDelimited, importCards } from './anki';
 import { makeUserCard } from './makeCard';
@@ -25,6 +33,7 @@ export default function FlashcardsView() {
   const [mode, setMode] = useState<Mode>('home');
   const [queue, setQueue] = useState<ReviewItem[]>([]);
   const [scope, setScope] = useState<'all' | 'due'>('due');
+  const [deck, setDeck] = useState('');
   const [creating, setCreating] = useState(false);
   const [importing, setImporting] = useState(false);
 
@@ -32,20 +41,33 @@ export default function FlashcardsView() {
   const stats = useMemo(() => queueStats(items), [items, state.study.cardSched]);
   const weeks = useMemo(() => heatmapWeeks(state.activity, 17), [state.activity]);
   const contentCount = useMemo(() => allCards().length, [uv]);
+  const tree = useMemo(() => buildDeckTree(items), [items, state.study.cardSched]);
+  const scoped = useMemo(() => (deck ? itemsInDeck(items, deck) : items), [items, deck]);
+  const scopedStats = useMemo(() => queueStats(scoped), [scoped, state.study.cardSched]);
 
-  function start() {
+  function start(path = deck, force?: 'all' | 'due') {
     const S = state.settings.scheduler;
+    const pool = path ? itemsInDeck(items, path) : items;
+    const how = force ?? scope;
     const q =
-      scope === 'due'
-        ? buildQueue(items, { newLimit: S.newPerDay, reviewLimit: S.reviewsPerDay })
+      how === 'due'
+        ? buildQueue(pool, { newLimit: S.newPerDay, reviewLimit: S.reviewsPerDay })
         : // "study all" — everything, new + review, ignoring caps
-          [...items];
+          [...pool];
     if (q.length === 0) {
-      toast('Nothing due — try “Study all”.');
+      toast(path ? 'Nothing due in that deck — switch to All.' : 'Nothing due — try “Study all”.');
       return;
     }
     setQueue(q);
     setMode('review');
+  }
+
+  function studyDeck(path: string) {
+    setDeck(path);
+    const pool = itemsInDeck(items, path);
+    const S = state.settings.scheduler;
+    const ready = buildQueue(pool, { newLimit: S.newPerDay, reviewLimit: S.reviewsPerDay });
+    start(path, ready.length ? 'due' : 'all');
   }
 
   if (mode === 'review') {
@@ -93,17 +115,24 @@ export default function FlashcardsView() {
 
       <div className="cols cols-2">
         <Card>
-          <div className="card-eyebrow">Review</div>
+          <div className="row spread" style={{ alignItems: 'baseline', marginBottom: 8 }}>
+            <div className="card-eyebrow" style={{ margin: 0 }}>Review</div>
+            {deck && (
+              <button className="deck-clear" onClick={() => setDeck('')}>
+                {deck.split('::').join(' › ')} ✕
+              </button>
+            )}
+          </div>
           <Segmented
             value={scope}
             onChange={setScope}
             options={[
-              { value: 'due', label: `Due (${stats.due + stats.neu})` },
-              { value: 'all', label: `All (${stats.total})` },
+              { value: 'due', label: `Due (${scopedStats.due + scopedStats.neu})` },
+              { value: 'all', label: `All (${scopedStats.total})` },
             ]}
             ariaLabel="Review scope"
           />
-          <Button variant="primary" block style={{ marginTop: 14 }} onClick={start}>
+          <Button variant="primary" block style={{ marginTop: 14 }} onClick={() => start()}>
             <IconFlashcards size={18} /> Start review
           </Button>
           <div className="row wrap" style={{ gap: 8, marginTop: 12 }}>
@@ -135,6 +164,16 @@ export default function FlashcardsView() {
 
       <section className="section">
         <div className="section-head">
+          <h2>Decks</h2>
+          <span className="see">{tree.length} top-level</span>
+        </div>
+        <Card padSm>
+          <DeckTree nodes={tree} selected={deck} onSelect={setDeck} onStudy={studyDeck} />
+        </Card>
+      </section>
+
+      <section className="section">
+        <div className="section-head">
           <h2>Review activity</h2>
         </div>
         <Card>
@@ -150,7 +189,7 @@ export default function FlashcardsView() {
         </Card>
       </section>
 
-      {creating && <CreateCardDialog onClose={() => setCreating(false)} />}
+      {creating && <CreateCardDialog onClose={() => setCreating(false)} deck={deck} />}
       {importing && <ImportDialog onClose={() => setImporting(false)} />}
     </>
   );
@@ -181,16 +220,20 @@ function ExportButton() {
   );
 }
 
-function CreateCardDialog({ onClose }: { onClose: () => void }) {
+function CreateCardDialog({ onClose, deck: initialDeck }: { onClose: () => void; deck?: string }) {
   const toast = useToast();
   const [front, setFront] = useState('');
   const [back, setBack] = useState('');
   const [cloze, setCloze] = useState('');
+  const [deck, setDeck] = useState(initialDeck || '');
   const [type, setType] = useState<'basic' | 'cloze'>('basic');
   const valid = type === 'cloze' ? /\{\{c\d+::/.test(cloze) : front.trim() && back.trim();
 
   function save() {
-    makeUserCard(type === 'cloze' ? { type: 'cloze', cloze } : { type: 'basic', front, back });
+    const d = deck.trim() || undefined;
+    makeUserCard(
+      type === 'cloze' ? { type: 'cloze', cloze, deck: d } : { type: 'basic', front, back, deck: d }
+    );
     toast('Card added', 'success');
     onClose();
   }
@@ -229,6 +272,17 @@ function CreateCardDialog({ onClose }: { onClose: () => void }) {
             onChange={(e) => setCloze(e.target.value)}
           />
         )}
+        <label className="field">
+          <span className="field-label">
+            Deck <span className="field-hint">Optional · use :: for sub-decks</span>
+          </span>
+          <input
+            className="input"
+            placeholder="Surgery::Wound Healing::Suture materials"
+            value={deck}
+            onChange={(e) => setDeck(e.target.value)}
+          />
+        </label>
       </div>
     </Dialog>
   );

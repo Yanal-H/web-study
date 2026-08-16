@@ -12,6 +12,8 @@ export interface NewCardInput {
   hint?: string;
   subject?: string;
   tags?: string[];
+  /** "::"-separated deck path; defaults to the personal deck */
+  deck?: string;
 }
 
 export function makeUserCard(input: NewCardInput): string {
@@ -37,6 +39,7 @@ export function makeUserCard(input: NewCardInput): string {
   (card as any).extra = input.extra;
   (card as any).hint = input.hint;
   (card as any).subject = input.subject;
+  (card as any).deck = input.deck;
   state.flashcards.push(card);
   commit();
   return id;

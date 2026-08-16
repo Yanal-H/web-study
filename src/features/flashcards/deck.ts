@@ -33,7 +33,12 @@ export interface ReviewItem {
   card: RenderCard;
   chapterId?: string;
   subject?: string;
+  /** full deck path, "::" between levels — Subject::Chapter::Section::Sub-topic */
+  deck: string;
 }
+
+/** Deck every personal card lands in unless it carries its own path. */
+export const USER_DECK = 'My cards';
 
 function schedFor(key: string): CardSched {
   return (state.study.cardSched[key] as CardSched) || { state: 'new' };
@@ -53,6 +58,7 @@ export function collectItems(filter?: { subject?: string; chapterId?: string }):
       source: 'content',
       chapterId: c.chapterId,
       subject: c.subject,
+      deck: c.deck || `${c.subject}::${c.chapterId}`,
       card: {
         type: c.type,
         front: c.front,
@@ -75,6 +81,7 @@ export function collectItems(filter?: { subject?: string; chapterId?: string }):
           key: `user:${c.id}#${i}`,
           source: 'user',
           subject: anyC.subject,
+          deck: anyC.deck || USER_DECK,
           card: {
             type: 'occlusion',
             image: anyC.image,
@@ -90,6 +97,7 @@ export function collectItems(filter?: { subject?: string; chapterId?: string }):
         key: `user:${c.id}`,
         source: 'user',
         subject: anyC.subject,
+        deck: anyC.deck || USER_DECK,
         card: {
           type: anyC.type || 'basic',
           front: c.front,
@@ -169,4 +177,86 @@ export function queueStats(items: ReviewItem[], now = Date.now()) {
     else if (cardIsDue(s, now)) due++;
   }
   return { due, neu, total: items.length };
+}
+
+/* ------------------------------------------------------------------ decks */
+
+export interface DeckNode {
+  /** label at this level */
+  name: string;
+  /** full path from the root, "::" separated */
+  path: string;
+  children: DeckNode[];
+  /** cards filed directly at this level */
+  own: number;
+  /** these totals include every descendant */
+  total: number;
+  due: number;
+  neu: number;
+}
+
+function emptyNode(name: string, path: string): DeckNode {
+  return { name, path, children: [], own: 0, total: 0, due: 0, neu: 0 };
+}
+
+/**
+ * Group items into a deck / sub-deck / sub-sub-deck tree. Counts roll up, so a
+ * parent shows everything beneath it and studying a parent studies the subtree.
+ */
+export function buildDeckTree(items: ReviewItem[], now = Date.now()): DeckNode[] {
+  const roots: DeckNode[] = [];
+  const index = new Map<string, DeckNode>();
+
+  for (const it of items) {
+    const parts = (it.deck || USER_DECK).split('::').map((p) => p.trim()).filter(Boolean);
+    if (parts.length === 0) parts.push(USER_DECK);
+    const s = schedFor(it.key);
+    const isNew = isNewCard(s);
+    const isDue = !isNew && cardIsDue(s, now);
+
+    let path = '';
+    let siblings = roots;
+    for (const part of parts) {
+      path = path ? `${path}::${part}` : part;
+      let node = index.get(path);
+      if (!node) {
+        node = emptyNode(part, path);
+        index.set(path, node);
+        siblings.push(node);
+      }
+      node.total++;
+      if (isNew) node.neu++;
+      else if (isDue) node.due++;
+      siblings = node.children;
+    }
+    const leaf = index.get(path);
+    if (leaf) leaf.own++;
+  }
+
+  const sortTree = (nodes: DeckNode[]) => {
+    nodes.sort((a, b) => a.name.localeCompare(b.name));
+    nodes.forEach((n) => sortTree(n.children));
+  };
+  sortTree(roots);
+  return roots;
+}
+
+/** Every item filed at a deck path or anywhere beneath it. */
+export function itemsInDeck(items: ReviewItem[], path: string): ReviewItem[] {
+  if (!path) return items;
+  const prefix = `${path}::`;
+  return items.filter((i) => i.deck === path || i.deck.startsWith(prefix));
+}
+
+/** Flatten a tree to its paths, depth-first (used by the deck picker). */
+export function deckPaths(nodes: DeckNode[]): string[] {
+  const out: string[] = [];
+  const walk = (ns: DeckNode[]) => {
+    for (const n of ns) {
+      out.push(n.path);
+      walk(n.children);
+    }
+  };
+  walk(nodes);
+  return out;
 }

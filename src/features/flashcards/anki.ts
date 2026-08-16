@@ -1,5 +1,7 @@
 // Anki-style TSV/CSV round-trip for the user's own cards. Supported fields:
-// front, back, tags, type (basic/cloze). Lossless for those fields.
+// front, back, tags, type (basic/cloze) and deck. Lossless for those fields.
+// Deck paths use Anki's own "::" convention, so decks, sub-decks and sub-sub-decks
+// survive a round trip in either direction.
 import { state, commit, uid } from '../../state/store';
 import type { Flashcard } from '../../state/types';
 
@@ -10,7 +12,7 @@ function esc(v: string): string {
 
 /** Export user cards to TSV (Anki's default). Header row included. */
 export function exportTSV(cards: Flashcard[]): string {
-  const rows = [['front', 'back', 'tags', 'type']];
+  const rows = [['front', 'back', 'tags', 'type', 'deck']];
   for (const c of cards) {
     const anyC = c as any;
     if (anyC.type === 'occlusion') continue; // image occlusion is not TSV-representable
@@ -19,6 +21,7 @@ export function exportTSV(cards: Flashcard[]): string {
       anyC.type === 'cloze' ? '' : c.back || '',
       (c.tags || []).join(' '),
       anyC.type || 'basic',
+      anyC.deck || '',
     ]);
   }
   return rows.map((r) => r.map(esc).join('\t')).join('\n');
@@ -53,6 +56,8 @@ export interface ParsedCard {
   back?: string;
   cloze?: string;
   tags: string[];
+  /** "::"-separated deck path, as Anki writes it */
+  deck?: string;
 }
 
 /** Parse TSV or CSV text into cards. Auto-detects delimiter and an optional header. */
@@ -70,10 +75,11 @@ export function parseDelimited(text: string): ParsedCard[] {
     const back = (cols[1] || '').trim();
     const tags = (cols[2] || '').trim().split(/\s+/).filter(Boolean);
     const typeCol = (cols[3] || '').trim().toLowerCase();
+    const deck = (cols[4] || '').trim() || undefined;
     const isCloze = typeCol === 'cloze' || /\{\{c\d+::/.test(front);
     if (!front) continue;
-    if (isCloze) cards.push({ type: 'cloze', cloze: front, tags });
-    else cards.push({ type: 'basic', front, back, tags });
+    if (isCloze) cards.push({ type: 'cloze', cloze: front, tags, deck });
+    else cards.push({ type: 'basic', front, back, tags, deck });
   }
   return cards;
 }
@@ -90,6 +96,7 @@ export function importCards(parsed: ParsedCard[]): number {
       back: p.back,
       cloze: p.cloze,
       tags: p.tags,
+      deck: p.deck,
       ef: state.settings.scheduler.easeStart,
       interval: 0,
       reps: 0,

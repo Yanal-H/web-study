@@ -190,13 +190,23 @@ export default function ReviewSession({
       </div>
 
       <div
-        className="flashcard"
+        key={item!.key}
+        className={`flashcard${revealed ? ' is-open' : ''}`}
         onClick={() => !revealed && setRevealed(true)}
         onTouchStart={onTouchStart}
         onTouchMove={onTouchMove}
         onTouchEnd={onTouchEnd}
       >
         {swipeHint && <div className={`swipe-hint swipe-${swipeHint}`}>{swipeHint}</div>}
+
+        <div className="fc-deck" title={item!.deck}>
+          {item!.deck.split('::').map((part, i, arr) => (
+            <span key={i} className={i === arr.length - 1 ? 'fc-deck-leaf' : undefined}>
+              {part}
+              {i < arr.length - 1 && <span className="fc-deck-sep">›</span>}
+            </span>
+          ))}
+        </div>
 
         <div className="flashcard-face">
           <CardFront card={c} revealed={revealed} typed={typed} setTyped={setTyped} hint={hint} />
