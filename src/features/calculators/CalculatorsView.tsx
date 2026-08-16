@@ -8,6 +8,11 @@ import {
   anionGap,
   correctedSodium,
   bsaMosteller,
+  parkland,
+  maintenanceFluid,
+  qtcBazett,
+  idealBodyWeight,
+  egfrCkdEpi,
 } from './formulas';
 
 /*
@@ -209,6 +214,123 @@ const CALCS: Calc[] = [
       return { value: `${num(bsa, 2)} m²`, interp: 'Used for chemotherapy and cardiac index dosing.', tone: 'default' };
     },
     cite: 'Mosteller RD. NEJM 1987. BSA = √(ht·wt/3600).',
+  },
+  {
+    id: 'parkland',
+    name: 'Parkland (burns)',
+    blurb: 'Crystalloid for the first 24 h of a major burn.',
+    inputs: [
+      { key: 'wt', label: 'Weight', unit: 'kg', step: 1, def: 70 },
+      { key: 'tbsa', label: 'Burn area', unit: '% TBSA', step: 1, def: 30 },
+    ],
+    compute: (v) => {
+      if (!v.wt || !v.tbsa) return null;
+      const r = parkland(v.wt, v.tbsa);
+      return {
+        value: `${num(r.total, 0)} mL / 24 h`,
+        interp: `Give ${num(r.first8h, 0)} mL in the first 8 h (${num(r.rate8h, 0)} mL/h), the rest over 16 h. Titrate to urine output.`,
+        tone: v.tbsa >= 20 ? 'warn' : 'default',
+      };
+    },
+    cite: 'Parkland formula: 4 mL × kg × %TBSA (Baxter). Adults, second/third-degree burns.',
+  },
+  {
+    id: 'maint-fluid',
+    name: 'Maintenance fluids',
+    blurb: 'Holliday–Segar 4-2-1 hourly rate.',
+    inputs: [{ key: 'wt', label: 'Weight', unit: 'kg', step: 0.5, def: 70 }],
+    compute: (v) => {
+      if (!v.wt) return null;
+      const rate = maintenanceFluid(v.wt);
+      return {
+        value: `${num(rate, 0)} mL/h`,
+        interp: `≈ ${num(rate * 24, 0)} mL/day. 4 mL/kg for the first 10 kg, 2 for the next 10, 1 thereafter.`,
+        tone: 'default',
+      };
+    },
+    cite: 'Holliday MA, Segar WE. Pediatrics 1957 (4-2-1 rule).',
+  },
+  {
+    id: 'qtc',
+    name: 'Corrected QT (QTc)',
+    blurb: 'Bazett correction for heart rate.',
+    inputs: [
+      { key: 'qt', label: 'QT interval', unit: 'ms', step: 5, def: 400 },
+      { key: 'hr', label: 'Heart rate', unit: 'bpm', step: 1, def: 75 },
+    ],
+    compute: (v) => {
+      if (!v.qt || !v.hr) return null;
+      const qtc = qtcBazett(v.qt, v.hr);
+      let interp = 'Normal QTc.';
+      let tone: CalcResult['tone'] = 'good';
+      if (qtc >= 500) {
+        interp = 'Markedly prolonged (≥500 ms) — high torsades risk.';
+        tone = 'bad';
+      } else if (qtc > 460) {
+        interp = 'Prolonged — review drugs and electrolytes.';
+        tone = 'warn';
+      }
+      return { value: `${num(qtc, 0)} ms`, interp, tone };
+    },
+    cite: 'Bazett HC, 1920. QTc = QT / √RR (RR in seconds).',
+  },
+  {
+    id: 'egfr',
+    name: 'eGFR (CKD-EPI 2021)',
+    blurb: 'Race-free estimate of kidney function.',
+    inputs: [
+      { key: 'age', label: 'Age', unit: 'yr', step: 1, def: 50 },
+      { key: 'scr', label: 'Serum creatinine', unit: 'mg/dL', step: 0.1, def: 1 },
+    ],
+    extraSelect: {
+      key: 'sex',
+      label: 'Sex',
+      options: [
+        { value: 'male', label: 'Male' },
+        { value: 'female', label: 'Female' },
+      ],
+    },
+    compute: (v, sel) => {
+      if (!v.age || !v.scr) return null;
+      const e = egfrCkdEpi(v.age, v.scr, sel.sex === 'female');
+      let interp = 'Normal or high (G1, ≥90).';
+      let tone: CalcResult['tone'] = 'good';
+      if (e < 15) {
+        interp = 'Kidney failure (G5, <15).';
+        tone = 'bad';
+      } else if (e < 30) {
+        interp = 'Severely reduced (G4).';
+        tone = 'bad';
+      } else if (e < 60) {
+        interp = 'Moderately reduced (G3) — review drug dosing.';
+        tone = 'warn';
+      } else if (e < 90) {
+        interp = 'Mildly reduced (G2).';
+        tone = 'good';
+      }
+      return { value: `${num(e, 0)} mL/min/1.73m²`, interp, tone };
+    },
+    cite: 'Inker LA et al. NEJM 2021 (CKD-EPI creatinine, race-free).',
+  },
+  {
+    id: 'ibw',
+    name: 'Ideal body weight',
+    blurb: 'Devine formula — drug dosing weight.',
+    inputs: [{ key: 'ht', label: 'Height', unit: 'cm', step: 1, def: 175 }],
+    extraSelect: {
+      key: 'sex',
+      label: 'Sex',
+      options: [
+        { value: 'male', label: 'Male' },
+        { value: 'female', label: 'Female' },
+      ],
+    },
+    compute: (v, sel) => {
+      if (!v.ht) return null;
+      const ibw = idealBodyWeight(v.ht, sel.sex === 'female');
+      return { value: `${num(ibw, 1)} kg`, interp: 'Used for tidal volumes and weight-based dosing.', tone: 'default' };
+    },
+    cite: 'Devine BJ, 1974. Male 50 kg + 2.3/inch over 5 ft; female 45.5 kg.',
   },
 ];
 
