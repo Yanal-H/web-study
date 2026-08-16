@@ -1,0 +1,111 @@
+/* Concept colouring — one colour per class of idea, everywhere text is rendered.
+   The classes are emitted by src/lib/lexicon.ts. Keep this file purely visual. */
+
+.t {
+  color: var(--kc, var(--text));
+  font-weight: 560;
+  border-radius: 4px;
+  padding: 0 1px;
+  transition: background var(--dur-fast) var(--ease);
+}
+.t[title] {
+  cursor: help;
+  border-bottom: 1px dotted color-mix(in srgb, var(--kc) 55%, transparent);
+}
+.t:hover {
+  background: color-mix(in srgb, var(--kc) var(--k-tint), transparent);
+}
+
+.t-value { --kc: var(--k-value); font-variant-numeric: tabular-nums; }
+.t-drug { --kc: var(--k-drug); }
+.t-organism { --kc: var(--k-organism); font-style: italic; }
+.t-cell { --kc: var(--k-cell); }
+.t-mediator { --kc: var(--k-mediator); }
+.t-test { --kc: var(--k-test); }
+.t-structure { --kc: var(--k-structure); }
+.t-procedure { --kc: var(--k-procedure); }
+.t-condition { --kc: var(--k-condition); }
+
+/* red flags get more than colour so they are unmissable */
+.t-warning {
+  --kc: var(--k-warning);
+  font-weight: 700;
+  background: color-mix(in srgb, var(--k-warning) 12%, transparent);
+  padding: 0 4px;
+}
+
+/* Bold inside coloured text keeps the colour rather than fighting it. */
+.md strong .t,
+.t strong {
+  color: inherit;
+}
+
+/* ---- the colour key shown in the reader ---- */
+.key-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 14px;
+  padding: 10px 14px;
+  border: 1px solid var(--border-soft);
+  border-radius: var(--r-md);
+  background: var(--surface-1);
+  font-size: 12px;
+  color: var(--text-dim);
+}
+.key-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+}
+.key-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 3px;
+  background: var(--kc);
+  box-shadow: 0 0 8px -1px var(--kc);
+}
+
+/* ---- glossary panel ---- */
+.gloss-list {
+  display: grid;
+  gap: 2px;
+}
+.gloss-row {
+  display: grid;
+  grid-template-columns: minmax(120px, 200px) 1fr;
+  gap: 14px;
+  padding: 9px 10px;
+  border-radius: var(--r-sm);
+  align-items: baseline;
+}
+.gloss-row:nth-child(odd) {
+  background: var(--surface-1);
+}
+.gloss-term {
+  font-weight: 650;
+  color: var(--kc, var(--text));
+}
+.gloss-def {
+  color: var(--text-dim);
+  font-size: 14px;
+  line-height: 1.55;
+}
+@media (max-width: 640px) {
+  .gloss-row {
+    grid-template-columns: 1fr;
+    gap: 2px;
+  }
+}
+
+/* When the reader's colour coding is switched off, everything falls back to
+   plain text but keeps the red-flag emphasis. */
+:root[data-lexicon='off'] .t:not(.t-warning) {
+  color: inherit;
+  font-weight: inherit;
+  border-bottom: 0;
+  font-style: inherit;
+}
+:root[data-lexicon='off'] .t:hover {
+  background: none;
+}

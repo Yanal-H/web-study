@@ -127,6 +127,20 @@
   --haki-glow: rgba(255, 45, 85, 0.55);
   --grad-haki: linear-gradient(135deg, #ff2d55, #7c3aed 55%, #22d3ee);
   --card-glow: 0 0 0 1px var(--border), 0 18px 50px -24px var(--accent-glow);
+
+  /* ---- CONCEPT COLOURS (dark) — one hue per class, spread round the wheel.
+     Used identically in the reader, on cards, in questions and in notes. ---- */
+  --k-value: #ff8a5c;
+  --k-drug: #f5b93f;
+  --k-organism: #a9dc55;
+  --k-cell: #45d9a6;
+  --k-mediator: #3fc9e8;
+  --k-test: #6fa8ff;
+  --k-structure: #a795ff;
+  --k-procedure: #dd8bf0;
+  --k-condition: #ff7fa5;
+  --k-warning: #ff3b52;
+  --k-tint: 14%;
 }
 
 /* ===================================================================
@@ -190,6 +204,19 @@
   --haki-glow: rgba(255, 45, 85, 0.5);
   --grad-haki: linear-gradient(135deg, #ff2d55, #7c3aed 55%, #0d9488);
   --card-glow: 0 0 0 1px var(--border), 0 18px 50px -28px var(--accent-glow);
+
+  /* ---- CONCEPT COLOURS (light) — same hues, darkened for contrast on paper ---- */
+  --k-value: #c2410c;
+  --k-drug: #a16207;
+  --k-organism: #4d7c0f;
+  --k-cell: #047857;
+  --k-mediator: #0369a1;
+  --k-test: #1d4ed8;
+  --k-structure: #6d28d9;
+  --k-procedure: #a21caf;
+  --k-condition: #be185d;
+  --k-warning: #be123c;
+  --k-tint: 10%;
 }
 
 /* Honour OS preference for the very first paint when no explicit choice is set.

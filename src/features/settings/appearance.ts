@@ -8,3 +8,8 @@ export function applyFontScale(scale: string) {
 export function applyDensity(density: string) {
   document.documentElement.classList.toggle('density-compact', density === 'compact');
 }
+
+/** Concept colour coding in the reader, on cards and in questions. */
+export function applyColourTerms(on: boolean) {
+  document.documentElement.dataset.lexicon = on ? 'on' : 'off';
+}

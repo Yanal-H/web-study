@@ -15,6 +15,8 @@ import { recordResult, toggleFlag, isFlagged } from './perf';
 import { makeUserCard } from '../flashcards/makeCard';
 import { useToast } from '../../design/Toast';
 import type { Mcq, Option } from '../../content/schema';
+import { renderInline } from '../../lib/lexicon';
+import { globalIndex } from '../../lib/useLexicon';
 
 export default function QuestionRunner({ onExit }: { onExit: () => void }) {
   const state = useStore();
@@ -26,9 +28,18 @@ export default function QuestionRunner({ onExit }: { onExit: () => void }) {
   const [confidence, setConfidence] = useState<number | null>(null);
   const [showResults, setShowResults] = useState(false);
   const [surge, setSurge] = useState<null | 'ok' | 'no'>(null);
+  const [autoRun, setAutoRun] = useState(false);
   const [, force] = useState(0);
   const qStart = useRef(Date.now());
+  const autoTimer = useRef<number | null>(null);
   const immediate = session ? session.mode !== 'exam' : true;
+
+  const mcqCfg = state.settings.mcq as Record<string, unknown>;
+  /** answer the moment an option is clicked — no Submit step (single-answer only) */
+  const instant = mcqCfg.instantAnswer !== false;
+  /** 'correct' advances only when you got it right, so a miss always gets read */
+  const autoMode = (mcqCfg.autoAdvance as 'correct' | 'always' | 'off') ?? 'correct';
+  const autoMs = (mcqCfg.autoAdvanceMs as number) ?? 1500;
 
   const q = session ? byId.get(session.ids[session.index]!) : undefined;
 
@@ -46,7 +57,10 @@ export default function QuestionRunner({ onExit }: { onExit: () => void }) {
       setConfidence(null);
     }
     qStart.current = Date.now();
+    cancelAuto();
   }, [session?.index]);
+
+  useEffect(() => () => cancelAuto(), []);
 
   // whole-set timer (exam)
   useEffect(() => {
@@ -74,6 +88,44 @@ export default function QuestionRunner({ onExit }: { onExit: () => void }) {
     return opts;
   }, [q?.id, state.settings.mcq.shuffleOptions]);
 
+  // keyboard-first: 1–6 or A–F pick an option, Enter/→ moves on, F flags
+  useEffect(() => {
+    function onKey(e: KeyboardEvent) {
+      if (!session || !q) return;
+      const el = e.target as HTMLElement | null;
+      if (el && /^(INPUT|TEXTAREA|SELECT)$/.test(el.tagName)) return;
+      if (e.metaKey || e.ctrlKey || e.altKey) return;
+      const k = e.key.toLowerCase();
+      const letters = 'abcdef';
+      let pick = -1;
+      if (/^[1-6]$/.test(k)) pick = Number(k) - 1;
+      else if (letters.includes(k) && k !== 'f') pick = letters.indexOf(k);
+      if (pick >= 0 && pick < options.length && !submitted) {
+        e.preventDefault();
+        choose(options[pick]!.id!);
+        return;
+      }
+      if (k === 'f') {
+        e.preventDefault();
+        toggleFlag(q.id);
+        force((n) => n + 1);
+        return;
+      }
+      if (e.key === 'Enter' || e.key === 'ArrowRight' || e.key === ' ') {
+        e.preventDefault();
+        if (submitted) go(1);
+        else if (chosen.length) submit();
+      }
+      if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        go(-1);
+      }
+    }
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [session?.index, submitted, chosen, options]);
+
   if (!session || !q) {
     return (
       <Center>
@@ -85,10 +137,20 @@ export default function QuestionRunner({ onExit }: { onExit: () => void }) {
 
   const isMulti = q.type === 'multi';
 
+  function cancelAuto() {
+    if (autoTimer.current) window.clearTimeout(autoTimer.current);
+    autoTimer.current = null;
+    setAutoRun(false);
+  }
+
   function choose(id: string) {
     if (submitted) return;
-    if (isMulti) setChosen((c) => (c.includes(id) ? c.filter((x) => x !== id) : [...c, id]));
-    else setChosen([id]);
+    if (isMulti) {
+      setChosen((c) => (c.includes(id) ? c.filter((x) => x !== id) : [...c, id]));
+      return;
+    }
+    setChosen([id]);
+    if (instant) submit([id]);
   }
 
   function record(next: McqSession) {
@@ -96,16 +158,26 @@ export default function QuestionRunner({ onExit }: { onExit: () => void }) {
     setSession({ ...next });
   }
 
-  function submit() {
-    if (chosen.length === 0) return;
-    const ok = isAnswerCorrect(q!, chosen);
+  function submit(selection?: string[]) {
+    const sel = selection ?? chosen;
+    if (sel.length === 0) return;
+    const ok = isAnswerCorrect(q!, sel);
     const next = { ...session! };
-    next.answers[q!.id] = { chosen, correct: ok, confidence, timeMs: Date.now() - qStart.current };
+    next.answers[q!.id] = { chosen: sel, correct: ok, confidence, timeMs: Date.now() - qStart.current };
     if (immediate) {
       setSubmitted(true);
       setSurge(ok ? 'ok' : 'no');
       setTimeout(() => setSurge(null), 620);
       record(next);
+      const last = session!.index + 1 >= session!.ids.length;
+      if (!last && (autoMode === 'always' || (autoMode === 'correct' && ok))) {
+        setAutoRun(true);
+        autoTimer.current = window.setTimeout(() => {
+          autoTimer.current = null;
+          setAutoRun(false);
+          go(1);
+        }, autoMs);
+      }
     } else {
       // exam: store, advance
       record(next);
@@ -114,6 +186,7 @@ export default function QuestionRunner({ onExit }: { onExit: () => void }) {
   }
 
   function go(delta: number) {
+    cancelAuto();
     const ni = session!.index + delta;
     if (ni < 0) return;
     if (ni >= session!.ids.length) return finish();
@@ -161,7 +234,16 @@ export default function QuestionRunner({ onExit }: { onExit: () => void }) {
       </div>
 
       <div className="qb-layout">
-        <Card className={`qb-question${surge ? ` surge-${surge}` : ''}`}>
+        <Card
+          key={q.id}
+          className={`qb-question qb-swap${surge ? ` surge-${surge}` : ''}`}
+          onPointerDownCapture={() => autoRun && cancelAuto()}
+        >
+          {autoRun && (
+            <div className="auto-bar" aria-hidden="true">
+              <div className="auto-bar-fill" style={{ animationDuration: `${autoMs}ms` }} />
+            </div>
+          )}
           <div className="row spread" style={{ marginBottom: 10 }}>
             <Badge tone={q.difficulty === 3 ? 'error' : q.difficulty === 2 ? 'warning' : 'success'}>
               Level {q.difficulty}
@@ -170,10 +252,13 @@ export default function QuestionRunner({ onExit }: { onExit: () => void }) {
           </div>
 
           {q.figure && <QFigure fig={q.figure} />}
-          <div className="qb-stem">{q.stem}</div>
+          <div
+            className="qb-stem"
+            dangerouslySetInnerHTML={{ __html: renderInline(q.stem, globalIndex()) }}
+          />
 
           <div className="qb-options">
-            {options.map((o) => {
+            {options.map((o, i) => {
               const picked = chosen.includes(o.id!);
               let cls = 'qb-option';
               if (submitted) {
@@ -182,9 +267,18 @@ export default function QuestionRunner({ onExit }: { onExit: () => void }) {
               } else if (picked) cls += ' picked';
               return (
                 <button key={o.id} className={cls} onClick={() => choose(o.id!)} disabled={submitted}>
+                  <span className="qb-key" aria-hidden="true">{'ABCDEF'[i]}</span>
                   <span className="qb-mark">{isMulti ? (picked ? '☑' : '☐') : picked ? '●' : '○'}</span>
-                  <span className="qb-opt-text">{o.text}</span>
-                  {submitted && (o.correct || picked) && o.why && <span className="qb-why">{o.why}</span>}
+                  <span
+                    className="qb-opt-text"
+                    dangerouslySetInnerHTML={{ __html: renderInline(o.text, globalIndex()) }}
+                  />
+                  {submitted && (o.correct || picked) && o.why && (
+                    <span
+                      className="qb-why"
+                      dangerouslySetInnerHTML={{ __html: renderInline(o.why, globalIndex()) }}
+                    />
+                  )}
                 </button>
               );
             })}
@@ -211,9 +305,13 @@ export default function QuestionRunner({ onExit }: { onExit: () => void }) {
               <IconChevron size={15} style={{ transform: 'rotate(180deg)' }} /> Prev
             </Button>
             {!submitted ? (
-              <Button variant="primary" disabled={chosen.length === 0} onClick={submit}>
-                {immediate ? 'Submit' : session.index + 1 === session.ids.length ? 'Finish' : 'Save & next'}
-              </Button>
+              instant && !isMulti && immediate ? (
+                <span className="qb-hint-keys">Pick an answer — keys 1–{options.length} or A–{'ABCDEF'[options.length - 1]}</span>
+              ) : (
+                <Button variant="primary" disabled={chosen.length === 0} onClick={() => submit()}>
+                  {immediate ? 'Submit' : session.index + 1 === session.ids.length ? 'Finish' : 'Save & next'}
+                </Button>
+              )
             ) : (
               <Button variant="primary" onClick={() => go(1)}>
                 {session.index + 1 === session.ids.length ? 'Finish' : 'Next'} <IconChevron size={15} />
@@ -234,7 +332,9 @@ function Explanation({ q, correct, onMakeCard }: { q: Mcq; correct: boolean; onM
       <div className="qb-verdict">{correct ? 'Correct' : 'Incorrect'}</div>
       {q.explanation.length > 0 && (
         <ol className="qb-explain-list">
-          {q.explanation.map((e, i) => <li key={i}>{e}</li>)}
+          {q.explanation.map((e, i) => (
+            <li key={i} dangerouslySetInnerHTML={{ __html: renderInline(e, globalIndex()) }} />
+          ))}
         </ol>
       )}
       {q.keyFacts.length > 0 && (

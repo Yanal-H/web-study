@@ -6,13 +6,14 @@ import './design/fonts.css';
 import './design/tokens.css';
 import './design/base.css';
 import './design/primitives.css';
+import './design/lexicon.css';
 import './features/features.css';
 import './features/dashboard/hero.css';
 import './features/effects/effects.css';
 import './features/gate/watermark.css';
 
 import { state } from './state/store';
-import { applyFontScale, applyDensity } from './features/settings/appearance';
+import { applyFontScale, applyDensity, applyColourTerms } from './features/settings/appearance';
 import { applyHaki } from './state/haki';
 
 // Apply persisted appearance preferences before first paint of the app tree.
@@ -20,6 +21,7 @@ const ap = state.settings?.appearance;
 if (ap) {
   applyFontScale(ap.fontScale);
   applyDensity(ap.density);
+  applyColourTerms(ap.colourTerms !== false);
   if (ap.reducedMotion) document.documentElement.classList.add('reduce-motion');
 }
 applyHaki();

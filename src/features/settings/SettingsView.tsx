@@ -4,7 +4,7 @@ import { state as liveState, commit, update, reloadState, Store, runMigrations }
 import { LS_KEY } from '../../state/constants';
 import { setTheme, isDark } from '../../state/theme';
 import { getHaki, setHaki, type HakiLevel } from '../../state/haki';
-import { applyFontScale, applyDensity } from './appearance';
+import { applyFontScale, applyDensity, applyColourTerms } from './appearance';
 import { Card, Button, Segmented, Input } from '../../design/primitives';
 import { useToast } from '../../design/Toast';
 import { IconDownload, IconUpload, IconSun, IconMoon } from '../../design/icons';
@@ -44,6 +44,7 @@ export default function SettingsView() {
     });
     if (key === 'fontScale') applyFontScale(value as string);
     if (key === 'density') applyDensity(value as string);
+    if (key === 'colourTerms') applyColourTerms(!!value);
   }
 
   function exportData() {
@@ -157,6 +158,16 @@ export default function SettingsView() {
             ariaLabel="Haki energy"
           />
         </Row>
+        <Row
+          label="Colour coding"
+          desc="Drugs, numbers, cells, conditions and red flags each get their own colour while you read."
+        >
+          <Switch
+            label="Colour coding"
+            checked={appearance.colourTerms !== false}
+            onChange={(v) => setAppearance('colourTerms', v)}
+          />
+        </Row>
         <Row label="Reduce motion" desc="Minimise animations.">
           <Switch
             label="Reduce motion"
@@ -214,6 +225,37 @@ export default function SettingsView() {
             label="Tutor mode"
             checked={!!mcq.tutorMode}
             onChange={(v) => update((s) => (s.settings.mcq.tutorMode = v))}
+          />
+        </Row>
+        <Row label="Instant answer" desc="Tapping an option answers it — no Submit step.">
+          <Switch
+            label="Instant answer"
+            checked={mcq.instantAnswer !== false}
+            onChange={(v) => update((s) => (s.settings.mcq.instantAnswer = v))}
+          />
+        </Row>
+        <Row label="Auto-advance" desc="Move to the next question on its own after you answer.">
+          <Segmented
+            value={(mcq.autoAdvance as string) ?? 'correct'}
+            onChange={(v) => update((s) => (s.settings.mcq.autoAdvance = v))}
+            options={[
+              { value: 'correct', label: 'When right' },
+              { value: 'always', label: 'Always' },
+              { value: 'off', label: 'Off' },
+            ]}
+            ariaLabel="Auto-advance"
+          />
+        </Row>
+        <Row label="Auto-advance delay" desc="How long the rationale stays up first.">
+          <Segmented
+            value={String((mcq.autoAdvanceMs as number) ?? 1500)}
+            onChange={(v) => update((s) => (s.settings.mcq.autoAdvanceMs = Number(v)))}
+            options={[
+              { value: '800', label: 'Fast' },
+              { value: '1500', label: 'Normal' },
+              { value: '3000', label: 'Slow' },
+            ]}
+            ariaLabel="Auto-advance delay"
           />
         </Row>
       </Card>

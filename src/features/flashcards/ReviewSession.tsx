@@ -4,7 +4,8 @@ import { scheduleCard, gradeLabel, type Grade, type CardSched } from '../../lib/
 import { persistGrade, restoreSched, itemSched, type ReviewItem } from './deck';
 import { Button, ProgressRing } from '../../design/primitives';
 import { IconFlag, IconCheck } from '../../design/icons';
-import { renderMarkdown } from '../../lib/markdown';
+import { renderRich, renderInline } from '../../lib/lexicon';
+import { globalIndex } from '../../lib/useLexicon';
 import { OcclusionView } from './Occlusion';
 
 const GRADES: Array<{ g: Grade; label: string; key: string; tone: string }> = [
@@ -256,7 +257,7 @@ function CardFront({
   hint: boolean;
 }) {
   if (card.type === 'cloze' && card.cloze) {
-    return <div className="fc-text md" dangerouslySetInnerHTML={{ __html: renderMarkdown(clozeFront(card.cloze)).replace(/\[…\]/g, '') }} />;
+    return <div className="fc-text md" dangerouslySetInnerHTML={{ __html: renderRich(clozeFront(card.cloze), globalIndex()).replace(/\[…\]/g, '') }} />;
   }
   if (card.type === 'occlusion' && card.image?.src && card.regions) {
     return <OcclusionView src={card.image.src} regions={card.regions} testIndex={card.regionIndex ?? 0} revealed={revealed} />;
@@ -272,7 +273,7 @@ function CardFront({
   const q = card.type === 'reversed' ? card.back : card.front;
   return (
     <div>
-      <div className="fc-text">{q}</div>
+      <div className="fc-text" dangerouslySetInnerHTML={{ __html: renderInline(q || '', globalIndex()) }} />
       {hint && card.hint && <div className="fc-hint">{card.hint}</div>}
       {card.type === 'type' && !revealed && (
         <input
@@ -290,7 +291,7 @@ function CardFront({
 
 function CardBack({ card, typed }: { card: ReviewItem['card']; typed: string }) {
   if (card.type === 'cloze' && card.cloze) {
-    return <div className="fc-back md" dangerouslySetInnerHTML={{ __html: renderMarkdown(clozeBack(card.cloze)) }} />;
+    return <div className="fc-back md" dangerouslySetInnerHTML={{ __html: renderRich(clozeBack(card.cloze), globalIndex()) }} />;
   }
   if (card.type === 'occlusion') {
     return <div className="fc-back"><strong>{card.back || 'Region'}</strong>{card.extra ? ` — ${card.extra}` : ''}</div>;
@@ -304,8 +305,10 @@ function CardBack({ card, typed }: { card: ReviewItem['card']; typed: string }) 
           {correct ? 'Correct' : `You typed: ${typed}`}
         </div>
       )}
-      <div className="fc-text">{a}</div>
-      {card.extra && <div className="fc-extra">{card.extra}</div>}
+      <div className="fc-text" dangerouslySetInnerHTML={{ __html: renderInline(a || '', globalIndex()) }} />
+      {card.extra && (
+        <div className="fc-extra" dangerouslySetInnerHTML={{ __html: renderInline(card.extra, globalIndex()) }} />
+      )}
     </div>
   );
 }

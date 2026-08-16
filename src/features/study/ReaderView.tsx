@@ -7,7 +7,9 @@ import { update } from '../../state/store';
 import { Card, Button, Badge, Tabs } from '../../design/primitives';
 import { IconChevron, IconFlashcards, IconQbank, IconCheck } from '../../design/icons';
 import { renderMarkdown } from '../../lib/markdown';
-import type { Figure, Table as TableT } from '../../content/schema';
+import { renderRich, renderInline, KIND_LABEL, type LexIndex, type TermKind } from '../../lib/lexicon';
+import { useLexicon } from '../../lib/useLexicon';
+import type { Figure, Table as TableT, GlossaryEntry } from '../../content/schema';
 
 type Tab = 'read' | 'cards' | 'questions';
 
@@ -106,8 +108,8 @@ export default function ReaderView() {
       </div>
 
       {tab === 'read' && <ReadTab chapter={chapter} onNavigate={navigate} />}
-      {tab === 'cards' && <CardsTab cards={cards} />}
-      {tab === 'questions' && <QuestionsTab mcqs={mcqs} />}
+      {tab === 'cards' && <CardsTab cards={cards} chapterId={chapter.id} onNavigate={navigate} />}
+      {tab === 'questions' && <QuestionsTab mcqs={mcqs} chapterId={chapter.id} onNavigate={navigate} />}
     </div>
   );
 }
@@ -124,6 +126,14 @@ function ReadTab({
   const prog = state.study.progress[ch.id] || {};
   const readSections: Record<string, boolean> = prog.sections || {};
   const [activeSec, setActiveSec] = useState<string>(ch.sections[0]?.id ?? '');
+  const lex = useLexicon(ch.glossary);
+  // which concept classes actually occur in this chapter — drives the colour key
+  const usedKinds = useMemo(() => {
+    const html = ch.sections.map((s) => renderRich(s.digest, lex)).join('');
+    const found = new Set<TermKind>();
+    for (const m of html.matchAll(/class="t t-([a-z]+)"/g)) found.add(m[1] as TermKind);
+    return [...found];
+  }, [ch.id, lex]);
 
   // scroll-spy: highlight the section currently in view in the TOC
   useEffect(() => {
@@ -187,9 +197,36 @@ function ReadTab({
             Mnemonics
           </a>
         )}
+        {ch.glossary.length > 0 && (
+          <a href="#glossary" className="toc-link">
+            Glossary
+          </a>
+        )}
       </nav>
 
       <div className="reader-body" onClick={onBodyClick}>
+        {ch.objectives.length > 0 && (
+          <div className="obj-box">
+            <div className="obj-title">By the end of this chapter you can</div>
+            <ol className="obj-list">
+              {ch.objectives.map((o, i) => (
+                <li key={i}>{o}</li>
+              ))}
+            </ol>
+          </div>
+        )}
+
+        {usedKinds.length > 1 && (
+          <div className="key-strip no-print" aria-label="Colour key">
+            {usedKinds.map((k) => (
+              <span className="key-item" key={k}>
+                <span className="key-dot" style={{ ['--kc' as string]: `var(--k-${k})` }} />
+                {KIND_LABEL[k]}
+              </span>
+            ))}
+          </div>
+        )}
+
         {ch.sections.map((s) => (
           <section id={`sec-${s.id}`} key={s.id} className="reader-section">
             <div className="row spread" style={{ alignItems: 'flex-start' }}>
@@ -205,21 +242,21 @@ function ReadTab({
                 <IconCheck size={15} /> {readSections[s.id] ? 'Read' : 'Mark read'}
               </button>
             </div>
-            <div className="md" dangerouslySetInnerHTML={{ __html: renderMarkdown(s.digest) }} />
+            <div className="md" dangerouslySetInnerHTML={{ __html: renderRich(s.digest, lex) }} />
 
             {s.highYield.length > 0 && (
               <div className="hy-box">
                 <div className="hy-title">High-yield</div>
                 <ul>
                   {s.highYield.map((h, i) => (
-                    <li key={i}>{h}</li>
+                    <li key={i} dangerouslySetInnerHTML={{ __html: renderInline(h, lex) }} />
                   ))}
                 </ul>
               </div>
             )}
 
             {s.tables.map((t, i) => (
-              <FigureTable key={i} table={t} />
+              <FigureTable key={i} table={t} lex={lex} />
             ))}
 
             {s.figures.map((f, i) => (
@@ -231,7 +268,7 @@ function ReadTab({
                 <strong>Pitfalls.</strong>
                 <ul style={{ margin: '6px 0 0', paddingLeft: 18 }}>
                   {s.pitfalls.map((p, i) => (
-                    <li key={i}>{p}</li>
+                    <li key={i} dangerouslySetInnerHTML={{ __html: renderInline(p, lex) }} />
                   ))}
                 </ul>
               </div>
@@ -256,12 +293,35 @@ function ReadTab({
             </div>
           </section>
         )}
+
+        {ch.glossary.length > 0 && (
+          <section id="glossary" className="reader-section">
+            <h2>Glossary</h2>
+            <div className="gloss-list">
+              {[...ch.glossary]
+                .sort((a, b) => a.term.localeCompare(b.term))
+                .map((g: GlossaryEntry, i) => (
+                  <div className="gloss-row" key={i} style={{ ['--kc' as string]: `var(--k-${g.kind || 'condition'})` }}>
+                    <div className="gloss-term">{g.term}</div>
+                    <div className="gloss-def">{g.def}</div>
+                  </div>
+                ))}
+            </div>
+          </section>
+        )}
+
+        {ch.summary && (
+          <section className="reader-section">
+            <h2>In one paragraph</h2>
+            <div className="md summary-box" dangerouslySetInnerHTML={{ __html: renderRich(ch.summary, lex) }} />
+          </section>
+        )}
       </div>
     </div>
   );
 }
 
-function FigureTable({ table }: { table: TableT }) {
+function FigureTable({ table, lex }: { table: TableT; lex?: LexIndex }) {
   return (
     <div className="reader-table-wrap">
       {table.title && <div className="reader-table-title">{table.title}</div>}
@@ -278,7 +338,7 @@ function FigureTable({ table }: { table: TableT }) {
             {table.rows.map((row, ri) => (
               <tr key={ri}>
                 {row.map((cell, ci) => (
-                  <td key={ci}>{cell}</td>
+                  <td key={ci} dangerouslySetInnerHTML={{ __html: renderInline(cell, lex) }} />
                 ))}
               </tr>
             ))}
@@ -304,17 +364,40 @@ function FigureBlock({ figure }: { figure: Figure }) {
   );
 }
 
-function CardsTab({ cards }: { cards: ReturnType<typeof chapterCards> }) {
+function CardsTab({
+  cards,
+  chapterId,
+  onNavigate,
+}: {
+  cards: ReturnType<typeof chapterCards>;
+  chapterId: string;
+  onNavigate: (to: string) => void;
+}) {
+  const decks = useMemo(() => {
+    const m = new Map<string, number>();
+    for (const c of cards) m.set(c.deck || '', (m.get(c.deck || '') || 0) + 1);
+    return [...m.entries()].sort((a, b) => a[0].localeCompare(b[0]));
+  }, [cards]);
   return (
     <>
-      <div className="soon" style={{ marginBottom: 'var(--sp-4)', padding: 'var(--sp-4)' }}>
-        <span className="soon-badge">
-          <IconFlashcards size={14} /> Review engine arrives in Phase 3
-        </span>
-        <p className="muted" style={{ margin: 0, fontSize: 13.5 }}>
-          These {cards.length} cards are loaded from the chapter and ready. Grading, flip and
-          scheduling come with the Recall-grade engine.
-        </p>
+      <div className="tab-lead">
+        <div>
+          <div className="tab-lead-title">{cards.length} cards in {decks.length} decks</div>
+          <div className="muted" style={{ fontSize: 13.5 }}>
+            Scheduled with the rest of your collection. Review them from here.
+          </div>
+        </div>
+        <Button variant="primary" onClick={() => onNavigate(`/flashcards?chapter=${encodeURIComponent(chapterId)}`)}>
+          <IconFlashcards size={16} /> Review these cards
+        </Button>
+      </div>
+      <div className="deck-chips">
+        {decks.map(([d, n]) => (
+          <span className="deck-chip" key={d}>
+            {d.split('::').slice(2).join(' › ') || d}
+            <b>{n}</b>
+          </span>
+        ))}
       </div>
       <div className="list">
         {cards.map((c) => (
@@ -342,17 +425,27 @@ function CardsTab({ cards }: { cards: ReturnType<typeof chapterCards> }) {
   );
 }
 
-function QuestionsTab({ mcqs }: { mcqs: ReturnType<typeof chapterMcqs> }) {
+function QuestionsTab({
+  mcqs,
+  chapterId,
+  onNavigate,
+}: {
+  mcqs: ReturnType<typeof chapterMcqs>;
+  chapterId: string;
+  onNavigate: (to: string) => void;
+}) {
   return (
     <>
-      <div className="soon" style={{ marginBottom: 'var(--sp-4)', padding: 'var(--sp-4)' }}>
-        <span className="soon-badge">
-          <IconQbank size={14} /> Quiz engine arrives in Phase 4
-        </span>
-        <p className="muted" style={{ margin: 0, fontSize: 13.5 }}>
-          {mcqs.length} questions are loaded with options, per-option rationale and explanations.
-          Interactive practice, timing and EMQs come next.
-        </p>
+      <div className="tab-lead">
+        <div>
+          <div className="tab-lead-title">{mcqs.length} questions</div>
+          <div className="muted" style={{ fontSize: 13.5 }}>
+            Every option carries its own rationale. Answer, see why, move on.
+          </div>
+        </div>
+        <Button variant="primary" onClick={() => onNavigate(`/qbank?chapter=${encodeURIComponent(chapterId)}`)}>
+          <IconQbank size={16} /> Practise this chapter
+        </Button>
       </div>
       <div className="list">
         {mcqs.map((q) => (

@@ -62,12 +62,22 @@ export const SETTINGS_DEFAULTS: AppSettings = {
     tutorMode: true,
     confidenceTracking: false,
     difficultyFilter: [1, 2, 3],
+    instantAnswer: true,
+    autoAdvance: 'correct',
+    autoAdvanceMs: 1500,
     defaultSize: 'all',
     timer: 'off',
     rapidSeconds: 45,
     examMinPerQ: 1.5,
   },
-  appearance: { theme: null, fontScale: 'M', density: 'comfortable', reducedMotion: false, haki: 'full' },
+  appearance: {
+    theme: null,
+    fontScale: 'M',
+    density: 'comfortable',
+    reducedMotion: false,
+    haki: 'full',
+    colourTerms: true,
+  },
   goals: { dailyGoal: 50 },
 };
 
