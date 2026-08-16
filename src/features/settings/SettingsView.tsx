@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { createContext, useContext, useRef, useState } from 'react';
 import { useStore } from '../../state/useStore';
 import { state as liveState, commit, update, reloadState, Store, runMigrations } from '../../state/store';
 import { LS_KEY } from '../../state/constants';
@@ -16,7 +16,20 @@ function Switch({ checked, onChange, label }: { checked: boolean; onChange: (v: 
   );
 }
 
+const SECTIONS = [
+  { id: 'appearance', label: 'Appearance' },
+  { id: 'study', label: 'Study' },
+  { id: 'questions', label: 'Questions' },
+  { id: 'library', label: 'Library' },
+  { id: 'data', label: 'Data' },
+];
+
+/** The active filter, so every Row can hide itself without threading a prop. */
+const FilterContext = createContext('');
+
 function Row({ label, desc, children }: { label: string; desc?: string; children: React.ReactNode }) {
+  const q = useContext(FilterContext);
+  if (q && !`${label} ${desc ?? ''}`.toLowerCase().includes(q)) return null;
   return (
     <div className="setting-row">
       <div>
@@ -33,6 +46,9 @@ export default function SettingsView() {
   const toast = useToast();
   const fileRef = useRef<HTMLInputElement>(null);
   const [confirmReset, setConfirmReset] = useState(false);
+
+  const [filter, setFilter] = useState('');
+  const q = filter.trim().toLowerCase();
 
   const appearance = state.settings.appearance;
   const scheduler = state.settings.scheduler;
@@ -105,14 +121,32 @@ export default function SettingsView() {
   }
 
   return (
-    <>
+    <FilterContext.Provider value={q}>
       <header className="page-head">
         <h1>Settings</h1>
-        <div className="sub">Appearance, study defaults and your data.</div>
+        <div className="sub">Appearance, study defaults, your library and your data.</div>
       </header>
 
-      <Card className="settings-section">
+      <div className="settings-bar no-print">
+        <input
+          className="input settings-filter"
+          placeholder="Filter settings…"
+          value={filter}
+          aria-label="Filter settings"
+          onChange={(e) => setFilter(e.target.value)}
+        />
+        <nav className="settings-jump" aria-label="Settings sections">
+          {SECTIONS.map((sec) => (
+            <a key={sec.id} href={`#set-${sec.id}`}>
+              {sec.label}
+            </a>
+          ))}
+        </nav>
+      </div>
+
+      <Card className="settings-section" id="set-appearance">
         <h2>Appearance</h2>
+        <p className="section-lead">How the app looks and how loud it is.</p>
         <Row label="Theme" desc="Light and dark are fully supported.">
           <Segmented
             value={isDark() ? 'midnight' : 'paper'}
@@ -224,8 +258,9 @@ export default function SettingsView() {
         </Row>
       </Card>
 
-      <Card className="settings-section">
+      <Card className="settings-section" id="set-questions">
         <h2>Question bank</h2>
+        <p className="section-lead">How answering feels: submit or not, and what happens next.</p>
         <Row label="Shuffle options" desc="Randomise answer order each attempt.">
           <Switch
             label="Shuffle options"
@@ -273,9 +308,11 @@ export default function SettingsView() {
         </Row>
       </Card>
 
-      <LibraryPanel />
+      <div id="set-library">
+        <LibraryPanel />
+      </div>
 
-      <Card className="settings-section">
+      <Card className="settings-section" id="set-data">
         <h2>Your data</h2>
         <p className="muted" style={{ fontSize: 13.5, marginTop: -6 }}>
           Everything is stored locally on this device. Back it up or move it between devices here.
@@ -327,6 +364,6 @@ export default function SettingsView() {
         </span>
         <span style={{ fontFamily: 'var(--font-signature)', fontSize: 18 }}>Yanal</span>
       </div>
-    </>
+    </FilterContext.Provider>
   );
 }

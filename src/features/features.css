@@ -3025,3 +3025,58 @@
   font-variant-numeric: tabular-nums;
   color: var(--gt);
 }
+
+/* ---- settings: jump bar, filter, section leads ---- */
+.settings-bar {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 10px 0 12px;
+  margin-bottom: 4px;
+  background: linear-gradient(var(--bg) 72%, transparent);
+  backdrop-filter: blur(6px);
+}
+.settings-filter {
+  max-width: 260px;
+}
+.settings-jump {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+.settings-jump a {
+  font-size: 12.5px;
+  padding: 5px 11px;
+  border-radius: 999px;
+  border: 1px solid var(--border-soft);
+  background: var(--surface-1);
+  color: var(--text-dim);
+  text-decoration: none;
+  transition: all var(--dur-fast) var(--ease);
+}
+.settings-jump a:hover {
+  color: var(--text);
+  border-color: var(--accent);
+}
+.section-lead {
+  margin: -6px 0 12px;
+  font-size: 13px;
+  color: var(--text-faint);
+  line-height: 1.5;
+}
+.settings-section {
+  scroll-margin-top: 72px;
+}
+#set-library {
+  scroll-margin-top: 72px;
+}
+@media (max-width: 640px) {
+  .settings-filter {
+    max-width: 100%;
+    width: 100%;
+  }
+}
