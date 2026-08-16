@@ -61,10 +61,14 @@ function tx<T>(stores: string[], mode: IDBTransactionMode, run: (t: IDBTransacti
   );
 }
 
+/** Containers a browser will decode audio from, including video containers. */
+export const AUDIO_EXT =
+  /\.(mp3|m4a|m4b|mp4|aac|adts|ogg|oga|opus|wav|wave|flac|weba|webm|mkv|mov|3gp|amr|wma|aiff?|caf)$/i;
+
 /** Guess a kind from the MIME type and file name. */
 export function kindOf(name: string, type: string): FileKind {
   const n = name.toLowerCase();
-  if (type.startsWith('audio/') || /\.(mp3|m4a|aac|ogg|opus|wav|flac)$/.test(n)) return 'audio';
+  if (type.startsWith('audio/') || AUDIO_EXT.test(n)) return 'audio';
   if (type.startsWith('image/') || /\.(png|jpe?g|gif|webp|svg|avif)$/.test(n)) return 'image';
   if (type === 'application/pdf' || /\.(pdf|epub|docx?|pptx?|txt|md)$/.test(n)) return 'book';
   return 'other';

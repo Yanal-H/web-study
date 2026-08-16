@@ -8,6 +8,7 @@ import { applyFontScale, applyDensity, applyColourTerms } from './appearance';
 import { Card, Button, Segmented, Input } from '../../design/primitives';
 import { useToast } from '../../design/Toast';
 import { IconDownload, IconUpload, IconSun, IconMoon } from '../../design/icons';
+import { sfx } from '../../lib/sound';
 import LibraryPanel from './LibraryPanel';
 
 function Switch({ checked, onChange, label }: { checked: boolean; onChange: (v: boolean) => void; label: string }) {
@@ -203,7 +204,7 @@ export default function SettingsView() {
             onChange={(v) => setAppearance('colourTerms', v)}
           />
         </Row>
-        <Row label="Sound" desc="Haki impacts, answer feedback and the timer chime. Synthesised — no files.">
+        <Row label="Sound" desc="Thunder, answer feedback and the timer chime. Synthesised in the browser — no files. Browsers only allow sound after you have clicked once on the page, and reduce-motion silences the ambient thunder along with the lightning.">
           <Switch
             label="Sound"
             checked={((state.settings as Record<string, any>).sound?.effects ?? true) !== false}
@@ -214,6 +215,27 @@ export default function SettingsView() {
               })
             }
           />
+        </Row>
+        <Row label="Sound volume" desc="Thunder, answer feedback and the timer chime.">
+          <div className="row" style={{ gap: 10, alignItems: 'center' }}>
+            <input
+              type="range"
+              min={0}
+              max={1}
+              step={0.05}
+              aria-label="Sound volume"
+              value={(state.settings as Record<string, any>).sound?.volume ?? 0.55}
+              onChange={(e) =>
+                update((s) => {
+                  const snd = ((s.settings as Record<string, any>).sound ||= {});
+                  snd.volume = Number(e.target.value);
+                })
+              }
+            />
+            <Button size="sm" onClick={() => sfx.test()}>
+              Test
+            </Button>
+          </div>
         </Row>
         <Row label="Reduce motion" desc="Minimise animations.">
           <Switch

@@ -2,8 +2,11 @@
 // No audio files ship with the app, nothing is fetched, and the whole engine is
 // a few hundred bytes of maths — so it works offline and adds nothing to load.
 //
-// Browsers refuse to start audio before a user gesture, so the context is
-// created lazily on the first effect and resumed if the browser suspended it.
+// Browsers refuse to start audio before a user gesture. A context created by a
+// timer stays suspended for good, so nothing plays and nothing errors — which is
+// exactly the silent failure this module now avoids: installAudioUnlock() waits
+// for the first click, key or touch, starts the context there, and only then do
+// effects make sound.
 
 import { state } from '../state/store';
 
@@ -12,6 +15,9 @@ type Ctx = AudioContext;
 let ctx: Ctx | null = null;
 let master: GainNode | null = null;
 let noise: AudioBuffer | null = null;
+/** true once a real user gesture has started the audio context */
+let unlocked = false;
+let listening = false;
 
 function settings() {
   const s = (state.settings as Record<string, any>).sound || {};
@@ -21,9 +27,7 @@ function settings() {
   };
 }
 
-function audio(): Ctx | null {
-  const { on } = settings();
-  if (!on) return null;
+function create(): Ctx | null {
   if (typeof window === 'undefined') return null;
   const Ctor = window.AudioContext || (window as any).webkitAudioContext;
   if (!Ctor) return null;
@@ -32,9 +36,59 @@ function audio(): Ctx | null {
     master = ctx.createGain();
     master.connect(ctx.destination);
   }
-  if (ctx.state === 'suspended') void ctx.resume();
   if (master) master.gain.value = settings().volume;
   return ctx;
+}
+
+/**
+ * Browsers refuse to start audio outside a user gesture, and a context created
+ * by a timer stays suspended forever. So the first real interaction — a click,
+ * a key, a touch — creates and resumes the context and pushes one silent buffer
+ * through it, which is what iOS needs to consider it started. Until then every
+ * effect is a no-op rather than a note scheduled into a dead context.
+ */
+export function installAudioUnlock() {
+  if (listening || typeof window === 'undefined') return;
+  listening = true;
+  const go = () => {
+    const c = create();
+    if (!c) return;
+    void c.resume().then(() => {
+      unlocked = c.state === 'running';
+    });
+    // a single silent sample, which some browsers require before real audio
+    try {
+      const b = c.createBuffer(1, 1, c.sampleRate);
+      const src = c.createBufferSource();
+      src.buffer = b;
+      src.connect(c.destination);
+      src.start(0);
+    } catch {
+      // nothing to do — the resume above is the part that matters
+    }
+    if (c.state === 'running') unlocked = true;
+  };
+  for (const ev of ['pointerdown', 'keydown', 'touchstart'] as const) {
+    window.addEventListener(ev, go, { passive: true });
+  }
+}
+
+/** Has the browser actually let audio start yet? */
+export function audioReady(): boolean {
+  return unlocked && ctx?.state === 'running';
+}
+
+function audio(): Ctx | null {
+  const { on } = settings();
+  if (!on) return null;
+  if (!unlocked) return null;
+  const c = create();
+  if (!c) return null;
+  if (c.state === 'suspended') {
+    void c.resume();
+    return null;
+  }
+  return c;
 }
 
 /** One second of white noise, reused by every noise-based effect. */
@@ -118,9 +172,15 @@ function noiseHit({
 
 /** The haki strike: a crack of lightning over a low rolling rumble. */
 export function thunder(intensity = 1) {
-  noiseHit({ dur: 0.09, gain: 0.3 * intensity, freq: 9000, toFreq: 2400, type: 'bandpass', q: 0.6 });
-  noiseHit({ dur: 0.85 * intensity, gain: 0.26 * intensity, freq: 900, toFreq: 55, delay: 0.03 });
-  tone({ freq: 92, to: 38, dur: 0.6 * intensity, type: 'sine', gain: 0.22 * intensity, delay: 0.02 });
+  const k = Math.max(0.35, intensity);
+  // the crack
+  noiseHit({ dur: 0.11, gain: 0.55 * k, freq: 9000, toFreq: 2200, type: 'bandpass', q: 0.6 });
+  noiseHit({ dur: 0.07, gain: 0.4 * k, freq: 4200, toFreq: 1400, type: 'bandpass', q: 1.1, delay: 0.02 });
+  // the roll behind it
+  noiseHit({ dur: 1.25 * k, gain: 0.5 * k, freq: 900, toFreq: 45, delay: 0.04 });
+  noiseHit({ dur: 1.8 * k, gain: 0.3 * k, freq: 380, toFreq: 32, delay: 0.16 });
+  // the pressure you feel more than hear
+  tone({ freq: 96, to: 30, dur: 0.9 * k, type: 'sine', gain: 0.45 * k, delay: 0.02 });
 }
 
 /** Soft tick when a card flips. */
@@ -159,9 +219,20 @@ export function combo(n: number) {
   tone({ freq: 420 + Math.min(12, n) * 55, dur: 0.11, type: 'square', gain: 0.12 });
 }
 
-/** Call once from a click handler to unlock audio on iOS. */
-export function warmUp() {
-  audio();
+/** Play something immediately so a student can hear that sound is working. */
+export function test() {
+  thunder(1);
 }
 
-export const sfx = { thunder, flip, correct, wrong, grade, chime, combo, warmUp };
+export const sfx = {
+  thunder,
+  flip,
+  correct,
+  wrong,
+  grade,
+  chime,
+  combo,
+  test,
+  audioReady,
+  installAudioUnlock,
+};

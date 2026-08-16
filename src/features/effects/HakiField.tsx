@@ -146,7 +146,7 @@ export default function HakiField() {
           nextBolt = 150 + Math.random() * 360;
           // Not every strike is overhead: about half of them carry, and quietly,
           // so the room has weather rather than a metronome.
-          if (Math.random() < 0.55) thunder(0.45 + Math.random() * 0.4);
+          if (Math.random() < 0.6) thunder(0.55 + Math.random() * 0.45);
         }
         if (flash) {
           const a = flash.life / 20;

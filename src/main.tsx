@@ -15,6 +15,7 @@ import './features/gate/watermark.css';
 import { state } from './state/store';
 import { applyFontScale, applyDensity, applyColourTerms } from './features/settings/appearance';
 import { applyHaki } from './state/haki';
+import { installAudioUnlock } from './lib/sound';
 
 // Apply persisted appearance preferences before first paint of the app tree.
 const ap = state.settings?.appearance;
@@ -25,6 +26,7 @@ if (ap) {
   if (ap.reducedMotion) document.documentElement.classList.add('reduce-motion');
 }
 applyHaki();
+installAudioUnlock();
 
 const container = document.getElementById('root');
 if (!container) throw new Error('Root container #root not found');

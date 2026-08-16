@@ -334,10 +334,19 @@ export default function MusicPlayer() {
           </button>
           {notice && <div className="mp-notice">{notice}</div>}
           <div className="mp-note">
-            Drop in your own downloads — NCS and anything else you already have. They stay on
-            this device and play offline.
+            Any format this browser can decode: mp3, m4a, mp4, aac, ogg, opus, wav, flac, webm.
+            A video file plays its sound. Files stay on this device and work offline.
           </div>
-          <input ref={fileRef} type="file" accept="audio/*" multiple hidden onChange={(e) => void add(e.target.files)} />
+          <input
+            ref={fileRef}
+            type="file"
+            // audio and video containers alike — an mp4 or webm plays its audio
+            // track through the same element, which is what students actually have
+            accept="audio/*,video/*,.mp3,.m4a,.m4b,.mp4,.aac,.ogg,.oga,.opus,.wav,.flac,.weba,.webm,.wma,.aif,.aiff,.mkv,.mov,.3gp,.amr"
+            multiple
+            hidden
+            onChange={(e) => void add(e.target.files)}
+          />
           </>
           )}
         </div>
