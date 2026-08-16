@@ -3598,3 +3598,291 @@
   color: var(--text-faint);
   font-variant-numeric: tabular-nums;
 }
+
+/* =========================================================================
+   Cross-navigation, AI tutor, haki menu, page transitions, subject stats
+   (appended — additive, no overrides of earlier rules)
+   ========================================================================= */
+
+/* ---- Route/page transition: content rises + fades on every navigation ---- */
+.route-view {
+  animation: routeIn 0.42s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+@keyframes routeIn {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+    filter: blur(2px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+:root.reduce-motion .route-view {
+  animation: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .route-view {
+    animation: none;
+  }
+}
+
+/* ---- Haki drawer: a charged edge + staggered nav reveal ---- */
+.sidebar-edge {
+  display: none;
+}
+@media (max-width: 900px) {
+  .sidebar-edge {
+    display: block;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 2px;
+    background: linear-gradient(180deg, transparent, var(--accent), transparent);
+    opacity: 0;
+    box-shadow: 0 0 18px 2px var(--accent-glow);
+  }
+  .sidebar.open .sidebar-edge {
+    animation: hakiEdge 0.7s ease-out both;
+  }
+  @keyframes hakiEdge {
+    0% {
+      opacity: 0;
+      transform: scaleY(0.2);
+    }
+    40% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0.55;
+      transform: scaleY(1);
+    }
+  }
+  .sidebar.open nav .navitem {
+    animation: navItemIn 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+  .sidebar.open nav .navitem:nth-child(2) { animation-delay: 0.03s; }
+  .sidebar.open nav .navitem:nth-child(3) { animation-delay: 0.06s; }
+  .sidebar.open nav .navitem:nth-child(4) { animation-delay: 0.09s; }
+  .sidebar.open nav .navitem:nth-child(5) { animation-delay: 0.12s; }
+  .sidebar.open nav .navitem:nth-child(6) { animation-delay: 0.15s; }
+  .sidebar.open nav .navitem:nth-child(7) { animation-delay: 0.18s; }
+  .sidebar.open nav .navitem:nth-child(n + 8) { animation-delay: 0.21s; }
+  @keyframes navItemIn {
+    from {
+      opacity: 0;
+      transform: translateX(-14px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+  .menu-btn {
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    background: var(--accent-soft) !important;
+    border-color: var(--accent) !important;
+    color: var(--accent) !important;
+  }
+}
+
+/* ---- Dashboard resume strip: jump back into a chapter ---- */
+.resume-strip {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: var(--sp-3);
+  margin-bottom: var(--sp-4);
+}
+.resume-card {
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 14px 16px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border-soft);
+  background: linear-gradient(135deg, var(--accent-soft), var(--surface-1) 70%);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: transform var(--transition), border-color var(--transition), box-shadow var(--transition);
+}
+.resume-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--accent);
+  box-shadow: 0 16px 34px -22px var(--accent-glow);
+}
+.resume-eyebrow {
+  font-size: 10.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--accent);
+  font-weight: 700;
+}
+.resume-title {
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.25;
+}
+.resume-meta {
+  font-size: 12px;
+  color: var(--text-faint);
+}
+.resume-go {
+  margin-top: 6px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--accent);
+}
+
+/* ---- Subject cards: bold stat trio + explicit actions ---- */
+.subject-card h3 {
+  font-size: var(--fs-lg);
+  font-weight: 650;
+}
+.sc-stats {
+  display: flex;
+  gap: 18px;
+  margin: 16px 0 4px;
+  padding-left: 8px;
+  position: relative;
+  z-index: 1;
+}
+.sc-stat {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.05;
+}
+.sc-stat-n {
+  font-family: var(--font-display);
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+.sc-stat-l {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--text-faint);
+  margin-top: 2px;
+}
+.sc-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 14px;
+  padding-left: 8px;
+  position: relative;
+  z-index: 1;
+}
+.sc-empty {
+  margin-top: 14px;
+  padding-left: 8px;
+  font-size: 12.5px;
+  color: var(--text-faint);
+}
+
+/* ---- Filter pill (Study, narrowed to a subject) ---- */
+.filter-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 8px 7px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--surface-1);
+  font-size: 13.5px;
+}
+.filter-pill strong {
+  color: var(--accent);
+}
+.filter-pill-x {
+  border: none;
+  background: var(--accent-soft);
+  color: var(--accent);
+  border-radius: 999px;
+  padding: 4px 12px;
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.filter-pill-x:hover {
+  background: var(--accent);
+  color: var(--accent-contrast);
+}
+
+/* ---- AI tutor controls + panel in the question runner ---- */
+.ai-controls {
+  margin-top: 14px;
+}
+.ai-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--accent);
+  background: transparent;
+  color: var(--accent);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background var(--transition), color var(--transition);
+}
+.ai-btn:hover:not(:disabled) {
+  background: var(--accent);
+  color: var(--accent-contrast);
+}
+.ai-btn:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+.ai-panel {
+  margin-top: 14px;
+  border: 1px solid color-mix(in srgb, var(--accent) 40%, var(--border));
+  border-radius: var(--radius-sm);
+  background: color-mix(in srgb, var(--accent) 7%, var(--surface-1));
+  padding: 14px 16px;
+  animation: routeIn 0.3s ease both;
+}
+.ai-panel--err {
+  border-color: var(--border);
+  background: var(--surface-2);
+}
+.ai-panel-head {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--accent);
+  margin-bottom: 8px;
+}
+.ai-panel-note {
+  text-transform: none;
+  letter-spacing: 0;
+  font-weight: 400;
+  color: var(--text-faint);
+  font-size: 11.5px;
+  margin-left: auto;
+}
+.ai-panel-body {
+  font-size: 14px;
+  line-height: 1.55;
+}
+.ai-panel-body.md p:first-child {
+  margin-top: 0;
+}
+.ai-panel-body.md ul,
+.ai-panel-body.md ol {
+  margin: 4px 0;
+  padding-left: 20px;
+}

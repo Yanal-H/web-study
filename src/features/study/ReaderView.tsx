@@ -498,7 +498,7 @@ function QuestionsTab({
 }: {
   mcqs: ReturnType<typeof chapterMcqs>;
   chapterId: string;
-  onNavigate: (to: string) => void;
+  onNavigate: (to: string, opts?: { state?: unknown }) => void;
 }) {
   return (
     <>
@@ -509,7 +509,7 @@ function QuestionsTab({
             Every option carries its own rationale. Answer, see why, move on.
           </div>
         </div>
-        <Button variant="primary" onClick={() => onNavigate(`/qbank?chapter=${encodeURIComponent(chapterId)}`)}>
+        <Button variant="primary" onClick={() => onNavigate('/qbank', { state: { chapterId } })}>
           <IconQbank size={16} /> Practise this chapter
         </Button>
       </div>

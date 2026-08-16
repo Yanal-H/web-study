@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { listChapters, type LoadedChapter } from '../../content/loader';
 import { useUserContentVersion, importChapterJson, removeUserChapter } from '../../content/userContent';
 import { useStore } from '../../state/useStore';
@@ -16,6 +16,9 @@ export default function StudyView() {
   const state = useStore();
   const chapters = useMemo(() => listChapters(), [uv]);
   const [importing, setImporting] = useState(false);
+  // a subject handed over from the Subjects page narrows the library
+  const presetSubject = ((useLocation().state ?? null) as { subject?: string } | null)?.subject ?? '';
+  const [filterSubject, setFilterSubject] = useState<string>(presetSubject);
 
   const recent = useMemo(() => {
     let best: { ch: LoadedChapter; when: string } | null = null;
@@ -29,11 +32,12 @@ export default function StudyView() {
   const bySubject = useMemo(() => {
     const map = new Map<string, LoadedChapter[]>();
     for (const c of chapters) {
+      if (filterSubject && c.subject !== filterSubject) continue;
       if (!map.has(c.subject)) map.set(c.subject, []);
       map.get(c.subject)!.push(c);
     }
     return [...map.entries()];
-  }, [chapters]);
+  }, [chapters, filterSubject]);
 
   return (
     <>
@@ -46,6 +50,15 @@ export default function StudyView() {
           <IconUpload size={15} /> Import your own
         </Button>
       </header>
+
+      {filterSubject && (
+        <div className="filter-pill no-print" style={{ marginBottom: 'var(--sp-4)' }}>
+          Showing <strong>{filterSubject}</strong>
+          <button className="filter-pill-x" aria-label="Clear filter" onClick={() => setFilterSubject('')}>
+            Show all
+          </button>
+        </div>
+      )}
 
       {recent && (
         <Card interactive style={{ marginBottom: 'var(--sp-4)', borderColor: 'var(--accent)' }} onClick={() => navigate(`/study/${encodeURIComponent(recent.id)}`)}>

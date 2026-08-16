@@ -5,10 +5,11 @@ import { LS_KEY } from '../../state/constants';
 import { setTheme, isDark } from '../../state/theme';
 import { getHaki, setHaki, type HakiLevel } from '../../state/haki';
 import { applyFontScale, applyDensity, applyColourTerms } from './appearance';
-import { Card, Button, Segmented, Input } from '../../design/primitives';
+import { Card, Button, Segmented, Input, Select } from '../../design/primitives';
 import { useToast } from '../../design/Toast';
-import { IconDownload, IconUpload, IconSun, IconMoon } from '../../design/icons';
+import { IconDownload, IconUpload, IconSun, IconMoon, IconSparkle } from '../../design/icons';
 import { sfx } from '../../lib/sound';
+import { getAiConfig, setAiConfig, AI_MODELS } from '../../lib/ai';
 import LibraryPanel from './LibraryPanel';
 
 function Switch({ checked, onChange, label }: { checked: boolean; onChange: (v: boolean) => void; label: string }) {
@@ -21,6 +22,7 @@ const SECTIONS = [
   { id: 'appearance', label: 'Appearance' },
   { id: 'study', label: 'Study' },
   { id: 'questions', label: 'Questions' },
+  { id: 'ai', label: 'AI tutor' },
   { id: 'library', label: 'Library' },
   { id: 'data', label: 'Data' },
 ];
@@ -55,6 +57,7 @@ export default function SettingsView() {
   const scheduler = state.settings.scheduler;
   const mcq = state.settings.mcq;
   const goals = state.settings.goals;
+  const ai = getAiConfig();
 
   function setAppearance<K extends string>(key: K, value: unknown) {
     update((s) => {
@@ -328,6 +331,45 @@ export default function SettingsView() {
             ariaLabel="Auto-advance delay"
           />
         </Row>
+      </Card>
+
+      <Card className="settings-section" id="set-ai">
+        <h2>
+          <IconSparkle size={18} style={{ verticalAlign: -3, marginRight: 6, color: 'var(--accent)' }} />
+          AI tutor
+        </h2>
+        <p className="section-lead">
+          Optional. Off by default — the app works fully offline without it. When you switch it on and add
+          your own key, a <strong>Hint</strong> and <strong>Explain with AI</strong> button appear on each
+          question. Nothing is sent anywhere until you press one of them.
+        </p>
+        <Row label="Enable AI tutor" desc="Adds live hints and explanations to the question bank.">
+          <Switch label="Enable AI tutor" checked={ai.enabled} onChange={(v) => setAiConfig({ enabled: v })} />
+        </Row>
+        <Row label="API key" desc="Your own Anthropic API key. Stored only on this device.">
+          <Input
+            type="password"
+            placeholder="sk-ant-…"
+            autoComplete="off"
+            value={ai.apiKey}
+            style={{ width: 240, fontFamily: 'var(--font-mono)', fontSize: 12.5 }}
+            onChange={(e) => setAiConfig({ apiKey: e.target.value })}
+          />
+        </Row>
+        <Row label="Model" desc="Faster and cheaper, or deeper and slower.">
+          <Select value={ai.model} onChange={(e) => setAiConfig({ model: e.target.value })} style={{ minWidth: 220 }}>
+            {AI_MODELS.map((m) => (
+              <option key={m.value} value={m.value}>
+                {m.label}
+              </option>
+            ))}
+          </Select>
+        </Row>
+        <p className="muted" style={{ fontSize: 12.5, marginTop: 4 }}>
+          The key never leaves your browser except in the direct call to the model. AI answers are generated
+          live and clearly labelled — always check them against the written rationale, which is the source of
+          truth.
+        </p>
       </Card>
 
       <div id="set-library">

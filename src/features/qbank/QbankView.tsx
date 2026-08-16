@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import { useStore } from '../../state/useStore';
 import { Card, Button, Stat, Segmented } from '../../design/primitives';
 import { useUserContentVersion } from '../../content/userContent';
@@ -36,11 +37,13 @@ const POOLS: Array<{ value: Special; label: string }> = [
 export default function QbankView() {
   const state = useStore();
   const uv = useUserContentVersion();
+  // a chapter/subject handed over from Study or Subjects preselects the filters
+  const preset = (useLocation().state ?? null) as { chapterId?: string; subject?: string } | null;
   const [screen, setScreen] = useState<Screen>(getSession() ? 'run' : 'setup');
   const [mode, setMode] = useState<QMode>('study');
   const [special, setSpecial] = useState<Special>('all');
-  const [subject, setSubject] = useState<string>('');
-  const [chapter, setChapter] = useState<string>('');
+  const [subject, setSubject] = useState<string>(preset?.subject ?? '');
+  const [chapter, setChapter] = useState<string>(preset?.chapterId ?? '');
   const [difficulties, setDifficulties] = useState<number[]>([1, 2, 3]);
   const [size, setSize] = useState<number>(20);
 

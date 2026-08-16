@@ -39,6 +39,12 @@ export const IconStudy = (p: IconProps) => (
     <path d="M20 5.5A1.5 1.5 0 0 0 18.5 4H13a2 2 0 0 0-2 2v13a1.5 1.5 0 0 1 1.5-1.5h6A1.5 1.5 0 0 0 20 16V5.5Z" />
   </Svg>
 );
+export const IconSparkle = (p: IconProps) => (
+  <Svg {...p}>
+    <path d="M12 3c.5 3.8 1.7 5 5.5 5.5-3.8.5-5 1.7-5.5 5.5-.5-3.8-1.7-5-5.5-5.5C10.3 8 11.5 6.8 12 3Z" />
+    <path d="M18.5 14c.3 1.9.9 2.5 2.8 2.8-1.9.3-2.5.9-2.8 2.8-.3-1.9-.9-2.5-2.8-2.8 1.9-.3 2.5-.9 2.8-2.8Z" />
+  </Svg>
+);
 export const IconSubjects = (p: IconProps) => (
   <Svg {...p}>
     <path d="M3 6.5 12 3l9 3.5-9 3.5-9-3.5Z" />

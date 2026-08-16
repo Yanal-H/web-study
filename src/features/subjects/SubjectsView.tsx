@@ -6,7 +6,7 @@ import { COLORS } from '../../state/constants';
 import { Button, IconButton, Card, Field, Input, EmptyState, ProgressRing } from '../../design/primitives';
 import { Dialog } from '../../design/Dialog';
 import { useToast } from '../../design/Toast';
-import { IconPlus, IconEdit, IconTrash, IconSubjects, IconChevron } from '../../design/icons';
+import { IconPlus, IconEdit, IconTrash, IconSubjects, IconChevron, IconStudy } from '../../design/icons';
 import { allCards, allMcqs } from '../../content/loader';
 import { useUserContentVersion } from '../../content/userContent';
 import { deckStats } from '../../data/session';
@@ -69,7 +69,7 @@ export default function SubjectsView() {
       <header className="page-head row spread" style={{ alignItems: 'flex-end' }}>
         <div>
           <h1>Subjects</h1>
-          <div className="sub">Organise your curriculum into subjects and topics.</div>
+          <div className="sub">Your curriculum, grouped by subject. Pick one to read or drill.</div>
         </div>
         <Button variant="primary" onClick={() => setCreating(true)}>
           <IconPlus size={17} /> New subject
@@ -96,25 +96,25 @@ export default function SubjectsView() {
             const stats = bySubject.get(sub.name) || { cards: 0, mcqs: 0 };
             const hasContent = stats.cards > 0 || stats.mcqs > 0;
             const eng = engine[sub.name];
+            const pct = eng && eng.total > 0 ? Math.round((eng.learned / eng.total) * 100) : null;
             return (
               <div
                 className={`subject-card sc-live${hasContent ? ' sc-clickable' : ''}`}
                 key={sub.id}
                 style={{ ['--sc-color' as string]: sub.color }}
-                onClick={() => hasContent && navigate('/study')}
+                onClick={() => hasContent && navigate('/study', { state: { subject: sub.name } })}
               >
                 <div className="sc-bar" style={{ background: sub.color }} />
                 <div className="sc-glow" />
                 <div className="row spread" style={{ alignItems: 'flex-start' }}>
-                  <div style={{ minWidth: 0, display: 'flex', gap: 12, alignItems: 'center' }}>
-                    {hasContent && eng && eng.total > 0 && (
-                      <ProgressRing value={eng.learned / eng.total} size={46} color={sub.color} />
-                    )}
+                  <div style={{ minWidth: 0, display: 'flex', gap: 14, alignItems: 'center' }}>
+                    {pct != null && <ProgressRing value={eng!.learned / eng!.total} size={52} color={sub.color} label={`${pct}%`} />}
                     <div style={{ minWidth: 0 }}>
                       <h3>{sub.name}</h3>
                       <div className="sc-meta">
                         {(sub.topics?.length ?? 0)} topic{(sub.topics?.length ?? 0) === 1 ? '' : 's'}
-                        {eng && eng.total > 0 && ` · ${Math.round((eng.learned / eng.total) * 100)}% seen`}
+                        {pct != null && ` · ${pct}% seen`}
+                        {eng && eng.due > 0 && ` · ${eng.due} due`}
                       </div>
                     </div>
                   </div>
@@ -127,28 +127,39 @@ export default function SubjectsView() {
                     </IconButton>
                   </div>
                 </div>
-                <div className="sc-foot">
-                  {hasContent ? (
-                    <>
-                      <span className="sc-chip" style={{ color: sub.color }}>
-                        {stats.cards} cards
-                      </span>
-                      <span className="sc-chip" style={{ color: sub.color }}>
-                        {stats.mcqs} questions
-                      </span>
-                      {eng && eng.due > 0 && (
-                        <span className="sc-chip" style={{ color: 'var(--k-warning)' }}>
-                          {eng.due} due
-                        </span>
+
+                {hasContent ? (
+                  <>
+                    <div className="sc-stats">
+                      <div className="sc-stat">
+                        <span className="sc-stat-n" style={{ color: sub.color }}>{stats.cards}</span>
+                        <span className="sc-stat-l">cards</span>
+                      </div>
+                      <div className="sc-stat">
+                        <span className="sc-stat-n" style={{ color: sub.color }}>{stats.mcqs}</span>
+                        <span className="sc-stat-l">questions</span>
+                      </div>
+                      {eng && (
+                        <div className="sc-stat">
+                          <span className="sc-stat-n" style={{ color: eng.due > 0 ? 'var(--k-warning)' : 'var(--text-faint)' }}>
+                            {eng.due}
+                          </span>
+                          <span className="sc-stat-l">due</span>
+                        </div>
                       )}
-                      <span className="sc-open">
-                        Open <IconChevron size={13} />
-                      </span>
-                    </>
-                  ) : (
-                    <span className="sc-meta">No content yet</span>
-                  )}
-                </div>
+                    </div>
+                    <div className="sc-actions" onClick={(e) => e.stopPropagation()}>
+                      <Button size="sm" onClick={() => navigate('/study', { state: { subject: sub.name } })}>
+                        <IconStudy size={15} /> Study
+                      </Button>
+                      <Button size="sm" variant="ghost" onClick={() => navigate('/qbank', { state: { subject: sub.name } })}>
+                        <IconChevron size={14} /> Questions
+                      </Button>
+                    </div>
+                  </>
+                ) : (
+                  <div className="sc-empty">Add cards or questions to this subject to get started.</div>
+                )}
               </div>
             );
           })}

@@ -170,8 +170,8 @@ function Shell() {
           <BrandMark size={32} />
           <div className="name">Yanal</div>
         </div>
-        <button className="menu-btn" type="button" onClick={() => setNavOpen(true)}>
-          <IconMenu size={18} /> Menu
+        <button className="menu-btn" type="button" onClick={() => setNavOpen(true)} aria-label="Open navigation">
+          <IconMenu size={18} /> Haki
         </button>
       </div>
 
@@ -182,6 +182,7 @@ function Shell() {
           aria-hidden="true"
         />
         <aside className={'sidebar' + (navOpen ? ' open' : '')} id="sidebar">
+          <span className="sidebar-edge" aria-hidden="true" />
           <div className="brand">
             <BrandMark />
             <div>
@@ -219,14 +220,16 @@ function Shell() {
         </aside>
 
         <main className="main">
-          <Suspense fallback={<div className="route-fallback">Loading…</div>} key={location.pathname}>
-            <Routes>
-              {ROUTES.map((r) => (
-                <Route key={r.path} path={r.path} element={<r.Component />} />
-              ))}
-              <Route path="*" element={<FallbackRoute />} />
-            </Routes>
-          </Suspense>
+          <div className="route-view" key={location.pathname}>
+            <Suspense fallback={<div className="route-fallback">Loading…</div>}>
+              <Routes>
+                {ROUTES.map((r) => (
+                  <Route key={r.path} path={r.path} element={<r.Component />} />
+                ))}
+                <Route path="*" element={<FallbackRoute />} />
+              </Routes>
+            </Suspense>
+          </div>
         </main>
       </div>
 

@@ -8,7 +8,7 @@ import { Card, Stat, Badge, ProgressRing, Button, EmptyState } from '../../desig
 import { IconFlame, IconTarget, IconFlashcards, IconQbank, IconStudy, IconCheck } from '../../design/icons';
 import { computeStreak, forecast, weakMcqs, todayProgress } from '../../lib/stats';
 import { collectItems, queueStats } from '../flashcards/deck';
-import { allMcqs } from '../../content/loader';
+import { allMcqs, getChapter } from '../../content/loader';
 import { isDue as mcqDue } from '../qbank/perf';
 import { useUserContentVersion } from '../../content/userContent';
 import Hero from './Hero';
@@ -54,6 +54,17 @@ export default function DashboardView() {
   const hour = new Date().getHours();
   const greet = hour < 12 ? 'Good morning' : hour < 18 ? 'Good afternoon' : 'Good evening';
 
+  // the chapters you have opened most recently, for a personal "jump back in" row
+  const recent = useMemo(() => {
+    const prog = state.study.progress || {};
+    return Object.entries(prog)
+      .filter(([, p]: [string, any]) => p?.lastOpened)
+      .map(([cid, p]: [string, any]) => ({ id: cid, ch: getChapter(cid), lastOpened: p.lastOpened as string }))
+      .filter((r) => r.ch)
+      .sort((a, b) => (a.lastOpened < b.lastOpened ? 1 : -1))
+      .slice(0, 3);
+  }, [state.study.progress, sv, uv]);
+
   // Next best action — a single, decisive recommendation.
   const nextAction = (() => {
     if (due.due > 0)
@@ -91,6 +102,28 @@ export default function DashboardView() {
         greeting={`${greet}.`}
         cta={{ text: nextAction.text, label: nextAction.cta, go: nextAction.go, icon: nextAction.icon }}
       />
+
+      {/* Jump back into what you were reading */}
+      {recent.length > 0 && (
+        <section className="resume-strip enter" aria-label="Continue studying">
+          {recent.map((r) => (
+            <button
+              key={r.id}
+              className="resume-card"
+              onClick={() => navigate(`/study/${encodeURIComponent(r.id)}`)}
+            >
+              <span className="resume-eyebrow">Continue</span>
+              <span className="resume-title">{r.ch!.title}</span>
+              <span className="resume-meta">
+                {r.ch!.subject} · {new Date(r.lastOpened).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })}
+              </span>
+              <span className="resume-go">
+                Resume <IconStudy size={14} />
+              </span>
+            </button>
+          ))}
+        </section>
+      )}
 
       {/* At-a-glance */}
       <div className="stat-row enter">
