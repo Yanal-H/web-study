@@ -49,7 +49,7 @@ export function parseTask(raw: string, now = new Date()): ParsedTask {
 
   // priority: !, !!, or the word urgent/asap
   if (/\b(urgent|asap)\b/i.test(text) || /!{2,}/.test(text)) priority = 2;
-  else if (/\bimportant\b/i.test(text) || /(?<!\!)\!(?!\!)/.test(text)) priority = 1;
+  else if (/\bimportant\b/i.test(text) || /(?<!!)!(?!!)/.test(text)) priority = 1;
   text = text.replace(/\burgent\b|\basap\b|\bimportant\b|!+/gi, ' ');
 
   // relative dates
