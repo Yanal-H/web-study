@@ -3,6 +3,7 @@ import { listFiles, putFile, deleteFile, getBlob, formatBytes, type FileMeta } f
 import { update } from '../../state/store';
 import { useStore } from '../../state/useStore';
 import { IconMusic, IconPlay, IconPause, IconSkip, IconTrash, IconPlus, IconClose } from '../../design/icons';
+import { musicEngine, TRACKS } from '../../lib/music';
 
 /**
  * Offline music. Tracks are the user's own audio files, stored in IndexedDB and
@@ -20,6 +21,8 @@ export default function MusicPlayer() {
   const [progress, setProgress] = useState(0);
   const [duration, setDuration] = useState(0);
   const [shuffle, setShuffle] = useState(false);
+  const [source, setSource] = useState<'built-in' | 'files'>('built-in');
+  const [builtIn, setBuiltIn] = useState<string | null>(null);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const urlRef = useRef<string | null>(null);
   const fileRef = useRef<HTMLInputElement>(null);
@@ -65,7 +68,10 @@ export default function MusicPlayer() {
 
   useEffect(() => {
     if (audioRef.current) audioRef.current.volume = volume;
+    musicEngine().setVolume(volume);
   }, [volume]);
+
+  useEffect(() => () => musicEngine().stop(), []);
 
   useEffect(
     () => () => {
@@ -74,9 +80,26 @@ export default function MusicPlayer() {
     []
   );
 
+  function playBuiltIn(id: string) {
+    const eng = musicEngine();
+    // one thing plays at a time
+    audioRef.current?.pause();
+    setPlaying(false);
+    if (builtIn === id) {
+      eng.stop();
+      setBuiltIn(null);
+      return;
+    }
+    eng.setVolume(volume);
+    if (eng.play(id)) setBuiltIn(id);
+  }
+
   function toggle() {
     const el = audioRef.current;
     if (!el || !current) return;
+    // starting a file stops the synth
+    musicEngine().stop();
+    setBuiltIn(null);
     if (playing) {
       el.pause();
       setPlaying(false);
@@ -147,6 +170,39 @@ export default function MusicPlayer() {
             </button>
           </div>
 
+          <div className="mp-tabs">
+            <button
+              className={source === 'built-in' ? 'on' : ''}
+              onClick={() => setSource('built-in')}
+            >
+              Built-in
+            </button>
+            <button className={source === 'files' ? 'on' : ''} onClick={() => setSource('files')}>
+              My tracks{tracks.length ? ` · ${tracks.length}` : ''}
+            </button>
+          </div>
+
+          {source === 'built-in' ? (
+            <>
+              <div className="mp-list">
+                {TRACKS.map((t) => (
+                  <div className={`mp-row${builtIn === t.id ? ' on' : ''}`} key={t.id}>
+                    <button className="mp-row-main" onClick={() => playBuiltIn(t.id)}>
+                      <span className="mp-row-name">
+                        {t.name}
+                        <span className="mp-blurb">{t.blurb}</span>
+                      </span>
+                      <span className="mp-row-size">{builtIn === t.id ? 'Playing' : `${t.bpm}`}</span>
+                    </button>
+                  </div>
+                ))}
+              </div>
+              <div className="mp-note">
+                Played live in the browser — no files, no connection, nothing to license.
+              </div>
+            </>
+          ) : (
+          <>
           {current ? (
             <>
               <div className="mp-now" title={current.name}>
@@ -214,7 +270,7 @@ export default function MusicPlayer() {
           </label>
 
           {tracks.length > 0 && (
-            <div className="mp-list">
+            <div className="mp-list mp-files">
               {tracks.map((t, i) => (
                 <div className={`mp-row${i === index ? ' on' : ''}`} key={t.id}>
                   <button
@@ -238,7 +294,13 @@ export default function MusicPlayer() {
           <button className="mp-add" onClick={() => fileRef.current?.click()}>
             <IconPlus size={14} /> Add tracks
           </button>
+          <div className="mp-note">
+            Drop in your own downloads — NCS and anything else you already have. They stay on
+            this device and play offline.
+          </div>
           <input ref={fileRef} type="file" accept="audio/*" multiple hidden onChange={(e) => void add(e.target.files)} />
+          </>
+          )}
         </div>
       )}
     </>

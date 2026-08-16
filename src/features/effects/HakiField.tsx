@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react';
+import { thunder } from '../../lib/sound';
 
 /*
  * HakiField — the living energy behind the whole app. A single fixed canvas:
@@ -49,7 +50,7 @@ export default function HakiField() {
     let running = true;
     let t = 0;
     let nextBolt = 180 + Math.random() * 320;
-    let flash: { pts: Array<[number, number]>; life: number } | null = null;
+    let flash: { pts: Array<[number, number]>; fork?: Array<[number, number]>; life: number } | null = null;
 
     const reduced = () => window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
     const level = () => document.documentElement.getAttribute('data-haki') || 'full';
@@ -136,21 +137,40 @@ export default function HakiField() {
         nextBolt--;
         if (nextBolt <= 0 && !flash) {
           const x0 = W * (0.1 + Math.random() * 0.8);
-          flash = { pts: boltPoints(x0, -10, x0 + (Math.random() - 0.5) * 240, H * (0.5 + Math.random() * 0.5), 9), life: 16 };
-          nextBolt = 180 + Math.random() * 420;
+          const endY = H * (0.5 + Math.random() * 0.5);
+          const main = boltPoints(x0, -10, x0 + (Math.random() - 0.5) * 240, endY, 11);
+          // a fork peeling off the middle of the strike
+          const mid = main[Math.floor(main.length * 0.55)]!;
+          const fork = boltPoints(mid[0], mid[1], mid[0] + (Math.random() - 0.5) * 300, endY * 0.92, 6);
+          flash = { pts: main, fork, life: 20 };
+          nextBolt = 150 + Math.random() * 360;
+          // Not every strike is overhead: about half of them carry, and quietly,
+          // so the room has weather rather than a metronome.
+          if (Math.random() < 0.55) thunder(0.45 + Math.random() * 0.4);
         }
         if (flash) {
-          const a = flash.life / 16;
-          // ambient flash
-          ctx!.fillStyle = `rgba(255,60,100,${0.05 * a * alphaScale})`;
+          const a = flash.life / 20;
+          // the whole field lights for an instant, then falls away
+          ctx!.fillStyle = `rgba(255,60,100,${0.09 * a * a * alphaScale})`;
           ctx!.fillRect(0, 0, W, H);
-          ctx!.strokeStyle = `rgba(255,225,235,${0.9 * a})`;
-          ctx!.lineWidth = 2;
-          ctx!.shadowColor = 'rgba(255,45,85,0.9)';
-          ctx!.shadowBlur = 16;
+          ctx!.shadowColor = 'rgba(255,45,85,0.95)';
+          const draw = (pts: Array<[number, number]>, width: number, alpha: number) => {
+            ctx!.strokeStyle = `rgba(255,231,240,${alpha})`;
+            ctx!.lineWidth = width;
+            ctx!.beginPath();
+            pts.forEach((p, i) => (i ? ctx!.lineTo(p[0], p[1]) : ctx!.moveTo(p[0], p[1])));
+            ctx!.stroke();
+          };
+          // wide crimson halo under a hot white core
+          ctx!.shadowBlur = 26;
+          ctx!.strokeStyle = `rgba(255,45,85,${0.5 * a})`;
+          ctx!.lineWidth = 7;
           ctx!.beginPath();
           flash.pts.forEach((p, i) => (i ? ctx!.lineTo(p[0], p[1]) : ctx!.moveTo(p[0], p[1])));
           ctx!.stroke();
+          ctx!.shadowBlur = 18;
+          draw(flash.pts, 2.4, 0.95 * a);
+          if (flash.fork) draw(flash.fork, 1.4, 0.65 * a);
           ctx!.shadowBlur = 0;
           flash.life--;
           if (flash.life <= 0) flash = null;

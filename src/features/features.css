@@ -2679,3 +2679,55 @@
   color: var(--text-faint);
   margin-top: 2px;
 }
+
+/* ---- music: source tabs and built-in track rows ---- */
+.mp-tabs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px;
+  padding: 3px;
+  border-radius: var(--r-md);
+  background: var(--surface-2);
+  border: 1px solid var(--border-soft);
+  margin-bottom: 10px;
+}
+.mp-tabs button {
+  border: 0;
+  background: none;
+  color: var(--text-faint);
+  font-size: 12px;
+  font-weight: 600;
+  padding: 6px 4px;
+  border-radius: var(--r-sm);
+  cursor: pointer;
+  transition: all var(--dur-fast) var(--ease);
+}
+.mp-tabs button:hover {
+  color: var(--text);
+}
+.mp-tabs button.on {
+  background: var(--grad-haki);
+  color: #fff;
+}
+.mp-blurb {
+  display: block;
+  font-size: 11px;
+  color: var(--text-faint);
+  font-weight: 400;
+  margin-top: 1px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.mp-row .mp-row-name {
+  white-space: normal;
+}
+.mp-note {
+  font-size: 11px;
+  color: var(--text-faint);
+  line-height: 1.45;
+  margin: 8px 0 4px;
+}
+.mp-row.on .mp-row-size {
+  color: var(--accent);
+  font-weight: 650;
+}
