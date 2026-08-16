@@ -1,16 +1,67 @@
-import { useState } from 'react';
-import { useStore } from '../../state/useStore';
+import { useMemo, useState } from 'react';
+import { useStore, useStoreVersion } from '../../state/useStore';
 import { update, uid } from '../../state/store';
-import { Card, Button, Input, Textarea, Field, EmptyState } from '../../design/primitives';
+import { Card, Button, Input, Textarea, Field } from '../../design/primitives';
 import { Dialog } from '../../design/Dialog';
 import { IconPlus, IconTrash, IconMnemonics } from '../../design/icons';
 import { useToast } from '../../design/Toast';
+import { listChapters } from '../../content/loader';
+import { useUserContentVersion } from '../../content/userContent';
+
+interface Mnem {
+  id: string;
+  title: string;
+  text: string;
+  source?: string; // chapter title, for the ones that ship with content
+  ownable: boolean; // false = read-only, from a chapter
+}
+
+/** Every mnemonic from every loaded chapter, so the page is full on day one. */
+function contentMnemonics(): Mnem[] {
+  return listChapters().flatMap((ch) =>
+    ch.mnemonics.map((m, i) => ({
+      id: `content:${ch.id}:${i}`,
+      title: m.cue,
+      text: m.expansion,
+      source: `${ch.subject} · ${ch.title}`,
+      ownable: false,
+    }))
+  );
+}
 
 export default function MnemonicsView() {
   const state = useStore();
+  const v = useStoreVersion();
+  const uv = useUserContentVersion();
   const toast = useToast();
   const [adding, setAdding] = useState(false);
-  const list: any[] = Array.isArray(state.mnemonics) ? state.mnemonics : [];
+  const [query, setQuery] = useState('');
+
+  const list: Mnem[] = useMemo(() => {
+    const mine: Mnem[] = (Array.isArray(state.mnemonics) ? state.mnemonics : []).map((m: any) => ({
+      id: m.id,
+      title: m.title || m.key || 'Mnemonic',
+      text: m.text || m.body || '',
+      ownable: true,
+    }));
+    const q = query.trim().toLowerCase();
+    const all = [...mine, ...contentMnemonics()];
+    return q
+      ? all.filter((m) => `${m.title} ${m.text} ${m.source ?? ''}`.toLowerCase().includes(q))
+      : all;
+  }, [state.mnemonics, v, uv, query]);
+
+  // group the content ones by subject for a book-like layout; mine sit up top
+  const mine = list.filter((m) => m.ownable);
+  const bySubject = useMemo(() => {
+    const g = new Map<string, Mnem[]>();
+    for (const m of list) {
+      if (m.ownable) continue;
+      const subj = m.source?.split(' · ')[0] || 'Other';
+      (g.get(subj) || g.set(subj, []).get(subj)!).push(m);
+    }
+    return [...g.entries()].sort((a, b) => a[0].localeCompare(b[0]));
+  }, [list]);
 
   function remove(id: string) {
     update((s) => {
@@ -24,33 +75,57 @@ export default function MnemonicsView() {
       <header className="page-head row spread" style={{ alignItems: 'flex-end' }}>
         <div>
           <h1>Mnemonics</h1>
-          <div className="sub">Memory hooks worth keeping.</div>
+          <div className="sub">Every hook from your chapters, plus the ones you add.</div>
         </div>
         <Button variant="primary" onClick={() => setAdding(true)}>
           <IconPlus size={17} /> New mnemonic
         </Button>
       </header>
 
-      {list.length === 0 ? (
+      <Input
+        value={query}
+        placeholder="Search mnemonics…"
+        aria-label="Search mnemonics"
+        onChange={(e) => setQuery(e.target.value)}
+        style={{ marginBottom: 'var(--sp-4)', maxWidth: 360 }}
+      />
+
+      {mine.length > 0 && (
+        <section className="section">
+          <div className="section-head">
+            <h2>Yours</h2>
+          </div>
+          <div className="mnem-grid">
+            {mine.map((m) => (
+              <MnemonicCard key={m.id} m={m} onRemove={() => remove(m.id)} />
+            ))}
+          </div>
+        </section>
+      )}
+
+      {bySubject.map(([subject, items]) => (
+        <section className="section" key={subject}>
+          <div className="section-head">
+            <h2>{subject}</h2>
+            <span className="see">{items.length}</span>
+          </div>
+          <div className="mnem-grid">
+            {items.map((m) => (
+              <MnemonicCard key={m.id} m={m} />
+            ))}
+          </div>
+        </section>
+      ))}
+
+      {list.length === 0 && (
         <Card>
-          <EmptyState
-            icon={<IconMnemonics size={22} />}
-            title="No mnemonics yet"
-            action={
-              <Button variant="primary" onClick={() => setAdding(true)}>
-                <IconPlus size={17} /> Add one
-              </Button>
-            }
-          >
-            Capture the hooks that make facts stick.
-          </EmptyState>
+          <div className="es" style={{ textAlign: 'center', padding: 'var(--sp-6)' }}>
+            <IconMnemonics size={22} />
+            <p className="muted" style={{ marginTop: 8 }}>
+              {query ? 'No mnemonics match that search.' : 'No mnemonics yet — add your first.'}
+            </p>
+          </div>
         </Card>
-      ) : (
-        <div className="mnem-grid">
-          {list.map((m) => (
-            <MnemonicCard key={m.id} m={m} onRemove={() => remove(m.id)} />
-          ))}
-        </div>
       )}
 
       {adding && (
@@ -69,7 +144,7 @@ export default function MnemonicsView() {
   );
 }
 
-function MnemonicCard({ m, onRemove }: { m: any; onRemove: () => void }) {
+function MnemonicCard({ m, onRemove }: { m: Mnem; onRemove?: () => void }) {
   const [open, setOpen] = useState(false);
   return (
     <div
@@ -77,22 +152,27 @@ function MnemonicCard({ m, onRemove }: { m: any; onRemove: () => void }) {
       onClick={() => setOpen((o) => !o)}
       role="button"
       tabIndex={0}
+      aria-expanded={open}
       onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && setOpen((o) => !o)}
     >
-      <div className="mnem-cue">{m.title || m.key || 'Mnemonic'}</div>
-      <div className="mnem-exp">{m.text || m.body}</div>
+      <div className="mnem-cue">{m.title}</div>
+      <div className="mnem-exp">{m.text}</div>
       <div className="mnem-foot">
         <span className="mnem-hint">{open ? 'Tap to hide' : 'Tap to reveal'}</span>
-        <button
-          className="btn btn--ghost btn--icon"
-          aria-label="Delete"
-          onClick={(e) => {
-            e.stopPropagation();
-            onRemove();
-          }}
-        >
-          <IconTrash size={15} />
-        </button>
+        {onRemove ? (
+          <button
+            className="btn btn--ghost btn--icon"
+            aria-label="Delete"
+            onClick={(e) => {
+              e.stopPropagation();
+              onRemove();
+            }}
+          >
+            <IconTrash size={15} />
+          </button>
+        ) : m.source ? (
+          <span className="mnem-src">{m.source.split(' · ').slice(1).join(' · ')}</span>
+        ) : null}
       </div>
     </div>
   );

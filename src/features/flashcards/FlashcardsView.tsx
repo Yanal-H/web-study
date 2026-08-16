@@ -1,5 +1,5 @@
 import { lazy, Suspense, useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { useStore } from '../../state/useStore';
+import { useStore, useStoreVersion } from '../../state/useStore';
 import { Card, Button, Stat, Segmented } from '../../design/primitives';
 import { Dialog } from '../../design/Dialog';
 import { useToast } from '../../design/Toast';
@@ -42,14 +42,15 @@ export default function FlashcardsView() {
 
   const [engineTree, setEngineTree] = useState<EngineDeckNode[]>([]);
   const [engineStats, setEngineStats] = useState({ due: 0, neu: 0, total: 0 });
+  const sv = useStoreVersion();
 
   // personal cards still live in the local store; content cards come from the engine
   const userItems = useMemo(
     () => collectItems().filter((i) => i.source === 'user'),
-    [uv, state.flashcards, state.schemaVersion]
+    [uv, state.flashcards, state.schemaVersion, sv]
   );
   const userStats = useMemo(() => queueStats(userItems), [userItems, state.study.cardSched]);
-  const weeks = useMemo(() => heatmapWeeks(state.activity, 17), [state.activity]);
+  const weeks = useMemo(() => heatmapWeeks(state.activity, 17), [state.activity, sv]);
   const contentCount = useMemo(() => allCards().length, [uv]);
 
   const refreshDecks = useCallback(async () => {

@@ -3,7 +3,7 @@ import { state, commit } from '../../state/store';
 import { type Grade, type CardSched } from '../../lib/scheduler';
 import { gradeItem, undoGrade, gradePreview, type ReviewItem, type GradeUndo } from './deck';
 import { Button, ProgressRing } from '../../design/primitives';
-import { IconFlag, IconCheck } from '../../design/icons';
+import { IconFlag, IconCheck, IconChevron } from '../../design/icons';
 import { chapterImage } from '../../content/loader';
 import { renderRich, renderInline } from '../../lib/lexicon';
 import { globalIndex } from '../../lib/useLexicon';
@@ -200,9 +200,20 @@ export default function ReviewSession({
     <div className="review-wrap">
       {impact && <div key={impact.key} className={`impact-flash impact-${impact.g}`} aria-hidden="true" />}
       <div className="review-top">
-        <Button variant="ghost" size="sm" onClick={onExit}>
-          Exit
-        </Button>
+        <div className="row" style={{ gap: 6 }}>
+          <Button variant="ghost" size="sm" onClick={onExit}>
+            <IconChevron size={15} style={{ transform: 'rotate(180deg)' }} /> Decks
+          </Button>
+          <button
+            className="btn btn--ghost btn--sm"
+            onClick={doUndo}
+            disabled={undo.current.length === 0}
+            aria-label="Previous card"
+            title="Back to the previous card (u)"
+          >
+            Back
+          </button>
+        </div>
         <div className="review-progress">
           {combo >= 2 && <span className="combo-chip">⚡ {combo} streak</span>}
           <span className="rc-counts" title="Still to come: new · learning · due">
@@ -212,14 +223,21 @@ export default function ReviewSession({
           </span>
           {idx + 1} / {queue.length}
         </div>
-        <button
-          className={`btn btn--ghost btn--icon ${flagged ? 'flagged' : ''}`}
-          aria-label="Flag card"
-          onClick={toggleFlag}
-          style={{ color: flagged ? 'var(--warning)' : undefined }}
-        >
-          <IconFlag size={17} />
-        </button>
+        <div className="row" style={{ gap: 6 }}>
+          {!revealed && (
+            <button className="btn btn--ghost btn--sm" onClick={() => setRevealed(true)} title="Show answer (space)">
+              Flip
+            </button>
+          )}
+          <button
+            className={`btn btn--ghost btn--icon ${flagged ? 'flagged' : ''}`}
+            aria-label="Flag card"
+            onClick={toggleFlag}
+            style={{ color: flagged ? 'var(--warning)' : undefined }}
+          >
+            <IconFlag size={17} />
+          </button>
+        </div>
       </div>
       <div className="review-bar">
         <div className="review-bar-fill" style={{ width: `${(idx / queue.length) * 100}%` }} />

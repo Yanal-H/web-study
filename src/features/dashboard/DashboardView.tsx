@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useStore } from '../../state/useStore';
+import { useStore, useStoreVersion } from '../../state/useStore';
 import { markActivity, commit } from '../../state/store';
 import { Card, Stat, Badge, ProgressRing, Button, EmptyState } from '../../design/primitives';
 import { IconFlame, IconTarget, IconFlashcards, IconQbank, IconStudy, IconCheck } from '../../design/icons';
@@ -28,7 +28,8 @@ export default function DashboardView() {
   const streak = computeStreak(state.activity);
   const weeks = heatmapWeeks(state.activity, 17);
   // unified due across everything: flashcards (content + user) + MCQ reviews
-  const deck = useMemo(() => collectItems(), [uv, state.flashcards, state.schemaVersion]);
+  const sv = useStoreVersion();
+  const deck = useMemo(() => collectItems(), [uv, state.flashcards, state.schemaVersion, sv]);
   const due = queueStats(deck);
   const mcqDueCount = useMemo(() => allMcqs().filter((q) => state.study.mcqPerf[q.id] && mcqDue(q.id)).length, [uv, state.study.mcqPerf]);
   const fc = forecast(state.flashcards, 14);

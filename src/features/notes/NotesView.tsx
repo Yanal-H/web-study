@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { useStore } from '../../state/useStore';
+import { useStore, useStoreVersion } from '../../state/useStore';
 import { commit, update, uid } from '../../state/store';
 import { Card, Button, Input, IconButton, Segmented, EmptyState } from '../../design/primitives';
 import { IconPlus, IconTrash, IconNotes } from '../../design/icons';
@@ -33,7 +33,9 @@ function readNotes(raw: Record<string, any>): Note[] {
 export default function NotesView() {
   const state = useStore();
   const toast = useToast();
-  const notes = useMemo(() => readNotes(state.notes), [state.notes]);
+  const v = useStoreVersion();
+  // key on the store version, not state.notes — the object is mutated in place
+  const notes = useMemo(() => readNotes(state.notes), [state.notes, v]);
   const [activeId, setActiveId] = useState<string | null>(notes[0]?.id ?? null);
   const [mode, setMode] = useState<'edit' | 'preview'>('edit');
 

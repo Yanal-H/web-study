@@ -3135,3 +3135,11 @@
 @media (max-width: 560px) {
   .qb-source { display: none; }
 }
+.mnem-src {
+  font-size: 10.5px;
+  color: var(--text-faint);
+  max-width: 60%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

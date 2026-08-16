@@ -399,28 +399,50 @@ function CardsTab({
           </span>
         ))}
       </div>
+      <CardPreview cards={cards} />
+    </>
+  );
+}
+
+/**
+ * A short, readable sample of a chapter's cards — never the whole bank.
+ * Occlusion and image cards carry no readable front/back, so they are counted
+ * but not printed as blank rows, which is what used to clutter this tab.
+ */
+function CardPreview({ cards }: { cards: ReturnType<typeof chapterCards> }) {
+  const PREVIEW = 12;
+  const readable = cards.filter((c) => c.type === 'cloze' ? c.cloze : c.front);
+  const shown = readable.slice(0, PREVIEW);
+  const hidden = cards.length - shown.length;
+  return (
+    <>
+      <div className="card-eyebrow" style={{ marginBottom: 8 }}>Sample</div>
       <div className="list">
-        {cards.map((c) => (
+        {shown.map((c) => (
           <div className="list-row" key={c.id} style={{ alignItems: 'flex-start' }}>
             <Badge>{c.type}</Badge>
             <div className="lr-main">
               {c.type === 'cloze' ? (
-                <div
-                  className="md"
-                  dangerouslySetInnerHTML={{ __html: renderMarkdown(c.cloze || '') }}
-                />
+                <div className="md" dangerouslySetInnerHTML={{ __html: renderMarkdown(c.cloze || '') }} />
               ) : (
                 <>
                   <div className="lr-title">{c.front}</div>
-                  <div className="lr-sub" style={{ color: 'var(--text-dim)' }}>
-                    {c.back}
-                  </div>
+                  {c.back && (
+                    <div className="lr-sub" style={{ color: 'var(--text-dim)' }}>
+                      {c.back}
+                    </div>
+                  )}
                 </>
               )}
             </div>
           </div>
         ))}
       </div>
+      {hidden > 0 && (
+        <div className="muted" style={{ fontSize: 13, marginTop: 10, textAlign: 'center' }}>
+          + {hidden} more — start a review to see them all
+        </div>
+      )}
     </>
   );
 }
@@ -447,8 +469,9 @@ function QuestionsTab({
           <IconQbank size={16} /> Practise this chapter
         </Button>
       </div>
+      <div className="card-eyebrow" style={{ marginBottom: 8 }}>Sample</div>
       <div className="list">
-        {mcqs.map((q) => (
+        {mcqs.slice(0, 8).map((q) => (
           <div className="list-row" key={q.id} style={{ alignItems: 'flex-start' }}>
             <Badge tone={q.difficulty === 3 ? 'error' : q.difficulty === 2 ? 'warning' : 'success'}>
               L{q.difficulty}
@@ -462,6 +485,11 @@ function QuestionsTab({
           </div>
         ))}
       </div>
+      {mcqs.length > 8 && (
+        <div className="muted" style={{ fontSize: 13, marginTop: 10, textAlign: 'center' }}>
+          + {mcqs.length - 8} more — start a session to work through them
+        </div>
+      )}
     </>
   );
 }
