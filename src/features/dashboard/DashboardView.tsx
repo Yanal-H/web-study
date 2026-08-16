@@ -1,6 +1,8 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useStore, useStoreVersion } from '../../state/useStore';
+import { deckStats } from '../../data/session';
+import { whenContentReady } from '../../data/bootstrap';
 import { markActivity, commit } from '../../state/store';
 import { Card, Stat, Badge, ProgressRing, Button, EmptyState } from '../../design/primitives';
 import { IconFlame, IconTarget, IconFlashcards, IconQbank, IconStudy, IconCheck } from '../../design/icons';
@@ -29,8 +31,28 @@ export default function DashboardView() {
   const weeks = heatmapWeeks(state.activity, 17);
   // unified due across everything: flashcards (content + user) + MCQ reviews
   const sv = useStoreVersion();
-  const deck = useMemo(() => collectItems(), [uv, state.flashcards, state.schemaVersion, sv]);
-  const due = queueStats(deck);
+  // personal cards from the local store, shipped cards from the engine (IndexedDB)
+  const userDeck = useMemo(
+    () => collectItems().filter((i) => i.source === 'user'),
+    [uv, state.flashcards, state.schemaVersion, sv]
+  );
+  const userDue = queueStats(userDeck);
+  const [engineDue, setEngineDue] = useState({ due: 0, neu: 0, total: 0 });
+  useEffect(() => {
+    let alive = true;
+    void whenContentReady()
+      .then(() => deckStats(''))
+      .then((s) => alive && setEngineDue(s))
+      .catch(() => {});
+    return () => {
+      alive = false;
+    };
+  }, [sv, uv]);
+  const due = {
+    due: userDue.due + engineDue.due,
+    neu: userDue.neu + engineDue.neu,
+    total: userDue.total + engineDue.total,
+  };
   const mcqDueCount = useMemo(() => allMcqs().filter((q) => state.study.mcqPerf[q.id] && mcqDue(q.id)).length, [uv, state.study.mcqPerf]);
   const fc = forecast(state.flashcards, 14);
   const weak = weakMcqs(state.study.mcqPerf);

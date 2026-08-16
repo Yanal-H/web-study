@@ -3229,3 +3229,77 @@
   color: var(--warning);
   background: var(--warning-soft);
 }
+
+/* ---- mnemonic self-test ---- */
+.mnem-quiz {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  background: var(--bg);
+  display: flex;
+  flex-direction: column;
+  animation: viewerIn 160ms var(--ease) both;
+}
+.mq-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border);
+  font-variant-numeric: tabular-nums;
+  color: var(--text-dim);
+  font-size: 13px;
+}
+.mq-card {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  padding: 24px;
+  text-align: center;
+  cursor: pointer;
+}
+.mq-cue {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(2rem, 7vw, 3.6rem);
+  letter-spacing: -0.02em;
+  background: var(--grad-haki);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+.mq-exp {
+  max-width: 640px;
+  font-size: clamp(1.1rem, 3vw, 1.5rem);
+  line-height: 1.5;
+  text-wrap: balance;
+  animation: fcReveal 240ms var(--ease) both;
+}
+.mq-hint {
+  color: var(--text-faint);
+  font-size: 14px;
+}
+.mq-actions {
+  display: flex;
+  gap: 12px;
+}
+.mq-done {
+  flex: 1;
+  display: grid;
+  place-content: center;
+  text-align: center;
+}
+.mq-score {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(3rem, 12vw, 6rem);
+  background: var(--grad-haki);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}

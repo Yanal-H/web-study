@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useStore, useStoreVersion } from '../../state/useStore';
 import { update, uid } from '../../state/store';
 import { Card, Button, Input, Textarea, Field } from '../../design/primitives';
@@ -35,6 +35,7 @@ export default function MnemonicsView() {
   const uv = useUserContentVersion();
   const toast = useToast();
   const [adding, setAdding] = useState(false);
+  const [quiz, setQuiz] = useState(false);
   const [query, setQuery] = useState('');
 
   const list: Mnem[] = useMemo(() => {
@@ -77,10 +78,17 @@ export default function MnemonicsView() {
           <h1>Mnemonics</h1>
           <div className="sub">Every hook from your chapters, plus the ones you add.</div>
         </div>
-        <Button variant="primary" onClick={() => setAdding(true)}>
-          <IconPlus size={17} /> New mnemonic
-        </Button>
+        <div className="row" style={{ gap: 8 }}>
+          {list.length > 0 && (
+            <Button onClick={() => setQuiz(true)}>Test yourself</Button>
+          )}
+          <Button variant="primary" onClick={() => setAdding(true)}>
+            <IconPlus size={17} /> New mnemonic
+          </Button>
+        </div>
       </header>
+
+      {quiz && <MnemonicQuiz items={list.filter((m) => m.text)} onClose={() => setQuiz(false)} />}
 
       <Input
         value={query}
@@ -174,6 +182,72 @@ function MnemonicCard({ m, onRemove }: { m: Mnem; onRemove?: () => void }) {
           <span className="mnem-src">{m.source.split(' · ').slice(1).join(' · ')}</span>
         ) : null}
       </div>
+    </div>
+  );
+}
+
+/** Active-recall drill: see the cue, recall the expansion, reveal, self-mark, next. */
+function MnemonicQuiz({ items, onClose }: { items: Mnem[]; onClose: () => void }) {
+  const deck = useMemo(() => [...items].sort(() => Math.random() - 0.5), [items]);
+  const [i, setI] = useState(0);
+  const [shown, setShown] = useState(false);
+  const [got, setGot] = useState(0);
+
+  const m = deck[i];
+  const done = i >= deck.length;
+
+  const next = (correct: boolean) => {
+    if (correct) setGot((g) => g + 1);
+    setShown(false);
+    setI((n) => n + 1);
+  };
+
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (done) {
+        if (e.key === 'Enter' || e.key === 'Escape') onClose();
+        return;
+      }
+      if (e.key === ' ') {
+        e.preventDefault();
+        setShown(true);
+      } else if (shown && (e.key === '1' || e.key.toLowerCase() === 'n')) next(false);
+      else if (shown && (e.key === '2' || e.key.toLowerCase() === 'y')) next(true);
+      else if (e.key === 'Escape') onClose();
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [done, shown, i]);
+
+  return (
+    <div className="mnem-quiz" role="dialog" aria-modal="true" aria-label="Mnemonic self-test">
+      <div className="mq-bar">
+        <span>{done ? deck.length : i + 1} / {deck.length}</span>
+        <button className="btn btn--ghost btn--sm" onClick={onClose}>Close</button>
+      </div>
+      {done ? (
+        <div className="mq-done">
+          <div className="mq-score">{Math.round((got / Math.max(1, deck.length)) * 100)}%</div>
+          <p className="muted">{got} of {deck.length} recalled</p>
+          <Button variant="primary" onClick={onClose} style={{ marginTop: 16 }}>Done</Button>
+        </div>
+      ) : (
+        <div className="mq-card" onClick={() => !shown && setShown(true)}>
+          <div className="mq-cue">{m!.title}</div>
+          {shown ? (
+            <>
+              <div className="mq-exp">{m!.text}</div>
+              <div className="mq-actions">
+                <button className="btn btn--danger" onClick={() => next(false)}>Missed (1)</button>
+                <button className="btn btn--primary" onClick={() => next(true)}>Got it (2)</button>
+              </div>
+            </>
+          ) : (
+            <div className="mq-hint">Recall what it stands for — tap or press space to check</div>
+          )}
+        </div>
+      )}
     </div>
   );
 }
