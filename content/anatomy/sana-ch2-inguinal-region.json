@@ -1,0 +1,1925 @@
+{
+ "schema": "foundation.study-module/v1",
+ "id": "sana-ch2-inguinal-region",
+ "subject": "Anatomy",
+ "title": "Inguinal Region",
+ "source": {
+  "book": "Recall by Yanal — Surgical Anatomy",
+  "chapter": 2,
+  "title": "Inguinal Region",
+  "pages": "—"
+ },
+ "brand": "by Yanal · Cairo 2026",
+ "estMinutes": 20,
+ "deck": "Anatomy::Inguinal Region",
+ "tags": [
+  "anatomy",
+  "surgical-anatomy",
+  "inguinal-region"
+ ],
+ "objectives": [
+  "Identify the key structures of Inguinal Region at each level of dissection.",
+  "Relate the nerves, vessels and muscles of Inguinal Region to their functions.",
+  "Localise the named spaces and regions of Inguinal Region and list their contents.",
+  "Recognise the common clinical lesions associated with Inguinal Region.",
+  "Reproduce the high-yield relations of Inguinal Region tested in vivas and MCQs."
+ ],
+ "outline": [
+  "2.1 Inguinal Canal",
+  "2.2 Rings & Hesselbach's Triangle",
+  "2.3 Cord & Coverings",
+  "2.4 Hernia Routes",
+  "2.5 Femoral Canal",
+  "2.6 Clinical Scenarios"
+ ],
+ "sections": [
+  {
+   "id": "s1",
+   "n": "2.1",
+   "title": "Inguinal Canal",
+   "deck": "Inguinal Canal",
+   "digest": "Imported Recall deck. This section holds the **inguinal canal** cards for Inguinal Region. Open the flashcards for Inguinal Canal to drill it; author a written digest here to turn the section into a reader page.",
+   "highYield": [],
+   "tables": [],
+   "pitfalls": [],
+   "figures": []
+  },
+  {
+   "id": "s2",
+   "n": "2.2",
+   "title": "Rings & Hesselbach's Triangle",
+   "deck": "Rings & Hesselbach's Triangle",
+   "digest": "Imported Recall deck. This section holds the **rings & hesselbach's triangle** cards for Inguinal Region. Open the flashcards for Rings & Hesselbach's Triangle to drill it; author a written digest here to turn the section into a reader page.",
+   "highYield": [],
+   "tables": [],
+   "pitfalls": [],
+   "figures": []
+  },
+  {
+   "id": "s3",
+   "n": "2.3",
+   "title": "Cord & Coverings",
+   "deck": "Cord & Coverings",
+   "digest": "Imported Recall deck. This section holds the **cord & coverings** cards for Inguinal Region. Open the flashcards for Cord & Coverings to drill it; author a written digest here to turn the section into a reader page.",
+   "highYield": [],
+   "tables": [],
+   "pitfalls": [],
+   "figures": []
+  },
+  {
+   "id": "s4",
+   "n": "2.4",
+   "title": "Hernia Routes",
+   "deck": "Hernia Routes",
+   "digest": "Imported Recall deck. This section holds the **hernia routes** cards for Inguinal Region. Open the flashcards for Hernia Routes to drill it; author a written digest here to turn the section into a reader page.",
+   "highYield": [],
+   "tables": [],
+   "pitfalls": [],
+   "figures": []
+  },
+  {
+   "id": "s5",
+   "n": "2.5",
+   "title": "Femoral Canal",
+   "deck": "Femoral Canal",
+   "digest": "Imported Recall deck. This section holds the **femoral canal** cards for Inguinal Region. Open the flashcards for Femoral Canal to drill it; author a written digest here to turn the section into a reader page.",
+   "highYield": [],
+   "tables": [],
+   "pitfalls": [],
+   "figures": []
+  },
+  {
+   "id": "s6",
+   "n": "2.6",
+   "title": "Clinical Scenarios",
+   "deck": "Clinical Scenarios",
+   "digest": "Imported Recall deck. This section holds the **clinical scenarios** cards for Inguinal Region. Open the flashcards for Clinical Scenarios to drill it; author a written digest here to turn the section into a reader page.",
+   "highYield": [],
+   "tables": [],
+   "pitfalls": [],
+   "figures": []
+  }
+ ],
+ "glossary": [],
+ "mnemonics": [],
+ "cards": [
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch2-inguinal-region-card-001",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Inguinal Canal",
+   "front": "What is the inguinal canal and how long is it?",
+   "back": "An oblique intermuscular slit about 4 cm long in the lower part of the anterior abdominal wall, running just above and parallel to the medial half of the inguinal ligament.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch2-inguinal-region-card-002",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Inguinal Canal",
+   "front": "What is the developmental reason for the existence of the inguinal canal?",
+   "back": "It is the track along which the testis descends from the posterior abdominal wall into the scrotum, dragging its coverings, vessels and duct with it; in the female it transmits the round ligament to the labium majus.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch2-inguinal-region-card-003",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Inguinal Canal",
+   "front": "In which direction does the inguinal canal run?",
+   "back": "Downwards, forwards and medially, from the deep ring laterally to the superficial ring medially.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch2-inguinal-region-card-004",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Inguinal Canal",
+   "front": "What forms the anterior wall of the inguinal canal?",
+   "back": "The external oblique aponeurosis along the whole length of the canal, reinforced laterally by the fleshy fibres of the internal oblique.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch2-inguinal-region-card-005",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Inguinal Canal",
+   "front": "What forms the posterior wall of the inguinal canal?",
+   "back": "The fascia transversalis along the whole length, reinforced medially by the conjoint tendon.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch2-inguinal-region-card-006",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Inguinal Canal",
+   "front": "What forms the roof of the inguinal canal?",
+   "back": "The arching lowest fibres of the internal oblique and transversus abdominis as they pass from the inguinal ligament to the conjoint tendon.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch2-inguinal-region-card-007",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Inguinal Canal",
+   "front": "What forms the floor of the inguinal canal?",
+   "back": "The in-rolled lower border of the inguinal ligament, reinforced medially by the lacunar ligament.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch2-inguinal-region-card-008",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Inguinal Canal",
+   "front": "Which wall is reinforced in front of the deep ring, and which behind the superficial ring?",
+   "back": "The internal oblique reinforces the anterior wall in front of the deep ring; the conjoint tendon reinforces the posterior wall behind the superficial ring. The two weak points are therefore never opposite a weak wall.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch2-inguinal-region-card-009",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Inguinal Canal",
+   "front": "What are the contents of the inguinal canal in the male?",
+   "back": "The spermatic cord and the ilioinguinal nerve, which lies outside the cord coverings on its anterolateral surface.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch2-inguinal-region-card-010",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Inguinal Canal",
+   "front": "What are the contents of the inguinal canal in the female?",
+   "back": "The round ligament of the uterus with its accompanying artery, and the ilioinguinal nerve.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch2-inguinal-region-card-011",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Inguinal Canal",
+   "front": "Which nerve traverses the canal without entering through the deep ring?",
+   "back": "The ilioinguinal nerve. It pierces the internal oblique to enter the canal from its lateral side and leaves through the superficial ring.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch2-inguinal-region-card-012",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Inguinal Canal",
+   "front": "List the mechanisms that protect the inguinal canal.",
+   "back": "Obliquity of the canal so the two rings are not opposite each other, the shutter mechanism of the arching internal oblique and transversus fibres, the ball-valve action of the cremaster, the slit-valve action of the external oblique on the superficial ring, and the flap-valve effect of intra-abdominal pressure pressing the posterior wall against the anterior wall.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch2-inguinal-region-card-013",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Inguinal Canal",
+   "front": "Describe the shutter mechanism.",
+   "back": "When the abdominal muscles contract, the arched lower fibres of the internal oblique and transversus straighten and descend towards the inguinal ligament, closing the canal like a shutter against the rising intra-abdominal pressure.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch2-inguinal-region-card-014",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Inguinal Canal",
+   "front": "How does the cremaster contribute to canal protection?",
+   "back": "On contraction it pulls the cord upwards and laterally so that the bulk of the cord plugs the superficial ring - the ball-valve action.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch2-inguinal-region-card-015",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Inguinal Canal",
+   "front": "Why does a wide or attenuated superficial ring not by itself cause a hernia?",
+   "back": "The hernia arises at a defect in the deep ring or the posterior wall. A wide superficial ring only permits an existing sac to emerge, which is why repair is directed at the posterior wall and the deep ring.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch2-inguinal-region-card-016",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Rings & Hesselbach's Triangle",
+   "front": "What is the deep inguinal ring?",
+   "back": "An oval opening in the fascia transversalis, the mouth of the funnel that becomes the internal spermatic fascia. It is the entry point of the canal.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch2-inguinal-region-card-017",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Rings & Hesselbach's Triangle",
+   "front": "Where does the department place the deep inguinal ring?",
+   "back": "About half an inch (1.25 cm) above the mid-inguinal point, and just above the femoral artery pulsation.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch2-inguinal-region-card-018",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Rings & Hesselbach's Triangle",
+   "front": "Distinguish the mid-inguinal point from the midpoint of the inguinal ligament.",
+   "back": "The mid-inguinal point is midway between the anterior superior iliac spine and the pubic symphysis and overlies the femoral artery. The midpoint of the inguinal ligament is midway between the anterior superior iliac spine and the pubic tubercle and lies just below the deep ring.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch2-inguinal-region-card-019",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Rings & Hesselbach's Triangle",
+   "front": "What is the immediate medial relation of the deep inguinal ring?",
+   "back": "The inferior epigastric vessels, which is the anatomical landmark used to separate an indirect from a direct hernia.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch2-inguinal-region-card-020",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Rings & Hesselbach's Triangle",
+   "front": "What is the superficial inguinal ring?",
+   "back": "A triangular defect in the external oblique aponeurosis lying above and medial to the pubic tubercle, the exit of the canal.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch2-inguinal-region-card-021",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Rings & Hesselbach's Triangle",
+   "front": "Name the boundaries of the superficial inguinal ring.",
+   "back": "The medial and lateral crura of the external oblique aponeurosis at the sides, the intercrural fibres above and laterally, and the pubic crest at the base.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch2-inguinal-region-card-022",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Rings & Hesselbach's Triangle",
+   "front": "Which layer of the cord is acquired at the superficial ring?",
+   "back": "The external spermatic fascia, derived from the external oblique aponeurosis.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch2-inguinal-region-card-023",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Rings & Hesselbach's Triangle",
+   "front": "Give the boundaries of Hesselbach's triangle as used in surgery.",
+   "back": "Medially the lateral border of the rectus abdominis, laterally the inferior epigastric artery, and inferiorly the inguinal ligament.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch2-inguinal-region-card-024",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Rings & Hesselbach's Triangle",
+   "front": "What is the floor of Hesselbach's triangle?",
+   "back": "The fascia transversalis reinforced medially by the conjoint tendon - the medial part of the posterior wall of the inguinal canal.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch2-inguinal-region-card-025",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Rings & Hesselbach's Triangle",
+   "front": "Which hernia passes through Hesselbach's triangle?",
+   "back": "A direct inguinal hernia, which pushes straight forwards through the posterior wall medial to the inferior epigastric artery.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch2-inguinal-region-card-026",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Rings & Hesselbach's Triangle",
+   "front": "How does the myopectineal orifice of Fruchaud unify groin hernias?",
+   "back": "It is the single fascial window bounded above by the arch of internal oblique and transversus, medially by the rectus, laterally by iliopsoas and below by the pecten pubis, crossed by the inguinal ligament. Every direct, indirect and femoral hernia passes through it, which is why a single preperitoneal mesh covering it repairs all three.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch2-inguinal-region-card-027",
+   "type": "basic",
+   "sectionId": "s3",
+   "deck": "Cord & Coverings",
+   "front": "List the three arteries of the spermatic cord.",
+   "back": "The testicular artery from the aorta, the artery to the vas (cremasteric branch of the inferior vesical artery) and the cremasteric artery from the inferior epigastric artery.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch2-inguinal-region-card-028",
+   "type": "basic",
+   "sectionId": "s3",
+   "deck": "Cord & Coverings",
+   "front": "List the three nerves related to the spermatic cord.",
+   "back": "The genital branch of the genitofemoral nerve supplying cremaster, sympathetic fibres from the testicular plexus, and the ilioinguinal nerve which lies on the cord rather than within it.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch2-inguinal-region-card-029",
+   "type": "basic",
+   "sectionId": "s3",
+   "deck": "Cord & Coverings",
+   "front": "List the remaining contents of the spermatic cord.",
+   "back": "The vas deferens, the pampiniform plexus of veins, lymphatics of the testis, and the remains of the processus vaginalis.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch2-inguinal-region-card-030",
+   "type": "basic",
+   "sectionId": "s3",
+   "deck": "Cord & Coverings",
+   "front": "Name the three coverings of the spermatic cord and the layer each is derived from.",
+   "back": "External spermatic fascia from the external oblique aponeurosis, cremasteric muscle and fascia from the internal oblique, and internal spermatic fascia from the fascia transversalis.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch2-inguinal-region-card-031",
+   "type": "basic",
+   "sectionId": "s3",
+   "deck": "Cord & Coverings",
+   "front": "Why does the cord have no covering derived from transversus abdominis?",
+   "back": "The cord passes beneath the arching lower border of transversus abdominis rather than through it, so that muscle contributes no covering.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch2-inguinal-region-card-032",
+   "type": "basic",
+   "sectionId": "s3",
+   "deck": "Cord & Coverings",
+   "front": "What are the coverings of an oblique inguinal hernia while it lies in the inguinal region?",
+   "back": "Skin, superficial fascia, external oblique aponeurosis, then the cremasteric muscle and fascia and the internal spermatic fascia.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch2-inguinal-region-card-033",
+   "type": "basic",
+   "sectionId": "s3",
+   "deck": "Cord & Coverings",
+   "front": "What are the coverings of the same hernia once it has reached the scrotum?",
+   "back": "Skin, non-fatty superficial fascia containing the dartos muscle, then the three cord coverings - external spermatic fascia, cremasteric muscle and fascia and internal spermatic fascia.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch2-inguinal-region-card-034",
+   "type": "basic",
+   "sectionId": "s3",
+   "deck": "Cord & Coverings",
+   "front": "How is the hernial sac recognised at operation?",
+   "back": "By its opaque pearly white colour, definite edges and crescentic fundus, and by its position anterolateral to the vas and vessels within the cord.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch2-inguinal-region-card-035",
+   "type": "basic",
+   "sectionId": "s3",
+   "deck": "Cord & Coverings",
+   "front": "How is the neck of the sac identified?",
+   "back": "It is the narrowest part of the sac, it lies at the level of the extraperitoneal fat, and the inferior epigastric vessels lie on its medial side.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch2-inguinal-region-card-036",
+   "type": "basic",
+   "sectionId": "s3",
+   "deck": "Cord & Coverings",
+   "front": "Why must the sac be dissected to its neck before ligation?",
+   "back": "A ligature applied short of the neck leaves a residual peritoneal pouch that will refill and recur. Transfixion at the neck lets the stump retract flush with the parietal peritoneum.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch2-inguinal-region-card-037",
+   "type": "basic",
+   "sectionId": "s3",
+   "deck": "Cord & Coverings",
+   "front": "What are the relations of the vas deferens at the deep ring?",
+   "back": "It hooks around the lateral side of the inferior epigastric artery to turn medially into the pelvis, crossing the external iliac vessels, and it lies posteromedial to the other cord structures.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch2-inguinal-region-card-038",
+   "type": "basic",
+   "sectionId": "s3",
+   "deck": "Cord & Coverings",
+   "front": "Which nerves are at risk in an open inguinal hernia repair?",
+   "back": "The ilioinguinal nerve on the cord, the iliohypogastric nerve above it, and the genital branch of the genitofemoral nerve entering with the cord at the deep ring. Entrapment of any of them causes chronic inguinodynia.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch2-inguinal-region-card-039",
+   "type": "basic",
+   "sectionId": "s4",
+   "deck": "Hernia Routes",
+   "front": "Define the anatomical course of an oblique (indirect) inguinal hernia.",
+   "back": "The sac enters the deep ring lateral to the inferior epigastric vessels, travels down the whole length of the canal inside the cord coverings, and may emerge from the superficial ring into the scrotum.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch2-inguinal-region-card-040",
+   "type": "basic",
+   "sectionId": "s4",
+   "deck": "Hernia Routes",
+   "front": "Where does the sac of an oblique inguinal hernia lie in relation to the vas and vessels?",
+   "back": "Always anterolateral to them, inside the cord coverings.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch2-inguinal-region-card-041",
+   "type": "basic",
+   "sectionId": "s4",
+   "deck": "Hernia Routes",
+   "front": "Define the anatomical course of a direct inguinal hernia.",
+   "back": "The sac bulges directly forwards through the weakened fascia transversalis of Hesselbach's triangle, medial to the inferior epigastric vessels, and lies outside the cord coverings behind the cord.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch2-inguinal-region-card-042",
+   "type": "basic",
+   "sectionId": "s4",
+   "deck": "Hernia Routes",
+   "front": "Why does a direct hernia rarely strangulate?",
+   "back": "It has a wide neck and a broad diffuse defect, so its contents move in and out freely; strangulation requires a narrow constricting ring.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch2-inguinal-region-card-043",
+   "type": "basic",
+   "sectionId": "s4",
+   "deck": "Hernia Routes",
+   "front": "Why does a direct hernia rarely reach the scrotum?",
+   "back": "It does not travel along the canal but pushes forwards through the posterior wall, and the superficial ring and the intact external oblique limit its descent.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch2-inguinal-region-card-044",
+   "type": "basic",
+   "sectionId": "s4",
+   "deck": "Hernia Routes",
+   "front": "Distinguish a congenital from an acquired sac in an oblique inguinal hernia.",
+   "back": "A congenital or preformed sac is an unobliterated processus vaginalis. An acquired or pulsion sac is formed by peritoneum pushed out by raised intra-abdominal pressure through a weak deep ring.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch2-inguinal-region-card-045",
+   "type": "basic",
+   "sectionId": "s4",
+   "deck": "Hernia Routes",
+   "front": "Describe the congenital anatomical type of oblique inguinal hernia.",
+   "back": "The whole processus vaginalis persists, so the hernia reaches the bottom of the scrotum and the testis lies among the contents of the sac.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch2-inguinal-region-card-046",
+   "type": "basic",
+   "sectionId": "s4",
+   "deck": "Hernia Routes",
+   "front": "Describe the infantile type of oblique inguinal hernia.",
+   "back": "The tunica vaginalis extends upwards to the superficial ring and the sac descends behind it, so at operation two sacs are found and the tunica may be opened by mistake.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch2-inguinal-region-card-047",
+   "type": "basic",
+   "sectionId": "s4",
+   "deck": "Hernia Routes",
+   "front": "What is a bubonocele?",
+   "back": "An adult-type oblique hernia limited to the inguinal canal, the processus vaginalis being obliterated at the superficial ring, presenting as a groin bulge only.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch2-inguinal-region-card-048",
+   "type": "basic",
+   "sectionId": "s4",
+   "deck": "Hernia Routes",
+   "front": "What is a funicular hernia?",
+   "back": "An adult type in which the processus is closed only at its lower end just above the epididymis; the hernia reaches the neck of the scrotum and the testis can be felt separately below it.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch2-inguinal-region-card-049",
+   "type": "basic",
+   "sectionId": "s4",
+   "deck": "Hernia Routes",
+   "front": "What is a complete or scrotal hernia?",
+   "back": "An adult-type hernia that descends to the bottom of the scrotum; the testis lies behind the hernia and is difficult to define but is still separate from the contents.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch2-inguinal-region-card-050",
+   "type": "basic",
+   "sectionId": "s4",
+   "deck": "Hernia Routes",
+   "front": "State the pubic tubercle rule that separates an inguinal from a femoral hernia.",
+   "back": "An inguinal hernia lies above and medial to the pubic tubercle; a femoral hernia lies below and lateral to it.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch2-inguinal-region-card-051",
+   "type": "basic",
+   "sectionId": "s4",
+   "deck": "Hernia Routes",
+   "front": "Describe the internal ring test (deep ring occlusion test).",
+   "back": "The hernia is reduced with the patient supine and knees flexed; the deep ring is occluded by the thumb and the patient stands and coughs. An oblique hernia is controlled and appears only on release, whereas a direct hernia still bulges forwards through the posterior wall.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch2-inguinal-region-card-052",
+   "type": "basic",
+   "sectionId": "s4",
+   "deck": "Hernia Routes",
+   "front": "In which direction do the contents of an oblique inguinal hernia descend and reduce?",
+   "back": "They descend downwards, forwards and medially, and reduce obliquely upwards, backwards and laterally - the reverse of the canal's direction.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch2-inguinal-region-card-053",
+   "type": "basic",
+   "sectionId": "s4",
+   "deck": "Hernia Routes",
+   "front": "What shape distinguishes an oblique from a direct hernia on inspection?",
+   "back": "The oblique hernia is oblong with a narrow neck and wide fundus and descends along the cord; the direct hernia is globular, appears straight forwards and disappears straight backwards.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch2-inguinal-region-card-054",
+   "type": "basic",
+   "sectionId": "s4",
+   "deck": "Hernia Routes",
+   "front": "What is a pantaloon (saddle-bag) hernia?",
+   "back": "Simultaneous direct and indirect sacs on the same side straddling the inferior epigastric vessels like the legs of a pair of trousers.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch2-inguinal-region-card-055",
+   "type": "basic",
+   "sectionId": "s4",
+   "deck": "Hernia Routes",
+   "front": "What is a sliding hernia (hernia en glissade)?",
+   "back": "A hernia in which a retroperitoneal viscus forms part of the wall of the sac - sigmoid colon on the left, caecum on the right, or the bladder medially. The posterior wall of the sac must not be opened or excised.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch2-inguinal-region-card-056",
+   "type": "basic",
+   "sectionId": "s4",
+   "deck": "Hernia Routes",
+   "front": "What is a Richter's hernia and where is it most common?",
+   "back": "Herniation of only part of the circumference of the bowel wall through a narrow ring, most often at the femoral ring. It strangulates and becomes gangrenous while the lumen remains patent, so there is no intestinal obstruction.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch2-inguinal-region-card-057",
+   "type": "basic",
+   "sectionId": "s4",
+   "deck": "Hernia Routes",
+   "front": "What is a Littre's hernia?",
+   "back": "A hernia whose sac contains a Meckel's diverticulum.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch2-inguinal-region-card-058",
+   "type": "basic",
+   "sectionId": "s4",
+   "deck": "Hernia Routes",
+   "front": "What is a Maydl's hernia?",
+   "back": "A W-shaped loop hernia in which two loops lie in the sac and the intervening loop remains in the abdomen. The strangulated segment is the intra-abdominal one, so it will be missed unless the loop is drawn out and inspected.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch2-inguinal-region-card-059",
+   "type": "basic",
+   "sectionId": "s4",
+   "deck": "Hernia Routes",
+   "front": "What is an Amyand's hernia?",
+   "back": "An inguinal hernia whose sac contains the appendix, which may be normal or inflamed.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch2-inguinal-region-card-060",
+   "type": "basic",
+   "sectionId": "s4",
+   "deck": "Hernia Routes",
+   "front": "How does an obturator hernia present and what is Howship-Romberg sign?",
+   "back": "It passes through the obturator canal, typically in a thin elderly woman, and presents as bowel obstruction with few local signs. Howship-Romberg sign is pain along the medial thigh to the knee from pressure on the obturator nerve, worsened by extension, abduction and medial rotation of the hip.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch2-inguinal-region-card-061",
+   "type": "basic",
+   "sectionId": "s4",
+   "deck": "Hernia Routes",
+   "front": "Which structures does a hernial sac consist of, and which viscus can never be a content?",
+   "back": "The sac has a mouth, neck, body and fundus. Any abdominal viscus may be a content except the pancreas.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch2-inguinal-region-card-062",
+   "type": "basic",
+   "sectionId": "s5",
+   "deck": "Femoral Canal",
+   "front": "What is the femoral sheath and what is it derived from?",
+   "back": "A funnel of fascia carried down behind the inguinal ligament around the femoral vessels, its anterior wall from the fascia transversalis and its posterior wall from the fascia iliaca.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch2-inguinal-region-card-063",
+   "type": "basic",
+   "sectionId": "s5",
+   "deck": "Femoral Canal",
+   "front": "Name the three compartments of the femoral sheath from lateral to medial.",
+   "back": "The lateral compartment for the femoral artery, the intermediate for the femoral vein, and the medial compartment which is the femoral canal.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch2-inguinal-region-card-064",
+   "type": "basic",
+   "sectionId": "s5",
+   "deck": "Femoral Canal",
+   "front": "Why does the femoral canal exist at all?",
+   "back": "It is a dead space that allows the femoral vein to expand when venous return increases; it contains fat, lymphatics and the node of Cloquet.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch2-inguinal-region-card-065",
+   "type": "basic",
+   "sectionId": "s5",
+   "deck": "Femoral Canal",
+   "front": "Give the four boundaries of the femoral ring.",
+   "back": "Anteriorly the inguinal ligament, posteriorly the pectineal ligament and superior pubic ramus with pectineus, medially the sharp edge of the lacunar ligament, and laterally the femoral vein.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch2-inguinal-region-card-066",
+   "type": "basic",
+   "sectionId": "s5",
+   "deck": "Femoral Canal",
+   "front": "Trace the course of a femoral hernia.",
+   "back": "Through the femoral ring into the femoral canal, down the canal to the saphenous opening, then forwards through the cribriform fascia and upwards over the inguinal ligament - so it presents below and lateral to the pubic tubercle and may then turn up over the ligament.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch2-inguinal-region-card-067",
+   "type": "basic",
+   "sectionId": "s5",
+   "deck": "Femoral Canal",
+   "front": "Why does a femoral hernia strangulate so readily?",
+   "back": "Its neck at the femoral ring is narrow and is bounded on three sides by rigid structures - the inguinal ligament, the lacunar ligament and the pectineal ligament - so the contents are quickly constricted.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch2-inguinal-region-card-068",
+   "type": "basic",
+   "sectionId": "s5",
+   "deck": "Femoral Canal",
+   "front": "Why is a femoral hernia commoner in women?",
+   "back": "The female pelvis is wider and the femoral ring and canal are correspondingly wider, and the fascia is stretched further by pregnancy.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch2-inguinal-region-card-069",
+   "type": "basic",
+   "sectionId": "s5",
+   "deck": "Femoral Canal",
+   "front": "What is the corona mortis and why is it named so?",
+   "back": "An abnormal or enlarged obturator artery, or a large communication between the obturator and inferior epigastric or external iliac vessels, crossing the superior pubic ramus close to the lacunar ligament in about a third of people. Blind division of the lacunar ligament can tear it, giving torrential and difficult-to-control bleeding - the crown of death.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch2-inguinal-region-card-070",
+   "type": "basic",
+   "sectionId": "s5",
+   "deck": "Femoral Canal",
+   "front": "How should the constricting ring of a strangulated femoral hernia be released safely?",
+   "back": "By dividing the lacunar ligament medially under direct vision with a finger or grooved director protecting the contents, having anticipated an aberrant obturator artery; some surgeons prefer to divide the inguinal ligament instead.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch2-inguinal-region-card-071",
+   "type": "basic",
+   "sectionId": "s5",
+   "deck": "Femoral Canal",
+   "front": "Which node lies in the femoral canal and what is its significance?",
+   "back": "The node of Cloquet or Rosenmuller. It receives lymph from the deep inguinal chain and the glans, and an enlarged node here is a common differential diagnosis for a femoral hernia.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch2-inguinal-region-card-072",
+   "type": "basic",
+   "sectionId": "s5",
+   "deck": "Femoral Canal",
+   "front": "Where is the saphenous opening and what covers it?",
+   "back": "In the fascia lata about 4 cm below and lateral to the pubic tubercle, covered by the sieve-like cribriform fascia and pierced by the great saphenous vein.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch2-inguinal-region-card-073",
+   "type": "basic",
+   "sectionId": "s5",
+   "deck": "Femoral Canal",
+   "front": "Which surgical approaches are used for a femoral hernia?",
+   "back": "The low (Lockwood) approach below the inguinal ligament for elective repair, the high (McEvedy) approach through the rectus sheath for strangulation because it allows bowel resection, and the trans-inguinal (Lotheissen) approach through the posterior wall of the inguinal canal.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch2-inguinal-region-card-074",
+   "type": "basic",
+   "sectionId": "s5",
+   "deck": "Femoral Canal",
+   "front": "Which structures form the femoral triangle and what is the arrangement of its contents?",
+   "back": "Bounded by the inguinal ligament, sartorius and adductor longus, with iliopsoas and pectineus in the floor. From lateral to medial the contents run nerve, artery, vein, empty space, lymphatics - NAVEL.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch2-inguinal-region-card-075",
+   "type": "basic",
+   "sectionId": "s4",
+   "deck": "Hernia Routes",
+   "front": "What is the anatomical principle of a Bassini repair?",
+   "back": "The conjoint tendon is sutured to the in-rolled edge of the inguinal ligament behind the cord, reconstituting the posterior wall of the canal - a tension repair now largely replaced by mesh.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch2-inguinal-region-card-076",
+   "type": "basic",
+   "sectionId": "s4",
+   "deck": "Hernia Routes",
+   "front": "What is the anatomical principle of a Shouldice repair?",
+   "back": "The transversalis fascia is incised and double-breasted in overlapping layers, then the conjoint tendon is approximated to the inguinal ligament, reconstructing the posterior wall and reforming a snug deep ring.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch2-inguinal-region-card-077",
+   "type": "basic",
+   "sectionId": "s4",
+   "deck": "Hernia Routes",
+   "front": "What is the anatomical principle of a McVay repair, and which hernia is it best suited to?",
+   "back": "The transversus arch is sutured to the pectineal ligament of Cooper with a relaxing incision in the anterior rectus sheath. Because it closes the femoral ring as well, it suits femoral and large direct hernias.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch2-inguinal-region-card-078",
+   "type": "basic",
+   "sectionId": "s4",
+   "deck": "Hernia Routes",
+   "front": "What is the anatomical principle of a Lichtenstein repair?",
+   "back": "A flat mesh is laid tension-free over the whole posterior wall from the pubic tubercle to beyond the deep ring, overlapping the internal oblique, with its tails split around the cord to recreate a snug deep ring.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch2-inguinal-region-card-079",
+   "type": "basic",
+   "sectionId": "s4",
+   "deck": "Hernia Routes",
+   "front": "Define the triangle of doom in laparoscopic hernia repair.",
+   "back": "Bounded medially by the vas deferens and laterally by the gonadal vessels, with the external iliac vessels in its floor. No tack or staple may be placed within it.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch2-inguinal-region-card-080",
+   "type": "basic",
+   "sectionId": "s4",
+   "deck": "Hernia Routes",
+   "front": "Define the triangle of pain in laparoscopic hernia repair.",
+   "back": "Bounded medially by the gonadal vessels and laterally and superiorly by the iliopubic tract, containing the lateral cutaneous nerve of the thigh, the femoral branch of the genitofemoral nerve and the femoral nerve. Fixation here causes neuralgia.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch2-inguinal-region-card-081",
+   "type": "basic",
+   "sectionId": "s4",
+   "deck": "Hernia Routes",
+   "front": "What is herniotomy and for whom is it sufficient?",
+   "back": "Excision of the sac alone after transfixion at its neck. In infants and children the wall is otherwise normal and herniotomy alone cures the hernia.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch2-inguinal-region-card-082",
+   "type": "basic",
+   "sectionId": "s4",
+   "deck": "Hernia Routes",
+   "front": "Distinguish herniorrhaphy from hernioplasty.",
+   "back": "Herniorrhaphy strengthens the posterior wall using the patient's own tissues after herniotomy; hernioplasty reinforces it with a prosthetic mesh without tension.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch2-inguinal-region-card-083",
+   "type": "cloze",
+   "sectionId": "s1",
+   "deck": "Inguinal Canal",
+   "cloze": "The anterior wall of the inguinal canal is formed along its whole length by the {{c1::external oblique aponeurosis}}.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch2-inguinal-region-card-084",
+   "type": "cloze",
+   "sectionId": "s1",
+   "deck": "Inguinal Canal",
+   "cloze": "The posterior wall of the inguinal canal is formed along its whole length by the {{c1::fascia transversalis}}.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch2-inguinal-region-card-085",
+   "type": "cloze",
+   "sectionId": "s1",
+   "deck": "Inguinal Canal",
+   "cloze": "The roof of the inguinal canal is formed by the arching fibres of {{c1::internal oblique and transversus abdominis}}.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch2-inguinal-region-card-086",
+   "type": "cloze",
+   "sectionId": "s1",
+   "deck": "Inguinal Canal",
+   "cloze": "The floor of the inguinal canal is the in-rolled lower border of the {{c1::inguinal ligament}}.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch2-inguinal-region-card-087",
+   "type": "cloze",
+   "sectionId": "s1",
+   "deck": "Inguinal Canal",
+   "cloze": "The inguinal canal is about {{c1::4 cm}} long.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch2-inguinal-region-card-088",
+   "type": "cloze",
+   "sectionId": "s2",
+   "deck": "Rings & Hesselbach's Triangle",
+   "cloze": "The deep inguinal ring is an opening in the {{c1::fascia transversalis}}.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch2-inguinal-region-card-089",
+   "type": "cloze",
+   "sectionId": "s2",
+   "deck": "Rings & Hesselbach's Triangle",
+   "cloze": "The deep inguinal ring lies about {{c1::half an inch (1.25 cm) above the mid-inguinal point}}.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch2-inguinal-region-card-090",
+   "type": "cloze",
+   "sectionId": "s2",
+   "deck": "Rings & Hesselbach's Triangle",
+   "cloze": "The superficial inguinal ring is a triangular defect in the external oblique aponeurosis lying {{c1::above and medial to the pubic tubercle}}.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch2-inguinal-region-card-091",
+   "type": "cloze",
+   "sectionId": "s2",
+   "deck": "Rings & Hesselbach's Triangle",
+   "cloze": "The lateral boundary of Hesselbach's triangle is the {{c1::inferior epigastric artery}}.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch2-inguinal-region-card-092",
+   "type": "cloze",
+   "sectionId": "s3",
+   "deck": "Cord & Coverings",
+   "cloze": "The internal spermatic fascia is derived from the {{c1::fascia transversalis}}.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch2-inguinal-region-card-093",
+   "type": "cloze",
+   "sectionId": "s3",
+   "deck": "Cord & Coverings",
+   "cloze": "The cremasteric muscle and fascia are derived from the {{c1::internal oblique}}.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch2-inguinal-region-card-094",
+   "type": "cloze",
+   "sectionId": "s3",
+   "deck": "Cord & Coverings",
+   "cloze": "The external spermatic fascia is derived from the {{c1::external oblique aponeurosis}}.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch2-inguinal-region-card-095",
+   "type": "cloze",
+   "sectionId": "s3",
+   "deck": "Cord & Coverings",
+   "cloze": "The nerve supply of the cremaster is the {{c1::genital branch of the genitofemoral nerve}}.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch2-inguinal-region-card-096",
+   "type": "cloze",
+   "sectionId": "s4",
+   "deck": "Hernia Routes",
+   "cloze": "An oblique inguinal hernia enters the deep ring {{c1::lateral}} to the inferior epigastric vessels.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch2-inguinal-region-card-097",
+   "type": "cloze",
+   "sectionId": "s4",
+   "deck": "Hernia Routes",
+   "cloze": "A direct inguinal hernia bulges {{c1::medial}} to the inferior epigastric vessels.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch2-inguinal-region-card-098",
+   "type": "cloze",
+   "sectionId": "s4",
+   "deck": "Hernia Routes",
+   "cloze": "A hernia containing a Meckel's diverticulum is called a {{c1::Littre's}} hernia.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch2-inguinal-region-card-099",
+   "type": "cloze",
+   "sectionId": "s4",
+   "deck": "Hernia Routes",
+   "cloze": "Strangulation of only part of the circumference of the bowel wall is a {{c1::Richter's}} hernia.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch2-inguinal-region-card-100",
+   "type": "cloze",
+   "sectionId": "s5",
+   "deck": "Femoral Canal",
+   "cloze": "The medial boundary of the femoral ring is the {{c1::lacunar ligament of Gimbernat}}.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch2-inguinal-region-card-101",
+   "type": "cloze",
+   "sectionId": "s5",
+   "deck": "Femoral Canal",
+   "cloze": "The lateral boundary of the femoral ring is the {{c1::femoral vein}}.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch2-inguinal-region-card-102",
+   "type": "cloze",
+   "sectionId": "s5",
+   "deck": "Femoral Canal",
+   "cloze": "An aberrant obturator artery crossing the femoral ring is called the {{c1::corona mortis}}.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch2-inguinal-region-card-103",
+   "type": "cloze",
+   "sectionId": "s5",
+   "deck": "Femoral Canal",
+   "cloze": "The lymph node within the femoral canal is the node of {{c1::Cloquet}}.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch2-inguinal-region-card-104",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Inguinal Canal",
+   "front": "What is the iliopubic tract and why do laparoscopic surgeons use it as a landmark?",
+   "back": "A thickened band of transversalis fascia running parallel and deep to the inguinal ligament from the iliopectineal arch to the pubic tubercle. Seen from inside the abdomen it is the visible inferior landmark for the deep ring, and no tack should be placed below it laterally.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch2-inguinal-region-card-105",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Inguinal Canal",
+   "front": "What is the shelving edge of the inguinal ligament?",
+   "back": "The in-rolled posterior part of the ligament that faces upwards and backwards; it is the tissue into which the conjoint tendon is sutured in a Bassini repair and to which mesh is anchored inferiorly.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch2-inguinal-region-card-106",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Inguinal Canal",
+   "front": "What is the reflected part of the inguinal ligament (Colles' ligament)?",
+   "back": "Fibres from the medial end of the inguinal ligament that turn upwards behind the superficial ring towards the linea alba, reinforcing the posterior wall behind the ring.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch2-inguinal-region-card-107",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Rings & Hesselbach's Triangle",
+   "front": "What structures does the transversalis fascia sling contribute to the deep ring, and what does it do?",
+   "back": "Its upper and lower crura form a U-shaped sling open above and medially; contraction of transversus abdominis pulls the sling upwards and laterally, tightening the ring around the cord.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch2-inguinal-region-card-108",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Rings & Hesselbach's Triangle",
+   "front": "How does the Nyhus classification describe groin hernias anatomically?",
+   "back": "Type 1 is an indirect hernia with a normal deep ring, type 2 an indirect hernia with a dilated ring but an intact posterior wall, type 3 a posterior wall defect subdivided into direct (3a), indirect with a destroyed posterior wall (3b) and femoral (3c), and type 4 a recurrent hernia.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch2-inguinal-region-card-109",
+   "type": "basic",
+   "sectionId": "s4",
+   "deck": "Hernia Routes",
+   "front": "Define the four clinical stages a hernia may pass through.",
+   "back": "Reducible, irreducible (incarcerated) where contents cannot be returned but the blood supply is intact, obstructed where the lumen is occluded but the supply is preserved, and strangulated where the blood supply is cut off.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch2-inguinal-region-card-110",
+   "type": "basic",
+   "sectionId": "s4",
+   "deck": "Hernia Routes",
+   "front": "Where does strangulation of a hernia usually begin and in what order do the tissues die?",
+   "back": "At the ring of constriction, most often the neck of the sac or a rigid ring such as the superficial ring, deep ring or femoral ring. Venous return is obstructed first, then arterial inflow; the bowel becomes congested, then purple, then black and finally perforates, with peritonitis as the terminal event.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch2-inguinal-region-card-111",
+   "type": "basic",
+   "sectionId": "s4",
+   "deck": "Hernia Routes",
+   "front": "What is an inflamed hernia and how does it differ from a strangulated one?",
+   "back": "One in which the contents are inflamed from within, as in appendicitis or salpingitis in the sac. It is tender but the skin is red and the systemic upset relates to the inflamed organ, whereas strangulation gives severe pain, absent cough impulse and rapid toxicity.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch2-inguinal-region-card-112",
+   "type": "basic",
+   "sectionId": "s4",
+   "deck": "Hernia Routes",
+   "front": "What is an interstitial hernia?",
+   "back": "A hernia whose sac lies between the layers of the abdominal wall rather than emerging subcutaneously - preperitoneal, interparietal between the muscle layers, or superficial deep to the external oblique. It presents with obstruction and no visible lump.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch2-inguinal-region-card-113",
+   "type": "basic",
+   "sectionId": "s4",
+   "deck": "Hernia Routes",
+   "front": "Why does a sliding hernia commonly contain the bladder medially, and what warns of it?",
+   "back": "The bladder is extraperitoneal and lies adjacent to the medial end of the canal, so it can be drawn into the medial wall of a direct sac. A history of two-stage micturition or of needing to compress the lump to empty the bladder warns of it, and inadvertent cystotomy is the penalty.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch2-inguinal-region-card-114",
+   "type": "basic",
+   "sectionId": "s5",
+   "deck": "Femoral Canal",
+   "front": "How long is the femoral canal and what is the anatomy of its lower end?",
+   "back": "About 1.25 cm long, ending at the saphenous opening where the cribriform fascia closes it; the hernia must therefore turn forwards and then upwards, which gives it its characteristic retort shape.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch2-inguinal-region-card-115",
+   "type": "basic",
+   "sectionId": "s5",
+   "deck": "Femoral Canal",
+   "front": "Which four structures pass beneath the inguinal ligament in the lacuna musculorum and lacuna vasorum?",
+   "back": "Laterally in the muscular compartment the iliopsoas, femoral nerve and lateral cutaneous nerve of the thigh; medially in the vascular compartment the femoral artery and vein within the femoral sheath, with the femoral canal at its medial edge.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch2-inguinal-region-card-116",
+   "type": "basic",
+   "sectionId": "s5",
+   "deck": "Femoral Canal",
+   "front": "Which structures may be mistaken for a femoral hernia?",
+   "back": "An enlarged node of Cloquet, a saphena varix which has a fluid thrill and disappears on lying down, a psoas abscess or bursa, a lipoma, an ectopic testis and a femoral artery aneurysm.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch2-inguinal-region-card-117",
+   "type": "cloze",
+   "sectionId": "s1",
+   "deck": "Inguinal Canal",
+   "cloze": "The thickened band of transversalis fascia deep and parallel to the inguinal ligament is the {{c1::iliopubic tract}}.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch2-inguinal-region-card-118",
+   "type": "cloze",
+   "sectionId": "s4",
+   "deck": "Hernia Routes",
+   "cloze": "In a strangulated hernia the constriction is most often at the {{c1::neck of the sac}}.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch2-inguinal-region-card-119",
+   "type": "cloze",
+   "sectionId": "s4",
+   "deck": "Hernia Routes",
+   "cloze": "A hernia whose contents cannot be returned but whose blood supply is intact is termed {{c1::irreducible (incarcerated)}}.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch2-inguinal-region-card-120",
+   "type": "cloze",
+   "sectionId": "s5",
+   "deck": "Femoral Canal",
+   "cloze": "The femoral canal is about {{c1::1.25 cm}} long.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch2-inguinal-region-card-121",
+   "type": "cloze",
+   "sectionId": "s5",
+   "deck": "Femoral Canal",
+   "cloze": "A dilated saphenous vein at the saphenous opening that disappears on lying down is a {{c1::saphena varix}}.",
+   "difficulty": 1
+  }
+ ],
+ "mcqs": [
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sana-ch2-inguinal-region-mcq-001",
+   "type": "single",
+   "sectionId": "s6",
+   "difficulty": 2,
+   "highYield": true,
+   "stem": "At operation a hernial sac is found emerging from the deep ring, lying anterolateral to the vas within the cord coverings. Which structure lies immediately medial to the neck of this sac?",
+   "options": [
+    {
+     "id": "a",
+     "text": "The conjoint tendon",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "b",
+     "text": "The inferior epigastric vessels",
+     "correct": true,
+     "why": "Key - B) The inferior epigastric vessels. The inferior epigastric vessels lie medial to the deep ring, and their position medial to the neck confirms the sac is indirect.\n\nWhy the others fail:\nA) The conjoint tendon - The conjoint tendon lies medially in the posterior wall of the canal but not at the neck of a sac emerging from the deep ring.\nC) The lacunar ligament - The lacunar ligament is at the medial end of the inguinal ligament, related to the femoral ring rather than the deep inguinal ring.\nD) The femoral vein - The femoral vein lies below the inguinal ligament in the femoral sheath, lateral to the femoral canal."
+    },
+    {
+     "id": "c",
+     "text": "The lacunar ligament",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "d",
+     "text": "The femoral vein",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    }
+   ],
+   "explanation": [
+    "Key - B) The inferior epigastric vessels. The inferior epigastric vessels lie medial to the deep ring, and their position medial to the neck confirms the sac is indirect.\n\nWhy the others fail:\nA) The conjoint tendon - The conjoint tendon lies medially in the posterior wall of the canal but not at the neck of a sac emerging from the deep ring.\nC) The lacunar ligament - The lacunar ligament is at the medial end of the inguinal ligament, related to the femoral ring rather than the deep inguinal ring.\nD) The femoral vein - The femoral vein lies below the inguinal ligament in the femoral sheath, lateral to the femoral canal."
+   ],
+   "keyFacts": [
+    "Key - B) The inferior epigastric vessels. The inferior epigastric vessels lie medial to the deep ring, and their position medial to the neck confirms the sac is indirect.\n\nWhy the others fail:\nA) The conjoint tendon - The conjoint tendon lies medially in the posterior wall of the canal but not at the neck of a sac emerging from the deep ring.\nC) The lacunar ligament - The lacunar ligament is at the medial end of the inguinal ligament, related to the femoral ring rather than the deep inguinal ring.\nD) The femoral vein - The femoral vein lies below the inguinal ligament in the femoral sheath, lateral to the femoral canal."
+   ],
+   "teachingPoint": "Key - B) The inferior epigastric vessels. The inferior epigastric vessels lie medial to the deep ring, and their position medial to the neck confirms the sac is indirect.\n\nWhy the others fail:\nA) The conjoint tendon - The conjoint tendon lies medially in the posterior wall of the canal but not at the neck of a sac emerging from the deep ring.\nC) The lacunar ligament - The lacunar ligament is at the medial end of the inguinal ligament, related to the femoral ring rather than the deep inguinal ring.\nD) The femoral vein - The femoral vein lies below the inguinal ligament in the femoral sheath, lateral to the femoral canal."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sana-ch2-inguinal-region-mcq-002",
+   "type": "single",
+   "sectionId": "s6",
+   "difficulty": 2,
+   "highYield": true,
+   "stem": "An elderly woman presents with small bowel obstruction and a small tender lump below and lateral to the right pubic tubercle. Which structure forms the sharp medial edge of the constricting ring?",
+   "options": [
+    {
+     "id": "a",
+     "text": "Inguinal ligament",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "b",
+     "text": "Pectineal ligament of Cooper",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "c",
+     "text": "Lacunar ligament of Gimbernat",
+     "correct": true,
+     "why": "Key - C) Lacunar ligament of Gimbernat. The lump below and lateral to the pubic tubercle is a strangulated femoral hernia, whose sharp medial boundary is the free crescentic edge of the lacunar ligament.\n\nWhy the others fail:\nA) Inguinal ligament - The inguinal ligament is the anterior boundary of the femoral ring, not the medial one.\nB) Pectineal ligament of Cooper - The pectineal ligament forms the posterior boundary along the pecten pubis.\nD) Conjoint tendon - The conjoint tendon reinforces the posterior wall of the inguinal canal above the inguinal ligament and takes no part in the femoral ring."
+    },
+    {
+     "id": "d",
+     "text": "Conjoint tendon",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    }
+   ],
+   "explanation": [
+    "Key - C) Lacunar ligament of Gimbernat. The lump below and lateral to the pubic tubercle is a strangulated femoral hernia, whose sharp medial boundary is the free crescentic edge of the lacunar ligament.\n\nWhy the others fail:\nA) Inguinal ligament - The inguinal ligament is the anterior boundary of the femoral ring, not the medial one.\nB) Pectineal ligament of Cooper - The pectineal ligament forms the posterior boundary along the pecten pubis.\nD) Conjoint tendon - The conjoint tendon reinforces the posterior wall of the inguinal canal above the inguinal ligament and takes no part in the femoral ring."
+   ],
+   "keyFacts": [
+    "Key - C) Lacunar ligament of Gimbernat. The lump below and lateral to the pubic tubercle is a strangulated femoral hernia, whose sharp medial boundary is the free crescentic edge of the lacunar ligament.\n\nWhy the others fail:\nA) Inguinal ligament - The inguinal ligament is the anterior boundary of the femoral ring, not the medial one.\nB) Pectineal ligament of Cooper - The pectineal ligament forms the posterior boundary along the pecten pubis.\nD) Conjoint tendon - The conjoint tendon reinforces the posterior wall of the inguinal canal above the inguinal ligament and takes no part in the femoral ring."
+   ],
+   "teachingPoint": "Key - C) Lacunar ligament of Gimbernat. The lump below and lateral to the pubic tubercle is a strangulated femoral hernia, whose sharp medial boundary is the free crescentic edge of the lacunar ligament.\n\nWhy the others fail:\nA) Inguinal ligament - The inguinal ligament is the anterior boundary of the femoral ring, not the medial one.\nB) Pectineal ligament of Cooper - The pectineal ligament forms the posterior boundary along the pecten pubis.\nD) Conjoint tendon - The conjoint tendon reinforces the posterior wall of the inguinal canal above the inguinal ligament and takes no part in the femoral ring."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sana-ch2-inguinal-region-mcq-003",
+   "type": "single",
+   "sectionId": "s6",
+   "difficulty": 2,
+   "highYield": true,
+   "stem": "While releasing a strangulated femoral hernia the surgeon divides the lacunar ligament and immediately encounters torrential bleeding. Which vessel has been injured?",
+   "options": [
+    {
+     "id": "a",
+     "text": "Femoral vein",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "b",
+     "text": "Aberrant obturator artery",
+     "correct": true,
+     "why": "Key - B) Aberrant obturator artery. In about a third of people an aberrant obturator artery arises from or communicates with the inferior epigastric vessels and crosses the lacunar ligament; this corona mortis is the classic cause of catastrophic bleeding at this step.\n\nWhy the others fail:\nA) Femoral vein - The femoral vein lies lateral to the canal and would not be reached by dividing the ligament medially.\nC) Deep circumflex iliac artery - The deep circumflex iliac artery runs laterally along the iliac crest, far from the femoral ring.\nD) External pudendal artery - The external pudendal artery is a small superficial branch of the femoral artery and cannot bleed torrentially."
+    },
+    {
+     "id": "c",
+     "text": "Deep circumflex iliac artery",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "d",
+     "text": "External pudendal artery",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    }
+   ],
+   "explanation": [
+    "Key - B) Aberrant obturator artery. In about a third of people an aberrant obturator artery arises from or communicates with the inferior epigastric vessels and crosses the lacunar ligament; this corona mortis is the classic cause of catastrophic bleeding at this step.\n\nWhy the others fail:\nA) Femoral vein - The femoral vein lies lateral to the canal and would not be reached by dividing the ligament medially.\nC) Deep circumflex iliac artery - The deep circumflex iliac artery runs laterally along the iliac crest, far from the femoral ring.\nD) External pudendal artery - The external pudendal artery is a small superficial branch of the femoral artery and cannot bleed torrentially."
+   ],
+   "keyFacts": [
+    "Key - B) Aberrant obturator artery. In about a third of people an aberrant obturator artery arises from or communicates with the inferior epigastric vessels and crosses the lacunar ligament; this corona mortis is the classic cause of catastrophic bleeding at this step.\n\nWhy the others fail:\nA) Femoral vein - The femoral vein lies lateral to the canal and would not be reached by dividing the ligament medially.\nC) Deep circumflex iliac artery - The deep circumflex iliac artery runs laterally along the iliac crest, far from the femoral ring.\nD) External pudendal artery - The external pudendal artery is a small superficial branch of the femoral artery and cannot bleed torrentially."
+   ],
+   "teachingPoint": "Key - B) Aberrant obturator artery. In about a third of people an aberrant obturator artery arises from or communicates with the inferior epigastric vessels and crosses the lacunar ligament; this corona mortis is the classic cause of catastrophic bleeding at this step.\n\nWhy the others fail:\nA) Femoral vein - The femoral vein lies lateral to the canal and would not be reached by dividing the ligament medially.\nC) Deep circumflex iliac artery - The deep circumflex iliac artery runs laterally along the iliac crest, far from the femoral ring.\nD) External pudendal artery - The external pudendal artery is a small superficial branch of the femoral artery and cannot bleed torrentially."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sana-ch2-inguinal-region-mcq-004",
+   "type": "single",
+   "sectionId": "s6",
+   "difficulty": 2,
+   "highYield": true,
+   "stem": "A 4-year-old boy has a reducible inguinoscrotal swelling present since birth. Which operation is anatomically sufficient?",
+   "options": [
+    {
+     "id": "a",
+     "text": "Herniotomy alone",
+     "correct": true,
+     "why": "Key - A) Herniotomy alone. In a child the hernia is due to a patent processus vaginalis with an otherwise normal wall, so excision and transfixion of the sac at its neck cures it.\n\nWhy the others fail:\nB) Bassini herniorrhaphy - A Bassini repair reconstructs a posterior wall that is not defective in a child and risks damaging the cord.\nC) Lichtenstein mesh hernioplasty - Mesh is not used in a growing child because it does not grow with the patient and risks damaging the cord.\nD) McVay repair to Cooper's ligament - A McVay repair addresses the femoral ring, which is not the problem here."
+    },
+    {
+     "id": "b",
+     "text": "Bassini herniorrhaphy",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "c",
+     "text": "Lichtenstein mesh hernioplasty",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "d",
+     "text": "McVay repair to Cooper's ligament",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    }
+   ],
+   "explanation": [
+    "Key - A) Herniotomy alone. In a child the hernia is due to a patent processus vaginalis with an otherwise normal wall, so excision and transfixion of the sac at its neck cures it.\n\nWhy the others fail:\nB) Bassini herniorrhaphy - A Bassini repair reconstructs a posterior wall that is not defective in a child and risks damaging the cord.\nC) Lichtenstein mesh hernioplasty - Mesh is not used in a growing child because it does not grow with the patient and risks damaging the cord.\nD) McVay repair to Cooper's ligament - A McVay repair addresses the femoral ring, which is not the problem here."
+   ],
+   "keyFacts": [
+    "Key - A) Herniotomy alone. In a child the hernia is due to a patent processus vaginalis with an otherwise normal wall, so excision and transfixion of the sac at its neck cures it.\n\nWhy the others fail:\nB) Bassini herniorrhaphy - A Bassini repair reconstructs a posterior wall that is not defective in a child and risks damaging the cord.\nC) Lichtenstein mesh hernioplasty - Mesh is not used in a growing child because it does not grow with the patient and risks damaging the cord.\nD) McVay repair to Cooper's ligament - A McVay repair addresses the femoral ring, which is not the problem here."
+   ],
+   "teachingPoint": "Key - A) Herniotomy alone. In a child the hernia is due to a patent processus vaginalis with an otherwise normal wall, so excision and transfixion of the sac at its neck cures it.\n\nWhy the others fail:\nB) Bassini herniorrhaphy - A Bassini repair reconstructs a posterior wall that is not defective in a child and risks damaging the cord.\nC) Lichtenstein mesh hernioplasty - Mesh is not used in a growing child because it does not grow with the patient and risks damaging the cord.\nD) McVay repair to Cooper's ligament - A McVay repair addresses the femoral ring, which is not the problem here."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sana-ch2-inguinal-region-mcq-005",
+   "type": "single",
+   "sectionId": "s6",
+   "difficulty": 2,
+   "highYield": true,
+   "stem": "During herniorrhaphy the surgeon finds that the posterior wall of the sac is formed by the caecum. What is the correct term and the correct action?",
+   "options": [
+    {
+     "id": "a",
+     "text": "Richter's hernia - resect the involved wall",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "b",
+     "text": "Sliding hernia - do not open or excise that part of the sac",
+     "correct": true,
+     "why": "Key - B) Sliding hernia - do not open or excise that part of the sac. When a retroperitoneal viscus such as the caecum forms part of the sac wall the hernia is sliding; opening or excising it would open the bowel, so the sac is closed and reduced with the viscus intact.\n\nWhy the others fail:\nA) Richter's hernia - resect the involved wall - A Richter's hernia involves part of the circumference of the bowel wall within the sac, not the wall of the sac itself.\nC) Maydl's hernia - deliver the intervening loop - A Maydl's hernia is a W-shaped double loop with the strangulated segment inside the abdomen, which is not what is described.\nD) Littre's hernia - resect the diverticulum - A Littre's hernia contains a Meckel's diverticulum, which arises from the ileum, not the caecum."
+    },
+    {
+     "id": "c",
+     "text": "Maydl's hernia - deliver the intervening loop",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "d",
+     "text": "Littre's hernia - resect the diverticulum",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    }
+   ],
+   "explanation": [
+    "Key - B) Sliding hernia - do not open or excise that part of the sac. When a retroperitoneal viscus such as the caecum forms part of the sac wall the hernia is sliding; opening or excising it would open the bowel, so the sac is closed and reduced with the viscus intact.\n\nWhy the others fail:\nA) Richter's hernia - resect the involved wall - A Richter's hernia involves part of the circumference of the bowel wall within the sac, not the wall of the sac itself.\nC) Maydl's hernia - deliver the intervening loop - A Maydl's hernia is a W-shaped double loop with the strangulated segment inside the abdomen, which is not what is described.\nD) Littre's hernia - resect the diverticulum - A Littre's hernia contains a Meckel's diverticulum, which arises from the ileum, not the caecum."
+   ],
+   "keyFacts": [
+    "Key - B) Sliding hernia - do not open or excise that part of the sac. When a retroperitoneal viscus such as the caecum forms part of the sac wall the hernia is sliding; opening or excising it would open the bowel, so the sac is closed and reduced with the viscus intact.\n\nWhy the others fail:\nA) Richter's hernia - resect the involved wall - A Richter's hernia involves part of the circumference of the bowel wall within the sac, not the wall of the sac itself.\nC) Maydl's hernia - deliver the intervening loop - A Maydl's hernia is a W-shaped double loop with the strangulated segment inside the abdomen, which is not what is described.\nD) Littre's hernia - resect the diverticulum - A Littre's hernia contains a Meckel's diverticulum, which arises from the ileum, not the caecum."
+   ],
+   "teachingPoint": "Key - B) Sliding hernia - do not open or excise that part of the sac. When a retroperitoneal viscus such as the caecum forms part of the sac wall the hernia is sliding; opening or excising it would open the bowel, so the sac is closed and reduced with the viscus intact.\n\nWhy the others fail:\nA) Richter's hernia - resect the involved wall - A Richter's hernia involves part of the circumference of the bowel wall within the sac, not the wall of the sac itself.\nC) Maydl's hernia - deliver the intervening loop - A Maydl's hernia is a W-shaped double loop with the strangulated segment inside the abdomen, which is not what is described.\nD) Littre's hernia - resect the diverticulum - A Littre's hernia contains a Meckel's diverticulum, which arises from the ileum, not the caecum."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sana-ch2-inguinal-region-mcq-006",
+   "type": "single",
+   "sectionId": "s6",
+   "difficulty": 2,
+   "highYield": true,
+   "stem": "A hernia is reduced, the deep ring is occluded with the thumb and the patient is asked to stand and cough. A bulge appears immediately medial to the examining thumb. What is the diagnosis?",
+   "options": [
+    {
+     "id": "a",
+     "text": "Oblique (indirect) inguinal hernia",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "b",
+     "text": "Direct inguinal hernia",
+     "correct": true,
+     "why": "Key - B) Direct inguinal hernia. A bulge appearing medial to an occluded deep ring comes straight forwards through the posterior wall in Hesselbach's triangle, which is a direct hernia.\n\nWhy the others fail:\nA) Oblique (indirect) inguinal hernia - An oblique hernia enters at the deep ring and is therefore controlled while the ring is occluded, appearing only on release.\nC) Femoral hernia - A femoral hernia appears below the inguinal ligament and below and lateral to the pubic tubercle, not above it.\nD) Spigelian hernia - A Spigelian hernia lies at the linea semilunaris well above the inguinal region."
+    },
+    {
+     "id": "c",
+     "text": "Femoral hernia",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "d",
+     "text": "Spigelian hernia",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    }
+   ],
+   "explanation": [
+    "Key - B) Direct inguinal hernia. A bulge appearing medial to an occluded deep ring comes straight forwards through the posterior wall in Hesselbach's triangle, which is a direct hernia.\n\nWhy the others fail:\nA) Oblique (indirect) inguinal hernia - An oblique hernia enters at the deep ring and is therefore controlled while the ring is occluded, appearing only on release.\nC) Femoral hernia - A femoral hernia appears below the inguinal ligament and below and lateral to the pubic tubercle, not above it.\nD) Spigelian hernia - A Spigelian hernia lies at the linea semilunaris well above the inguinal region."
+   ],
+   "keyFacts": [
+    "Key - B) Direct inguinal hernia. A bulge appearing medial to an occluded deep ring comes straight forwards through the posterior wall in Hesselbach's triangle, which is a direct hernia.\n\nWhy the others fail:\nA) Oblique (indirect) inguinal hernia - An oblique hernia enters at the deep ring and is therefore controlled while the ring is occluded, appearing only on release.\nC) Femoral hernia - A femoral hernia appears below the inguinal ligament and below and lateral to the pubic tubercle, not above it.\nD) Spigelian hernia - A Spigelian hernia lies at the linea semilunaris well above the inguinal region."
+   ],
+   "teachingPoint": "Key - B) Direct inguinal hernia. A bulge appearing medial to an occluded deep ring comes straight forwards through the posterior wall in Hesselbach's triangle, which is a direct hernia.\n\nWhy the others fail:\nA) Oblique (indirect) inguinal hernia - An oblique hernia enters at the deep ring and is therefore controlled while the ring is occluded, appearing only on release.\nC) Femoral hernia - A femoral hernia appears below the inguinal ligament and below and lateral to the pubic tubercle, not above it.\nD) Spigelian hernia - A Spigelian hernia lies at the linea semilunaris well above the inguinal region."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sana-ch2-inguinal-region-mcq-007",
+   "type": "single",
+   "sectionId": "s6",
+   "difficulty": 2,
+   "highYield": true,
+   "stem": "Six months after a Lichtenstein repair a man has burning pain and numbness over the root of the penis and the upper scrotum. Which nerve has been entrapped?",
+   "options": [
+    {
+     "id": "a",
+     "text": "Iliohypogastric nerve",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "b",
+     "text": "Ilioinguinal nerve",
+     "correct": true,
+     "why": "Key - B) Ilioinguinal nerve. The ilioinguinal nerve runs on the cord and leaves through the superficial ring to supply the root of the penis, the upper scrotum and the adjacent medial thigh, and it is the nerve most often caught in the mesh or a suture.\n\nWhy the others fail:\nA) Iliohypogastric nerve - The iliohypogastric nerve supplies skin over the pubis and the lateral buttock, above the described territory.\nC) Genital branch of the genitofemoral nerve - The genital branch of the genitofemoral nerve supplies cremaster and a small area of scrotal skin, and its loss is mainly motor with a lost cremasteric reflex.\nD) Lateral cutaneous nerve of the thigh - The lateral cutaneous nerve of the thigh supplies the lateral thigh and is at risk in laparoscopic repair, not in this territory."
+    },
+    {
+     "id": "c",
+     "text": "Genital branch of the genitofemoral nerve",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "d",
+     "text": "Lateral cutaneous nerve of the thigh",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    }
+   ],
+   "explanation": [
+    "Key - B) Ilioinguinal nerve. The ilioinguinal nerve runs on the cord and leaves through the superficial ring to supply the root of the penis, the upper scrotum and the adjacent medial thigh, and it is the nerve most often caught in the mesh or a suture.\n\nWhy the others fail:\nA) Iliohypogastric nerve - The iliohypogastric nerve supplies skin over the pubis and the lateral buttock, above the described territory.\nC) Genital branch of the genitofemoral nerve - The genital branch of the genitofemoral nerve supplies cremaster and a small area of scrotal skin, and its loss is mainly motor with a lost cremasteric reflex.\nD) Lateral cutaneous nerve of the thigh - The lateral cutaneous nerve of the thigh supplies the lateral thigh and is at risk in laparoscopic repair, not in this territory."
+   ],
+   "keyFacts": [
+    "Key - B) Ilioinguinal nerve. The ilioinguinal nerve runs on the cord and leaves through the superficial ring to supply the root of the penis, the upper scrotum and the adjacent medial thigh, and it is the nerve most often caught in the mesh or a suture.\n\nWhy the others fail:\nA) Iliohypogastric nerve - The iliohypogastric nerve supplies skin over the pubis and the lateral buttock, above the described territory.\nC) Genital branch of the genitofemoral nerve - The genital branch of the genitofemoral nerve supplies cremaster and a small area of scrotal skin, and its loss is mainly motor with a lost cremasteric reflex.\nD) Lateral cutaneous nerve of the thigh - The lateral cutaneous nerve of the thigh supplies the lateral thigh and is at risk in laparoscopic repair, not in this territory."
+   ],
+   "teachingPoint": "Key - B) Ilioinguinal nerve. The ilioinguinal nerve runs on the cord and leaves through the superficial ring to supply the root of the penis, the upper scrotum and the adjacent medial thigh, and it is the nerve most often caught in the mesh or a suture.\n\nWhy the others fail:\nA) Iliohypogastric nerve - The iliohypogastric nerve supplies skin over the pubis and the lateral buttock, above the described territory.\nC) Genital branch of the genitofemoral nerve - The genital branch of the genitofemoral nerve supplies cremaster and a small area of scrotal skin, and its loss is mainly motor with a lost cremasteric reflex.\nD) Lateral cutaneous nerve of the thigh - The lateral cutaneous nerve of the thigh supplies the lateral thigh and is at risk in laparoscopic repair, not in this territory."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sana-ch2-inguinal-region-mcq-008",
+   "type": "single",
+   "sectionId": "s6",
+   "difficulty": 2,
+   "highYield": true,
+   "stem": "In a laparoscopic TAPP repair the assistant is about to place a tack between the vas deferens medially and the gonadal vessels laterally. What lies in the floor of this triangle?",
+   "options": [
+    {
+     "id": "a",
+     "text": "The femoral nerve",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "b",
+     "text": "The external iliac vessels",
+     "correct": true,
+     "why": "Key - B) The external iliac vessels. The triangle bounded by the vas medially and the gonadal vessels laterally is the triangle of doom, whose floor is the external iliac artery and vein; a tack there is catastrophic.\n\nWhy the others fail:\nA) The femoral nerve - The femoral nerve lies in the triangle of pain, lateral to the gonadal vessels.\nC) The obturator nerve - The obturator nerve lies deeper and more medially on the lateral pelvic wall, outside this triangle.\nD) The ureter - The ureter crosses the pelvic brim more medially and posteriorly and is not the structure at immediate risk from a tack here."
+    },
+    {
+     "id": "c",
+     "text": "The obturator nerve",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "d",
+     "text": "The ureter",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    }
+   ],
+   "explanation": [
+    "Key - B) The external iliac vessels. The triangle bounded by the vas medially and the gonadal vessels laterally is the triangle of doom, whose floor is the external iliac artery and vein; a tack there is catastrophic.\n\nWhy the others fail:\nA) The femoral nerve - The femoral nerve lies in the triangle of pain, lateral to the gonadal vessels.\nC) The obturator nerve - The obturator nerve lies deeper and more medially on the lateral pelvic wall, outside this triangle.\nD) The ureter - The ureter crosses the pelvic brim more medially and posteriorly and is not the structure at immediate risk from a tack here."
+   ],
+   "keyFacts": [
+    "Key - B) The external iliac vessels. The triangle bounded by the vas medially and the gonadal vessels laterally is the triangle of doom, whose floor is the external iliac artery and vein; a tack there is catastrophic.\n\nWhy the others fail:\nA) The femoral nerve - The femoral nerve lies in the triangle of pain, lateral to the gonadal vessels.\nC) The obturator nerve - The obturator nerve lies deeper and more medially on the lateral pelvic wall, outside this triangle.\nD) The ureter - The ureter crosses the pelvic brim more medially and posteriorly and is not the structure at immediate risk from a tack here."
+   ],
+   "teachingPoint": "Key - B) The external iliac vessels. The triangle bounded by the vas medially and the gonadal vessels laterally is the triangle of doom, whose floor is the external iliac artery and vein; a tack there is catastrophic.\n\nWhy the others fail:\nA) The femoral nerve - The femoral nerve lies in the triangle of pain, lateral to the gonadal vessels.\nC) The obturator nerve - The obturator nerve lies deeper and more medially on the lateral pelvic wall, outside this triangle.\nD) The ureter - The ureter crosses the pelvic brim more medially and posteriorly and is not the structure at immediate risk from a tack here."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sana-ch2-inguinal-region-mcq-009",
+   "type": "single",
+   "sectionId": "s6",
+   "difficulty": 2,
+   "highYield": true,
+   "stem": "A hernia sac contains a loop of small bowel that is viable, but the patient remains obstructed and toxic after reduction. Which anatomical variant should be suspected?",
+   "options": [
+    {
+     "id": "a",
+     "text": "Richter's hernia",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "b",
+     "text": "Maydl's hernia",
+     "correct": true,
+     "why": "Key - B) Maydl's hernia. In a Maydl's W-shaped hernia the loop inside the abdomen between the two limbs in the sac is the ischaemic one, so the sac contents look viable while the patient stays obstructed and toxic.\n\nWhy the others fail:\nA) Richter's hernia - In a Richter's hernia only part of the bowel circumference is trapped, so obstruction is typically absent rather than persistent.\nC) Sliding hernia - A sliding hernia has a viscus forming the sac wall; it causes technical difficulty at repair but not this picture.\nD) Amyand's hernia - An Amyand's hernia contains the appendix and would present with local inflammation rather than a viable loop with continuing obstruction."
+    },
+    {
+     "id": "c",
+     "text": "Sliding hernia",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "d",
+     "text": "Amyand's hernia",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    }
+   ],
+   "explanation": [
+    "Key - B) Maydl's hernia. In a Maydl's W-shaped hernia the loop inside the abdomen between the two limbs in the sac is the ischaemic one, so the sac contents look viable while the patient stays obstructed and toxic.\n\nWhy the others fail:\nA) Richter's hernia - In a Richter's hernia only part of the bowel circumference is trapped, so obstruction is typically absent rather than persistent.\nC) Sliding hernia - A sliding hernia has a viscus forming the sac wall; it causes technical difficulty at repair but not this picture.\nD) Amyand's hernia - An Amyand's hernia contains the appendix and would present with local inflammation rather than a viable loop with continuing obstruction."
+   ],
+   "keyFacts": [
+    "Key - B) Maydl's hernia. In a Maydl's W-shaped hernia the loop inside the abdomen between the two limbs in the sac is the ischaemic one, so the sac contents look viable while the patient stays obstructed and toxic.\n\nWhy the others fail:\nA) Richter's hernia - In a Richter's hernia only part of the bowel circumference is trapped, so obstruction is typically absent rather than persistent.\nC) Sliding hernia - A sliding hernia has a viscus forming the sac wall; it causes technical difficulty at repair but not this picture.\nD) Amyand's hernia - An Amyand's hernia contains the appendix and would present with local inflammation rather than a viable loop with continuing obstruction."
+   ],
+   "teachingPoint": "Key - B) Maydl's hernia. In a Maydl's W-shaped hernia the loop inside the abdomen between the two limbs in the sac is the ischaemic one, so the sac contents look viable while the patient stays obstructed and toxic.\n\nWhy the others fail:\nA) Richter's hernia - In a Richter's hernia only part of the bowel circumference is trapped, so obstruction is typically absent rather than persistent.\nC) Sliding hernia - A sliding hernia has a viscus forming the sac wall; it causes technical difficulty at repair but not this picture.\nD) Amyand's hernia - An Amyand's hernia contains the appendix and would present with local inflammation rather than a viable loop with continuing obstruction."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sana-ch2-inguinal-region-mcq-010",
+   "type": "single",
+   "sectionId": "s6",
+   "difficulty": 2,
+   "highYield": true,
+   "stem": "Which single structure best explains why a large mesh laid in the preperitoneal plane repairs direct, indirect and femoral hernias at once?",
+   "options": [
+    {
+     "id": "a",
+     "text": "Hesselbach's triangle",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "b",
+     "text": "The myopectineal orifice of Fruchaud",
+     "correct": true,
+     "why": "Key - B) The myopectineal orifice of Fruchaud. All three groin hernias pass through the myopectineal orifice of Fruchaud, so a mesh covering that single fascial window covers every route.\n\nWhy the others fail:\nA) Hesselbach's triangle - Hesselbach's triangle is the site of direct hernias only.\nC) The femoral sheath - The femoral sheath surrounds the femoral vessels and accounts only for the femoral route.\nD) The conjoint tendon - The conjoint tendon reinforces the medial posterior wall and is relevant to direct hernias alone."
+    },
+    {
+     "id": "c",
+     "text": "The femoral sheath",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "d",
+     "text": "The conjoint tendon",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    }
+   ],
+   "explanation": [
+    "Key - B) The myopectineal orifice of Fruchaud. All three groin hernias pass through the myopectineal orifice of Fruchaud, so a mesh covering that single fascial window covers every route.\n\nWhy the others fail:\nA) Hesselbach's triangle - Hesselbach's triangle is the site of direct hernias only.\nC) The femoral sheath - The femoral sheath surrounds the femoral vessels and accounts only for the femoral route.\nD) The conjoint tendon - The conjoint tendon reinforces the medial posterior wall and is relevant to direct hernias alone."
+   ],
+   "keyFacts": [
+    "Key - B) The myopectineal orifice of Fruchaud. All three groin hernias pass through the myopectineal orifice of Fruchaud, so a mesh covering that single fascial window covers every route.\n\nWhy the others fail:\nA) Hesselbach's triangle - Hesselbach's triangle is the site of direct hernias only.\nC) The femoral sheath - The femoral sheath surrounds the femoral vessels and accounts only for the femoral route.\nD) The conjoint tendon - The conjoint tendon reinforces the medial posterior wall and is relevant to direct hernias alone."
+   ],
+   "teachingPoint": "Key - B) The myopectineal orifice of Fruchaud. All three groin hernias pass through the myopectineal orifice of Fruchaud, so a mesh covering that single fascial window covers every route.\n\nWhy the others fail:\nA) Hesselbach's triangle - Hesselbach's triangle is the site of direct hernias only.\nC) The femoral sheath - The femoral sheath surrounds the femoral vessels and accounts only for the femoral route.\nD) The conjoint tendon - The conjoint tendon reinforces the medial posterior wall and is relevant to direct hernias alone."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sana-ch2-inguinal-region-mcq-011",
+   "type": "single",
+   "sectionId": "s6",
+   "difficulty": 2,
+   "highYield": true,
+   "stem": "A man has a soft inguinoscrotal swelling. The testis is felt separately below the swelling, and the swelling reaches only the neck of the scrotum. Which anatomical type is this?",
+   "options": [
+    {
+     "id": "a",
+     "text": "Congenital type",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "b",
+     "text": "Infantile type",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "c",
+     "text": "Funicular type",
+     "correct": true,
+     "why": "Key - C) Funicular type. In the funicular type the processus is closed just above the epididymis, so the hernia stops at the neck of the scrotum and the testis is felt separately below it.\n\nWhy the others fail:\nA) Congenital type - In the congenital type the whole processus persists and the testis lies among the contents of the sac.\nB) Infantile type - In the infantile type the tunica vaginalis extends up to the superficial ring and the sac lies behind it, which is an operative finding rather than this clinical picture.\nD) Complete scrotal type - In the complete scrotal type the hernia descends to the bottom of the scrotum and the testis is behind it and hard to define."
+    },
+    {
+     "id": "d",
+     "text": "Complete scrotal type",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    }
+   ],
+   "explanation": [
+    "Key - C) Funicular type. In the funicular type the processus is closed just above the epididymis, so the hernia stops at the neck of the scrotum and the testis is felt separately below it.\n\nWhy the others fail:\nA) Congenital type - In the congenital type the whole processus persists and the testis lies among the contents of the sac.\nB) Infantile type - In the infantile type the tunica vaginalis extends up to the superficial ring and the sac lies behind it, which is an operative finding rather than this clinical picture.\nD) Complete scrotal type - In the complete scrotal type the hernia descends to the bottom of the scrotum and the testis is behind it and hard to define."
+   ],
+   "keyFacts": [
+    "Key - C) Funicular type. In the funicular type the processus is closed just above the epididymis, so the hernia stops at the neck of the scrotum and the testis is felt separately below it.\n\nWhy the others fail:\nA) Congenital type - In the congenital type the whole processus persists and the testis lies among the contents of the sac.\nB) Infantile type - In the infantile type the tunica vaginalis extends up to the superficial ring and the sac lies behind it, which is an operative finding rather than this clinical picture.\nD) Complete scrotal type - In the complete scrotal type the hernia descends to the bottom of the scrotum and the testis is behind it and hard to define."
+   ],
+   "teachingPoint": "Key - C) Funicular type. In the funicular type the processus is closed just above the epididymis, so the hernia stops at the neck of the scrotum and the testis is felt separately below it.\n\nWhy the others fail:\nA) Congenital type - In the congenital type the whole processus persists and the testis lies among the contents of the sac.\nB) Infantile type - In the infantile type the tunica vaginalis extends up to the superficial ring and the sac lies behind it, which is an operative finding rather than this clinical picture.\nD) Complete scrotal type - In the complete scrotal type the hernia descends to the bottom of the scrotum and the testis is behind it and hard to define."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sana-ch2-inguinal-region-mcq-012",
+   "type": "single",
+   "sectionId": "s6",
+   "difficulty": 2,
+   "highYield": true,
+   "stem": "In a difficult open repair the surgeon needs to be certain a groin hernia is femoral rather than direct before choosing the approach. Which single intraoperative relation settles it?",
+   "options": [
+    {
+     "id": "a",
+     "text": "The sac lies medial to the inferior epigastric vessels",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "b",
+     "text": "The sac emerges through the superficial inguinal ring",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "c",
+     "text": "The neck of the sac lies below and lateral to the pubic tubercle, medial to the femoral vein",
+     "correct": true,
+     "why": "Key - C) The neck of the sac lies below and lateral to the pubic tubercle, medial to the femoral vein. The femoral ring lies below the inguinal ligament, below and lateral to the pubic tubercle and immediately medial to the femoral vein, so a neck in that position is femoral by definition and calls for a repair that closes the femoral ring.\n\nWhy the others fail:\nA) The sac lies medial to the inferior epigastric vessels - A sac medial to the inferior epigastric vessels defines a direct hernia through Hesselbach's triangle, which is what must be excluded.\nB) The sac emerges through the superficial inguinal ring - Emergence through the superficial ring is a feature of an inguinal hernia of either kind and can also occur when a large femoral sac rides upwards over the ligament.\nD) The sac lies within the coverings of the spermatic cord - A sac within the cord coverings is an oblique inguinal hernia, which is neither of the two under consideration."
+    },
+    {
+     "id": "d",
+     "text": "The sac lies within the coverings of the spermatic cord",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    }
+   ],
+   "explanation": [
+    "Key - C) The neck of the sac lies below and lateral to the pubic tubercle, medial to the femoral vein. The femoral ring lies below the inguinal ligament, below and lateral to the pubic tubercle and immediately medial to the femoral vein, so a neck in that position is femoral by definition and calls for a repair that closes the femoral ring.\n\nWhy the others fail:\nA) The sac lies medial to the inferior epigastric vessels - A sac medial to the inferior epigastric vessels defines a direct hernia through Hesselbach's triangle, which is what must be excluded.\nB) The sac emerges through the superficial inguinal ring - Emergence through the superficial ring is a feature of an inguinal hernia of either kind and can also occur when a large femoral sac rides upwards over the ligament.\nD) The sac lies within the coverings of the spermatic cord - A sac within the cord coverings is an oblique inguinal hernia, which is neither of the two under consideration."
+   ],
+   "keyFacts": [
+    "Key - C) The neck of the sac lies below and lateral to the pubic tubercle, medial to the femoral vein. The femoral ring lies below the inguinal ligament, below and lateral to the pubic tubercle and immediately medial to the femoral vein, so a neck in that position is femoral by definition and calls for a repair that closes the femoral ring.\n\nWhy the others fail:\nA) The sac lies medial to the inferior epigastric vessels - A sac medial to the inferior epigastric vessels defines a direct hernia through Hesselbach's triangle, which is what must be excluded.\nB) The sac emerges through the superficial inguinal ring - Emergence through the superficial ring is a feature of an inguinal hernia of either kind and can also occur when a large femoral sac rides upwards over the ligament.\nD) The sac lies within the coverings of the spermatic cord - A sac within the cord coverings is an oblique inguinal hernia, which is neither of the two under consideration."
+   ],
+   "teachingPoint": "Key - C) The neck of the sac lies below and lateral to the pubic tubercle, medial to the femoral vein. The femoral ring lies below the inguinal ligament, below and lateral to the pubic tubercle and immediately medial to the femoral vein, so a neck in that position is femoral by definition and calls for a repair that closes the femoral ring.\n\nWhy the others fail:\nA) The sac lies medial to the inferior epigastric vessels - A sac medial to the inferior epigastric vessels defines a direct hernia through Hesselbach's triangle, which is what must be excluded.\nB) The sac emerges through the superficial inguinal ring - Emergence through the superficial ring is a feature of an inguinal hernia of either kind and can also occur when a large femoral sac rides upwards over the ligament.\nD) The sac lies within the coverings of the spermatic cord - A sac within the cord coverings is an oblique inguinal hernia, which is neither of the two under consideration."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sana-ch2-inguinal-region-mcq-013",
+   "type": "single",
+   "sectionId": "s6",
+   "difficulty": 2,
+   "highYield": true,
+   "stem": "A thin elderly woman has intermittent small bowel obstruction and pain radiating along the medial thigh to the knee that worsens on extension and medial rotation of the hip. Repeated groin examination is normal. Which canal contains the hernia, and what bounds it above?",
+   "options": [
+    {
+     "id": "a",
+     "text": "The femoral canal, bounded above by the inguinal ligament",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "b",
+     "text": "The obturator canal, bounded above by the obturator groove of the superior pubic ramus",
+     "correct": true,
+     "why": "Key - B) The obturator canal, bounded above by the obturator groove of the superior pubic ramus. Howship-Romberg sign comes from pressure on the obturator nerve in the obturator canal, which is bounded above and laterally by the obturator groove of the superior pubic ramus and below by the free edge of the obturator membrane; the hernia lies deep to pectineus and is impalpable.\n\nWhy the others fail:\nA) The femoral canal, bounded above by the inguinal ligament - A femoral hernia would usually give a palpable lump below and lateral to the pubic tubercle and does not compress the obturator nerve.\nC) The inguinal canal, bounded above by the arching internal oblique - An inguinal hernia produces a groin lump and does not compress the obturator nerve.\nD) The canal of Nuck, bounded above by the superficial ring - A hydrocele of the canal of Nuck is a cystic swelling in the inguinal canal or labium and causes no obstruction."
+    },
+    {
+     "id": "c",
+     "text": "The inguinal canal, bounded above by the arching internal oblique",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "d",
+     "text": "The canal of Nuck, bounded above by the superficial ring",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    }
+   ],
+   "explanation": [
+    "Key - B) The obturator canal, bounded above by the obturator groove of the superior pubic ramus. Howship-Romberg sign comes from pressure on the obturator nerve in the obturator canal, which is bounded above and laterally by the obturator groove of the superior pubic ramus and below by the free edge of the obturator membrane; the hernia lies deep to pectineus and is impalpable.\n\nWhy the others fail:\nA) The femoral canal, bounded above by the inguinal ligament - A femoral hernia would usually give a palpable lump below and lateral to the pubic tubercle and does not compress the obturator nerve.\nC) The inguinal canal, bounded above by the arching internal oblique - An inguinal hernia produces a groin lump and does not compress the obturator nerve.\nD) The canal of Nuck, bounded above by the superficial ring - A hydrocele of the canal of Nuck is a cystic swelling in the inguinal canal or labium and causes no obstruction."
+   ],
+   "keyFacts": [
+    "Key - B) The obturator canal, bounded above by the obturator groove of the superior pubic ramus. Howship-Romberg sign comes from pressure on the obturator nerve in the obturator canal, which is bounded above and laterally by the obturator groove of the superior pubic ramus and below by the free edge of the obturator membrane; the hernia lies deep to pectineus and is impalpable.\n\nWhy the others fail:\nA) The femoral canal, bounded above by the inguinal ligament - A femoral hernia would usually give a palpable lump below and lateral to the pubic tubercle and does not compress the obturator nerve.\nC) The inguinal canal, bounded above by the arching internal oblique - An inguinal hernia produces a groin lump and does not compress the obturator nerve.\nD) The canal of Nuck, bounded above by the superficial ring - A hydrocele of the canal of Nuck is a cystic swelling in the inguinal canal or labium and causes no obstruction."
+   ],
+   "teachingPoint": "Key - B) The obturator canal, bounded above by the obturator groove of the superior pubic ramus. Howship-Romberg sign comes from pressure on the obturator nerve in the obturator canal, which is bounded above and laterally by the obturator groove of the superior pubic ramus and below by the free edge of the obturator membrane; the hernia lies deep to pectineus and is impalpable.\n\nWhy the others fail:\nA) The femoral canal, bounded above by the inguinal ligament - A femoral hernia would usually give a palpable lump below and lateral to the pubic tubercle and does not compress the obturator nerve.\nC) The inguinal canal, bounded above by the arching internal oblique - An inguinal hernia produces a groin lump and does not compress the obturator nerve.\nD) The canal of Nuck, bounded above by the superficial ring - A hydrocele of the canal of Nuck is a cystic swelling in the inguinal canal or labium and causes no obstruction."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sana-ch2-inguinal-region-mcq-014",
+   "type": "single",
+   "sectionId": "s6",
+   "difficulty": 2,
+   "highYield": true,
+   "stem": "A strangulated femoral hernia in an obese woman requires resection of gangrenous ileum. Which approach gives the safest access to both the sac and the bowel?",
+   "options": [
+    {
+     "id": "a",
+     "text": "Low (Lockwood) approach below the inguinal ligament",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "b",
+     "text": "Trans-inguinal (Lotheissen) approach through the posterior wall of the inguinal canal",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "c",
+     "text": "High (McEvedy) approach through the lower rectus sheath and the preperitoneal space",
+     "correct": true,
+     "why": "Key - C) High (McEvedy) approach through the lower rectus sheath and the preperitoneal space. The high approach enters above the inguinal ligament through the lower rectus sheath into the preperitoneal space, so the ring can be released under vision and the peritoneum opened to resect and anastomose bowel.\n\nWhy the others fail:\nA) Low (Lockwood) approach below the inguinal ligament - The low approach exposes the sac well but gives no room to deliver and resect bowel, and the constriction is hard to release from below.\nB) Trans-inguinal (Lotheissen) approach through the posterior wall of the inguinal canal - The trans-inguinal approach destroys the posterior wall of the inguinal canal and still gives restricted access for a resection.\nD) Laparoscopic transabdominal preperitoneal repair - A laparoscopic repair is a poor choice in the presence of gangrenous bowel and contamination and does not allow safe resection in this setting."
+    },
+    {
+     "id": "d",
+     "text": "Laparoscopic transabdominal preperitoneal repair",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    }
+   ],
+   "explanation": [
+    "Key - C) High (McEvedy) approach through the lower rectus sheath and the preperitoneal space. The high approach enters above the inguinal ligament through the lower rectus sheath into the preperitoneal space, so the ring can be released under vision and the peritoneum opened to resect and anastomose bowel.\n\nWhy the others fail:\nA) Low (Lockwood) approach below the inguinal ligament - The low approach exposes the sac well but gives no room to deliver and resect bowel, and the constriction is hard to release from below.\nB) Trans-inguinal (Lotheissen) approach through the posterior wall of the inguinal canal - The trans-inguinal approach destroys the posterior wall of the inguinal canal and still gives restricted access for a resection.\nD) Laparoscopic transabdominal preperitoneal repair - A laparoscopic repair is a poor choice in the presence of gangrenous bowel and contamination and does not allow safe resection in this setting."
+   ],
+   "keyFacts": [
+    "Key - C) High (McEvedy) approach through the lower rectus sheath and the preperitoneal space. The high approach enters above the inguinal ligament through the lower rectus sheath into the preperitoneal space, so the ring can be released under vision and the peritoneum opened to resect and anastomose bowel.\n\nWhy the others fail:\nA) Low (Lockwood) approach below the inguinal ligament - The low approach exposes the sac well but gives no room to deliver and resect bowel, and the constriction is hard to release from below.\nB) Trans-inguinal (Lotheissen) approach through the posterior wall of the inguinal canal - The trans-inguinal approach destroys the posterior wall of the inguinal canal and still gives restricted access for a resection.\nD) Laparoscopic transabdominal preperitoneal repair - A laparoscopic repair is a poor choice in the presence of gangrenous bowel and contamination and does not allow safe resection in this setting."
+   ],
+   "teachingPoint": "Key - C) High (McEvedy) approach through the lower rectus sheath and the preperitoneal space. The high approach enters above the inguinal ligament through the lower rectus sheath into the preperitoneal space, so the ring can be released under vision and the peritoneum opened to resect and anastomose bowel.\n\nWhy the others fail:\nA) Low (Lockwood) approach below the inguinal ligament - The low approach exposes the sac well but gives no room to deliver and resect bowel, and the constriction is hard to release from below.\nB) Trans-inguinal (Lotheissen) approach through the posterior wall of the inguinal canal - The trans-inguinal approach destroys the posterior wall of the inguinal canal and still gives restricted access for a resection.\nD) Laparoscopic transabdominal preperitoneal repair - A laparoscopic repair is a poor choice in the presence of gangrenous bowel and contamination and does not allow safe resection in this setting."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sana-ch2-inguinal-region-mcq-015",
+   "type": "single",
+   "sectionId": "s6",
+   "difficulty": 2,
+   "highYield": true,
+   "stem": "Which anatomical statement best explains why a mesh repair has a lower recurrence rate than a Bassini repair for a large direct hernia?",
+   "options": [
+    {
+     "id": "a",
+     "text": "Mesh closes the deep inguinal ring more completely",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "b",
+     "text": "Mesh replaces the deficient transversalis fascia over the whole myopectineal orifice without approximating structures that are not normally in contact",
+     "correct": true,
+     "why": "Key - B) Mesh replaces the deficient transversalis fascia over the whole myopectineal orifice without approximating structures that are not normally in contact. The failure in a direct hernia is the transversalis fascia of the posterior wall, and a tension repair pulls the conjoint tendon down to the inguinal ligament, two structures not normally apposed, so the suture line is under permanent tension; mesh restores the whole myopectineal orifice without tension.\n\nWhy the others fail:\nA) Mesh closes the deep inguinal ring more completely - Closing the deep ring is relevant to the indirect hernia; a large direct hernia arises medial to it.\nC) Mesh restores the shutter mechanism of the internal oblique - No repair restores the physiological shutter action of a denervated or attenuated muscle.\nD) Mesh prevents the ilioinguinal nerve from being caught in the repair - Mesh in fact raises rather than lowers the risk of nerve entrapment and chronic groin pain."
+    },
+    {
+     "id": "c",
+     "text": "Mesh restores the shutter mechanism of the internal oblique",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "d",
+     "text": "Mesh prevents the ilioinguinal nerve from being caught in the repair",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    }
+   ],
+   "explanation": [
+    "Key - B) Mesh replaces the deficient transversalis fascia over the whole myopectineal orifice without approximating structures that are not normally in contact. The failure in a direct hernia is the transversalis fascia of the posterior wall, and a tension repair pulls the conjoint tendon down to the inguinal ligament, two structures not normally apposed, so the suture line is under permanent tension; mesh restores the whole myopectineal orifice without tension.\n\nWhy the others fail:\nA) Mesh closes the deep inguinal ring more completely - Closing the deep ring is relevant to the indirect hernia; a large direct hernia arises medial to it.\nC) Mesh restores the shutter mechanism of the internal oblique - No repair restores the physiological shutter action of a denervated or attenuated muscle.\nD) Mesh prevents the ilioinguinal nerve from being caught in the repair - Mesh in fact raises rather than lowers the risk of nerve entrapment and chronic groin pain."
+   ],
+   "keyFacts": [
+    "Key - B) Mesh replaces the deficient transversalis fascia over the whole myopectineal orifice without approximating structures that are not normally in contact. The failure in a direct hernia is the transversalis fascia of the posterior wall, and a tension repair pulls the conjoint tendon down to the inguinal ligament, two structures not normally apposed, so the suture line is under permanent tension; mesh restores the whole myopectineal orifice without tension.\n\nWhy the others fail:\nA) Mesh closes the deep inguinal ring more completely - Closing the deep ring is relevant to the indirect hernia; a large direct hernia arises medial to it.\nC) Mesh restores the shutter mechanism of the internal oblique - No repair restores the physiological shutter action of a denervated or attenuated muscle.\nD) Mesh prevents the ilioinguinal nerve from being caught in the repair - Mesh in fact raises rather than lowers the risk of nerve entrapment and chronic groin pain."
+   ],
+   "teachingPoint": "Key - B) Mesh replaces the deficient transversalis fascia over the whole myopectineal orifice without approximating structures that are not normally in contact. The failure in a direct hernia is the transversalis fascia of the posterior wall, and a tension repair pulls the conjoint tendon down to the inguinal ligament, two structures not normally apposed, so the suture line is under permanent tension; mesh restores the whole myopectineal orifice without tension.\n\nWhy the others fail:\nA) Mesh closes the deep inguinal ring more completely - Closing the deep ring is relevant to the indirect hernia; a large direct hernia arises medial to it.\nC) Mesh restores the shutter mechanism of the internal oblique - No repair restores the physiological shutter action of a denervated or attenuated muscle.\nD) Mesh prevents the ilioinguinal nerve from being caught in the repair - Mesh in fact raises rather than lowers the risk of nerve entrapment and chronic groin pain."
+  }
+ ],
+ "emqs": [],
+ "summary": "Inguinal Region: work through each section's cards to fix the structures, their relations and clinical lesions. Use the MCQs to test discrimination and the image-occlusion cards to rehearse identification."
+}

@@ -141,3 +141,9 @@ export function chapterSummaries(): ChapterSummary[] {
     estMinutes: ch.estMinutes,
   }));
 }
+
+/** A diagram from a chapter's `images` map, resolved by the id occlusion cards use. */
+export function chapterImage(chapterId: string, imageId: string) {
+  const ch = getChapter(chapterId);
+  return ch?.images?.[imageId];
+}

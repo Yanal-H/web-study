@@ -1,0 +1,1915 @@
+{
+ "schema": "foundation.study-module/v1",
+ "id": "sana-ch5-abdominal-vasculature",
+ "subject": "Anatomy",
+ "title": "Abdominal Vasculature",
+ "source": {
+  "book": "Recall by Yanal — Surgical Anatomy",
+  "chapter": 5,
+  "title": "Abdominal Vasculature",
+  "pages": "—"
+ },
+ "brand": "by Yanal · Cairo 2026",
+ "estMinutes": 20,
+ "deck": "Anatomy::Abdominal Vasculature",
+ "tags": [
+  "anatomy",
+  "surgical-anatomy",
+  "abdominal-vasculature"
+ ],
+ "objectives": [
+  "Identify the key structures of Abdominal Vasculature at each level of dissection.",
+  "Relate the nerves, vessels and muscles of Abdominal Vasculature to their functions.",
+  "Localise the named spaces and regions of Abdominal Vasculature and list their contents.",
+  "Recognise the common clinical lesions associated with Abdominal Vasculature.",
+  "Reproduce the high-yield relations of Abdominal Vasculature tested in vivas and MCQs."
+ ],
+ "outline": [
+  "5.1 Aorta & Branches",
+  "5.2 Coeliac Trunk",
+  "5.3 SMA & IMA",
+  "5.4 Watershed & Collaterals",
+  "5.5 Portal Venous System",
+  "5.6 Portosystemic Anastomoses",
+  "5.7 Clinical Scenarios",
+  "5.8 Nodal Stations & Lymphatics"
+ ],
+ "sections": [
+  {
+   "id": "s1",
+   "n": "5.1",
+   "title": "Aorta & Branches",
+   "deck": "Aorta & Branches",
+   "digest": "Imported Recall deck. This section holds the **aorta & branches** cards for Abdominal Vasculature. Open the flashcards for Aorta & Branches to drill it; author a written digest here to turn the section into a reader page.",
+   "highYield": [],
+   "tables": [],
+   "pitfalls": [],
+   "figures": []
+  },
+  {
+   "id": "s2",
+   "n": "5.2",
+   "title": "Coeliac Trunk",
+   "deck": "Coeliac Trunk",
+   "digest": "Imported Recall deck. This section holds the **coeliac trunk** cards for Abdominal Vasculature. Open the flashcards for Coeliac Trunk to drill it; author a written digest here to turn the section into a reader page.",
+   "highYield": [],
+   "tables": [],
+   "pitfalls": [],
+   "figures": []
+  },
+  {
+   "id": "s3",
+   "n": "5.3",
+   "title": "SMA & IMA",
+   "deck": "SMA & IMA",
+   "digest": "Imported Recall deck. This section holds the **sma & ima** cards for Abdominal Vasculature. Open the flashcards for SMA & IMA to drill it; author a written digest here to turn the section into a reader page.",
+   "highYield": [],
+   "tables": [],
+   "pitfalls": [],
+   "figures": []
+  },
+  {
+   "id": "s4",
+   "n": "5.4",
+   "title": "Watershed & Collaterals",
+   "deck": "Watershed & Collaterals",
+   "digest": "Imported Recall deck. This section holds the **watershed & collaterals** cards for Abdominal Vasculature. Open the flashcards for Watershed & Collaterals to drill it; author a written digest here to turn the section into a reader page.",
+   "highYield": [],
+   "tables": [],
+   "pitfalls": [],
+   "figures": []
+  },
+  {
+   "id": "s5",
+   "n": "5.5",
+   "title": "Portal Venous System",
+   "deck": "Portal Venous System",
+   "digest": "Imported Recall deck. This section holds the **portal venous system** cards for Abdominal Vasculature. Open the flashcards for Portal Venous System to drill it; author a written digest here to turn the section into a reader page.",
+   "highYield": [],
+   "tables": [],
+   "pitfalls": [],
+   "figures": []
+  },
+  {
+   "id": "s6",
+   "n": "5.6",
+   "title": "Portosystemic Anastomoses",
+   "deck": "Portosystemic Anastomoses",
+   "digest": "Imported Recall deck. This section holds the **portosystemic anastomoses** cards for Abdominal Vasculature. Open the flashcards for Portosystemic Anastomoses to drill it; author a written digest here to turn the section into a reader page.",
+   "highYield": [],
+   "tables": [],
+   "pitfalls": [],
+   "figures": []
+  },
+  {
+   "id": "s7",
+   "n": "5.7",
+   "title": "Clinical Scenarios",
+   "deck": "Clinical Scenarios",
+   "digest": "Imported Recall deck. This section holds the **clinical scenarios** cards for Abdominal Vasculature. Open the flashcards for Clinical Scenarios to drill it; author a written digest here to turn the section into a reader page.",
+   "highYield": [],
+   "tables": [],
+   "pitfalls": [],
+   "figures": []
+  },
+  {
+   "id": "s8",
+   "n": "5.8",
+   "title": "Nodal Stations & Lymphatics",
+   "deck": "Nodal Stations & Lymphatics",
+   "digest": "Imported Recall deck. This section holds the **nodal stations & lymphatics** cards for Abdominal Vasculature. Open the flashcards for Nodal Stations & Lymphatics to drill it; author a written digest here to turn the section into a reader page.",
+   "highYield": [],
+   "tables": [],
+   "pitfalls": [],
+   "figures": []
+  }
+ ],
+ "glossary": [],
+ "mnemonics": [],
+ "cards": [
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch5-abdominal-vasculature-card-001",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Aorta & Branches",
+   "front": "At which level does the abdominal aorta begin and how does it enter the abdomen?",
+   "back": "At the lower border of T12, passing behind the median arcuate ligament through the aortic opening of the diaphragm, accompanied by the thoracic duct and the azygos vein.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch5-abdominal-vasculature-card-002",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Aorta & Branches",
+   "front": "At which level does the aorta bifurcate, and what is the surface marking?",
+   "back": "At the lower border of L4, about 1 cm below and to the left of the umbilicus, on the supracristal plane joining the highest points of the iliac crests.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch5-abdominal-vasculature-card-003",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Aorta & Branches",
+   "front": "Name the three unpaired anterior visceral branches of the aorta with their levels.",
+   "back": "Coeliac trunk at T12, superior mesenteric artery at L1, inferior mesenteric artery at L3.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch5-abdominal-vasculature-card-004",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Aorta & Branches",
+   "front": "Name the paired lateral visceral branches of the aorta with their levels.",
+   "back": "Middle suprarenal at L1, renal at L2, gonadal (testicular or ovarian) at L2.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch5-abdominal-vasculature-card-005",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Aorta & Branches",
+   "front": "Name the paired parietal branches of the aorta.",
+   "back": "The inferior phrenic arteries at T12 and four pairs of lumbar arteries, with the small median sacral artery arising from the bifurcation.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch5-abdominal-vasculature-card-006",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Aorta & Branches",
+   "front": "Which structures cross in front of the abdominal aorta?",
+   "back": "The body of the pancreas and splenic vein, the left renal vein, the third part of the duodenum, the root of the small bowel mesentery and the coeliac and superior mesenteric plexuses.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch5-abdominal-vasculature-card-007",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Aorta & Branches",
+   "front": "Which structures lie to the right of the aorta?",
+   "back": "The inferior vena cava, the cisterna chyli and the right crus of the diaphragm; the azygos vein and thoracic duct lie behind it.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch5-abdominal-vasculature-card-008",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Aorta & Branches",
+   "front": "What is the surgical importance of the left renal vein crossing the aorta?",
+   "back": "It crosses anterior to the aorta below the origin of the superior mesenteric artery and is the landmark for the upper limit of an infrarenal aortic clamp; it may be divided near the cava in an emergency because the left kidney drains through its gonadal, suprarenal and lumbar tributaries.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch5-abdominal-vasculature-card-009",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Aorta & Branches",
+   "front": "What is the nutcracker phenomenon?",
+   "back": "Compression of the left renal vein between the aorta behind and the superior mesenteric artery in front, causing left renal venous hypertension with haematuria, loin pain and a left varicocele.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch5-abdominal-vasculature-card-010",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Aorta & Branches",
+   "front": "What is median arcuate ligament syndrome?",
+   "back": "Compression of the coeliac trunk by a low median arcuate ligament, producing postprandial epigastric pain and a bruit that varies with respiration, relieved by dividing the ligament.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch5-abdominal-vasculature-card-011",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Aorta & Branches",
+   "front": "Why does an abdominal aortic aneurysm usually spare the segment above the renal arteries?",
+   "back": "The infrarenal aorta has fewer vasa vasorum, a thinner media and bears reflected pressure waves from the bifurcation, so degenerative aneurysms form there in the great majority of cases.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch5-abdominal-vasculature-card-012",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Aorta & Branches",
+   "front": "Where does a leaking abdominal aortic aneurysm usually rupture and why does that give time to operate?",
+   "back": "Posterolaterally into the retroperitoneum on the left, where the surrounding tissues tamponade the leak. A free anterior rupture into the peritoneal cavity is rapidly fatal.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch5-abdominal-vasculature-card-013",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Aorta & Branches",
+   "front": "Which vein must be identified and preserved during exposure of the neck of an abdominal aortic aneurysm?",
+   "back": "The left renal vein crossing anteriorly, and its lumbar and gonadal tributaries; a retro-aortic left renal vein is a variant that is easily torn.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch5-abdominal-vasculature-card-014",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Aorta & Branches",
+   "front": "How does the inferior vena cava form and at what level?",
+   "back": "By the union of the two common iliac veins at the level of L5, to the right of the aortic bifurcation.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch5-abdominal-vasculature-card-015",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Aorta & Branches",
+   "front": "Which veins drain the kidneys and suprarenals asymmetrically, and why does it matter?",
+   "back": "The left renal vein receives the left suprarenal and left gonadal veins before crossing the aorta, whereas the right suprarenal and right gonadal veins drain directly into the inferior vena cava. Right adrenalectomy therefore involves a short, wide vein straight into the cava.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch5-abdominal-vasculature-card-016",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Coeliac Trunk",
+   "front": "Name the three branches of the coeliac trunk.",
+   "back": "The left gastric artery, the splenic artery and the common hepatic artery.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch5-abdominal-vasculature-card-017",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Coeliac Trunk",
+   "front": "Which part of the gut does the coeliac trunk supply and why does that boundary matter?",
+   "back": "The foregut, from the abdominal oesophagus to the second part of the duodenum at the level of the ampulla, together with the liver, pancreas and spleen. The boundary lies at the entry of the bile duct, where the foregut and midgut blood supplies meet.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch5-abdominal-vasculature-card-018",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Coeliac Trunk",
+   "front": "Trace the course of the left gastric artery.",
+   "back": "It runs upwards and to the left to the abdominal oesophagus, gives oesophageal branches, then turns down along the lesser curvature between the layers of the lesser omentum to anastomose with the right gastric artery.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch5-abdominal-vasculature-card-019",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Coeliac Trunk",
+   "front": "Why is the left gastric artery central to variceal bleeding?",
+   "back": "Its oesophageal branches anastomose with the oesophageal veins of the azygos system, and the corresponding left gastric (coronary) vein is the main channel by which portal blood reaches oesophageal varices.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch5-abdominal-vasculature-card-020",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Coeliac Trunk",
+   "front": "Trace the course of the splenic artery.",
+   "back": "It runs a tortuous course to the left along the upper border of the pancreas, behind the stomach, then enters the splenorenal ligament to reach the hilum, giving pancreatic branches, short gastric arteries and the left gastroepiploic artery.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch5-abdominal-vasculature-card-021",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Coeliac Trunk",
+   "front": "What are the branches of the common hepatic artery?",
+   "back": "The gastroduodenal artery, the right gastric artery and the proper hepatic artery, which divides into right and left hepatic arteries.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch5-abdominal-vasculature-card-022",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Coeliac Trunk",
+   "front": "Which artery lies behind the first part of the duodenum, and what is the consequence?",
+   "back": "The gastroduodenal artery. A posterior duodenal ulcer erodes it and causes brisk arterial haematemesis and melaena, controlled surgically by underrunning the vessel with a three-point suture.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch5-abdominal-vasculature-card-023",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Coeliac Trunk",
+   "front": "Name the arteries of the lesser and greater curvatures of the stomach.",
+   "back": "The right and left gastric arteries on the lesser curvature, and the right and left gastroepiploic arteries on the greater curvature, with the short gastric arteries to the fundus.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch5-abdominal-vasculature-card-024",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Coeliac Trunk",
+   "front": "Why can the stomach survive ligation of several of its arteries?",
+   "back": "Its arteries form a continuous anastomotic ring around both curvatures with an extensive submucosal plexus, so it can survive on a single main vessel - which is what allows a gastric conduit to be raised on the right gastroepiploic artery alone.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch5-abdominal-vasculature-card-025",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Coeliac Trunk",
+   "front": "What is a replaced right hepatic artery and why does it matter in cholecystectomy?",
+   "back": "In about one in six people the right hepatic artery arises from the superior mesenteric artery and runs behind and to the right of the bile duct in the hepatoduodenal ligament, close to Calot's triangle, where it can be mistaken for the cystic artery and divided.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch5-abdominal-vasculature-card-026",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Coeliac Trunk",
+   "front": "What is a replaced left hepatic artery and in which operation is it at risk?",
+   "back": "One arising from the left gastric artery and running in the lesser omentum. It is at risk when the lesser omentum is divided during gastrectomy or fundoplication.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch5-abdominal-vasculature-card-027",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Coeliac Trunk",
+   "front": "Which arcades link the coeliac and superior mesenteric territories?",
+   "back": "The anterior and posterior pancreaticoduodenal arcades, joining the gastroduodenal artery above with the inferior pancreaticoduodenal branch of the superior mesenteric artery below; the arc of Buhler is an uncommon direct communication.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch5-abdominal-vasculature-card-028",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Coeliac Trunk",
+   "front": "Why does the coeliac trunk tolerate slow occlusion but not sudden ligation in some patients?",
+   "back": "Slow stenosis allows the pancreaticoduodenal arcades to enlarge and carry retrograde flow from the superior mesenteric artery. Sudden interruption gives no time for this, and if the arcades are small the liver and stomach become ischaemic.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch5-abdominal-vasculature-card-029",
+   "type": "basic",
+   "sectionId": "s3",
+   "deck": "SMA & IMA",
+   "front": "Where does the superior mesenteric artery arise and what does it pass behind and in front of?",
+   "back": "From the aorta at L1, about 1 cm below the coeliac trunk. It passes behind the neck of the pancreas and the splenic vein, and in front of the left renal vein, the uncinate process and the third part of the duodenum.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch5-abdominal-vasculature-card-030",
+   "type": "basic",
+   "sectionId": "s3",
+   "deck": "SMA & IMA",
+   "front": "Which part of the gut does the superior mesenteric artery supply?",
+   "back": "The midgut, from the second part of the duodenum at the ampulla to the junction of the proximal two-thirds and distal third of the transverse colon.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch5-abdominal-vasculature-card-031",
+   "type": "basic",
+   "sectionId": "s3",
+   "deck": "SMA & IMA",
+   "front": "Name the branches of the superior mesenteric artery.",
+   "back": "The inferior pancreaticoduodenal artery, jejunal and ileal branches from its left side, and the ileocolic, right colic and middle colic arteries from its right side.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch5-abdominal-vasculature-card-032",
+   "type": "basic",
+   "sectionId": "s3",
+   "deck": "SMA & IMA",
+   "front": "What is superior mesenteric artery syndrome?",
+   "back": "Compression of the third part of the duodenum in the angle between the aorta and the superior mesenteric artery when the intervening fat pad is lost, as in severe weight loss or after spinal surgery, causing bilious vomiting relieved by lying prone or on the left side.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch5-abdominal-vasculature-card-033",
+   "type": "basic",
+   "sectionId": "s3",
+   "deck": "SMA & IMA",
+   "front": "Compare the mesenteric vessels of the jejunum and the ileum.",
+   "back": "The jejunum has one or two large arcades with long straight vasa recta, and its mesentery has translucent windows; the ileum has three to five tiers of short arcades with short vasa recta and a fat-laden mesentery.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch5-abdominal-vasculature-card-034",
+   "type": "basic",
+   "sectionId": "s3",
+   "deck": "SMA & IMA",
+   "front": "How is that difference used at operation?",
+   "back": "The pattern of arcades and mesenteric fat identifies the proximal from the distal small bowel when a loop is delivered into the wound, which is essential when siting a jejunostomy or judging the length of remaining bowel.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch5-abdominal-vasculature-card-035",
+   "type": "basic",
+   "sectionId": "s3",
+   "deck": "SMA & IMA",
+   "front": "Which artery supplies the appendix and why is gangrene early?",
+   "back": "The appendicular artery, a branch of the ileocolic artery running in the free edge of the mesoappendix. It is an end artery, so thrombosis in appendicitis leads rapidly to gangrene and perforation.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch5-abdominal-vasculature-card-036",
+   "type": "basic",
+   "sectionId": "s3",
+   "deck": "SMA & IMA",
+   "front": "Where does the inferior mesenteric artery arise and what does it supply?",
+   "back": "From the aorta at L3, about 4 cm above the bifurcation. It supplies the hindgut from the distal third of the transverse colon to the upper rectum.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch5-abdominal-vasculature-card-037",
+   "type": "basic",
+   "sectionId": "s3",
+   "deck": "SMA & IMA",
+   "front": "Name the branches of the inferior mesenteric artery.",
+   "back": "The left colic artery, two to four sigmoid arteries, and its continuation as the superior rectal artery.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch5-abdominal-vasculature-card-038",
+   "type": "basic",
+   "sectionId": "s3",
+   "deck": "SMA & IMA",
+   "front": "Describe the blood supply of the rectum.",
+   "back": "The superior rectal artery from the inferior mesenteric artery to the upper and middle rectum, the middle rectal arteries from the internal iliac arteries, and the inferior rectal arteries from the internal pudendal arteries to the anal canal.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch5-abdominal-vasculature-card-039",
+   "type": "basic",
+   "sectionId": "s3",
+   "deck": "SMA & IMA",
+   "front": "Why does the rectal stump survive after ligation of the inferior mesenteric artery?",
+   "back": "The middle and inferior rectal arteries from the internal iliac system anastomose with the superior rectal artery, so the systemic pelvic supply maintains the stump.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch5-abdominal-vasculature-card-040",
+   "type": "basic",
+   "sectionId": "s3",
+   "deck": "SMA & IMA",
+   "front": "What is a high tie of the inferior mesenteric artery and why is it performed?",
+   "back": "Ligation flush with the aorta rather than distal to the origin of the left colic artery. It clears the apical nodes at the origin for accurate staging and gives extra length for a tension-free anastomosis, at the cost of dividing the left colic supply and relying on the marginal artery.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch5-abdominal-vasculature-card-041",
+   "type": "basic",
+   "sectionId": "s3",
+   "deck": "SMA & IMA",
+   "front": "Which nerve plexus is at risk at a high tie of the inferior mesenteric artery?",
+   "back": "The superior hypogastric plexus lying just below the origin on the front of the aorta; injury causes retrograde ejaculation and bladder dysfunction.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch5-abdominal-vasculature-card-042",
+   "type": "basic",
+   "sectionId": "s3",
+   "deck": "SMA & IMA",
+   "front": "Which arteries must be preserved to mobilise the splenic flexure safely?",
+   "back": "The marginal artery along the colonic border, since the middle colic and left colic contributions are usually divided; the flexure survives on the continuity of that marginal arcade.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch5-abdominal-vasculature-card-043",
+   "type": "basic",
+   "sectionId": "s3",
+   "deck": "SMA & IMA",
+   "front": "Explain the vascular anatomy of a right hemicolectomy.",
+   "back": "The ileocolic, right colic and the right branch of the middle colic arteries are divided at their origins from the superior mesenteric artery, with the mesentery taken to include the nodes along them; the ileum is transected where its blood supply is secure.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch5-abdominal-vasculature-card-044",
+   "type": "basic",
+   "sectionId": "s3",
+   "deck": "SMA & IMA",
+   "front": "Why are colonic vasa recta clinically important in diverticular disease?",
+   "back": "The vasa recta pierce the circular muscle at the mesenteric side of the taeniae, creating the points of weakness where mucosa herniates to form diverticula; the same vessel then lies in the dome of the diverticulum and is the source of brisk diverticular bleeding.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch5-abdominal-vasculature-card-045",
+   "type": "basic",
+   "sectionId": "s4",
+   "deck": "Watershed & Collaterals",
+   "front": "What is the marginal artery of Drummond?",
+   "back": "A continuous anastomotic arcade running along the mesenteric border of the colon from the ileocolic artery to the sigmoid arteries, formed by the terminal branches of all the colic arteries and giving off the vasa recta.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch5-abdominal-vasculature-card-046",
+   "type": "basic",
+   "sectionId": "s4",
+   "deck": "Watershed & Collaterals",
+   "front": "What is the arc of Riolan?",
+   "back": "A short central communication between the middle colic branch of the superior mesenteric artery and the left colic branch of the inferior mesenteric artery, also called the meandering mesenteric artery. It enlarges when either trunk is occluded and is a warning sign on angiography.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch5-abdominal-vasculature-card-047",
+   "type": "basic",
+   "sectionId": "s4",
+   "deck": "Watershed & Collaterals",
+   "front": "Where is Griffiths' point and why does it matter?",
+   "back": "At the splenic flexure, where the superior and inferior mesenteric territories meet. The marginal artery is deficient here in a substantial minority of people, making it the commonest site of ischaemic colitis and of anastomotic ischaemia.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch5-abdominal-vasculature-card-048",
+   "type": "basic",
+   "sectionId": "s4",
+   "deck": "Watershed & Collaterals",
+   "front": "Where is Sudeck's point?",
+   "back": "At the rectosigmoid junction, between the last sigmoid artery and the superior rectal artery, the second recognised colonic watershed and a reason to site an anastomosis with care after high ligation.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch5-abdominal-vasculature-card-049",
+   "type": "basic",
+   "sectionId": "s4",
+   "deck": "Watershed & Collaterals",
+   "front": "List the three principal collateral routes that protect the gut from mesenteric occlusion.",
+   "back": "Coeliac to superior mesenteric through the pancreaticoduodenal arcades, superior to inferior mesenteric through the marginal artery and the arc of Riolan, and inferior mesenteric to internal iliac through the superior to middle rectal anastomosis.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch5-abdominal-vasculature-card-050",
+   "type": "basic",
+   "sectionId": "s4",
+   "deck": "Watershed & Collaterals",
+   "front": "Why is chronic mesenteric ischaemia usually symptomatic only when two of the three trunks are diseased?",
+   "back": "The collateral network is rich enough that one occluded trunk is compensated; symptoms of postprandial pain, food fear and weight loss appear once the collateral reserve itself is compromised.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch5-abdominal-vasculature-card-051",
+   "type": "basic",
+   "sectionId": "s4",
+   "deck": "Watershed & Collaterals",
+   "front": "Which segment is affected by an embolus lodging in the superior mesenteric artery, and why is the proximal jejunum often spared?",
+   "back": "An embolus typically impacts just distal to the origin of the middle colic artery, so the proximal jejunum retains its supply while the rest of the midgut infarcts.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch5-abdominal-vasculature-card-052",
+   "type": "basic",
+   "sectionId": "s4",
+   "deck": "Watershed & Collaterals",
+   "front": "Contrast the anatomy of embolic and thrombotic acute mesenteric ischaemia.",
+   "back": "An embolus lodges in a normal artery a few centimetres from the origin, sparing the proximal jejunum; thrombosis occurs on established atheroma at the ostium, so the whole midgut including the proximal jejunum is involved and collaterals are already exhausted.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch5-abdominal-vasculature-card-053",
+   "type": "basic",
+   "sectionId": "s4",
+   "deck": "Watershed & Collaterals",
+   "front": "Why can ischaemic colitis follow open repair of an abdominal aortic aneurysm?",
+   "back": "The inferior mesenteric artery is oversewn during the repair, so the left colon depends on the marginal artery across Griffiths' point; if that arcade is deficient or the internal iliac supply is also compromised, the sigmoid and descending colon become ischaemic.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch5-abdominal-vasculature-card-054",
+   "type": "basic",
+   "sectionId": "s4",
+   "deck": "Watershed & Collaterals",
+   "front": "Which structural feature makes the colonic mucosa the first casualty of hypoperfusion?",
+   "back": "The vasa recta are short end vessels supplying a mucosa with high metabolic demand and a countercurrent villous circulation, so the mucosa infarcts before the muscle layers, giving mucosal sloughing with an intact serosa.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch5-abdominal-vasculature-card-055",
+   "type": "basic",
+   "sectionId": "s4",
+   "deck": "Watershed & Collaterals",
+   "front": "Which two arteries anastomose within the anterior abdominal wall to bypass an aortic coarctation or occlusion?",
+   "back": "The superior epigastric artery from the internal thoracic system and the inferior epigastric artery from the external iliac; with the intercostal and lumbar arteries this provides a systemic collateral route around the obstruction.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch5-abdominal-vasculature-card-056",
+   "type": "basic",
+   "sectionId": "s5",
+   "deck": "Portal Venous System",
+   "front": "How and where is the portal vein formed?",
+   "back": "By the union of the superior mesenteric vein and the splenic vein behind the neck of the pancreas at the level of L2.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch5-abdominal-vasculature-card-057",
+   "type": "basic",
+   "sectionId": "s5",
+   "deck": "Portal Venous System",
+   "front": "How long is the portal vein and where does it run?",
+   "back": "About 8 cm. It ascends behind the first part of the duodenum, then in the free edge of the lesser omentum behind the bile duct and hepatic artery, to divide at the porta hepatis into right and left branches.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch5-abdominal-vasculature-card-058",
+   "type": "basic",
+   "sectionId": "s5",
+   "deck": "Portal Venous System",
+   "front": "Where does the inferior mesenteric vein drain?",
+   "back": "Usually into the splenic vein behind the body of the pancreas; it may join the superior mesenteric vein or the angle between the two.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch5-abdominal-vasculature-card-059",
+   "type": "basic",
+   "sectionId": "s5",
+   "deck": "Portal Venous System",
+   "front": "Name the tributaries of the portal vein itself.",
+   "back": "The left gastric (coronary) vein, the right gastric vein, the cystic veins, the superior pancreaticoduodenal vein and the paraumbilical veins.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch5-abdominal-vasculature-card-060",
+   "type": "basic",
+   "sectionId": "s5",
+   "deck": "Portal Venous System",
+   "front": "What is distinctive about the portal system that explains its clinical behaviour?",
+   "back": "It has no valves and begins and ends in capillaries, so obstruction raises pressure evenly throughout the system and flow can reverse into any communicating channel.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch5-abdominal-vasculature-card-061",
+   "type": "basic",
+   "sectionId": "s5",
+   "deck": "Portal Venous System",
+   "front": "What is the normal portal pressure and what defines portal hypertension?",
+   "back": "Normal portal pressure is about 5 to 10 mmHg; portal hypertension is a sustained rise above about 12 mmHg, or a hepatic venous pressure gradient above 5 mmHg, and varices bleed when the gradient exceeds about 12 mmHg.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch5-abdominal-vasculature-card-062",
+   "type": "basic",
+   "sectionId": "s5",
+   "deck": "Portal Venous System",
+   "front": "Classify portal hypertension anatomically.",
+   "back": "Prehepatic from portal or splenic vein thrombosis, intrahepatic which is presinusoidal in schistosomiasis and sinusoidal in cirrhosis, and posthepatic from hepatic vein occlusion (Budd-Chiari) or constrictive pericarditis.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch5-abdominal-vasculature-card-063",
+   "type": "basic",
+   "sectionId": "s5",
+   "deck": "Portal Venous System",
+   "front": "Why does splenic vein thrombosis cause isolated gastric varices?",
+   "back": "Blood from the spleen is diverted through the short gastric veins into the fundus of the stomach and back to the portal vein through the coronary vein, so fundal varices form with a normal portal pressure - a left-sided portal hypertension curable by splenectomy.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch5-abdominal-vasculature-card-064",
+   "type": "basic",
+   "sectionId": "s5",
+   "deck": "Portal Venous System",
+   "front": "Describe the hepatic venous drainage of the liver.",
+   "back": "Three main hepatic veins - right, middle and left - run within the intersegmental planes and drain directly into the inferior vena cava just below the diaphragm; they have no extrahepatic course of any length.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch5-abdominal-vasculature-card-065",
+   "type": "basic",
+   "sectionId": "s5",
+   "deck": "Portal Venous System",
+   "front": "Why does the caudate lobe often hypertrophy in Budd-Chiari syndrome?",
+   "back": "It drains by several small veins directly into the inferior vena cava rather than through the three main hepatic veins, so it retains its outflow and hypertrophies while the rest of the liver congests.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch5-abdominal-vasculature-card-066",
+   "type": "basic",
+   "sectionId": "s5",
+   "deck": "Portal Venous System",
+   "front": "What is the anatomical basis of a TIPS procedure?",
+   "back": "A stented tract is created through the liver parenchyma between a hepatic vein and a large intrahepatic portal vein branch, exploiting the fact that both systems run together within the liver, so portal blood is shunted directly into the systemic circulation.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch5-abdominal-vasculature-card-067",
+   "type": "basic",
+   "sectionId": "s5",
+   "deck": "Portal Venous System",
+   "front": "What is the anatomical principle of a distal splenorenal (Warren) shunt?",
+   "back": "The splenic vein is divided and its distal end anastomosed to the left renal vein, decompressing the gastro-oesophageal varices through the short gastric veins while leaving portal flow to the liver intact.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch5-abdominal-vasculature-card-068",
+   "type": "basic",
+   "sectionId": "s5",
+   "deck": "Portal Venous System",
+   "front": "Which vein is used to gain portal access in an emergency, and what is its relation at the porta?",
+   "back": "The portal vein itself, approached through the free edge of the lesser omentum where it lies posterior to the bile duct and hepatic artery, controlled by the Pringle manoeuvre.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch5-abdominal-vasculature-card-069",
+   "type": "basic",
+   "sectionId": "s6",
+   "deck": "Portosystemic Anastomoses",
+   "front": "Name the site and the veins of the oesophageal portosystemic anastomosis.",
+   "back": "At the lower third of the oesophagus, between the oesophageal branches of the left gastric (coronary) vein of the portal system and the oesophageal tributaries of the azygos vein of the systemic system.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch5-abdominal-vasculature-card-070",
+   "type": "basic",
+   "sectionId": "s6",
+   "deck": "Portosystemic Anastomoses",
+   "front": "Why do oesophageal varices bleed so severely?",
+   "back": "The submucosal veins of the lower oesophagus lie immediately beneath a thin mucosa with no supporting tissue, so as they enlarge they are exposed to reflux and to mechanical trauma and rupture into the lumen under portal pressure.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch5-abdominal-vasculature-card-071",
+   "type": "basic",
+   "sectionId": "s6",
+   "deck": "Portosystemic Anastomoses",
+   "front": "Name the site and the veins of the anorectal portosystemic anastomosis.",
+   "back": "At the anal canal, between the superior rectal vein of the portal system and the middle and inferior rectal veins draining into the internal iliac and internal pudendal veins.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch5-abdominal-vasculature-card-072",
+   "type": "basic",
+   "sectionId": "s6",
+   "deck": "Portosystemic Anastomoses",
+   "front": "Why are haemorrhoids not caused by portal hypertension?",
+   "back": "Haemorrhoids are enlargements of the normal anal cushions supplied by arteriovenous communications above the dentate line. Portal hypertension instead produces anorectal varices, which are distinct dilated veins seen higher in the rectum.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch5-abdominal-vasculature-card-073",
+   "type": "basic",
+   "sectionId": "s6",
+   "deck": "Portosystemic Anastomoses",
+   "front": "Name the site and the veins of the paraumbilical portosystemic anastomosis.",
+   "back": "At the umbilicus, between the paraumbilical veins running in the falciform ligament with the ligamentum teres and the superficial epigastric and thoraco-epigastric veins of the abdominal wall.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch5-abdominal-vasculature-card-074",
+   "type": "basic",
+   "sectionId": "s6",
+   "deck": "Portosystemic Anastomoses",
+   "front": "What is Cruveilhier-Baumgarten syndrome?",
+   "back": "A venous hum, with or without a thrill, heard over a large recanalised paraumbilical collateral at the umbilicus in portal hypertension.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch5-abdominal-vasculature-card-075",
+   "type": "basic",
+   "sectionId": "s6",
+   "deck": "Portosystemic Anastomoses",
+   "front": "Name the retroperitoneal portosystemic anastomoses.",
+   "back": "The veins of Retzius, between the veins of the ascending and descending colon, duodenum and pancreas and the lumbar, renal and phrenic veins of the posterior abdominal wall.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch5-abdominal-vasculature-card-076",
+   "type": "basic",
+   "sectionId": "s6",
+   "deck": "Portosystemic Anastomoses",
+   "front": "What is the bare area anastomosis of Sappey?",
+   "back": "Communications between small portal veins in the bare area of the liver and the phrenic veins of the diaphragm, one of the deep collaterals that decompresses the portal system silently.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch5-abdominal-vasculature-card-077",
+   "type": "basic",
+   "sectionId": "s6",
+   "deck": "Portosystemic Anastomoses",
+   "front": "Which portosystemic communication explains stomal varices?",
+   "back": "Where bowel mucosa meets skin at an ileostomy or colostomy, portal tributaries of the bowel meet systemic veins of the abdominal wall; in portal hypertension these engorge and bleed profusely from around the stoma.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch5-abdominal-vasculature-card-078",
+   "type": "basic",
+   "sectionId": "s6",
+   "deck": "Portosystemic Anastomoses",
+   "front": "Which portosystemic sites are clinically important, and which are silent?",
+   "back": "Oesophageal and anorectal varices, caput medusae and stomal varices are clinically evident; the retroperitoneal veins of Retzius, the bare area veins of Sappey and a patent ductus venosus decompress the system without visible signs.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch5-abdominal-vasculature-card-079",
+   "type": "basic",
+   "sectionId": "s6",
+   "deck": "Portosystemic Anastomoses",
+   "front": "Why does portal hypertension cause splenomegaly, and what is Banti's syndrome?",
+   "back": "Congestion of the splenic vein enlarges the spleen and causes hypersplenism with pancytopenia; the association of congestive splenomegaly with hypersplenism in portal hypertension is called Banti's syndrome.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch5-abdominal-vasculature-card-080",
+   "type": "basic",
+   "sectionId": "s6",
+   "deck": "Portosystemic Anastomoses",
+   "front": "Why does a portosystemic shunt precipitate encephalopathy?",
+   "back": "Nitrogenous products absorbed from the gut bypass hepatic detoxification and reach the systemic circulation directly, in proportion to how much portal flow is diverted - which is why selective shunts are preferred.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch5-abdominal-vasculature-card-081",
+   "type": "cloze",
+   "sectionId": "s1",
+   "deck": "Aorta & Branches",
+   "cloze": "The abdominal aorta bifurcates at the level of {{c1::L4}}.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch5-abdominal-vasculature-card-082",
+   "type": "cloze",
+   "sectionId": "s1",
+   "deck": "Aorta & Branches",
+   "cloze": "The coeliac trunk arises at the level of {{c1::T12}}.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch5-abdominal-vasculature-card-083",
+   "type": "cloze",
+   "sectionId": "s1",
+   "deck": "Aorta & Branches",
+   "cloze": "The superior mesenteric artery arises at the level of {{c1::L1}}.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch5-abdominal-vasculature-card-084",
+   "type": "cloze",
+   "sectionId": "s1",
+   "deck": "Aorta & Branches",
+   "cloze": "The inferior mesenteric artery arises at the level of {{c1::L3}}.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch5-abdominal-vasculature-card-085",
+   "type": "cloze",
+   "sectionId": "s1",
+   "deck": "Aorta & Branches",
+   "cloze": "The left renal vein crosses {{c1::anterior}} to the aorta below the origin of the superior mesenteric artery.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch5-abdominal-vasculature-card-086",
+   "type": "cloze",
+   "sectionId": "s1",
+   "deck": "Aorta & Branches",
+   "cloze": "Compression of the left renal vein between the aorta and the superior mesenteric artery is the {{c1::nutcracker}} phenomenon.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch5-abdominal-vasculature-card-087",
+   "type": "cloze",
+   "sectionId": "s2",
+   "deck": "Coeliac Trunk",
+   "cloze": "The three branches of the coeliac trunk are the left gastric, splenic and {{c1::common hepatic}} arteries.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch5-abdominal-vasculature-card-088",
+   "type": "cloze",
+   "sectionId": "s2",
+   "deck": "Coeliac Trunk",
+   "cloze": "A posterior duodenal ulcer bleeds from the {{c1::gastroduodenal}} artery.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch5-abdominal-vasculature-card-089",
+   "type": "cloze",
+   "sectionId": "s2",
+   "deck": "Coeliac Trunk",
+   "cloze": "A replaced right hepatic artery most often arises from the {{c1::superior mesenteric artery}}.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch5-abdominal-vasculature-card-090",
+   "type": "cloze",
+   "sectionId": "s3",
+   "deck": "SMA & IMA",
+   "cloze": "The midgut supply ends at the junction of the proximal two-thirds and distal third of the {{c1::transverse colon}}.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch5-abdominal-vasculature-card-091",
+   "type": "cloze",
+   "sectionId": "s3",
+   "deck": "SMA & IMA",
+   "cloze": "The appendicular artery is a branch of the {{c1::ileocolic}} artery.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch5-abdominal-vasculature-card-092",
+   "type": "cloze",
+   "sectionId": "s3",
+   "deck": "SMA & IMA",
+   "cloze": "The inferior mesenteric artery continues into the pelvis as the {{c1::superior rectal artery}}.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch5-abdominal-vasculature-card-093",
+   "type": "cloze",
+   "sectionId": "s3",
+   "deck": "SMA & IMA",
+   "cloze": "Colonic diverticula form where the {{c1::vasa recta}} pierce the circular muscle.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch5-abdominal-vasculature-card-094",
+   "type": "cloze",
+   "sectionId": "s4",
+   "deck": "Watershed & Collaterals",
+   "cloze": "The continuous anastomotic arcade along the mesenteric border of the colon is the marginal artery of {{c1::Drummond}}.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch5-abdominal-vasculature-card-095",
+   "type": "cloze",
+   "sectionId": "s4",
+   "deck": "Watershed & Collaterals",
+   "cloze": "The central communication between the middle colic and left colic arteries is the arc of {{c1::Riolan}}.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch5-abdominal-vasculature-card-096",
+   "type": "cloze",
+   "sectionId": "s4",
+   "deck": "Watershed & Collaterals",
+   "cloze": "The colonic watershed at the splenic flexure is called {{c1::Griffiths' point}}.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch5-abdominal-vasculature-card-097",
+   "type": "cloze",
+   "sectionId": "s4",
+   "deck": "Watershed & Collaterals",
+   "cloze": "The watershed at the rectosigmoid junction is called {{c1::Sudeck's point}}.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch5-abdominal-vasculature-card-098",
+   "type": "cloze",
+   "sectionId": "s5",
+   "deck": "Portal Venous System",
+   "cloze": "The portal vein is formed behind the neck of the pancreas by the union of the splenic vein and the {{c1::superior mesenteric vein}}.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch5-abdominal-vasculature-card-099",
+   "type": "cloze",
+   "sectionId": "s5",
+   "deck": "Portal Venous System",
+   "cloze": "The inferior mesenteric vein usually drains into the {{c1::splenic vein}}.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch5-abdominal-vasculature-card-100",
+   "type": "cloze",
+   "sectionId": "s5",
+   "deck": "Portal Venous System",
+   "cloze": "Isolated gastric varices with a normal portal pressure suggest {{c1::splenic vein thrombosis}}.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch5-abdominal-vasculature-card-101",
+   "type": "cloze",
+   "sectionId": "s6",
+   "deck": "Portosystemic Anastomoses",
+   "cloze": "Oesophageal varices form between the left gastric vein and the {{c1::azygos}} venous system.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch5-abdominal-vasculature-card-102",
+   "type": "cloze",
+   "sectionId": "s6",
+   "deck": "Portosystemic Anastomoses",
+   "cloze": "Recanalised paraumbilical veins produce {{c1::caput medusae}}.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch5-abdominal-vasculature-card-103",
+   "type": "cloze",
+   "sectionId": "s6",
+   "deck": "Portosystemic Anastomoses",
+   "cloze": "The retroperitoneal portosystemic collaterals are the veins of {{c1::Retzius}}.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch5-abdominal-vasculature-card-104",
+   "type": "basic",
+   "sectionId": "s8",
+   "deck": "Nodal Stations & Lymphatics",
+   "front": "Name the three groups of pre-aortic nodes and their territories.",
+   "back": "Coeliac nodes draining the foregut and its derivatives, superior mesenteric nodes draining the midgut, and inferior mesenteric nodes draining the hindgut - each set receiving from the outlying nodes along the corresponding artery.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch5-abdominal-vasculature-card-105",
+   "type": "basic",
+   "sectionId": "s8",
+   "deck": "Nodal Stations & Lymphatics",
+   "front": "Describe the chain of nodes along a gut artery from bowel to aorta.",
+   "back": "Epicolic on the bowel wall, paracolic along the marginal artery, intermediate along the named colic branches, and principal or apical nodes at the origin of the trunk from the aorta - the sequence that defines the extent of a cancer resection.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch5-abdominal-vasculature-card-106",
+   "type": "basic",
+   "sectionId": "s8",
+   "deck": "Nodal Stations & Lymphatics",
+   "front": "Where do the lateral aortic (para-aortic) nodes drain, and what do they receive?",
+   "back": "They receive the kidneys, suprarenals, gonads, the abdominal wall deep lymphatics and the iliac chains, and drain by the lumbar trunks into the cisterna chyli.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch5-abdominal-vasculature-card-107",
+   "type": "basic",
+   "sectionId": "s8",
+   "deck": "Nodal Stations & Lymphatics",
+   "front": "Where is the cisterna chyli and what forms it?",
+   "back": "A dilated lymphatic sac in front of L1 and L2, to the right of the aorta and behind the right crus, formed by the two lumbar trunks and the intestinal trunk; it continues as the thoracic duct through the aortic opening.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch5-abdominal-vasculature-card-108",
+   "type": "basic",
+   "sectionId": "s8",
+   "deck": "Nodal Stations & Lymphatics",
+   "front": "Why does chylous ascites follow extensive retroperitoneal dissection?",
+   "back": "The lumbar and intestinal lymphatic trunks and the cisterna chyli lie directly on the aorta at L1 to L2; division without ligation lets chyle leak into the peritoneal cavity.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch5-abdominal-vasculature-card-109",
+   "type": "basic",
+   "sectionId": "s5",
+   "deck": "Portal Venous System",
+   "front": "What is the gastrocolic trunk of Henle and why does it matter in right hemicolectomy?",
+   "back": "A short venous trunk on the anterior surface of the pancreatic head formed by the right gastroepiploic, the superior right colic and the anterior superior pancreaticoduodenal veins before entering the superior mesenteric vein. It tears easily during mobilisation of the hepatic flexure and bleeds torrentially.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch5-abdominal-vasculature-card-110",
+   "type": "basic",
+   "sectionId": "s5",
+   "deck": "Portal Venous System",
+   "front": "What are the relations of the superior mesenteric vein to its artery?",
+   "back": "The vein lies to the right of the artery throughout the root of the mesentery; a reversed relationship on imaging is a sign of malrotation.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch5-abdominal-vasculature-card-111",
+   "type": "basic",
+   "sectionId": "s5",
+   "deck": "Portal Venous System",
+   "front": "Which veins drain the pancreas and why does that matter in pancreatic cancer?",
+   "back": "Small pancreatic veins drain directly into the splenic and superior mesenteric veins and the portal vein behind the neck of the gland, so a tumour of the head or neck invades the portal-superior mesenteric confluence early and determines resectability.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch5-abdominal-vasculature-card-112",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Aorta & Branches",
+   "front": "Name the tributaries of the inferior vena cava.",
+   "back": "The common iliac veins, lumbar veins, right gonadal vein, renal veins, right suprarenal vein, inferior phrenic veins and the hepatic veins.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch5-abdominal-vasculature-card-113",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Aorta & Branches",
+   "front": "What is the ascending lumbar vein and why is it clinically important?",
+   "back": "A longitudinal channel connecting the lumbar veins on each side, joining the subcostal vein to form the azygos on the right and the hemiazygos on the left. It is a major collateral in inferior vena caval obstruction and can be avulsed during left renal vein mobilisation.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch5-abdominal-vasculature-card-114",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Aorta & Branches",
+   "front": "Which arteries supply the ureter along its course?",
+   "back": "The renal artery above, then branches from the gonadal artery, the aorta, the common and internal iliac arteries and the vesical arteries below; they reach it from the medial side in the abdomen and the lateral side in the pelvis, and the longitudinal anastomosis in its adventitia is why the ureter must be handled with its sheath.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch5-abdominal-vasculature-card-115",
+   "type": "basic",
+   "sectionId": "s4",
+   "deck": "Watershed & Collaterals",
+   "front": "Why is the inferior mesenteric artery sacrificed with impunity in most aortic surgery but not all?",
+   "back": "Because the marginal artery and the superior to middle rectal anastomosis usually maintain the left colon. It cannot be sacrificed safely when the superior mesenteric artery is stenosed, when the marginal artery is deficient at Griffiths' point, or when both internal iliac arteries are occluded, and in those cases it should be reimplanted.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch5-abdominal-vasculature-card-116",
+   "type": "basic",
+   "sectionId": "s4",
+   "deck": "Watershed & Collaterals",
+   "front": "How does the anatomy of the mesenteric circulation explain pain out of proportion to signs in acute ischaemia?",
+   "back": "Early ischaemia affects the mucosa and stimulates only visceral afferents, giving severe poorly localised midline pain with a soft abdomen; peritoneal signs appear only when transmural infarction reaches the parietal peritoneum, by which time the bowel is already dead.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch5-abdominal-vasculature-card-117",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Coeliac Trunk",
+   "front": "Which arteries would be preserved to maintain the stomach after division of the left gastric, short gastric and left gastroepiploic vessels?",
+   "back": "The right gastric and right gastroepiploic arteries, which is the standard pedicle arrangement for a gastric conduit.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch5-abdominal-vasculature-card-118",
+   "type": "cloze",
+   "sectionId": "s8",
+   "deck": "Nodal Stations & Lymphatics",
+   "cloze": "The nodes at the origin of a gut artery from the aorta are the {{c1::principal (apical)}} nodes.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch5-abdominal-vasculature-card-119",
+   "type": "cloze",
+   "sectionId": "s8",
+   "deck": "Nodal Stations & Lymphatics",
+   "cloze": "The cisterna chyli lies in front of {{c1::L1 and L2}}, to the right of the aorta.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch5-abdominal-vasculature-card-120",
+   "type": "cloze",
+   "sectionId": "s5",
+   "deck": "Portal Venous System",
+   "cloze": "The venous trunk on the head of the pancreas formed by the right gastroepiploic and superior right colic veins is the gastrocolic trunk of {{c1::Henle}}.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch5-abdominal-vasculature-card-121",
+   "type": "cloze",
+   "sectionId": "s5",
+   "deck": "Portal Venous System",
+   "cloze": "The superior mesenteric vein normally lies to the {{c1::right}} of its artery.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch5-abdominal-vasculature-card-122",
+   "type": "cloze",
+   "sectionId": "s1",
+   "deck": "Aorta & Branches",
+   "cloze": "The right gonadal vein drains into the {{c1::inferior vena cava}}.",
+   "difficulty": 1
+  }
+ ],
+ "mcqs": [
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sana-ch5-abdominal-vasculature-mcq-001",
+   "type": "single",
+   "sectionId": "s7",
+   "difficulty": 2,
+   "highYield": true,
+   "stem": "Three days after open repair of an infrarenal aortic aneurysm a patient passes bloody diarrhoea and has left iliac fossa tenderness. Which anatomical explanation is most likely?",
+   "options": [
+    {
+     "id": "a",
+     "text": "Occlusion of the coeliac trunk by the aortic clamp",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "b",
+     "text": "Loss of the inferior mesenteric artery with a deficient marginal artery at Griffiths' point",
+     "correct": true,
+     "why": "Key - B) Loss of the inferior mesenteric artery with a deficient marginal artery at Griffiths' point. The inferior mesenteric artery is sacrificed at repair, so the left colon depends on flow across the splenic flexure watershed; where the marginal artery is deficient at Griffiths' point, ischaemic colitis follows.\n\nWhy the others fail:\nA) Occlusion of the coeliac trunk by the aortic clamp - The coeliac trunk arises above the clamp in an infrarenal repair and supplies the foregut, which would not give left colonic symptoms.\nC) Embolisation of the superior mesenteric artery - A superior mesenteric embolus would infarct the small bowel and right colon with profound systemic collapse, not isolated left-sided colitis.\nD) Thrombosis of the portal vein - Portal vein thrombosis causes portal hypertension and does not produce segmental colonic ischaemia in this way."
+    },
+    {
+     "id": "c",
+     "text": "Embolisation of the superior mesenteric artery",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "d",
+     "text": "Thrombosis of the portal vein",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    }
+   ],
+   "explanation": [
+    "Key - B) Loss of the inferior mesenteric artery with a deficient marginal artery at Griffiths' point. The inferior mesenteric artery is sacrificed at repair, so the left colon depends on flow across the splenic flexure watershed; where the marginal artery is deficient at Griffiths' point, ischaemic colitis follows.\n\nWhy the others fail:\nA) Occlusion of the coeliac trunk by the aortic clamp - The coeliac trunk arises above the clamp in an infrarenal repair and supplies the foregut, which would not give left colonic symptoms.\nC) Embolisation of the superior mesenteric artery - A superior mesenteric embolus would infarct the small bowel and right colon with profound systemic collapse, not isolated left-sided colitis.\nD) Thrombosis of the portal vein - Portal vein thrombosis causes portal hypertension and does not produce segmental colonic ischaemia in this way."
+   ],
+   "keyFacts": [
+    "Key - B) Loss of the inferior mesenteric artery with a deficient marginal artery at Griffiths' point. The inferior mesenteric artery is sacrificed at repair, so the left colon depends on flow across the splenic flexure watershed; where the marginal artery is deficient at Griffiths' point, ischaemic colitis follows.\n\nWhy the others fail:\nA) Occlusion of the coeliac trunk by the aortic clamp - The coeliac trunk arises above the clamp in an infrarenal repair and supplies the foregut, which would not give left colonic symptoms.\nC) Embolisation of the superior mesenteric artery - A superior mesenteric embolus would infarct the small bowel and right colon with profound systemic collapse, not isolated left-sided colitis.\nD) Thrombosis of the portal vein - Portal vein thrombosis causes portal hypertension and does not produce segmental colonic ischaemia in this way."
+   ],
+   "teachingPoint": "Key - B) Loss of the inferior mesenteric artery with a deficient marginal artery at Griffiths' point. The inferior mesenteric artery is sacrificed at repair, so the left colon depends on flow across the splenic flexure watershed; where the marginal artery is deficient at Griffiths' point, ischaemic colitis follows.\n\nWhy the others fail:\nA) Occlusion of the coeliac trunk by the aortic clamp - The coeliac trunk arises above the clamp in an infrarenal repair and supplies the foregut, which would not give left colonic symptoms.\nC) Embolisation of the superior mesenteric artery - A superior mesenteric embolus would infarct the small bowel and right colon with profound systemic collapse, not isolated left-sided colitis.\nD) Thrombosis of the portal vein - Portal vein thrombosis causes portal hypertension and does not produce segmental colonic ischaemia in this way."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sana-ch5-abdominal-vasculature-mcq-002",
+   "type": "single",
+   "sectionId": "s7",
+   "difficulty": 2,
+   "highYield": true,
+   "stem": "A patient with a chronic posterior duodenal ulcer has massive haematemesis. Which vessel is eroded and where does it lie?",
+   "options": [
+    {
+     "id": "a",
+     "text": "Left gastric artery, on the lesser curvature",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "b",
+     "text": "Gastroduodenal artery, behind the first part of the duodenum",
+     "correct": true,
+     "why": "Key - B) Gastroduodenal artery, behind the first part of the duodenum. The gastroduodenal artery runs immediately behind the first part of the duodenum, so a posterior ulcer erodes it and the bleeding is arterial and severe.\n\nWhy the others fail:\nA) Left gastric artery, on the lesser curvature - The left gastric artery lies on the lesser curvature within the lesser omentum and is not the vessel behind the duodenal cap.\nC) Superior pancreaticoduodenal artery, in the head of the pancreas - The superior pancreaticoduodenal artery is a branch of the gastroduodenal artery and is a smaller contributor rather than the classic vessel named.\nD) Right gastroepiploic artery, on the greater curvature - The right gastroepiploic artery runs along the greater curvature in the greater omentum, away from the posterior duodenal wall."
+    },
+    {
+     "id": "c",
+     "text": "Superior pancreaticoduodenal artery, in the head of the pancreas",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "d",
+     "text": "Right gastroepiploic artery, on the greater curvature",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    }
+   ],
+   "explanation": [
+    "Key - B) Gastroduodenal artery, behind the first part of the duodenum. The gastroduodenal artery runs immediately behind the first part of the duodenum, so a posterior ulcer erodes it and the bleeding is arterial and severe.\n\nWhy the others fail:\nA) Left gastric artery, on the lesser curvature - The left gastric artery lies on the lesser curvature within the lesser omentum and is not the vessel behind the duodenal cap.\nC) Superior pancreaticoduodenal artery, in the head of the pancreas - The superior pancreaticoduodenal artery is a branch of the gastroduodenal artery and is a smaller contributor rather than the classic vessel named.\nD) Right gastroepiploic artery, on the greater curvature - The right gastroepiploic artery runs along the greater curvature in the greater omentum, away from the posterior duodenal wall."
+   ],
+   "keyFacts": [
+    "Key - B) Gastroduodenal artery, behind the first part of the duodenum. The gastroduodenal artery runs immediately behind the first part of the duodenum, so a posterior ulcer erodes it and the bleeding is arterial and severe.\n\nWhy the others fail:\nA) Left gastric artery, on the lesser curvature - The left gastric artery lies on the lesser curvature within the lesser omentum and is not the vessel behind the duodenal cap.\nC) Superior pancreaticoduodenal artery, in the head of the pancreas - The superior pancreaticoduodenal artery is a branch of the gastroduodenal artery and is a smaller contributor rather than the classic vessel named.\nD) Right gastroepiploic artery, on the greater curvature - The right gastroepiploic artery runs along the greater curvature in the greater omentum, away from the posterior duodenal wall."
+   ],
+   "teachingPoint": "Key - B) Gastroduodenal artery, behind the first part of the duodenum. The gastroduodenal artery runs immediately behind the first part of the duodenum, so a posterior ulcer erodes it and the bleeding is arterial and severe.\n\nWhy the others fail:\nA) Left gastric artery, on the lesser curvature - The left gastric artery lies on the lesser curvature within the lesser omentum and is not the vessel behind the duodenal cap.\nC) Superior pancreaticoduodenal artery, in the head of the pancreas - The superior pancreaticoduodenal artery is a branch of the gastroduodenal artery and is a smaller contributor rather than the classic vessel named.\nD) Right gastroepiploic artery, on the greater curvature - The right gastroepiploic artery runs along the greater curvature in the greater omentum, away from the posterior duodenal wall."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sana-ch5-abdominal-vasculature-mcq-003",
+   "type": "single",
+   "sectionId": "s7",
+   "difficulty": 2,
+   "highYield": true,
+   "stem": "A patient with cirrhosis bleeds from oesophageal varices. Which venous connection is responsible?",
+   "options": [
+    {
+     "id": "a",
+     "text": "Superior rectal to middle rectal veins",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "b",
+     "text": "Paraumbilical to superficial epigastric veins",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "c",
+     "text": "Left gastric to oesophageal tributaries of the azygos vein",
+     "correct": true,
+     "why": "Key - C) Left gastric to oesophageal tributaries of the azygos vein. The oesophageal branches of the left gastric vein communicate with the oesophageal tributaries of the azygos system, and it is these submucosal channels in the lower oesophagus that become varices and bleed.\n\nWhy the others fail:\nA) Superior rectal to middle rectal veins - The rectal anastomosis produces anorectal varices, not oesophageal ones.\nB) Paraumbilical to superficial epigastric veins - The paraumbilical connection produces caput medusae on the abdominal wall.\nD) Splenic to left renal vein - A splenorenal communication is a surgically created or spontaneous deep shunt and is not the site of variceal bleeding."
+    },
+    {
+     "id": "d",
+     "text": "Splenic to left renal vein",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    }
+   ],
+   "explanation": [
+    "Key - C) Left gastric to oesophageal tributaries of the azygos vein. The oesophageal branches of the left gastric vein communicate with the oesophageal tributaries of the azygos system, and it is these submucosal channels in the lower oesophagus that become varices and bleed.\n\nWhy the others fail:\nA) Superior rectal to middle rectal veins - The rectal anastomosis produces anorectal varices, not oesophageal ones.\nB) Paraumbilical to superficial epigastric veins - The paraumbilical connection produces caput medusae on the abdominal wall.\nD) Splenic to left renal vein - A splenorenal communication is a surgically created or spontaneous deep shunt and is not the site of variceal bleeding."
+   ],
+   "keyFacts": [
+    "Key - C) Left gastric to oesophageal tributaries of the azygos vein. The oesophageal branches of the left gastric vein communicate with the oesophageal tributaries of the azygos system, and it is these submucosal channels in the lower oesophagus that become varices and bleed.\n\nWhy the others fail:\nA) Superior rectal to middle rectal veins - The rectal anastomosis produces anorectal varices, not oesophageal ones.\nB) Paraumbilical to superficial epigastric veins - The paraumbilical connection produces caput medusae on the abdominal wall.\nD) Splenic to left renal vein - A splenorenal communication is a surgically created or spontaneous deep shunt and is not the site of variceal bleeding."
+   ],
+   "teachingPoint": "Key - C) Left gastric to oesophageal tributaries of the azygos vein. The oesophageal branches of the left gastric vein communicate with the oesophageal tributaries of the azygos system, and it is these submucosal channels in the lower oesophagus that become varices and bleed.\n\nWhy the others fail:\nA) Superior rectal to middle rectal veins - The rectal anastomosis produces anorectal varices, not oesophageal ones.\nB) Paraumbilical to superficial epigastric veins - The paraumbilical connection produces caput medusae on the abdominal wall.\nD) Splenic to left renal vein - A splenorenal communication is a surgically created or spontaneous deep shunt and is not the site of variceal bleeding."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sana-ch5-abdominal-vasculature-mcq-004",
+   "type": "single",
+   "sectionId": "s7",
+   "difficulty": 2,
+   "highYield": true,
+   "stem": "A man has isolated gastric fundal varices, a large spleen, and a normal liver on biopsy with normal portal pressure. What is the anatomical diagnosis and treatment?",
+   "options": [
+    {
+     "id": "a",
+     "text": "Cirrhosis - treat with beta blockade",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "b",
+     "text": "Splenic vein thrombosis - treat with splenectomy",
+     "correct": true,
+     "why": "Key - B) Splenic vein thrombosis - treat with splenectomy. Splenic vein occlusion diverts splenic outflow through the short gastric veins into the fundus, producing isolated fundal varices with normal portal pressure - so-called left-sided portal hypertension, cured by splenectomy.\n\nWhy the others fail:\nA) Cirrhosis - treat with beta blockade - Cirrhosis is excluded by the normal biopsy and normal portal pressure.\nC) Budd-Chiari syndrome - treat with anticoagulation - Budd-Chiari syndrome obstructs hepatic venous outflow and raises portal pressure with a congested liver, which is not the case here.\nD) Portal vein thrombosis - treat with a mesocaval shunt - Portal vein thrombosis raises portal pressure and produces oesophageal as well as gastric varices."
+    },
+    {
+     "id": "c",
+     "text": "Budd-Chiari syndrome - treat with anticoagulation",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "d",
+     "text": "Portal vein thrombosis - treat with a mesocaval shunt",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    }
+   ],
+   "explanation": [
+    "Key - B) Splenic vein thrombosis - treat with splenectomy. Splenic vein occlusion diverts splenic outflow through the short gastric veins into the fundus, producing isolated fundal varices with normal portal pressure - so-called left-sided portal hypertension, cured by splenectomy.\n\nWhy the others fail:\nA) Cirrhosis - treat with beta blockade - Cirrhosis is excluded by the normal biopsy and normal portal pressure.\nC) Budd-Chiari syndrome - treat with anticoagulation - Budd-Chiari syndrome obstructs hepatic venous outflow and raises portal pressure with a congested liver, which is not the case here.\nD) Portal vein thrombosis - treat with a mesocaval shunt - Portal vein thrombosis raises portal pressure and produces oesophageal as well as gastric varices."
+   ],
+   "keyFacts": [
+    "Key - B) Splenic vein thrombosis - treat with splenectomy. Splenic vein occlusion diverts splenic outflow through the short gastric veins into the fundus, producing isolated fundal varices with normal portal pressure - so-called left-sided portal hypertension, cured by splenectomy.\n\nWhy the others fail:\nA) Cirrhosis - treat with beta blockade - Cirrhosis is excluded by the normal biopsy and normal portal pressure.\nC) Budd-Chiari syndrome - treat with anticoagulation - Budd-Chiari syndrome obstructs hepatic venous outflow and raises portal pressure with a congested liver, which is not the case here.\nD) Portal vein thrombosis - treat with a mesocaval shunt - Portal vein thrombosis raises portal pressure and produces oesophageal as well as gastric varices."
+   ],
+   "teachingPoint": "Key - B) Splenic vein thrombosis - treat with splenectomy. Splenic vein occlusion diverts splenic outflow through the short gastric veins into the fundus, producing isolated fundal varices with normal portal pressure - so-called left-sided portal hypertension, cured by splenectomy.\n\nWhy the others fail:\nA) Cirrhosis - treat with beta blockade - Cirrhosis is excluded by the normal biopsy and normal portal pressure.\nC) Budd-Chiari syndrome - treat with anticoagulation - Budd-Chiari syndrome obstructs hepatic venous outflow and raises portal pressure with a congested liver, which is not the case here.\nD) Portal vein thrombosis - treat with a mesocaval shunt - Portal vein thrombosis raises portal pressure and produces oesophageal as well as gastric varices."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sana-ch5-abdominal-vasculature-mcq-005",
+   "type": "single",
+   "sectionId": "s7",
+   "difficulty": 2,
+   "highYield": true,
+   "stem": "An elderly man in atrial fibrillation has sudden severe abdominal pain out of proportion to the physical signs. At laparotomy the jejunum for the first 40 cm is viable but the remaining small bowel and right colon are infarcted. What has happened?",
+   "options": [
+    {
+     "id": "a",
+     "text": "Thrombosis at the origin of the superior mesenteric artery",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "b",
+     "text": "Embolus lodging just distal to the origin of the middle colic artery",
+     "correct": true,
+     "why": "Key - B) Embolus lodging just distal to the origin of the middle colic artery. An embolus from a fibrillating atrium typically lodges a few centimetres along the artery just beyond the middle colic origin, so the proximal jejunal branches are spared while the rest of the midgut infarcts.\n\nWhy the others fail:\nA) Thrombosis at the origin of the superior mesenteric artery - Ostial thrombosis on atheroma would infarct the whole midgut including the proximal jejunum.\nC) Inferior mesenteric artery occlusion - Inferior mesenteric occlusion affects the left colon, not the small bowel.\nD) Non-occlusive mesenteric ischaemia from low cardiac output - Non-occlusive ischaemia produces patchy segmental damage, usually most marked at the watershed areas, rather than this clean proximal demarcation."
+    },
+    {
+     "id": "c",
+     "text": "Inferior mesenteric artery occlusion",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "d",
+     "text": "Non-occlusive mesenteric ischaemia from low cardiac output",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    }
+   ],
+   "explanation": [
+    "Key - B) Embolus lodging just distal to the origin of the middle colic artery. An embolus from a fibrillating atrium typically lodges a few centimetres along the artery just beyond the middle colic origin, so the proximal jejunal branches are spared while the rest of the midgut infarcts.\n\nWhy the others fail:\nA) Thrombosis at the origin of the superior mesenteric artery - Ostial thrombosis on atheroma would infarct the whole midgut including the proximal jejunum.\nC) Inferior mesenteric artery occlusion - Inferior mesenteric occlusion affects the left colon, not the small bowel.\nD) Non-occlusive mesenteric ischaemia from low cardiac output - Non-occlusive ischaemia produces patchy segmental damage, usually most marked at the watershed areas, rather than this clean proximal demarcation."
+   ],
+   "keyFacts": [
+    "Key - B) Embolus lodging just distal to the origin of the middle colic artery. An embolus from a fibrillating atrium typically lodges a few centimetres along the artery just beyond the middle colic origin, so the proximal jejunal branches are spared while the rest of the midgut infarcts.\n\nWhy the others fail:\nA) Thrombosis at the origin of the superior mesenteric artery - Ostial thrombosis on atheroma would infarct the whole midgut including the proximal jejunum.\nC) Inferior mesenteric artery occlusion - Inferior mesenteric occlusion affects the left colon, not the small bowel.\nD) Non-occlusive mesenteric ischaemia from low cardiac output - Non-occlusive ischaemia produces patchy segmental damage, usually most marked at the watershed areas, rather than this clean proximal demarcation."
+   ],
+   "teachingPoint": "Key - B) Embolus lodging just distal to the origin of the middle colic artery. An embolus from a fibrillating atrium typically lodges a few centimetres along the artery just beyond the middle colic origin, so the proximal jejunal branches are spared while the rest of the midgut infarcts.\n\nWhy the others fail:\nA) Thrombosis at the origin of the superior mesenteric artery - Ostial thrombosis on atheroma would infarct the whole midgut including the proximal jejunum.\nC) Inferior mesenteric artery occlusion - Inferior mesenteric occlusion affects the left colon, not the small bowel.\nD) Non-occlusive mesenteric ischaemia from low cardiac output - Non-occlusive ischaemia produces patchy segmental damage, usually most marked at the watershed areas, rather than this clean proximal demarcation."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sana-ch5-abdominal-vasculature-mcq-006",
+   "type": "single",
+   "sectionId": "s7",
+   "difficulty": 2,
+   "highYield": true,
+   "stem": "During laparoscopic cholecystectomy an artery is seen crossing behind the bile duct and running upwards to the right into Calot's triangle. Which variant is this most likely to be?",
+   "options": [
+    {
+     "id": "a",
+     "text": "Replaced left hepatic artery from the left gastric artery",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "b",
+     "text": "Replaced right hepatic artery from the superior mesenteric artery",
+     "correct": true,
+     "why": "Key - B) Replaced right hepatic artery from the superior mesenteric artery. A right hepatic artery arising from the superior mesenteric artery passes behind and to the right of the bile duct into Calot's triangle, where it is easily mistaken for the cystic artery and divided.\n\nWhy the others fail:\nA) Replaced left hepatic artery from the left gastric artery - A replaced left hepatic artery runs in the lesser omentum to the left, not behind the bile duct to the right.\nC) Accessory cystic artery from the gastroduodenal artery - An accessory cystic artery is a small vessel to the gallbladder and would not have this large calibre or course.\nD) Aberrant middle colic artery - The middle colic artery arises from the superior mesenteric artery and runs in the transverse mesocolon, nowhere near the porta hepatis."
+    },
+    {
+     "id": "c",
+     "text": "Accessory cystic artery from the gastroduodenal artery",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "d",
+     "text": "Aberrant middle colic artery",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    }
+   ],
+   "explanation": [
+    "Key - B) Replaced right hepatic artery from the superior mesenteric artery. A right hepatic artery arising from the superior mesenteric artery passes behind and to the right of the bile duct into Calot's triangle, where it is easily mistaken for the cystic artery and divided.\n\nWhy the others fail:\nA) Replaced left hepatic artery from the left gastric artery - A replaced left hepatic artery runs in the lesser omentum to the left, not behind the bile duct to the right.\nC) Accessory cystic artery from the gastroduodenal artery - An accessory cystic artery is a small vessel to the gallbladder and would not have this large calibre or course.\nD) Aberrant middle colic artery - The middle colic artery arises from the superior mesenteric artery and runs in the transverse mesocolon, nowhere near the porta hepatis."
+   ],
+   "keyFacts": [
+    "Key - B) Replaced right hepatic artery from the superior mesenteric artery. A right hepatic artery arising from the superior mesenteric artery passes behind and to the right of the bile duct into Calot's triangle, where it is easily mistaken for the cystic artery and divided.\n\nWhy the others fail:\nA) Replaced left hepatic artery from the left gastric artery - A replaced left hepatic artery runs in the lesser omentum to the left, not behind the bile duct to the right.\nC) Accessory cystic artery from the gastroduodenal artery - An accessory cystic artery is a small vessel to the gallbladder and would not have this large calibre or course.\nD) Aberrant middle colic artery - The middle colic artery arises from the superior mesenteric artery and runs in the transverse mesocolon, nowhere near the porta hepatis."
+   ],
+   "teachingPoint": "Key - B) Replaced right hepatic artery from the superior mesenteric artery. A right hepatic artery arising from the superior mesenteric artery passes behind and to the right of the bile duct into Calot's triangle, where it is easily mistaken for the cystic artery and divided.\n\nWhy the others fail:\nA) Replaced left hepatic artery from the left gastric artery - A replaced left hepatic artery runs in the lesser omentum to the left, not behind the bile duct to the right.\nC) Accessory cystic artery from the gastroduodenal artery - An accessory cystic artery is a small vessel to the gallbladder and would not have this large calibre or course.\nD) Aberrant middle colic artery - The middle colic artery arises from the superior mesenteric artery and runs in the transverse mesocolon, nowhere near the porta hepatis."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sana-ch5-abdominal-vasculature-mcq-007",
+   "type": "single",
+   "sectionId": "s7",
+   "difficulty": 2,
+   "highYield": true,
+   "stem": "A surgeon performs a high tie of the inferior mesenteric artery for a sigmoid carcinoma. Which structure lying just below the origin must be preserved?",
+   "options": [
+    {
+     "id": "a",
+     "text": "The left ureter",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "b",
+     "text": "The superior hypogastric plexus",
+     "correct": true,
+     "why": "Key - B) The superior hypogastric plexus. The superior hypogastric plexus lies on the front of the aorta just below the origin of the inferior mesenteric artery; injury there causes retrograde ejaculation and bladder dysfunction.\n\nWhy the others fail:\nA) The left ureter - The left ureter is at risk lower down and more laterally, at the pelvic brim beneath the sigmoid mesocolon.\nC) The cisterna chyli - The cisterna chyli lies behind the aorta at the level of L1 to L2, well above this dissection.\nD) The left gonadal artery - The gonadal artery arises from the aorta at L2, above the inferior mesenteric artery and lateral to the plane of dissection."
+    },
+    {
+     "id": "c",
+     "text": "The cisterna chyli",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "d",
+     "text": "The left gonadal artery",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    }
+   ],
+   "explanation": [
+    "Key - B) The superior hypogastric plexus. The superior hypogastric plexus lies on the front of the aorta just below the origin of the inferior mesenteric artery; injury there causes retrograde ejaculation and bladder dysfunction.\n\nWhy the others fail:\nA) The left ureter - The left ureter is at risk lower down and more laterally, at the pelvic brim beneath the sigmoid mesocolon.\nC) The cisterna chyli - The cisterna chyli lies behind the aorta at the level of L1 to L2, well above this dissection.\nD) The left gonadal artery - The gonadal artery arises from the aorta at L2, above the inferior mesenteric artery and lateral to the plane of dissection."
+   ],
+   "keyFacts": [
+    "Key - B) The superior hypogastric plexus. The superior hypogastric plexus lies on the front of the aorta just below the origin of the inferior mesenteric artery; injury there causes retrograde ejaculation and bladder dysfunction.\n\nWhy the others fail:\nA) The left ureter - The left ureter is at risk lower down and more laterally, at the pelvic brim beneath the sigmoid mesocolon.\nC) The cisterna chyli - The cisterna chyli lies behind the aorta at the level of L1 to L2, well above this dissection.\nD) The left gonadal artery - The gonadal artery arises from the aorta at L2, above the inferior mesenteric artery and lateral to the plane of dissection."
+   ],
+   "teachingPoint": "Key - B) The superior hypogastric plexus. The superior hypogastric plexus lies on the front of the aorta just below the origin of the inferior mesenteric artery; injury there causes retrograde ejaculation and bladder dysfunction.\n\nWhy the others fail:\nA) The left ureter - The left ureter is at risk lower down and more laterally, at the pelvic brim beneath the sigmoid mesocolon.\nC) The cisterna chyli - The cisterna chyli lies behind the aorta at the level of L1 to L2, well above this dissection.\nD) The left gonadal artery - The gonadal artery arises from the aorta at L2, above the inferior mesenteric artery and lateral to the plane of dissection."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sana-ch5-abdominal-vasculature-mcq-008",
+   "type": "single",
+   "sectionId": "s7",
+   "difficulty": 2,
+   "highYield": true,
+   "stem": "Angiography in a patient with postprandial abdominal pain and weight loss shows a large meandering artery connecting the middle colic and left colic territories. What does this signify?",
+   "options": [
+    {
+     "id": "a",
+     "text": "A normal variant of no significance",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "b",
+     "text": "A prominent arc of Riolan indicating occlusion of a main mesenteric trunk",
+     "correct": true,
+     "why": "Key - B) A prominent arc of Riolan indicating occlusion of a main mesenteric trunk. An enlarged arc of Riolan carries collateral flow between the superior and inferior mesenteric systems and enlarges only when one of the trunks is occluded, which fits chronic mesenteric ischaemia.\n\nWhy the others fail:\nA) A normal variant of no significance - A large meandering mesenteric artery is not a normal finding and should never be dismissed.\nC) An arteriovenous malformation of the colon - An arteriovenous malformation gives an early draining vein and a localised blush, not a long collateral trunk between named arteries.\nD) A persistent vitelline artery - A persistent vitelline artery relates to Meckel's diverticulum and does not connect the colic arteries."
+    },
+    {
+     "id": "c",
+     "text": "An arteriovenous malformation of the colon",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "d",
+     "text": "A persistent vitelline artery",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    }
+   ],
+   "explanation": [
+    "Key - B) A prominent arc of Riolan indicating occlusion of a main mesenteric trunk. An enlarged arc of Riolan carries collateral flow between the superior and inferior mesenteric systems and enlarges only when one of the trunks is occluded, which fits chronic mesenteric ischaemia.\n\nWhy the others fail:\nA) A normal variant of no significance - A large meandering mesenteric artery is not a normal finding and should never be dismissed.\nC) An arteriovenous malformation of the colon - An arteriovenous malformation gives an early draining vein and a localised blush, not a long collateral trunk between named arteries.\nD) A persistent vitelline artery - A persistent vitelline artery relates to Meckel's diverticulum and does not connect the colic arteries."
+   ],
+   "keyFacts": [
+    "Key - B) A prominent arc of Riolan indicating occlusion of a main mesenteric trunk. An enlarged arc of Riolan carries collateral flow between the superior and inferior mesenteric systems and enlarges only when one of the trunks is occluded, which fits chronic mesenteric ischaemia.\n\nWhy the others fail:\nA) A normal variant of no significance - A large meandering mesenteric artery is not a normal finding and should never be dismissed.\nC) An arteriovenous malformation of the colon - An arteriovenous malformation gives an early draining vein and a localised blush, not a long collateral trunk between named arteries.\nD) A persistent vitelline artery - A persistent vitelline artery relates to Meckel's diverticulum and does not connect the colic arteries."
+   ],
+   "teachingPoint": "Key - B) A prominent arc of Riolan indicating occlusion of a main mesenteric trunk. An enlarged arc of Riolan carries collateral flow between the superior and inferior mesenteric systems and enlarges only when one of the trunks is occluded, which fits chronic mesenteric ischaemia.\n\nWhy the others fail:\nA) A normal variant of no significance - A large meandering mesenteric artery is not a normal finding and should never be dismissed.\nC) An arteriovenous malformation of the colon - An arteriovenous malformation gives an early draining vein and a localised blush, not a long collateral trunk between named arteries.\nD) A persistent vitelline artery - A persistent vitelline artery relates to Meckel's diverticulum and does not connect the colic arteries."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sana-ch5-abdominal-vasculature-mcq-009",
+   "type": "single",
+   "sectionId": "s7",
+   "difficulty": 2,
+   "highYield": true,
+   "stem": "Why can a gastric conduit be raised to the neck on a single vessel after oesophagectomy, and which vessel is it?",
+   "options": [
+    {
+     "id": "a",
+     "text": "The left gastric artery, because it is the largest gastric vessel",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "b",
+     "text": "The right gastroepiploic artery, because of the continuous arcade along the greater curvature and the submucosal plexus",
+     "correct": true,
+     "why": "Key - B) The right gastroepiploic artery, because of the continuous arcade along the greater curvature and the submucosal plexus. The right gastroepiploic artery supplies a continuous arcade along the greater curvature which, with the rich submucosal plexus, perfuses the whole conduit once the other vessels are divided.\n\nWhy the others fail:\nA) The left gastric artery, because it is the largest gastric vessel - The left gastric artery must be divided at its origin for the lymphadenectomy, so it cannot be the pedicle.\nC) The short gastric arteries, because they are numerous - The short gastric arteries are divided when the fundus is mobilised and are far too small to perfuse a conduit.\nD) The splenic artery, because it is preserved with the spleen - The splenic artery does not supply the stomach directly except through branches that are divided during mobilisation."
+    },
+    {
+     "id": "c",
+     "text": "The short gastric arteries, because they are numerous",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "d",
+     "text": "The splenic artery, because it is preserved with the spleen",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    }
+   ],
+   "explanation": [
+    "Key - B) The right gastroepiploic artery, because of the continuous arcade along the greater curvature and the submucosal plexus. The right gastroepiploic artery supplies a continuous arcade along the greater curvature which, with the rich submucosal plexus, perfuses the whole conduit once the other vessels are divided.\n\nWhy the others fail:\nA) The left gastric artery, because it is the largest gastric vessel - The left gastric artery must be divided at its origin for the lymphadenectomy, so it cannot be the pedicle.\nC) The short gastric arteries, because they are numerous - The short gastric arteries are divided when the fundus is mobilised and are far too small to perfuse a conduit.\nD) The splenic artery, because it is preserved with the spleen - The splenic artery does not supply the stomach directly except through branches that are divided during mobilisation."
+   ],
+   "keyFacts": [
+    "Key - B) The right gastroepiploic artery, because of the continuous arcade along the greater curvature and the submucosal plexus. The right gastroepiploic artery supplies a continuous arcade along the greater curvature which, with the rich submucosal plexus, perfuses the whole conduit once the other vessels are divided.\n\nWhy the others fail:\nA) The left gastric artery, because it is the largest gastric vessel - The left gastric artery must be divided at its origin for the lymphadenectomy, so it cannot be the pedicle.\nC) The short gastric arteries, because they are numerous - The short gastric arteries are divided when the fundus is mobilised and are far too small to perfuse a conduit.\nD) The splenic artery, because it is preserved with the spleen - The splenic artery does not supply the stomach directly except through branches that are divided during mobilisation."
+   ],
+   "teachingPoint": "Key - B) The right gastroepiploic artery, because of the continuous arcade along the greater curvature and the submucosal plexus. The right gastroepiploic artery supplies a continuous arcade along the greater curvature which, with the rich submucosal plexus, perfuses the whole conduit once the other vessels are divided.\n\nWhy the others fail:\nA) The left gastric artery, because it is the largest gastric vessel - The left gastric artery must be divided at its origin for the lymphadenectomy, so it cannot be the pedicle.\nC) The short gastric arteries, because they are numerous - The short gastric arteries are divided when the fundus is mobilised and are far too small to perfuse a conduit.\nD) The splenic artery, because it is preserved with the spleen - The splenic artery does not supply the stomach directly except through branches that are divided during mobilisation."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sana-ch5-abdominal-vasculature-mcq-010",
+   "type": "single",
+   "sectionId": "s7",
+   "difficulty": 2,
+   "highYield": true,
+   "stem": "A patient with an ileostomy formed for ulcerative colitis and known sclerosing cholangitis has recurrent profuse bleeding from the skin around the stoma. What is the anatomical explanation?",
+   "options": [
+    {
+     "id": "a",
+     "text": "Granulation tissue at the mucocutaneous junction",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "b",
+     "text": "Portosystemic anastomosis between bowel tributaries and abdominal wall veins",
+     "correct": true,
+     "why": "Key - B) Portosystemic anastomosis between bowel tributaries and abdominal wall veins. At the mucocutaneous junction portal tributaries of the bowel meet systemic veins of the abdominal wall; in portal hypertension these engorge into stomal varices that bleed heavily.\n\nWhy the others fail:\nA) Granulation tissue at the mucocutaneous junction - Granulation tissue bleeds on contact but does not cause profuse recurrent haemorrhage.\nC) Erosion of the inferior epigastric artery by the stoma appliance - The inferior epigastric artery is not eroded by an appliance, and arterial bleeding would be pulsatile and immediate.\nD) Arteriovenous malformation of the ileal mesentery - A mesenteric arteriovenous malformation would bleed into the bowel lumen rather than from the peristomal skin."
+    },
+    {
+     "id": "c",
+     "text": "Erosion of the inferior epigastric artery by the stoma appliance",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "d",
+     "text": "Arteriovenous malformation of the ileal mesentery",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    }
+   ],
+   "explanation": [
+    "Key - B) Portosystemic anastomosis between bowel tributaries and abdominal wall veins. At the mucocutaneous junction portal tributaries of the bowel meet systemic veins of the abdominal wall; in portal hypertension these engorge into stomal varices that bleed heavily.\n\nWhy the others fail:\nA) Granulation tissue at the mucocutaneous junction - Granulation tissue bleeds on contact but does not cause profuse recurrent haemorrhage.\nC) Erosion of the inferior epigastric artery by the stoma appliance - The inferior epigastric artery is not eroded by an appliance, and arterial bleeding would be pulsatile and immediate.\nD) Arteriovenous malformation of the ileal mesentery - A mesenteric arteriovenous malformation would bleed into the bowel lumen rather than from the peristomal skin."
+   ],
+   "keyFacts": [
+    "Key - B) Portosystemic anastomosis between bowel tributaries and abdominal wall veins. At the mucocutaneous junction portal tributaries of the bowel meet systemic veins of the abdominal wall; in portal hypertension these engorge into stomal varices that bleed heavily.\n\nWhy the others fail:\nA) Granulation tissue at the mucocutaneous junction - Granulation tissue bleeds on contact but does not cause profuse recurrent haemorrhage.\nC) Erosion of the inferior epigastric artery by the stoma appliance - The inferior epigastric artery is not eroded by an appliance, and arterial bleeding would be pulsatile and immediate.\nD) Arteriovenous malformation of the ileal mesentery - A mesenteric arteriovenous malformation would bleed into the bowel lumen rather than from the peristomal skin."
+   ],
+   "teachingPoint": "Key - B) Portosystemic anastomosis between bowel tributaries and abdominal wall veins. At the mucocutaneous junction portal tributaries of the bowel meet systemic veins of the abdominal wall; in portal hypertension these engorge into stomal varices that bleed heavily.\n\nWhy the others fail:\nA) Granulation tissue at the mucocutaneous junction - Granulation tissue bleeds on contact but does not cause profuse recurrent haemorrhage.\nC) Erosion of the inferior epigastric artery by the stoma appliance - The inferior epigastric artery is not eroded by an appliance, and arterial bleeding would be pulsatile and immediate.\nD) Arteriovenous malformation of the ileal mesentery - A mesenteric arteriovenous malformation would bleed into the bowel lumen rather than from the peristomal skin."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sana-ch5-abdominal-vasculature-mcq-011",
+   "type": "single",
+   "sectionId": "s7",
+   "difficulty": 2,
+   "highYield": true,
+   "stem": "During mobilisation of the hepatic flexure the surgeon encounters brisk venous bleeding from the anterior surface of the pancreatic head. Which vessel has been avulsed, and where does it drain?",
+   "options": [
+    {
+     "id": "a",
+     "text": "Middle colic vein, into the superior mesenteric vein",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "b",
+     "text": "Gastrocolic trunk of Henle, into the superior mesenteric vein",
+     "correct": true,
+     "why": "Key - B) Gastrocolic trunk of Henle, into the superior mesenteric vein. The gastrocolic trunk of Henle is formed by the right gastroepiploic, superior right colic and anterior superior pancreaticoduodenal veins on the front of the pancreatic head and drains into the superior mesenteric vein; traction on the hepatic flexure avulses it and it retracts into the pancreas.\n\nWhy the others fail:\nA) Middle colic vein, into the superior mesenteric vein - The middle colic vein runs in the transverse mesocolon and is more commonly injured at the root of that mesentery, not on the pancreatic head.\nC) Inferior mesenteric vein, into the splenic vein - The inferior mesenteric vein runs upwards to the left of the duodenojejunal flexure and is nowhere near this dissection.\nD) Right gastric vein, into the portal vein - The right gastric vein is small and runs along the lesser curvature to the portal vein, not across the pancreatic head."
+    },
+    {
+     "id": "c",
+     "text": "Inferior mesenteric vein, into the splenic vein",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "d",
+     "text": "Right gastric vein, into the portal vein",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    }
+   ],
+   "explanation": [
+    "Key - B) Gastrocolic trunk of Henle, into the superior mesenteric vein. The gastrocolic trunk of Henle is formed by the right gastroepiploic, superior right colic and anterior superior pancreaticoduodenal veins on the front of the pancreatic head and drains into the superior mesenteric vein; traction on the hepatic flexure avulses it and it retracts into the pancreas.\n\nWhy the others fail:\nA) Middle colic vein, into the superior mesenteric vein - The middle colic vein runs in the transverse mesocolon and is more commonly injured at the root of that mesentery, not on the pancreatic head.\nC) Inferior mesenteric vein, into the splenic vein - The inferior mesenteric vein runs upwards to the left of the duodenojejunal flexure and is nowhere near this dissection.\nD) Right gastric vein, into the portal vein - The right gastric vein is small and runs along the lesser curvature to the portal vein, not across the pancreatic head."
+   ],
+   "keyFacts": [
+    "Key - B) Gastrocolic trunk of Henle, into the superior mesenteric vein. The gastrocolic trunk of Henle is formed by the right gastroepiploic, superior right colic and anterior superior pancreaticoduodenal veins on the front of the pancreatic head and drains into the superior mesenteric vein; traction on the hepatic flexure avulses it and it retracts into the pancreas.\n\nWhy the others fail:\nA) Middle colic vein, into the superior mesenteric vein - The middle colic vein runs in the transverse mesocolon and is more commonly injured at the root of that mesentery, not on the pancreatic head.\nC) Inferior mesenteric vein, into the splenic vein - The inferior mesenteric vein runs upwards to the left of the duodenojejunal flexure and is nowhere near this dissection.\nD) Right gastric vein, into the portal vein - The right gastric vein is small and runs along the lesser curvature to the portal vein, not across the pancreatic head."
+   ],
+   "teachingPoint": "Key - B) Gastrocolic trunk of Henle, into the superior mesenteric vein. The gastrocolic trunk of Henle is formed by the right gastroepiploic, superior right colic and anterior superior pancreaticoduodenal veins on the front of the pancreatic head and drains into the superior mesenteric vein; traction on the hepatic flexure avulses it and it retracts into the pancreas.\n\nWhy the others fail:\nA) Middle colic vein, into the superior mesenteric vein - The middle colic vein runs in the transverse mesocolon and is more commonly injured at the root of that mesentery, not on the pancreatic head.\nC) Inferior mesenteric vein, into the splenic vein - The inferior mesenteric vein runs upwards to the left of the duodenojejunal flexure and is nowhere near this dissection.\nD) Right gastric vein, into the portal vein - The right gastric vein is small and runs along the lesser curvature to the portal vein, not across the pancreatic head."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sana-ch5-abdominal-vasculature-mcq-012",
+   "type": "single",
+   "sectionId": "s7",
+   "difficulty": 2,
+   "highYield": true,
+   "stem": "A patient has occlusion of both the coeliac trunk and the superior mesenteric artery at their origins but remains free of pain at rest. Which collateral route is most likely to be maintaining the foregut and midgut?",
+   "options": [
+    {
+     "id": "a",
+     "text": "Pancreaticoduodenal arcades from the coeliac trunk",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "b",
+     "text": "The marginal artery and arc of Riolan carrying flow retrogradely from the inferior mesenteric artery",
+     "correct": true,
+     "why": "Key - B) The marginal artery and arc of Riolan carrying flow retrogradely from the inferior mesenteric artery. With both proximal trunks occluded the only large remaining inflow is the inferior mesenteric artery, whose left colic branch feeds the marginal artery and the arc of Riolan and drives flow retrogradely into the midgut and, through the arcades, the foregut.\n\nWhy the others fail:\nA) Pancreaticoduodenal arcades from the coeliac trunk - The pancreaticoduodenal arcades connect the coeliac and superior mesenteric territories, so they are useless when both trunks are occluded at their origins.\nC) Lumbar arteries through the posterior abdominal wall - Lumbar arteries supply the body wall and contribute nothing meaningful to the gut.\nD) Inferior phrenic arteries through the diaphragm - The inferior phrenic arteries supply the diaphragm and the suprarenals and cannot perfuse the intestine."
+    },
+    {
+     "id": "c",
+     "text": "Lumbar arteries through the posterior abdominal wall",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "d",
+     "text": "Inferior phrenic arteries through the diaphragm",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    }
+   ],
+   "explanation": [
+    "Key - B) The marginal artery and arc of Riolan carrying flow retrogradely from the inferior mesenteric artery. With both proximal trunks occluded the only large remaining inflow is the inferior mesenteric artery, whose left colic branch feeds the marginal artery and the arc of Riolan and drives flow retrogradely into the midgut and, through the arcades, the foregut.\n\nWhy the others fail:\nA) Pancreaticoduodenal arcades from the coeliac trunk - The pancreaticoduodenal arcades connect the coeliac and superior mesenteric territories, so they are useless when both trunks are occluded at their origins.\nC) Lumbar arteries through the posterior abdominal wall - Lumbar arteries supply the body wall and contribute nothing meaningful to the gut.\nD) Inferior phrenic arteries through the diaphragm - The inferior phrenic arteries supply the diaphragm and the suprarenals and cannot perfuse the intestine."
+   ],
+   "keyFacts": [
+    "Key - B) The marginal artery and arc of Riolan carrying flow retrogradely from the inferior mesenteric artery. With both proximal trunks occluded the only large remaining inflow is the inferior mesenteric artery, whose left colic branch feeds the marginal artery and the arc of Riolan and drives flow retrogradely into the midgut and, through the arcades, the foregut.\n\nWhy the others fail:\nA) Pancreaticoduodenal arcades from the coeliac trunk - The pancreaticoduodenal arcades connect the coeliac and superior mesenteric territories, so they are useless when both trunks are occluded at their origins.\nC) Lumbar arteries through the posterior abdominal wall - Lumbar arteries supply the body wall and contribute nothing meaningful to the gut.\nD) Inferior phrenic arteries through the diaphragm - The inferior phrenic arteries supply the diaphragm and the suprarenals and cannot perfuse the intestine."
+   ],
+   "teachingPoint": "Key - B) The marginal artery and arc of Riolan carrying flow retrogradely from the inferior mesenteric artery. With both proximal trunks occluded the only large remaining inflow is the inferior mesenteric artery, whose left colic branch feeds the marginal artery and the arc of Riolan and drives flow retrogradely into the midgut and, through the arcades, the foregut.\n\nWhy the others fail:\nA) Pancreaticoduodenal arcades from the coeliac trunk - The pancreaticoduodenal arcades connect the coeliac and superior mesenteric territories, so they are useless when both trunks are occluded at their origins.\nC) Lumbar arteries through the posterior abdominal wall - Lumbar arteries supply the body wall and contribute nothing meaningful to the gut.\nD) Inferior phrenic arteries through the diaphragm - The inferior phrenic arteries supply the diaphragm and the suprarenals and cannot perfuse the intestine."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sana-ch5-abdominal-vasculature-mcq-013",
+   "type": "single",
+   "sectionId": "s7",
+   "difficulty": 2,
+   "highYield": true,
+   "stem": "A cirrhotic patient bleeds from oesophageal varices. Which anatomical fact best explains why bleeding arises at the lower oesophagus rather than at the other portosystemic sites?",
+   "options": [
+    {
+     "id": "a",
+     "text": "The left gastric vein is the largest tributary of the portal vein",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "b",
+     "text": "The collateral veins there lie superficially in the submucosa beneath a thin unsupported mucosa in a segment subject to reflux and mechanical trauma",
+     "correct": true,
+     "why": "Key - B) The collateral veins there lie superficially in the submucosa beneath a thin unsupported mucosa in a segment subject to reflux and mechanical trauma. At the gastro-oesophageal junction the collateral channels run immediately beneath a thin mucosa with no supporting submucosal tissue and are exposed to acid reflux and to the mechanical forces of swallowing, so they rupture at lower pressures than deeper collaterals.\n\nWhy the others fail:\nA) The left gastric vein is the largest tributary of the portal vein - Size alone would not determine the site of rupture, and the coronary vein is not the largest portal tributary.\nC) The azygos vein has a lower pressure than other systemic veins - Azygos pressure is similar to that of other systemic veins and is not the discriminating factor.\nD) The oesophageal veins have no valves whereas the rectal veins do - No vein of the portal system has valves, so the contrast drawn in this option is false."
+    },
+    {
+     "id": "c",
+     "text": "The azygos vein has a lower pressure than other systemic veins",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "d",
+     "text": "The oesophageal veins have no valves whereas the rectal veins do",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    }
+   ],
+   "explanation": [
+    "Key - B) The collateral veins there lie superficially in the submucosa beneath a thin unsupported mucosa in a segment subject to reflux and mechanical trauma. At the gastro-oesophageal junction the collateral channels run immediately beneath a thin mucosa with no supporting submucosal tissue and are exposed to acid reflux and to the mechanical forces of swallowing, so they rupture at lower pressures than deeper collaterals.\n\nWhy the others fail:\nA) The left gastric vein is the largest tributary of the portal vein - Size alone would not determine the site of rupture, and the coronary vein is not the largest portal tributary.\nC) The azygos vein has a lower pressure than other systemic veins - Azygos pressure is similar to that of other systemic veins and is not the discriminating factor.\nD) The oesophageal veins have no valves whereas the rectal veins do - No vein of the portal system has valves, so the contrast drawn in this option is false."
+   ],
+   "keyFacts": [
+    "Key - B) The collateral veins there lie superficially in the submucosa beneath a thin unsupported mucosa in a segment subject to reflux and mechanical trauma. At the gastro-oesophageal junction the collateral channels run immediately beneath a thin mucosa with no supporting submucosal tissue and are exposed to acid reflux and to the mechanical forces of swallowing, so they rupture at lower pressures than deeper collaterals.\n\nWhy the others fail:\nA) The left gastric vein is the largest tributary of the portal vein - Size alone would not determine the site of rupture, and the coronary vein is not the largest portal tributary.\nC) The azygos vein has a lower pressure than other systemic veins - Azygos pressure is similar to that of other systemic veins and is not the discriminating factor.\nD) The oesophageal veins have no valves whereas the rectal veins do - No vein of the portal system has valves, so the contrast drawn in this option is false."
+   ],
+   "teachingPoint": "Key - B) The collateral veins there lie superficially in the submucosa beneath a thin unsupported mucosa in a segment subject to reflux and mechanical trauma. At the gastro-oesophageal junction the collateral channels run immediately beneath a thin mucosa with no supporting submucosal tissue and are exposed to acid reflux and to the mechanical forces of swallowing, so they rupture at lower pressures than deeper collaterals.\n\nWhy the others fail:\nA) The left gastric vein is the largest tributary of the portal vein - Size alone would not determine the site of rupture, and the coronary vein is not the largest portal tributary.\nC) The azygos vein has a lower pressure than other systemic veins - Azygos pressure is similar to that of other systemic veins and is not the discriminating factor.\nD) The oesophageal veins have no valves whereas the rectal veins do - No vein of the portal system has valves, so the contrast drawn in this option is false."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sana-ch5-abdominal-vasculature-mcq-014",
+   "type": "single",
+   "sectionId": "s7",
+   "difficulty": 2,
+   "highYield": true,
+   "stem": "Which single anatomical finding would most strongly contraindicate a high tie of the inferior mesenteric artery with a colorectal anastomosis?",
+   "options": [
+    {
+     "id": "a",
+     "text": "A patent arc of Riolan",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "b",
+     "text": "An absent marginal artery at the splenic flexure with occlusion of both internal iliac arteries",
+     "correct": true,
+     "why": "Key - B) An absent marginal artery at the splenic flexure with occlusion of both internal iliac arteries. If the marginal artery is deficient at Griffiths' point and the internal iliac supply to the middle rectal arteries is also lost, both the inflow to the descending colon and the pelvic supply to the rectal stump are gone, and the anastomosis will be ischaemic.\n\nWhy the others fail:\nA) A patent arc of Riolan - A patent arc of Riolan is reassuring, since it is the collateral that maintains the left colon after the trunk is divided.\nC) A replaced right hepatic artery - A replaced right hepatic artery is a hepatic variant with no bearing on colonic perfusion.\nD) A left-sided inferior mesenteric vein draining into the superior mesenteric vein - Variation in the drainage of the inferior mesenteric vein affects venous outflow, not arterial viability of the anastomosis."
+    },
+    {
+     "id": "c",
+     "text": "A replaced right hepatic artery",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "d",
+     "text": "A left-sided inferior mesenteric vein draining into the superior mesenteric vein",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    }
+   ],
+   "explanation": [
+    "Key - B) An absent marginal artery at the splenic flexure with occlusion of both internal iliac arteries. If the marginal artery is deficient at Griffiths' point and the internal iliac supply to the middle rectal arteries is also lost, both the inflow to the descending colon and the pelvic supply to the rectal stump are gone, and the anastomosis will be ischaemic.\n\nWhy the others fail:\nA) A patent arc of Riolan - A patent arc of Riolan is reassuring, since it is the collateral that maintains the left colon after the trunk is divided.\nC) A replaced right hepatic artery - A replaced right hepatic artery is a hepatic variant with no bearing on colonic perfusion.\nD) A left-sided inferior mesenteric vein draining into the superior mesenteric vein - Variation in the drainage of the inferior mesenteric vein affects venous outflow, not arterial viability of the anastomosis."
+   ],
+   "keyFacts": [
+    "Key - B) An absent marginal artery at the splenic flexure with occlusion of both internal iliac arteries. If the marginal artery is deficient at Griffiths' point and the internal iliac supply to the middle rectal arteries is also lost, both the inflow to the descending colon and the pelvic supply to the rectal stump are gone, and the anastomosis will be ischaemic.\n\nWhy the others fail:\nA) A patent arc of Riolan - A patent arc of Riolan is reassuring, since it is the collateral that maintains the left colon after the trunk is divided.\nC) A replaced right hepatic artery - A replaced right hepatic artery is a hepatic variant with no bearing on colonic perfusion.\nD) A left-sided inferior mesenteric vein draining into the superior mesenteric vein - Variation in the drainage of the inferior mesenteric vein affects venous outflow, not arterial viability of the anastomosis."
+   ],
+   "teachingPoint": "Key - B) An absent marginal artery at the splenic flexure with occlusion of both internal iliac arteries. If the marginal artery is deficient at Griffiths' point and the internal iliac supply to the middle rectal arteries is also lost, both the inflow to the descending colon and the pelvic supply to the rectal stump are gone, and the anastomosis will be ischaemic.\n\nWhy the others fail:\nA) A patent arc of Riolan - A patent arc of Riolan is reassuring, since it is the collateral that maintains the left colon after the trunk is divided.\nC) A replaced right hepatic artery - A replaced right hepatic artery is a hepatic variant with no bearing on colonic perfusion.\nD) A left-sided inferior mesenteric vein draining into the superior mesenteric vein - Variation in the drainage of the inferior mesenteric vein affects venous outflow, not arterial viability of the anastomosis."
+  }
+ ],
+ "emqs": [],
+ "summary": "Abdominal Vasculature: work through each section's cards to fix the structures, their relations and clinical lesions. Use the MCQs to test discrimination and the image-occlusion cards to rehearse identification."
+}

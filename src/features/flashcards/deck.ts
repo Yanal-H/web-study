@@ -21,9 +21,16 @@ export interface RenderCard {
   cloze?: string;
   extra?: string;
   hint?: string;
-  image?: { src?: string; alt?: string };
+  /** an inline figure, or an id into the owning pack's images map */
+  image?: { src?: string; alt?: string; imageId?: string };
   regions?: OcclusionRegion[];
   regionIndex?: number; // occlusion: which region this item tests
+  /** authored occlusion boxes (content packs) */
+  masks?: Array<{ id: string; x: number; y: number; w: number; h: number; label?: string }>;
+  target?: string;
+  occMode?: 'hideAll' | 'hideOne';
+  label?: string;
+  chapterId?: string;
   tags?: string[];
 }
 
@@ -66,7 +73,19 @@ export function collectItems(filter?: { subject?: string; chapterId?: string }):
         cloze: c.cloze,
         extra: c.extra,
         hint: c.hint,
-        image: c.image ? { src: c.image.src, alt: c.image.alt } : undefined,
+        // a figure carries its own src; occlusion cards name an entry in the
+        // pack's images map, resolved at render time
+        image:
+          typeof c.image === 'string'
+            ? { imageId: c.image }
+            : c.image
+              ? { src: c.image.src, alt: c.image.alt }
+              : undefined,
+        masks: c.masks,
+        target: c.target,
+        occMode: c.occMode,
+        label: c.label,
+        chapterId: c.chapterId,
         tags: c.tags,
       },
     });

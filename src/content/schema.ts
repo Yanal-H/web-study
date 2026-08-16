@@ -94,6 +94,27 @@ export const SectionSchema = z.object({
 });
 export type Section = z.infer<typeof SectionSchema>;
 
+/* ---- OCCLUSION MASK ---- a box over a diagram, in 0-1 fractions of its size */
+export const MaskSchema = z.object({
+  id: z.string().min(1),
+  x: z.number(),
+  y: z.number(),
+  w: z.number(),
+  h: z.number(),
+  label: z.string().optional(),
+});
+export type Mask = z.infer<typeof MaskSchema>;
+
+/* ---- PACK IMAGE ---- a diagram shared by every occlusion card that names it.
+ * `src` is a self-contained data URI, so occlusion works with no network. */
+export const PackImageSchema = z.object({
+  src: z.string().min(1),
+  w: z.number().optional(),
+  h: z.number().optional(),
+  alt: z.string().optional(),
+});
+export type PackImage = z.infer<typeof PackImageSchema>;
+
 /* ---- CARD (foundation.card/v2) ---- */
 export const CardSchema = z
   .object({
@@ -111,7 +132,20 @@ export const CardSchema = z
     keyFacts: z.array(z.string()).optional(),
     tags: z.array(z.string()).optional(),
     difficulty: z.number().int().min(1).max(3).optional(),
-    image: FigureSchema.optional(),
+    /**
+     * `image` cards carry a figure inline. `occlusion` cards instead reference an
+     * entry in the pack's `images` map by id (a plain string), so one diagram can
+     * back dozens of cards without repeating the data URI.
+     */
+    image: z.union([FigureSchema, z.string().min(1)]).optional(),
+    /** occlusion: the boxes drawn over the image, in 0–1 fractions of its size */
+    masks: z.array(MaskSchema).optional(),
+    /** occlusion: which mask this card is testing */
+    target: z.string().optional(),
+    /** occlusion: hide every mask, or only the target */
+    occMode: z.enum(['hideAll', 'hideOne']).optional(),
+    /** occlusion: the diagram's own title, shown above the image */
+    label: z.string().optional(),
     /**
      * Deck path for this card, relative to the chapter's deck root, using "::"
      * between levels — e.g. "Phases::Inflammatory". Combined with the chapter root
@@ -124,9 +158,20 @@ export const CardSchema = z
     if (c.type === 'cloze') {
       if (!c.cloze || !/\{\{c\d+::/.test(c.cloze))
         ctx.addIssue({ code: 'custom', message: 'cloze cards need a {{c1::…}} cloze string', path: ['cloze'] });
-    } else if (c.type === 'image' || c.type === 'occlusion') {
+    } else if (c.type === 'occlusion') {
       if (!c.image)
-        ctx.addIssue({ code: 'custom', message: `${c.type} cards need an image`, path: ['image'] });
+        ctx.addIssue({
+          code: 'custom',
+          message: 'occlusion cards need an image (a figure, or an id from the pack images map)',
+          path: ['image'],
+        });
+      if (!c.masks || c.masks.length === 0)
+        ctx.addIssue({ code: 'custom', message: 'occlusion cards need at least one mask', path: ['masks'] });
+      if (c.target && c.masks && !c.masks.some((m) => m.id === c.target))
+        ctx.addIssue({ code: 'custom', message: 'target must be one of this card\'s mask ids', path: ['target'] });
+    } else if (c.type === 'image') {
+      if (!c.image)
+        ctx.addIssue({ code: 'custom', message: 'image cards need an image', path: ['image'] });
     } else {
       if (!c.front || !c.back)
         ctx.addIssue({ code: 'custom', message: `${c.type} cards need front and back`, path: ['front'] });
@@ -251,6 +296,8 @@ export const ChapterSchema = z.object({
   glossary: z.array(GlossaryEntrySchema).default([]),
   tags: z.array(z.string()).default([]),
   outline: z.array(z.string()).default([]),
+  /** diagrams referenced by occlusion cards, keyed by the id those cards use */
+  images: z.record(PackImageSchema).default({}),
   sections: z.array(SectionSchema).min(1),
   mnemonics: z.array(MnemonicSchema).default([]),
   cards: z.array(CardSchema).default([]),

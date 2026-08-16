@@ -1,0 +1,1114 @@
+{
+ "schema": "foundation.study-module/v1",
+ "id": "sana-ch6-oesophagus-stomach",
+ "subject": "Anatomy",
+ "title": "Oesophagus & Stomach",
+ "source": {
+  "book": "Recall by Yanal — Surgical Anatomy",
+  "chapter": 6,
+  "title": "Oesophagus & Stomach",
+  "pages": "—"
+ },
+ "brand": "by Yanal · Cairo 2026",
+ "estMinutes": 20,
+ "deck": "Anatomy::Oesophagus & Stomach",
+ "tags": [
+  "anatomy",
+  "surgical-anatomy",
+  "oesophagus-stomach"
+ ],
+ "objectives": [
+  "Identify the key structures of Oesophagus & Stomach at each level of dissection.",
+  "Relate the nerves, vessels and muscles of Oesophagus & Stomach to their functions.",
+  "Localise the named spaces and regions of Oesophagus & Stomach and list their contents.",
+  "Recognise the common clinical lesions associated with Oesophagus & Stomach.",
+  "Reproduce the high-yield relations of Oesophagus & Stomach tested in vivas and MCQs."
+ ],
+ "outline": [
+  "6.1 Abdominal Oesophagus & Hiatus",
+  "6.2 Stomach Structure & Relations",
+  "6.3 Gastric Blood Supply",
+  "6.4 Gastric Lymphatics & Nodal Stations",
+  "6.5 Vagi & Their Surgical Branches",
+  "6.6 Clinical Scenarios"
+ ],
+ "sections": [
+  {
+   "id": "s1",
+   "n": "6.1",
+   "title": "Abdominal Oesophagus & Hiatus",
+   "deck": "Abdominal Oesophagus & Hiatus",
+   "digest": "Imported Recall deck. This section holds the **abdominal oesophagus & hiatus** cards for Oesophagus & Stomach. Open the flashcards for Abdominal Oesophagus & Hiatus to drill it; author a written digest here to turn the section into a reader page.",
+   "highYield": [],
+   "tables": [],
+   "pitfalls": [],
+   "figures": []
+  },
+  {
+   "id": "s2",
+   "n": "6.2",
+   "title": "Stomach Structure & Relations",
+   "deck": "Stomach Structure & Relations",
+   "digest": "Imported Recall deck. This section holds the **stomach structure & relations** cards for Oesophagus & Stomach. Open the flashcards for Stomach Structure & Relations to drill it; author a written digest here to turn the section into a reader page.",
+   "highYield": [],
+   "tables": [],
+   "pitfalls": [],
+   "figures": []
+  },
+  {
+   "id": "s3",
+   "n": "6.3",
+   "title": "Gastric Blood Supply",
+   "deck": "Gastric Blood Supply",
+   "digest": "Imported Recall deck. This section holds the **gastric blood supply** cards for Oesophagus & Stomach. Open the flashcards for Gastric Blood Supply to drill it; author a written digest here to turn the section into a reader page.",
+   "highYield": [],
+   "tables": [],
+   "pitfalls": [],
+   "figures": []
+  },
+  {
+   "id": "s4",
+   "n": "6.4",
+   "title": "Gastric Lymphatics & Nodal Stations",
+   "deck": "Gastric Lymphatics & Nodal Stations",
+   "digest": "Imported Recall deck. This section holds the **gastric lymphatics & nodal stations** cards for Oesophagus & Stomach. Open the flashcards for Gastric Lymphatics & Nodal Stations to drill it; author a written digest here to turn the section into a reader page.",
+   "highYield": [],
+   "tables": [],
+   "pitfalls": [],
+   "figures": []
+  },
+  {
+   "id": "s5",
+   "n": "6.5",
+   "title": "Vagi & Their Surgical Branches",
+   "deck": "Vagi & Their Surgical Branches",
+   "digest": "Imported Recall deck. This section holds the **vagi & their surgical branches** cards for Oesophagus & Stomach. Open the flashcards for Vagi & Their Surgical Branches to drill it; author a written digest here to turn the section into a reader page.",
+   "highYield": [],
+   "tables": [],
+   "pitfalls": [],
+   "figures": []
+  },
+  {
+   "id": "s6",
+   "n": "6.6",
+   "title": "Clinical Scenarios",
+   "deck": "Clinical Scenarios",
+   "digest": "Imported Recall deck. This section holds the **clinical scenarios** cards for Oesophagus & Stomach. Open the flashcards for Clinical Scenarios to drill it; author a written digest here to turn the section into a reader page.",
+   "highYield": [],
+   "tables": [],
+   "pitfalls": [],
+   "figures": []
+  }
+ ],
+ "glossary": [],
+ "mnemonics": [],
+ "cards": [
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch6-oesophagus-stomach-card-001",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Abdominal Oesophagus & Hiatus",
+   "front": "How long is the abdominal oesophagus and where does it lie?",
+   "back": "About 1.25 to 2.5 cm. It passes from the oesophageal hiatus to the cardia, lying in the oesophageal groove on the posterior surface of the left lobe of the liver, in front of the left crus of the diaphragm.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch6-oesophagus-stomach-card-002",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Abdominal Oesophagus & Hiatus",
+   "front": "At which vertebral level is the oesophageal hiatus, and which muscle forms it?",
+   "back": "At T10, formed by the muscular fibres of the right crus of the diaphragm, which split and sling around the oesophagus.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch6-oesophagus-stomach-card-003",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Abdominal Oesophagus & Hiatus",
+   "front": "Which structures pass through the oesophageal hiatus with the oesophagus?",
+   "back": "The anterior and posterior vagal trunks and the oesophageal branches of the left gastric vessels, with lymphatics.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch6-oesophagus-stomach-card-004",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Abdominal Oesophagus & Hiatus",
+   "front": "Why does the right crus rather than the left form the hiatus?",
+   "back": "The right crus is longer and stronger, arising from the bodies of L1 to L3, and its decussating fibres form a sling that can act as a pinchcock around the oesophagus.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch6-oesophagus-stomach-card-005",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Abdominal Oesophagus & Hiatus",
+   "front": "List the components of the physiological lower oesophageal sphincter.",
+   "back": "The intrinsic smooth muscle thickening of the lower oesophagus, the sling fibres of the right crus acting as an external pinchcock, the acute angle of His, the mucosal rosette, the phrenico-oesophageal ligament, and the length of intra-abdominal oesophagus exposed to positive abdominal pressure.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch6-oesophagus-stomach-card-006",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Abdominal Oesophagus & Hiatus",
+   "front": "What is the angle of His and why does it matter?",
+   "back": "The acute angle between the left border of the abdominal oesophagus and the fundus of the stomach. It creates a mucosal flap valve that is obliterated in a sliding hiatus hernia and is deliberately recreated by a fundoplication.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch6-oesophagus-stomach-card-007",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Abdominal Oesophagus & Hiatus",
+   "front": "What is the phrenico-oesophageal ligament of Laimer?",
+   "back": "A fascial condensation from the transversalis and endothoracic fascia that anchors the lower oesophagus to the margins of the hiatus while allowing the longitudinal movement of swallowing. Its laxity permits a sliding hernia.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch6-oesophagus-stomach-card-008",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Abdominal Oesophagus & Hiatus",
+   "front": "Why does a length of intra-abdominal oesophagus prevent reflux?",
+   "back": "That segment is exposed to positive intra-abdominal pressure, so a rise in abdominal pressure compresses the oesophagus as much as it compresses the stomach, closing rather than opening the lumen - a flutter-valve effect lost when the segment is pulled into the chest.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch6-oesophagus-stomach-card-009",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Abdominal Oesophagus & Hiatus",
+   "front": "Distinguish a sliding from a rolling hiatus hernia anatomically.",
+   "back": "In a sliding (type 1) hernia the cardia and the gastro-oesophageal junction migrate above the hiatus, so the angle of His and the abdominal segment are lost and reflux follows. In a rolling or para-oesophageal (type 2) hernia the junction stays below the hiatus while the fundus rolls up alongside the oesophagus, so reflux is uncommon but volvulus, strangulation and gastric ulceration are the risks.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch6-oesophagus-stomach-card-010",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Abdominal Oesophagus & Hiatus",
+   "front": "Why does a para-oesophageal hernia demand repair even when symptoms are mild?",
+   "back": "The herniated fundus can undergo organo-axial volvulus in a confined sac, leading to incarceration, gastric ischaemia and perforation, which carries a very high mortality.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch6-oesophagus-stomach-card-011",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Abdominal Oesophagus & Hiatus",
+   "front": "Name the three anatomical constrictions of the oesophagus and their distances from the incisors.",
+   "back": "The cricopharyngeal narrowing at about 15 cm, the aortic and left main bronchus crossing at about 25 cm, and the diaphragmatic hiatus at about 40 cm.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch6-oesophagus-stomach-card-012",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Abdominal Oesophagus & Hiatus",
+   "front": "Why do swallowed foreign bodies and corrosive strictures occur at those three points?",
+   "back": "They are the narrowest points, where a bolus is held longest, so contact time with the mucosa is greatest and impaction is most likely.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch6-oesophagus-stomach-card-013",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Abdominal Oesophagus & Hiatus",
+   "front": "Where is the pharyngeal pouch of Zenker formed and through which weak area?",
+   "back": "Through Killian's dehiscence, the triangular gap between the oblique thyropharyngeus and the transverse cricopharyngeus fibres of the inferior constrictor, on the posterior wall - a pulsion diverticulum that deviates to the left as it enlarges.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch6-oesophagus-stomach-card-014",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Abdominal Oesophagus & Hiatus",
+   "front": "Compare the muscle coat of the upper, middle and lower thirds of the oesophagus.",
+   "back": "The upper third is striated muscle, the middle third is mixed, and the lower third is smooth muscle - which is why achalasia and diffuse spasm affect the lower two-thirds and why the upper sphincter is under voluntary control.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch6-oesophagus-stomach-card-015",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Abdominal Oesophagus & Hiatus",
+   "front": "How does the venous drainage of the oesophagus change along its length?",
+   "back": "The upper part drains to the systemic azygos and hemiazygos veins; the lower part drains to the left gastric (coronary) vein of the portal system, and the submucosal plexus at the junction is the site of varices.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch6-oesophagus-stomach-card-016",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Abdominal Oesophagus & Hiatus",
+   "front": "Describe the lymphatic drainage of the oesophagus by third.",
+   "back": "The upper third to the deep cervical nodes, the middle third to the superior and posterior mediastinal nodes, and the lower third to the left gastric and coeliac nodes.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch6-oesophagus-stomach-card-017",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Abdominal Oesophagus & Hiatus",
+   "front": "Why does oesophageal cancer spread widely and early in the submucosa?",
+   "back": "The oesophagus has a dense longitudinal submucosal lymphatic plexus and no serosa, so tumour spreads longitudinally within the wall well beyond the visible margin and out into perioesophageal tissue early - hence wide resection margins and poor local control.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch6-oesophagus-stomach-card-018",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Abdominal Oesophagus & Hiatus",
+   "front": "Which anatomical feature explains why a lower oesophageal tumour may present with hoarseness?",
+   "back": "Involvement of the left recurrent laryngeal nerve, which hooks around the arch of the aorta close to the oesophagus, and less often the right nerve at the subclavian artery.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch6-oesophagus-stomach-card-019",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Abdominal Oesophagus & Hiatus",
+   "front": "Which structures are immediately posterior to the oesophagus in the lower thorax and are at risk in oesophagectomy?",
+   "back": "The thoracic duct, the descending thoracic aorta and its oesophageal branches, and the azygos vein on the right - injury to the duct gives a chylothorax.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch6-oesophagus-stomach-card-020",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Stomach Structure & Relations",
+   "front": "Name the anatomical parts of the stomach.",
+   "back": "The cardia, fundus above the level of the cardiac orifice, body, pyloric antrum, pyloric canal and pylorus, with lesser and greater curvatures and the incisura angularis.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch6-oesophagus-stomach-card-021",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Stomach Structure & Relations",
+   "front": "What is the incisura angularis and what does it mark?",
+   "back": "The sharp notch at the lowest part of the lesser curvature, marking the junction of the body with the pyloric antrum - the boundary between acid-secreting and gastrin-secreting mucosa and a common site of gastric ulcer.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch6-oesophagus-stomach-card-022",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Stomach Structure & Relations",
+   "front": "Which structures form the stomach bed?",
+   "back": "The diaphragm, left crus, spleen, left suprarenal, upper part of the left kidney, splenic artery, pancreas and transverse mesocolon, separated from the stomach by the lesser sac.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch6-oesophagus-stomach-card-023",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Stomach Structure & Relations",
+   "front": "What is anterior to the stomach?",
+   "back": "The anterior abdominal wall, the left costal margin, the left pleura and lung, the diaphragm and the left lobe of the liver.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch6-oesophagus-stomach-card-024",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Stomach Structure & Relations",
+   "front": "How is the pylorus identified at operation?",
+   "back": "By the palpable thickened ring of the pyloric sphincter, by the prepyloric vein of Mayo crossing it anteriorly, and by the change in wall thickness felt between finger and thumb.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch6-oesophagus-stomach-card-025",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Stomach Structure & Relations",
+   "front": "Which peritoneal attachments hold the stomach?",
+   "back": "The lesser omentum from the lesser curvature to the liver, the gastrocolic ligament from the greater curvature to the transverse colon, the gastrosplenic ligament to the spleen and the gastrophrenic ligament to the diaphragm.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch6-oesophagus-stomach-card-026",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Stomach Structure & Relations",
+   "front": "Describe the muscle coats of the stomach.",
+   "back": "Outer longitudinal, middle circular which thickens into the pyloric sphincter, and an innermost oblique layer confined mainly to the fundus and body which is unique to the stomach.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch6-oesophagus-stomach-card-027",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Stomach Structure & Relations",
+   "front": "Why does hypertrophic pyloric stenosis produce a palpable olive and visible peristalsis?",
+   "back": "Hypertrophy of the circular muscle of the pylorus forms a firm mass palpable in the right upper quadrant lateral to the rectus, and the obstructed stomach hypertrophies and contracts visibly from left to right.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch6-oesophagus-stomach-card-028",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Stomach Structure & Relations",
+   "front": "What is the anatomical basis of Ramstedt's pyloromyotomy?",
+   "back": "The hypertrophied circular muscle is split longitudinally down to the submucosa along the avascular anterosuperior surface, leaving the mucosa intact so the lumen opens without entering the gut.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch6-oesophagus-stomach-card-029",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Stomach Structure & Relations",
+   "front": "Which two types of gastric volvulus occur and about which axis?",
+   "back": "Organo-axial about the long axis joining the cardia and pylorus, associated with para-oesophageal hernia, and mesentero-axial about the short axis at right angles to it.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch6-oesophagus-stomach-card-030",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Stomach Structure & Relations",
+   "front": "What is Borchardt's triad?",
+   "back": "Severe epigastric pain with unproductive retching and the inability to pass a nasogastric tube - the classic presentation of gastric volvulus.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch6-oesophagus-stomach-card-031",
+   "type": "basic",
+   "sectionId": "s3",
+   "deck": "Gastric Blood Supply",
+   "front": "Name the five arteries supplying the stomach and their origins.",
+   "back": "The left gastric from the coeliac trunk, the right gastric from the hepatic artery, the left gastroepiploic from the splenic artery, the right gastroepiploic from the gastroduodenal artery, and the short gastric arteries from the splenic artery.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch6-oesophagus-stomach-card-032",
+   "type": "basic",
+   "sectionId": "s3",
+   "deck": "Gastric Blood Supply",
+   "front": "Which artery supplies the fundus and why does that matter in splenectomy?",
+   "back": "The short gastric arteries from the splenic artery. They must be divided close to the spleen, and a ligature placed too close to the stomach can necrose the fundus.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch6-oesophagus-stomach-card-033",
+   "type": "basic",
+   "sectionId": "s3",
+   "deck": "Gastric Blood Supply",
+   "front": "Why is the lesser curvature at greater risk of ischaemia after gastric surgery?",
+   "back": "Its supply comes from the two gastric arteries running in a single arcade with fewer collaterals, and devascularisation there after highly selective vagotomy or extensive mobilisation can cause lesser curve necrosis and perforation.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch6-oesophagus-stomach-card-034",
+   "type": "basic",
+   "sectionId": "s3",
+   "deck": "Gastric Blood Supply",
+   "front": "Describe the venous drainage of the stomach.",
+   "back": "The left gastric (coronary) and right gastric veins drain directly into the portal vein; the left gastroepiploic and short gastric veins drain into the splenic vein; the right gastroepiploic vein drains into the superior mesenteric vein through the gastrocolic trunk of Henle.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch6-oesophagus-stomach-card-035",
+   "type": "basic",
+   "sectionId": "s3",
+   "deck": "Gastric Blood Supply",
+   "front": "What is the prepyloric vein of Mayo?",
+   "back": "A small vein crossing the anterior surface of the pylorus vertically, a reliable operative landmark for the gastroduodenal junction.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch6-oesophagus-stomach-card-036",
+   "type": "basic",
+   "sectionId": "s3",
+   "deck": "Gastric Blood Supply",
+   "front": "Why is a Dieulafoy lesion so dangerous despite its small size?",
+   "back": "It is an abnormally large tortuous submucosal artery, usually in the proximal stomach within 6 cm of the cardia, that erodes through a pinpoint mucosal defect; the vessel calibre is arterial so bleeding is torrential and the lesion is easily missed at endoscopy.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch6-oesophagus-stomach-card-037",
+   "type": "basic",
+   "sectionId": "s3",
+   "deck": "Gastric Blood Supply",
+   "front": "Why does a gastric conduit for oesophageal replacement depend on the right gastroepiploic artery?",
+   "back": "The left gastric, short gastric and left gastroepiploic vessels are all divided to gain length and to clear the nodes, leaving the right gastroepiploic arcade along the greater curvature plus the submucosal plexus to perfuse the whole tube up to the neck.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch6-oesophagus-stomach-card-038",
+   "type": "basic",
+   "sectionId": "s4",
+   "deck": "Gastric Lymphatics & Nodal Stations",
+   "front": "Name the four principal lymphatic zones of the stomach.",
+   "back": "The upper lesser curve to the left gastric nodes, the lower lesser curve and pylorus to the right gastric and hepatic nodes, the upper greater curve and fundus to the pancreaticosplenic nodes, and the lower greater curve to the right gastroepiploic and subpyloric nodes.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch6-oesophagus-stomach-card-039",
+   "type": "basic",
+   "sectionId": "s4",
+   "deck": "Gastric Lymphatics & Nodal Stations",
+   "front": "Where do all four gastric lymphatic zones ultimately converge?",
+   "back": "On the coeliac nodes around the coeliac trunk, and from there into the intestinal lymph trunk and the cisterna chyli.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch6-oesophagus-stomach-card-040",
+   "type": "basic",
+   "sectionId": "s4",
+   "deck": "Gastric Lymphatics & Nodal Stations",
+   "front": "Define the primary (first-tier) nodal stations of the stomach.",
+   "back": "The perigastric nodes lying along the lesser and greater curvatures - the right and left cardiac, lesser curve, greater curve, suprapyloric and infrapyloric groups.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch6-oesophagus-stomach-card-041",
+   "type": "basic",
+   "sectionId": "s4",
+   "deck": "Gastric Lymphatics & Nodal Stations",
+   "front": "Define the secondary (second-tier) nodal stations of the stomach.",
+   "back": "The nodes along the named arteries away from the stomach - left gastric, common hepatic, coeliac, splenic artery and splenic hilar nodes.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch6-oesophagus-stomach-card-042",
+   "type": "basic",
+   "sectionId": "s4",
+   "deck": "Gastric Lymphatics & Nodal Stations",
+   "front": "Distinguish a D1 from a D2 gastrectomy anatomically.",
+   "back": "A D1 resection removes the stomach with the perigastric first-tier nodes only. A D2 resection additionally clears the second-tier nodes along the left gastric, common hepatic, coeliac and splenic arteries, which requires skeletonising those vessels.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch6-oesophagus-stomach-card-043",
+   "type": "basic",
+   "sectionId": "s4",
+   "deck": "Gastric Lymphatics & Nodal Stations",
+   "front": "Why does the greater omentum accompany the specimen in a radical gastrectomy?",
+   "back": "Its lymphatics communicate freely with those of the greater curvature and it is a site of early transcoelomic implantation, so omentectomy is part of the clearance.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch6-oesophagus-stomach-card-044",
+   "type": "basic",
+   "sectionId": "s4",
+   "deck": "Gastric Lymphatics & Nodal Stations",
+   "front": "What is Virchow's node and what is the anatomical route?",
+   "back": "An enlarged left supraclavicular node at the termination of the thoracic duct, which drains the coeliac nodes; tumour cells reach it retrogradely, giving Troisier's sign.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch6-oesophagus-stomach-card-045",
+   "type": "basic",
+   "sectionId": "s4",
+   "deck": "Gastric Lymphatics & Nodal Stations",
+   "front": "Name the routes of spread of gastric carcinoma other than lymphatic.",
+   "back": "Direct through the wall into pancreas, colon or liver; transcoelomic to the peritoneum, ovaries as Krukenberg tumours and the rectovesical pouch as Blumer's shelf; and haematogenous by the portal vein to the liver.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch6-oesophagus-stomach-card-046",
+   "type": "basic",
+   "sectionId": "s4",
+   "deck": "Gastric Lymphatics & Nodal Stations",
+   "front": "What is a Sister Mary Joseph nodule and what is its route?",
+   "back": "A metastatic deposit at the umbilicus, reached along the lymphatics and the obliterated vessels of the falciform ligament from an intra-abdominal malignancy, most often gastric or ovarian.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch6-oesophagus-stomach-card-047",
+   "type": "basic",
+   "sectionId": "s5",
+   "deck": "Vagi & Their Surgical Branches",
+   "front": "How are the vagus nerves arranged at the oesophageal hiatus, and why?",
+   "back": "The left vagus becomes the anterior trunk and the right vagus the posterior trunk, because the stomach rotates 90 degrees clockwise about its longitudinal axis in development, carrying the left nerve to the front and the right to the back.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch6-oesophagus-stomach-card-048",
+   "type": "basic",
+   "sectionId": "s5",
+   "deck": "Vagi & Their Surgical Branches",
+   "front": "Name the branches of the anterior vagal trunk.",
+   "back": "The hepatic branch running in the upper lesser omentum to the liver and gallbladder, and the anterior gastric branches, of which the most distal is the anterior nerve of Latarjet supplying the antrum and pylorus.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch6-oesophagus-stomach-card-049",
+   "type": "basic",
+   "sectionId": "s5",
+   "deck": "Vagi & Their Surgical Branches",
+   "front": "Name the branches of the posterior vagal trunk.",
+   "back": "The coeliac branch to the coeliac plexus, the posterior gastric branches including the posterior nerve of Latarjet, and the criminal nerve of Grassi to the fundus.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch6-oesophagus-stomach-card-050",
+   "type": "basic",
+   "sectionId": "s5",
+   "deck": "Vagi & Their Surgical Branches",
+   "front": "What is the criminal nerve of Grassi and why is it named so?",
+   "back": "The first posterior gastric branch, arising high and passing behind the oesophagus to the fundus. If it is missed at vagotomy, acid secretion persists and the ulcer recurs - so it is blamed for the failure.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch6-oesophagus-stomach-card-051",
+   "type": "basic",
+   "sectionId": "s5",
+   "deck": "Vagi & Their Surgical Branches",
+   "front": "What is the nerve of Latarjet and what is the crow's foot?",
+   "back": "The terminal antral branch of each vagal trunk running along the lesser curvature within the lesser omentum. Its terminal fan of branches to the antrum and pylorus is the crow's foot, which must be preserved in a highly selective vagotomy to keep gastric emptying normal.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch6-oesophagus-stomach-card-052",
+   "type": "basic",
+   "sectionId": "s5",
+   "deck": "Vagi & Their Surgical Branches",
+   "front": "Contrast truncal, selective and highly selective vagotomy anatomically.",
+   "back": "Truncal vagotomy divides both trunks at the hiatus, denervating the whole stomach plus liver, biliary tree and gut. Selective vagotomy spares the hepatic and coeliac branches and denervates only the stomach. Highly selective (parietal cell) vagotomy divides only the gastric branches to the body and fundus, preserving the nerves of Latarjet and the crow's foot.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch6-oesophagus-stomach-card-053",
+   "type": "basic",
+   "sectionId": "s5",
+   "deck": "Vagi & Their Surgical Branches",
+   "front": "Why does truncal vagotomy require a drainage procedure?",
+   "back": "It paralyses the antral pump and abolishes receptive relaxation, so the pylorus fails to relax and the stomach cannot empty; a pyloroplasty or gastrojejunostomy is added to bypass the problem.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch6-oesophagus-stomach-card-054",
+   "type": "basic",
+   "sectionId": "s5",
+   "deck": "Vagi & Their Surgical Branches",
+   "front": "Why does highly selective vagotomy not require a drainage procedure?",
+   "back": "The antral and pyloric innervation through the nerves of Latarjet is preserved, so antral pumping and pyloric relaxation continue normally while acid secretion from the parietal cell mass is abolished.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch6-oesophagus-stomach-card-055",
+   "type": "basic",
+   "sectionId": "s5",
+   "deck": "Vagi & Their Surgical Branches",
+   "front": "Which post-vagotomy problems follow from the loss of the hepatic and coeliac branches?",
+   "back": "Gallbladder stasis with an increased incidence of gallstones, and diarrhoea from altered small bowel and biliary motility.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch6-oesophagus-stomach-card-056",
+   "type": "basic",
+   "sectionId": "s5",
+   "deck": "Vagi & Their Surgical Branches",
+   "front": "What is the anatomical basis of dumping after gastric drainage or resection?",
+   "back": "Loss of the pyloric sphincter and of receptive relaxation lets hyperosmolar chyme flood into the jejunum, drawing fluid into the lumen and distending it, which causes both the vasomotor and abdominal symptoms of early dumping.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch6-oesophagus-stomach-card-057",
+   "type": "basic",
+   "sectionId": "s5",
+   "deck": "Vagi & Their Surgical Branches",
+   "front": "Describe the sympathetic supply of the stomach and the route of its pain.",
+   "back": "Preganglionic fibres from T6 to T9 run in the greater splanchnic nerve to the coeliac ganglion; afferent pain fibres return along the same route, so gastric pain is referred to the epigastrium and, with diaphragmatic irritation, to the shoulder.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch6-oesophagus-stomach-card-058",
+   "type": "basic",
+   "sectionId": "s5",
+   "deck": "Vagi & Their Surgical Branches",
+   "front": "What is Heller's myotomy and which fibres are divided?",
+   "back": "Division of the circular muscle of the lower oesophagus and the upper 2 cm of the cardia down to the mucosa, for achalasia; because it destroys the sphincter, an antireflux partial fundoplication is usually added.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch6-oesophagus-stomach-card-059",
+   "type": "cloze",
+   "sectionId": "s1",
+   "deck": "Abdominal Oesophagus & Hiatus",
+   "cloze": "The oesophageal hiatus lies at the level of {{c1::T10}}.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch6-oesophagus-stomach-card-060",
+   "type": "cloze",
+   "sectionId": "s1",
+   "deck": "Abdominal Oesophagus & Hiatus",
+   "cloze": "The oesophageal hiatus is formed by the fibres of the {{c1::right crus}} of the diaphragm.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch6-oesophagus-stomach-card-061",
+   "type": "cloze",
+   "sectionId": "s1",
+   "deck": "Abdominal Oesophagus & Hiatus",
+   "cloze": "The acute angle between the abdominal oesophagus and the gastric fundus is the angle of {{c1::His}}.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch6-oesophagus-stomach-card-062",
+   "type": "cloze",
+   "sectionId": "s1",
+   "deck": "Abdominal Oesophagus & Hiatus",
+   "cloze": "In a sliding hiatus hernia the {{c1::gastro-oesophageal junction}} migrates above the diaphragm.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch6-oesophagus-stomach-card-063",
+   "type": "cloze",
+   "sectionId": "s1",
+   "deck": "Abdominal Oesophagus & Hiatus",
+   "cloze": "A pharyngeal pouch protrudes through {{c1::Killian's dehiscence}}.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch6-oesophagus-stomach-card-064",
+   "type": "cloze",
+   "sectionId": "s1",
+   "deck": "Abdominal Oesophagus & Hiatus",
+   "cloze": "The lower third of the oesophagus drains its lymph to the left gastric and {{c1::coeliac}} nodes.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch6-oesophagus-stomach-card-065",
+   "type": "cloze",
+   "sectionId": "s1",
+   "deck": "Abdominal Oesophagus & Hiatus",
+   "cloze": "The oesophagus has no {{c1::serosa}}, which is why tumour spreads early beyond the wall.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch6-oesophagus-stomach-card-066",
+   "type": "cloze",
+   "sectionId": "s2",
+   "deck": "Stomach Structure & Relations",
+   "cloze": "The notch at the lowest point of the lesser curvature is the {{c1::incisura angularis}}.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch6-oesophagus-stomach-card-067",
+   "type": "cloze",
+   "sectionId": "s2",
+   "deck": "Stomach Structure & Relations",
+   "cloze": "The innermost muscle coat unique to the stomach is the {{c1::oblique}} layer.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch6-oesophagus-stomach-card-068",
+   "type": "cloze",
+   "sectionId": "s2",
+   "deck": "Stomach Structure & Relations",
+   "cloze": "Gastric volvulus about the long axis of the stomach is termed {{c1::organo-axial}}.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch6-oesophagus-stomach-card-069",
+   "type": "cloze",
+   "sectionId": "s3",
+   "deck": "Gastric Blood Supply",
+   "cloze": "The fundus of the stomach is supplied by the {{c1::short gastric}} arteries.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch6-oesophagus-stomach-card-070",
+   "type": "cloze",
+   "sectionId": "s3",
+   "deck": "Gastric Blood Supply",
+   "cloze": "The right gastroepiploic artery is a branch of the {{c1::gastroduodenal}} artery.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch6-oesophagus-stomach-card-071",
+   "type": "cloze",
+   "sectionId": "s3",
+   "deck": "Gastric Blood Supply",
+   "cloze": "The vein crossing the anterior surface of the pylorus is the prepyloric vein of {{c1::Mayo}}.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch6-oesophagus-stomach-card-072",
+   "type": "cloze",
+   "sectionId": "s4",
+   "deck": "Gastric Lymphatics & Nodal Stations",
+   "cloze": "All gastric lymphatic zones converge finally on the {{c1::coeliac}} nodes.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch6-oesophagus-stomach-card-073",
+   "type": "cloze",
+   "sectionId": "s4",
+   "deck": "Gastric Lymphatics & Nodal Stations",
+   "cloze": "A D2 gastrectomy clears the nodes along the {{c1::named arteries (left gastric, hepatic, coeliac, splenic)}}.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch6-oesophagus-stomach-card-074",
+   "type": "cloze",
+   "sectionId": "s4",
+   "deck": "Gastric Lymphatics & Nodal Stations",
+   "cloze": "An umbilical metastatic deposit is a {{c1::Sister Mary Joseph}} nodule.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch6-oesophagus-stomach-card-075",
+   "type": "cloze",
+   "sectionId": "s5",
+   "deck": "Vagi & Their Surgical Branches",
+   "cloze": "At the hiatus the {{c1::left}} vagus becomes the anterior trunk.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch6-oesophagus-stomach-card-076",
+   "type": "cloze",
+   "sectionId": "s5",
+   "deck": "Vagi & Their Surgical Branches",
+   "cloze": "The high posterior fundic branch missed at vagotomy is the criminal nerve of {{c1::Grassi}}.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch6-oesophagus-stomach-card-077",
+   "type": "cloze",
+   "sectionId": "s5",
+   "deck": "Vagi & Their Surgical Branches",
+   "cloze": "The antral branch preserved in highly selective vagotomy is the nerve of {{c1::Latarjet}}.",
+   "difficulty": 1
+  }
+ ],
+ "mcqs": [
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sana-ch6-oesophagus-stomach-mcq-001",
+   "type": "single",
+   "sectionId": "s6",
+   "difficulty": 2,
+   "highYield": true,
+   "stem": "Two years after a truncal vagotomy and pyloroplasty a patient has recurrent duodenal ulceration. At re-exploration a nerve fibre is found passing behind the oesophagus to the fundus. Which nerve was missed, and from which trunk does it arise?",
+   "options": [
+    {
+     "id": "a",
+     "text": "Hepatic branch of the anterior trunk",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "b",
+     "text": "Criminal nerve of Grassi from the posterior trunk",
+     "correct": true,
+     "why": "Key - B) Criminal nerve of Grassi from the posterior trunk. The criminal nerve of Grassi is the first posterior gastric branch, arising high and running behind the oesophagus to the fundus; if it is left intact the parietal cell mass keeps its vagal drive and the ulcer recurs.\n\nWhy the others fail:\nA) Hepatic branch of the anterior trunk - The hepatic branch runs forwards in the lesser omentum to the liver and carries no acid-secretory fibres to the fundus.\nC) Anterior nerve of Latarjet - The anterior nerve of Latarjet supplies the antrum and pylorus and is deliberately preserved in selective procedures, not a cause of persistent acid secretion.\nD) Coeliac branch of the posterior trunk - The coeliac branch runs to the coeliac plexus and supplies the midgut, not the gastric fundus."
+    },
+    {
+     "id": "c",
+     "text": "Anterior nerve of Latarjet",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "d",
+     "text": "Coeliac branch of the posterior trunk",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    }
+   ],
+   "explanation": [
+    "Key - B) Criminal nerve of Grassi from the posterior trunk. The criminal nerve of Grassi is the first posterior gastric branch, arising high and running behind the oesophagus to the fundus; if it is left intact the parietal cell mass keeps its vagal drive and the ulcer recurs.\n\nWhy the others fail:\nA) Hepatic branch of the anterior trunk - The hepatic branch runs forwards in the lesser omentum to the liver and carries no acid-secretory fibres to the fundus.\nC) Anterior nerve of Latarjet - The anterior nerve of Latarjet supplies the antrum and pylorus and is deliberately preserved in selective procedures, not a cause of persistent acid secretion.\nD) Coeliac branch of the posterior trunk - The coeliac branch runs to the coeliac plexus and supplies the midgut, not the gastric fundus."
+   ],
+   "keyFacts": [
+    "Key - B) Criminal nerve of Grassi from the posterior trunk. The criminal nerve of Grassi is the first posterior gastric branch, arising high and running behind the oesophagus to the fundus; if it is left intact the parietal cell mass keeps its vagal drive and the ulcer recurs.\n\nWhy the others fail:\nA) Hepatic branch of the anterior trunk - The hepatic branch runs forwards in the lesser omentum to the liver and carries no acid-secretory fibres to the fundus.\nC) Anterior nerve of Latarjet - The anterior nerve of Latarjet supplies the antrum and pylorus and is deliberately preserved in selective procedures, not a cause of persistent acid secretion.\nD) Coeliac branch of the posterior trunk - The coeliac branch runs to the coeliac plexus and supplies the midgut, not the gastric fundus."
+   ],
+   "teachingPoint": "Key - B) Criminal nerve of Grassi from the posterior trunk. The criminal nerve of Grassi is the first posterior gastric branch, arising high and running behind the oesophagus to the fundus; if it is left intact the parietal cell mass keeps its vagal drive and the ulcer recurs.\n\nWhy the others fail:\nA) Hepatic branch of the anterior trunk - The hepatic branch runs forwards in the lesser omentum to the liver and carries no acid-secretory fibres to the fundus.\nC) Anterior nerve of Latarjet - The anterior nerve of Latarjet supplies the antrum and pylorus and is deliberately preserved in selective procedures, not a cause of persistent acid secretion.\nD) Coeliac branch of the posterior trunk - The coeliac branch runs to the coeliac plexus and supplies the midgut, not the gastric fundus."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sana-ch6-oesophagus-stomach-mcq-002",
+   "type": "single",
+   "sectionId": "s6",
+   "difficulty": 2,
+   "highYield": true,
+   "stem": "A patient has a large para-oesophageal hernia with the gastro-oesophageal junction still below the diaphragm. Why is repair advised even though reflux symptoms are absent?",
+   "options": [
+    {
+     "id": "a",
+     "text": "Because the angle of His has been lost and reflux will inevitably follow",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "b",
+     "text": "Because the herniated fundus can undergo organo-axial volvulus in the sac and strangulate",
+     "correct": true,
+     "why": "Key - B) Because the herniated fundus can undergo organo-axial volvulus in the sac and strangulate. The fundus rolling into a confined sac can twist about the cardio-pyloric axis, and once incarcerated the gastric wall becomes ischaemic and perforates, with very high mortality.\n\nWhy the others fail:\nA) Because the angle of His has been lost and reflux will inevitably follow - In a para-oesophageal hernia the junction and the angle of His remain below the hiatus, which is exactly why reflux is uncommon.\nC) Because the phrenico-oesophageal ligament will rupture and cause a sliding hernia - Progression to a sliding hernia is not the recognised danger and would in any case be less serious than gastric strangulation.\nD) Because the vagal trunks are stretched and cause gastroparesis - Vagal stretching does not produce the acute catastrophe that drives the recommendation for repair."
+    },
+    {
+     "id": "c",
+     "text": "Because the phrenico-oesophageal ligament will rupture and cause a sliding hernia",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "d",
+     "text": "Because the vagal trunks are stretched and cause gastroparesis",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    }
+   ],
+   "explanation": [
+    "Key - B) Because the herniated fundus can undergo organo-axial volvulus in the sac and strangulate. The fundus rolling into a confined sac can twist about the cardio-pyloric axis, and once incarcerated the gastric wall becomes ischaemic and perforates, with very high mortality.\n\nWhy the others fail:\nA) Because the angle of His has been lost and reflux will inevitably follow - In a para-oesophageal hernia the junction and the angle of His remain below the hiatus, which is exactly why reflux is uncommon.\nC) Because the phrenico-oesophageal ligament will rupture and cause a sliding hernia - Progression to a sliding hernia is not the recognised danger and would in any case be less serious than gastric strangulation.\nD) Because the vagal trunks are stretched and cause gastroparesis - Vagal stretching does not produce the acute catastrophe that drives the recommendation for repair."
+   ],
+   "keyFacts": [
+    "Key - B) Because the herniated fundus can undergo organo-axial volvulus in the sac and strangulate. The fundus rolling into a confined sac can twist about the cardio-pyloric axis, and once incarcerated the gastric wall becomes ischaemic and perforates, with very high mortality.\n\nWhy the others fail:\nA) Because the angle of His has been lost and reflux will inevitably follow - In a para-oesophageal hernia the junction and the angle of His remain below the hiatus, which is exactly why reflux is uncommon.\nC) Because the phrenico-oesophageal ligament will rupture and cause a sliding hernia - Progression to a sliding hernia is not the recognised danger and would in any case be less serious than gastric strangulation.\nD) Because the vagal trunks are stretched and cause gastroparesis - Vagal stretching does not produce the acute catastrophe that drives the recommendation for repair."
+   ],
+   "teachingPoint": "Key - B) Because the herniated fundus can undergo organo-axial volvulus in the sac and strangulate. The fundus rolling into a confined sac can twist about the cardio-pyloric axis, and once incarcerated the gastric wall becomes ischaemic and perforates, with very high mortality.\n\nWhy the others fail:\nA) Because the angle of His has been lost and reflux will inevitably follow - In a para-oesophageal hernia the junction and the angle of His remain below the hiatus, which is exactly why reflux is uncommon.\nC) Because the phrenico-oesophageal ligament will rupture and cause a sliding hernia - Progression to a sliding hernia is not the recognised danger and would in any case be less serious than gastric strangulation.\nD) Because the vagal trunks are stretched and cause gastroparesis - Vagal stretching does not produce the acute catastrophe that drives the recommendation for repair."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sana-ch6-oesophagus-stomach-mcq-003",
+   "type": "single",
+   "sectionId": "s6",
+   "difficulty": 2,
+   "highYield": true,
+   "stem": "During a D2 total gastrectomy the surgeon skeletonises a vessel along the upper border of the pancreas to clear its nodes. Which vessel, and which additional structure is thereby placed at risk?",
+   "options": [
+    {
+     "id": "a",
+     "text": "Left gastric artery - the left hepatic artery may be replaced from it",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "b",
+     "text": "Splenic artery - the tail of the pancreas and the splenic hilum",
+     "correct": true,
+     "why": "Key - B) Splenic artery - the tail of the pancreas and the splenic hilum. The splenic artery runs a tortuous course along the upper border of the pancreas to the hilum, so clearing its nodes risks the pancreatic tail and the splenic vessels, and pancreatic injury or splenic devascularisation is the classic complication of a D2 clearance.\n\nWhy the others fail:\nA) Left gastric artery - the left hepatic artery may be replaced from it - The left gastric artery runs upwards in the gastropancreatic fold rather than along the upper border of the pancreas, though the replaced left hepatic point is itself correct anatomy.\nC) Common hepatic artery - the portal vein behind it - The common hepatic artery does run with the portal vein behind it, but it lies at the upper border of the pancreatic head and neck rather than along the length of the gland.\nD) Right gastroepiploic artery - the gastrocolic trunk of Henle - The right gastroepiploic artery lies in the greater omentum along the greater curvature, not on the upper border of the pancreas."
+    },
+    {
+     "id": "c",
+     "text": "Common hepatic artery - the portal vein behind it",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "d",
+     "text": "Right gastroepiploic artery - the gastrocolic trunk of Henle",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    }
+   ],
+   "explanation": [
+    "Key - B) Splenic artery - the tail of the pancreas and the splenic hilum. The splenic artery runs a tortuous course along the upper border of the pancreas to the hilum, so clearing its nodes risks the pancreatic tail and the splenic vessels, and pancreatic injury or splenic devascularisation is the classic complication of a D2 clearance.\n\nWhy the others fail:\nA) Left gastric artery - the left hepatic artery may be replaced from it - The left gastric artery runs upwards in the gastropancreatic fold rather than along the upper border of the pancreas, though the replaced left hepatic point is itself correct anatomy.\nC) Common hepatic artery - the portal vein behind it - The common hepatic artery does run with the portal vein behind it, but it lies at the upper border of the pancreatic head and neck rather than along the length of the gland.\nD) Right gastroepiploic artery - the gastrocolic trunk of Henle - The right gastroepiploic artery lies in the greater omentum along the greater curvature, not on the upper border of the pancreas."
+   ],
+   "keyFacts": [
+    "Key - B) Splenic artery - the tail of the pancreas and the splenic hilum. The splenic artery runs a tortuous course along the upper border of the pancreas to the hilum, so clearing its nodes risks the pancreatic tail and the splenic vessels, and pancreatic injury or splenic devascularisation is the classic complication of a D2 clearance.\n\nWhy the others fail:\nA) Left gastric artery - the left hepatic artery may be replaced from it - The left gastric artery runs upwards in the gastropancreatic fold rather than along the upper border of the pancreas, though the replaced left hepatic point is itself correct anatomy.\nC) Common hepatic artery - the portal vein behind it - The common hepatic artery does run with the portal vein behind it, but it lies at the upper border of the pancreatic head and neck rather than along the length of the gland.\nD) Right gastroepiploic artery - the gastrocolic trunk of Henle - The right gastroepiploic artery lies in the greater omentum along the greater curvature, not on the upper border of the pancreas."
+   ],
+   "teachingPoint": "Key - B) Splenic artery - the tail of the pancreas and the splenic hilum. The splenic artery runs a tortuous course along the upper border of the pancreas to the hilum, so clearing its nodes risks the pancreatic tail and the splenic vessels, and pancreatic injury or splenic devascularisation is the classic complication of a D2 clearance.\n\nWhy the others fail:\nA) Left gastric artery - the left hepatic artery may be replaced from it - The left gastric artery runs upwards in the gastropancreatic fold rather than along the upper border of the pancreas, though the replaced left hepatic point is itself correct anatomy.\nC) Common hepatic artery - the portal vein behind it - The common hepatic artery does run with the portal vein behind it, but it lies at the upper border of the pancreatic head and neck rather than along the length of the gland.\nD) Right gastroepiploic artery - the gastrocolic trunk of Henle - The right gastroepiploic artery lies in the greater omentum along the greater curvature, not on the upper border of the pancreas."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sana-ch6-oesophagus-stomach-mcq-004",
+   "type": "single",
+   "sectionId": "s6",
+   "difficulty": 2,
+   "highYield": true,
+   "stem": "A patient undergoing oesophagectomy has the stomach raised to the neck as a conduit. Which single anatomical feature makes this possible after the left gastric, short gastric and left gastroepiploic vessels are all divided?",
+   "options": [
+    {
+     "id": "a",
+     "text": "The submucosal plexus is independent of the extramural arteries",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "b",
+     "text": "The right gastroepiploic arcade runs continuously along the greater curvature and communicates with the submucosal plexus",
+     "correct": true,
+     "why": "Key - B) The right gastroepiploic arcade runs continuously along the greater curvature and communicates with the submucosal plexus. The right gastroepiploic artery forms a continuous arcade along the greater curvature, and its communication with the rich intramural submucosal plexus perfuses the whole tubularised conduit, including the tip at the neck which is the most marginal point.\n\nWhy the others fail:\nA) The submucosal plexus is independent of the extramural arteries - The submucosal plexus is fed by the extramural arteries and cannot function independently of them.\nC) The right gastric artery alone can perfuse the fundus - The right gastric artery is small and supplies the distal lesser curvature; it cannot perfuse the fundus, which is why the tip of the conduit is the site of anastomotic leak.\nD) The gastric wall derives supply from the diaphragmatic vessels through the gastrophrenic ligament - The gastrophrenic ligament is divided during mobilisation and carries no significant arterial supply."
+    },
+    {
+     "id": "c",
+     "text": "The right gastric artery alone can perfuse the fundus",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "d",
+     "text": "The gastric wall derives supply from the diaphragmatic vessels through the gastrophrenic ligament",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    }
+   ],
+   "explanation": [
+    "Key - B) The right gastroepiploic arcade runs continuously along the greater curvature and communicates with the submucosal plexus. The right gastroepiploic artery forms a continuous arcade along the greater curvature, and its communication with the rich intramural submucosal plexus perfuses the whole tubularised conduit, including the tip at the neck which is the most marginal point.\n\nWhy the others fail:\nA) The submucosal plexus is independent of the extramural arteries - The submucosal plexus is fed by the extramural arteries and cannot function independently of them.\nC) The right gastric artery alone can perfuse the fundus - The right gastric artery is small and supplies the distal lesser curvature; it cannot perfuse the fundus, which is why the tip of the conduit is the site of anastomotic leak.\nD) The gastric wall derives supply from the diaphragmatic vessels through the gastrophrenic ligament - The gastrophrenic ligament is divided during mobilisation and carries no significant arterial supply."
+   ],
+   "keyFacts": [
+    "Key - B) The right gastroepiploic arcade runs continuously along the greater curvature and communicates with the submucosal plexus. The right gastroepiploic artery forms a continuous arcade along the greater curvature, and its communication with the rich intramural submucosal plexus perfuses the whole tubularised conduit, including the tip at the neck which is the most marginal point.\n\nWhy the others fail:\nA) The submucosal plexus is independent of the extramural arteries - The submucosal plexus is fed by the extramural arteries and cannot function independently of them.\nC) The right gastric artery alone can perfuse the fundus - The right gastric artery is small and supplies the distal lesser curvature; it cannot perfuse the fundus, which is why the tip of the conduit is the site of anastomotic leak.\nD) The gastric wall derives supply from the diaphragmatic vessels through the gastrophrenic ligament - The gastrophrenic ligament is divided during mobilisation and carries no significant arterial supply."
+   ],
+   "teachingPoint": "Key - B) The right gastroepiploic arcade runs continuously along the greater curvature and communicates with the submucosal plexus. The right gastroepiploic artery forms a continuous arcade along the greater curvature, and its communication with the rich intramural submucosal plexus perfuses the whole tubularised conduit, including the tip at the neck which is the most marginal point.\n\nWhy the others fail:\nA) The submucosal plexus is independent of the extramural arteries - The submucosal plexus is fed by the extramural arteries and cannot function independently of them.\nC) The right gastric artery alone can perfuse the fundus - The right gastric artery is small and supplies the distal lesser curvature; it cannot perfuse the fundus, which is why the tip of the conduit is the site of anastomotic leak.\nD) The gastric wall derives supply from the diaphragmatic vessels through the gastrophrenic ligament - The gastrophrenic ligament is divided during mobilisation and carries no significant arterial supply."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sana-ch6-oesophagus-stomach-mcq-005",
+   "type": "single",
+   "sectionId": "s6",
+   "difficulty": 2,
+   "highYield": true,
+   "stem": "A patient with cirrhosis has torrential bleeding from the gastric fundus. Portal pressure is normal and the liver biopsy is unremarkable, but the spleen is very large. Which vein is occluded and by what route do the varices form?",
+   "options": [
+    {
+     "id": "a",
+     "text": "Left gastric vein - through oesophageal tributaries of the azygos",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "b",
+     "text": "Splenic vein - through the short gastric veins into the fundus",
+     "correct": true,
+     "why": "Key - B) Splenic vein - through the short gastric veins into the fundus. With the splenic vein occluded, splenic outflow is forced through the short gastric veins into the fundus and back to the portal vein through the coronary vein, producing isolated fundal varices with a normal portal pressure - left-sided portal hypertension cured by splenectomy.\n\nWhy the others fail:\nA) Left gastric vein - through oesophageal tributaries of the azygos - Left gastric vein obstruction is not the described picture and would give oesophageal rather than isolated fundal varices.\nC) Portal vein - through the whole portal system uniformly - Portal vein occlusion raises portal pressure, which the stem excludes.\nD) Right gastroepiploic vein - through the gastrocolic trunk of Henle - The right gastroepiploic vein drains the distal greater curvature and its obstruction does not produce fundal varices."
+    },
+    {
+     "id": "c",
+     "text": "Portal vein - through the whole portal system uniformly",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "d",
+     "text": "Right gastroepiploic vein - through the gastrocolic trunk of Henle",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    }
+   ],
+   "explanation": [
+    "Key - B) Splenic vein - through the short gastric veins into the fundus. With the splenic vein occluded, splenic outflow is forced through the short gastric veins into the fundus and back to the portal vein through the coronary vein, producing isolated fundal varices with a normal portal pressure - left-sided portal hypertension cured by splenectomy.\n\nWhy the others fail:\nA) Left gastric vein - through oesophageal tributaries of the azygos - Left gastric vein obstruction is not the described picture and would give oesophageal rather than isolated fundal varices.\nC) Portal vein - through the whole portal system uniformly - Portal vein occlusion raises portal pressure, which the stem excludes.\nD) Right gastroepiploic vein - through the gastrocolic trunk of Henle - The right gastroepiploic vein drains the distal greater curvature and its obstruction does not produce fundal varices."
+   ],
+   "keyFacts": [
+    "Key - B) Splenic vein - through the short gastric veins into the fundus. With the splenic vein occluded, splenic outflow is forced through the short gastric veins into the fundus and back to the portal vein through the coronary vein, producing isolated fundal varices with a normal portal pressure - left-sided portal hypertension cured by splenectomy.\n\nWhy the others fail:\nA) Left gastric vein - through oesophageal tributaries of the azygos - Left gastric vein obstruction is not the described picture and would give oesophageal rather than isolated fundal varices.\nC) Portal vein - through the whole portal system uniformly - Portal vein occlusion raises portal pressure, which the stem excludes.\nD) Right gastroepiploic vein - through the gastrocolic trunk of Henle - The right gastroepiploic vein drains the distal greater curvature and its obstruction does not produce fundal varices."
+   ],
+   "teachingPoint": "Key - B) Splenic vein - through the short gastric veins into the fundus. With the splenic vein occluded, splenic outflow is forced through the short gastric veins into the fundus and back to the portal vein through the coronary vein, producing isolated fundal varices with a normal portal pressure - left-sided portal hypertension cured by splenectomy.\n\nWhy the others fail:\nA) Left gastric vein - through oesophageal tributaries of the azygos - Left gastric vein obstruction is not the described picture and would give oesophageal rather than isolated fundal varices.\nC) Portal vein - through the whole portal system uniformly - Portal vein occlusion raises portal pressure, which the stem excludes.\nD) Right gastroepiploic vein - through the gastrocolic trunk of Henle - The right gastroepiploic vein drains the distal greater curvature and its obstruction does not produce fundal varices."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sana-ch6-oesophagus-stomach-mcq-006",
+   "type": "single",
+   "sectionId": "s6",
+   "difficulty": 2,
+   "highYield": true,
+   "stem": "Which anatomical difference best explains why a highly selective vagotomy needs no drainage procedure whereas a truncal vagotomy does?",
+   "options": [
+    {
+     "id": "a",
+     "text": "Highly selective vagotomy leaves the pyloric sphincter intact",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "b",
+     "text": "Highly selective vagotomy preserves the nerves of Latarjet and the crow's foot, so antral pumping and pyloric relaxation continue",
+     "correct": true,
+     "why": "Key - B) Highly selective vagotomy preserves the nerves of Latarjet and the crow's foot, so antral pumping and pyloric relaxation continue. Preserving the nerves of Latarjet and their terminal crow's foot keeps the antral pump and the coordinated pyloric relaxation, so the stomach empties normally without a bypass.\n\nWhy the others fail:\nA) Highly selective vagotomy leaves the pyloric sphincter intact - Both operations leave the sphincter structurally intact; the problem in truncal vagotomy is functional, not structural.\nC) Truncal vagotomy divides the coeliac branch and paralyses the small bowel - The coeliac branch affects the midgut and contributes to post-vagotomy diarrhoea, but it is not the reason a drainage procedure is needed.\nD) Truncal vagotomy denervates the parietal cell mass more completely - Greater completeness of parietal denervation would reduce recurrence, not create a need for drainage."
+    },
+    {
+     "id": "c",
+     "text": "Truncal vagotomy divides the coeliac branch and paralyses the small bowel",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "d",
+     "text": "Truncal vagotomy denervates the parietal cell mass more completely",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    }
+   ],
+   "explanation": [
+    "Key - B) Highly selective vagotomy preserves the nerves of Latarjet and the crow's foot, so antral pumping and pyloric relaxation continue. Preserving the nerves of Latarjet and their terminal crow's foot keeps the antral pump and the coordinated pyloric relaxation, so the stomach empties normally without a bypass.\n\nWhy the others fail:\nA) Highly selective vagotomy leaves the pyloric sphincter intact - Both operations leave the sphincter structurally intact; the problem in truncal vagotomy is functional, not structural.\nC) Truncal vagotomy divides the coeliac branch and paralyses the small bowel - The coeliac branch affects the midgut and contributes to post-vagotomy diarrhoea, but it is not the reason a drainage procedure is needed.\nD) Truncal vagotomy denervates the parietal cell mass more completely - Greater completeness of parietal denervation would reduce recurrence, not create a need for drainage."
+   ],
+   "keyFacts": [
+    "Key - B) Highly selective vagotomy preserves the nerves of Latarjet and the crow's foot, so antral pumping and pyloric relaxation continue. Preserving the nerves of Latarjet and their terminal crow's foot keeps the antral pump and the coordinated pyloric relaxation, so the stomach empties normally without a bypass.\n\nWhy the others fail:\nA) Highly selective vagotomy leaves the pyloric sphincter intact - Both operations leave the sphincter structurally intact; the problem in truncal vagotomy is functional, not structural.\nC) Truncal vagotomy divides the coeliac branch and paralyses the small bowel - The coeliac branch affects the midgut and contributes to post-vagotomy diarrhoea, but it is not the reason a drainage procedure is needed.\nD) Truncal vagotomy denervates the parietal cell mass more completely - Greater completeness of parietal denervation would reduce recurrence, not create a need for drainage."
+   ],
+   "teachingPoint": "Key - B) Highly selective vagotomy preserves the nerves of Latarjet and the crow's foot, so antral pumping and pyloric relaxation continue. Preserving the nerves of Latarjet and their terminal crow's foot keeps the antral pump and the coordinated pyloric relaxation, so the stomach empties normally without a bypass.\n\nWhy the others fail:\nA) Highly selective vagotomy leaves the pyloric sphincter intact - Both operations leave the sphincter structurally intact; the problem in truncal vagotomy is functional, not structural.\nC) Truncal vagotomy divides the coeliac branch and paralyses the small bowel - The coeliac branch affects the midgut and contributes to post-vagotomy diarrhoea, but it is not the reason a drainage procedure is needed.\nD) Truncal vagotomy denervates the parietal cell mass more completely - Greater completeness of parietal denervation would reduce recurrence, not create a need for drainage."
+  }
+ ],
+ "emqs": [],
+ "summary": "Oesophagus & Stomach: work through each section's cards to fix the structures, their relations and clinical lesions. Use the MCQs to test discrimination and the image-occlusion cards to rehearse identification."
+}

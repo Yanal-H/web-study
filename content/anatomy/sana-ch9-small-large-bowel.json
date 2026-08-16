@@ -1,0 +1,695 @@
+{
+ "schema": "foundation.study-module/v1",
+ "id": "sana-ch9-small-large-bowel",
+ "subject": "Anatomy",
+ "title": "Small & Large Bowel",
+ "source": {
+  "book": "Recall by Yanal — Surgical Anatomy",
+  "chapter": 9,
+  "title": "Small & Large Bowel",
+  "pages": "—"
+ },
+ "brand": "by Yanal · Cairo 2026",
+ "estMinutes": 20,
+ "deck": "Anatomy::Small & Large Bowel",
+ "tags": [
+  "anatomy",
+  "surgical-anatomy",
+  "small-large-bowel"
+ ],
+ "objectives": [
+  "Identify the key structures of Small & Large Bowel at each level of dissection.",
+  "Relate the nerves, vessels and muscles of Small & Large Bowel to their functions.",
+  "Localise the named spaces and regions of Small & Large Bowel and list their contents.",
+  "Recognise the common clinical lesions associated with Small & Large Bowel.",
+  "Reproduce the high-yield relations of Small & Large Bowel tested in vivas and MCQs."
+ ],
+ "outline": [
+  "9.1 Small Bowel",
+  "9.2 Colon",
+  "9.3 Appendix",
+  "9.4 Clinical Scenarios"
+ ],
+ "sections": [
+  {
+   "id": "s1",
+   "n": "9.1",
+   "title": "Small Bowel",
+   "deck": "Small Bowel",
+   "digest": "Imported Recall deck. This section holds the **small bowel** cards for Small & Large Bowel. Open the flashcards for Small Bowel to drill it; author a written digest here to turn the section into a reader page.",
+   "highYield": [],
+   "tables": [],
+   "pitfalls": [],
+   "figures": []
+  },
+  {
+   "id": "s2",
+   "n": "9.2",
+   "title": "Colon",
+   "deck": "Colon",
+   "digest": "Imported Recall deck. This section holds the **colon** cards for Small & Large Bowel. Open the flashcards for Colon to drill it; author a written digest here to turn the section into a reader page.",
+   "highYield": [],
+   "tables": [],
+   "pitfalls": [],
+   "figures": []
+  },
+  {
+   "id": "s3",
+   "n": "9.3",
+   "title": "Appendix",
+   "deck": "Appendix",
+   "digest": "Imported Recall deck. This section holds the **appendix** cards for Small & Large Bowel. Open the flashcards for Appendix to drill it; author a written digest here to turn the section into a reader page.",
+   "highYield": [],
+   "tables": [],
+   "pitfalls": [],
+   "figures": []
+  },
+  {
+   "id": "s4",
+   "n": "9.4",
+   "title": "Clinical Scenarios",
+   "deck": "Clinical Scenarios",
+   "digest": "Imported Recall deck. This section holds the **clinical scenarios** cards for Small & Large Bowel. Open the flashcards for Clinical Scenarios to drill it; author a written digest here to turn the section into a reader page.",
+   "highYield": [],
+   "tables": [],
+   "pitfalls": [],
+   "figures": []
+  }
+ ],
+ "glossary": [],
+ "mnemonics": [],
+ "cards": [
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch9-small-large-bowel-card-001",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Small Bowel",
+   "front": "How is the jejunum distinguished from the ileum at operation?",
+   "back": "The jejunum is wider, thicker-walled and redder with prominent plicae circulares, one or two large vascular arcades with long vasa recta and a translucent mesentery; the ileum is narrower, thinner, paler, with three to five tiers of short arcades, short vasa recta, a fat-laden mesentery and Peyer's patches.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch9-small-large-bowel-card-002",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Small Bowel",
+   "front": "Why does the surgeon need to know the direction of the mesentery when creating a stoma?",
+   "back": "The mesenteric border must not be twisted; the mesentery is oriented so that the afferent limb is correctly identified and the blood supply is not kinked, or the stoma becomes ischaemic.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch9-small-large-bowel-card-003",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Small Bowel",
+   "front": "Where is a Meckel's diverticulum found and what is the rule of twos?",
+   "back": "On the antimesenteric border of the ileum, about 2 feet from the ileocaecal valve, about 2 inches long, in about 2 per cent of people, with two common heterotopic tissues - gastric and pancreatic - and often symptomatic before the age of 2.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch9-small-large-bowel-card-004",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Small Bowel",
+   "front": "Why does a Meckel's diverticulum bleed, and from where?",
+   "back": "Heterotopic gastric mucosa within it secretes acid, ulcerating the adjacent normal ileal mucosa at the neck of the diverticulum, which is why the ulcer and the bleeding point are in the ileum, not in the diverticulum itself.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch9-small-large-bowel-card-005",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Small Bowel",
+   "front": "What is the vitelline artery remnant and why does it matter?",
+   "back": "A persistent vitelline (omphalomesenteric) artery running to the tip of a Meckel's diverticulum from the mesentery; it forms a band across the peritoneal cavity around which volvulus and internal herniation can occur.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch9-small-large-bowel-card-006",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Small Bowel",
+   "front": "Why is the antimesenteric border important in bowel surgery?",
+   "back": "It is the least vascular line of the circumference, so it is where an enterotomy is made and where a diverticulum or a Richter's knuckle protrudes; the mesenteric border carries the vessels entering the wall.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch9-small-large-bowel-card-007",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Small Bowel",
+   "front": "Which anatomical feature makes the terminal ileum the site of impaction and of Crohn's disease?",
+   "back": "It is the narrowest part of the small bowel with the most abundant lymphoid tissue in the Peyer's patches, so both mechanical impaction and lymphoid-based inflammation localise there.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch9-small-large-bowel-card-008",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Small Bowel",
+   "front": "Why does resection of the terminal ileum cause specific deficiencies?",
+   "back": "It is the only site of active absorption of vitamin B12 with intrinsic factor and of bile salts, so its loss causes megaloblastic anaemia and bile salt malabsorption with diarrhoea and gallstone formation.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch9-small-large-bowel-card-009",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Small Bowel",
+   "front": "How is a small bowel loop tested for viability at laparotomy?",
+   "back": "By returning it to the abdomen wrapped in warm packs and re-inspecting for colour, sheen, peristalsis and pulsation in the mesenteric arcade at the bowel border - pulsation in the mesenteric root alone is not sufficient.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch9-small-large-bowel-card-010",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Colon",
+   "front": "Name the four anatomical features that distinguish colon from small bowel.",
+   "back": "Taeniae coli, haustrations, appendices epiploicae and a larger calibre; the taeniae are the key sign, since they converge at the base of the appendix.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch9-small-large-bowel-card-011",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Colon",
+   "front": "Name the three taeniae coli and their positions on the transverse colon.",
+   "back": "Taenia mesocolica at the mesenteric attachment, taenia omentalis at the attachment of the greater omentum, and taenia libera on the free anterior surface.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch9-small-large-bowel-card-012",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Colon",
+   "front": "Why do the taeniae matter clinically?",
+   "back": "They are shorter than the bowel and produce the haustra; they converge on the base of the appendix and so lead the surgeon to it; and the vasa recta pierce the wall beside them, which is where diverticula form.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch9-small-large-bowel-card-013",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Colon",
+   "front": "Give the peritoneal status of each part of the colon.",
+   "back": "Caecum intraperitoneal but usually without a mesentery, ascending colon retroperitoneal on its posterior surface, transverse colon intraperitoneal on the transverse mesocolon, descending colon retroperitoneal, sigmoid colon intraperitoneal on the sigmoid mesocolon.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch9-small-large-bowel-card-014",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Colon",
+   "front": "Which structures lie behind the ascending colon and are at risk during right hemicolectomy?",
+   "back": "The iliacus, quadratus lumborum, the lower pole of the right kidney, the second part of the duodenum at the hepatic flexure, the right ureter and gonadal vessels, and the genitofemoral nerve.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch9-small-large-bowel-card-015",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Colon",
+   "front": "Which structures lie behind the descending colon?",
+   "back": "The left kidney, quadratus lumborum, iliacus, the left ureter and gonadal vessels and the psoas.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch9-small-large-bowel-card-016",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Colon",
+   "front": "Which ligament must be divided to mobilise the splenic flexure, and what is the hazard?",
+   "back": "The phrenicocolic ligament; excessive downward traction avulses the splenic capsule at its lower pole, which is the commonest cause of iatrogenic splenic injury in colonic surgery.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch9-small-large-bowel-card-017",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Colon",
+   "front": "Why is the splenic flexure more difficult to mobilise than the hepatic flexure?",
+   "back": "It lies higher, more posteriorly and more deeply under the ribs, is attached to the diaphragm by the phrenicocolic ligament and is fused to the tail of the pancreas and the spleen.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch9-small-large-bowel-card-018",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Colon",
+   "front": "Describe the mobilisation plane used for colonic resection and what it protects.",
+   "back": "The avascular embryological fusion plane of Toldt between the mesocolon and the retroperitoneum; staying in it leaves the ureter, gonadal vessels, duodenum and Gerota's fascia undisturbed behind.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch9-small-large-bowel-card-019",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Colon",
+   "front": "Where does the ureter cross into the pelvis and how is it identified at operation?",
+   "back": "At the bifurcation of the common iliac artery over the pelvic brim; it is identified by its longitudinal vessels and by vermicular peristalsis on gentle pinching, and it should be seen before dividing any pedicle.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch9-small-large-bowel-card-020",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Colon",
+   "front": "Why is the caecum the site of rupture in a closed-loop large bowel obstruction?",
+   "back": "By Laplace's law wall tension is proportional to radius, and the caecum has the largest diameter of the colon, so it distends and perforates first when the ileocaecal valve is competent.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch9-small-large-bowel-card-021",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Colon",
+   "front": "What is the anatomical significance of a competent ileocaecal valve?",
+   "back": "It converts a distal colonic obstruction into a closed loop, raising intraluminal pressure rapidly and threatening caecal perforation; an incompetent valve decompresses into the small bowel and gives a slower course with vomiting.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch9-small-large-bowel-card-022",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Colon",
+   "front": "Why does caecal volvulus require a mobile caecum?",
+   "back": "It occurs only when the caecum and ascending colon have failed to fuse to the posterior wall and retain a mesentery, allowing the segment to rotate about its vascular pedicle.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch9-small-large-bowel-card-023",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Colon",
+   "front": "Describe the lymphatic drainage of the colon and its surgical implication.",
+   "back": "Epicolic on the wall, paracolic along the marginal artery, intermediate along the named colic vessels and principal at the origin from the aorta. Because the nodes follow the arteries, the length of bowel resected is dictated by the artery that must be taken.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch9-small-large-bowel-card-024",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Colon",
+   "front": "Why does a right hemicolectomy include the terminal ileum?",
+   "back": "The ileocolic artery supplies both the terminal ileum and the caecum, so dividing it at its origin to clear its nodes devascularises the last few centimetres of ileum.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch9-small-large-bowel-card-025",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Colon",
+   "front": "Why is an extended right hemicolectomy needed for a splenic flexure tumour in some patients?",
+   "back": "The flexure lies at the watershed between the two mesenteric territories, so clearing the nodes of both the middle colic and left colic vessels may be required, and the resection is extended to reach well-perfused bowel on each side.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch9-small-large-bowel-card-026",
+   "type": "basic",
+   "sectionId": "s3",
+   "deck": "Appendix",
+   "front": "Where is the base of the appendix and how is it located at operation?",
+   "back": "At the convergence of the three taeniae coli on the posteromedial wall of the caecum, about 2 cm below the ileocaecal valve; following any taenia downwards leads to it.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch9-small-large-bowel-card-027",
+   "type": "basic",
+   "sectionId": "s3",
+   "deck": "Appendix",
+   "front": "Give the surface marking of the base of the appendix.",
+   "back": "McBurney's point, at the junction of the lateral third and medial two-thirds of the line from the right anterior superior iliac spine to the umbilicus.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch9-small-large-bowel-card-028",
+   "type": "basic",
+   "sectionId": "s3",
+   "deck": "Appendix",
+   "front": "List the positions of the appendix in order of frequency.",
+   "back": "Retrocaecal or retrocolic (the commonest), pelvic, subcaecal, pre-ileal and post-ileal, with rarer paracaecal and subhepatic positions.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch9-small-large-bowel-card-029",
+   "type": "basic",
+   "sectionId": "s3",
+   "deck": "Appendix",
+   "front": "How does a retrocaecal appendix alter the clinical picture?",
+   "back": "It lies away from the anterior parietal peritoneum, so tenderness and guarding are slight, but it lies on the psoas, giving a positive psoas test with pain on hip extension, and it may irritate the ureter causing haematuria.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch9-small-large-bowel-card-030",
+   "type": "basic",
+   "sectionId": "s3",
+   "deck": "Appendix",
+   "front": "How does a pelvic appendix alter the clinical picture?",
+   "back": "It lies against the rectum, bladder and, in the female, the adnexa, so there is tenderness on rectal examination, diarrhoea and urinary frequency, with few abdominal signs and a positive obturator test.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch9-small-large-bowel-card-031",
+   "type": "basic",
+   "sectionId": "s3",
+   "deck": "Appendix",
+   "front": "What is the mesoappendix and what does it carry?",
+   "back": "A triangular fold of peritoneum from the lower layer of the small bowel mesentery, carrying the appendicular artery in its free edge, a branch of the ileocolic artery.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch9-small-large-bowel-card-032",
+   "type": "basic",
+   "sectionId": "s3",
+   "deck": "Appendix",
+   "front": "Why does the appendix become gangrenous early in appendicitis?",
+   "back": "The appendicular artery is a functional end artery running in the free edge of the mesoappendix, so thrombosis in the inflamed mesoappendix causes infarction of the distal appendix rather than mere congestion.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch9-small-large-bowel-card-033",
+   "type": "basic",
+   "sectionId": "s3",
+   "deck": "Appendix",
+   "front": "Which lymphoid feature explains the age distribution of appendicitis?",
+   "back": "The submucosal lymphoid tissue is maximal in adolescence and early adult life and involutes with age, so obstruction of the lumen by lymphoid hyperplasia is commonest in that age group.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch9-small-large-bowel-card-034",
+   "type": "basic",
+   "sectionId": "s3",
+   "deck": "Appendix",
+   "front": "How does the appendix drain its lymph?",
+   "back": "To the ileocolic nodes along the ileocolic artery, and then to the superior mesenteric group.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch9-small-large-bowel-card-035",
+   "type": "basic",
+   "sectionId": "s3",
+   "deck": "Appendix",
+   "front": "Which anatomical arrangement causes an appendix mass rather than free peritonitis?",
+   "back": "The greater omentum and adjacent small bowel loops adhere around the inflamed appendix and wall it off; in young children the omentum is short and does not reach, so free perforation is commoner.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch9-small-large-bowel-card-036",
+   "type": "cloze",
+   "sectionId": "s1",
+   "deck": "Small Bowel",
+   "cloze": "A Meckel's diverticulum lies on the {{c1::antimesenteric}} border of the ileum.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch9-small-large-bowel-card-037",
+   "type": "cloze",
+   "sectionId": "s1",
+   "deck": "Small Bowel",
+   "cloze": "Vitamin B12 is absorbed in the {{c1::terminal ileum}}.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch9-small-large-bowel-card-038",
+   "type": "cloze",
+   "sectionId": "s1",
+   "deck": "Small Bowel",
+   "cloze": "The jejunum has {{c1::long}} vasa recta and few large arcades.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch9-small-large-bowel-card-039",
+   "type": "cloze",
+   "sectionId": "s2",
+   "deck": "Colon",
+   "cloze": "The three taeniae coli converge at the base of the {{c1::appendix}}.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch9-small-large-bowel-card-040",
+   "type": "cloze",
+   "sectionId": "s2",
+   "deck": "Colon",
+   "cloze": "The avascular embryological plane used to mobilise the colon is the plane of {{c1::Toldt}}.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch9-small-large-bowel-card-041",
+   "type": "cloze",
+   "sectionId": "s2",
+   "deck": "Colon",
+   "cloze": "The ureter crosses into the pelvis at the bifurcation of the {{c1::common iliac artery}}.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch9-small-large-bowel-card-042",
+   "type": "cloze",
+   "sectionId": "s2",
+   "deck": "Colon",
+   "cloze": "The part of the colon that perforates first in closed-loop obstruction is the {{c1::caecum}}.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch9-small-large-bowel-card-043",
+   "type": "cloze",
+   "sectionId": "s2",
+   "deck": "Colon",
+   "cloze": "Excessive traction on the {{c1::phrenicocolic}} ligament is the commonest cause of iatrogenic splenic injury.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch9-small-large-bowel-card-044",
+   "type": "cloze",
+   "sectionId": "s3",
+   "deck": "Appendix",
+   "cloze": "The commonest position of the appendix is {{c1::retrocaecal}}.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch9-small-large-bowel-card-045",
+   "type": "cloze",
+   "sectionId": "s3",
+   "deck": "Appendix",
+   "cloze": "The appendicular artery is a branch of the {{c1::ileocolic}} artery and runs in the free edge of the mesoappendix.",
+   "difficulty": 1
+  }
+ ],
+ "mcqs": [
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sana-ch9-small-large-bowel-mcq-001",
+   "type": "single",
+   "sectionId": "s4",
+   "difficulty": 2,
+   "highYield": true,
+   "stem": "A patient with a competent ileocaecal valve has a completely obstructing sigmoid carcinoma. Which segment will perforate first and on what principle?",
+   "options": [
+    {
+     "id": "a",
+     "text": "The sigmoid immediately above the tumour, because pressure is highest there",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "b",
+     "text": "The caecum, because by Laplace's law wall tension rises with radius and the caecum has the largest diameter",
+     "correct": true,
+     "why": "Key - B) The caecum, because by Laplace's law wall tension rises with radius and the caecum has the largest diameter. With a competent valve the colon becomes a closed loop, and since wall tension is proportional to radius the caecum, having the largest diameter, reaches critical tension and perforates first.\n\nWhy the others fail:\nA) The sigmoid immediately above the tumour, because pressure is highest there - Pressure is transmitted throughout a closed loop, so the segment nearest the obstruction is not the one under greatest wall tension.\nC) The terminal ileum, because it is the narrowest segment - The terminal ileum is protected by the competent valve and lies outside the closed loop.\nD) The splenic flexure, because it is the watershed of the blood supply - The splenic flexure is the ischaemic watershed but is not the site of maximal wall tension in obstruction."
+    },
+    {
+     "id": "c",
+     "text": "The terminal ileum, because it is the narrowest segment",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "d",
+     "text": "The splenic flexure, because it is the watershed of the blood supply",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    }
+   ],
+   "explanation": [
+    "Key - B) The caecum, because by Laplace's law wall tension rises with radius and the caecum has the largest diameter. With a competent valve the colon becomes a closed loop, and since wall tension is proportional to radius the caecum, having the largest diameter, reaches critical tension and perforates first.\n\nWhy the others fail:\nA) The sigmoid immediately above the tumour, because pressure is highest there - Pressure is transmitted throughout a closed loop, so the segment nearest the obstruction is not the one under greatest wall tension.\nC) The terminal ileum, because it is the narrowest segment - The terminal ileum is protected by the competent valve and lies outside the closed loop.\nD) The splenic flexure, because it is the watershed of the blood supply - The splenic flexure is the ischaemic watershed but is not the site of maximal wall tension in obstruction."
+   ],
+   "keyFacts": [
+    "Key - B) The caecum, because by Laplace's law wall tension rises with radius and the caecum has the largest diameter. With a competent valve the colon becomes a closed loop, and since wall tension is proportional to radius the caecum, having the largest diameter, reaches critical tension and perforates first.\n\nWhy the others fail:\nA) The sigmoid immediately above the tumour, because pressure is highest there - Pressure is transmitted throughout a closed loop, so the segment nearest the obstruction is not the one under greatest wall tension.\nC) The terminal ileum, because it is the narrowest segment - The terminal ileum is protected by the competent valve and lies outside the closed loop.\nD) The splenic flexure, because it is the watershed of the blood supply - The splenic flexure is the ischaemic watershed but is not the site of maximal wall tension in obstruction."
+   ],
+   "teachingPoint": "Key - B) The caecum, because by Laplace's law wall tension rises with radius and the caecum has the largest diameter. With a competent valve the colon becomes a closed loop, and since wall tension is proportional to radius the caecum, having the largest diameter, reaches critical tension and perforates first.\n\nWhy the others fail:\nA) The sigmoid immediately above the tumour, because pressure is highest there - Pressure is transmitted throughout a closed loop, so the segment nearest the obstruction is not the one under greatest wall tension.\nC) The terminal ileum, because it is the narrowest segment - The terminal ileum is protected by the competent valve and lies outside the closed loop.\nD) The splenic flexure, because it is the watershed of the blood supply - The splenic flexure is the ischaemic watershed but is not the site of maximal wall tension in obstruction."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sana-ch9-small-large-bowel-mcq-002",
+   "type": "single",
+   "sectionId": "s4",
+   "difficulty": 2,
+   "highYield": true,
+   "stem": "A child has painless massive rectal bleeding. At laparotomy a diverticulum is found on the antimesenteric border of the ileum. Where is the actual bleeding point, and why?",
+   "options": [
+    {
+     "id": "a",
+     "text": "Within the diverticulum, from its own mucosa",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "b",
+     "text": "In the adjacent ileal mucosa at the neck, ulcerated by acid from heterotopic gastric mucosa",
+     "correct": true,
+     "why": "Key - B) In the adjacent ileal mucosa at the neck, ulcerated by acid from heterotopic gastric mucosa. Acid secreted by heterotopic gastric mucosa ulcerates the adjacent unprotected ileal mucosa at the neck of the diverticulum, which is why the resection must include that segment of ileum and not the diverticulum alone.\n\nWhy the others fail:\nA) Within the diverticulum, from its own mucosa - The heterotopic gastric mucosa lining part of the diverticulum is itself acid-resistant, so it is not the site that ulcerates.\nC) At the ileocaecal valve, from venous congestion - The ileocaecal valve is not involved in the pathology of a Meckel's diverticulum.\nD) In the mesentery, from the vitelline artery - A persistent vitelline artery can cause volvulus around a band but does not itself produce luminal bleeding."
+    },
+    {
+     "id": "c",
+     "text": "At the ileocaecal valve, from venous congestion",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "d",
+     "text": "In the mesentery, from the vitelline artery",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    }
+   ],
+   "explanation": [
+    "Key - B) In the adjacent ileal mucosa at the neck, ulcerated by acid from heterotopic gastric mucosa. Acid secreted by heterotopic gastric mucosa ulcerates the adjacent unprotected ileal mucosa at the neck of the diverticulum, which is why the resection must include that segment of ileum and not the diverticulum alone.\n\nWhy the others fail:\nA) Within the diverticulum, from its own mucosa - The heterotopic gastric mucosa lining part of the diverticulum is itself acid-resistant, so it is not the site that ulcerates.\nC) At the ileocaecal valve, from venous congestion - The ileocaecal valve is not involved in the pathology of a Meckel's diverticulum.\nD) In the mesentery, from the vitelline artery - A persistent vitelline artery can cause volvulus around a band but does not itself produce luminal bleeding."
+   ],
+   "keyFacts": [
+    "Key - B) In the adjacent ileal mucosa at the neck, ulcerated by acid from heterotopic gastric mucosa. Acid secreted by heterotopic gastric mucosa ulcerates the adjacent unprotected ileal mucosa at the neck of the diverticulum, which is why the resection must include that segment of ileum and not the diverticulum alone.\n\nWhy the others fail:\nA) Within the diverticulum, from its own mucosa - The heterotopic gastric mucosa lining part of the diverticulum is itself acid-resistant, so it is not the site that ulcerates.\nC) At the ileocaecal valve, from venous congestion - The ileocaecal valve is not involved in the pathology of a Meckel's diverticulum.\nD) In the mesentery, from the vitelline artery - A persistent vitelline artery can cause volvulus around a band but does not itself produce luminal bleeding."
+   ],
+   "teachingPoint": "Key - B) In the adjacent ileal mucosa at the neck, ulcerated by acid from heterotopic gastric mucosa. Acid secreted by heterotopic gastric mucosa ulcerates the adjacent unprotected ileal mucosa at the neck of the diverticulum, which is why the resection must include that segment of ileum and not the diverticulum alone.\n\nWhy the others fail:\nA) Within the diverticulum, from its own mucosa - The heterotopic gastric mucosa lining part of the diverticulum is itself acid-resistant, so it is not the site that ulcerates.\nC) At the ileocaecal valve, from venous congestion - The ileocaecal valve is not involved in the pathology of a Meckel's diverticulum.\nD) In the mesentery, from the vitelline artery - A persistent vitelline artery can cause volvulus around a band but does not itself produce luminal bleeding."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sana-ch9-small-large-bowel-mcq-003",
+   "type": "single",
+   "sectionId": "s4",
+   "difficulty": 2,
+   "highYield": true,
+   "stem": "A patient with appendicitis has minimal abdominal tenderness but marked pain on extending the right hip, and microscopic haematuria. Which position of the appendix does this indicate and why?",
+   "options": [
+    {
+     "id": "a",
+     "text": "Pelvic, lying against the bladder",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "b",
+     "text": "Retrocaecal, lying on the psoas and near the right ureter",
+     "correct": true,
+     "why": "Key - B) Retrocaecal, lying on the psoas and near the right ureter. A retrocaecal appendix lies behind the caecum away from the anterior parietal peritoneum, so abdominal signs are slight; it lies on the psoas producing a positive psoas test, and it may irritate the adjacent right ureter causing haematuria.\n\nWhy the others fail:\nA) Pelvic, lying against the bladder - A pelvic appendix causes diarrhoea, urinary frequency and rectal tenderness, and the obturator rather than the psoas test is positive.\nC) Pre-ileal, lying in front of the terminal ileum - A pre-ileal appendix lies anteriorly and would produce marked local tenderness and guarding.\nD) Subhepatic, lying near the gallbladder - A subhepatic appendix mimics cholecystitis with right upper quadrant signs and no psoas irritation."
+    },
+    {
+     "id": "c",
+     "text": "Pre-ileal, lying in front of the terminal ileum",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "d",
+     "text": "Subhepatic, lying near the gallbladder",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    }
+   ],
+   "explanation": [
+    "Key - B) Retrocaecal, lying on the psoas and near the right ureter. A retrocaecal appendix lies behind the caecum away from the anterior parietal peritoneum, so abdominal signs are slight; it lies on the psoas producing a positive psoas test, and it may irritate the adjacent right ureter causing haematuria.\n\nWhy the others fail:\nA) Pelvic, lying against the bladder - A pelvic appendix causes diarrhoea, urinary frequency and rectal tenderness, and the obturator rather than the psoas test is positive.\nC) Pre-ileal, lying in front of the terminal ileum - A pre-ileal appendix lies anteriorly and would produce marked local tenderness and guarding.\nD) Subhepatic, lying near the gallbladder - A subhepatic appendix mimics cholecystitis with right upper quadrant signs and no psoas irritation."
+   ],
+   "keyFacts": [
+    "Key - B) Retrocaecal, lying on the psoas and near the right ureter. A retrocaecal appendix lies behind the caecum away from the anterior parietal peritoneum, so abdominal signs are slight; it lies on the psoas producing a positive psoas test, and it may irritate the adjacent right ureter causing haematuria.\n\nWhy the others fail:\nA) Pelvic, lying against the bladder - A pelvic appendix causes diarrhoea, urinary frequency and rectal tenderness, and the obturator rather than the psoas test is positive.\nC) Pre-ileal, lying in front of the terminal ileum - A pre-ileal appendix lies anteriorly and would produce marked local tenderness and guarding.\nD) Subhepatic, lying near the gallbladder - A subhepatic appendix mimics cholecystitis with right upper quadrant signs and no psoas irritation."
+   ],
+   "teachingPoint": "Key - B) Retrocaecal, lying on the psoas and near the right ureter. A retrocaecal appendix lies behind the caecum away from the anterior parietal peritoneum, so abdominal signs are slight; it lies on the psoas producing a positive psoas test, and it may irritate the adjacent right ureter causing haematuria.\n\nWhy the others fail:\nA) Pelvic, lying against the bladder - A pelvic appendix causes diarrhoea, urinary frequency and rectal tenderness, and the obturator rather than the psoas test is positive.\nC) Pre-ileal, lying in front of the terminal ileum - A pre-ileal appendix lies anteriorly and would produce marked local tenderness and guarding.\nD) Subhepatic, lying near the gallbladder - A subhepatic appendix mimics cholecystitis with right upper quadrant signs and no psoas irritation."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sana-ch9-small-large-bowel-mcq-004",
+   "type": "single",
+   "sectionId": "s4",
+   "difficulty": 2,
+   "highYield": true,
+   "stem": "During a right hemicolectomy, in which plane should the surgeon mobilise the colon to avoid injuring the duodenum, right ureter and gonadal vessels?",
+   "options": [
+    {
+     "id": "a",
+     "text": "Between the mesocolon and the peritoneum of the paracolic gutter",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "b",
+     "text": "In the avascular fusion plane of Toldt between the mesocolon and Gerota's fascia",
+     "correct": true,
+     "why": "Key - B) In the avascular fusion plane of Toldt between the mesocolon and Gerota's fascia. The plane of Toldt is the avascular embryological fusion plane; staying within it lifts the mesocolon cleanly while leaving Gerota's fascia, the duodenum, the ureter and the gonadal vessels undisturbed behind.\n\nWhy the others fail:\nA) Between the mesocolon and the peritoneum of the paracolic gutter - Entering superficial to the fusion plane leaves mesocolon behind and does not create a safe posterior plane.\nC) Deep to Gerota's fascia on the psoas - Dissecting deep to Gerota's fascia takes the plane behind the kidney and puts the ureter and gonadal vessels on the specimen side, which is exactly the error to avoid.\nD) Along the marginal artery at the bowel wall - Dissection at the marginal artery would devascularise the bowel and does not create a posterior mobilisation plane."
+    },
+    {
+     "id": "c",
+     "text": "Deep to Gerota's fascia on the psoas",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "d",
+     "text": "Along the marginal artery at the bowel wall",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    }
+   ],
+   "explanation": [
+    "Key - B) In the avascular fusion plane of Toldt between the mesocolon and Gerota's fascia. The plane of Toldt is the avascular embryological fusion plane; staying within it lifts the mesocolon cleanly while leaving Gerota's fascia, the duodenum, the ureter and the gonadal vessels undisturbed behind.\n\nWhy the others fail:\nA) Between the mesocolon and the peritoneum of the paracolic gutter - Entering superficial to the fusion plane leaves mesocolon behind and does not create a safe posterior plane.\nC) Deep to Gerota's fascia on the psoas - Dissecting deep to Gerota's fascia takes the plane behind the kidney and puts the ureter and gonadal vessels on the specimen side, which is exactly the error to avoid.\nD) Along the marginal artery at the bowel wall - Dissection at the marginal artery would devascularise the bowel and does not create a posterior mobilisation plane."
+   ],
+   "keyFacts": [
+    "Key - B) In the avascular fusion plane of Toldt between the mesocolon and Gerota's fascia. The plane of Toldt is the avascular embryological fusion plane; staying within it lifts the mesocolon cleanly while leaving Gerota's fascia, the duodenum, the ureter and the gonadal vessels undisturbed behind.\n\nWhy the others fail:\nA) Between the mesocolon and the peritoneum of the paracolic gutter - Entering superficial to the fusion plane leaves mesocolon behind and does not create a safe posterior plane.\nC) Deep to Gerota's fascia on the psoas - Dissecting deep to Gerota's fascia takes the plane behind the kidney and puts the ureter and gonadal vessels on the specimen side, which is exactly the error to avoid.\nD) Along the marginal artery at the bowel wall - Dissection at the marginal artery would devascularise the bowel and does not create a posterior mobilisation plane."
+   ],
+   "teachingPoint": "Key - B) In the avascular fusion plane of Toldt between the mesocolon and Gerota's fascia. The plane of Toldt is the avascular embryological fusion plane; staying within it lifts the mesocolon cleanly while leaving Gerota's fascia, the duodenum, the ureter and the gonadal vessels undisturbed behind.\n\nWhy the others fail:\nA) Between the mesocolon and the peritoneum of the paracolic gutter - Entering superficial to the fusion plane leaves mesocolon behind and does not create a safe posterior plane.\nC) Deep to Gerota's fascia on the psoas - Dissecting deep to Gerota's fascia takes the plane behind the kidney and puts the ureter and gonadal vessels on the specimen side, which is exactly the error to avoid.\nD) Along the marginal artery at the bowel wall - Dissection at the marginal artery would devascularise the bowel and does not create a posterior mobilisation plane."
+  }
+ ],
+ "emqs": [],
+ "summary": "Small & Large Bowel: work through each section's cards to fix the structures, their relations and clinical lesions. Use the MCQs to test discrimination and the image-occlusion cards to rehearse identification."
+}

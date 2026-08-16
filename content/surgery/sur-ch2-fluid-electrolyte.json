@@ -1,0 +1,4062 @@
+{
+ "schema": "foundation.study-module/v1",
+ "id": "sur-ch2-fluid-electrolyte",
+ "subject": "Surgery",
+ "title": "Fluid and Electrolyte Balance in Surgical Patients",
+ "source": {
+  "book": "Surgery Department Books 2026 — Surgery 1 (SUR-423)",
+  "chapter": 2,
+  "title": "Fluid and Electrolyte Balance in Surgical Patients",
+  "pages": "12-17"
+ },
+ "brand": "by Yanal · Cairo 2026",
+ "estMinutes": 35,
+ "deck": "Surgery::Fluid and Electrolyte Balance",
+ "tags": [
+  "surgery",
+  "fluid-electrolyte",
+  "sur-423"
+ ],
+ "objectives": [
+  "Classify hyponatraemia into dilutional and depletional types and treat each correctly.",
+  "Recognise sodium excess and explain why serum sodium is an unreliable guide.",
+  "Explain the causes, ECG changes and safe treatment of hypokalaemia.",
+  "Manage hyperkalaemia in the correct sequence of protect, shift and remove.",
+  "State daily fluid and electrolyte requirements and the routes of replacement.",
+  "Compare crystalloids and colloids and recall standard crystalloid compositions.",
+  "Prescribe a standard maintenance regimen and adjust for losses and pyrexia."
+ ],
+ "outline": [
+  "2.1 Hyponatraemia",
+  "2.2 Hypernatraemia",
+  "2.3 Hypokalaemia",
+  "2.4 Hyperkalaemia",
+  "2.5 Requirements & routes",
+  "2.6 Types of fluid",
+  "2.7 Crystalloid compositions",
+  "2.8 Basal fluid regimens"
+ ],
+ "sections": [
+  {
+   "id": "s1",
+   "n": "2.1",
+   "title": "Hyponatraemia",
+   "deck": "Electrolyte imbalance",
+   "digest": "Normal serum sodium is **135–145 mmol/L**; **hyponatraemia** is <135 mmol/L. In surgery it is either **dilutional (hypervolaemic)** or **depletional (hypovolaemic)**. Dilutional causes: excess salt-free fluid (5% dextrose), post-operative **ADH** excess, cirrhosis and heart failure. Depletional causes: gastrointestinal losses (vomiting, diarrhoea, obstruction, fistulae — GI secretions have near-plasma sodium), ECF loss in burns or third-space sequestration (peritonitis, ileus, ascites), and renal loss (salt-losing nephritis, diuretics, adrenal failure). Most patients with Na⁺ >120 mmol/L are asymptomatic; below that, cerebral symptoms (agitation, disorientation, delirium, vomiting, headache, seizures) reflect water shift into brain cells. Depletional signs are those of a low ECF: sunken eyes, dry coated tongue, collapsed peripheral veins, tachycardia, orthostatic hypotension, low CVP and scanty dark urine. **Treatment:** dilutional → restrict water, and give **hypertonic (3%) saline** only if severe (<120 mmol/L) or with neurological signs; depletional → restore ECF with **normal saline (0.9%)** or Hartmann's. Correct slowly — rapid correction risks **central pontine myelinolysis**.",
+   "highYield": [
+    "Hyponatraemia = serum Na⁺ <135 mmol/L.",
+    "Symptoms are mostly cerebral once Na⁺ <120 mmol/L.",
+    "Severe/symptomatic dilutional hyponatraemia → hypertonic (3%) saline.",
+    "Correct slowly — rapid correction causes central pontine myelinolysis.",
+    "Serum sodium does NOT measure total body sodium."
+   ],
+   "tables": [
+    {
+     "title": "Dilutional vs depletional hyponatraemia",
+     "columns": [
+      "Feature",
+      "Dilutional (hypervolaemic)",
+      "Depletional (hypovolaemic)"
+     ],
+     "rows": [
+      [
+       "Cause",
+       "Salt-free fluid, ADH excess, cirrhosis/CHF",
+       "GI/renal/ECF losses"
+      ],
+      [
+       "Volume status",
+       "Expanded",
+       "Reduced (low CVP, tachycardia)"
+      ],
+      [
+       "Treatment",
+       "Water restriction; 3% saline if severe",
+       "Normal saline / Hartmann's"
+      ]
+     ]
+    }
+   ],
+   "pitfalls": [
+    "Do not correct hyponatraemia rapidly → central pontine myelinolysis.",
+    "A normal serum sodium can hide a large total-body sodium deficit."
+   ],
+   "figures": []
+  },
+  {
+   "id": "s2",
+   "n": "2.2",
+   "title": "Hypernatraemia",
+   "deck": "Electrolyte imbalance",
+   "digest": "**Sodium excess (hypernatraemia)** in surgery follows excessive 0.9% saline in the early post-operative period, when sodium retention is expected, overloading the circulation with salt and water. Other causes: **hyperaldosteronism** — primary (**Conn's syndrome**) or secondary (cirrhosis) — and **Cushing's syndrome** (hyperadrenocorticism). Clinically the only reliable sign of total-body sodium excess is **oedema**; early there is slight facial puffiness, then weight gain paralleling ECF accumulation, and hypertension. Serum sodium is often normal. **Treatment:** sodium restriction and careful diuretics.",
+   "highYield": [
+    "The only reliable sign of total-body sodium excess is oedema.",
+    "Post-op excess 0.9% saline is the classic surgical cause.",
+    "Serum sodium is usually normal despite sodium excess."
+   ],
+   "tables": [],
+   "pitfalls": [
+    "Serum sodium is a poor guide to total body sodium; judge by oedema and weight."
+   ],
+   "figures": []
+  },
+  {
+   "id": "s3",
+   "n": "2.3",
+   "title": "Hypokalaemia",
+   "deck": "Electrolyte imbalance",
+   "digest": "Serum potassium is a small fraction of total body potassium, so small serum falls reflect large losses. **Causes of hypokalaemia:** excessive vomiting (pyloric stenosis, obstruction, ileus) and prolonged gastroduodenal aspiration replaced with saline; alimentary fistulae; severe diarrhoea (cholera, ulcerative colitis, villous tumour, ileostomy); loop diuretics (furosemide); **alkalosis** (shift into cells without true loss); and hyperaldosteronism. **Consequences:** it raises membrane excitation potentials, making nerves/muscles *less* excitable; risk of supraventricular arrhythmias; and predisposition to hepatic coma in liver disease. **Clinical:** often asymptomatic; early malaise/weakness with slow slurred speech; paralytic ileus and distension; and, with severe depletion, respiratory-muscle weakness. **ECG:** prolonged QT, ST depression, T-wave flattening/inversion and a **U wave**. **Treatment:** deficit ≈ (4.5 − serum K) × 100; add potassium to the infusion spread over the day — never a bolus. Safe rules: urine output ≥40 mL/h, ≤40 mmol per litre, and no faster than 40 mmol/h.",
+   "highYield": [
+    "Small serum K fall = large total-body deficit.",
+    "ECG of hypokalaemia: flat/inverted T, ST depression, prolonged QT, U wave.",
+    "Never give potassium as a bolus — it causes fatal arrhythmia.",
+    "Safe potassium: urine ≥40 mL/h, ≤40 mmol/L, ≤40 mmol/h."
+   ],
+   "tables": [
+    {
+     "title": "Safe rules for giving IV potassium",
+     "columns": [
+      "Rule",
+      "Value"
+     ],
+     "rows": [
+      [
+       "Minimum urine output",
+       "≥40 mL/hour"
+      ],
+      [
+       "Max concentration",
+       "≤40 mmol per litre"
+      ],
+      [
+       "Max rate",
+       "≤40 mmol/hour"
+      ],
+      [
+       "Route",
+       "Infusion, never a bolus"
+      ]
+     ]
+    }
+   ],
+   "pitfalls": [
+    "Potassium is dangerous: hyperkalaemia from over-rapid replacement causes arrhythmia and asystole.",
+    "Alkalosis lowers serum K by an intracellular shift, not by true depletion."
+   ],
+   "figures": []
+  },
+  {
+   "id": "s4",
+   "n": "2.4",
+   "title": "Hyperkalaemia",
+   "deck": "Electrolyte imbalance",
+   "digest": "Life-threatening **hyperkalaemia** usually needs **renal failure**, worsened by tissue destruction or by sodium/calcium depletion; **acidosis** shifts potassium out of cells (diabetics with low insulin are prone). **Consequences:** a rise to ~5 mmol/L stimulates aldosterone (renal K excretion); it lowers membrane excitation potentials, making cells more excitable, and above ~7 mmol/L intracardiac conduction slows with arrhythmia, bradycardia, hypotension and cardiac arrest. **ECG** (a sensitive test) shows a **wide QRS and peaked T waves**. **Treatment (in order):** IV **calcium gluconate** (antagonises potassium at the membrane), IV **sodium bicarbonate** (alkalinisation shifts K into cells), **dextrose + insulin** (10 units insulin with 20 g glucose drives K in with glycogen; dextrose prevents hypoglycaemia), then **ion-exchange resin** (sodium polystyrene sulfonate, orally or by enema) and, if all fail, **dialysis**.",
+   "highYield": [
+    "Hyperkalaemia usually needs renal failure to be dangerous.",
+    "ECG: peaked T waves then a wide QRS.",
+    "Calcium gluconate protects the myocardium but does not lower K.",
+    "Insulin+dextrose and bicarbonate shift K into cells; resin/dialysis remove it."
+   ],
+   "tables": [
+    {
+     "title": "Emergency management of hyperkalaemia",
+     "columns": [
+      "Step",
+      "Agent",
+      "Action"
+     ],
+     "rows": [
+      [
+       "1 Protect heart",
+       "IV calcium gluconate",
+       "Membrane antagonism (does not lower K)"
+      ],
+      [
+       "2 Shift in",
+       "Dextrose + insulin",
+       "Drives K intracellularly"
+      ],
+      [
+       "3 Shift in",
+       "IV sodium bicarbonate",
+       "Alkalinisation shifts K in"
+      ],
+      [
+       "4 Remove",
+       "Ion-exchange resin",
+       "Removes K via gut"
+      ],
+      [
+       "5 Remove",
+       "Dialysis",
+       "Definitive if refractory"
+      ]
+     ]
+    },
+    {
+     "title": "Potassium ECG changes",
+     "columns": [
+      "State",
+      "ECG"
+     ],
+     "rows": [
+      [
+       "Hypokalaemia",
+       "Flat/inverted T, ST depression, long QT, U wave"
+      ],
+      [
+       "Hyperkalaemia",
+       "Peaked T waves, wide QRS"
+      ]
+     ]
+    }
+   ],
+   "pitfalls": [
+    "Calcium gluconate stabilises the myocardium but does not remove potassium — always follow it with shifting/removing measures."
+   ],
+   "figures": []
+  },
+  {
+   "id": "s5",
+   "n": "2.5",
+   "title": "Requirements & routes",
+   "deck": "Fluid replacement",
+   "digest": "Daily adult requirements: **water ~35 mL/kg**, **sodium ~1 mmol/kg**, **potassium ~1 mmol/kg**. Routes: **enteral (oral)** when the GI tract works and the deficit is modest (not possible in post-operative ileus); **parenteral (IV)** when the gut is not working or rapid replacement is needed. Parenteral fluids divide into **crystalloid**, **colloid** and **blood**. Prescribing considers three things: **basal requirements**, **continuing abnormal losses**, and **pre-existing dehydration/electrolyte loss**. Add ~200 mL/day per 1°C of pyrexia, and add insensible/other losses to the total.",
+   "highYield": [
+    "Daily adult: water 35 mL/kg, Na 1 mmol/kg, K 1 mmol/kg.",
+    "Prescribe for basal needs + ongoing losses + pre-existing deficit.",
+    "Add ~200 mL/day for each 1°C rise in temperature."
+   ],
+   "tables": [
+    {
+     "title": "Daily adult maintenance",
+     "columns": [
+      "Component",
+      "Requirement"
+     ],
+     "rows": [
+      [
+       "Water",
+       "~35 mL/kg"
+      ],
+      [
+       "Sodium",
+       "~1 mmol/kg"
+      ],
+      [
+       "Potassium",
+       "~1 mmol/kg"
+      ]
+     ]
+    }
+   ],
+   "pitfalls": [
+    "Oral replacement fails in paralytic ileus — use the IV route."
+   ],
+   "figures": []
+  },
+  {
+   "id": "s6",
+   "n": "2.6",
+   "title": "Types of fluid",
+   "deck": "Fluid replacement",
+   "digest": "**Water** is given as 5% dextrose (dextrose is metabolised, leaving free water). **Crystalloids** are isotonic salt solutions. **Colloids** hold larger molecules in the intravascular space: **albumin 4.5%** (natural, no clotting factors, small anaphylaxis risk, expensive); **gelatins** (Haemaccel/Gelofusine, from bovine collagen, half-life 8–10 h — Haemaccel contains K⁺ and Ca²⁺ so it clots citrated blood in a shared giving set); **dextrans** (glucose polymers, Dextran 40 filtered by kidney, Dextran 70 stays longer; interfere with cross-matching and coagulation via rouleaux, nephrotoxic, allergenic); and **hetastarch** (6% in saline, half-life 16–24 h, limit dose, no cross-match interference, expensive).",
+   "highYield": [
+    "5% dextrose = a way of giving free water.",
+    "Haemaccel contains K⁺/Ca²⁺ → clots citrated blood in a shared line.",
+    "Dextrans interfere with cross-matching and coagulation (rouleaux)."
+   ],
+   "tables": [
+    {
+     "title": "Colloids",
+     "columns": [
+      "Colloid",
+      "Notes"
+     ],
+     "rows": [
+      [
+       "Albumin 4.5%",
+       "Natural, no clotting factors, expensive"
+      ],
+      [
+       "Gelatins (Haemaccel/Gelofusine)",
+       "Bovine collagen; Haemaccel has K⁺/Ca²⁺ → clots citrated blood"
+      ],
+      [
+       "Dextran 40/70",
+       "Interferes with cross-match & coagulation; nephrotoxic"
+      ],
+      [
+       "Hetastarch 6%",
+       "Long half-life; no cross-match interference; expensive"
+      ]
+     ]
+    }
+   ],
+   "pitfalls": [
+    "Never run Haemaccel through the same giving set as citrated blood — residual blood clots.",
+    "Dextran can invalidate a subsequent cross-match — take the sample first."
+   ],
+   "figures": []
+  },
+  {
+   "id": "s7",
+   "n": "2.7",
+   "title": "Crystalloid compositions",
+   "deck": "Fluid replacement",
+   "digest": "Know the crystalloid contents. **Physiological (normal) saline 0.9%**: Na⁺ 154, Cl⁻ 154 mmol/L. **Dextrose 5%**: 278 mmol/L dextrose (negligible calories, effectively free water). **Dextrose-saline** (0.18% saline, 4% dextrose): Na⁺ 30, Cl⁻ 30 mmol/L. **Hartmann's solution**: Na⁺ 131, K⁺ 5, Cl⁻ 111, HCO₃⁻ 29, Ca²⁺ 2 mmol/L. **Ringer's solution**: Na⁺ 147, K⁺ 4, Cl⁻ 156, Ca²⁺ 2.2 mmol/L. Hartmann's/Ringer's are the balanced options closest to plasma.",
+   "highYield": [
+    "Normal saline = Na⁺ 154, Cl⁻ 154.",
+    "Hartmann's contains Na, K, Cl, bicarbonate and calcium (near-plasma).",
+    "Dextrose-saline delivers little sodium (Na⁺ 30)."
+   ],
+   "tables": [
+    {
+     "title": "Crystalloid compositions (mmol/L)",
+     "columns": [
+      "Solution",
+      "Na⁺",
+      "K⁺",
+      "Cl⁻",
+      "Other"
+     ],
+     "rows": [
+      [
+       "Saline 0.9%",
+       "154",
+       "–",
+       "154",
+       "–"
+      ],
+      [
+       "Dextrose 5%",
+       "–",
+       "–",
+       "–",
+       "278 dextrose"
+      ],
+      [
+       "Dextrose-saline",
+       "30",
+       "–",
+       "30",
+       "222 dextrose"
+      ],
+      [
+       "Hartmann's",
+       "131",
+       "5",
+       "111",
+       "HCO₃⁻ 29, Ca²⁺ 2"
+      ],
+      [
+       "Ringer's",
+       "147",
+       "4",
+       "156",
+       "Ca²⁺ 2.2"
+      ]
+     ]
+    }
+   ],
+   "pitfalls": [
+    "Avoid potassium-containing Hartmann's as the sole fluid in established hyperkalaemia/renal failure."
+   ],
+   "figures": []
+  },
+  {
+   "id": "s8",
+   "n": "2.8",
+   "title": "Basal fluid regimens",
+   "deck": "Fluid replacement",
+   "digest": "Standard daily maintenance for a 70-kg adult. **Regimen A:** 1 L normal saline + 20 mmol KCl over 8 h, then 1 L 5% dextrose + 20 mmol KCl over 8 h, then another 1 L 5% dextrose + 20 mmol KCl over 8 h — giving 3 L water, 60 mmol K⁺, 150 mmol Na⁺. **Regimen B:** 3 × (1 L dextrose-saline + 20 mmol KCl over 8 h) — giving 3 L water, 60 mmol K⁺, 90 mmol Na⁺; since metabolised dextrose effectively delivers hypotonic saline, regimen B suits only the short term. Add 200 mL/day per 1°C pyrexia and all measured/insensible losses.",
+   "highYield": [
+    "Regimen A ≈ 3 L water, 150 mmol Na, 60 mmol K.",
+    "Regimen B (dextrose-saline) suits only the short term.",
+    "Add for fever and losses on top of maintenance."
+   ],
+   "tables": [
+    {
+     "title": "Maintenance regimens (70-kg adult / 24 h)",
+     "columns": [
+      "Regimen",
+      "Fluids",
+      "Provides"
+     ],
+     "rows": [
+      [
+       "A",
+       "1 L saline + 2 L 5% dextrose, each +20 mmol KCl/8 h",
+       "3 L water, Na 150, K 60"
+      ],
+      [
+       "B",
+       "3 L dextrose-saline, each +20 mmol KCl/8 h",
+       "3 L water, Na 90, K 60"
+      ]
+     ]
+    }
+   ],
+   "pitfalls": [
+    "Prolonged regimen B effectively gives hypotonic saline → dilutional hyponatraemia."
+   ],
+   "figures": []
+  }
+ ],
+ "glossary": [
+  {
+   "term": "hyponatraemia",
+   "kind": "condition",
+   "def": "Serum Na⁺ below 135 mmol/L.",
+   "aliases": [
+    "hyponatremia"
+   ]
+  },
+  {
+   "term": "hypernatraemia",
+   "kind": "condition",
+   "def": "Serum sodium excess; reliable sign is oedema.",
+   "aliases": [
+    "hypernatremia",
+    "sodium excess"
+   ]
+  },
+  {
+   "term": "hypokalaemia",
+   "kind": "condition",
+   "def": "Low serum potassium; small falls reflect large body deficits.",
+   "aliases": [
+    "hypokalemia"
+   ]
+  },
+  {
+   "term": "hyperkalaemia",
+   "kind": "condition",
+   "def": "High serum potassium; risks arrhythmia and asystole.",
+   "aliases": [
+    "hyperkalemia"
+   ]
+  },
+  {
+   "term": "dilutional hyponatraemia",
+   "kind": "condition",
+   "def": "Hypervolaemic hyponatraemia from salt-free fluid/ADH/CHF/cirrhosis."
+  },
+  {
+   "term": "depletional hyponatraemia",
+   "kind": "condition",
+   "def": "Hypovolaemic hyponatraemia from GI/renal/ECF losses.",
+   "aliases": [
+    "depletion hyponatraemia"
+   ]
+  },
+  {
+   "term": "ADH",
+   "kind": "mediator",
+   "def": "Antidiuretic hormone; post-operative excess causes water retention.",
+   "aliases": [
+    "antidiuretic hormone",
+    "vasopressin"
+   ]
+  },
+  {
+   "term": "central pontine myelinolysis",
+   "kind": "warning",
+   "def": "Serious demyelination from over-rapid correction of hyponatraemia.",
+   "aliases": [
+    "osmotic demyelination"
+   ]
+  },
+  {
+   "term": "hyperaldosteronism",
+   "kind": "condition",
+   "def": "Aldosterone excess causing sodium retention and potassium loss."
+  },
+  {
+   "term": "Conn's syndrome",
+   "kind": "condition",
+   "def": "Primary hyperaldosteronism.",
+   "aliases": [
+    "conn syndrome"
+   ]
+  },
+  {
+   "term": "Cushing's syndrome",
+   "kind": "condition",
+   "def": "Hyperadrenocorticism causing sodium/water excess.",
+   "aliases": [
+    "cushing syndrome"
+   ]
+  },
+  {
+   "term": "ECF",
+   "kind": "structure",
+   "def": "Extracellular fluid compartment.",
+   "aliases": [
+    "extracellular fluid"
+   ]
+  },
+  {
+   "term": "CVP",
+   "kind": "test",
+   "def": "Central venous pressure; low in volume depletion.",
+   "aliases": [
+    "central venous pressure"
+   ]
+  },
+  {
+   "term": "U wave",
+   "kind": "test",
+   "def": "Extra ECG deflection after the T wave, seen in hypokalaemia.",
+   "aliases": [
+    "u-wave"
+   ]
+  },
+  {
+   "term": "peaked T wave",
+   "kind": "test",
+   "def": "Early ECG change of hyperkalaemia.",
+   "aliases": [
+    "peaked T waves"
+   ]
+  },
+  {
+   "term": "hypertonic saline",
+   "kind": "drug",
+   "def": "3% saline for severe/symptomatic hyponatraemia.",
+   "aliases": [
+    "3% saline"
+   ]
+  },
+  {
+   "term": "normal saline",
+   "kind": "drug",
+   "def": "0.9% sodium chloride; Na⁺ 154, Cl⁻ 154 mmol/L.",
+   "aliases": [
+    "physiological saline",
+    "0.9% saline"
+   ]
+  },
+  {
+   "term": "Hartmann's solution",
+   "kind": "drug",
+   "def": "Balanced crystalloid with Na, K, Cl, bicarbonate and calcium.",
+   "aliases": [
+    "hartmanns",
+    "lactated ringer"
+   ]
+  },
+  {
+   "term": "Ringer's solution",
+   "kind": "drug",
+   "def": "Balanced crystalloid close to plasma electrolytes.",
+   "aliases": [
+    "ringers"
+   ]
+  },
+  {
+   "term": "dextrose 5%",
+   "kind": "drug",
+   "def": "Isotonic dextrose that leaves free water after metabolism.",
+   "aliases": [
+    "5% dextrose",
+    "D5W"
+   ]
+  },
+  {
+   "term": "dextrose-saline",
+   "kind": "drug",
+   "def": "0.18% saline with 4% dextrose; low sodium content.",
+   "aliases": [
+    "dextrose saline"
+   ]
+  },
+  {
+   "term": "albumin",
+   "kind": "drug",
+   "def": "Natural colloid (4.5%) without clotting factors."
+  },
+  {
+   "term": "gelatin",
+   "kind": "drug",
+   "def": "Colloid from bovine collagen (Haemaccel/Gelofusine).",
+   "aliases": [
+    "gelatins",
+    "Haemaccel",
+    "Gelofusine"
+   ]
+  },
+  {
+   "term": "dextran",
+   "kind": "drug",
+   "def": "Glucose-polymer colloid; interferes with cross-match and coagulation.",
+   "aliases": [
+    "dextran 40",
+    "dextran 70",
+    "dextrans"
+   ]
+  },
+  {
+   "term": "hetastarch",
+   "kind": "drug",
+   "def": "Starch colloid with a long half-life and no cross-match interference."
+  },
+  {
+   "term": "calcium gluconate",
+   "kind": "drug",
+   "def": "Membrane-stabilising first step in hyperkalaemia."
+  },
+  {
+   "term": "sodium bicarbonate",
+   "kind": "drug",
+   "def": "Alkalinising agent shifting potassium into cells.",
+   "aliases": [
+    "bicarbonate"
+   ]
+  },
+  {
+   "term": "ion-exchange resin",
+   "kind": "drug",
+   "def": "Sodium polystyrene sulfonate; removes potassium via the gut.",
+   "aliases": [
+    "kayexalate",
+    "polystyrene sulfonate"
+   ]
+  },
+  {
+   "term": "insulin-dextrose",
+   "kind": "drug",
+   "def": "Insulin with glucose to drive potassium intracellularly.",
+   "aliases": [
+    "insulin and dextrose"
+   ]
+  },
+  {
+   "term": "crystalloid",
+   "kind": "drug",
+   "def": "Isotonic salt solution for fluid replacement.",
+   "aliases": [
+    "crystalloids"
+   ]
+  },
+  {
+   "term": "colloid",
+   "kind": "drug",
+   "def": "Fluid holding large molecules in the intravascular space.",
+   "aliases": [
+    "colloids"
+   ]
+  },
+  {
+   "term": "third-space loss",
+   "kind": "condition",
+   "def": "Sequestration of fluid into peritonitis/ileus/ascites.",
+   "aliases": [
+    "third space"
+   ]
+  }
+ ],
+ "mnemonics": [
+  {
+   "cue": "C BIG K Drop",
+   "expansion": "Hyperkalaemia treatment order: Calcium gluconate, Bicarbonate, Insulin+Glucose, K-binding resin, Dialysis",
+   "for": "s4"
+  },
+  {
+   "cue": "MURDER",
+   "expansion": "Hyperkalaemia effects: Muscle weakness, Urine (oliguria), Respiratory failure, Decreased contractility, ECG changes, Reflexes reduced",
+   "for": "s4"
+  },
+  {
+   "cue": "From low to high the pons will die; from high to low the brain will blow",
+   "expansion": "Correct hyponatraemia SLOWLY (pontine myelinolysis) and hypernatraemia slowly (cerebral oedema)",
+   "for": "s1"
+  }
+ ],
+ "cards": [
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch2-fluid-electrolyte-card-001",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Hyponatraemia::Basics",
+   "front": "Define hyponatraemia.",
+   "back": "Serum sodium below 135 mmol/L (normal 135–145).",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch2-fluid-electrolyte-card-002",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Hyponatraemia::Types",
+   "front": "Name the two surgical categories of hyponatraemia.",
+   "back": "Dilutional (hypervolaemic) and depletional (hypovolaemic).",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch2-fluid-electrolyte-card-003",
+   "type": "cloze",
+   "sectionId": "s1",
+   "deck": "Hyponatraemia::Types",
+   "cloze": "Dilutional hyponatraemia can follow post-operative excess of {{c1::ADH}}.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch2-fluid-electrolyte-card-004",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Hyponatraemia::Causes",
+   "front": "Give three depletional causes of hyponatraemia.",
+   "back": "GI losses (vomiting/diarrhoea/fistulae), ECF/third-space loss (burns, peritonitis, ascites), renal loss (diuretics, salt-losing nephritis, adrenal failure).",
+   "difficulty": 2
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch2-fluid-electrolyte-card-005",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Hyponatraemia::Symptoms",
+   "front": "Why are hyponatraemia symptoms mostly cerebral?",
+   "back": "Water shifts into brain cells (cerebral oedema) — agitation, delirium, seizures.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch2-fluid-electrolyte-card-006",
+   "type": "cloze",
+   "sectionId": "s1",
+   "deck": "Hyponatraemia::Symptoms",
+   "cloze": "Most patients with serum Na⁺ above {{c1::120}} mmol/L are asymptomatic.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch2-fluid-electrolyte-card-007",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Hyponatraemia::Treatment",
+   "front": "When is 3% (hypertonic) saline indicated in hyponatraemia?",
+   "back": "Severe (Na⁺ <120 mmol/L) or when neurological symptoms are present.",
+   "difficulty": 2
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch2-fluid-electrolyte-card-008",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Hyponatraemia::Treatment",
+   "front": "What is the danger of correcting hyponatraemia too fast?",
+   "back": "Central pontine myelinolysis.",
+   "difficulty": 2
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch2-fluid-electrolyte-card-009",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Hyponatraemia::Treatment",
+   "front": "How is depletional hyponatraemia treated?",
+   "back": "Restore ECF volume with normal saline (0.9%) or Hartmann's.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch2-fluid-electrolyte-card-010",
+   "type": "type",
+   "sectionId": "s1",
+   "deck": "Hyponatraemia::Treatment",
+   "front": "Complication of over-rapid Na correction (two words).",
+   "back": "pontine myelinolysis",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch2-fluid-electrolyte-card-011",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Hypernatraemia::Signs",
+   "front": "What is the only reliable sign of total-body sodium excess?",
+   "back": "Oedema.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch2-fluid-electrolyte-card-012",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Hypernatraemia::Causes",
+   "front": "Give the classic surgical cause of sodium excess.",
+   "back": "Excessive 0.9% saline in the early post-operative period.",
+   "difficulty": 2
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch2-fluid-electrolyte-card-013",
+   "type": "cloze",
+   "sectionId": "s2",
+   "deck": "Hypernatraemia::Causes",
+   "cloze": "Primary hyperaldosteronism ({{c1::Conn's syndrome}}) causes sodium retention.",
+   "difficulty": 2
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch2-fluid-electrolyte-card-014",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Hypernatraemia::Treatment",
+   "front": "Treatment of total-body sodium excess?",
+   "back": "Sodium restriction and careful use of diuretics.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch2-fluid-electrolyte-card-015",
+   "type": "basic",
+   "sectionId": "s3",
+   "deck": "Hypokalaemia::Basics",
+   "front": "Why do small serum K falls matter?",
+   "back": "Serum K is a small part of total body K, so a small fall reflects a large deficit.",
+   "difficulty": 2
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch2-fluid-electrolyte-card-016",
+   "type": "basic",
+   "sectionId": "s3",
+   "deck": "Hypokalaemia::Causes",
+   "front": "Name four causes of hypokalaemia.",
+   "back": "Vomiting/aspiration, fistulae, severe diarrhoea, loop diuretics (also alkalosis, hyperaldosteronism).",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch2-fluid-electrolyte-card-017",
+   "type": "cloze",
+   "sectionId": "s3",
+   "deck": "Hypokalaemia::Causes",
+   "cloze": "Alkalosis lowers serum potassium by shifting it {{c1::into cells}} without true loss.",
+   "difficulty": 2
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch2-fluid-electrolyte-card-018",
+   "type": "basic",
+   "sectionId": "s3",
+   "deck": "Hypokalaemia::ECG",
+   "front": "List the ECG changes of hypokalaemia.",
+   "back": "Prolonged QT, ST depression, flat/inverted T wave, and a U wave.",
+   "difficulty": 2
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch2-fluid-electrolyte-card-019",
+   "type": "basic",
+   "sectionId": "s3",
+   "deck": "Hypokalaemia::Treatment",
+   "front": "Estimate the potassium deficit.",
+   "back": "(4.5 − serum K) × 100.",
+   "difficulty": 2
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch2-fluid-electrolyte-card-020",
+   "type": "basic",
+   "sectionId": "s3",
+   "deck": "Hypokalaemia::Treatment",
+   "front": "State the three safe rules for IV potassium.",
+   "back": "Urine ≥40 mL/h; ≤40 mmol per litre; no faster than 40 mmol/h (never a bolus).",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch2-fluid-electrolyte-card-021",
+   "type": "cloze",
+   "sectionId": "s3",
+   "deck": "Hypokalaemia::Treatment",
+   "cloze": "Potassium should never be given as a {{c1::bolus}}.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch2-fluid-electrolyte-card-022",
+   "type": "basic",
+   "sectionId": "s4",
+   "deck": "Hyperkalaemia::Causes",
+   "front": "What condition usually underlies dangerous hyperkalaemia?",
+   "back": "Renal failure (worsened by tissue destruction or Na/Ca depletion).",
+   "difficulty": 2
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch2-fluid-electrolyte-card-023",
+   "type": "cloze",
+   "sectionId": "s4",
+   "deck": "Hyperkalaemia::Causes",
+   "cloze": "{{c1::Acidosis}} shifts potassium out of cells into the ECF.",
+   "difficulty": 2
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch2-fluid-electrolyte-card-024",
+   "type": "basic",
+   "sectionId": "s4",
+   "deck": "Hyperkalaemia::ECG",
+   "front": "Earliest ECG change of hyperkalaemia?",
+   "back": "Peaked (tented) T waves; later a wide QRS.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch2-fluid-electrolyte-card-025",
+   "type": "basic",
+   "sectionId": "s4",
+   "deck": "Hyperkalaemia::Treatment",
+   "front": "First drug in hyperkalaemia and why?",
+   "back": "IV calcium gluconate — it antagonises potassium at the membrane (protects the heart) but does not lower K.",
+   "difficulty": 2
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch2-fluid-electrolyte-card-026",
+   "type": "basic",
+   "sectionId": "s4",
+   "deck": "Hyperkalaemia::Treatment",
+   "front": "How do insulin-dextrose and bicarbonate help hyperkalaemia?",
+   "back": "They shift potassium into cells (dextrose prevents hypoglycaemia with insulin).",
+   "difficulty": 2
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch2-fluid-electrolyte-card-027",
+   "type": "basic",
+   "sectionId": "s4",
+   "deck": "Hyperkalaemia::Treatment",
+   "front": "Which measures actually remove potassium from the body?",
+   "back": "Ion-exchange resin (via the gut) and dialysis.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch2-fluid-electrolyte-card-028",
+   "type": "reversed",
+   "sectionId": "s4",
+   "deck": "Hyperkalaemia::Treatment",
+   "front": "Antagonises potassium at the membrane without lowering serum K",
+   "back": "Calcium gluconate",
+   "difficulty": 2
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch2-fluid-electrolyte-card-029",
+   "type": "basic",
+   "sectionId": "s5",
+   "deck": "Requirements::Daily",
+   "front": "State the daily adult water, sodium and potassium requirements.",
+   "back": "Water ~35 mL/kg, sodium ~1 mmol/kg, potassium ~1 mmol/kg.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch2-fluid-electrolyte-card-030",
+   "type": "basic",
+   "sectionId": "s5",
+   "deck": "Requirements::Prescribing",
+   "front": "What three components make up a fluid prescription?",
+   "back": "Basal requirements, continuing abnormal losses, and pre-existing dehydration/electrolyte loss.",
+   "difficulty": 2
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch2-fluid-electrolyte-card-031",
+   "type": "cloze",
+   "sectionId": "s5",
+   "deck": "Requirements::Prescribing",
+   "cloze": "Add about {{c1::200 mL}} per day for each 1°C rise in body temperature.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch2-fluid-electrolyte-card-032",
+   "type": "basic",
+   "sectionId": "s5",
+   "deck": "Requirements::Routes",
+   "front": "When is the enteral route unsuitable for fluid replacement?",
+   "back": "When the GI tract is not working, e.g. post-operative paralytic ileus.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch2-fluid-electrolyte-card-033",
+   "type": "basic",
+   "sectionId": "s6",
+   "deck": "Fluids::Water",
+   "front": "Why is 5% dextrose effectively a way of giving water?",
+   "back": "Dextrose is metabolised, leaving net free water.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch2-fluid-electrolyte-card-034",
+   "type": "basic",
+   "sectionId": "s6",
+   "deck": "Fluids::Colloids",
+   "front": "Why must Haemaccel not share a giving set with citrated blood?",
+   "back": "It contains K⁺ and Ca²⁺, which clot the residual citrated blood.",
+   "difficulty": 2
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch2-fluid-electrolyte-card-035",
+   "type": "cloze",
+   "sectionId": "s6",
+   "deck": "Fluids::Colloids",
+   "cloze": "Dextrans interfere with blood cross-matching and coagulation by forming red-cell {{c1::rouleaux}}.",
+   "difficulty": 2
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch2-fluid-electrolyte-card-036",
+   "type": "basic",
+   "sectionId": "s6",
+   "deck": "Fluids::Colloids",
+   "front": "Name the three broad categories of parenteral fluid.",
+   "back": "Crystalloid, colloid and blood.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch2-fluid-electrolyte-card-037",
+   "type": "cloze",
+   "sectionId": "s7",
+   "deck": "Compositions::Saline",
+   "cloze": "Normal saline 0.9% contains Na⁺ {{c1::154}} mmol/L and Cl⁻ 154 mmol/L.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch2-fluid-electrolyte-card-038",
+   "type": "basic",
+   "sectionId": "s7",
+   "deck": "Compositions::Hartmann",
+   "front": "Which ions does Hartmann's solution contain?",
+   "back": "Na⁺, K⁺, Cl⁻, bicarbonate and calcium — close to plasma.",
+   "difficulty": 2
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch2-fluid-electrolyte-card-039",
+   "type": "basic",
+   "sectionId": "s7",
+   "deck": "Compositions::Dextrose-saline",
+   "front": "Why is dextrose-saline a poor sodium source?",
+   "back": "It contains only ~30 mmol/L sodium.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch2-fluid-electrolyte-card-040",
+   "type": "type",
+   "sectionId": "s7",
+   "deck": "Compositions::Saline",
+   "front": "Sodium concentration of normal saline (number, mmol/L).",
+   "back": "154",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch2-fluid-electrolyte-card-041",
+   "type": "basic",
+   "sectionId": "s8",
+   "deck": "Regimens::A",
+   "front": "What does maintenance regimen A provide over 24 h?",
+   "back": "~3 L water, 150 mmol Na⁺ and 60 mmol K⁺.",
+   "difficulty": 2
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch2-fluid-electrolyte-card-042",
+   "type": "basic",
+   "sectionId": "s8",
+   "deck": "Regimens::B",
+   "front": "Why is dextrose-saline regimen B only for the short term?",
+   "back": "Metabolised dextrose effectively delivers hypotonic saline → dilutional hyponatraemia.",
+   "difficulty": 2
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch2-fluid-electrolyte-card-043",
+   "type": "cloze",
+   "sectionId": "s8",
+   "deck": "Regimens::A",
+   "cloze": "A standard bag of maintenance fluid typically carries {{c1::20}} mmol KCl over 8 hours.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch2-fluid-electrolyte-card-044",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Hyponatraemia::Causes",
+   "front": "Why do GI secretion losses cause hyponatraemia?",
+   "back": "Most GI secretions have a sodium content close to plasma, so their loss depletes sodium.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch2-fluid-electrolyte-card-045",
+   "type": "basic",
+   "sectionId": "s3",
+   "deck": "Hypokalaemia::Consequences",
+   "front": "Which arrhythmia risk accompanies hypokalaemia?",
+   "back": "Supraventricular arrhythmias.",
+   "difficulty": 2
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch2-fluid-electrolyte-card-046",
+   "type": "basic",
+   "sectionId": "s4",
+   "deck": "Hyperkalaemia::Basics",
+   "front": "Which patients are especially prone to hyperkalaemia from acidosis?",
+   "back": "Diabetics with reduced or absent insulin secretion.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch2-fluid-electrolyte-card-047",
+   "type": "cloze",
+   "sectionId": "s6",
+   "deck": "Fluids::Colloids",
+   "cloze": "Gelatin colloids are modified from the hydrolysis of {{c1::bovine collagen}}.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch2-fluid-electrolyte-card-048",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Hypernatraemia::Signs",
+   "front": "What early facial sign may appear in sodium excess?",
+   "back": "Slight puffiness of the face.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch2-fluid-electrolyte-card-049",
+   "type": "basic",
+   "sectionId": "s5",
+   "deck": "Requirements::Prescribing",
+   "front": "Besides basal needs and fever, what else must be added to the fluid total?",
+   "back": "Continuing abnormal losses and any pre-existing dehydration/electrolyte deficit (including insensible loss).",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch2-fluid-electrolyte-card-050",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Hyponatraemia::Basics",
+   "front": "State the normal serum sodium range.",
+   "back": "135–145 mmol/L.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch2-fluid-electrolyte-card-051",
+   "type": "cloze",
+   "sectionId": "s1",
+   "deck": "Hyponatraemia::Causes",
+   "cloze": "Third-space losses causing depletional hyponatraemia include peritonitis, ileus and {{c1::ascites}}.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch2-fluid-electrolyte-card-052",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Hyponatraemia::Symptoms",
+   "front": "Name three cerebral features of dilutional hyponatraemia.",
+   "back": "Agitation, disorientation/delirium and seizures (also headache and vomiting).",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch2-fluid-electrolyte-card-053",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Hyponatraemia::Treatment",
+   "front": "First step for asymptomatic dilutional hyponatraemia?",
+   "back": "Restrict water intake.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch2-fluid-electrolyte-card-054",
+   "type": "cloze",
+   "sectionId": "s1",
+   "deck": "Hyponatraemia::Signs",
+   "cloze": "In depletional hyponatraemia the tongue is {{c1::coated and dry}} and peripheral veins are collapsed.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch2-fluid-electrolyte-card-055",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Hypernatraemia::Causes",
+   "front": "Give two endocrine causes of sodium excess.",
+   "back": "Hyperaldosteronism (Conn's/secondary) and Cushing's syndrome.",
+   "difficulty": 2
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch2-fluid-electrolyte-card-056",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Hypernatraemia::Signs",
+   "front": "What parallels ECF accumulation in sodium excess?",
+   "back": "Weight gain (with hypertension).",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch2-fluid-electrolyte-card-057",
+   "type": "type",
+   "sectionId": "s2",
+   "deck": "Hypernatraemia::Signs",
+   "front": "Only reliable sign of total-body sodium excess (one word).",
+   "back": "oedema",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch2-fluid-electrolyte-card-058",
+   "type": "basic",
+   "sectionId": "s3",
+   "deck": "Hypokalaemia::Causes",
+   "front": "Which diuretic classically causes hypokalaemia?",
+   "back": "Furosemide (a loop diuretic).",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch2-fluid-electrolyte-card-059",
+   "type": "basic",
+   "sectionId": "s3",
+   "deck": "Hypokalaemia::Consequences",
+   "front": "How does hypokalaemia change nerve/muscle excitability?",
+   "back": "It raises membrane excitation potentials, making them less excitable.",
+   "difficulty": 2
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch2-fluid-electrolyte-card-060",
+   "type": "basic",
+   "sectionId": "s3",
+   "deck": "Hypokalaemia::Consequences",
+   "front": "Which patients risk hepatic coma with hypokalaemia?",
+   "back": "Those with liver disease.",
+   "difficulty": 2
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch2-fluid-electrolyte-card-061",
+   "type": "cloze",
+   "sectionId": "s3",
+   "deck": "Hypokalaemia::ECG",
+   "cloze": "Hypokalaemia depresses the {{c1::ST}} segment and flattens or inverts the T wave.",
+   "difficulty": 2
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch2-fluid-electrolyte-card-062",
+   "type": "basic",
+   "sectionId": "s3",
+   "deck": "Hypokalaemia::Clinical",
+   "front": "Early clinical features of potassium depletion?",
+   "back": "Vague malaise and weakness with slow, slurred speech.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch2-fluid-electrolyte-card-063",
+   "type": "basic",
+   "sectionId": "s3",
+   "deck": "Hypokalaemia::Treatment",
+   "front": "Over what period is replacement potassium distributed?",
+   "back": "Spread throughout the day in the infusion (never a bolus).",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch2-fluid-electrolyte-card-064",
+   "type": "basic",
+   "sectionId": "s4",
+   "deck": "Hyperkalaemia::Consequences",
+   "front": "How does hyperkalaemia change membrane excitation potentials?",
+   "back": "It lowers them, making cells more excitable.",
+   "difficulty": 2
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch2-fluid-electrolyte-card-065",
+   "type": "cloze",
+   "sectionId": "s4",
+   "deck": "Hyperkalaemia::Treatment",
+   "cloze": "Ion-exchange resin (sodium polystyrene sulfonate) can be given by mouth or by {{c1::enema}}.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch2-fluid-electrolyte-card-066",
+   "type": "basic",
+   "sectionId": "s4",
+   "deck": "Hyperkalaemia::Treatment",
+   "front": "What is done if all pharmacological measures fail to lower potassium?",
+   "back": "Dialysis.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch2-fluid-electrolyte-card-067",
+   "type": "type",
+   "sectionId": "s4",
+   "deck": "Hyperkalaemia::ECG",
+   "front": "Classic peaked ECG wave in hyperkalaemia (one word).",
+   "back": "T",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch2-fluid-electrolyte-card-068",
+   "type": "basic",
+   "sectionId": "s5",
+   "deck": "Requirements::Daily",
+   "front": "Daily sodium and potassium requirements per kg?",
+   "back": "About 1 mmol/kg each per day.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch2-fluid-electrolyte-card-069",
+   "type": "basic",
+   "sectionId": "s6",
+   "deck": "Fluids::Colloids",
+   "front": "Half-life of gelatin colloids?",
+   "back": "About 8–10 hours.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch2-fluid-electrolyte-card-070",
+   "type": "basic",
+   "sectionId": "s6",
+   "deck": "Fluids::Colloids",
+   "front": "Two problems associated with dextrans.",
+   "back": "Nephrotoxicity and interference with cross-matching/coagulation (rouleaux); also allergy.",
+   "difficulty": 2
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch2-fluid-electrolyte-card-071",
+   "type": "cloze",
+   "sectionId": "s6",
+   "deck": "Fluids::Hetastarch",
+   "cloze": "Hetastarch is 6% starch in saline with a half-life of about {{c1::16–24}} hours.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch2-fluid-electrolyte-card-072",
+   "type": "basic",
+   "sectionId": "s7",
+   "deck": "Compositions::Dextrose",
+   "front": "Dextrose concentration in 5% dextrose (mmol/L)?",
+   "back": "278 mmol/L (calories negligible).",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch2-fluid-electrolyte-card-073",
+   "type": "cloze",
+   "sectionId": "s7",
+   "deck": "Compositions::Hartmann",
+   "cloze": "Hartmann's solution contains about {{c1::29}} mmol/L bicarbonate and 2 mmol/L calcium.",
+   "difficulty": 2
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch2-fluid-electrolyte-card-074",
+   "type": "basic",
+   "sectionId": "s7",
+   "deck": "Compositions::Ringer",
+   "front": "Which two divalent-relevant ions does Ringer's solution contain beyond Na/Cl?",
+   "back": "Potassium (~4 mmol/L) and calcium (~2.2 mmol/L).",
+   "difficulty": 2
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch2-fluid-electrolyte-card-075",
+   "type": "basic",
+   "sectionId": "s8",
+   "deck": "Regimens::B",
+   "front": "What does regimen B provide over 24 h?",
+   "back": "~3 L water, 90 mmol Na⁺ and 60 mmol K⁺.",
+   "difficulty": 2
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch2-fluid-electrolyte-card-076",
+   "type": "cloze",
+   "sectionId": "s8",
+   "deck": "Regimens::General",
+   "cloze": "Add {{c1::200}} mL per day to maintenance for each 1°C rise in temperature.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch2-fluid-electrolyte-card-077",
+   "type": "basic",
+   "sectionId": "s5",
+   "deck": "Requirements::Routes",
+   "front": "Into which three groups are parenteral fluids divided?",
+   "back": "Crystalloid, colloid and blood.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch2-fluid-electrolyte-card-078",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Hyponatraemia::Signs",
+   "front": "What happens to urine in depletional hyponatraemia?",
+   "back": "It becomes scanty, dark and of high specific gravity.",
+   "difficulty": 2
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch2-fluid-electrolyte-card-079",
+   "type": "basic",
+   "sectionId": "s4",
+   "deck": "Hyperkalaemia::Treatment",
+   "front": "Standard insulin-dextrose regimen for hyperkalaemia?",
+   "back": "About 10 units of regular insulin with 20 g of glucose.",
+   "difficulty": 2
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch2-fluid-electrolyte-card-080",
+   "type": "basic",
+   "sectionId": "s3",
+   "deck": "Hypokalaemia::Causes",
+   "front": "Name two GI causes of hypokalaemia besides vomiting.",
+   "back": "Severe diarrhoea (cholera, ulcerative colitis) and alimentary fistulae.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch2-fluid-electrolyte-card-081",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Hypernatraemia::Basics",
+   "front": "Serum sodium level in most sodium-excess states?",
+   "back": "Usually normal.",
+   "difficulty": 2
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch2-fluid-electrolyte-card-082",
+   "type": "cloze",
+   "sectionId": "s1",
+   "deck": "Hyponatraemia::Basics",
+   "cloze": "Hyponatraemia is defined as a serum sodium below {{c1::135}} mmol/L.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch2-fluid-electrolyte-card-083",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Hyponatraemia::Causes",
+   "front": "Name a renal cause of depletional hyponatraemia.",
+   "back": "Salt-losing nephritis, diuretics or adrenal failure.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch2-fluid-electrolyte-card-084",
+   "type": "basic",
+   "sectionId": "s3",
+   "deck": "Hypokalaemia::Consequences",
+   "front": "Which respiratory problem follows severe hypokalaemia?",
+   "back": "Respiratory-muscle weakness → inadequate ventilation and atelectasis.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch2-fluid-electrolyte-card-085",
+   "type": "basic",
+   "sectionId": "s4",
+   "deck": "Hyperkalaemia::Consequences",
+   "front": "Which ECG test is sensitive for hyperkalaemia and what does it show first?",
+   "back": "The ECG; it shows peaked T waves, then a wide QRS.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch2-fluid-electrolyte-card-086",
+   "type": "basic",
+   "sectionId": "s6",
+   "deck": "Fluids::Dextrans",
+   "front": "Difference in renal handling between Dextran 40 and Dextran 70?",
+   "back": "Dextran 40 is filtered by the kidney; Dextran 70 is not, so it stays in the circulation longer.",
+   "difficulty": 2
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch2-fluid-electrolyte-card-087",
+   "type": "cloze",
+   "sectionId": "s4",
+   "deck": "Hyperkalaemia::Treatment",
+   "cloze": "Sodium bicarbonate lowers potassium by encouraging an {{c1::intracellular}} shift.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch2-fluid-electrolyte-card-088",
+   "type": "basic",
+   "sectionId": "s7",
+   "deck": "Compositions::Saline",
+   "front": "Chloride concentration of normal saline?",
+   "back": "154 mmol/L.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch2-fluid-electrolyte-card-089",
+   "type": "basic",
+   "sectionId": "s5",
+   "deck": "Requirements::Prescribing",
+   "front": "Why must insensible losses be included in the fluid total?",
+   "back": "They are ongoing water losses (skin/respiration) additional to measured output.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch2-fluid-electrolyte-card-090",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Hypernatraemia::Causes",
+   "front": "Which post-operative physiological tendency contributes to sodium excess?",
+   "back": "Early post-operative sodium retention.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch2-fluid-electrolyte-card-091",
+   "type": "basic",
+   "sectionId": "s3",
+   "deck": "Hypokalaemia::Clinical",
+   "front": "Are most hypokalaemic patients symptomatic?",
+   "back": "No — most are asymptomatic.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch2-fluid-electrolyte-card-092",
+   "type": "basic",
+   "sectionId": "s8",
+   "deck": "Regimens::General",
+   "front": "How is a fever accounted for in a fluid regimen?",
+   "back": "Add ~200 mL/day per 1°C rise, plus all measured and insensible losses.",
+   "difficulty": 1
+  }
+ ],
+ "mcqs": [
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sur-ch2-fluid-electrolyte-mcq-001",
+   "type": "single",
+   "sectionId": "s1",
+   "difficulty": 2,
+   "highYield": true,
+   "stem": "A post-operative patient given large volumes of 5% dextrose becomes confused with serum Na⁺ 118 mmol/L. The most appropriate treatment is:",
+   "options": [
+    {
+     "id": "a",
+     "text": "Rapid infusion of 3% saline to normalise Na⁺ within 2 hours",
+     "correct": false,
+     "why": "Rapid correction risks central pontine myelinolysis."
+    },
+    {
+     "id": "b",
+     "text": "Water restriction and cautious hypertonic (3%) saline",
+     "correct": true,
+     "why": "Correct — severe symptomatic dilutional hyponatraemia."
+    },
+    {
+     "id": "c",
+     "text": "1 L bolus of 0.9% saline",
+     "correct": false,
+     "why": "This is dilutional (hypervolaemic), not depletional."
+    },
+    {
+     "id": "d",
+     "text": "Furosemide alone",
+     "correct": false,
+     "why": "Does not safely correct symptomatic hyponatraemia here."
+    },
+    {
+     "id": "e",
+     "text": "Fluid loading with dextrose",
+     "correct": false,
+     "why": "This would worsen the dilution."
+    }
+   ],
+   "explanation": [
+    "This is dilutional hyponatraemia from salt-free fluid.",
+    "Because it is severe and symptomatic, cautious 3% saline plus water restriction is used.",
+    "Correction must be slow to avoid pontine myelinolysis."
+   ],
+   "keyFacts": [
+    "Severe symptomatic dilutional hyponatraemia → cautious 3% saline, correct slowly."
+   ],
+   "teachingPoint": "Correct symptomatic hyponatraemia carefully, not quickly."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sur-ch2-fluid-electrolyte-mcq-002",
+   "type": "single",
+   "sectionId": "s1",
+   "difficulty": 2,
+   "highYield": false,
+   "stem": "Which statement about serum sodium is correct?",
+   "options": [
+    {
+     "id": "a",
+     "text": "It measures total body sodium",
+     "correct": false,
+     "why": "Serum sodium does not reflect total body sodium."
+    },
+    {
+     "id": "b",
+     "text": "It may be normal despite a large total-body sodium change",
+     "correct": true,
+     "why": "Correct."
+    },
+    {
+     "id": "c",
+     "text": "It is always low in sodium excess",
+     "correct": false,
+     "why": "Sodium excess often has a normal serum value."
+    },
+    {
+     "id": "d",
+     "text": "It rises in dilutional states",
+     "correct": false,
+     "why": "Dilution lowers, not raises, it."
+    },
+    {
+     "id": "e",
+     "text": "It is unaffected by water balance",
+     "correct": false,
+     "why": "Water balance strongly affects it."
+    }
+   ],
+   "explanation": [
+    "Serum sodium is a concentration, not a content.",
+    "It can be normal despite large total-body changes."
+   ],
+   "keyFacts": [
+    "Serum Na ≠ total body sodium."
+   ],
+   "teachingPoint": "Interpret sodium as a concentration."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sur-ch2-fluid-electrolyte-mcq-003",
+   "type": "single",
+   "sectionId": "s2",
+   "difficulty": 2,
+   "highYield": true,
+   "stem": "The only reliable clinical sign of total-body sodium excess is:",
+   "options": [
+    {
+     "id": "a",
+     "text": "Hypertension",
+     "correct": false,
+     "why": "A feature but not the reliable sign."
+    },
+    {
+     "id": "b",
+     "text": "Oedema",
+     "correct": true,
+     "why": "Correct."
+    },
+    {
+     "id": "c",
+     "text": "Raised serum sodium",
+     "correct": false,
+     "why": "Serum sodium is usually normal."
+    },
+    {
+     "id": "d",
+     "text": "Thirst",
+     "correct": false,
+     "why": "Not the reliable sign of sodium excess."
+    },
+    {
+     "id": "e",
+     "text": "Tachycardia",
+     "correct": false,
+     "why": "Suggests depletion, not excess."
+    }
+   ],
+   "explanation": [
+    "Sodium excess expands the ECF.",
+    "The reliable sign is oedema; serum sodium is often normal."
+   ],
+   "keyFacts": [
+    "Sodium excess → oedema."
+   ],
+   "teachingPoint": "Judge sodium excess by oedema, not the lab value."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sur-ch2-fluid-electrolyte-mcq-004",
+   "type": "single",
+   "sectionId": "s3",
+   "difficulty": 2,
+   "highYield": true,
+   "stem": "A patient with pyloric stenosis and prolonged vomiting is most likely to develop:",
+   "options": [
+    {
+     "id": "a",
+     "text": "Hyperkalaemia",
+     "correct": false,
+     "why": "Vomiting/aspiration lose potassium, causing hypokalaemia."
+    },
+    {
+     "id": "b",
+     "text": "Hypokalaemia",
+     "correct": true,
+     "why": "Correct — a classic surgical cause."
+    },
+    {
+     "id": "c",
+     "text": "Hypernatraemia",
+     "correct": false,
+     "why": "Not the typical disturbance here."
+    },
+    {
+     "id": "d",
+     "text": "Hypercalcaemia",
+     "correct": false,
+     "why": "Unrelated to this loss."
+    },
+    {
+     "id": "e",
+     "text": "Metabolic acidosis",
+     "correct": false,
+     "why": "Vomiting causes alkalosis, not acidosis."
+    }
+   ],
+   "explanation": [
+    "GI losses and aspiration deplete potassium.",
+    "Pyloric stenosis is a classic cause of hypokalaemia (with alkalosis)."
+   ],
+   "keyFacts": [
+    "Vomiting/aspiration → hypokalaemia."
+   ],
+   "teachingPoint": "Upper-GI losses drop potassium."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sur-ch2-fluid-electrolyte-mcq-005",
+   "type": "single",
+   "sectionId": "s3",
+   "difficulty": 2,
+   "highYield": false,
+   "stem": "Which ECG feature is characteristic of hypokalaemia?",
+   "options": [
+    {
+     "id": "a",
+     "text": "Peaked T waves",
+     "correct": false,
+     "why": "That is hyperkalaemia."
+    },
+    {
+     "id": "b",
+     "text": "U wave",
+     "correct": true,
+     "why": "Correct."
+    },
+    {
+     "id": "c",
+     "text": "Wide QRS",
+     "correct": false,
+     "why": "That is hyperkalaemia."
+    },
+    {
+     "id": "d",
+     "text": "Delta wave",
+     "correct": false,
+     "why": "A pre-excitation feature, unrelated."
+    },
+    {
+     "id": "e",
+     "text": "Short QT",
+     "correct": false,
+     "why": "Hypokalaemia prolongs the QT."
+    }
+   ],
+   "explanation": [
+    "Hypokalaemia gives flat/inverted T, ST depression and prolonged QT.",
+    "A U wave is characteristic."
+   ],
+   "keyFacts": [
+    "Hypokalaemia → U wave."
+   ],
+   "teachingPoint": "Match electrolyte to its ECG signature."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sur-ch2-fluid-electrolyte-mcq-006",
+   "type": "single",
+   "sectionId": "s3",
+   "difficulty": 2,
+   "highYield": true,
+   "stem": "What is the single most important safety rule when replacing potassium intravenously?",
+   "options": [
+    {
+     "id": "a",
+     "text": "Give it as a rapid bolus",
+     "correct": false,
+     "why": "Bolus potassium can be fatal."
+    },
+    {
+     "id": "b",
+     "text": "Never give it as a bolus; infuse it",
+     "correct": true,
+     "why": "Correct — no faster than 40 mmol/h."
+    },
+    {
+     "id": "c",
+     "text": "Give it only with adrenaline",
+     "correct": false,
+     "why": "Not a potassium rule."
+    },
+    {
+     "id": "d",
+     "text": "Give it undiluted centrally",
+     "correct": false,
+     "why": "Concentration must be controlled, not maximised."
+    },
+    {
+     "id": "e",
+     "text": "Withhold it if urine output is high",
+     "correct": false,
+     "why": "Adequate urine output is required, not a reason to withhold."
+    }
+   ],
+   "explanation": [
+    "Bolus potassium causes arrhythmia and asystole.",
+    "Infuse it: urine ≥40 mL/h, ≤40 mmol/L, ≤40 mmol/h."
+   ],
+   "keyFacts": [
+    "Never bolus potassium."
+   ],
+   "teachingPoint": "Potassium is lethal if given fast."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sur-ch2-fluid-electrolyte-mcq-007",
+   "type": "single",
+   "sectionId": "s4",
+   "difficulty": 2,
+   "highYield": true,
+   "stem": "A dialysis patient has serum K⁺ 7.2 mmol/L with peaked T waves. The FIRST drug is:",
+   "options": [
+    {
+     "id": "a",
+     "text": "Insulin with dextrose",
+     "correct": false,
+     "why": "Shifts K but is not the first membrane-protecting step."
+    },
+    {
+     "id": "b",
+     "text": "IV calcium gluconate",
+     "correct": true,
+     "why": "Correct — immediate myocardial protection."
+    },
+    {
+     "id": "c",
+     "text": "Sodium bicarbonate",
+     "correct": false,
+     "why": "Shifts K but not the first step for membrane protection."
+    },
+    {
+     "id": "d",
+     "text": "Ion-exchange resin",
+     "correct": false,
+     "why": "Slow; removes K over hours."
+    },
+    {
+     "id": "e",
+     "text": "Salbutamol nebuliser",
+     "correct": false,
+     "why": "An adjunct, not the first step here."
+    }
+   ],
+   "explanation": [
+    "Calcium gluconate stabilises the myocardium at once.",
+    "It buys time while shifting/removing measures work."
+   ],
+   "keyFacts": [
+    "Calcium gluconate first in dangerous hyperkalaemia."
+   ],
+   "teachingPoint": "Protect the heart before lowering potassium."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sur-ch2-fluid-electrolyte-mcq-008",
+   "type": "single",
+   "sectionId": "s4",
+   "difficulty": 2,
+   "highYield": false,
+   "stem": "Which measure actually REMOVES potassium from the body?",
+   "options": [
+    {
+     "id": "a",
+     "text": "Calcium gluconate",
+     "correct": false,
+     "why": "Membrane antagonism only."
+    },
+    {
+     "id": "b",
+     "text": "Insulin and dextrose",
+     "correct": false,
+     "why": "Shifts K into cells."
+    },
+    {
+     "id": "c",
+     "text": "Sodium bicarbonate",
+     "correct": false,
+     "why": "Shifts K into cells."
+    },
+    {
+     "id": "d",
+     "text": "Ion-exchange resin or dialysis",
+     "correct": true,
+     "why": "Correct — these remove potassium."
+    },
+    {
+     "id": "e",
+     "text": "Salbutamol",
+     "correct": false,
+     "why": "Shifts K into cells."
+    }
+   ],
+   "explanation": [
+    "Calcium protects; insulin/bicarbonate/salbutamol shift.",
+    "Only resin and dialysis remove potassium from the body."
+   ],
+   "keyFacts": [
+    "Resin/dialysis remove K; the rest shift or protect."
+   ],
+   "teachingPoint": "Distinguish protect vs shift vs remove."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sur-ch2-fluid-electrolyte-mcq-009",
+   "type": "single",
+   "sectionId": "s6",
+   "difficulty": 2,
+   "highYield": false,
+   "stem": "Why should Haemaccel not be co-administered with citrated blood through the same giving set?",
+   "options": [
+    {
+     "id": "a",
+     "text": "It is hypotonic",
+     "correct": false,
+     "why": "Tonicity is not the issue."
+    },
+    {
+     "id": "b",
+     "text": "It contains K⁺ and Ca²⁺ that clot the residual blood",
+     "correct": true,
+     "why": "Correct."
+    },
+    {
+     "id": "c",
+     "text": "It causes haemolysis",
+     "correct": false,
+     "why": "Not the described mechanism."
+    },
+    {
+     "id": "d",
+     "text": "It is nephrotoxic",
+     "correct": false,
+     "why": "A dextran feature, not this one."
+    },
+    {
+     "id": "e",
+     "text": "It blocks the filter",
+     "correct": false,
+     "why": "Not the reason."
+    }
+   ],
+   "explanation": [
+    "Haemaccel contains potassium and calcium.",
+    "Calcium reverses citrate anticoagulation, clotting residual blood in the set."
+   ],
+   "keyFacts": [
+    "Haemaccel + citrated blood in one line → clot."
+   ],
+   "teachingPoint": "Beware calcium-containing colloids with citrated blood."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sur-ch2-fluid-electrolyte-mcq-010",
+   "type": "single",
+   "sectionId": "s7",
+   "difficulty": 1,
+   "highYield": false,
+   "stem": "Which crystalloid most closely resembles plasma electrolytes?",
+   "options": [
+    {
+     "id": "a",
+     "text": "Normal saline 0.9%",
+     "correct": false,
+     "why": "Has only Na and Cl, no K/Ca/bicarbonate."
+    },
+    {
+     "id": "b",
+     "text": "5% dextrose",
+     "correct": false,
+     "why": "Effectively free water."
+    },
+    {
+     "id": "c",
+     "text": "Hartmann's solution",
+     "correct": true,
+     "why": "Correct — balanced with Na, K, Cl, bicarbonate, Ca."
+    },
+    {
+     "id": "d",
+     "text": "Dextrose-saline",
+     "correct": false,
+     "why": "Low sodium, not balanced."
+    },
+    {
+     "id": "e",
+     "text": "3% saline",
+     "correct": false,
+     "why": "Hypertonic, not physiological."
+    }
+   ],
+   "explanation": [
+    "Balanced crystalloids contain multiple physiological ions.",
+    "Hartmann's includes Na, K, Cl, bicarbonate and calcium."
+   ],
+   "keyFacts": [
+    "Hartmann's ≈ plasma."
+   ],
+   "teachingPoint": "Balanced fluids resemble plasma."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sur-ch2-fluid-electrolyte-mcq-011",
+   "type": "single",
+   "sectionId": "s7",
+   "difficulty": 1,
+   "highYield": false,
+   "stem": "Normal (physiological) saline 0.9% contains sodium at:",
+   "options": [
+    {
+     "id": "a",
+     "text": "77 mmol/L",
+     "correct": false,
+     "why": "Too low; that is half-normal saline."
+    },
+    {
+     "id": "b",
+     "text": "130 mmol/L",
+     "correct": false,
+     "why": "That is closer to Hartmann's sodium."
+    },
+    {
+     "id": "c",
+     "text": "154 mmol/L",
+     "correct": true,
+     "why": "Correct."
+    },
+    {
+     "id": "d",
+     "text": "222 mmol/L",
+     "correct": false,
+     "why": "That is a dextrose figure, not sodium."
+    },
+    {
+     "id": "e",
+     "text": "300 mmol/L",
+     "correct": false,
+     "why": "Too high."
+    }
+   ],
+   "explanation": [
+    "Normal saline is 0.9% NaCl.",
+    "This gives Na⁺ 154 and Cl⁻ 154 mmol/L."
+   ],
+   "keyFacts": [
+    "Normal saline: Na 154, Cl 154."
+   ],
+   "teachingPoint": "Learn the crystalloid numbers."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sur-ch2-fluid-electrolyte-mcq-012",
+   "type": "single",
+   "sectionId": "s5",
+   "difficulty": 1,
+   "highYield": false,
+   "stem": "The approximate daily water requirement for a healthy 70-kg adult is closest to:",
+   "options": [
+    {
+     "id": "a",
+     "text": "1 L",
+     "correct": false,
+     "why": "Far too little."
+    },
+    {
+     "id": "b",
+     "text": "2.5 L",
+     "correct": true,
+     "why": "Correct — ~35 mL/kg ≈ 2.5 L."
+    },
+    {
+     "id": "c",
+     "text": "5 L",
+     "correct": false,
+     "why": "Too much for maintenance."
+    },
+    {
+     "id": "d",
+     "text": "10 L",
+     "correct": false,
+     "why": "Excessive."
+    },
+    {
+     "id": "e",
+     "text": "0.5 L",
+     "correct": false,
+     "why": "Far too little."
+    }
+   ],
+   "explanation": [
+    "Maintenance water is ~35 mL/kg/day.",
+    "For 70 kg this is roughly 2.5 L."
+   ],
+   "keyFacts": [
+    "~35 mL/kg/day water."
+   ],
+   "teachingPoint": "Maintenance scales with weight."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sur-ch2-fluid-electrolyte-mcq-013",
+   "type": "single",
+   "sectionId": "s8",
+   "difficulty": 2,
+   "highYield": false,
+   "stem": "Prolonged use of dextrose-saline maintenance (regimen B) risks:",
+   "options": [
+    {
+     "id": "a",
+     "text": "Hypernatraemia",
+     "correct": false,
+     "why": "It provides little sodium, not excess."
+    },
+    {
+     "id": "b",
+     "text": "Dilutional hyponatraemia",
+     "correct": true,
+     "why": "Correct — metabolised dextrose effectively gives hypotonic saline."
+    },
+    {
+     "id": "c",
+     "text": "Hyperkalaemia",
+     "correct": false,
+     "why": "Not the specific risk."
+    },
+    {
+     "id": "d",
+     "text": "Metabolic acidosis",
+     "correct": false,
+     "why": "Not the described risk."
+    },
+    {
+     "id": "e",
+     "text": "Hypercalcaemia",
+     "correct": false,
+     "why": "Unrelated."
+    }
+   ],
+   "explanation": [
+    "After dextrose is metabolised, dextrose-saline behaves like hypotonic saline.",
+    "Prolonged use lowers sodium."
+   ],
+   "keyFacts": [
+    "Dextrose-saline long-term → hyponatraemia."
+   ],
+   "teachingPoint": "Watch tonicity over days."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sur-ch2-fluid-electrolyte-mcq-014",
+   "type": "single",
+   "sectionId": "s1",
+   "difficulty": 2,
+   "highYield": true,
+   "stem": "A patient with severe diarrhoea has sunken eyes, low CVP, tachycardia and Na⁺ 130 mmol/L. This is best treated with:",
+   "options": [
+    {
+     "id": "a",
+     "text": "Water restriction",
+     "correct": false,
+     "why": "That treats dilutional, not depletional, hyponatraemia."
+    },
+    {
+     "id": "b",
+     "text": "0.9% saline / Hartmann's to restore ECF",
+     "correct": true,
+     "why": "Correct."
+    },
+    {
+     "id": "c",
+     "text": "3% saline immediately",
+     "correct": false,
+     "why": "Not required at this level without severe symptoms."
+    },
+    {
+     "id": "d",
+     "text": "5% dextrose",
+     "correct": false,
+     "why": "Would worsen the sodium and not restore ECF."
+    },
+    {
+     "id": "e",
+     "text": "Diuretics",
+     "correct": false,
+     "why": "Inappropriate in volume depletion."
+    }
+   ],
+   "explanation": [
+    "The picture is hypovolaemic (depletional) hyponatraemia.",
+    "Restore ECF with normal saline or Hartmann's."
+   ],
+   "keyFacts": [
+    "Depletional hyponatraemia → saline/Hartmann's."
+   ],
+   "teachingPoint": "Volume status guides the fluid."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sur-ch2-fluid-electrolyte-mcq-015",
+   "type": "single",
+   "sectionId": "s4",
+   "difficulty": 2,
+   "highYield": false,
+   "stem": "Insulin is given with dextrose in hyperkalaemia in order to:",
+   "options": [
+    {
+     "id": "a",
+     "text": "Remove potassium in the urine",
+     "correct": false,
+     "why": "Insulin shifts, it does not excrete K."
+    },
+    {
+     "id": "b",
+     "text": "Drive potassium into cells while avoiding hypoglycaemia",
+     "correct": true,
+     "why": "Correct."
+    },
+    {
+     "id": "c",
+     "text": "Antagonise potassium at the myocardial membrane",
+     "correct": false,
+     "why": "That is calcium's role."
+    },
+    {
+     "id": "d",
+     "text": "Bind potassium in the gut",
+     "correct": false,
+     "why": "That is resin's role."
+    },
+    {
+     "id": "e",
+     "text": "Alkalinise the blood",
+     "correct": false,
+     "why": "That is bicarbonate's role."
+    }
+   ],
+   "explanation": [
+    "Insulin drives potassium intracellularly with glycogen.",
+    "Dextrose is added to prevent hypoglycaemia."
+   ],
+   "keyFacts": [
+    "Insulin+dextrose shifts K into cells."
+   ],
+   "teachingPoint": "Match each agent to its mechanism."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sur-ch2-fluid-electrolyte-mcq-016",
+   "type": "single",
+   "sectionId": "s3",
+   "difficulty": 2,
+   "highYield": false,
+   "stem": "Which of the following causes hypokalaemia by an intracellular shift rather than true loss?",
+   "options": [
+    {
+     "id": "a",
+     "text": "Vomiting",
+     "correct": false,
+     "why": "True loss via GI secretions."
+    },
+    {
+     "id": "b",
+     "text": "Alkalosis",
+     "correct": true,
+     "why": "Correct — shifts K into cells."
+    },
+    {
+     "id": "c",
+     "text": "Diarrhoea",
+     "correct": false,
+     "why": "True loss."
+    },
+    {
+     "id": "d",
+     "text": "Fistula",
+     "correct": false,
+     "why": "True loss."
+    },
+    {
+     "id": "e",
+     "text": "Furosemide",
+     "correct": false,
+     "why": "Renal loss."
+    }
+   ],
+   "explanation": [
+    "Most causes are true losses.",
+    "Alkalosis lowers serum K by an intracellular shift without depletion."
+   ],
+   "keyFacts": [
+    "Alkalosis shifts K in."
+   ],
+   "teachingPoint": "Distinguish shift from true loss."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sur-ch2-fluid-electrolyte-mcq-017",
+   "type": "single",
+   "sectionId": "s2",
+   "difficulty": 2,
+   "highYield": false,
+   "stem": "Which is a recognised cause of total-body sodium (and water) excess?",
+   "options": [
+    {
+     "id": "a",
+     "text": "Addison's disease",
+     "correct": false,
+     "why": "That causes sodium loss, not excess."
+    },
+    {
+     "id": "b",
+     "text": "Conn's syndrome",
+     "correct": true,
+     "why": "Correct — primary hyperaldosteronism."
+    },
+    {
+     "id": "c",
+     "text": "Diabetes insipidus",
+     "correct": false,
+     "why": "Causes water loss."
+    },
+    {
+     "id": "d",
+     "text": "Salt-losing nephritis",
+     "correct": false,
+     "why": "Causes sodium loss."
+    },
+    {
+     "id": "e",
+     "text": "Diuretic overuse",
+     "correct": false,
+     "why": "Causes loss, not excess."
+    }
+   ],
+   "explanation": [
+    "Aldosterone excess retains sodium and water.",
+    "Conn's syndrome is primary hyperaldosteronism."
+   ],
+   "keyFacts": [
+    "Conn's → sodium/water excess."
+   ],
+   "teachingPoint": "Aldosterone drives sodium retention."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sur-ch2-fluid-electrolyte-mcq-018",
+   "type": "single",
+   "sectionId": "s6",
+   "difficulty": 1,
+   "highYield": false,
+   "stem": "Which colloid is a natural blood product lacking clotting factors?",
+   "options": [
+    {
+     "id": "a",
+     "text": "Gelatin",
+     "correct": false,
+     "why": "A modified bovine-collagen colloid, not a blood product."
+    },
+    {
+     "id": "b",
+     "text": "Albumin 4.5%",
+     "correct": true,
+     "why": "Correct."
+    },
+    {
+     "id": "c",
+     "text": "Dextran 70",
+     "correct": false,
+     "why": "A glucose polymer, not a blood product."
+    },
+    {
+     "id": "d",
+     "text": "Hetastarch",
+     "correct": false,
+     "why": "A synthetic starch."
+    },
+    {
+     "id": "e",
+     "text": "Hartmann's",
+     "correct": false,
+     "why": "A crystalloid."
+    }
+   ],
+   "explanation": [
+    "Albumin is a natural plasma protein.",
+    "The 4.5% preparation carries no clotting factors."
+   ],
+   "keyFacts": [
+    "Albumin = natural colloid, no clotting factors."
+   ],
+   "teachingPoint": "Know each colloid's origin."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sur-ch2-fluid-electrolyte-mcq-019",
+   "type": "single",
+   "sectionId": "s5",
+   "difficulty": 2,
+   "highYield": false,
+   "stem": "A febrile surgical patient is 2°C above normal temperature. Roughly how much extra maintenance water should be added per day?",
+   "options": [
+    {
+     "id": "a",
+     "text": "No extra",
+     "correct": false,
+     "why": "Fever increases insensible loss."
+    },
+    {
+     "id": "b",
+     "text": "~400 mL",
+     "correct": true,
+     "why": "Correct — ~200 mL per 1°C × 2."
+    },
+    {
+     "id": "c",
+     "text": "~2 L",
+     "correct": false,
+     "why": "Too much for 2°C."
+    },
+    {
+     "id": "d",
+     "text": "~50 mL",
+     "correct": false,
+     "why": "Too little."
+    },
+    {
+     "id": "e",
+     "text": "~5 L",
+     "correct": false,
+     "why": "Far too much."
+    }
+   ],
+   "explanation": [
+    "Add ~200 mL/day for each 1°C of pyrexia.",
+    "For 2°C that is about 400 mL."
+   ],
+   "keyFacts": [
+    "+200 mL/day per 1°C fever."
+   ],
+   "teachingPoint": "Adjust maintenance for fever and losses."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sur-ch2-fluid-electrolyte-mcq-020",
+   "type": "single",
+   "sectionId": "s4",
+   "difficulty": 2,
+   "highYield": false,
+   "stem": "Which acid–base disturbance predisposes to hyperkalaemia by shifting potassium out of cells?",
+   "options": [
+    {
+     "id": "a",
+     "text": "Alkalosis",
+     "correct": false,
+     "why": "Alkalosis shifts K in, lowering it."
+    },
+    {
+     "id": "b",
+     "text": "Acidosis",
+     "correct": true,
+     "why": "Correct."
+    },
+    {
+     "id": "c",
+     "text": "Respiratory alkalosis only",
+     "correct": false,
+     "why": "Alkalosis lowers K."
+    },
+    {
+     "id": "d",
+     "text": "No disturbance affects K",
+     "correct": false,
+     "why": "Acid–base strongly affects K distribution."
+    },
+    {
+     "id": "e",
+     "text": "Ketosis without acidosis",
+     "correct": false,
+     "why": "The shift is driven by acidaemia."
+    }
+   ],
+   "explanation": [
+    "Hydrogen ions exchange with potassium across the membrane.",
+    "Acidosis drives K out of cells, raising serum K."
+   ],
+   "keyFacts": [
+    "Acidosis → hyperkalaemia (shift out)."
+   ],
+   "teachingPoint": "Acid–base moves potassium."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sur-ch2-fluid-electrolyte-mcq-021",
+   "type": "single",
+   "sectionId": "s1",
+   "difficulty": 2,
+   "highYield": false,
+   "stem": "Depletional hyponatraemia is characterised clinically by:",
+   "options": [
+    {
+     "id": "a",
+     "text": "Oedema and hypertension",
+     "correct": false,
+     "why": "Those suggest sodium excess."
+    },
+    {
+     "id": "b",
+     "text": "Low CVP, tachycardia and scanty dark urine",
+     "correct": true,
+     "why": "Correct — features of reduced ECF."
+    },
+    {
+     "id": "c",
+     "text": "Bounding pulse and raised JVP",
+     "correct": false,
+     "why": "Suggest volume overload."
+    },
+    {
+     "id": "d",
+     "text": "Marked thirst as the dominant feature",
+     "correct": false,
+     "why": "Thirst is less prominent in salt-and-water depletion."
+    },
+    {
+     "id": "e",
+     "text": "High urine output",
+     "correct": false,
+     "why": "Urine is scanty and concentrated."
+    }
+   ],
+   "explanation": [
+    "Depletion reduces ECF volume.",
+    "Signs include low CVP, tachycardia, orthostatic hypotension and scanty concentrated urine."
+   ],
+   "keyFacts": [
+    "Depletional = low-volume signs."
+   ],
+   "teachingPoint": "Read the volume status."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sur-ch2-fluid-electrolyte-mcq-022",
+   "type": "single",
+   "sectionId": "s8",
+   "difficulty": 2,
+   "highYield": false,
+   "stem": "Maintenance regimen A over 24 hours provides approximately:",
+   "options": [
+    {
+     "id": "a",
+     "text": "3 L water, 90 mmol Na, 60 mmol K",
+     "correct": false,
+     "why": "That is regimen B's sodium."
+    },
+    {
+     "id": "b",
+     "text": "3 L water, 150 mmol Na, 60 mmol K",
+     "correct": true,
+     "why": "Correct."
+    },
+    {
+     "id": "c",
+     "text": "2 L water, 150 mmol Na, 20 mmol K",
+     "correct": false,
+     "why": "Wrong volumes."
+    },
+    {
+     "id": "d",
+     "text": "3 L water, 300 mmol Na, 120 mmol K",
+     "correct": false,
+     "why": "Too much."
+    },
+    {
+     "id": "e",
+     "text": "1 L water, 60 mmol Na, 20 mmol K",
+     "correct": false,
+     "why": "Too little."
+    }
+   ],
+   "explanation": [
+    "Regimen A uses 1 L saline plus 2 L dextrose, each with 20 mmol KCl.",
+    "This gives ~3 L water, 150 mmol Na and 60 mmol K."
+   ],
+   "keyFacts": [
+    "Regimen A ≈ 3 L / Na 150 / K 60."
+   ],
+   "teachingPoint": "Know the standard regimen totals."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sur-ch2-fluid-electrolyte-mcq-023",
+   "type": "single",
+   "sectionId": "s7",
+   "difficulty": 1,
+   "highYield": false,
+   "stem": "Which fluid effectively delivers pure water once metabolised?",
+   "options": [
+    {
+     "id": "a",
+     "text": "Normal saline",
+     "correct": false,
+     "why": "Delivers sodium and chloride."
+    },
+    {
+     "id": "b",
+     "text": "5% dextrose",
+     "correct": true,
+     "why": "Correct — dextrose is metabolised, leaving free water."
+    },
+    {
+     "id": "c",
+     "text": "Hartmann's",
+     "correct": false,
+     "why": "A balanced salt solution."
+    },
+    {
+     "id": "d",
+     "text": "3% saline",
+     "correct": false,
+     "why": "Hypertonic salt."
+    },
+    {
+     "id": "e",
+     "text": "Ringer's",
+     "correct": false,
+     "why": "A balanced salt solution."
+    }
+   ],
+   "explanation": [
+    "Dextrose is metabolised to CO2 and water.",
+    "5% dextrose therefore provides free water."
+   ],
+   "keyFacts": [
+    "5% dextrose = free water."
+   ],
+   "teachingPoint": "Dextrose solutions replace water."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sur-ch2-fluid-electrolyte-mcq-024",
+   "type": "single",
+   "sectionId": "s6",
+   "difficulty": 2,
+   "highYield": false,
+   "stem": "Dextran is best avoided immediately before which investigation?",
+   "options": [
+    {
+     "id": "a",
+     "text": "Chest X-ray",
+     "correct": false,
+     "why": "Unaffected by dextran."
+    },
+    {
+     "id": "b",
+     "text": "Blood cross-matching",
+     "correct": true,
+     "why": "Correct — dextran interferes with cross-matching."
+    },
+    {
+     "id": "c",
+     "text": "Urinalysis",
+     "correct": false,
+     "why": "Not the key interference."
+    },
+    {
+     "id": "d",
+     "text": "ECG",
+     "correct": false,
+     "why": "Unaffected."
+    },
+    {
+     "id": "e",
+     "text": "Serum sodium",
+     "correct": false,
+     "why": "Not the key issue."
+    }
+   ],
+   "explanation": [
+    "Dextran forms rouleaux and interferes with cross-matching.",
+    "Take the cross-match sample before giving dextran."
+   ],
+   "keyFacts": [
+    "Dextran interferes with cross-match."
+   ],
+   "teachingPoint": "Sequence tests around colloids."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sur-ch2-fluid-electrolyte-mcq-025",
+   "type": "single",
+   "sectionId": "s5",
+   "difficulty": 1,
+   "highYield": false,
+   "stem": "Which route of fluid replacement is preferred when the gut is working and the deficit is modest?",
+   "options": [
+    {
+     "id": "a",
+     "text": "Central venous",
+     "correct": false,
+     "why": "Reserved for larger/parenteral needs."
+    },
+    {
+     "id": "b",
+     "text": "Enteral (oral)",
+     "correct": true,
+     "why": "Correct."
+    },
+    {
+     "id": "c",
+     "text": "Intraosseous",
+     "correct": false,
+     "why": "An emergency access route."
+    },
+    {
+     "id": "d",
+     "text": "Subcutaneous",
+     "correct": false,
+     "why": "Not first-line here."
+    },
+    {
+     "id": "e",
+     "text": "Rectal",
+     "correct": false,
+     "why": "Not standard for maintenance."
+    }
+   ],
+   "explanation": [
+    "Use the gut when it works and the deficit is modest.",
+    "Oral replacement is appropriate; IV is for a non-functioning gut or rapid needs."
+   ],
+   "keyFacts": [
+    "Working gut, small deficit → oral."
+   ],
+   "teachingPoint": "Choose the least invasive effective route."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sur-ch2-fluid-electrolyte-mcq-026",
+   "type": "single",
+   "sectionId": "s4",
+   "difficulty": 2,
+   "highYield": false,
+   "stem": "A serum potassium rise to about 5 mmol/L triggers which protective response?",
+   "options": [
+    {
+     "id": "a",
+     "text": "Increased ADH secretion",
+     "correct": false,
+     "why": "Not the potassium response."
+    },
+    {
+     "id": "b",
+     "text": "Aldosterone secretion enhancing renal K excretion",
+     "correct": true,
+     "why": "Correct."
+    },
+    {
+     "id": "c",
+     "text": "Reduced insulin secretion",
+     "correct": false,
+     "why": "Would worsen hyperkalaemia."
+    },
+    {
+     "id": "d",
+     "text": "Cortisol suppression",
+     "correct": false,
+     "why": "Not the mechanism."
+    },
+    {
+     "id": "e",
+     "text": "Parathyroid hormone release",
+     "correct": false,
+     "why": "Governs calcium, not potassium."
+    }
+   ],
+   "explanation": [
+    "Rising potassium stimulates aldosterone.",
+    "Aldosterone increases renal potassium excretion."
+   ],
+   "keyFacts": [
+    "K rise → aldosterone → renal K loss."
+   ],
+   "teachingPoint": "Aldosterone defends potassium balance."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sur-ch2-fluid-electrolyte-mcq-027",
+   "type": "single",
+   "sectionId": "s3",
+   "difficulty": 2,
+   "highYield": true,
+   "stem": "Muscle weakness, paralytic ileus and slurred speech in a post-operative patient on prolonged nasogastric aspiration suggest:",
+   "options": [
+    {
+     "id": "a",
+     "text": "Hypernatraemia",
+     "correct": false,
+     "why": "Not the classic picture here."
+    },
+    {
+     "id": "b",
+     "text": "Hypokalaemia",
+     "correct": true,
+     "why": "Correct."
+    },
+    {
+     "id": "c",
+     "text": "Hyperkalaemia",
+     "correct": false,
+     "why": "Presents with different features and ECG."
+    },
+    {
+     "id": "d",
+     "text": "Hypocalcaemia",
+     "correct": false,
+     "why": "Causes tetany, not this picture."
+    },
+    {
+     "id": "e",
+     "text": "Hypermagnesaemia",
+     "correct": false,
+     "why": "Not the typical surgical cause here."
+    }
+   ],
+   "explanation": [
+    "Prolonged aspiration depletes potassium.",
+    "Weakness, ileus and slurred speech are hypokalaemic features."
+   ],
+   "keyFacts": [
+    "Aspiration → hypokalaemia symptoms."
+   ],
+   "teachingPoint": "Link the losses to the deficit."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sur-ch2-fluid-electrolyte-mcq-028",
+   "type": "single",
+   "sectionId": "s2",
+   "difficulty": 2,
+   "highYield": false,
+   "stem": "In sodium excess, the serum sodium concentration is typically:",
+   "options": [
+    {
+     "id": "a",
+     "text": "Markedly elevated",
+     "correct": false,
+     "why": "Usually normal despite excess."
+    },
+    {
+     "id": "b",
+     "text": "Usually normal",
+     "correct": true,
+     "why": "Correct."
+    },
+    {
+     "id": "c",
+     "text": "Always low",
+     "correct": false,
+     "why": "Not the rule."
+    },
+    {
+     "id": "d",
+     "text": "Undetectable",
+     "correct": false,
+     "why": "Not applicable."
+    },
+    {
+     "id": "e",
+     "text": "Only measurable on ABG",
+     "correct": false,
+     "why": "Not the point."
+    }
+   ],
+   "explanation": [
+    "Total-body sodium excess expands water proportionally.",
+    "So serum sodium is usually normal; oedema is the sign."
+   ],
+   "keyFacts": [
+    "Sodium excess → normal serum Na, oedema."
+   ],
+   "teachingPoint": "Concentration hides content changes."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sur-ch2-fluid-electrolyte-mcq-029",
+   "type": "single",
+   "sectionId": "s8",
+   "difficulty": 1,
+   "highYield": false,
+   "stem": "A standard maintenance bag is typically supplemented with how much potassium chloride per litre?",
+   "options": [
+    {
+     "id": "a",
+     "text": "None",
+     "correct": false,
+     "why": "Maintenance usually includes potassium."
+    },
+    {
+     "id": "b",
+     "text": "20 mmol",
+     "correct": true,
+     "why": "Correct."
+    },
+    {
+     "id": "c",
+     "text": "100 mmol",
+     "correct": false,
+     "why": "Dangerously high per litre."
+    },
+    {
+     "id": "d",
+     "text": "5 mmol",
+     "correct": false,
+     "why": "Below the usual maintenance addition."
+    },
+    {
+     "id": "e",
+     "text": "60 mmol",
+     "correct": false,
+     "why": "Exceeds the safe per-litre limit."
+    }
+   ],
+   "explanation": [
+    "Maintenance bags usually carry 20 mmol KCl.",
+    "The safe ceiling is 40 mmol per litre."
+   ],
+   "keyFacts": [
+    "~20 mmol KCl per maintenance litre."
+   ],
+   "teachingPoint": "Keep within safe potassium limits."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sur-ch2-fluid-electrolyte-mcq-030",
+   "type": "single",
+   "sectionId": "s1",
+   "difficulty": 2,
+   "highYield": false,
+   "stem": "Which is a dilutional (hypervolaemic) cause of hyponatraemia?",
+   "options": [
+    {
+     "id": "a",
+     "text": "Persistent vomiting",
+     "correct": false,
+     "why": "A depletional cause."
+    },
+    {
+     "id": "b",
+     "text": "Congestive heart failure",
+     "correct": true,
+     "why": "Correct."
+    },
+    {
+     "id": "c",
+     "text": "Diuretic use",
+     "correct": false,
+     "why": "A depletional/renal cause."
+    },
+    {
+     "id": "d",
+     "text": "Intestinal fistula",
+     "correct": false,
+     "why": "A depletional cause."
+    },
+    {
+     "id": "e",
+     "text": "Burns",
+     "correct": false,
+     "why": "An ECF-loss (depletional) cause."
+    }
+   ],
+   "explanation": [
+    "Dilutional causes expand water relative to sodium.",
+    "Heart failure (and cirrhosis, ADH excess, salt-free fluid) is dilutional."
+   ],
+   "keyFacts": [
+    "CHF → dilutional hyponatraemia."
+   ],
+   "teachingPoint": "Sort causes by volume status."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sur-ch2-fluid-electrolyte-mcq-031",
+   "type": "single",
+   "sectionId": "s6",
+   "difficulty": 2,
+   "highYield": false,
+   "stem": "Which colloid has the longest quoted half-life and does not interfere with cross-matching?",
+   "options": [
+    {
+     "id": "a",
+     "text": "Gelatin",
+     "correct": false,
+     "why": "Half-life 8–10 h."
+    },
+    {
+     "id": "b",
+     "text": "Dextran 40",
+     "correct": false,
+     "why": "Shorter and interferes with cross-match."
+    },
+    {
+     "id": "c",
+     "text": "Hetastarch",
+     "correct": true,
+     "why": "Correct — 16–24 h, no cross-match interference."
+    },
+    {
+     "id": "d",
+     "text": "Albumin",
+     "correct": false,
+     "why": "Natural product, different profile."
+    },
+    {
+     "id": "e",
+     "text": "Normal saline",
+     "correct": false,
+     "why": "A crystalloid."
+    }
+   ],
+   "explanation": [
+    "Hetastarch has a 16–24 h half-life.",
+    "It does not interfere with cross-matching but is expensive and dose-limited."
+   ],
+   "keyFacts": [
+    "Hetastarch: long half-life, no cross-match issue."
+   ],
+   "teachingPoint": "Compare colloid pharmacokinetics."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sur-ch2-fluid-electrolyte-mcq-032",
+   "type": "single",
+   "sectionId": "s4",
+   "difficulty": 2,
+   "highYield": false,
+   "stem": "Above roughly which serum potassium does intracardiac conduction slow with risk of arrest?",
+   "options": [
+    {
+     "id": "a",
+     "text": "5 mmol/L",
+     "correct": false,
+     "why": "This level triggers aldosterone but is not the arrest threshold."
+    },
+    {
+     "id": "b",
+     "text": "7 mmol/L",
+     "correct": true,
+     "why": "Correct."
+    },
+    {
+     "id": "c",
+     "text": "3 mmol/L",
+     "correct": false,
+     "why": "That is hypokalaemic."
+    },
+    {
+     "id": "d",
+     "text": "4.5 mmol/L",
+     "correct": false,
+     "why": "Upper normal."
+    },
+    {
+     "id": "e",
+     "text": "6 mmol/L",
+     "correct": false,
+     "why": "Concerning but the quoted threshold for conduction slowing is ~7."
+    }
+   ],
+   "explanation": [
+    "Rising potassium first tents T waves.",
+    "Above ~7 mmol/L conduction slows with arrhythmia and arrest risk."
+   ],
+   "keyFacts": [
+    "K⁺ >7 mmol/L → conduction slowing."
+   ],
+   "teachingPoint": "Escalate urgency with the number."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sur-ch2-fluid-electrolyte-mcq-033",
+   "type": "single",
+   "sectionId": "s3",
+   "difficulty": 2,
+   "highYield": false,
+   "stem": "The potassium deficit in an adult is estimated by which formula?",
+   "options": [
+    {
+     "id": "a",
+     "text": "(serum K − 4.5) × 10",
+     "correct": false,
+     "why": "Wrong sign and factor."
+    },
+    {
+     "id": "b",
+     "text": "(4.5 − serum K) × 100",
+     "correct": true,
+     "why": "Correct."
+    },
+    {
+     "id": "c",
+     "text": "serum K × body weight",
+     "correct": false,
+     "why": "Not the quoted formula."
+    },
+    {
+     "id": "d",
+     "text": "(140 − serum K) × 0.6",
+     "correct": false,
+     "why": "That resembles a sodium/water formula."
+    },
+    {
+     "id": "e",
+     "text": "serum K × 100",
+     "correct": false,
+     "why": "Ignores the target level."
+    }
+   ],
+   "explanation": [
+    "Deficit uses the gap from ~4.5 mmol/L.",
+    "Deficit ≈ (4.5 − serum K) × 100."
+   ],
+   "keyFacts": [
+    "Deficit = (4.5 − K) × 100."
+   ],
+   "teachingPoint": "Estimate before replacing."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sur-ch2-fluid-electrolyte-mcq-034",
+   "type": "single",
+   "sectionId": "s7",
+   "difficulty": 2,
+   "highYield": false,
+   "stem": "Hartmann's solution is best avoided as the sole fluid in a patient with:",
+   "options": [
+    {
+     "id": "a",
+     "text": "Hypovolaemia",
+     "correct": false,
+     "why": "Hartmann's is appropriate for resuscitation."
+    },
+    {
+     "id": "b",
+     "text": "Established hyperkalaemia/renal failure",
+     "correct": true,
+     "why": "Correct — it contains potassium."
+    },
+    {
+     "id": "c",
+     "text": "Post-operative pain",
+     "correct": false,
+     "why": "Not a fluid decision."
+    },
+    {
+     "id": "d",
+     "text": "Mild pyrexia",
+     "correct": false,
+     "why": "Not a contraindication."
+    },
+    {
+     "id": "e",
+     "text": "Hypernatraemia",
+     "correct": false,
+     "why": "Hartmann's is near-isotonic; not the key concern."
+    }
+   ],
+   "explanation": [
+    "Hartmann's contains ~5 mmol/L potassium.",
+    "In established hyperkalaemia/renal failure this adds to the load."
+   ],
+   "keyFacts": [
+    "Avoid K-containing fluid in hyperkalaemia."
+   ],
+   "teachingPoint": "Match the fluid to the electrolyte state."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sur-ch2-fluid-electrolyte-mcq-035",
+   "type": "single",
+   "sectionId": "s1",
+   "difficulty": 2,
+   "highYield": true,
+   "stem": "Rapid over-correction of chronic hyponatraemia specifically risks:",
+   "options": [
+    {
+     "id": "a",
+     "text": "Cerebral oedema",
+     "correct": false,
+     "why": "That is a risk of hyponatraemia itself, not of correction."
+    },
+    {
+     "id": "b",
+     "text": "Central pontine myelinolysis",
+     "correct": true,
+     "why": "Correct."
+    },
+    {
+     "id": "c",
+     "text": "Renal failure",
+     "correct": false,
+     "why": "Not the specific risk."
+    },
+    {
+     "id": "d",
+     "text": "Hyperkalaemia",
+     "correct": false,
+     "why": "Unrelated."
+    },
+    {
+     "id": "e",
+     "text": "Pulmonary oedema",
+     "correct": false,
+     "why": "Not the specific complication."
+    }
+   ],
+   "explanation": [
+    "Chronic hyponatraemia adapts the brain osmotically.",
+    "Rapid correction causes osmotic demyelination (central pontine myelinolysis)."
+   ],
+   "keyFacts": [
+    "Over-fast Na correction → pontine myelinolysis."
+   ],
+   "teachingPoint": "Slow correction protects the brain."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sur-ch2-fluid-electrolyte-mcq-036",
+   "type": "single",
+   "sectionId": "s3",
+   "difficulty": 2,
+   "highYield": false,
+   "stem": "Which drug most typically produces hypokalaemia?",
+   "options": [
+    {
+     "id": "a",
+     "text": "Spironolactone",
+     "correct": false,
+     "why": "A potassium-sparing diuretic — raises potassium."
+    },
+    {
+     "id": "b",
+     "text": "Furosemide",
+     "correct": true,
+     "why": "Correct — a loop diuretic causing potassium loss."
+    },
+    {
+     "id": "c",
+     "text": "Amiloride",
+     "correct": false,
+     "why": "Potassium-sparing."
+    },
+    {
+     "id": "d",
+     "text": "Ramipril",
+     "correct": false,
+     "why": "An ACE inhibitor tends to raise potassium."
+    },
+    {
+     "id": "e",
+     "text": "Digoxin",
+     "correct": false,
+     "why": "Does not itself deplete potassium."
+    }
+   ],
+   "explanation": [
+    "Loop diuretics increase renal potassium loss.",
+    "Furosemide is the classic culprit."
+   ],
+   "keyFacts": [
+    "Furosemide → hypokalaemia."
+   ],
+   "teachingPoint": "Know which diuretics move potassium."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sur-ch2-fluid-electrolyte-mcq-037",
+   "type": "single",
+   "sectionId": "s4",
+   "difficulty": 2,
+   "highYield": false,
+   "stem": "Which change makes cells MORE excitable and can precipitate cardiac arrest?",
+   "options": [
+    {
+     "id": "a",
+     "text": "Hypokalaemia raising excitation potentials",
+     "correct": false,
+     "why": "That reduces excitability."
+    },
+    {
+     "id": "b",
+     "text": "Hyperkalaemia lowering excitation potentials",
+     "correct": true,
+     "why": "Correct."
+    },
+    {
+     "id": "c",
+     "text": "Hypernatraemia",
+     "correct": false,
+     "why": "Not the mechanism described."
+    },
+    {
+     "id": "d",
+     "text": "Hypocalcaemia",
+     "correct": false,
+     "why": "Different mechanism."
+    },
+    {
+     "id": "e",
+     "text": "Alkalosis",
+     "correct": false,
+     "why": "Shifts potassium, not the direct answer."
+    }
+   ],
+   "explanation": [
+    "Hyperkalaemia lowers the membrane excitation potential.",
+    "Cells become more excitable; above ~7 mmol/L arrest may follow."
+   ],
+   "keyFacts": [
+    "Hyperkalaemia → more excitable → arrest."
+   ],
+   "teachingPoint": "Reason from membrane potentials."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sur-ch2-fluid-electrolyte-mcq-038",
+   "type": "single",
+   "sectionId": "s7",
+   "difficulty": 1,
+   "highYield": false,
+   "stem": "Which crystalloid contains bicarbonate and calcium?",
+   "options": [
+    {
+     "id": "a",
+     "text": "Normal saline",
+     "correct": false,
+     "why": "Only sodium and chloride."
+    },
+    {
+     "id": "b",
+     "text": "Hartmann's solution",
+     "correct": true,
+     "why": "Correct."
+    },
+    {
+     "id": "c",
+     "text": "5% dextrose",
+     "correct": false,
+     "why": "Free water only."
+    },
+    {
+     "id": "d",
+     "text": "Dextrose-saline",
+     "correct": false,
+     "why": "Low sodium, no bicarbonate/calcium."
+    },
+    {
+     "id": "e",
+     "text": "3% saline",
+     "correct": false,
+     "why": "Hypertonic salt only."
+    }
+   ],
+   "explanation": [
+    "Balanced fluids add physiological ions.",
+    "Hartmann's includes bicarbonate and calcium."
+   ],
+   "keyFacts": [
+    "Hartmann's has bicarbonate + calcium."
+   ],
+   "teachingPoint": "Learn the balanced-fluid contents."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sur-ch2-fluid-electrolyte-mcq-039",
+   "type": "single",
+   "sectionId": "s6",
+   "difficulty": 1,
+   "highYield": false,
+   "stem": "5% dextrose is used clinically to:",
+   "options": [
+    {
+     "id": "a",
+     "text": "Expand the intravascular space durably",
+     "correct": false,
+     "why": "It distributes as water, not a durable expander."
+    },
+    {
+     "id": "b",
+     "text": "Provide free water replacement",
+     "correct": true,
+     "why": "Correct."
+    },
+    {
+     "id": "c",
+     "text": "Provide significant calories",
+     "correct": false,
+     "why": "Its calorific content is negligible."
+    },
+    {
+     "id": "d",
+     "text": "Correct hyperkalaemia alone",
+     "correct": false,
+     "why": "It is combined with insulin for that."
+    },
+    {
+     "id": "e",
+     "text": "Resuscitate haemorrhagic shock",
+     "correct": false,
+     "why": "Crystalloid saline/blood is used, not free water."
+    }
+   ],
+   "explanation": [
+    "Metabolism of dextrose leaves water.",
+    "5% dextrose therefore replaces water."
+   ],
+   "keyFacts": [
+    "5% dextrose = free water."
+   ],
+   "teachingPoint": "Use dextrose for water, not volume."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sur-ch2-fluid-electrolyte-mcq-040",
+   "type": "single",
+   "sectionId": "s1",
+   "difficulty": 2,
+   "highYield": false,
+   "stem": "A cirrhotic patient with ascites has serum Na⁺ 128 mmol/L and is clinically fluid-overloaded. Initial management is:",
+   "options": [
+    {
+     "id": "a",
+     "text": "Aggressive 0.9% saline",
+     "correct": false,
+     "why": "This adds sodium/water to an overloaded patient."
+    },
+    {
+     "id": "b",
+     "text": "Water restriction",
+     "correct": true,
+     "why": "Correct — dilutional hyponatraemia of cirrhosis."
+    },
+    {
+     "id": "c",
+     "text": "Immediate 3% saline",
+     "correct": false,
+     "why": "Reserved for severe symptomatic cases."
+    },
+    {
+     "id": "d",
+     "text": "Large-volume 5% dextrose",
+     "correct": false,
+     "why": "Worsens dilution."
+    },
+    {
+     "id": "e",
+     "text": "Loop diuretic bolus alone",
+     "correct": false,
+     "why": "Not the first specific step for the sodium."
+    }
+   ],
+   "explanation": [
+    "Cirrhosis causes dilutional (hypervolaemic) hyponatraemia.",
+    "Initial management is water restriction."
+   ],
+   "keyFacts": [
+    "Overloaded + low Na → restrict water."
+   ],
+   "teachingPoint": "Volume status drives the plan."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sur-ch2-fluid-electrolyte-mcq-041",
+   "type": "single",
+   "sectionId": "s2",
+   "difficulty": 2,
+   "highYield": false,
+   "stem": "Which endocrine disorder causes sodium and water retention with hypertension and oedema?",
+   "options": [
+    {
+     "id": "a",
+     "text": "Addison's disease",
+     "correct": false,
+     "why": "Causes salt loss and hypotension."
+    },
+    {
+     "id": "b",
+     "text": "Conn's syndrome",
+     "correct": true,
+     "why": "Correct — primary hyperaldosteronism."
+    },
+    {
+     "id": "c",
+     "text": "Diabetes insipidus",
+     "correct": false,
+     "why": "Causes water loss."
+    },
+    {
+     "id": "d",
+     "text": "Hypothyroidism",
+     "correct": false,
+     "why": "Not the classic cause here."
+    },
+    {
+     "id": "e",
+     "text": "Phaeochromocytoma",
+     "correct": false,
+     "why": "Causes catecholamine-driven hypertension, not this pattern."
+    }
+   ],
+   "explanation": [
+    "Aldosterone retains sodium and water.",
+    "Conn's syndrome is primary hyperaldosteronism."
+   ],
+   "keyFacts": [
+    "Conn's → Na/water retention."
+   ],
+   "teachingPoint": "Aldosterone excess drives retention."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sur-ch2-fluid-electrolyte-mcq-042",
+   "type": "single",
+   "sectionId": "s8",
+   "difficulty": 2,
+   "highYield": false,
+   "stem": "Which maintenance regimen delivers the higher daily sodium load?",
+   "options": [
+    {
+     "id": "a",
+     "text": "Regimen B (dextrose-saline)",
+     "correct": false,
+     "why": "Provides only ~90 mmol Na."
+    },
+    {
+     "id": "b",
+     "text": "Regimen A (saline + dextrose)",
+     "correct": true,
+     "why": "Correct — ~150 mmol Na."
+    },
+    {
+     "id": "c",
+     "text": "Both deliver identical sodium",
+     "correct": false,
+     "why": "They differ (150 vs 90 mmol)."
+    },
+    {
+     "id": "d",
+     "text": "Neither delivers sodium",
+     "correct": false,
+     "why": "Both contain sodium."
+    },
+    {
+     "id": "e",
+     "text": "Cannot be determined",
+     "correct": false,
+     "why": "The totals are defined."
+    }
+   ],
+   "explanation": [
+    "Regimen A includes a litre of normal saline.",
+    "It delivers ~150 mmol Na versus ~90 mmol in regimen B."
+   ],
+   "keyFacts": [
+    "Regimen A > regimen B for sodium."
+   ],
+   "teachingPoint": "Compare regimen electrolyte totals."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sur-ch2-fluid-electrolyte-mcq-043",
+   "type": "single",
+   "sectionId": "s3",
+   "difficulty": 2,
+   "highYield": true,
+   "stem": "A U wave with ST depression and a flat T wave on ECG indicates:",
+   "options": [
+    {
+     "id": "a",
+     "text": "Hyperkalaemia",
+     "correct": false,
+     "why": "Gives peaked T and wide QRS."
+    },
+    {
+     "id": "b",
+     "text": "Hypokalaemia",
+     "correct": true,
+     "why": "Correct."
+    },
+    {
+     "id": "c",
+     "text": "Hypercalcaemia",
+     "correct": false,
+     "why": "Shortens QT, different pattern."
+    },
+    {
+     "id": "d",
+     "text": "Hyponatraemia",
+     "correct": false,
+     "why": "No specific ECG signature."
+    },
+    {
+     "id": "e",
+     "text": "Hypernatraemia",
+     "correct": false,
+     "why": "No specific ECG signature."
+    }
+   ],
+   "explanation": [
+    "A U wave with ST depression and flat T is hypokalaemic.",
+    "Contrast with the peaked T of hyperkalaemia."
+   ],
+   "keyFacts": [
+    "U wave = hypokalaemia."
+   ],
+   "teachingPoint": "Read the potassium off the ECG."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sur-ch2-fluid-electrolyte-mcq-044",
+   "type": "single",
+   "sectionId": "s5",
+   "difficulty": 1,
+   "highYield": false,
+   "stem": "Which is NOT one of the three components considered when prescribing fluids?",
+   "options": [
+    {
+     "id": "a",
+     "text": "Basal requirements",
+     "correct": false,
+     "why": "A component."
+    },
+    {
+     "id": "b",
+     "text": "Continuing abnormal losses",
+     "correct": false,
+     "why": "A component."
+    },
+    {
+     "id": "c",
+     "text": "Pre-existing dehydration/electrolyte loss",
+     "correct": false,
+     "why": "A component."
+    },
+    {
+     "id": "d",
+     "text": "The patient's blood group",
+     "correct": true,
+     "why": "Correct — not part of fluid prescription components."
+    },
+    {
+     "id": "e",
+     "text": "Insensible losses added to the total",
+     "correct": false,
+     "why": "Legitimately added on top."
+    }
+   ],
+   "explanation": [
+    "Prescribing considers basal needs, ongoing losses and pre-existing deficit.",
+    "Blood group is irrelevant to the maintenance calculation."
+   ],
+   "keyFacts": [
+    "Prescribe: basal + losses + deficit."
+   ],
+   "teachingPoint": "Structure every fluid prescription."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sur-ch2-fluid-electrolyte-mcq-045",
+   "type": "single",
+   "sectionId": "s6",
+   "difficulty": 1,
+   "highYield": false,
+   "stem": "Which colloid is expensive, natural, and carries a small anaphylaxis risk?",
+   "options": [
+    {
+     "id": "a",
+     "text": "Dextran 70",
+     "correct": false,
+     "why": "A synthetic glucose polymer."
+    },
+    {
+     "id": "b",
+     "text": "Albumin 4.5%",
+     "correct": true,
+     "why": "Correct."
+    },
+    {
+     "id": "c",
+     "text": "Gelatin",
+     "correct": false,
+     "why": "A modified bovine-collagen colloid."
+    },
+    {
+     "id": "d",
+     "text": "Hetastarch",
+     "correct": false,
+     "why": "A synthetic starch."
+    },
+    {
+     "id": "e",
+     "text": "Normal saline",
+     "correct": false,
+     "why": "A crystalloid."
+    }
+   ],
+   "explanation": [
+    "Albumin is a natural blood-derived colloid.",
+    "It is expensive with a small anaphylaxis risk."
+   ],
+   "keyFacts": [
+    "Albumin: natural, costly, small anaphylaxis risk."
+   ],
+   "teachingPoint": "Match colloids to their profiles."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sur-ch2-fluid-electrolyte-mcq-046",
+   "type": "single",
+   "sectionId": "s4",
+   "difficulty": 2,
+   "highYield": true,
+   "stem": "After giving calcium gluconate for hyperkalaemia, the next priority is to:",
+   "options": [
+    {
+     "id": "a",
+     "text": "Stop all treatment as the heart is protected",
+     "correct": false,
+     "why": "Serum K is still high and must be lowered."
+    },
+    {
+     "id": "b",
+     "text": "Shift potassium into cells with insulin-dextrose",
+     "correct": true,
+     "why": "Correct."
+    },
+    {
+     "id": "c",
+     "text": "Give another dose of calcium only",
+     "correct": false,
+     "why": "Calcium does not lower K."
+    },
+    {
+     "id": "d",
+     "text": "Start oral potassium",
+     "correct": false,
+     "why": "This would worsen it."
+    },
+    {
+     "id": "e",
+     "text": "Give a potassium-containing fluid",
+     "correct": false,
+     "why": "Contraindicated."
+    }
+   ],
+   "explanation": [
+    "Calcium protects but does not lower potassium.",
+    "Follow with insulin-dextrose (± bicarbonate) to shift K, then remove it."
+   ],
+   "keyFacts": [
+    "Protect, then shift, then remove."
+   ],
+   "teachingPoint": "Never stop after calcium alone."
+  }
+ ],
+ "emqs": [
+  {
+   "schema": "foundation.emq/v1",
+   "id": "sur-ch2-fluid-electrolyte-emq-001",
+   "type": "emq",
+   "theme": "Electrolyte disturbance",
+   "sectionId": "s4",
+   "difficulty": 2,
+   "instruction": "For each scenario, select the single most likely electrolyte abnormality.",
+   "options": [
+    {
+     "id": "a",
+     "text": "Dilutional hyponatraemia"
+    },
+    {
+     "id": "b",
+     "text": "Depletional hyponatraemia"
+    },
+    {
+     "id": "c",
+     "text": "Hypernatraemia"
+    },
+    {
+     "id": "d",
+     "text": "Hypokalaemia"
+    },
+    {
+     "id": "e",
+     "text": "Hyperkalaemia"
+    },
+    {
+     "id": "f",
+     "text": "Hypocalcaemia"
+    }
+   ],
+   "stems": [
+    {
+     "stem": "A patient on renal replacement misses dialysis; ECG shows peaked T waves and a widening QRS.",
+     "answer": "e",
+     "why": "Peaked T waves and wide QRS with missed dialysis indicate hyperkalaemia."
+    },
+    {
+     "stem": "Prolonged nasogastric aspiration with weakness, ileus and a U wave on ECG.",
+     "answer": "d",
+     "why": "GI losses and a U wave indicate hypokalaemia."
+    },
+    {
+     "stem": "Confusion after large volumes of 5% dextrose post-operatively; Na⁺ 119 mmol/L, no volume depletion.",
+     "answer": "a",
+     "why": "Salt-free fluid with a low sodium and normal volume is dilutional hyponatraemia."
+    },
+    {
+     "stem": "Severe diarrhoea with sunken eyes, low CVP and Na⁺ 129 mmol/L.",
+     "answer": "b",
+     "why": "Low-volume signs with low sodium indicate depletional hyponatraemia."
+    }
+   ]
+  },
+  {
+   "schema": "foundation.emq/v1",
+   "id": "sur-ch2-fluid-electrolyte-emq-002",
+   "type": "emq",
+   "theme": "Hyperkalaemia management",
+   "sectionId": "s4",
+   "difficulty": 2,
+   "instruction": "Select the single best-matching agent for each intended action.",
+   "options": [
+    {
+     "id": "a",
+     "text": "Calcium gluconate"
+    },
+    {
+     "id": "b",
+     "text": "Insulin with dextrose"
+    },
+    {
+     "id": "c",
+     "text": "Sodium bicarbonate"
+    },
+    {
+     "id": "d",
+     "text": "Ion-exchange resin"
+    },
+    {
+     "id": "e",
+     "text": "Dialysis"
+    },
+    {
+     "id": "f",
+     "text": "Salbutamol"
+    }
+   ],
+   "stems": [
+    {
+     "stem": "Immediate myocardial membrane stabilisation without lowering serum K.",
+     "answer": "a",
+     "why": "Calcium antagonises potassium at the membrane."
+    },
+    {
+     "stem": "Drives potassium into cells while glucose prevents hypoglycaemia.",
+     "answer": "b",
+     "why": "Insulin with dextrose shifts potassium intracellularly."
+    },
+    {
+     "stem": "Removes potassium from the body via the gastrointestinal tract.",
+     "answer": "d",
+     "why": "Ion-exchange resin binds and removes potassium enterally."
+    },
+    {
+     "stem": "Definitive removal when all pharmacological measures fail.",
+     "answer": "e",
+     "why": "Dialysis is definitive for refractory hyperkalaemia."
+    }
+   ]
+  },
+  {
+   "schema": "foundation.emq/v1",
+   "id": "sur-ch2-fluid-electrolyte-emq-003",
+   "type": "emq",
+   "theme": "Intravenous fluids",
+   "sectionId": "s7",
+   "difficulty": 2,
+   "instruction": "For each requirement, select the single most appropriate fluid.",
+   "options": [
+    {
+     "id": "a",
+     "text": "0.9% saline"
+    },
+    {
+     "id": "b",
+     "text": "5% dextrose"
+    },
+    {
+     "id": "c",
+     "text": "Hartmann's solution"
+    },
+    {
+     "id": "d",
+     "text": "3% saline"
+    },
+    {
+     "id": "e",
+     "text": "Albumin 4.5%"
+    },
+    {
+     "id": "f",
+     "text": "Dextrose-saline"
+    }
+   ],
+   "stems": [
+    {
+     "stem": "Restoring extracellular volume in a hypovolaemic, depleted patient.",
+     "answer": "a",
+     "why": "Normal saline restores ECF volume."
+    },
+    {
+     "stem": "Providing free water to a patient needing water replacement.",
+     "answer": "b",
+     "why": "5% dextrose delivers free water after metabolism."
+    },
+    {
+     "stem": "A balanced resuscitation fluid closest to plasma electrolytes.",
+     "answer": "c",
+     "why": "Hartmann's is the balanced, near-plasma option."
+    },
+    {
+     "stem": "Cautious correction of severe symptomatic hyponatraemia.",
+     "answer": "d",
+     "why": "3% (hypertonic) saline is used for severe symptomatic hyponatraemia."
+    }
+   ]
+  },
+  {
+   "schema": "foundation.emq/v1",
+   "id": "sur-ch2-fluid-electrolyte-emq-004",
+   "type": "emq",
+   "theme": "Potassium safety",
+   "sectionId": "s3",
+   "difficulty": 2,
+   "instruction": "For each statement about IV potassium, select the correct value or rule.",
+   "options": [
+    {
+     "id": "a",
+     "text": "40 mL/hour minimum urine output"
+    },
+    {
+     "id": "b",
+     "text": "40 mmol per litre maximum"
+    },
+    {
+     "id": "c",
+     "text": "40 mmol/hour maximum rate"
+    },
+    {
+     "id": "d",
+     "text": "Never as a bolus"
+    },
+    {
+     "id": "e",
+     "text": "(4.5 − serum K) × 100"
+    }
+   ],
+   "stems": [
+    {
+     "stem": "The safe ceiling for concentration in a bag.",
+     "answer": "b",
+     "why": "No more than 40 mmol should be added per litre."
+    },
+    {
+     "stem": "The safe ceiling for infusion rate.",
+     "answer": "c",
+     "why": "Potassium is given no faster than 40 mmol/hour."
+    },
+    {
+     "stem": "How the deficit is estimated.",
+     "answer": "e",
+     "why": "Deficit ≈ (4.5 − serum K) × 100."
+    },
+    {
+     "stem": "The absolute rule about administration.",
+     "answer": "d",
+     "why": "Potassium must never be given as a bolus."
+    }
+   ]
+  }
+ ],
+ "summary": "Hyponatraemia (<135 mmol/L) is dilutional (salt-free fluid, ADH excess, CHF/cirrhosis → water restriction, cautious 3% saline if severe) or depletional (GI/renal/ECF losses → saline/Hartmann's); correct slowly to avoid central pontine myelinolysis. Sodium excess shows oedema with a usually-normal serum sodium. Hypokalaemia (vomiting, aspiration, diuretics, alkalosis) gives a U wave and needs cautious infused potassium, never a bolus. Hyperkalaemia (renal failure, acidosis) tents T waves and is managed by calcium (protect), insulin-dextrose/bicarbonate (shift), then resin/dialysis (remove). Daily needs are ~35 mL/kg water and ~1 mmol/kg each of Na and K; know normal saline (Na 154), Hartmann's (balanced) and the standard maintenance regimens, adding for fever and losses."
+}

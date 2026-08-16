@@ -1,0 +1,1393 @@
+{
+ "schema": "foundation.study-module/v1",
+ "id": "sana-ch4-peritoneum",
+ "subject": "Anatomy",
+ "title": "Peritoneum",
+ "source": {
+  "book": "Recall by Yanal — Surgical Anatomy",
+  "chapter": 4,
+  "title": "Peritoneum",
+  "pages": "—"
+ },
+ "brand": "by Yanal · Cairo 2026",
+ "estMinutes": 20,
+ "deck": "Anatomy::Peritoneum",
+ "tags": [
+  "anatomy",
+  "surgical-anatomy",
+  "peritoneum"
+ ],
+ "objectives": [
+  "Identify the key structures of Peritoneum at each level of dissection.",
+  "Relate the nerves, vessels and muscles of Peritoneum to their functions.",
+  "Localise the named spaces and regions of Peritoneum and list their contents.",
+  "Recognise the common clinical lesions associated with Peritoneum.",
+  "Reproduce the high-yield relations of Peritoneum tested in vivas and MCQs."
+ ],
+ "outline": [
+  "4.1 Greater & Lesser Sacs",
+  "4.2 Mesenteries & Omenta",
+  "4.3 Peritoneal Spaces & Gutters",
+  "4.4 Collections & Spread",
+  "4.5 Clinical Scenarios"
+ ],
+ "sections": [
+  {
+   "id": "s1",
+   "n": "4.1",
+   "title": "Greater & Lesser Sacs",
+   "deck": "Greater & Lesser Sacs",
+   "digest": "Imported Recall deck. This section holds the **greater & lesser sacs** cards for Peritoneum. Open the flashcards for Greater & Lesser Sacs to drill it; author a written digest here to turn the section into a reader page.",
+   "highYield": [],
+   "tables": [],
+   "pitfalls": [],
+   "figures": []
+  },
+  {
+   "id": "s2",
+   "n": "4.2",
+   "title": "Mesenteries & Omenta",
+   "deck": "Mesenteries & Omenta",
+   "digest": "Imported Recall deck. This section holds the **mesenteries & omenta** cards for Peritoneum. Open the flashcards for Mesenteries & Omenta to drill it; author a written digest here to turn the section into a reader page.",
+   "highYield": [],
+   "tables": [],
+   "pitfalls": [],
+   "figures": []
+  },
+  {
+   "id": "s3",
+   "n": "4.3",
+   "title": "Peritoneal Spaces & Gutters",
+   "deck": "Peritoneal Spaces & Gutters",
+   "digest": "Imported Recall deck. This section holds the **peritoneal spaces & gutters** cards for Peritoneum. Open the flashcards for Peritoneal Spaces & Gutters to drill it; author a written digest here to turn the section into a reader page.",
+   "highYield": [],
+   "tables": [],
+   "pitfalls": [],
+   "figures": []
+  },
+  {
+   "id": "s4",
+   "n": "4.4",
+   "title": "Collections & Spread",
+   "deck": "Collections & Spread",
+   "digest": "Imported Recall deck. This section holds the **collections & spread** cards for Peritoneum. Open the flashcards for Collections & Spread to drill it; author a written digest here to turn the section into a reader page.",
+   "highYield": [],
+   "tables": [],
+   "pitfalls": [],
+   "figures": []
+  },
+  {
+   "id": "s5",
+   "n": "4.5",
+   "title": "Clinical Scenarios",
+   "deck": "Clinical Scenarios",
+   "digest": "Imported Recall deck. This section holds the **clinical scenarios** cards for Peritoneum. Open the flashcards for Clinical Scenarios to drill it; author a written digest here to turn the section into a reader page.",
+   "highYield": [],
+   "tables": [],
+   "pitfalls": [],
+   "figures": []
+  }
+ ],
+ "glossary": [],
+ "mnemonics": [],
+ "cards": [
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch4-peritoneum-card-001",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Greater & Lesser Sacs",
+   "front": "What is the peritoneum and how are its two layers related?",
+   "back": "A serous membrane whose parietal layer lines the abdominal wall and whose visceral layer covers the viscera; the two are continuous and enclose the potential space of the peritoneal cavity.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch4-peritoneum-card-002",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Greater & Lesser Sacs",
+   "front": "How does the peritoneal cavity differ between the sexes?",
+   "back": "It is a closed sac in the male; in the female it communicates with the exterior through the uterine tubes, uterus and vagina, which is a route for ascending infection and for peritoneal spread of ovarian disease.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch4-peritoneum-card-003",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Greater & Lesser Sacs",
+   "front": "Compare the nerve supply of the parietal and visceral peritoneum.",
+   "back": "The parietal peritoneum is supplied segmentally by the somatic nerves of the overlying wall and is exquisitely sensitive to touch, pressure and temperature, giving accurately localised pain, guarding and rebound. The visceral peritoneum is supplied by autonomic fibres, is insensitive to cutting and burning, and responds only to stretch and ischaemia with poorly localised midline pain.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch4-peritoneum-card-004",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Greater & Lesser Sacs",
+   "front": "Which nerve supplies the central part of the diaphragmatic peritoneum, and where is its pain referred?",
+   "back": "The phrenic nerve (C3, C4, C5); pain is referred to the tip of the shoulder over the C4 dermatome.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch4-peritoneum-card-005",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Greater & Lesser Sacs",
+   "front": "Which nerves supply the peripheral part of the diaphragmatic peritoneum?",
+   "back": "The lower six intercostal and subcostal nerves, so irritation there is felt in the lower chest wall and upper abdomen.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch4-peritoneum-card-006",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Greater & Lesser Sacs",
+   "front": "Explain the shift of pain in acute appendicitis in peritoneal terms.",
+   "back": "Early distension of the appendix stimulates visceral afferents of the midgut, referring pain to the umbilicus at T10. When the inflamed appendix touches the parietal peritoneum of the right iliac fossa, somatic afferents localise the pain there with tenderness and guarding.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch4-peritoneum-card-007",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Greater & Lesser Sacs",
+   "front": "Give the referred pain sites of the foregut, midgut and hindgut.",
+   "back": "Foregut to the epigastrium, midgut to the umbilicus, hindgut to the hypogastrium (suprapubic region).",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch4-peritoneum-card-008",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Greater & Lesser Sacs",
+   "front": "What is the lesser sac (omental bursa)?",
+   "back": "The diverticulum of the peritoneal cavity lying behind the stomach and the lesser omentum and in front of the pancreas and the structures of the posterior abdominal wall.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch4-peritoneum-card-009",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Greater & Lesser Sacs",
+   "front": "What are the boundaries of the lesser sac?",
+   "back": "In front the stomach, lesser omentum and the two anterior layers of the greater omentum; behind the pancreas, left kidney, left suprarenal and the transverse mesocolon; on the left the gastrosplenic and splenorenal ligaments; on the right the epiploic foramen.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch4-peritoneum-card-010",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Greater & Lesser Sacs",
+   "front": "Why is the lesser sac important in pancreatic disease?",
+   "back": "The pancreas lies in its posterior wall, so pancreatic exudate and a pseudocyst collect within it, and drainage is achieved by opening the sac through the gastrocolic omentum or by cystogastrostomy through the posterior wall of the stomach.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch4-peritoneum-card-011",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Greater & Lesser Sacs",
+   "front": "Name the four boundaries of the epiploic (omental) foramen of Winslow.",
+   "back": "Anteriorly the free edge of the lesser omentum with the portal triad; posteriorly the inferior vena cava; superiorly the caudate lobe of the liver; inferiorly the first part of the duodenum.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch4-peritoneum-card-012",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Greater & Lesser Sacs",
+   "front": "What is the arrangement of structures in the free edge of the lesser omentum?",
+   "back": "The bile duct in front and to the right, the hepatic artery in front and to the left, and the portal vein behind them both.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch4-peritoneum-card-013",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Greater & Lesser Sacs",
+   "front": "Describe the Pringle manoeuvre and its anatomical basis.",
+   "back": "A finger is passed through the epiploic foramen and the free edge of the lesser omentum is compressed between finger and thumb, occluding the hepatic artery and portal vein. Bleeding that continues despite this comes from the hepatic veins or the inferior vena cava.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch4-peritoneum-card-014",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Greater & Lesser Sacs",
+   "front": "What are the two parts of the lesser omentum?",
+   "back": "The hepatogastric ligament, a thin sheet from the lesser curvature to the liver, and the thicker hepatoduodenal ligament forming the free edge and carrying the portal triad.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch4-peritoneum-card-015",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Greater & Lesser Sacs",
+   "front": "Why can an anterior duodenal ulcer perforate freely but a posterior one bleed?",
+   "back": "The anterior wall of the first part of the duodenum is covered with peritoneum and faces the greater sac, so perforation spills into it. The posterior wall is bare and lies on the gastroduodenal artery, so an ulcer there erodes the artery.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch4-peritoneum-card-016",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Mesenteries & Omenta",
+   "front": "What is the greater omentum and how many layers does it have?",
+   "back": "A four-layered apron of peritoneum hanging from the greater curvature of the stomach in front of the intestines and fused with the transverse colon and mesocolon; the two descending layers turn back as two ascending layers.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch4-peritoneum-card-017",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Mesenteries & Omenta",
+   "front": "Why is the greater omentum called the policeman of the abdomen?",
+   "back": "It is mobile and richly vascular, and it migrates to wall off an inflamed viscus or a perforation, limiting generalised peritonitis and forming an inflammatory mass.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch4-peritoneum-card-018",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Mesenteries & Omenta",
+   "front": "What is the blood supply of the greater omentum, and how is it used surgically?",
+   "back": "The right and left gastroepiploic arteries through the omental branches. Its length and vascular arcade allow it to be raised as a pedicled flap on either gastroepiploic vessel for covering an anastomosis, filling a pelvic space or reinforcing a repair, and it is the tissue used to patch a perforated duodenal ulcer.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch4-peritoneum-card-019",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Mesenteries & Omenta",
+   "front": "Which part of the greater omentum is divided to enter the lesser sac?",
+   "back": "The gastrocolic ligament, the part between the greater curvature and the transverse colon.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch4-peritoneum-card-020",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Mesenteries & Omenta",
+   "front": "Describe the root of the mesentery of the small intestine.",
+   "back": "It is about 15 cm long, running obliquely downwards and to the right from the duodenojejunal flexure at the left side of L2 to the right sacroiliac joint, while its intestinal border is about 6 metres long and heavily pleated.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch4-peritoneum-card-021",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Mesenteries & Omenta",
+   "front": "Which structures are crossed by the root of the small bowel mesentery?",
+   "back": "The third part of the duodenum, the abdominal aorta, the inferior vena cava, the right ureter and the right psoas major.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch4-peritoneum-card-022",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Mesenteries & Omenta",
+   "front": "How does the mesentery divide the infracolic compartment?",
+   "back": "Into a smaller right infracolic space above and to the right of the root, and a larger left infracolic space below and to the left, which opens into the pelvis.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch4-peritoneum-card-023",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Mesenteries & Omenta",
+   "front": "Give the attachment of the transverse mesocolon.",
+   "back": "Across the second part of the duodenum, the head and the anterior border of the body of the pancreas, dividing the abdominal cavity into supracolic and infracolic compartments.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch4-peritoneum-card-024",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Mesenteries & Omenta",
+   "front": "Describe the sigmoid mesocolon.",
+   "back": "An inverted V-shaped fold whose apex lies over the bifurcation of the left common iliac artery; the left ureter passes behind that apex, which is why the ureter is at risk during sigmoid mobilisation.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch4-peritoneum-card-025",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Mesenteries & Omenta",
+   "front": "Why does a sigmoid volvulus occur?",
+   "back": "A long redundant sigmoid loop on a narrow mesocolic base can rotate about that base, most often anticlockwise, obstructing the lumen and then the blood supply.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch4-peritoneum-card-026",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Mesenteries & Omenta",
+   "front": "Name the peritoneal ligaments of the spleen and their contents.",
+   "back": "The gastrosplenic ligament carrying the short gastric and left gastroepiploic vessels, and the splenorenal (lienorenal) ligament carrying the splenic vessels and the tail of the pancreas.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch4-peritoneum-card-027",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Mesenteries & Omenta",
+   "front": "Which viscera are intraperitoneal in the sense of being suspended by a mesentery?",
+   "back": "Stomach, first part and duodenal cap, jejunum and ileum, caecum, appendix, transverse colon, sigmoid colon, spleen, liver and the upper rectum.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch4-peritoneum-card-028",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Mesenteries & Omenta",
+   "front": "Which organs are retroperitoneal?",
+   "back": "Kidneys, ureters, suprarenals, aorta and inferior vena cava as primary retroperitoneal structures, and the duodenum beyond the cap, pancreas, ascending and descending colon and the lower rectum as secondarily retroperitoneal after fusion.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch4-peritoneum-card-029",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Mesenteries & Omenta",
+   "front": "What is the plane of Toldt and why does it matter?",
+   "back": "The avascular fusion fascia between the mesocolon of the ascending or descending colon and the posterior abdominal wall. Dissection along it mobilises the colon bloodlessly while leaving the ureter, gonadal vessels and duodenum safely behind.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch4-peritoneum-card-030",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Mesenteries & Omenta",
+   "front": "What is the falciform ligament and what does its free edge contain?",
+   "back": "A sickle-shaped peritoneal fold from the anterior abdominal wall and diaphragm to the liver, dividing the right and left subphrenic spaces. Its free edge carries the ligamentum teres, the obliterated left umbilical vein, with the paraumbilical veins.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch4-peritoneum-card-031",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Mesenteries & Omenta",
+   "front": "What is the bare area of the liver?",
+   "back": "The triangular area on the posterosuperior surface between the layers of the coronary ligament where liver is in direct contact with the diaphragm without peritoneum, allowing infection and veins (of Sappey) to pass between the two.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch4-peritoneum-card-032",
+   "type": "basic",
+   "sectionId": "s3",
+   "deck": "Peritoneal Spaces & Gutters",
+   "front": "Define the subphrenic region and its limits.",
+   "back": "The region between the diaphragm above and the transverse colon and mesocolon below, divided by the liver into suprahepatic and infrahepatic compartments.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch4-peritoneum-card-033",
+   "type": "basic",
+   "sectionId": "s3",
+   "deck": "Peritoneal Spaces & Gutters",
+   "front": "Which structure divides the suprahepatic compartment into right and left?",
+   "back": "The falciform ligament.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch4-peritoneum-card-034",
+   "type": "basic",
+   "sectionId": "s3",
+   "deck": "Peritoneal Spaces & Gutters",
+   "front": "What is the hepatorenal pouch of Morison and why does pus collect there?",
+   "back": "The right subhepatic space between the liver and gallbladder in front and the upper pole of the right kidney, right suprarenal and second part of the duodenum behind. It is the most dependent part of the peritoneal cavity in the supine patient, so fluid and pus gravitate into it.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch4-peritoneum-card-035",
+   "type": "basic",
+   "sectionId": "s3",
+   "deck": "Peritoneal Spaces & Gutters",
+   "front": "What is the left subhepatic space?",
+   "back": "The lesser sac itself, lying behind the stomach.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch4-peritoneum-card-036",
+   "type": "basic",
+   "sectionId": "s3",
+   "deck": "Peritoneal Spaces & Gutters",
+   "front": "List the common sites of an intraperitoneal abscess.",
+   "back": "The subphrenic spaces, the hepatorenal pouch of Morison, the pelvis (rectovesical pouch or pouch of Douglas), the iliac fossae and between loops of bowel.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch4-peritoneum-card-037",
+   "type": "basic",
+   "sectionId": "s3",
+   "deck": "Peritoneal Spaces & Gutters",
+   "front": "Describe the right paracolic gutter and its clinical importance.",
+   "back": "It runs lateral to the ascending colon and is continuous above with the hepatorenal pouch and the right subphrenic space, and below with the pelvis. It is a two-way conduit: pus from a perforated duodenal ulcer trickles down it to the right iliac fossa and mimics appendicitis, and pelvic pus can track up it to form a subphrenic abscess.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch4-peritoneum-card-038",
+   "type": "basic",
+   "sectionId": "s3",
+   "deck": "Peritoneal Spaces & Gutters",
+   "front": "Why is the left paracolic gutter a less effective route upwards?",
+   "back": "The phrenicocolic ligament at the splenic flexure blocks its upper end, so left-sided collections tend to pass downwards to the pelvis rather than upwards to the left subphrenic space.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch4-peritoneum-card-039",
+   "type": "basic",
+   "sectionId": "s3",
+   "deck": "Peritoneal Spaces & Gutters",
+   "front": "Which is the most dependent part of the peritoneal cavity in the erect or semi-sitting position?",
+   "back": "The rectovesical pouch in the male and the rectouterine pouch of Douglas in the female, which is why patients with peritonitis are nursed sitting up so that pus collects in the pelvis.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch4-peritoneum-card-040",
+   "type": "basic",
+   "sectionId": "s3",
+   "deck": "Peritoneal Spaces & Gutters",
+   "front": "Why is a pelvic abscess relatively benign and how is it drained?",
+   "back": "The pelvic peritoneum absorbs toxins poorly, so systemic upset is modest. The abscess points into the rectum or the posterior vaginal fornix and is drained through whichever it points to, avoiding a laparotomy.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch4-peritoneum-card-041",
+   "type": "basic",
+   "sectionId": "s3",
+   "deck": "Peritoneal Spaces & Gutters",
+   "front": "How does a subphrenic abscess produce chest signs?",
+   "back": "Diaphragmatic irritation causes a sympathetic pleural effusion and basal collapse, with pain referred to the shoulder tip through the phrenic nerve, so the old aphorism is that pus somewhere, pus nowhere means pus under the diaphragm.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch4-peritoneum-card-042",
+   "type": "basic",
+   "sectionId": "s3",
+   "deck": "Peritoneal Spaces & Gutters",
+   "front": "Name the paraduodenal fossae and their surgical relevance.",
+   "back": "The paraduodenal fossa of Landzert on the left and the mesentericoparietal fossa of Waldeyer on the right; small bowel can enter them and form an internal hernia presenting as obstruction with no external lump.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch4-peritoneum-card-043",
+   "type": "basic",
+   "sectionId": "s3",
+   "deck": "Peritoneal Spaces & Gutters",
+   "front": "What is a hernia through the foramen of Winslow?",
+   "back": "A rare internal hernia in which bowel passes into the lesser sac, producing obstruction with a mass in the epigastrium; reduction must be gentle because the constricting margins contain the portal triad and cannot be divided.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch4-peritoneum-card-044",
+   "type": "basic",
+   "sectionId": "s3",
+   "deck": "Peritoneal Spaces & Gutters",
+   "front": "Where is the safest site for abdominal paracentesis and why?",
+   "back": "In the left iliac fossa at the junction of the lateral third and medial two-thirds of the line from the umbilicus to the anterior superior iliac spine, lateral to the rectus sheath. This avoids the inferior epigastric artery and the caecum, and the descending colon is usually collapsed.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch4-peritoneum-card-045",
+   "type": "basic",
+   "sectionId": "s4",
+   "deck": "Collections & Spread",
+   "front": "How does peritoneal fluid normally circulate?",
+   "back": "Diaphragmatic movement and negative subphrenic pressure draw fluid upwards along the paracolic gutters towards the subphrenic spaces, where specialised diaphragmatic lymphatic stomata absorb it into the mediastinal and then the thoracic duct.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch4-peritoneum-card-046",
+   "type": "basic",
+   "sectionId": "s4",
+   "deck": "Collections & Spread",
+   "front": "What is the surgical consequence of diaphragmatic lymphatic absorption?",
+   "back": "Bacteria and tumour cells reach the thoracic duct and bloodstream quickly, and pancreatic or biliary peritonitis produces early pleural effusion; conversely the same route allows rapid clearance of small contaminations.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch4-peritoneum-card-047",
+   "type": "basic",
+   "sectionId": "s4",
+   "deck": "Collections & Spread",
+   "front": "Trace the usual route of pus from a perforated appendix in the supine patient.",
+   "back": "Into the right iliac fossa, then up the right paracolic gutter to the hepatorenal pouch and the right subphrenic space, or down into the pelvis.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch4-peritoneum-card-048",
+   "type": "basic",
+   "sectionId": "s4",
+   "deck": "Collections & Spread",
+   "front": "Why does an appendix abscess wall itself off while a free perforation does not?",
+   "back": "The greater omentum and adjacent loops adhere to the inflamed organ and localise the exudate. A sudden perforation into the free cavity, especially in a child in whom the omentum is short, spills contents widely before adhesions can form.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch4-peritoneum-card-049",
+   "type": "basic",
+   "sectionId": "s4",
+   "deck": "Collections & Spread",
+   "front": "Which peritoneal features predispose to postoperative adhesions?",
+   "back": "Injury to the mesothelium by drying, rough handling, powder, blood and infection causes fibrin deposition; if fibrinolysis is impaired, fibrin organises into fibrous adhesions, the commonest cause of later small bowel obstruction.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch4-peritoneum-card-050",
+   "type": "basic",
+   "sectionId": "s4",
+   "deck": "Collections & Spread",
+   "front": "Why does tuberculous peritonitis produce matted bowel and a doughy abdomen?",
+   "back": "Tubercles on the peritoneum and mesentery excite a plastic exudate that mats loops together, and caseating mesenteric nodes may form a cold abscess.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch4-peritoneum-card-051",
+   "type": "basic",
+   "sectionId": "s4",
+   "deck": "Collections & Spread",
+   "front": "How does malignant ascites and peritoneal seeding arise?",
+   "back": "Cells shed from a serosal surface follow the circulating peritoneal fluid to the dependent pelvic pouches and the subphrenic areas, seeding the rectovesical pouch, the ovaries (Krukenberg tumour) and the omentum, which becomes a thickened omental cake.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch4-peritoneum-card-052",
+   "type": "basic",
+   "sectionId": "s4",
+   "deck": "Collections & Spread",
+   "front": "What is the anatomical basis of the rectal shelf of Blumer?",
+   "back": "A palpable ridge of metastatic deposits in the rectovesical or rectouterine pouch felt on rectal examination, the most dependent part of the cavity where seeded cells settle.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch4-peritoneum-card-053",
+   "type": "basic",
+   "sectionId": "s4",
+   "deck": "Collections & Spread",
+   "front": "Why does bile or pancreatic peritonitis cause rapid hypovolaemia?",
+   "back": "The peritoneum has a very large surface area, and chemical irritation causes massive exudation of protein-rich fluid into the cavity, a third space loss equivalent to a large burn.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch4-peritoneum-card-054",
+   "type": "basic",
+   "sectionId": "s4",
+   "deck": "Collections & Spread",
+   "front": "Name the ligaments and folds along which infection or tumour spreads from the stomach to the transverse colon.",
+   "back": "The gastrocolic ligament, along which a gastric carcinoma may invade the colon and form a gastrocolic fistula.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch4-peritoneum-card-055",
+   "type": "basic",
+   "sectionId": "s4",
+   "deck": "Collections & Spread",
+   "front": "What is the retroperitoneal space and how does its infection behave differently?",
+   "back": "The space between the posterior parietal peritoneum and the posterior abdominal wall containing kidneys, ureters, pancreas, duodenum and great vessels. Infection there causes ill-localised back pain, psoas spasm and few peritoneal signs, and it tracks along fascial planes rather than gravitating to the pouches.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch4-peritoneum-card-056",
+   "type": "basic",
+   "sectionId": "s4",
+   "deck": "Collections & Spread",
+   "front": "What is the anatomical explanation for pain in the back with pancreatic disease?",
+   "back": "The pancreas is retroperitoneal and its afferents run with the coeliac plexus splanchnic nerves to T6 to T10, so pain is felt in the epigastrium and bores through to the back and is eased by leaning forwards.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch4-peritoneum-card-057",
+   "type": "cloze",
+   "sectionId": "s1",
+   "deck": "Greater & Lesser Sacs",
+   "cloze": "The anterior boundary of the epiploic foramen is the free edge of the {{c1::lesser omentum}} containing the portal triad.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch4-peritoneum-card-058",
+   "type": "cloze",
+   "sectionId": "s1",
+   "deck": "Greater & Lesser Sacs",
+   "cloze": "The posterior boundary of the epiploic foramen is the {{c1::inferior vena cava}}.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch4-peritoneum-card-059",
+   "type": "cloze",
+   "sectionId": "s1",
+   "deck": "Greater & Lesser Sacs",
+   "cloze": "In the free edge of the lesser omentum the {{c1::portal vein}} lies posterior to the bile duct and hepatic artery.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch4-peritoneum-card-060",
+   "type": "cloze",
+   "sectionId": "s1",
+   "deck": "Greater & Lesser Sacs",
+   "cloze": "Pain from the central diaphragmatic peritoneum is referred to the {{c1::shoulder tip}} through the phrenic nerve.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch4-peritoneum-card-061",
+   "type": "cloze",
+   "sectionId": "s1",
+   "deck": "Greater & Lesser Sacs",
+   "cloze": "Midgut pain is referred to the {{c1::umbilicus}}.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch4-peritoneum-card-062",
+   "type": "cloze",
+   "sectionId": "s2",
+   "deck": "Mesenteries & Omenta",
+   "cloze": "The root of the small bowel mesentery runs from the duodenojejunal flexure to the {{c1::right sacroiliac joint}}.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch4-peritoneum-card-063",
+   "type": "cloze",
+   "sectionId": "s2",
+   "deck": "Mesenteries & Omenta",
+   "cloze": "The splenorenal ligament contains the splenic vessels and the {{c1::tail of the pancreas}}.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch4-peritoneum-card-064",
+   "type": "cloze",
+   "sectionId": "s2",
+   "deck": "Mesenteries & Omenta",
+   "cloze": "The avascular fusion plane used to mobilise the colon is the plane of {{c1::Toldt}}.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch4-peritoneum-card-065",
+   "type": "cloze",
+   "sectionId": "s2",
+   "deck": "Mesenteries & Omenta",
+   "cloze": "The free edge of the falciform ligament contains the {{c1::ligamentum teres}}.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch4-peritoneum-card-066",
+   "type": "cloze",
+   "sectionId": "s3",
+   "deck": "Peritoneal Spaces & Gutters",
+   "cloze": "The most dependent part of the peritoneal cavity in the supine patient is the {{c1::hepatorenal pouch of Morison}}.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch4-peritoneum-card-067",
+   "type": "cloze",
+   "sectionId": "s3",
+   "deck": "Peritoneal Spaces & Gutters",
+   "cloze": "The upper end of the left paracolic gutter is closed by the {{c1::phrenicocolic ligament}}.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch4-peritoneum-card-068",
+   "type": "cloze",
+   "sectionId": "s3",
+   "deck": "Peritoneal Spaces & Gutters",
+   "cloze": "A pelvic abscess pointing into the rectum is drained {{c1::transrectally}}.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch4-peritoneum-card-069",
+   "type": "cloze",
+   "sectionId": "s4",
+   "deck": "Collections & Spread",
+   "cloze": "Peritoneal fluid is absorbed mainly by lymphatic stomata on the {{c1::diaphragmatic}} peritoneum.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch4-peritoneum-card-070",
+   "type": "cloze",
+   "sectionId": "s4",
+   "deck": "Collections & Spread",
+   "cloze": "Transcoelomic seeding to the ovary produces a {{c1::Krukenberg}} tumour.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch4-peritoneum-card-071",
+   "type": "basic",
+   "sectionId": "s3",
+   "deck": "Peritoneal Spaces & Gutters",
+   "front": "Enumerate the peritoneal spaces of the supracolic and infracolic compartments.",
+   "back": "Supracolic: right and left subphrenic (suprahepatic), right subhepatic (Morison's pouch) and left subhepatic (lesser sac). Infracolic: right and left infracolic spaces separated by the mesenteric root, the right and left paracolic gutters, and the pelvic pouches below.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch4-peritoneum-card-072",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Greater & Lesser Sacs",
+   "front": "Name the recesses of the lesser sac.",
+   "back": "The superior recess behind the caudate lobe reaching up to the diaphragm, the inferior recess between the layers of the greater omentum, and the splenic recess towards the hilum between the gastrosplenic and splenorenal ligaments.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch4-peritoneum-card-073",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Greater & Lesser Sacs",
+   "front": "Which manoeuvre exposes the whole lesser sac and the pancreas, and what is divided?",
+   "back": "Division of the gastrocolic ligament along the greater curvature outside the gastroepiploic arcade, lifting the stomach upwards - the standard approach for pancreatic necrosectomy and for cystogastrostomy.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch4-peritoneum-card-074",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Mesenteries & Omenta",
+   "front": "What is the ligament of Treitz and why is it used as a landmark?",
+   "back": "The suspensory muscle of the duodenum, a fibromuscular band from the right crus to the duodenojejunal flexure. It fixes the flexure to the left of L2 and defines the boundary between upper and lower gastrointestinal bleeding.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch4-peritoneum-card-075",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Mesenteries & Omenta",
+   "front": "Name the peritoneal ligaments of the liver.",
+   "back": "The falciform ligament with the ligamentum teres in its free edge, the upper and lower layers of the coronary ligament enclosing the bare area, the right and left triangular ligaments, and the lesser omentum from the porta to the lesser curvature.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch4-peritoneum-card-076",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Mesenteries & Omenta",
+   "front": "Why does midgut malrotation predispose to volvulus?",
+   "back": "Failure of normal rotation leaves the duodenojejunal flexure to the right and the caecum high, so the mesenteric root is short and narrow rather than broad and oblique, allowing the whole midgut to twist about the superior mesenteric vessels.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch4-peritoneum-card-077",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Mesenteries & Omenta",
+   "front": "What are Ladd's bands and what do they obstruct?",
+   "back": "Peritoneal bands running from an abnormally placed caecum across the second part of the duodenum to the right posterolateral wall in malrotation; they compress the duodenum and are divided as part of Ladd's procedure.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch4-peritoneum-card-078",
+   "type": "basic",
+   "sectionId": "s4",
+   "deck": "Collections & Spread",
+   "front": "Why is the omentum removed in staging surgery for ovarian carcinoma?",
+   "back": "Peritoneal fluid carries shed cells to the omentum, which is a preferential site of implantation and forms an omental cake; omentectomy is therefore both staging and cytoreduction.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch4-peritoneum-card-079",
+   "type": "basic",
+   "sectionId": "s4",
+   "deck": "Collections & Spread",
+   "front": "What is the anatomical basis of peritoneal dialysis?",
+   "back": "The peritoneum has a surface area comparable to the body surface and a rich subserous capillary bed, so it acts as a semipermeable membrane; the catheter tip is placed in the pouch of Douglas, the most dependent recess, with the cuffs in the rectus sheath and subcutaneous tissue.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch4-peritoneum-card-080",
+   "type": "basic",
+   "sectionId": "s4",
+   "deck": "Collections & Spread",
+   "front": "Why does pneumoperitoneum collect under the right dome of the diaphragm on an erect film?",
+   "back": "Free gas rises to the highest point of the cavity, and on the right the smooth convex liver separates the gas from the diaphragm, giving a clear crescent; on the left gas in the stomach fundus makes interpretation harder.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch4-peritoneum-card-081",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Greater & Lesser Sacs",
+   "front": "Why is the peritoneal cavity effectively a closed sac with only one physiological opening in the female, and what does this permit?",
+   "back": "The abdominal ostia of the uterine tubes open into it, allowing an ovum to reach the tube and also allowing ascending infection to cause pelvic peritonitis and perihepatitis - the Fitz-Hugh-Curtis adhesions.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch4-peritoneum-card-082",
+   "type": "cloze",
+   "sectionId": "s2",
+   "deck": "Mesenteries & Omenta",
+   "cloze": "The duodenojejunal flexure is fixed by the suspensory ligament of {{c1::Treitz}}.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch4-peritoneum-card-083",
+   "type": "cloze",
+   "sectionId": "s2",
+   "deck": "Mesenteries & Omenta",
+   "cloze": "Peritoneal bands crossing the duodenum in malrotation are called {{c1::Ladd's bands}}.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch4-peritoneum-card-084",
+   "type": "cloze",
+   "sectionId": "s3",
+   "deck": "Peritoneal Spaces & Gutters",
+   "cloze": "The peritoneal dialysis catheter tip is sited in the {{c1::pouch of Douglas}}.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch4-peritoneum-card-085",
+   "type": "cloze",
+   "sectionId": "s4",
+   "deck": "Collections & Spread",
+   "cloze": "Perihepatic adhesions following pelvic infection are the {{c1::Fitz-Hugh-Curtis}} syndrome.",
+   "difficulty": 1
+  }
+ ],
+ "mcqs": [
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sana-ch4-peritoneum-mcq-001",
+   "type": "single",
+   "sectionId": "s5",
+   "difficulty": 2,
+   "highYield": true,
+   "stem": "A man with a perforated duodenal ulcer develops right iliac fossa pain and tenderness some hours later, and appendicitis is suspected. Which anatomical route explains this?",
+   "options": [
+    {
+     "id": "a",
+     "text": "Spread through the lesser sac and the epiploic foramen",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "b",
+     "text": "Trickling of exudate down the right paracolic gutter",
+     "correct": true,
+     "why": "Key - B) Trickling of exudate down the right paracolic gutter. Duodenal contents spill into the right subhepatic space and run down the right paracolic gutter to the right iliac fossa, producing local peritonitis that mimics appendicitis.\n\nWhy the others fail:\nA) Spread through the lesser sac and the epiploic foramen - The lesser sac is a closed diverticulum behind the stomach; contents entering it would remain in the supracolic compartment rather than reach the right iliac fossa.\nC) Referred pain along the T10 dermatome - Referred T10 pain is felt around the umbilicus and does not produce localised right iliac fossa tenderness with guarding.\nD) Spread along the transverse mesocolon - The transverse mesocolon separates the supracolic and infracolic compartments and is not a channel for gravitational spread."
+    },
+    {
+     "id": "c",
+     "text": "Referred pain along the T10 dermatome",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "d",
+     "text": "Spread along the transverse mesocolon",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    }
+   ],
+   "explanation": [
+    "Key - B) Trickling of exudate down the right paracolic gutter. Duodenal contents spill into the right subhepatic space and run down the right paracolic gutter to the right iliac fossa, producing local peritonitis that mimics appendicitis.\n\nWhy the others fail:\nA) Spread through the lesser sac and the epiploic foramen - The lesser sac is a closed diverticulum behind the stomach; contents entering it would remain in the supracolic compartment rather than reach the right iliac fossa.\nC) Referred pain along the T10 dermatome - Referred T10 pain is felt around the umbilicus and does not produce localised right iliac fossa tenderness with guarding.\nD) Spread along the transverse mesocolon - The transverse mesocolon separates the supracolic and infracolic compartments and is not a channel for gravitational spread."
+   ],
+   "keyFacts": [
+    "Key - B) Trickling of exudate down the right paracolic gutter. Duodenal contents spill into the right subhepatic space and run down the right paracolic gutter to the right iliac fossa, producing local peritonitis that mimics appendicitis.\n\nWhy the others fail:\nA) Spread through the lesser sac and the epiploic foramen - The lesser sac is a closed diverticulum behind the stomach; contents entering it would remain in the supracolic compartment rather than reach the right iliac fossa.\nC) Referred pain along the T10 dermatome - Referred T10 pain is felt around the umbilicus and does not produce localised right iliac fossa tenderness with guarding.\nD) Spread along the transverse mesocolon - The transverse mesocolon separates the supracolic and infracolic compartments and is not a channel for gravitational spread."
+   ],
+   "teachingPoint": "Key - B) Trickling of exudate down the right paracolic gutter. Duodenal contents spill into the right subhepatic space and run down the right paracolic gutter to the right iliac fossa, producing local peritonitis that mimics appendicitis.\n\nWhy the others fail:\nA) Spread through the lesser sac and the epiploic foramen - The lesser sac is a closed diverticulum behind the stomach; contents entering it would remain in the supracolic compartment rather than reach the right iliac fossa.\nC) Referred pain along the T10 dermatome - Referred T10 pain is felt around the umbilicus and does not produce localised right iliac fossa tenderness with guarding.\nD) Spread along the transverse mesocolon - The transverse mesocolon separates the supracolic and infracolic compartments and is not a channel for gravitational spread."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sana-ch4-peritoneum-mcq-002",
+   "type": "single",
+   "sectionId": "s5",
+   "difficulty": 2,
+   "highYield": true,
+   "stem": "Ten days after an appendicectomy a patient has swinging fever, hiccups, right shoulder-tip pain and a pleural effusion. Where is the collection?",
+   "options": [
+    {
+     "id": "a",
+     "text": "Pouch of Douglas",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "b",
+     "text": "Right subphrenic space",
+     "correct": true,
+     "why": "Key - B) Right subphrenic space. Shoulder-tip pain through the phrenic nerve with hiccup and a sympathetic effusion localises the abscess beneath the diaphragm on the right, reached by pus travelling up the right paracolic gutter.\n\nWhy the others fail:\nA) Pouch of Douglas - A pelvic collection causes diarrhoea, tenesmus and a boggy mass on rectal examination rather than shoulder pain and effusion.\nC) Lesser sac - A lesser sac collection follows pancreatic disease or a posterior gastric perforation and gives epigastric rather than shoulder symptoms.\nD) Left paracolic gutter - The left paracolic gutter is remote from the right diaphragm and is closed above by the phrenicocolic ligament."
+    },
+    {
+     "id": "c",
+     "text": "Lesser sac",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "d",
+     "text": "Left paracolic gutter",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    }
+   ],
+   "explanation": [
+    "Key - B) Right subphrenic space. Shoulder-tip pain through the phrenic nerve with hiccup and a sympathetic effusion localises the abscess beneath the diaphragm on the right, reached by pus travelling up the right paracolic gutter.\n\nWhy the others fail:\nA) Pouch of Douglas - A pelvic collection causes diarrhoea, tenesmus and a boggy mass on rectal examination rather than shoulder pain and effusion.\nC) Lesser sac - A lesser sac collection follows pancreatic disease or a posterior gastric perforation and gives epigastric rather than shoulder symptoms.\nD) Left paracolic gutter - The left paracolic gutter is remote from the right diaphragm and is closed above by the phrenicocolic ligament."
+   ],
+   "keyFacts": [
+    "Key - B) Right subphrenic space. Shoulder-tip pain through the phrenic nerve with hiccup and a sympathetic effusion localises the abscess beneath the diaphragm on the right, reached by pus travelling up the right paracolic gutter.\n\nWhy the others fail:\nA) Pouch of Douglas - A pelvic collection causes diarrhoea, tenesmus and a boggy mass on rectal examination rather than shoulder pain and effusion.\nC) Lesser sac - A lesser sac collection follows pancreatic disease or a posterior gastric perforation and gives epigastric rather than shoulder symptoms.\nD) Left paracolic gutter - The left paracolic gutter is remote from the right diaphragm and is closed above by the phrenicocolic ligament."
+   ],
+   "teachingPoint": "Key - B) Right subphrenic space. Shoulder-tip pain through the phrenic nerve with hiccup and a sympathetic effusion localises the abscess beneath the diaphragm on the right, reached by pus travelling up the right paracolic gutter.\n\nWhy the others fail:\nA) Pouch of Douglas - A pelvic collection causes diarrhoea, tenesmus and a boggy mass on rectal examination rather than shoulder pain and effusion.\nC) Lesser sac - A lesser sac collection follows pancreatic disease or a posterior gastric perforation and gives epigastric rather than shoulder symptoms.\nD) Left paracolic gutter - The left paracolic gutter is remote from the right diaphragm and is closed above by the phrenicocolic ligament."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sana-ch4-peritoneum-mcq-003",
+   "type": "single",
+   "sectionId": "s5",
+   "difficulty": 2,
+   "highYield": true,
+   "stem": "During a difficult cholecystectomy there is torrential bleeding from the porta hepatis. The surgeon passes a finger through the epiploic foramen and compresses the free edge of the lesser omentum, but the bleeding continues. What is the most likely source?",
+   "options": [
+    {
+     "id": "a",
+     "text": "Cystic artery",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "b",
+     "text": "Right hepatic artery",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "c",
+     "text": "Portal vein",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "d",
+     "text": "Hepatic vein or the inferior vena cava",
+     "correct": true,
+     "why": "Key - D) Hepatic vein or the inferior vena cava. The Pringle manoeuvre controls only inflow through the hepatic artery and portal vein; continued bleeding must come from the hepatic veins or the inferior vena cava, which lie outside the compressed pedicle.\n\nWhy the others fail:\nA) Cystic artery - The cystic artery arises within Calot's triangle from the right hepatic artery and would be controlled by the manoeuvre.\nB) Right hepatic artery - The right hepatic artery lies in the free edge and its flow is arrested by compression.\nC) Portal vein - The portal vein lies posteriorly in the same free edge and is likewise occluded."
+    }
+   ],
+   "explanation": [
+    "Key - D) Hepatic vein or the inferior vena cava. The Pringle manoeuvre controls only inflow through the hepatic artery and portal vein; continued bleeding must come from the hepatic veins or the inferior vena cava, which lie outside the compressed pedicle.\n\nWhy the others fail:\nA) Cystic artery - The cystic artery arises within Calot's triangle from the right hepatic artery and would be controlled by the manoeuvre.\nB) Right hepatic artery - The right hepatic artery lies in the free edge and its flow is arrested by compression.\nC) Portal vein - The portal vein lies posteriorly in the same free edge and is likewise occluded."
+   ],
+   "keyFacts": [
+    "Key - D) Hepatic vein or the inferior vena cava. The Pringle manoeuvre controls only inflow through the hepatic artery and portal vein; continued bleeding must come from the hepatic veins or the inferior vena cava, which lie outside the compressed pedicle.\n\nWhy the others fail:\nA) Cystic artery - The cystic artery arises within Calot's triangle from the right hepatic artery and would be controlled by the manoeuvre.\nB) Right hepatic artery - The right hepatic artery lies in the free edge and its flow is arrested by compression.\nC) Portal vein - The portal vein lies posteriorly in the same free edge and is likewise occluded."
+   ],
+   "teachingPoint": "Key - D) Hepatic vein or the inferior vena cava. The Pringle manoeuvre controls only inflow through the hepatic artery and portal vein; continued bleeding must come from the hepatic veins or the inferior vena cava, which lie outside the compressed pedicle.\n\nWhy the others fail:\nA) Cystic artery - The cystic artery arises within Calot's triangle from the right hepatic artery and would be controlled by the manoeuvre.\nB) Right hepatic artery - The right hepatic artery lies in the free edge and its flow is arrested by compression.\nC) Portal vein - The portal vein lies posteriorly in the same free edge and is likewise occluded."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sana-ch4-peritoneum-mcq-004",
+   "type": "single",
+   "sectionId": "s5",
+   "difficulty": 2,
+   "highYield": true,
+   "stem": "A patient with severe acute pancreatitis develops a large collection behind the stomach. Which space contains it, and which structure forms its posterior wall?",
+   "options": [
+    {
+     "id": "a",
+     "text": "Greater sac, with the transverse mesocolon behind",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "b",
+     "text": "Lesser sac, with the pancreas in its posterior wall",
+     "correct": true,
+     "why": "Key - B) Lesser sac, with the pancreas in its posterior wall. The pancreas lies in the posterior wall of the lesser sac, so pancreatic exudate collects there and can be drained by cystogastrostomy through the posterior wall of the stomach.\n\nWhy the others fail:\nA) Greater sac, with the transverse mesocolon behind - The greater sac lies in front of the stomach and is not the confined space that holds a pseudocyst.\nC) Right subhepatic space, with the right kidney behind - The right subhepatic space is on the opposite side of the abdomen and is not related to the body of the pancreas.\nD) Retroperitoneum, with the psoas behind - A purely retroperitoneal collection would not be described as lying behind the stomach within a peritoneal recess."
+    },
+    {
+     "id": "c",
+     "text": "Right subhepatic space, with the right kidney behind",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "d",
+     "text": "Retroperitoneum, with the psoas behind",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    }
+   ],
+   "explanation": [
+    "Key - B) Lesser sac, with the pancreas in its posterior wall. The pancreas lies in the posterior wall of the lesser sac, so pancreatic exudate collects there and can be drained by cystogastrostomy through the posterior wall of the stomach.\n\nWhy the others fail:\nA) Greater sac, with the transverse mesocolon behind - The greater sac lies in front of the stomach and is not the confined space that holds a pseudocyst.\nC) Right subhepatic space, with the right kidney behind - The right subhepatic space is on the opposite side of the abdomen and is not related to the body of the pancreas.\nD) Retroperitoneum, with the psoas behind - A purely retroperitoneal collection would not be described as lying behind the stomach within a peritoneal recess."
+   ],
+   "keyFacts": [
+    "Key - B) Lesser sac, with the pancreas in its posterior wall. The pancreas lies in the posterior wall of the lesser sac, so pancreatic exudate collects there and can be drained by cystogastrostomy through the posterior wall of the stomach.\n\nWhy the others fail:\nA) Greater sac, with the transverse mesocolon behind - The greater sac lies in front of the stomach and is not the confined space that holds a pseudocyst.\nC) Right subhepatic space, with the right kidney behind - The right subhepatic space is on the opposite side of the abdomen and is not related to the body of the pancreas.\nD) Retroperitoneum, with the psoas behind - A purely retroperitoneal collection would not be described as lying behind the stomach within a peritoneal recess."
+   ],
+   "teachingPoint": "Key - B) Lesser sac, with the pancreas in its posterior wall. The pancreas lies in the posterior wall of the lesser sac, so pancreatic exudate collects there and can be drained by cystogastrostomy through the posterior wall of the stomach.\n\nWhy the others fail:\nA) Greater sac, with the transverse mesocolon behind - The greater sac lies in front of the stomach and is not the confined space that holds a pseudocyst.\nC) Right subhepatic space, with the right kidney behind - The right subhepatic space is on the opposite side of the abdomen and is not related to the body of the pancreas.\nD) Retroperitoneum, with the psoas behind - A purely retroperitoneal collection would not be described as lying behind the stomach within a peritoneal recess."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sana-ch4-peritoneum-mcq-005",
+   "type": "single",
+   "sectionId": "s5",
+   "difficulty": 2,
+   "highYield": true,
+   "stem": "Where should a diagnostic paracentesis needle be inserted in a patient with tense ascites, and why?",
+   "options": [
+    {
+     "id": "a",
+     "text": "In the midline just below the umbilicus, to avoid all vessels",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "b",
+     "text": "In the right iliac fossa at McBurney's point, to avoid the sigmoid",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "c",
+     "text": "In the left iliac fossa lateral to the rectus sheath, at the junction of the lateral third and medial two-thirds of the umbilicus to spine line",
+     "correct": true,
+     "why": "Key - C) In the left iliac fossa lateral to the rectus sheath, at the junction of the lateral third and medial two-thirds of the umbilicus to spine line. The left iliac fossa lateral to the rectus at that point is lateral to the inferior epigastric artery, clear of the caecum, and over a usually empty descending colon.\n\nWhy the others fail:\nA) In the midline just below the umbilicus, to avoid all vessels - The midline below the umbilicus risks a distended bladder and a patent urachal remnant, and adhesions from previous midline scars.\nB) In the right iliac fossa at McBurney's point, to avoid the sigmoid - The right iliac fossa at McBurney's point risks the caecum, which is usually distended with gas.\nD) In the right hypochondrium below the costal margin, where the peritoneum is thinnest - Insertion below the right costal margin risks the liver and the gallbladder."
+    },
+    {
+     "id": "d",
+     "text": "In the right hypochondrium below the costal margin, where the peritoneum is thinnest",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    }
+   ],
+   "explanation": [
+    "Key - C) In the left iliac fossa lateral to the rectus sheath, at the junction of the lateral third and medial two-thirds of the umbilicus to spine line. The left iliac fossa lateral to the rectus at that point is lateral to the inferior epigastric artery, clear of the caecum, and over a usually empty descending colon.\n\nWhy the others fail:\nA) In the midline just below the umbilicus, to avoid all vessels - The midline below the umbilicus risks a distended bladder and a patent urachal remnant, and adhesions from previous midline scars.\nB) In the right iliac fossa at McBurney's point, to avoid the sigmoid - The right iliac fossa at McBurney's point risks the caecum, which is usually distended with gas.\nD) In the right hypochondrium below the costal margin, where the peritoneum is thinnest - Insertion below the right costal margin risks the liver and the gallbladder."
+   ],
+   "keyFacts": [
+    "Key - C) In the left iliac fossa lateral to the rectus sheath, at the junction of the lateral third and medial two-thirds of the umbilicus to spine line. The left iliac fossa lateral to the rectus at that point is lateral to the inferior epigastric artery, clear of the caecum, and over a usually empty descending colon.\n\nWhy the others fail:\nA) In the midline just below the umbilicus, to avoid all vessels - The midline below the umbilicus risks a distended bladder and a patent urachal remnant, and adhesions from previous midline scars.\nB) In the right iliac fossa at McBurney's point, to avoid the sigmoid - The right iliac fossa at McBurney's point risks the caecum, which is usually distended with gas.\nD) In the right hypochondrium below the costal margin, where the peritoneum is thinnest - Insertion below the right costal margin risks the liver and the gallbladder."
+   ],
+   "teachingPoint": "Key - C) In the left iliac fossa lateral to the rectus sheath, at the junction of the lateral third and medial two-thirds of the umbilicus to spine line. The left iliac fossa lateral to the rectus at that point is lateral to the inferior epigastric artery, clear of the caecum, and over a usually empty descending colon.\n\nWhy the others fail:\nA) In the midline just below the umbilicus, to avoid all vessels - The midline below the umbilicus risks a distended bladder and a patent urachal remnant, and adhesions from previous midline scars.\nB) In the right iliac fossa at McBurney's point, to avoid the sigmoid - The right iliac fossa at McBurney's point risks the caecum, which is usually distended with gas.\nD) In the right hypochondrium below the costal margin, where the peritoneum is thinnest - Insertion below the right costal margin risks the liver and the gallbladder."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sana-ch4-peritoneum-mcq-006",
+   "type": "single",
+   "sectionId": "s5",
+   "difficulty": 2,
+   "highYield": true,
+   "stem": "A patient with generalised peritonitis is nursed sitting up. What is the anatomical rationale?",
+   "options": [
+    {
+     "id": "a",
+     "text": "To relieve pressure on the diaphragm and improve ventilation only",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "b",
+     "text": "To encourage pus to gravitate into the pelvis, where absorption of toxins is poor",
+     "correct": true,
+     "why": "Key - B) To encourage pus to gravitate into the pelvis, where absorption of toxins is poor. In the erect or semi-sitting position the pelvic pouches are the most dependent part of the cavity, and the pelvic peritoneum absorbs toxins poorly, so a pelvic collection is less toxic and is easily drained per rectum or through the vaginal fornix.\n\nWhy the others fail:\nA) To relieve pressure on the diaphragm and improve ventilation only - Improved ventilation is a genuine benefit but is not the peritoneal reason for the posture.\nC) To keep pus in the subphrenic spaces where drainage is easier - Keeping pus under the diaphragm is exactly what the posture avoids, since diaphragmatic peritoneum absorbs rapidly and a subphrenic abscess is far more dangerous.\nD) To reduce portal venous congestion - Portal congestion is unrelated to nursing position in peritonitis."
+    },
+    {
+     "id": "c",
+     "text": "To keep pus in the subphrenic spaces where drainage is easier",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "d",
+     "text": "To reduce portal venous congestion",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    }
+   ],
+   "explanation": [
+    "Key - B) To encourage pus to gravitate into the pelvis, where absorption of toxins is poor. In the erect or semi-sitting position the pelvic pouches are the most dependent part of the cavity, and the pelvic peritoneum absorbs toxins poorly, so a pelvic collection is less toxic and is easily drained per rectum or through the vaginal fornix.\n\nWhy the others fail:\nA) To relieve pressure on the diaphragm and improve ventilation only - Improved ventilation is a genuine benefit but is not the peritoneal reason for the posture.\nC) To keep pus in the subphrenic spaces where drainage is easier - Keeping pus under the diaphragm is exactly what the posture avoids, since diaphragmatic peritoneum absorbs rapidly and a subphrenic abscess is far more dangerous.\nD) To reduce portal venous congestion - Portal congestion is unrelated to nursing position in peritonitis."
+   ],
+   "keyFacts": [
+    "Key - B) To encourage pus to gravitate into the pelvis, where absorption of toxins is poor. In the erect or semi-sitting position the pelvic pouches are the most dependent part of the cavity, and the pelvic peritoneum absorbs toxins poorly, so a pelvic collection is less toxic and is easily drained per rectum or through the vaginal fornix.\n\nWhy the others fail:\nA) To relieve pressure on the diaphragm and improve ventilation only - Improved ventilation is a genuine benefit but is not the peritoneal reason for the posture.\nC) To keep pus in the subphrenic spaces where drainage is easier - Keeping pus under the diaphragm is exactly what the posture avoids, since diaphragmatic peritoneum absorbs rapidly and a subphrenic abscess is far more dangerous.\nD) To reduce portal venous congestion - Portal congestion is unrelated to nursing position in peritonitis."
+   ],
+   "teachingPoint": "Key - B) To encourage pus to gravitate into the pelvis, where absorption of toxins is poor. In the erect or semi-sitting position the pelvic pouches are the most dependent part of the cavity, and the pelvic peritoneum absorbs toxins poorly, so a pelvic collection is less toxic and is easily drained per rectum or through the vaginal fornix.\n\nWhy the others fail:\nA) To relieve pressure on the diaphragm and improve ventilation only - Improved ventilation is a genuine benefit but is not the peritoneal reason for the posture.\nC) To keep pus in the subphrenic spaces where drainage is easier - Keeping pus under the diaphragm is exactly what the posture avoids, since diaphragmatic peritoneum absorbs rapidly and a subphrenic abscess is far more dangerous.\nD) To reduce portal venous congestion - Portal congestion is unrelated to nursing position in peritonitis."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sana-ch4-peritoneum-mcq-007",
+   "type": "single",
+   "sectionId": "s5",
+   "difficulty": 2,
+   "highYield": true,
+   "stem": "During mobilisation of the sigmoid colon the surgeon must protect a structure lying behind the apex of the sigmoid mesocolon. What is it?",
+   "options": [
+    {
+     "id": "a",
+     "text": "The left gonadal vein",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "b",
+     "text": "The left ureter",
+     "correct": true,
+     "why": "Key - B) The left ureter. The left ureter crosses the pelvic brim behind the apex of the inverted V of the sigmoid mesocolon and is the classic structure injured at this step.\n\nWhy the others fail:\nA) The left gonadal vein - The gonadal vein lies more laterally on the psoas and is not the structure at the mesocolic apex.\nC) The inferior mesenteric vein - The inferior mesenteric vein runs upwards to the left of the duodenojejunal flexure, not behind the sigmoid apex.\nD) The left common iliac vein - The left common iliac vein lies deeper and more medially, beneath the artery at the bifurcation."
+    },
+    {
+     "id": "c",
+     "text": "The inferior mesenteric vein",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "d",
+     "text": "The left common iliac vein",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    }
+   ],
+   "explanation": [
+    "Key - B) The left ureter. The left ureter crosses the pelvic brim behind the apex of the inverted V of the sigmoid mesocolon and is the classic structure injured at this step.\n\nWhy the others fail:\nA) The left gonadal vein - The gonadal vein lies more laterally on the psoas and is not the structure at the mesocolic apex.\nC) The inferior mesenteric vein - The inferior mesenteric vein runs upwards to the left of the duodenojejunal flexure, not behind the sigmoid apex.\nD) The left common iliac vein - The left common iliac vein lies deeper and more medially, beneath the artery at the bifurcation."
+   ],
+   "keyFacts": [
+    "Key - B) The left ureter. The left ureter crosses the pelvic brim behind the apex of the inverted V of the sigmoid mesocolon and is the classic structure injured at this step.\n\nWhy the others fail:\nA) The left gonadal vein - The gonadal vein lies more laterally on the psoas and is not the structure at the mesocolic apex.\nC) The inferior mesenteric vein - The inferior mesenteric vein runs upwards to the left of the duodenojejunal flexure, not behind the sigmoid apex.\nD) The left common iliac vein - The left common iliac vein lies deeper and more medially, beneath the artery at the bifurcation."
+   ],
+   "teachingPoint": "Key - B) The left ureter. The left ureter crosses the pelvic brim behind the apex of the inverted V of the sigmoid mesocolon and is the classic structure injured at this step.\n\nWhy the others fail:\nA) The left gonadal vein - The gonadal vein lies more laterally on the psoas and is not the structure at the mesocolic apex.\nC) The inferior mesenteric vein - The inferior mesenteric vein runs upwards to the left of the duodenojejunal flexure, not behind the sigmoid apex.\nD) The left common iliac vein - The left common iliac vein lies deeper and more medially, beneath the artery at the bifurcation."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sana-ch4-peritoneum-mcq-008",
+   "type": "single",
+   "sectionId": "s5",
+   "difficulty": 2,
+   "highYield": true,
+   "stem": "A woman with advanced gastric carcinoma has bilateral ovarian masses. Which route of spread does this represent?",
+   "options": [
+    {
+     "id": "a",
+     "text": "Haematogenous through the portal vein",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "b",
+     "text": "Lymphatic to the para-aortic nodes then retrograde",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "c",
+     "text": "Transcoelomic seeding through the peritoneal cavity",
+     "correct": true,
+     "why": "Key - C) Transcoelomic seeding through the peritoneal cavity. Cells shed from the gastric serosa follow the circulating peritoneal fluid and settle on the dependent ovaries, giving bilateral Krukenberg tumours.\n\nWhy the others fail:\nA) Haematogenous through the portal vein - Portal spread produces liver metastases, not ovarian deposits.\nB) Lymphatic to the para-aortic nodes then retrograde - Retrograde lymphatic spread to the ovary is not the recognised mechanism of the Krukenberg tumour.\nD) Direct invasion through the transverse mesocolon - Direct mesocolic invasion produces a gastrocolic fistula rather than distant bilateral ovarian masses."
+    },
+    {
+     "id": "d",
+     "text": "Direct invasion through the transverse mesocolon",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    }
+   ],
+   "explanation": [
+    "Key - C) Transcoelomic seeding through the peritoneal cavity. Cells shed from the gastric serosa follow the circulating peritoneal fluid and settle on the dependent ovaries, giving bilateral Krukenberg tumours.\n\nWhy the others fail:\nA) Haematogenous through the portal vein - Portal spread produces liver metastases, not ovarian deposits.\nB) Lymphatic to the para-aortic nodes then retrograde - Retrograde lymphatic spread to the ovary is not the recognised mechanism of the Krukenberg tumour.\nD) Direct invasion through the transverse mesocolon - Direct mesocolic invasion produces a gastrocolic fistula rather than distant bilateral ovarian masses."
+   ],
+   "keyFacts": [
+    "Key - C) Transcoelomic seeding through the peritoneal cavity. Cells shed from the gastric serosa follow the circulating peritoneal fluid and settle on the dependent ovaries, giving bilateral Krukenberg tumours.\n\nWhy the others fail:\nA) Haematogenous through the portal vein - Portal spread produces liver metastases, not ovarian deposits.\nB) Lymphatic to the para-aortic nodes then retrograde - Retrograde lymphatic spread to the ovary is not the recognised mechanism of the Krukenberg tumour.\nD) Direct invasion through the transverse mesocolon - Direct mesocolic invasion produces a gastrocolic fistula rather than distant bilateral ovarian masses."
+   ],
+   "teachingPoint": "Key - C) Transcoelomic seeding through the peritoneal cavity. Cells shed from the gastric serosa follow the circulating peritoneal fluid and settle on the dependent ovaries, giving bilateral Krukenberg tumours.\n\nWhy the others fail:\nA) Haematogenous through the portal vein - Portal spread produces liver metastases, not ovarian deposits.\nB) Lymphatic to the para-aortic nodes then retrograde - Retrograde lymphatic spread to the ovary is not the recognised mechanism of the Krukenberg tumour.\nD) Direct invasion through the transverse mesocolon - Direct mesocolic invasion produces a gastrocolic fistula rather than distant bilateral ovarian masses."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sana-ch4-peritoneum-mcq-009",
+   "type": "single",
+   "sectionId": "s5",
+   "difficulty": 2,
+   "highYield": true,
+   "stem": "During emergency laparotomy for obstruction, a loop of small bowel is found to have passed into the lesser sac and is constricted at its entry. Which structures form the margins of the ring, and what follows for management?",
+   "options": [
+    {
+     "id": "a",
+     "text": "Falciform ligament anteriorly - it may be divided freely",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "b",
+     "text": "Lesser omentum with the portal triad anteriorly and the inferior vena cava posteriorly - the ring must not be divided",
+     "correct": true,
+     "why": "Key - B) Lesser omentum with the portal triad anteriorly and the inferior vena cava posteriorly - the ring must not be divided. The entry to the lesser sac is the epiploic foramen, bounded in front by the free edge of the lesser omentum carrying the portal triad, behind by the inferior vena cava, above by the caudate lobe and below by the duodenum - so the ring cannot be cut and the bowel must be decompressed and eased out, or the sac opened through the gastrocolic ligament.\n\nWhy the others fail:\nA) Falciform ligament anteriorly - it may be divided freely - The falciform ligament lies on the anterior abdominal wall and liver and takes no part in the epiploic foramen.\nC) Gastrocolic ligament anteriorly - divide it to enlarge the opening - Dividing the gastrocolic ligament opens the lesser sac from the front, which is a valid way to gain access, but it does not enlarge the constricting ring itself and the stem of the option misstates the anatomy of the margin.\nD) Transverse mesocolon inferiorly - divide it to reduce the loop - The transverse mesocolon forms part of the floor of the sac and carries the middle colic vessels; dividing it would devascularise the transverse colon."
+    },
+    {
+     "id": "c",
+     "text": "Gastrocolic ligament anteriorly - divide it to enlarge the opening",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "d",
+     "text": "Transverse mesocolon inferiorly - divide it to reduce the loop",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    }
+   ],
+   "explanation": [
+    "Key - B) Lesser omentum with the portal triad anteriorly and the inferior vena cava posteriorly - the ring must not be divided. The entry to the lesser sac is the epiploic foramen, bounded in front by the free edge of the lesser omentum carrying the portal triad, behind by the inferior vena cava, above by the caudate lobe and below by the duodenum - so the ring cannot be cut and the bowel must be decompressed and eased out, or the sac opened through the gastrocolic ligament.\n\nWhy the others fail:\nA) Falciform ligament anteriorly - it may be divided freely - The falciform ligament lies on the anterior abdominal wall and liver and takes no part in the epiploic foramen.\nC) Gastrocolic ligament anteriorly - divide it to enlarge the opening - Dividing the gastrocolic ligament opens the lesser sac from the front, which is a valid way to gain access, but it does not enlarge the constricting ring itself and the stem of the option misstates the anatomy of the margin.\nD) Transverse mesocolon inferiorly - divide it to reduce the loop - The transverse mesocolon forms part of the floor of the sac and carries the middle colic vessels; dividing it would devascularise the transverse colon."
+   ],
+   "keyFacts": [
+    "Key - B) Lesser omentum with the portal triad anteriorly and the inferior vena cava posteriorly - the ring must not be divided. The entry to the lesser sac is the epiploic foramen, bounded in front by the free edge of the lesser omentum carrying the portal triad, behind by the inferior vena cava, above by the caudate lobe and below by the duodenum - so the ring cannot be cut and the bowel must be decompressed and eased out, or the sac opened through the gastrocolic ligament.\n\nWhy the others fail:\nA) Falciform ligament anteriorly - it may be divided freely - The falciform ligament lies on the anterior abdominal wall and liver and takes no part in the epiploic foramen.\nC) Gastrocolic ligament anteriorly - divide it to enlarge the opening - Dividing the gastrocolic ligament opens the lesser sac from the front, which is a valid way to gain access, but it does not enlarge the constricting ring itself and the stem of the option misstates the anatomy of the margin.\nD) Transverse mesocolon inferiorly - divide it to reduce the loop - The transverse mesocolon forms part of the floor of the sac and carries the middle colic vessels; dividing it would devascularise the transverse colon."
+   ],
+   "teachingPoint": "Key - B) Lesser omentum with the portal triad anteriorly and the inferior vena cava posteriorly - the ring must not be divided. The entry to the lesser sac is the epiploic foramen, bounded in front by the free edge of the lesser omentum carrying the portal triad, behind by the inferior vena cava, above by the caudate lobe and below by the duodenum - so the ring cannot be cut and the bowel must be decompressed and eased out, or the sac opened through the gastrocolic ligament.\n\nWhy the others fail:\nA) Falciform ligament anteriorly - it may be divided freely - The falciform ligament lies on the anterior abdominal wall and liver and takes no part in the epiploic foramen.\nC) Gastrocolic ligament anteriorly - divide it to enlarge the opening - Dividing the gastrocolic ligament opens the lesser sac from the front, which is a valid way to gain access, but it does not enlarge the constricting ring itself and the stem of the option misstates the anatomy of the margin.\nD) Transverse mesocolon inferiorly - divide it to reduce the loop - The transverse mesocolon forms part of the floor of the sac and carries the middle colic vessels; dividing it would devascularise the transverse colon."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sana-ch4-peritoneum-mcq-010",
+   "type": "single",
+   "sectionId": "s5",
+   "difficulty": 2,
+   "highYield": true,
+   "stem": "Four days after emergency surgery for a perforated sigmoid diverticulum a patient develops swinging fever, tenesmus and diarrhoea with mucus, and a boggy tender mass on rectal examination. Which anatomical property of this site explains the modest systemic upset?",
+   "options": [
+    {
+     "id": "a",
+     "text": "The pelvic peritoneum has a rich lymphatic absorption comparable to the diaphragm",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "b",
+     "text": "The pelvic peritoneum absorbs toxins poorly compared with the diaphragmatic peritoneum",
+     "correct": true,
+     "why": "Key - B) The pelvic peritoneum absorbs toxins poorly compared with the diaphragmatic peritoneum. The pelvic peritoneum absorbs toxins poorly, so a pelvic abscess causes local symptoms with relatively little toxaemia and can be drained through the rectum or the posterior fornix.\n\nWhy the others fail:\nA) The pelvic peritoneum has a rich lymphatic absorption comparable to the diaphragm - It is the diaphragmatic peritoneum, not the pelvic peritoneum, that has the specialised absorptive stomata.\nC) The rectum has no serosal covering in its lower third - The absence of serosa on the lower rectum is true but explains local spread of rectal cancer, not the systemic behaviour of an abscess.\nD) The pouch of Douglas lies outside the peritoneal cavity - The pouch of Douglas is the most dependent recess within the peritoneal cavity, not outside it."
+    },
+    {
+     "id": "c",
+     "text": "The rectum has no serosal covering in its lower third",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "d",
+     "text": "The pouch of Douglas lies outside the peritoneal cavity",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    }
+   ],
+   "explanation": [
+    "Key - B) The pelvic peritoneum absorbs toxins poorly compared with the diaphragmatic peritoneum. The pelvic peritoneum absorbs toxins poorly, so a pelvic abscess causes local symptoms with relatively little toxaemia and can be drained through the rectum or the posterior fornix.\n\nWhy the others fail:\nA) The pelvic peritoneum has a rich lymphatic absorption comparable to the diaphragm - It is the diaphragmatic peritoneum, not the pelvic peritoneum, that has the specialised absorptive stomata.\nC) The rectum has no serosal covering in its lower third - The absence of serosa on the lower rectum is true but explains local spread of rectal cancer, not the systemic behaviour of an abscess.\nD) The pouch of Douglas lies outside the peritoneal cavity - The pouch of Douglas is the most dependent recess within the peritoneal cavity, not outside it."
+   ],
+   "keyFacts": [
+    "Key - B) The pelvic peritoneum absorbs toxins poorly compared with the diaphragmatic peritoneum. The pelvic peritoneum absorbs toxins poorly, so a pelvic abscess causes local symptoms with relatively little toxaemia and can be drained through the rectum or the posterior fornix.\n\nWhy the others fail:\nA) The pelvic peritoneum has a rich lymphatic absorption comparable to the diaphragm - It is the diaphragmatic peritoneum, not the pelvic peritoneum, that has the specialised absorptive stomata.\nC) The rectum has no serosal covering in its lower third - The absence of serosa on the lower rectum is true but explains local spread of rectal cancer, not the systemic behaviour of an abscess.\nD) The pouch of Douglas lies outside the peritoneal cavity - The pouch of Douglas is the most dependent recess within the peritoneal cavity, not outside it."
+   ],
+   "teachingPoint": "Key - B) The pelvic peritoneum absorbs toxins poorly compared with the diaphragmatic peritoneum. The pelvic peritoneum absorbs toxins poorly, so a pelvic abscess causes local symptoms with relatively little toxaemia and can be drained through the rectum or the posterior fornix.\n\nWhy the others fail:\nA) The pelvic peritoneum has a rich lymphatic absorption comparable to the diaphragm - It is the diaphragmatic peritoneum, not the pelvic peritoneum, that has the specialised absorptive stomata.\nC) The rectum has no serosal covering in its lower third - The absence of serosa on the lower rectum is true but explains local spread of rectal cancer, not the systemic behaviour of an abscess.\nD) The pouch of Douglas lies outside the peritoneal cavity - The pouch of Douglas is the most dependent recess within the peritoneal cavity, not outside it."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sana-ch4-peritoneum-mcq-011",
+   "type": "single",
+   "sectionId": "s5",
+   "difficulty": 2,
+   "highYield": true,
+   "stem": "A patient with gallstone disease has severe right shoulder-tip pain after laparoscopy. Which anatomical pathway accounts for it, and why is it not a sign of complication?",
+   "options": [
+    {
+     "id": "a",
+     "text": "Referred pain along the right phrenic nerve from carbon dioxide irritating the diaphragmatic peritoneum",
+     "correct": true,
+     "why": "Key - A) Referred pain along the right phrenic nerve from carbon dioxide irritating the diaphragmatic peritoneum. Residual carbon dioxide beneath the diaphragm stimulates the central diaphragmatic peritoneum, whose afferents run in the phrenic nerve from C3 to C5, and the pain is referred to the C4 dermatome over the shoulder tip - a benign and self-limiting phenomenon.\n\nWhy the others fail:\nB) Referred pain along the intercostobrachial nerve from the port site - The intercostobrachial nerve supplies the medial arm and axilla from T2 and has no diaphragmatic connection.\nC) Direct spread of blood along the falciform ligament to the shoulder - Blood does not track to the shoulder, and the falciform ligament ends at the anterior abdominal wall.\nD) Traction on the right triangular ligament stimulating the vagus - The vagus carries no somatic sensation that would be referred to the shoulder dermatome."
+    },
+    {
+     "id": "b",
+     "text": "Referred pain along the intercostobrachial nerve from the port site",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "c",
+     "text": "Direct spread of blood along the falciform ligament to the shoulder",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "d",
+     "text": "Traction on the right triangular ligament stimulating the vagus",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    }
+   ],
+   "explanation": [
+    "Key - A) Referred pain along the right phrenic nerve from carbon dioxide irritating the diaphragmatic peritoneum. Residual carbon dioxide beneath the diaphragm stimulates the central diaphragmatic peritoneum, whose afferents run in the phrenic nerve from C3 to C5, and the pain is referred to the C4 dermatome over the shoulder tip - a benign and self-limiting phenomenon.\n\nWhy the others fail:\nB) Referred pain along the intercostobrachial nerve from the port site - The intercostobrachial nerve supplies the medial arm and axilla from T2 and has no diaphragmatic connection.\nC) Direct spread of blood along the falciform ligament to the shoulder - Blood does not track to the shoulder, and the falciform ligament ends at the anterior abdominal wall.\nD) Traction on the right triangular ligament stimulating the vagus - The vagus carries no somatic sensation that would be referred to the shoulder dermatome."
+   ],
+   "keyFacts": [
+    "Key - A) Referred pain along the right phrenic nerve from carbon dioxide irritating the diaphragmatic peritoneum. Residual carbon dioxide beneath the diaphragm stimulates the central diaphragmatic peritoneum, whose afferents run in the phrenic nerve from C3 to C5, and the pain is referred to the C4 dermatome over the shoulder tip - a benign and self-limiting phenomenon.\n\nWhy the others fail:\nB) Referred pain along the intercostobrachial nerve from the port site - The intercostobrachial nerve supplies the medial arm and axilla from T2 and has no diaphragmatic connection.\nC) Direct spread of blood along the falciform ligament to the shoulder - Blood does not track to the shoulder, and the falciform ligament ends at the anterior abdominal wall.\nD) Traction on the right triangular ligament stimulating the vagus - The vagus carries no somatic sensation that would be referred to the shoulder dermatome."
+   ],
+   "teachingPoint": "Key - A) Referred pain along the right phrenic nerve from carbon dioxide irritating the diaphragmatic peritoneum. Residual carbon dioxide beneath the diaphragm stimulates the central diaphragmatic peritoneum, whose afferents run in the phrenic nerve from C3 to C5, and the pain is referred to the C4 dermatome over the shoulder tip - a benign and self-limiting phenomenon.\n\nWhy the others fail:\nB) Referred pain along the intercostobrachial nerve from the port site - The intercostobrachial nerve supplies the medial arm and axilla from T2 and has no diaphragmatic connection.\nC) Direct spread of blood along the falciform ligament to the shoulder - Blood does not track to the shoulder, and the falciform ligament ends at the anterior abdominal wall.\nD) Traction on the right triangular ligament stimulating the vagus - The vagus carries no somatic sensation that would be referred to the shoulder dermatome."
+  }
+ ],
+ "emqs": [],
+ "summary": "Peritoneum: work through each section's cards to fix the structures, their relations and clinical lesions. Use the MCQs to test discrimination and the image-occlusion cards to rehearse identification."
+}

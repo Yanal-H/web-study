@@ -4,10 +4,11 @@ import { scheduleCard, gradeLabel, type Grade, type CardSched } from '../../lib/
 import { persistGrade, restoreSched, itemSched, type ReviewItem } from './deck';
 import { Button, ProgressRing } from '../../design/primitives';
 import { IconFlag, IconCheck } from '../../design/icons';
+import { chapterImage } from '../../content/loader';
 import { renderRich, renderInline } from '../../lib/lexicon';
 import { globalIndex } from '../../lib/useLexicon';
 import { sfx } from '../../lib/sound';
-import { OcclusionView } from './Occlusion';
+import { OcclusionView, MaskedFigure } from './Occlusion';
 
 const GRADES: Array<{ g: Grade; label: string; key: string; tone: string }> = [
   { g: 'again', label: 'Again', key: '1', tone: 'var(--grade-again)' },
@@ -275,6 +276,20 @@ function CardFront({
   if (card.type === 'cloze' && card.cloze) {
     return <div className="fc-text md" dangerouslySetInnerHTML={{ __html: renderRich(clozeFront(card.cloze), globalIndex()).replace(/\[…\]/g, '') }} />;
   }
+  if (card.type === 'occlusion' && card.masks?.length) {
+    const src = card.image?.src || resolveImage(card);
+    if (src)
+      return (
+        <MaskedFigure
+          src={src}
+          masks={card.masks}
+          target={card.target}
+          mode={card.occMode}
+          revealed={revealed}
+          label={card.label}
+        />
+      );
+  }
   if (card.type === 'occlusion' && card.image?.src && card.regions) {
     return <OcclusionView src={card.image.src} regions={card.regions} testIndex={card.regionIndex ?? 0} revealed={revealed} />;
   }
@@ -305,12 +320,24 @@ function CardFront({
   );
 }
 
+/** Occlusion cards name a diagram in their chapter's images map. */
+function resolveImage(card: ReviewItem['card']): string | undefined {
+  if (!card.image?.imageId || !card.chapterId) return undefined;
+  return chapterImage(card.chapterId, card.image.imageId)?.src;
+}
+
 function CardBack({ card, typed }: { card: ReviewItem['card']; typed: string }) {
   if (card.type === 'cloze' && card.cloze) {
     return <div className="fc-back md" dangerouslySetInnerHTML={{ __html: renderRich(clozeBack(card.cloze), globalIndex()) }} />;
   }
   if (card.type === 'occlusion') {
-    return <div className="fc-back"><strong>{card.back || 'Region'}</strong>{card.extra ? ` — ${card.extra}` : ''}</div>;
+    const answer = card.masks?.find((m) => m.id === card.target)?.label;
+    return (
+      <div className="fc-back">
+        <strong>{answer || card.back || 'Region'}</strong>
+        {card.extra ? ` — ${card.extra}` : ''}
+      </div>
+    );
   }
   const a = card.type === 'reversed' ? card.front : card.back;
   const correct = card.type === 'type' && typed.trim().toLowerCase() === (a || '').trim().toLowerCase();

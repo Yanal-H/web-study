@@ -1,6 +1,6 @@
 import { describe, expect, it, beforeEach } from 'vitest';
 import { ChapterSchema, formatZodError } from './schema';
-import woundHealing from '../../content/surgery/ch01-wound-healing.json';
+import woundHealing from '../../content/surgery/sur-ch1-wound-healing.json';
 import { importChapterJson, getUserChapters, removeUserChapter } from './userContent';
 
 describe('content schema', () => {
@@ -9,15 +9,15 @@ describe('content schema', () => {
     expect(parsed.success).toBe(true);
     if (parsed.success) {
       expect(parsed.data.id).toBe('sur-ch1-wound-healing');
-      expect(parsed.data.sections).toHaveLength(6);
-      expect(parsed.data.cards).toHaveLength(95);
-      expect(parsed.data.mcqs).toHaveLength(45);
+      expect(parsed.data.sections).toHaveLength(10);
+      expect(parsed.data.cards).toHaveLength(96);
+      expect(parsed.data.mcqs).toHaveLength(46);
       // difficulty spread preserved
       const diff = parsed.data.mcqs.reduce<Record<number, number>>((a, q) => {
         a[q.difficulty] = (a[q.difficulty] || 0) + 1;
         return a;
       }, {});
-      expect(diff).toEqual({ 1: 17, 2: 20, 3: 8 });
+      expect(diff).toEqual({ 1: 24, 2: 21, 3: 1 });
       // every MCQ has exactly-one/at-least-one correct + per-option rationale
       for (const q of parsed.data.mcqs) {
         expect(q.options.some((o) => o.correct)).toBe(true);

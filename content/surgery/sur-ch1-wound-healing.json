@@ -1,0 +1,4274 @@
+{
+ "schema": "foundation.study-module/v1",
+ "id": "sur-ch1-wound-healing",
+ "subject": "Surgery",
+ "title": "Wound Healing and Management",
+ "source": {
+  "book": "Surgery Department Books 2026 — Surgery 1 (SUR-423)",
+  "chapter": 1,
+  "title": "Wound Healing and Management",
+  "pages": "1-11"
+ },
+ "brand": "by Yanal · Cairo 2026",
+ "estMinutes": 35,
+ "deck": "Surgery::Wound Healing and Management",
+ "tags": [
+  "surgery",
+  "wound-healing",
+  "sur-423"
+ ],
+ "objectives": [
+  "Describe the components and phases of wound healing and their timing.",
+  "Distinguish healing by primary, secondary and tertiary intention.",
+  "List the general and local factors that impair wound healing.",
+  "Differentiate hypertrophic scar, keloid and contracture and outline their treatment.",
+  "Classify closed and open wounds by mechanism and predict their risks.",
+  "Apply the principles of first aid and theatre management of an open wound.",
+  "Recognise the three common chronic wounds and select appropriate sutures and dressings."
+ ],
+ "outline": [
+  "1.1 Components & stages of healing",
+  "1.2 Types of healing (intention)",
+  "1.3 Factors affecting healing",
+  "1.4 Complications & scars",
+  "1.5 Closed wounds",
+  "1.6 Open wounds",
+  "1.7 Management of open wounds",
+  "1.8 Chronic wounds",
+  "1.9 Suture materials",
+  "1.10 Wound dressings"
+ ],
+ "sections": [
+  {
+   "id": "s1",
+   "n": "1.1",
+   "title": "Components & stages of healing",
+   "deck": "Wound healing",
+   "digest": "Injury triggers an ordered cascade of cellular and biochemical events ending in a healed wound. Healing has three **components**: **wound contraction** (myofibroblasts containing smooth-muscle actin, starting at once and continuing 2–3 weeks), **granulation tissue** formation (later replaced by fibrous tissue), and **epithelialisation** (a clean sutured wound epithelialises in about 48 hours). Their proportions differ with wound type: apposed edges heal mostly by epithelialisation with little contraction, whereas a gaping wound relies heavily on contraction and granulation. The process runs through three overlapping **phases**. The **haemostasis and inflammatory phase** (about 5 days) begins with platelet aggregation on subendothelial collagen and activation of the coagulation cascade; platelets release cytokines and growth factors that recruit leucocytes, macrophages and lymphocytes, and **macrophages** drive phagocytosis, debridement and further growth-factor release. In the **proliferative phase** fibroblasts secrete collagen, endothelial cells form capillary buds (together making granulation tissue), and epithelial cells migrate from the edges. In the **maturation/remodelling phase** collagen III is progressively replaced by collagen I, fibres thicken and align along stress lines, and tensile strength rises over roughly a year but never reaches normal.",
+   "highYield": [
+    "Three components: contraction, granulation, epithelialisation.",
+    "Clean sutured wound epithelialises in ~48 hours.",
+    "Macrophage is the key orchestrating cell of healing.",
+    "Collagen III laid first, then replaced by collagen I during remodelling.",
+    "~20% of final strength at 3 weeks; ~80% of original at 3 months; never 100%."
+   ],
+   "tables": [
+    {
+     "title": "The three phases of wound healing",
+     "columns": [
+      "Phase",
+      "Key cells",
+      "Key events",
+      "Timing"
+     ],
+     "rows": [
+      [
+       "Haemostasis & inflammation",
+       "Platelets, neutrophils, macrophages",
+       "Clot, coagulation cascade, chemotaxis, debridement",
+       "~5 days"
+      ],
+      [
+       "Proliferation",
+       "Fibroblasts, endothelial & epithelial cells",
+       "Collagen, capillary buds → granulation tissue, epithelial migration",
+       "Days–weeks"
+      ],
+      [
+       "Maturation & remodelling",
+       "Fibroblasts",
+       "Collagen III → collagen I, fibres align, tensile strength rises",
+       "Up to ~1 year"
+      ]
+     ]
+    }
+   ],
+   "pitfalls": [
+    "Epithelialisation ≠ return of strength: the wound looks closed at 48 h but is mechanically weak for weeks.",
+    "A wound never regains full original tensile strength — do not state 100%."
+   ],
+   "figures": [
+    {
+     "kind": "described",
+     "alt": "Three-panel diagram of the stages of wound healing.",
+     "described": "Three cross-sections of skin across a wound. Panel 1: a fresh gap filled with clot and inflammatory cells invading. Panel 2: new capillaries plus fibroblasts forming red granulation tissue with epithelium starting to creep in from the edges. Panel 3: a healed wound with mature collagen fibres reoriented across the line of the wound."
+    }
+   ]
+  },
+  {
+   "id": "s2",
+   "n": "1.2",
+   "title": "Types of healing (intention)",
+   "deck": "Wound healing",
+   "digest": "Wounds heal by one of three **intentions**. **Primary intention**: a clean wound with edges immediately apposed by sutures or clips; minimal granulation and **minimal fibrosis** give a fine neat scar. **Secondary intention**: edges are not apposed or the wound gapes (often after infection); the defect fills with granulation tissue, producing more fibrous tissue and an ugly scar that is devoid of sweat glands, sebaceous glands and hair. **Tertiary intention** (delayed primary closure): a contaminated wound is deliberately left open for about 5 days and, if no infection supervenes, closed with delayed primary sutures.",
+   "highYield": [
+    "Primary = apposed edges, minimal fibrosis, fine scar.",
+    "Secondary = gaping/infected, fills with granulation, ugly scar without adnexa.",
+    "Tertiary = delayed primary closure of a contaminated wound after ~5 days."
+   ],
+   "tables": [
+    {
+     "title": "Healing by intention",
+     "columns": [
+      "Intention",
+      "Situation",
+      "Mechanism",
+      "Scar"
+     ],
+     "rows": [
+      [
+       "Primary",
+       "Clean wound, edges apposed at once",
+       "Epithelialisation, minimal contraction/fibrosis",
+       "Fine, neat"
+      ],
+      [
+       "Secondary",
+       "Edges apart or gaping/infected",
+       "In-fill with granulation tissue, contraction",
+       "Wide, ugly, no adnexa"
+      ],
+      [
+       "Tertiary (delayed primary)",
+       "Contaminated wound left open ~5 days then closed",
+       "Sutured once infection excluded",
+       "Intermediate"
+      ]
+     ]
+    }
+   ],
+   "pitfalls": [
+    "Tertiary intention is not the same as secondary: the wound is still surgically closed, just after a delay."
+   ],
+   "figures": []
+  },
+  {
+   "id": "s3",
+   "n": "1.3",
+   "title": "Factors affecting healing",
+   "deck": "Wound healing",
+   "digest": "Factors are **general** or **local**. General: advanced **age** (slower protein turnover); poor **nutrition** — protein deficiency reduces collagen and ground substance, **vitamin C** deficiency blocks collagen maturation, **vitamin A** deficiency impairs epithelialisation, and deficiencies of zinc, copper, calcium and manganese all delay healing; debilitating disease (uraemia, jaundice, cirrhosis, **diabetes**, malignancy); and drugs — **steroids**, chemotherapy and immunosuppressants. Local: **vascularity** (rich supply of face/scalp heals fast, poor supply below the knee heals slowly), **irradiation** (endarteritis obliterans → ischaemia), **immobilisation** (movement/shear damages granulation tissue, so immobilisation helps), **tension** (sutures under tension, haematoma and infection raise wound tension → ischaemia), **infection** (bacteria compete for oxygen and secrete collagen-destroying enzymes), **foreign bodies and necrotic tissue**, **adhesion to bone** (prevents contraction, e.g. over the shin), and **impaired venous drainage** (post-phlebitic limb).",
+   "highYield": [
+    "Vitamin C → collagen maturation; vitamin A → epithelialisation.",
+    "Steroids, diabetes, infection, ischaemia and tension are the classic delayers.",
+    "Immobilisation HELPS healing (protects granulation tissue).",
+    "Recall these factors when reasoning about burst abdomen and incisional/recurrent hernia."
+   ],
+   "tables": [
+    {
+     "title": "Factors delaying wound healing",
+     "columns": [
+      "General",
+      "Local"
+     ],
+     "rows": [
+      [
+       "Old age; protein/vitamin C/vitamin A/trace-element deficiency",
+       "Poor vascularity; irradiation"
+      ],
+      [
+       "Diabetes, uraemia, jaundice, cirrhosis, malignancy",
+       "Infection; foreign body/necrotic tissue"
+      ],
+      [
+       "Steroids, chemotherapy, immunosuppression",
+       "Tension, haematoma; movement/shear"
+      ],
+      [
+       "",
+       "Adhesion to bone; impaired venous drainage"
+      ]
+     ]
+    }
+   ],
+   "pitfalls": [
+    "Vitamin C and vitamin A act at different steps — do not swap them.",
+    "Movement is bad but immobilisation is good; students often reverse this."
+   ],
+   "figures": []
+  },
+  {
+   "id": "s4",
+   "n": "1.4",
+   "title": "Complications & scars",
+   "deck": "Wound healing",
+   "digest": "Complications include **wound failure (dehiscence)**: adverse general or local factors cause failure of an abdominal wound → **burst abdomen** or **incisional hernia**. Scar problems: **stretching** of the scar; **hypertrophic scar** — raised but staying *within* the wound margins, may regress within months, common over shoulder and presternum; and **keloid** — overactive healing with excess scar that extends *beyond* the original wound, follows burns/trauma/surgery/ear-piercing/vaccination, commoner in dark skin with familial predisposition, and favours ear lobules, shoulder and presternal skin. **Contracture** is pathological shortening of scar tissue causing deformity when a scar crosses a joint; correct joint positioning during healing minimises it. Treatment of hypertrophic scars and keloids: silicone-gel-sheet **pressure**, **intralesional triamcinolone**, and **surgical excision** (recurrence after simple excision may reach 80%, so use intramarginal excision plus intra-operative steroid).",
+   "highYield": [
+    "Hypertrophic scar stays WITHIN the wound; keloid extends BEYOND it.",
+    "Keloid: dark skin, familial, ear lobules/shoulder/presternum.",
+    "Contracture crosses joints → deformity; position the joint correctly while healing.",
+    "Keloid excision alone recurs up to ~80% → combine excision with steroid."
+   ],
+   "tables": [
+    {
+     "title": "Hypertrophic scar vs keloid",
+     "columns": [
+      "Feature",
+      "Hypertrophic scar",
+      "Keloid"
+     ],
+     "rows": [
+      [
+       "Extent",
+       "Stays within wound margins",
+       "Extends beyond original wound"
+      ],
+      [
+       "Natural course",
+       "May regress in months",
+       "Persists/recurs"
+      ],
+      [
+       "Skin type",
+       "Any",
+       "Commoner in dark skin, familial"
+      ],
+      [
+       "Typical sites",
+       "Shoulder, presternum",
+       "Ear lobules, shoulder, presternum"
+      ]
+     ]
+    }
+   ],
+   "pitfalls": [
+    "“Raised scar” is not automatically a keloid — the discriminator is whether it stays within (hypertrophic) or grows beyond (keloid) the wound."
+   ],
+   "figures": []
+  },
+  {
+   "id": "s5",
+   "n": "1.5",
+   "title": "Closed wounds",
+   "deck": "Types of wounds",
+   "digest": "A closed wound leaves skin intact. A **contusion** (bruise) follows a blunt blow that extravasates blood through injured capillaries; the area is painful and swollen, bluish then brown/green as blood breaks down. Elevation and a topical anti-inflammatory help. A **haematoma** forms when bleeding is excessive: initially cystic, it clots within hours and later liquefies. A small haematoma may be aspirated with a wide-bore needle; otherwise it is evacuated by incision under aseptic technique.",
+   "highYield": [
+    "Contusion colour evolves bluish → brown/green.",
+    "Small haematoma → aspirate; large → formal incision and evacuation."
+   ],
+   "tables": [],
+   "pitfalls": [],
+   "figures": []
+  },
+  {
+   "id": "s6",
+   "n": "1.6",
+   "title": "Open wounds",
+   "deck": "Types of wounds",
+   "digest": "Open wounds breach the skin. **Abrasion**: superficial layers scraped off by friction; very painful (exposed nerve endings); clean with a bland antiseptic and a non-adherent dressing. **Incised**: clean-cut by a sharp blade; longer than deep, minimal tissue destruction but brisk haemorrhage and risk to tendons/nerves. **Lacerated**: blunt severe violence (road traffic accidents, falls); irregular, devitalised, contaminated, high infection risk; inflammatory oedema raises wound tension and causes secondary ischaemia, and a **degloving injury** may strip skin and fat off the deep fascia — devascularisation appears over the next few days. **Penetrating**: a pointed object; deeper than long, small external opening with poor drainage encouraging infection; deceptive — always suspect deep-structure injury. **Missile**: a bullet transmits high kinetic energy (KE = ½MV², so velocity dominates — rifles far worse than pistols); damage from the direct track, shock waves, temporary cavitation, and secondary bony fragments. Structures far from the tract may be injured. **Bites** (animal/human) are lacerated, contaminated and highly infective.",
+   "highYield": [
+    "Incised = longer than deep; penetrating = deeper than long.",
+    "KE = ½MV² → velocity matters most; high-velocity (rifle) >> low-velocity (pistol).",
+    "Penetrating wound: always suspect deep injury; a stab of the abdominal wall may hide a visceral injury.",
+    "Lacerated wounds are commonly accompanied by degloving; reassess viability over days."
+   ],
+   "tables": [
+    {
+     "title": "Open wound types",
+     "columns": [
+      "Type",
+      "Mechanism",
+      "Key features"
+     ],
+     "rows": [
+      [
+       "Abrasion",
+       "Friction",
+       "Superficial, very painful"
+      ],
+      [
+       "Incised",
+       "Sharp blade",
+       "Longer than deep, brisk bleed, tendon/nerve risk"
+      ],
+      [
+       "Lacerated",
+       "Blunt violence",
+       "Irregular, devitalised, contaminated, degloving"
+      ],
+      [
+       "Penetrating",
+       "Pointed object",
+       "Deeper than long, poor drainage, hidden deep injury"
+      ],
+      [
+       "Missile",
+       "Bullet (KE=½MV²)",
+       "Track + shock wave + cavitation + secondary fragments"
+      ],
+      [
+       "Bite",
+       "Animal/human",
+       "Lacerated, contaminated, highly infective"
+      ]
+     ]
+    }
+   ],
+   "pitfalls": [
+    "In missile injury, damage can occur far from the visible tract — do not limit exploration to the entry track."
+   ],
+   "figures": []
+  },
+  {
+   "id": "s7",
+   "n": "1.7",
+   "title": "Management of open wounds",
+   "deck": "Management",
+   "digest": "**First aid**: treat as a multiple-injury patient; take a timing/mechanism history to predict injured structures; give **tetanus prophylaxis** and prophylactic antibiotics (add anaerobic cover for deep/lacerated wounds); control bleeding by direct compression with a sterile dressing and firm bandage (a tourniquet only as a temporary measure before theatre); X-ray and splint suspected fractures; and feel distal pulses (urgent duplex if absent). **In theatre**: thorough saline **irrigation** and meticulous removal of foreign bodies, then antiseptic (e.g. povidone-iodine). Repair a major artery/vein; ligate small vessels. Repair nerves/tendons in clean incised wounds but **defer** in contaminated wounds. Repair clean muscle with mattress sutures; excise ischaemic/necrotic muscle (dark/grey, does not contract when pinched or bleed when cut). In contaminated wounds or extensive tissue loss leave the **deep fascia open**. Skin: clean and early (<6 h) → primary closure; contaminated/late → delayed primary closure; lacerations → debride to healthy tissue; degloving of doubtful viability → second look at 3–4 days. Stabilise associated fractures by **external** fixation when infection is possible (internal fixation would seed bone). All missile injuries require exploration.",
+   "highYield": [
+    "Contaminated wound rule: do NOT repair nerve/tendon, do NOT close deep fascia, do NOT close skin.",
+    "Clean & early (<6 h) → primary closure; late/contaminated → delayed primary closure.",
+    "Necrotic muscle: dark/grey, no contraction on pinch, no bleeding on cut → excise.",
+    "Possible infection + fracture → external fixation, not internal."
+   ],
+   "tables": [
+    {
+     "title": "Skin closure decision",
+     "columns": [
+      "Wound",
+      "Action"
+     ],
+     "rows": [
+      [
+       "Clean and early (<6 h)",
+       "Primary closure"
+      ],
+      [
+       "Contaminated or late",
+       "Delayed primary closure"
+      ],
+      [
+       "Laceration",
+       "Debride to healthy vascularised tissue"
+      ],
+      [
+       "Degloving, doubtful viability",
+       "Leave open, second look at 3–4 days"
+      ]
+     ]
+    }
+   ],
+   "pitfalls": [
+    "A stab wound of the abdominal wall can be sutured while a visceral injury is missed — do not close a penetrating wound without excluding deep injury.",
+    "Internal fixation in a potentially infected field spreads infection to bone."
+   ],
+   "figures": []
+  },
+  {
+   "id": "s8",
+   "n": "1.8",
+   "title": "Chronic wounds",
+   "deck": "Chronic wounds",
+   "digest": "A **chronic wound** fails the normal healing sequence within a reasonable time (about three months), arrested at the inflammatory/proliferative phase by factors such as ischaemia, venous congestion, diabetes, steroids or necrotic tissue; most share local hypoxia. Manage the general factors hand-in-hand with local wound care. Three categories recur. **Chronic leg ulcers** (ulcer = a break in the continuity of epithelium/mucosa): the commonest are **venous** ulcers; others are ischaemic, neuropathic and neoplastic (squamous or, rarely, basal cell carcinoma). **Diabetic foot ulcers**. **Pressure sores** (bed/decubitus ulcers) develop in bedridden patients from sustained skin pressure; risk factors include old age, poor nutrition, anaemia, denervation, paraplegia, ICU stay, immobilisation and soiling by urine/stool; common sites are ischial tuberosity, greater trochanter, sacrum, heel and malleoli; they progress through erythema → partial-thickness loss → full-thickness loss short of the fascia → deeper destruction into muscle, bone and joints. Prevention/treatment: correct general factors, regular turning, dry skin, air mattresses, debridement, vacuum-assisted closure and flap cover.",
+   "highYield": [
+    "Chronic wound = fails to heal within ~3 months; shares local hypoxia.",
+    "Venous ulcer is the commonest chronic leg ulcer.",
+    "Pressure sore sites: ischial tuberosity, greater trochanter, sacrum, heel, malleoli.",
+    "A long-standing ulcer can undergo malignant (usually squamous cell) change."
+   ],
+   "tables": [
+    {
+     "title": "Pressure sore stages",
+     "columns": [
+      "Stage",
+      "Finding"
+     ],
+     "rows": [
+      [
+       "1",
+       "Erythema (intact skin)"
+      ],
+      [
+       "2",
+       "Partial-thickness skin loss"
+      ],
+      [
+       "3",
+       "Full-thickness loss, short of fascia"
+      ],
+      [
+       "4",
+       "Destruction into muscle, bone, joints"
+      ]
+     ]
+    },
+    {
+     "title": "Types of chronic leg ulcer",
+     "columns": [
+      "Type",
+      "Note"
+     ],
+     "rows": [
+      [
+       "Venous",
+       "Commonest; gaiter area; venous hypertension"
+      ],
+      [
+       "Ischaemic",
+       "Poor arterial supply, painful"
+      ],
+      [
+       "Neuropathic",
+       "Pressure points, painless (e.g. diabetes)"
+      ],
+      [
+       "Neoplastic",
+       "SCC (Marjolin's) or, rarely, BCC"
+      ]
+     ]
+    }
+   ],
+   "pitfalls": [
+    "“Commonest leg ulcer” = venous — not arterial.",
+    "Non-healing chronic ulcer with heaped edges → biopsy for malignant change."
+   ],
+   "figures": []
+  },
+  {
+   "id": "s9",
+   "n": "1.9",
+   "title": "Suture materials",
+   "deck": "Suture materials",
+   "digest": "Sutures appose wound edges until healing occurs and are classified by **origin** (natural/synthetic), **absorption** (absorbable/non-absorbable — the most important axis) and **mode of synthesis** (**monofilament** vs **multifilament/braided**). Natural materials provoke more tissue reaction and can maintain infection; multifilament sutures react more and, in infection, can harbour ~10× more organisms than an equivalent monofilament because capillary spaces between filaments let organisms settle. **Absorbable**: chromic catgut (natural, absorbed ~3 weeks, largely obsolete); **polyglycolic acid (Dexon)** and **polyglactin (Vicryl)** (braided synthetics for GI/soft tissue, absorbed over 2–4 months); **polydioxanone (PDS)** (monofilament, slowest to absorb). **Non-absorbable**: **silk** (braided protein, marked reaction, actually very slowly absorbable); **polyamide/nylon** (mono or multi, good strength, insecure knot); **polypropylene (Prolene)** (monofilament, inert, ideal for abdominal wall and hernia repair, needs no removal if infected but knots poorly); **stainless steel** (very strong and inert, difficult handling, used to close sternotomy). Other skin closure: clips, staplers, adhesive tapes (no tissue reaction) and skin glue.",
+   "highYield": [
+    "Absorbable vs non-absorbable is the most important classification.",
+    "Monofilament resists infection better than braided (no capillary spaces).",
+    "PDS is the slowest-absorbing absorbable; Prolene is ideal for abdominal wall/hernia.",
+    "Silk is technically slowly absorbable despite being classed non-absorbable."
+   ],
+   "tables": [
+    {
+     "title": "Common suture materials",
+     "columns": [
+      "Suture",
+      "Absorbable?",
+      "Filament",
+      "Typical use"
+     ],
+     "rows": [
+      [
+       "Chromic catgut",
+       "Yes (~3 wk)",
+       "Natural",
+       "GI/urinary (now rare)"
+      ],
+      [
+       "Polyglactin (Vicryl)",
+       "Yes (~ up to 4 mo)",
+       "Braided",
+       "GI/soft-tissue anastomoses"
+      ],
+      [
+       "Polyglycolic acid (Dexon)",
+       "Yes (~2–3 mo)",
+       "Braided",
+       "Soft tissue"
+      ],
+      [
+       "Polydioxanone (PDS)",
+       "Yes (slowest)",
+       "Monofilament",
+       "Abdominal closure"
+      ],
+      [
+       "Silk",
+       "No (very slow)",
+       "Braided",
+       "Ties/ligatures"
+      ],
+      [
+       "Polyamide (nylon)",
+       "No",
+       "Mono/multi",
+       "Skin"
+      ],
+      [
+       "Polypropylene (Prolene)",
+       "No",
+       "Monofilament",
+       "Abdominal wall, hernia, vascular"
+      ],
+      [
+       "Stainless steel",
+       "No",
+       "Mono/multi",
+       "Sternotomy closure"
+      ]
+     ]
+    }
+   ],
+   "pitfalls": [
+    "In a contaminated field prefer monofilament — braided suture sustains infection.",
+    "Vicryl/Dexon (synthetic braided) are ABSORBABLE; silk (natural braided) is non-absorbable — do not group by braiding."
+   ],
+   "figures": [
+    {
+     "kind": "described",
+     "alt": "Cross-section of monofilament vs braided suture.",
+     "described": "Two magnified cross-sections: on the left a single smooth circular strand (monofilament); on the right many small strands bundled together with capillary gaps between them (braided/multifilament), the gaps where organisms can lodge."
+    }
+   ]
+  },
+  {
+   "id": "s10",
+   "n": "1.10",
+   "title": "Wound dressings",
+   "deck": "Wound dressings",
+   "digest": "Dressings provide the ideal environment for healing and limit bacterial overgrowth. **Occlusive** dressings (gauze + adhesive plaster) protect the wound and prevent evaporation, maintaining hydration; local hypoxia favours capillary proliferation and autolysis of slough, but they are unsuitable for infected or highly exudative wounds. **Semi-occlusive** dressings (e.g. hydrocolloid sheets) are permeable to water vapour and gases but not bacteria and keep a moist bed. **Alginates** (from seaweed) form a fibrous gel on contact with exudate. **Osmotic agents** (Debrisan, urea crystals, honey) absorb exudate. Two measures enhance the whole process: **vacuum-assisted closure (VAC)**, whose negative pressure promotes granulation and contraction (good for pressure sores and diabetic ulcers), and increased local hydration for moist healing.",
+   "highYield": [
+    "Occlusive dressings are unsuitable for infected/highly exudative wounds.",
+    "Alginates are seaweed-derived and gel with exudate.",
+    "VAC uses negative pressure to boost granulation and contraction; good for pressure sores/diabetic ulcers."
+   ],
+   "tables": [
+    {
+     "title": "Wound dressings",
+     "columns": [
+      "Dressing",
+      "Property/use"
+     ],
+     "rows": [
+      [
+       "Occlusive (gauze+plaster)",
+       "Protects, retains moisture; not for infected/exudative wounds"
+      ],
+      [
+       "Semi-occlusive (hydrocolloid)",
+       "Vapour/gas permeable, bacteria impermeable, moist bed"
+      ],
+      [
+       "Alginate",
+       "Seaweed-derived, gels with exudate"
+      ],
+      [
+       "Osmotic (Debrisan, urea, honey)",
+       "Absorbs exudate"
+      ],
+      [
+       "VAC",
+       "Negative pressure → granulation & contraction"
+      ]
+     ]
+    }
+   ],
+   "pitfalls": [
+    "Do not put an occlusive dressing on an infected or heavily exudative wound."
+   ],
+   "figures": []
+  }
+ ],
+ "glossary": [
+  {
+   "term": "myofibroblast",
+   "kind": "cell",
+   "def": "Actin-rich fibroblast that contracts a wound.",
+   "aliases": [
+    "myofibroblasts"
+   ]
+  },
+  {
+   "term": "granulation tissue",
+   "kind": "cell",
+   "def": "New capillary buds plus fibroblasts filling a wound; later replaced by fibrous tissue."
+  },
+  {
+   "term": "epithelialisation",
+   "kind": "procedure",
+   "def": "Migration of epithelium to cover a wound surface; ~48 h in a clean sutured wound.",
+   "aliases": [
+    "epithelialization"
+   ]
+  },
+  {
+   "term": "collagen I",
+   "kind": "mediator",
+   "def": "Mature collagen that predominates after remodelling and carries tensile strength.",
+   "aliases": [
+    "type I collagen"
+   ]
+  },
+  {
+   "term": "collagen III",
+   "kind": "mediator",
+   "def": "Immature collagen laid down first, later replaced by collagen I.",
+   "aliases": [
+    "type III collagen"
+   ]
+  },
+  {
+   "term": "macrophage",
+   "kind": "cell",
+   "def": "Key orchestrating cell of healing: phagocytosis, debridement and growth-factor release.",
+   "aliases": [
+    "macrophages"
+   ]
+  },
+  {
+   "term": "TGF-β",
+   "kind": "mediator",
+   "def": "Growth factor driving fibroblast activity and collagen synthesis.",
+   "aliases": [
+    "TGF beta",
+    "transforming growth factor beta"
+   ]
+  },
+  {
+   "term": "PDGF",
+   "kind": "mediator",
+   "def": "Platelet-derived growth factor; recruits and activates repair cells.",
+   "aliases": [
+    "platelet-derived growth factor"
+   ]
+  },
+  {
+   "term": "primary intention",
+   "kind": "procedure",
+   "def": "Healing of apposed clean edges with minimal fibrosis and a fine scar."
+  },
+  {
+   "term": "secondary intention",
+   "kind": "procedure",
+   "def": "Healing of an unapposed/gaping wound by granulation and contraction, giving an ugly scar."
+  },
+  {
+   "term": "tertiary intention",
+   "kind": "procedure",
+   "def": "Delayed primary closure of a contaminated wound after ~5 days.",
+   "aliases": [
+    "delayed primary closure"
+   ]
+  },
+  {
+   "term": "wound dehiscence",
+   "kind": "condition",
+   "def": "Failure/breakdown of a wound; of an abdominal wound gives burst abdomen or incisional hernia.",
+   "aliases": [
+    "dehiscence",
+    "wound failure"
+   ]
+  },
+  {
+   "term": "burst abdomen",
+   "kind": "warning",
+   "def": "Acute failure of an abdominal wound with dehiscence of all layers."
+  },
+  {
+   "term": "incisional hernia",
+   "kind": "condition",
+   "def": "Herniation through a healed but weakened surgical wound."
+  },
+  {
+   "term": "hypertrophic scar",
+   "kind": "condition",
+   "def": "Raised scar confined within the wound margins; may regress."
+  },
+  {
+   "term": "keloid",
+   "kind": "condition",
+   "def": "Overgrown scar extending beyond the original wound; commoner in dark skin, familial.",
+   "aliases": [
+    "keloids"
+   ]
+  },
+  {
+   "term": "contracture",
+   "kind": "condition",
+   "def": "Pathological shortening of scar tissue causing deformity across a joint."
+  },
+  {
+   "term": "triamcinolone",
+   "kind": "drug",
+   "def": "Intralesional corticosteroid used for hypertrophic scars and keloids."
+  },
+  {
+   "term": "abrasion",
+   "kind": "condition",
+   "def": "Superficial friction wound with exposed nerve endings; very painful.",
+   "aliases": [
+    "abrasions"
+   ]
+  },
+  {
+   "term": "incised wound",
+   "kind": "condition",
+   "def": "Clean-cut wound, longer than deep, from a sharp blade."
+  },
+  {
+   "term": "lacerated wound",
+   "kind": "condition",
+   "def": "Irregular devitalised contaminated wound from blunt violence.",
+   "aliases": [
+    "laceration"
+   ]
+  },
+  {
+   "term": "degloving injury",
+   "kind": "condition",
+   "def": "Shearing that strips skin and fat off the deep fascia.",
+   "aliases": [
+    "degloving"
+   ]
+  },
+  {
+   "term": "penetrating wound",
+   "kind": "warning",
+   "def": "Deeper-than-long wound with a small opening; suspect deep-structure injury."
+  },
+  {
+   "term": "missile wound",
+   "kind": "condition",
+   "def": "High-energy bullet wound; damage from track, shock wave, cavitation and fragments."
+  },
+  {
+   "term": "venous ulcer",
+   "kind": "condition",
+   "def": "Commonest chronic leg ulcer, from venous hypertension in the gaiter area.",
+   "aliases": [
+    "venous ulcers"
+   ]
+  },
+  {
+   "term": "diabetic foot ulcer",
+   "kind": "condition",
+   "def": "Neuropathic/ischaemic ulceration of the diabetic foot."
+  },
+  {
+   "term": "pressure sore",
+   "kind": "condition",
+   "def": "Decubitus ulcer from sustained skin pressure in a bedridden patient.",
+   "aliases": [
+    "decubitus ulcer",
+    "bed sore",
+    "pressure ulcer"
+   ]
+  },
+  {
+   "term": "Marjolin's ulcer",
+   "kind": "condition",
+   "def": "Squamous cell carcinoma arising in a chronic wound or scar.",
+   "aliases": [
+    "marjolin ulcer"
+   ]
+  },
+  {
+   "term": "catgut",
+   "kind": "procedure",
+   "def": "Natural absorbable suture (chromic form absorbs ~3 weeks); now largely obsolete.",
+   "aliases": [
+    "chromic catgut"
+   ]
+  },
+  {
+   "term": "polyglactin",
+   "kind": "procedure",
+   "def": "Braided absorbable synthetic suture (Vicryl) for soft-tissue/GI anastomoses.",
+   "aliases": [
+    "Vicryl"
+   ]
+  },
+  {
+   "term": "polydioxanone",
+   "kind": "procedure",
+   "def": "Monofilament absorbable suture (PDS); slowest to absorb.",
+   "aliases": [
+    "PDS"
+   ]
+  },
+  {
+   "term": "polypropylene",
+   "kind": "procedure",
+   "def": "Inert monofilament non-absorbable suture (Prolene); ideal for abdominal wall/hernia.",
+   "aliases": [
+    "Prolene"
+   ]
+  },
+  {
+   "term": "monofilament",
+   "kind": "value",
+   "def": "Single-strand suture that resists infection (no capillary spaces)."
+  },
+  {
+   "term": "vacuum-assisted closure",
+   "kind": "procedure",
+   "def": "Negative-pressure dressing promoting granulation and contraction.",
+   "aliases": [
+    "VAC",
+    "negative pressure wound therapy"
+   ]
+  },
+  {
+   "term": "alginate",
+   "kind": "procedure",
+   "def": "Seaweed-derived dressing that gels with exudate.",
+   "aliases": [
+    "alginates"
+   ]
+  }
+ ],
+ "mnemonics": [
+  {
+   "cue": "DIDN'T HEAL",
+   "expansion": "Factors delaying healing: Diabetes, Infection, Drugs (steroids), Nutrition, Tissue ischaemia/hypoxia, Hepatic/renal failure, Excess tension, Another wound nearby, Low temperature",
+   "for": "s3"
+  },
+  {
+   "cue": "TIME",
+   "expansion": "Wound-bed preparation: Tissue (debride nonviable), Infection/inflammation control, Moisture balance, Edge (advancing epithelium)",
+   "for": "s10"
+  },
+  {
+   "cue": "Rubor, tumor, calor, dolor, functio laesa",
+   "expansion": "Cardinal signs of inflammation seen in an infected wound: redness, swelling, heat, pain, loss of function",
+   "for": "s6"
+  }
+ ],
+ "cards": [
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch1-wound-healing-card-001",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Wound healing::Components",
+   "front": "Name the three components of wound healing.",
+   "back": "Wound contraction, granulation tissue formation and epithelialisation.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch1-wound-healing-card-002",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Wound healing::Components",
+   "front": "Which cell drives wound contraction and what protein does it contain?",
+   "back": "The myofibroblast, which contains the smooth-muscle protein actin.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch1-wound-healing-card-003",
+   "type": "cloze",
+   "sectionId": "s1",
+   "deck": "Wound healing::Components",
+   "cloze": "Wound contraction starts immediately and continues for about {{c1::2–3 weeks}}.",
+   "difficulty": 2
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch1-wound-healing-card-004",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Wound healing::Components",
+   "front": "How long does a clean sutured wound take to epithelialise?",
+   "back": "About 48 hours.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch1-wound-healing-card-005",
+   "type": "cloze",
+   "sectionId": "s1",
+   "deck": "Wound healing::Components",
+   "cloze": "Granulation tissue is later replaced by {{c1::fibrous tissue}}.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch1-wound-healing-card-006",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Wound healing::Stages",
+   "front": "List the three phases of wound healing in order.",
+   "back": "Haemostasis & inflammation, proliferation, then maturation & remodelling.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch1-wound-healing-card-007",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Wound healing::Stages",
+   "front": "How long does the haemostasis and inflammatory phase normally last?",
+   "back": "About 5 days.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch1-wound-healing-card-008",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Wound healing::Stages",
+   "front": "What starts the haemostasis phase at the injured vessel?",
+   "back": "Platelet aggregation on subendothelial collagen and activation of the coagulation cascade.",
+   "difficulty": 2
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch1-wound-healing-card-009",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Wound healing::Stages",
+   "front": "Which cell is central to phagocytosis and debridement and releases growth factors to recruit fibroblasts?",
+   "back": "The macrophage.",
+   "difficulty": 2
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch1-wound-healing-card-010",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Wound healing::Stages",
+   "front": "In the proliferative phase, what do fibroblasts and endothelial cells together form?",
+   "back": "Granulation tissue (collagen from fibroblasts plus new capillary buds).",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch1-wound-healing-card-011",
+   "type": "cloze",
+   "sectionId": "s1",
+   "deck": "Wound healing::Stages",
+   "cloze": "Young epithelium is thinner than normal and has no {{c1::sebaceous glands, sweat glands or hair follicles}}.",
+   "difficulty": 2
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch1-wound-healing-card-012",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Wound healing::Remodelling",
+   "front": "Which collagen type is deposited first, and what replaces it during remodelling?",
+   "back": "Collagen III first; it is progressively replaced by collagen I.",
+   "difficulty": 2
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch1-wound-healing-card-013",
+   "type": "cloze",
+   "sectionId": "s1",
+   "deck": "Wound healing::Remodelling",
+   "cloze": "Remodelling continues for about {{c1::one year}}, and the wound never regains full original tensile strength.",
+   "difficulty": 2
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch1-wound-healing-card-014",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Wound healing::Remodelling",
+   "front": "What proportion of final strength does a wound have at 3 weeks?",
+   "back": "About 20%.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch1-wound-healing-card-015",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Wound healing::Remodelling",
+   "front": "What proportion of original strength does a wound have at 3 months?",
+   "back": "About 80% — and it never regains 100%.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch1-wound-healing-card-016",
+   "type": "type",
+   "sectionId": "s1",
+   "deck": "Wound healing::Remodelling",
+   "front": "Single word: the cell orchestrating wound healing.",
+   "back": "macrophage",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch1-wound-healing-card-017",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Types of healing::Intention",
+   "front": "Define healing by primary intention.",
+   "back": "A clean wound with edges apposed at once (sutures/clips), healing with minimal fibrosis and a fine scar.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch1-wound-healing-card-018",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Types of healing::Intention",
+   "front": "Define healing by secondary intention.",
+   "back": "Unapposed or gaping wound (often infected) that fills with granulation tissue → more fibrosis and an ugly scar.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch1-wound-healing-card-019",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Types of healing::Intention",
+   "front": "Define healing by tertiary intention.",
+   "back": "Delayed primary closure: a contaminated wound left open ~5 days then sutured if no infection appears.",
+   "difficulty": 2
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch1-wound-healing-card-020",
+   "type": "cloze",
+   "sectionId": "s2",
+   "deck": "Types of healing::Intention",
+   "cloze": "A secondary-intention scar is devoid of {{c1::sweat glands, sebaceous glands and hair}}.",
+   "difficulty": 2
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch1-wound-healing-card-021",
+   "type": "reversed",
+   "sectionId": "s2",
+   "deck": "Types of healing::Intention",
+   "front": "Delayed primary closure of a contaminated wound after ~5 days",
+   "back": "Healing by tertiary intention",
+   "difficulty": 2
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch1-wound-healing-card-022",
+   "type": "type",
+   "sectionId": "s2",
+   "deck": "Types of healing::Intention",
+   "front": "A clean wound closed immediately heals by which intention? (one word)",
+   "back": "primary",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch1-wound-healing-card-023",
+   "type": "basic",
+   "sectionId": "s3",
+   "deck": "Factors::General",
+   "front": "How does vitamin C deficiency impair healing?",
+   "back": "It prevents maturation of protocollagen (collagen maturation).",
+   "difficulty": 2
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch1-wound-healing-card-024",
+   "type": "basic",
+   "sectionId": "s3",
+   "deck": "Factors::General",
+   "front": "How does vitamin A deficiency impair healing?",
+   "back": "It causes deficient epithelialisation.",
+   "difficulty": 2
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch1-wound-healing-card-025",
+   "type": "cloze",
+   "sectionId": "s3",
+   "deck": "Factors::General",
+   "cloze": "Wound healing is slow in the elderly because of a reduced rate of {{c1::protein turnover}}.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch1-wound-healing-card-026",
+   "type": "basic",
+   "sectionId": "s3",
+   "deck": "Factors::General",
+   "front": "Name three drug classes that inhibit wound healing.",
+   "back": "Steroids, cancer chemotherapy and immunosuppressants.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch1-wound-healing-card-027",
+   "type": "basic",
+   "sectionId": "s3",
+   "deck": "Factors::General",
+   "front": "Which trace elements, if deficient, delay healing?",
+   "back": "Zinc, copper, calcium and manganese.",
+   "difficulty": 2
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch1-wound-healing-card-028",
+   "type": "basic",
+   "sectionId": "s3",
+   "deck": "Factors::Local",
+   "front": "Why does immobilisation help wound healing?",
+   "back": "Movement and shear damage the blood supply of granulation tissue; immobilisation protects it.",
+   "difficulty": 2
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch1-wound-healing-card-029",
+   "type": "basic",
+   "sectionId": "s3",
+   "deck": "Factors::Local",
+   "front": "How does irradiation impair healing?",
+   "back": "Endarteritis obliterans causes ischaemia, impairing contraction and granulation.",
+   "difficulty": 3
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch1-wound-healing-card-030",
+   "type": "basic",
+   "sectionId": "s3",
+   "deck": "Factors::Local",
+   "front": "Give two ways infection delays healing.",
+   "back": "Bacteria compete with fibroblasts for oxygen/nutrition and secrete enzymes that destroy collagen.",
+   "difficulty": 2
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch1-wound-healing-card-031",
+   "type": "cloze",
+   "sectionId": "s3",
+   "deck": "Factors::Local",
+   "cloze": "A good blood supply (face and scalp) heals fast, whereas a poor supply below the {{c1::knee}} heals slowly.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch1-wound-healing-card-032",
+   "type": "basic",
+   "sectionId": "s3",
+   "deck": "Factors::Local",
+   "front": "Why do wounds over the shin of the tibia contract poorly?",
+   "back": "Adhesion of the wound to the underlying bone prevents contraction.",
+   "difficulty": 2
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch1-wound-healing-card-033",
+   "type": "basic",
+   "sectionId": "s3",
+   "deck": "Factors::Local",
+   "front": "Which three conditions typically apply when studying burst abdomen and hernia recurrence?",
+   "back": "The factors that impair wound healing — review them together.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch1-wound-healing-card-034",
+   "type": "basic",
+   "sectionId": "s4",
+   "deck": "Complications::Dehiscence",
+   "front": "Failure of an abdominal wound leads to which two problems?",
+   "back": "Burst abdomen or incisional hernia.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch1-wound-healing-card-035",
+   "type": "basic",
+   "sectionId": "s4",
+   "deck": "Complications::Scars",
+   "front": "Key difference between a hypertrophic scar and a keloid?",
+   "back": "Hypertrophic stays within the wound margins; keloid extends beyond them.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch1-wound-healing-card-036",
+   "type": "cloze",
+   "sectionId": "s4",
+   "deck": "Complications::Scars",
+   "cloze": "Keloids are commoner in {{c1::dark}} skin and have a familial predisposition.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch1-wound-healing-card-037",
+   "type": "basic",
+   "sectionId": "s4",
+   "deck": "Complications::Scars",
+   "front": "Name three sites prone to keloid formation.",
+   "back": "Ear lobules, shoulder and presternal area.",
+   "difficulty": 2
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch1-wound-healing-card-038",
+   "type": "basic",
+   "sectionId": "s4",
+   "deck": "Complications::Scars",
+   "front": "What is a contracture and where does it cause problems?",
+   "back": "Pathological shortening of scar tissue causing deformity when a scar overlies a joint.",
+   "difficulty": 2
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch1-wound-healing-card-039",
+   "type": "basic",
+   "sectionId": "s4",
+   "deck": "Complications::Scars",
+   "front": "Three treatments for hypertrophic scars and keloids?",
+   "back": "Silicone-gel-sheet pressure, intralesional triamcinolone and surgical excision (with steroid).",
+   "difficulty": 2
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch1-wound-healing-card-040",
+   "type": "cloze",
+   "sectionId": "s4",
+   "deck": "Complications::Scars",
+   "cloze": "Recurrence after simple excision of a keloid may reach {{c1::80%}}, so combine intramarginal excision with steroid.",
+   "difficulty": 3
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch1-wound-healing-card-041",
+   "type": "reversed",
+   "sectionId": "s4",
+   "deck": "Complications::Scars",
+   "front": "Raised scar that extends beyond the original wound margins",
+   "back": "Keloid",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch1-wound-healing-card-042",
+   "type": "basic",
+   "sectionId": "s5",
+   "deck": "Closed wounds::Contusion",
+   "front": "How does the colour of a contusion evolve?",
+   "back": "Bluish (extravasated blood) then brownish or green as it breaks down.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch1-wound-healing-card-043",
+   "type": "basic",
+   "sectionId": "s5",
+   "deck": "Closed wounds::Haematoma",
+   "front": "How is a small haematoma managed versus a large one?",
+   "back": "Small → aspirate with a wide-bore needle; large → evacuate by incision under aseptic technique.",
+   "difficulty": 2
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch1-wound-healing-card-044",
+   "type": "cloze",
+   "sectionId": "s5",
+   "deck": "Closed wounds::Haematoma",
+   "cloze": "A haematoma is at first cystic, clots within {{c1::hours}}, then later liquefies.",
+   "difficulty": 2
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch1-wound-healing-card-045",
+   "type": "basic",
+   "sectionId": "s6",
+   "deck": "Open wounds::Abrasion",
+   "front": "Why is an abrasion so painful?",
+   "back": "The superficial skin is scraped off, exposing sensitive nerve endings.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch1-wound-healing-card-046",
+   "type": "basic",
+   "sectionId": "s6",
+   "deck": "Open wounds::Incised",
+   "front": "Describe an incised wound.",
+   "back": "Clean-cut by a sharp blade, longer than deep, little tissue destruction, brisk bleeding, tendon/nerve risk.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch1-wound-healing-card-047",
+   "type": "cloze",
+   "sectionId": "s6",
+   "deck": "Open wounds::Penetrating",
+   "cloze": "A penetrating wound is {{c1::deeper than long}}, so always suspect injury to deep structures.",
+   "difficulty": 2
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch1-wound-healing-card-048",
+   "type": "basic",
+   "sectionId": "s6",
+   "deck": "Open wounds::Lacerated",
+   "front": "What is a degloving injury?",
+   "back": "Shearing that strips an area of skin and subcutaneous fat off the underlying deep fascia.",
+   "difficulty": 2
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch1-wound-healing-card-049",
+   "type": "basic",
+   "sectionId": "s6",
+   "deck": "Open wounds::Missile",
+   "front": "Give the kinetic energy formula for a missile and its clinical implication.",
+   "back": "KE = ½MV²; velocity dominates, so high-velocity rifle wounds are far worse than low-velocity pistol wounds.",
+   "difficulty": 2
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch1-wound-healing-card-050",
+   "type": "basic",
+   "sectionId": "s6",
+   "deck": "Open wounds::Missile",
+   "front": "List the mechanisms of tissue damage in a missile wound.",
+   "back": "Direct track damage, shock waves, temporary cavitation, and secondary bony fragments.",
+   "difficulty": 3
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch1-wound-healing-card-051",
+   "type": "cloze",
+   "sectionId": "s6",
+   "deck": "Open wounds::Missile",
+   "cloze": "In missile injury, structures {{c1::far from the tract}} may be injured.",
+   "difficulty": 2
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch1-wound-healing-card-052",
+   "type": "basic",
+   "sectionId": "s6",
+   "deck": "Open wounds::Bites",
+   "front": "Why are bites high-risk wounds?",
+   "back": "They are lacerated and contaminated with a high incidence of infection.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch1-wound-healing-card-053",
+   "type": "type",
+   "sectionId": "s6",
+   "deck": "Open wounds::Incised",
+   "front": "An incised wound is longer than ____ (one word).",
+   "back": "deep",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch1-wound-healing-card-054",
+   "type": "basic",
+   "sectionId": "s7",
+   "deck": "Management::First aid",
+   "front": "Two prophylaxis steps in first aid of an open wound?",
+   "back": "Tetanus prophylaxis and prophylactic antibiotics (anaerobic cover if deep/lacerated).",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch1-wound-healing-card-055",
+   "type": "basic",
+   "sectionId": "s7",
+   "deck": "Management::First aid",
+   "front": "Best first-line method to stop wound bleeding?",
+   "back": "Direct local compression with a sterile dressing and firm bandage; tourniquet only as a temporary measure before theatre.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch1-wound-healing-card-056",
+   "type": "basic",
+   "sectionId": "s7",
+   "deck": "Management::First aid",
+   "front": "What must you do if distal pulses are not palpable?",
+   "back": "Reassess after treating shock; urgent duplex is mandatory if still absent.",
+   "difficulty": 2
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch1-wound-healing-card-057",
+   "type": "basic",
+   "sectionId": "s7",
+   "deck": "Management::Theatre",
+   "front": "How is necrotic muscle recognised intra-operatively?",
+   "back": "Dark red or grey, does not contract when pinched, and does not bleed when incised → excise it.",
+   "difficulty": 2
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch1-wound-healing-card-058",
+   "type": "cloze",
+   "sectionId": "s7",
+   "deck": "Management::Theatre",
+   "cloze": "In contaminated wounds, do not repair nerve or tendon, do not close the {{c1::deep fascia}}, and do not close the skin.",
+   "difficulty": 2
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch1-wound-healing-card-059",
+   "type": "basic",
+   "sectionId": "s7",
+   "deck": "Management::Theatre",
+   "front": "Clean-and-early (<6 h) skin wound — how is it closed?",
+   "back": "Primary closure.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch1-wound-healing-card-060",
+   "type": "basic",
+   "sectionId": "s7",
+   "deck": "Management::Theatre",
+   "front": "Contaminated or late skin wound — how is it closed?",
+   "back": "Delayed primary closure.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch1-wound-healing-card-061",
+   "type": "basic",
+   "sectionId": "s7",
+   "deck": "Management::Theatre",
+   "front": "Degloving injury of doubtful skin viability — what is the plan?",
+   "back": "Leave the decision to a second look at 3–4 days.",
+   "difficulty": 2
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch1-wound-healing-card-062",
+   "type": "basic",
+   "sectionId": "s7",
+   "deck": "Management::Theatre",
+   "front": "Why use external rather than internal fixation when infection is possible?",
+   "back": "Internal fixation would spread infection to bone.",
+   "difficulty": 2
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch1-wound-healing-card-063",
+   "type": "basic",
+   "sectionId": "s7",
+   "deck": "Management::Theatre",
+   "front": "Which wounds always require exploration?",
+   "back": "All missile injuries.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch1-wound-healing-card-064",
+   "type": "reversed",
+   "sectionId": "s7",
+   "deck": "Management::Theatre",
+   "front": "Do not repair nerve/tendon, do not close deep fascia or skin",
+   "back": "Rules for a contaminated wound",
+   "difficulty": 2
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch1-wound-healing-card-065",
+   "type": "basic",
+   "sectionId": "s8",
+   "deck": "Chronic wounds::Definition",
+   "front": "How is a chronic wound defined?",
+   "back": "One that fails the normal healing sequence within a reasonable time — usually about three months.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch1-wound-healing-card-066",
+   "type": "basic",
+   "sectionId": "s8",
+   "deck": "Chronic wounds::Definition",
+   "front": "What do most chronic wounds share locally?",
+   "back": "Local hypoxia (from ischaemia, trauma, vasculitis).",
+   "difficulty": 2
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch1-wound-healing-card-067",
+   "type": "basic",
+   "sectionId": "s8",
+   "deck": "Chronic wounds::Leg ulcers",
+   "front": "What is the commonest type of chronic leg ulcer?",
+   "back": "Venous ulcer.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch1-wound-healing-card-068",
+   "type": "basic",
+   "sectionId": "s8",
+   "deck": "Chronic wounds::Leg ulcers",
+   "front": "Define an ulcer.",
+   "back": "A break in the continuity of epithelium or mucous membrane.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch1-wound-healing-card-069",
+   "type": "basic",
+   "sectionId": "s8",
+   "deck": "Chronic wounds::Leg ulcers",
+   "front": "Which malignancies can arise in a chronic leg ulcer?",
+   "back": "Squamous cell carcinoma (Marjolin's) or, rarely, basal cell carcinoma.",
+   "difficulty": 2
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch1-wound-healing-card-070",
+   "type": "cloze",
+   "sectionId": "s8",
+   "deck": "Chronic wounds::Pressure sores",
+   "cloze": "Common pressure-sore sites are the {{c1::ischial tuberosity}}, greater trochanter, sacrum, heel and malleoli.",
+   "difficulty": 2
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch1-wound-healing-card-071",
+   "type": "basic",
+   "sectionId": "s8",
+   "deck": "Chronic wounds::Pressure sores",
+   "front": "List the four stages of a pressure sore.",
+   "back": "Erythema → partial-thickness loss → full-thickness loss short of fascia → destruction into muscle/bone/joint.",
+   "difficulty": 2
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch1-wound-healing-card-072",
+   "type": "basic",
+   "sectionId": "s8",
+   "deck": "Chronic wounds::Pressure sores",
+   "front": "Name four risk factors for pressure sores.",
+   "back": "Old age, poor nutrition, anaemia, immobilisation (also denervation, paraplegia, ICU stay, soiling).",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch1-wound-healing-card-073",
+   "type": "basic",
+   "sectionId": "s8",
+   "deck": "Chronic wounds::Pressure sores",
+   "front": "Two dressing/device measures that help pressure sores heal?",
+   "back": "Vacuum-assisted closure and air mattresses (plus turning, debridement, flaps).",
+   "difficulty": 2
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch1-wound-healing-card-074",
+   "type": "basic",
+   "sectionId": "s9",
+   "deck": "Sutures::Classification",
+   "front": "What is the single most important way to classify a suture?",
+   "back": "By absorption — absorbable versus non-absorbable.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch1-wound-healing-card-075",
+   "type": "basic",
+   "sectionId": "s9",
+   "deck": "Sutures::Classification",
+   "front": "Why does a braided suture sustain infection more than a monofilament?",
+   "back": "Capillary spaces between filaments let organisms settle — up to ~10× more than an equivalent monofilament.",
+   "difficulty": 2
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch1-wound-healing-card-076",
+   "type": "basic",
+   "sectionId": "s9",
+   "deck": "Sutures::Absorbable",
+   "front": "Which absorbable suture is the slowest to absorb?",
+   "back": "Polydioxanone (PDS), a monofilament.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch1-wound-healing-card-077",
+   "type": "basic",
+   "sectionId": "s9",
+   "deck": "Sutures::Absorbable",
+   "front": "Name a braided absorbable suture used for GI anastomoses.",
+   "back": "Polyglactin (Vicryl) — or polyglycolic acid (Dexon).",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch1-wound-healing-card-078",
+   "type": "cloze",
+   "sectionId": "s9",
+   "deck": "Sutures::Non-absorbable",
+   "cloze": "{{c1::Polypropylene (Prolene)}} is a monofilament, very inert, and ideal for abdominal wall and hernia repair.",
+   "difficulty": 2
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch1-wound-healing-card-079",
+   "type": "basic",
+   "sectionId": "s9",
+   "deck": "Sutures::Non-absorbable",
+   "front": "Why is silk unusual among non-absorbable sutures?",
+   "back": "It is a braided protein that provokes marked reaction and is in fact very slowly absorbable.",
+   "difficulty": 2
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch1-wound-healing-card-080",
+   "type": "basic",
+   "sectionId": "s9",
+   "deck": "Sutures::Non-absorbable",
+   "front": "Which suture closes a sternotomy in open-heart surgery?",
+   "back": "Stainless steel.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch1-wound-healing-card-081",
+   "type": "basic",
+   "sectionId": "s9",
+   "deck": "Sutures::Non-absorbable",
+   "front": "A drawback of polyamide (nylon)?",
+   "back": "The knot is not very secure.",
+   "difficulty": 2
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch1-wound-healing-card-082",
+   "type": "basic",
+   "sectionId": "s9",
+   "deck": "Sutures::Other closure",
+   "front": "Why do adhesive skin tapes cause no inflammatory reaction?",
+   "back": "No suture material transverses the skin.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch1-wound-healing-card-083",
+   "type": "type",
+   "sectionId": "s9",
+   "deck": "Sutures::Absorbable",
+   "front": "Slowest-absorbing absorbable suture (abbreviation).",
+   "back": "PDS",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch1-wound-healing-card-084",
+   "type": "basic",
+   "sectionId": "s10",
+   "deck": "Dressings::Occlusive",
+   "front": "Why are occlusive dressings unsuitable for some wounds?",
+   "back": "They are unsuitable for infected and highly exudative wounds.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch1-wound-healing-card-085",
+   "type": "basic",
+   "sectionId": "s10",
+   "deck": "Dressings::Occlusive",
+   "front": "How does an occlusive dressing aid healing?",
+   "back": "Prevents evaporation to keep hydration; local hypoxia favours capillary proliferation and autolysis of slough.",
+   "difficulty": 2
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch1-wound-healing-card-086",
+   "type": "basic",
+   "sectionId": "s10",
+   "deck": "Dressings::Types",
+   "front": "What are alginate dressings derived from and how do they act?",
+   "back": "From seaweed; on contact with exudate they form a fibrous gel giving a moist environment.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch1-wound-healing-card-087",
+   "type": "basic",
+   "sectionId": "s10",
+   "deck": "Dressings::Types",
+   "front": "Give two osmotic dressing agents.",
+   "back": "Debrisan, urea crystals or honey.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch1-wound-healing-card-088",
+   "type": "basic",
+   "sectionId": "s10",
+   "deck": "Dressings::VAC",
+   "front": "How does VAC promote healing and where is it especially useful?",
+   "back": "Negative pressure enhances granulation and stimulates contraction; good for pressure sores and diabetic ulcers.",
+   "difficulty": 2
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch1-wound-healing-card-089",
+   "type": "cloze",
+   "sectionId": "s10",
+   "deck": "Dressings::Types",
+   "cloze": "Semi-occlusive hydrocolloid dressings are permeable to water vapour and gases but impermeable to {{c1::bacteria}}.",
+   "difficulty": 2
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch1-wound-healing-card-090",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Wound healing::Stages",
+   "front": "From which cells are the cytokines and growth factors of the early phase first released?",
+   "back": "Platelets.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch1-wound-healing-card-091",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Types of healing::Intention",
+   "front": "In which intention does wound contraction and granulation contribute most?",
+   "back": "Secondary intention, when wound edges are wide apart.",
+   "difficulty": 2
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch1-wound-healing-card-092",
+   "type": "cloze",
+   "sectionId": "s3",
+   "deck": "Factors::General",
+   "cloze": "Debilitating diseases that delay healing include uraemia, jaundice, cirrhosis, {{c1::diabetes}} and malignancy.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch1-wound-healing-card-093",
+   "type": "basic",
+   "sectionId": "s5",
+   "deck": "Closed wounds::Contusion",
+   "front": "What simple measures help a contusion?",
+   "back": "Elevation to minimise oedema and a local anti-inflammatory ointment.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch1-wound-healing-card-094",
+   "type": "basic",
+   "sectionId": "s6",
+   "deck": "Open wounds::Abrasion",
+   "front": "How is an abrasion dressed?",
+   "back": "Cleaned with a bland antiseptic and covered with a non-adherent dressing.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch1-wound-healing-card-095",
+   "type": "basic",
+   "sectionId": "s8",
+   "deck": "Chronic wounds::Definition",
+   "front": "At which phases are most chronic wounds arrested?",
+   "back": "The inflammatory and proliferative phases, with minimal contraction and collagen formation.",
+   "difficulty": 2
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch1-wound-healing-card-096",
+   "type": "basic",
+   "sectionId": "s10",
+   "deck": "Dressings::VAC",
+   "front": "Besides VAC, what second measure enhances the whole healing process?",
+   "back": "Increased local hydration providing a moist environment (moist healing).",
+   "difficulty": 1
+  }
+ ],
+ "mcqs": [
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sur-ch1-wound-healing-mcq-001",
+   "type": "single",
+   "sectionId": "s1",
+   "difficulty": 1,
+   "highYield": true,
+   "stem": "A clean surgical incision is closed with sutures. Approximately how long does it take to epithelialise?",
+   "options": [
+    {
+     "id": "a",
+     "text": "24 hours",
+     "correct": false,
+     "why": "Faster than the usual figure quoted for a clean sutured wound."
+    },
+    {
+     "id": "b",
+     "text": "48 hours",
+     "correct": true,
+     "why": "Correct — a clean sutured wound epithelialises in about 48 hours."
+    },
+    {
+     "id": "c",
+     "text": "1 week",
+     "correct": false,
+     "why": "This is far too long for simple epithelialisation of apposed edges."
+    },
+    {
+     "id": "d",
+     "text": "3 weeks",
+     "correct": false,
+     "why": "At 3 weeks the wound has only ~20% of its final strength; epithelialisation is long complete."
+    },
+    {
+     "id": "e",
+     "text": "3 months",
+     "correct": false,
+     "why": "Corresponds to ~80% of strength, not initial epithelialisation."
+    }
+   ],
+   "explanation": [
+    "Apposed clean edges heal chiefly by epithelialisation.",
+    "This is complete in roughly 48 hours.",
+    "Strength, however, lags far behind cover."
+   ],
+   "keyFacts": [
+    "Clean sutured wound epithelialises in ~48 h."
+   ],
+   "teachingPoint": "Epithelial cover is fast; tensile strength is slow."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sur-ch1-wound-healing-mcq-002",
+   "type": "single",
+   "sectionId": "s1",
+   "difficulty": 1,
+   "highYield": true,
+   "stem": "Which cell is chiefly responsible for wound contraction?",
+   "options": [
+    {
+     "id": "a",
+     "text": "Neutrophil",
+     "correct": false,
+     "why": "A first-responder inflammatory cell, not the contractile cell."
+    },
+    {
+     "id": "b",
+     "text": "Macrophage",
+     "correct": false,
+     "why": "Orchestrates healing and debridement but does not itself contract the wound."
+    },
+    {
+     "id": "c",
+     "text": "Myofibroblast",
+     "correct": true,
+     "why": "Correct — it contains smooth-muscle actin and contracts the wound."
+    },
+    {
+     "id": "d",
+     "text": "Endothelial cell",
+     "correct": false,
+     "why": "Forms capillary buds for granulation tissue, not contraction."
+    },
+    {
+     "id": "e",
+     "text": "Lymphocyte",
+     "correct": false,
+     "why": "Modulates the immune response; not contractile."
+    }
+   ],
+   "explanation": [
+    "Wound contraction reduces wound size from the outset.",
+    "It is driven by myofibroblasts containing smooth-muscle actin."
+   ],
+   "keyFacts": [
+    "Myofibroblast = actin-containing contractile fibroblast."
+   ],
+   "teachingPoint": "Contraction is a myofibroblast function."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sur-ch1-wound-healing-mcq-003",
+   "type": "single",
+   "sectionId": "s1",
+   "difficulty": 2,
+   "highYield": false,
+   "stem": "During remodelling, the change in collagen is best described as:",
+   "options": [
+    {
+     "id": "a",
+     "text": "Collagen I replaced by collagen III",
+     "correct": false,
+     "why": "This is the reverse of what happens."
+    },
+    {
+     "id": "b",
+     "text": "Collagen III replaced by collagen I",
+     "correct": true,
+     "why": "Correct — immature III is progressively replaced by mature I."
+    },
+    {
+     "id": "c",
+     "text": "Collagen II replaced by collagen I",
+     "correct": false,
+     "why": "Collagen II is cartilage collagen, not relevant here."
+    },
+    {
+     "id": "d",
+     "text": "No change in collagen subtype",
+     "correct": false,
+     "why": "The subtype ratio changes markedly during remodelling."
+    },
+    {
+     "id": "e",
+     "text": "Collagen replaced by elastin",
+     "correct": false,
+     "why": "Elastin does not replace collagen in a scar."
+    }
+   ],
+   "explanation": [
+    "Collagen III is laid down first.",
+    "Over weeks it is replaced by collagen I, which carries tensile strength."
+   ],
+   "keyFacts": [
+    "III first, then I."
+   ],
+   "teachingPoint": "Remodelling swaps collagen III for collagen I."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sur-ch1-wound-healing-mcq-004",
+   "type": "single",
+   "sectionId": "s1",
+   "difficulty": 1,
+   "highYield": true,
+   "stem": "Three months after a laceration, the wound's tensile strength is approximately:",
+   "options": [
+    {
+     "id": "a",
+     "text": "20% of original",
+     "correct": false,
+     "why": "This corresponds to about 3 weeks, not 3 months."
+    },
+    {
+     "id": "b",
+     "text": "50% of original",
+     "correct": false,
+     "why": "An intermediate value not quoted for this milestone."
+    },
+    {
+     "id": "c",
+     "text": "80% of original",
+     "correct": true,
+     "why": "Correct — about 80% at 3 months, and never 100%."
+    },
+    {
+     "id": "d",
+     "text": "100% of original",
+     "correct": false,
+     "why": "A wound never regains its full original strength."
+    },
+    {
+     "id": "e",
+     "text": "120% of original",
+     "correct": false,
+     "why": "Scar is weaker, not stronger, than intact tissue."
+    }
+   ],
+   "explanation": [
+    "At 3 weeks a wound has ~20% of final strength.",
+    "By 3 months it reaches ~80% of original — but never fully recovers."
+   ],
+   "keyFacts": [
+    "3 weeks ~20%; 3 months ~80%; never 100%."
+   ],
+   "teachingPoint": "Strength recovery plateaus below normal."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sur-ch1-wound-healing-mcq-005",
+   "type": "single",
+   "sectionId": "s2",
+   "difficulty": 1,
+   "highYield": true,
+   "stem": "A contaminated wound is deliberately left open for five days and then sutured once infection is excluded. This is healing by:",
+   "options": [
+    {
+     "id": "a",
+     "text": "Primary intention",
+     "correct": false,
+     "why": "Primary intention closes clean wounds immediately."
+    },
+    {
+     "id": "b",
+     "text": "Secondary intention",
+     "correct": false,
+     "why": "Secondary intention leaves the wound to granulate, not to be sutured later."
+    },
+    {
+     "id": "c",
+     "text": "Tertiary intention",
+     "correct": true,
+     "why": "Correct — delayed primary closure of a contaminated wound."
+    },
+    {
+     "id": "d",
+     "text": "Quaternary intention",
+     "correct": false,
+     "why": "Not a recognised category."
+    },
+    {
+     "id": "e",
+     "text": "Regeneration",
+     "correct": false,
+     "why": "Regeneration restores original tissue without scar; not applicable here."
+    }
+   ],
+   "explanation": [
+    "Delayed primary closure = tertiary intention.",
+    "The wound is watched ~5 days, then closed if clean."
+   ],
+   "keyFacts": [
+    "Tertiary = delayed primary closure."
+   ],
+   "teachingPoint": "Contaminated wounds are best closed after a delay."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sur-ch1-wound-healing-mcq-006",
+   "type": "single",
+   "sectionId": "s4",
+   "difficulty": 1,
+   "highYield": true,
+   "stem": "A raised scar over the earlobe after piercing extends well beyond the original wound margins. The most likely diagnosis is:",
+   "options": [
+    {
+     "id": "a",
+     "text": "Hypertrophic scar",
+     "correct": false,
+     "why": "A hypertrophic scar stays within the wound margins."
+    },
+    {
+     "id": "b",
+     "text": "Keloid",
+     "correct": true,
+     "why": "Correct — growth beyond the wound margins, classic at the earlobe."
+    },
+    {
+     "id": "c",
+     "text": "Contracture",
+     "correct": false,
+     "why": "A contracture shortens tissue across a joint, not this appearance."
+    },
+    {
+     "id": "d",
+     "text": "Marjolin's ulcer",
+     "correct": false,
+     "why": "That is malignant change in a chronic wound, not a raised scar."
+    },
+    {
+     "id": "e",
+     "text": "Normal maturing scar",
+     "correct": false,
+     "why": "A normal scar does not overgrow the wound boundary."
+    }
+   ],
+   "explanation": [
+    "The discriminator is the wound margin.",
+    "Extension beyond it defines a keloid; the earlobe is a classic site."
+   ],
+   "keyFacts": [
+    "Beyond margins = keloid; within = hypertrophic."
+   ],
+   "teachingPoint": "Site plus overgrowth points to keloid."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sur-ch1-wound-healing-mcq-007",
+   "type": "single",
+   "sectionId": "s4",
+   "difficulty": 2,
+   "highYield": false,
+   "stem": "Which treatment strategy minimises recurrence after excision of a keloid?",
+   "options": [
+    {
+     "id": "a",
+     "text": "Simple excision alone",
+     "correct": false,
+     "why": "Recurrence may reach ~80% with excision alone."
+    },
+    {
+     "id": "b",
+     "text": "Intramarginal excision with intra-operative steroid",
+     "correct": true,
+     "why": "Correct — combining excision with steroid reduces recurrence."
+    },
+    {
+     "id": "c",
+     "text": "Wide excision with primary closure under tension",
+     "correct": false,
+     "why": "Tension worsens scarring and recurrence."
+    },
+    {
+     "id": "d",
+     "text": "Radiotherapy as sole treatment",
+     "correct": false,
+     "why": "Not the standard first strategy described here."
+    },
+    {
+     "id": "e",
+     "text": "Observation only",
+     "correct": false,
+     "why": "Keloids do not reliably regress like hypertrophic scars."
+    }
+   ],
+   "explanation": [
+    "Excision alone recurs frequently.",
+    "Intramarginal excision plus steroid is recommended."
+   ],
+   "keyFacts": [
+    "Combine excision with intralesional steroid."
+   ],
+   "teachingPoint": "Keloid excision needs adjuvant steroid."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sur-ch1-wound-healing-mcq-008",
+   "type": "single",
+   "sectionId": "s3",
+   "difficulty": 2,
+   "highYield": true,
+   "stem": "A patient on long-term corticosteroids heals poorly. Which additional deficiency specifically impairs collagen maturation?",
+   "options": [
+    {
+     "id": "a",
+     "text": "Vitamin A",
+     "correct": false,
+     "why": "Vitamin A deficiency impairs epithelialisation, not collagen maturation."
+    },
+    {
+     "id": "b",
+     "text": "Vitamin C",
+     "correct": true,
+     "why": "Correct — vitamin C is needed for maturation of protocollagen."
+    },
+    {
+     "id": "c",
+     "text": "Vitamin K",
+     "correct": false,
+     "why": "Vitamin K affects clotting factors, not collagen maturation."
+    },
+    {
+     "id": "d",
+     "text": "Vitamin D",
+     "correct": false,
+     "why": "Vitamin D governs calcium/bone, not collagen cross-linking here."
+    },
+    {
+     "id": "e",
+     "text": "Vitamin B12",
+     "correct": false,
+     "why": "B12 affects haematopoiesis/neurology, not collagen maturation."
+    }
+   ],
+   "explanation": [
+    "Vitamin C is required for collagen (protocollagen) maturation.",
+    "Vitamin A, by contrast, supports epithelialisation."
+   ],
+   "keyFacts": [
+    "Vitamin C → collagen maturation."
+   ],
+   "teachingPoint": "Match the vitamin to its healing step."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sur-ch1-wound-healing-mcq-009",
+   "type": "single",
+   "sectionId": "s3",
+   "difficulty": 2,
+   "highYield": false,
+   "stem": "Which local factor actually FAVOURS wound healing?",
+   "options": [
+    {
+     "id": "a",
+     "text": "Infection",
+     "correct": false,
+     "why": "Infection delays healing."
+    },
+    {
+     "id": "b",
+     "text": "Tension",
+     "correct": false,
+     "why": "Tension causes ischaemia and impairs healing."
+    },
+    {
+     "id": "c",
+     "text": "Immobilisation",
+     "correct": true,
+     "why": "Correct — it protects granulation tissue from shear."
+    },
+    {
+     "id": "d",
+     "text": "Foreign body",
+     "correct": false,
+     "why": "Foreign material impairs healing."
+    },
+    {
+     "id": "e",
+     "text": "Irradiation",
+     "correct": false,
+     "why": "Irradiation causes ischaemia via endarteritis obliterans."
+    }
+   ],
+   "explanation": [
+    "Movement and shear damage granulation tissue.",
+    "Immobilisation therefore aids healing."
+   ],
+   "keyFacts": [
+    "Immobilisation helps; movement harms."
+   ],
+   "teachingPoint": "Protecting granulation tissue speeds healing."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sur-ch1-wound-healing-mcq-010",
+   "type": "single",
+   "sectionId": "s6",
+   "difficulty": 2,
+   "highYield": true,
+   "stem": "A stab wound to the anterior abdominal wall looks small and shallow. The safest principle is:",
+   "options": [
+    {
+     "id": "a",
+     "text": "Suture the skin and discharge",
+     "correct": false,
+     "why": "This risks missing a visceral injury beneath a deceptive wound."
+    },
+    {
+     "id": "b",
+     "text": "Assume no deep injury if the opening is small",
+     "correct": false,
+     "why": "A small opening does not exclude deep injury in penetrating wounds."
+    },
+    {
+     "id": "c",
+     "text": "Suspect and exclude deep-structure injury",
+     "correct": true,
+     "why": "Correct — penetrating wounds are deceptive; suspect deep injury."
+    },
+    {
+     "id": "d",
+     "text": "Apply a tourniquet",
+     "correct": false,
+     "why": "Inappropriate for an abdominal-wall stab."
+    },
+    {
+     "id": "e",
+     "text": "Wait 48 hours before any assessment",
+     "correct": false,
+     "why": "Delaying assessment risks a missed viscus injury."
+    }
+   ],
+   "explanation": [
+    "A penetrating wound is deeper than long with a small opening.",
+    "An unwary surgeon may close it and miss an injured viscus."
+   ],
+   "keyFacts": [
+    "Penetrating wound → always suspect deep injury."
+   ],
+   "teachingPoint": "Never close a stab without excluding deep injury."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sur-ch1-wound-healing-mcq-011",
+   "type": "single",
+   "sectionId": "s6",
+   "difficulty": 2,
+   "highYield": false,
+   "stem": "Why are high-velocity rifle wounds far more destructive than low-velocity pistol wounds?",
+   "options": [
+    {
+     "id": "a",
+     "text": "Because kinetic energy depends mainly on mass",
+     "correct": false,
+     "why": "KE depends on the square of velocity, not mainly mass."
+    },
+    {
+     "id": "b",
+     "text": "Because kinetic energy depends on the square of velocity",
+     "correct": true,
+     "why": "Correct — KE = ½MV², so velocity dominates."
+    },
+    {
+     "id": "c",
+     "text": "Because pistols cause more cavitation",
+     "correct": false,
+     "why": "High-velocity rounds cause greater cavitation."
+    },
+    {
+     "id": "d",
+     "text": "Because rifles never fragment",
+     "correct": false,
+     "why": "Fragmentation adds to, not subtracts from, damage."
+    },
+    {
+     "id": "e",
+     "text": "Because low-velocity rounds cause shock waves",
+     "correct": false,
+     "why": "Shock waves are a feature of high-energy transfer."
+    }
+   ],
+   "explanation": [
+    "KE = ½MV².",
+    "Doubling velocity quadruples energy transferred to tissue."
+   ],
+   "keyFacts": [
+    "Velocity is squared in the KE formula."
+   ],
+   "teachingPoint": "Velocity is the key determinant of missile injury."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sur-ch1-wound-healing-mcq-012",
+   "type": "single",
+   "sectionId": "s7",
+   "difficulty": 2,
+   "highYield": true,
+   "stem": "In a heavily contaminated wound, which action is correct?",
+   "options": [
+    {
+     "id": "a",
+     "text": "Primary skin closure",
+     "correct": false,
+     "why": "Contaminated wounds should not have primary skin closure."
+    },
+    {
+     "id": "b",
+     "text": "Immediate tendon repair",
+     "correct": false,
+     "why": "Tendon repair is deferred in contaminated wounds."
+    },
+    {
+     "id": "c",
+     "text": "Leave the deep fascia open",
+     "correct": true,
+     "why": "Correct — deep fascia is left open in contamination/extensive loss."
+    },
+    {
+     "id": "d",
+     "text": "Close the deep fascia tightly",
+     "correct": false,
+     "why": "Closing the deep fascia is contraindicated here."
+    },
+    {
+     "id": "e",
+     "text": "Internal fixation of any fracture",
+     "correct": false,
+     "why": "Internal fixation risks seeding bone with infection."
+    }
+   ],
+   "explanation": [
+    "Contaminated-wound rule: no nerve/tendon repair, deep fascia and skin left open.",
+    "Delayed primary closure is used for skin."
+   ],
+   "keyFacts": [
+    "Leave deep fascia and skin open in contamination."
+   ],
+   "teachingPoint": "Do not close a contaminated wound primarily."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sur-ch1-wound-healing-mcq-013",
+   "type": "single",
+   "sectionId": "s7",
+   "difficulty": 2,
+   "highYield": false,
+   "stem": "Muscle in the base of a traumatic wound is dark grey, does not contract when pinched and does not bleed when cut. The correct action is:",
+   "options": [
+    {
+     "id": "a",
+     "text": "Repair it with mattress sutures",
+     "correct": false,
+     "why": "Only clean, viable muscle is repaired."
+    },
+    {
+     "id": "b",
+     "text": "Leave it and close over it",
+     "correct": false,
+     "why": "Necrotic muscle left in situ becomes a nidus for infection."
+    },
+    {
+     "id": "c",
+     "text": "Excise the necrotic muscle",
+     "correct": true,
+     "why": "Correct — non-viable muscle should be completely excised."
+    },
+    {
+     "id": "d",
+     "text": "Inject it with adrenaline",
+     "correct": false,
+     "why": "This does not restore viability."
+    },
+    {
+     "id": "e",
+     "text": "Cover with a skin graft immediately",
+     "correct": false,
+     "why": "Grafting over dead muscle will fail."
+    }
+   ],
+   "explanation": [
+    "Viability signs: colour, contraction on pinch, bleeding on cut.",
+    "Muscle failing all three is necrotic and must be excised."
+   ],
+   "keyFacts": [
+    "Excise muscle that is grey, non-contractile and non-bleeding."
+   ],
+   "teachingPoint": "Debride non-viable muscle completely."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sur-ch1-wound-healing-mcq-014",
+   "type": "single",
+   "sectionId": "s7",
+   "difficulty": 2,
+   "highYield": true,
+   "stem": "A limb wound with a fracture is contaminated and infection is possible. Which fixation is preferred?",
+   "options": [
+    {
+     "id": "a",
+     "text": "Internal plate fixation",
+     "correct": false,
+     "why": "Internal fixation would spread infection to bone."
+    },
+    {
+     "id": "b",
+     "text": "Intramedullary nail",
+     "correct": false,
+     "why": "Also internal; risks seeding the medullary canal."
+    },
+    {
+     "id": "c",
+     "text": "External fixation",
+     "correct": true,
+     "why": "Correct — stabilises the fracture without seeding bone."
+    },
+    {
+     "id": "d",
+     "text": "No fixation at all",
+     "correct": false,
+     "why": "The fracture still needs stabilisation."
+    },
+    {
+     "id": "e",
+     "text": "Primary bone grafting",
+     "correct": false,
+     "why": "Inappropriate in a contaminated field."
+    }
+   ],
+   "explanation": [
+    "Infected/contaminated fields contraindicate internal fixation.",
+    "External fixation stabilises without internal hardware in bone."
+   ],
+   "keyFacts": [
+    "Possible infection + fracture → external fixation."
+   ],
+   "teachingPoint": "Avoid internal metal in a dirty field."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sur-ch1-wound-healing-mcq-015",
+   "type": "single",
+   "sectionId": "s8",
+   "difficulty": 1,
+   "highYield": true,
+   "stem": "Which is the commonest type of chronic leg ulcer?",
+   "options": [
+    {
+     "id": "a",
+     "text": "Ischaemic ulcer",
+     "correct": false,
+     "why": "Important but not the commonest."
+    },
+    {
+     "id": "b",
+     "text": "Venous ulcer",
+     "correct": true,
+     "why": "Correct — venous ulcers are the commonest chronic leg ulcer."
+    },
+    {
+     "id": "c",
+     "text": "Neuropathic ulcer",
+     "correct": false,
+     "why": "Common in diabetes but not the overall commonest leg ulcer."
+    },
+    {
+     "id": "d",
+     "text": "Neoplastic ulcer",
+     "correct": false,
+     "why": "Uncommon; arises from malignant change."
+    },
+    {
+     "id": "e",
+     "text": "Traumatic ulcer",
+     "correct": false,
+     "why": "Not a recognised chronic-ulcer category here."
+    }
+   ],
+   "explanation": [
+    "Chronic leg ulcers are heterogeneous.",
+    "The venous type is the commonest."
+   ],
+   "keyFacts": [
+    "Venous = commonest chronic leg ulcer."
+   ],
+   "teachingPoint": "Think venous first for a chronic leg ulcer."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sur-ch1-wound-healing-mcq-016",
+   "type": "single",
+   "sectionId": "s8",
+   "difficulty": 2,
+   "highYield": false,
+   "stem": "A bedridden elderly patient develops full-thickness skin loss over the sacrum that stops just short of the fascia. This is which pressure-sore stage?",
+   "options": [
+    {
+     "id": "a",
+     "text": "Stage 1",
+     "correct": false,
+     "why": "Stage 1 is erythema with intact skin."
+    },
+    {
+     "id": "b",
+     "text": "Stage 2",
+     "correct": false,
+     "why": "Stage 2 is partial-thickness loss."
+    },
+    {
+     "id": "c",
+     "text": "Stage 3",
+     "correct": true,
+     "why": "Correct — full-thickness loss short of the fascia."
+    },
+    {
+     "id": "d",
+     "text": "Stage 4",
+     "correct": false,
+     "why": "Stage 4 destroys muscle, bone or joint."
+    },
+    {
+     "id": "e",
+     "text": "Unstageable",
+     "correct": false,
+     "why": "The description fits stage 3."
+    }
+   ],
+   "explanation": [
+    "Staging runs erythema → partial → full-thickness short of fascia → deeper.",
+    "Full-thickness but sparing fascia is stage 3."
+   ],
+   "keyFacts": [
+    "Stage 3 = full-thickness, short of fascia."
+   ],
+   "teachingPoint": "Grade pressure sores by depth."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sur-ch1-wound-healing-mcq-017",
+   "type": "single",
+   "sectionId": "s8",
+   "difficulty": 2,
+   "highYield": true,
+   "stem": "A chronic non-healing ulcer with raised, everted edges is most concerning for:",
+   "options": [
+    {
+     "id": "a",
+     "text": "Venous change",
+     "correct": false,
+     "why": "Venous ulcers typically have sloping edges."
+    },
+    {
+     "id": "b",
+     "text": "Malignant (squamous) change",
+     "correct": true,
+     "why": "Correct — heaped/everted edges suggest Marjolin's (SCC)."
+    },
+    {
+     "id": "c",
+     "text": "Simple infection",
+     "correct": false,
+     "why": "Infection alone does not usually give everted edges."
+    },
+    {
+     "id": "d",
+     "text": "Arterial insufficiency",
+     "correct": false,
+     "why": "Arterial ulcers are punched-out, not everted."
+    },
+    {
+     "id": "e",
+     "text": "Normal healing",
+     "correct": false,
+     "why": "Healing ulcers have healthy sloping margins."
+    }
+   ],
+   "explanation": [
+    "A long-standing ulcer can undergo squamous carcinomatous change.",
+    "Raised, everted edges are the warning sign → biopsy."
+   ],
+   "keyFacts": [
+    "Everted edges in a chronic ulcer → biopsy for SCC."
+   ],
+   "teachingPoint": "Chronic ulcers can turn malignant."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sur-ch1-wound-healing-mcq-018",
+   "type": "single",
+   "sectionId": "s9",
+   "difficulty": 1,
+   "highYield": true,
+   "stem": "Which suture is ideal for closure of the abdominal wall and hernia repair?",
+   "options": [
+    {
+     "id": "a",
+     "text": "Chromic catgut",
+     "correct": false,
+     "why": "Absorbable and largely obsolete; unsuitable for durable closure."
+    },
+    {
+     "id": "b",
+     "text": "Silk",
+     "correct": false,
+     "why": "Braided, reactive and slowly absorbable; not ideal here."
+    },
+    {
+     "id": "c",
+     "text": "Polypropylene (Prolene)",
+     "correct": true,
+     "why": "Correct — inert monofilament, ideal for abdominal wall/hernia."
+    },
+    {
+     "id": "d",
+     "text": "Polyglactin (Vicryl)",
+     "correct": false,
+     "why": "Braided absorbable; used for soft tissue/GI, not durable wall closure."
+    },
+    {
+     "id": "e",
+     "text": "Stainless steel",
+     "correct": false,
+     "why": "Used for sternotomy, not routine abdominal-wall/hernia repair."
+    }
+   ],
+   "explanation": [
+    "Prolene is a very inert monofilament.",
+    "It is the material of choice for abdominal-wall and hernia repair."
+   ],
+   "keyFacts": [
+    "Prolene → abdominal wall and hernia."
+   ],
+   "teachingPoint": "Match suture to task: Prolene for the wall."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sur-ch1-wound-healing-mcq-019",
+   "type": "single",
+   "sectionId": "s9",
+   "difficulty": 2,
+   "highYield": false,
+   "stem": "In the presence of infection, why is a monofilament suture preferred over a braided one?",
+   "options": [
+    {
+     "id": "a",
+     "text": "It is absorbable",
+     "correct": false,
+     "why": "Absorption is not the reason and depends on the material."
+    },
+    {
+     "id": "b",
+     "text": "It has no capillary spaces to harbour organisms",
+     "correct": true,
+     "why": "Correct — braided sutures wick and shelter organisms."
+    },
+    {
+     "id": "c",
+     "text": "It is always stronger",
+     "correct": false,
+     "why": "Strength is not the deciding factor here."
+    },
+    {
+     "id": "d",
+     "text": "It is cheaper",
+     "correct": false,
+     "why": "Cost is irrelevant to infection risk."
+    },
+    {
+     "id": "e",
+     "text": "It dissolves faster in pus",
+     "correct": false,
+     "why": "Not the mechanism at play."
+    }
+   ],
+   "explanation": [
+    "Braided suture has capillary spaces between filaments.",
+    "These can harbour ~10× more organisms than an equivalent monofilament."
+   ],
+   "keyFacts": [
+    "Monofilament resists infection (no capillary spaces)."
+   ],
+   "teachingPoint": "Choose monofilament in contaminated fields."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sur-ch1-wound-healing-mcq-020",
+   "type": "single",
+   "sectionId": "s9",
+   "difficulty": 1,
+   "highYield": true,
+   "stem": "Which absorbable suture is the slowest to absorb?",
+   "options": [
+    {
+     "id": "a",
+     "text": "Chromic catgut",
+     "correct": false,
+     "why": "Absorbs within about 3 weeks."
+    },
+    {
+     "id": "b",
+     "text": "Polyglycolic acid (Dexon)",
+     "correct": false,
+     "why": "Absorbs over ~2–3 months."
+    },
+    {
+     "id": "c",
+     "text": "Polyglactin (Vicryl)",
+     "correct": false,
+     "why": "Absorbs over ~4 months."
+    },
+    {
+     "id": "d",
+     "text": "Polydioxanone (PDS)",
+     "correct": true,
+     "why": "Correct — monofilament, the slowest-absorbing absorbable."
+    },
+    {
+     "id": "e",
+     "text": "Plain catgut",
+     "correct": false,
+     "why": "Absorbs quickly, not slowly."
+    }
+   ],
+   "explanation": [
+    "Among absorbables, PDS lasts longest.",
+    "It is a monofilament, useful for slow-healing abdominal closure."
+   ],
+   "keyFacts": [
+    "PDS = slowest absorbable."
+   ],
+   "teachingPoint": "PDS gives prolonged absorbable support."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sur-ch1-wound-healing-mcq-021",
+   "type": "single",
+   "sectionId": "s10",
+   "difficulty": 1,
+   "highYield": true,
+   "stem": "Which dressing is LEAST suitable for an infected, highly exudative wound?",
+   "options": [
+    {
+     "id": "a",
+     "text": "Alginate",
+     "correct": false,
+     "why": "Alginates handle exudate well."
+    },
+    {
+     "id": "b",
+     "text": "Occlusive gauze-and-plaster dressing",
+     "correct": true,
+     "why": "Correct — unsuitable for infected/exudative wounds."
+    },
+    {
+     "id": "c",
+     "text": "Osmotic agent (e.g. honey)",
+     "correct": false,
+     "why": "Osmotic agents absorb exudate."
+    },
+    {
+     "id": "d",
+     "text": "Semi-occlusive hydrocolloid",
+     "correct": false,
+     "why": "Permeable to vapour, keeps a moist bed."
+    },
+    {
+     "id": "e",
+     "text": "Vacuum-assisted closure",
+     "correct": false,
+     "why": "VAC manages exudate under negative pressure."
+    }
+   ],
+   "explanation": [
+    "Occlusive dressings retain moisture and cause local hypoxia.",
+    "They are therefore unsuitable for infected/highly exudative wounds."
+   ],
+   "keyFacts": [
+    "Occlusive dressing ≠ infected/exudative wound."
+   ],
+   "teachingPoint": "Match the dressing to exudate and infection."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sur-ch1-wound-healing-mcq-022",
+   "type": "single",
+   "sectionId": "s10",
+   "difficulty": 2,
+   "highYield": false,
+   "stem": "How does vacuum-assisted closure (VAC) promote healing?",
+   "options": [
+    {
+     "id": "a",
+     "text": "Positive pressure compresses vessels",
+     "correct": false,
+     "why": "VAC uses negative, not positive, pressure."
+    },
+    {
+     "id": "b",
+     "text": "Negative pressure enhances granulation and contraction",
+     "correct": true,
+     "why": "Correct — this is the mechanism, useful in pressure/diabetic ulcers."
+    },
+    {
+     "id": "c",
+     "text": "It sterilises the wound chemically",
+     "correct": false,
+     "why": "VAC is a physical, not chemical, therapy."
+    },
+    {
+     "id": "d",
+     "text": "It replaces the need for debridement",
+     "correct": false,
+     "why": "Debridement is still required."
+    },
+    {
+     "id": "e",
+     "text": "It prevents all bacterial growth",
+     "correct": false,
+     "why": "It reduces exudate/oedema but does not sterilise."
+    }
+   ],
+   "explanation": [
+    "VAC applies sub-atmospheric pressure to the wound bed.",
+    "This boosts granulation and stimulates contraction."
+   ],
+   "keyFacts": [
+    "VAC = negative pressure → granulation + contraction."
+   ],
+   "teachingPoint": "Negative pressure accelerates a granulating wound."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sur-ch1-wound-healing-mcq-023",
+   "type": "single",
+   "sectionId": "s5",
+   "difficulty": 2,
+   "highYield": false,
+   "stem": "A small, fluctuant collection of blood forms under the skin after blunt trauma and has been present for a few hours. The most appropriate initial management of a SMALL one is:",
+   "options": [
+    {
+     "id": "a",
+     "text": "Immediate wide surgical evacuation",
+     "correct": false,
+     "why": "Reserved for large haematomas."
+    },
+    {
+     "id": "b",
+     "text": "Aspiration with a wide-bore needle",
+     "correct": true,
+     "why": "Correct — a small haematoma can be aspirated."
+    },
+    {
+     "id": "c",
+     "text": "Compression alone indefinitely",
+     "correct": false,
+     "why": "May help a contusion but a defined small haematoma is aspirated."
+    },
+    {
+     "id": "d",
+     "text": "Antibiotics only",
+     "correct": false,
+     "why": "Antibiotics do not evacuate a haematoma."
+    },
+    {
+     "id": "e",
+     "text": "Ignore — it will always resorb fully",
+     "correct": false,
+     "why": "Not reliable for a defined collection."
+    }
+   ],
+   "explanation": [
+    "A haematoma clots then liquefies.",
+    "A small one may be aspirated; a large one is incised and evacuated."
+   ],
+   "keyFacts": [
+    "Small haematoma → aspirate; large → evacuate."
+   ],
+   "teachingPoint": "Size guides haematoma management."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sur-ch1-wound-healing-mcq-024",
+   "type": "single",
+   "sectionId": "s1",
+   "difficulty": 1,
+   "highYield": false,
+   "stem": "The phase of wound healing dominated by macrophage-driven debridement and lasting about five days is the:",
+   "options": [
+    {
+     "id": "a",
+     "text": "Proliferative phase",
+     "correct": false,
+     "why": "Proliferation follows inflammation and builds granulation tissue."
+    },
+    {
+     "id": "b",
+     "text": "Haemostasis and inflammatory phase",
+     "correct": true,
+     "why": "Correct — clot, coagulation and macrophage debridement, ~5 days."
+    },
+    {
+     "id": "c",
+     "text": "Maturation phase",
+     "correct": false,
+     "why": "Maturation remodels collagen over months."
+    },
+    {
+     "id": "d",
+     "text": "Epithelial phase",
+     "correct": false,
+     "why": "Not a distinct named phase."
+    },
+    {
+     "id": "e",
+     "text": "Contraction phase",
+     "correct": false,
+     "why": "Contraction is a component, not the ~5-day inflammatory phase."
+    }
+   ],
+   "explanation": [
+    "The first phase combines haemostasis and inflammation.",
+    "Macrophages debride and release growth factors over about 5 days."
+   ],
+   "keyFacts": [
+    "Inflammatory phase ~5 days, macrophage-led."
+   ],
+   "teachingPoint": "Inflammation sets up the repair that follows."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sur-ch1-wound-healing-mcq-025",
+   "type": "single",
+   "sectionId": "s6",
+   "difficulty": 1,
+   "highYield": false,
+   "stem": "Which wound is characteristically 'longer than deep' with clean edges and minimal tissue destruction?",
+   "options": [
+    {
+     "id": "a",
+     "text": "Lacerated wound",
+     "correct": false,
+     "why": "Lacerations are irregular and devitalised."
+    },
+    {
+     "id": "b",
+     "text": "Incised wound",
+     "correct": true,
+     "why": "Correct — a sharp blade gives a clean wound longer than deep."
+    },
+    {
+     "id": "c",
+     "text": "Penetrating wound",
+     "correct": false,
+     "why": "Penetrating wounds are deeper than long."
+    },
+    {
+     "id": "d",
+     "text": "Abrasion",
+     "correct": false,
+     "why": "An abrasion is a superficial friction wound."
+    },
+    {
+     "id": "e",
+     "text": "Contusion",
+     "correct": false,
+     "why": "A contusion is a closed bruise."
+    }
+   ],
+   "explanation": [
+    "Incised wounds are made by sharp blades.",
+    "They are longer than deep with clean edges and brisk bleeding."
+   ],
+   "keyFacts": [
+    "Incised = longer than deep, clean edges."
+   ],
+   "teachingPoint": "Mechanism defines wound morphology."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sur-ch1-wound-healing-mcq-026",
+   "type": "single",
+   "sectionId": "s3",
+   "difficulty": 2,
+   "highYield": false,
+   "stem": "Which statement about wound-healing factors is TRUE?",
+   "options": [
+    {
+     "id": "a",
+     "text": "Steroids accelerate healing",
+     "correct": false,
+     "why": "Steroids inhibit healing."
+    },
+    {
+     "id": "b",
+     "text": "Vitamin A deficiency impairs epithelialisation",
+     "correct": true,
+     "why": "Correct."
+    },
+    {
+     "id": "c",
+     "text": "Good vascularity slows healing",
+     "correct": false,
+     "why": "Good vascularity speeds healing."
+    },
+    {
+     "id": "d",
+     "text": "Infection speeds collagen deposition",
+     "correct": false,
+     "why": "Infection destroys collagen and delays healing."
+    },
+    {
+     "id": "e",
+     "text": "Tension improves wound perfusion",
+     "correct": false,
+     "why": "Tension causes ischaemia."
+    }
+   ],
+   "explanation": [
+    "Sort each factor into helps vs harms.",
+    "Vitamin A deficiency impairs epithelialisation — the only true option."
+   ],
+   "keyFacts": [
+    "Vitamin A deficiency → poor epithelialisation."
+   ],
+   "teachingPoint": "Know the direction of each healing factor."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sur-ch1-wound-healing-mcq-027",
+   "type": "single",
+   "sectionId": "s2",
+   "difficulty": 1,
+   "highYield": false,
+   "stem": "Which feature best distinguishes a scar healed by secondary intention?",
+   "options": [
+    {
+     "id": "a",
+     "text": "Fine neat line",
+     "correct": false,
+     "why": "That describes primary intention."
+    },
+    {
+     "id": "b",
+     "text": "Ugly wide scar lacking sweat/sebaceous glands and hair",
+     "correct": true,
+     "why": "Correct — secondary-intention scar features."
+    },
+    {
+     "id": "c",
+     "text": "No scar at all",
+     "correct": false,
+     "why": "Secondary intention always scars."
+    },
+    {
+     "id": "d",
+     "text": "Immediate suture apposition",
+     "correct": false,
+     "why": "That is primary intention."
+    },
+    {
+     "id": "e",
+     "text": "Closure at 5 days after contamination",
+     "correct": false,
+     "why": "That is tertiary intention."
+    }
+   ],
+   "explanation": [
+    "Secondary intention fills a gap with granulation tissue.",
+    "The resulting scar is wide and devoid of skin adnexa."
+   ],
+   "keyFacts": [
+    "Secondary scar = wide, no adnexa."
+   ],
+   "teachingPoint": "Granulation-filled wounds scar poorly."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sur-ch1-wound-healing-mcq-028",
+   "type": "single",
+   "sectionId": "s4",
+   "difficulty": 1,
+   "highYield": false,
+   "stem": "Failure of an abdominal surgical wound may present as:",
+   "options": [
+    {
+     "id": "a",
+     "text": "Keloid only",
+     "correct": false,
+     "why": "Keloid is a scar problem, not wound failure of the abdomen."
+    },
+    {
+     "id": "b",
+     "text": "Burst abdomen or incisional hernia",
+     "correct": true,
+     "why": "Correct — the two classic consequences."
+    },
+    {
+     "id": "c",
+     "text": "Contracture of the abdominal wall",
+     "correct": false,
+     "why": "Contracture affects scars over joints."
+    },
+    {
+     "id": "d",
+     "text": "Hypertrophic scar only",
+     "correct": false,
+     "why": "A scar issue, not dehiscence."
+    },
+    {
+     "id": "e",
+     "text": "Marjolin's ulcer",
+     "correct": false,
+     "why": "That is malignant change in a chronic wound."
+    }
+   ],
+   "explanation": [
+    "Adverse factors can cause abdominal wound failure.",
+    "This presents as burst abdomen or later incisional hernia."
+   ],
+   "keyFacts": [
+    "Abdominal wound failure → burst abdomen/incisional hernia."
+   ],
+   "teachingPoint": "Dehiscence has early and late forms."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sur-ch1-wound-healing-mcq-029",
+   "type": "single",
+   "sectionId": "s7",
+   "difficulty": 1,
+   "highYield": false,
+   "stem": "Which is the best first-line method to control bleeding from an open wound in first aid?",
+   "options": [
+    {
+     "id": "a",
+     "text": "Immediate tourniquet",
+     "correct": false,
+     "why": "Only a temporary measure before theatre, not first-line."
+    },
+    {
+     "id": "b",
+     "text": "Direct compression with sterile dressing and firm bandage",
+     "correct": true,
+     "why": "Correct — first-line haemostasis."
+    },
+    {
+     "id": "c",
+     "text": "Blind clamping in the wound",
+     "correct": false,
+     "why": "Risks damaging nerves/vessels."
+    },
+    {
+     "id": "d",
+     "text": "Elevation alone",
+     "correct": false,
+     "why": "Helpful adjunct but not the primary method described."
+    },
+    {
+     "id": "e",
+     "text": "Systemic tranexamic acid alone",
+     "correct": false,
+     "why": "Not the first mechanical step for external bleeding."
+    }
+   ],
+   "explanation": [
+    "External wound bleeding is first controlled mechanically.",
+    "Direct compression with a sterile dressing and bandage is first-line; a tourniquet is only temporary."
+   ],
+   "keyFacts": [
+    "Direct compression first; tourniquet only temporarily."
+   ],
+   "teachingPoint": "Compress before you consider a tourniquet."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sur-ch1-wound-healing-mcq-030",
+   "type": "single",
+   "sectionId": "s6",
+   "difficulty": 2,
+   "highYield": false,
+   "stem": "A patient is thrown from a motorcycle; an area of thigh skin and fat is sheared off the deep fascia, with skin viability doubtful. This injury is best termed:",
+   "options": [
+    {
+     "id": "a",
+     "text": "Incised wound",
+     "correct": false,
+     "why": "Incised wounds are clean sharp cuts."
+    },
+    {
+     "id": "b",
+     "text": "Degloving injury",
+     "correct": true,
+     "why": "Correct — skin/fat stripped off deep fascia."
+    },
+    {
+     "id": "c",
+     "text": "Abrasion",
+     "correct": false,
+     "why": "Abrasions are superficial friction wounds."
+    },
+    {
+     "id": "d",
+     "text": "Contusion",
+     "correct": false,
+     "why": "A contusion is a closed bruise."
+    },
+    {
+     "id": "e",
+     "text": "Puncture wound",
+     "correct": false,
+     "why": "A puncture is a deep narrow track."
+    }
+   ],
+   "explanation": [
+    "Blunt shear can strip skin/fat off the deep fascia.",
+    "Viability is judged at a second look after 3–4 days."
+   ],
+   "keyFacts": [
+    "Degloving → second look at 3–4 days."
+   ],
+   "teachingPoint": "Doubtful degloved skin is reassessed, not discarded."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sur-ch1-wound-healing-mcq-031",
+   "type": "single",
+   "sectionId": "s9",
+   "difficulty": 2,
+   "highYield": false,
+   "stem": "Which suture is a braided natural material that provokes marked tissue reaction yet is technically very slowly absorbable?",
+   "options": [
+    {
+     "id": "a",
+     "text": "Prolene",
+     "correct": false,
+     "why": "Prolene is an inert synthetic monofilament."
+    },
+    {
+     "id": "b",
+     "text": "Silk",
+     "correct": true,
+     "why": "Correct — braided protein, reactive, slowly absorbable."
+    },
+    {
+     "id": "c",
+     "text": "PDS",
+     "correct": false,
+     "why": "PDS is a synthetic absorbable monofilament."
+    },
+    {
+     "id": "d",
+     "text": "Nylon",
+     "correct": false,
+     "why": "Nylon is a synthetic polyamide."
+    },
+    {
+     "id": "e",
+     "text": "Stainless steel",
+     "correct": false,
+     "why": "Steel is inert and non-absorbable."
+    }
+   ],
+   "explanation": [
+    "Silk is a braided protein suture.",
+    "It reacts markedly and is in fact very slowly absorbable despite its classification."
+   ],
+   "keyFacts": [
+    "Silk: braided, reactive, slowly absorbable."
+   ],
+   "teachingPoint": "Silk is the exception among 'non-absorbables'."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sur-ch1-wound-healing-mcq-032",
+   "type": "single",
+   "sectionId": "s1",
+   "difficulty": 1,
+   "highYield": false,
+   "stem": "Which statement about tensile strength is correct?",
+   "options": [
+    {
+     "id": "a",
+     "text": "A wound reaches full strength by 3 weeks",
+     "correct": false,
+     "why": "At 3 weeks it has only ~20% of final strength."
+    },
+    {
+     "id": "b",
+     "text": "A wound never regains full original strength",
+     "correct": true,
+     "why": "Correct."
+    },
+    {
+     "id": "c",
+     "text": "Scar is stronger than intact skin",
+     "correct": false,
+     "why": "Scar is weaker than intact tissue."
+    },
+    {
+     "id": "d",
+     "text": "Remodelling lasts about one week",
+     "correct": false,
+     "why": "Remodelling continues about a year."
+    },
+    {
+     "id": "e",
+     "text": "Collagen I is laid down before collagen III",
+     "correct": false,
+     "why": "Collagen III precedes collagen I."
+    }
+   ],
+   "explanation": [
+    "Remodelling raises strength over about a year.",
+    "But the wound never regains its full original tensile strength."
+   ],
+   "keyFacts": [
+    "Never 100%; remodelling ~1 year."
+   ],
+   "teachingPoint": "Repaired tissue is permanently weaker."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sur-ch1-wound-healing-mcq-033",
+   "type": "single",
+   "sectionId": "s8",
+   "difficulty": 2,
+   "highYield": false,
+   "stem": "Which is NOT a recognised risk factor for pressure sores?",
+   "options": [
+    {
+     "id": "a",
+     "text": "Immobilisation",
+     "correct": false,
+     "why": "A key risk factor."
+    },
+    {
+     "id": "b",
+     "text": "Poor nutrition",
+     "correct": false,
+     "why": "A recognised risk factor."
+    },
+    {
+     "id": "c",
+     "text": "Good sensory innervation",
+     "correct": true,
+     "why": "Correct — denervation (loss of sensation), not good innervation, is the risk."
+    },
+    {
+     "id": "d",
+     "text": "Urinary/faecal soiling",
+     "correct": false,
+     "why": "A recognised risk factor."
+    },
+    {
+     "id": "e",
+     "text": "Old age",
+     "correct": false,
+     "why": "A recognised risk factor."
+    }
+   ],
+   "explanation": [
+    "Risk factors include immobility, poor nutrition, anaemia, denervation and soiling.",
+    "Intact sensation is protective, so 'good innervation' is not a risk factor."
+   ],
+   "keyFacts": [
+    "Denervation (not good innervation) predisposes to pressure sores."
+   ],
+   "teachingPoint": "Loss of protective sensation drives pressure injury."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sur-ch1-wound-healing-mcq-034",
+   "type": "single",
+   "sectionId": "s10",
+   "difficulty": 1,
+   "highYield": false,
+   "stem": "Alginate dressings are:",
+   "options": [
+    {
+     "id": "a",
+     "text": "Derived from seaweed and gel with exudate",
+     "correct": true,
+     "why": "Correct."
+    },
+    {
+     "id": "b",
+     "text": "Impermeable plastic films only",
+     "correct": false,
+     "why": "That describes some occlusive films, not alginates."
+    },
+    {
+     "id": "c",
+     "text": "Purely osmotic sugar pastes",
+     "correct": false,
+     "why": "That describes osmotic agents like honey."
+    },
+    {
+     "id": "d",
+     "text": "Negative-pressure devices",
+     "correct": false,
+     "why": "That is VAC."
+    },
+    {
+     "id": "e",
+     "text": "Antibiotic-impregnated gauze",
+     "correct": false,
+     "why": "Not the defining property of alginates."
+    }
+   ],
+   "explanation": [
+    "Alginates come from seaweed.",
+    "On contact with exudate they form a fibrous gel and a moist bed."
+   ],
+   "keyFacts": [
+    "Alginate = seaweed-derived, gels with exudate."
+   ],
+   "teachingPoint": "Alginates suit exudative wounds."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sur-ch1-wound-healing-mcq-035",
+   "type": "single",
+   "sectionId": "s3",
+   "difficulty": 2,
+   "highYield": false,
+   "stem": "A wound over the shin of the tibia heals with very little contraction. The best explanation is:",
+   "options": [
+    {
+     "id": "a",
+     "text": "Excess vitamin C",
+     "correct": false,
+     "why": "Vitamin C aids, and its excess is not the issue."
+    },
+    {
+     "id": "b",
+     "text": "Adhesion of the wound to bone",
+     "correct": true,
+     "why": "Correct — adhesion to a bony surface prevents contraction."
+    },
+    {
+     "id": "c",
+     "text": "Too much immobilisation",
+     "correct": false,
+     "why": "Immobilisation helps healing."
+    },
+    {
+     "id": "d",
+     "text": "High local vascularity",
+     "correct": false,
+     "why": "The shin has relatively poor supply, and vascularity would aid healing."
+    },
+    {
+     "id": "e",
+     "text": "Absence of macrophages",
+     "correct": false,
+     "why": "Not the described mechanism."
+    }
+   ],
+   "explanation": [
+    "Contraction needs mobile soft tissue.",
+    "Adhesion to underlying bone (e.g. over the shin) prevents it."
+   ],
+   "keyFacts": [
+    "Adhesion to bone blocks contraction."
+   ],
+   "teachingPoint": "Fixed wounds contract poorly."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sur-ch1-wound-healing-mcq-036",
+   "type": "single",
+   "sectionId": "s6",
+   "difficulty": 1,
+   "highYield": false,
+   "stem": "Which open wound has the highest inherent risk of infection due to contamination and devitalised tissue?",
+   "options": [
+    {
+     "id": "a",
+     "text": "Clean incised wound",
+     "correct": false,
+     "why": "Clean, minimal tissue destruction, lower infection risk."
+    },
+    {
+     "id": "b",
+     "text": "Lacerated wound",
+     "correct": true,
+     "why": "Correct — irregular, devitalised, contaminated, high infection risk."
+    },
+    {
+     "id": "c",
+     "text": "Superficial abrasion",
+     "correct": false,
+     "why": "Superficial, cleaned easily."
+    },
+    {
+     "id": "d",
+     "text": "Simple closed contusion",
+     "correct": false,
+     "why": "A closed injury with intact skin."
+    },
+    {
+     "id": "e",
+     "text": "Fine surgical incision",
+     "correct": false,
+     "why": "Clean and controlled."
+    }
+   ],
+   "explanation": [
+    "Lacerations are caused by blunt violence.",
+    "They are devitalised and contaminated with a high infection risk."
+   ],
+   "keyFacts": [
+    "Lacerated wounds are dirty and devitalised."
+   ],
+   "teachingPoint": "Mechanism predicts contamination."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sur-ch1-wound-healing-mcq-037",
+   "type": "single",
+   "sectionId": "s2",
+   "difficulty": 1,
+   "highYield": false,
+   "stem": "Healing by primary intention is characterised by:",
+   "options": [
+    {
+     "id": "a",
+     "text": "Marked granulation tissue in-fill",
+     "correct": false,
+     "why": "That is secondary intention."
+    },
+    {
+     "id": "b",
+     "text": "Minimal fibrosis and a fine scar",
+     "correct": true,
+     "why": "Correct."
+    },
+    {
+     "id": "c",
+     "text": "A wide scar without adnexa",
+     "correct": false,
+     "why": "That is secondary intention."
+    },
+    {
+     "id": "d",
+     "text": "Deliberate 5-day delay before closure",
+     "correct": false,
+     "why": "That is tertiary intention."
+    },
+    {
+     "id": "e",
+     "text": "Healing without any scar",
+     "correct": false,
+     "why": "Even primary intention leaves a fine scar."
+    }
+   ],
+   "explanation": [
+    "Primary intention apposes clean edges immediately.",
+    "Healing shows minimal fibrosis and a neat scar."
+   ],
+   "keyFacts": [
+    "Primary = minimal fibrosis, fine scar."
+   ],
+   "teachingPoint": "Apposed clean edges scar least."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sur-ch1-wound-healing-mcq-038",
+   "type": "single",
+   "sectionId": "s7",
+   "difficulty": 2,
+   "highYield": false,
+   "stem": "Regarding nerve and tendon injury within a contaminated wound, the correct principle is:",
+   "options": [
+    {
+     "id": "a",
+     "text": "Repair immediately to prevent retraction",
+     "correct": false,
+     "why": "Contaminated wounds should have repair deferred."
+    },
+    {
+     "id": "b",
+     "text": "Defer definitive repair",
+     "correct": true,
+     "why": "Correct — defer nerve/tendon repair in contamination."
+    },
+    {
+     "id": "c",
+     "text": "Never repair at any stage",
+     "correct": false,
+     "why": "They can be repaired later once clean."
+    },
+    {
+     "id": "d",
+     "text": "Repair only the nerve, never the tendon",
+     "correct": false,
+     "why": "Both are deferred, not selectively repaired."
+    },
+    {
+     "id": "e",
+     "text": "Close the deep fascia over them",
+     "correct": false,
+     "why": "Deep fascia is left open in contamination."
+    }
+   ],
+   "explanation": [
+    "Clean incised wounds allow primary nerve/tendon repair.",
+    "In contamination, repair is deferred until the wound is clean."
+   ],
+   "keyFacts": [
+    "Defer nerve/tendon repair in a dirty wound."
+   ],
+   "teachingPoint": "Timing of repair depends on contamination."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sur-ch1-wound-healing-mcq-039",
+   "type": "single",
+   "sectionId": "s1",
+   "difficulty": 1,
+   "highYield": false,
+   "stem": "Granulation tissue is composed of:",
+   "options": [
+    {
+     "id": "a",
+     "text": "Mature collagen only",
+     "correct": false,
+     "why": "Mature collagen predominates later, in remodelling."
+    },
+    {
+     "id": "b",
+     "text": "New capillary buds and fibroblasts",
+     "correct": true,
+     "why": "Correct."
+    },
+    {
+     "id": "c",
+     "text": "Neutrophils and platelets only",
+     "correct": false,
+     "why": "Those dominate the earlier inflammatory clot."
+    },
+    {
+     "id": "d",
+     "text": "Epithelial cells only",
+     "correct": false,
+     "why": "Epithelium migrates over the surface, separate from granulation tissue."
+    },
+    {
+     "id": "e",
+     "text": "Necrotic debris",
+     "correct": false,
+     "why": "Debris is removed, not the tissue itself."
+    }
+   ],
+   "explanation": [
+    "Endothelial buds plus fibroblasts form granulation tissue.",
+    "It later matures into fibrous tissue."
+   ],
+   "keyFacts": [
+    "Granulation = capillaries + fibroblasts."
+   ],
+   "teachingPoint": "Granulation tissue is the building phase."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sur-ch1-wound-healing-mcq-040",
+   "type": "single",
+   "sectionId": "s9",
+   "difficulty": 1,
+   "highYield": false,
+   "stem": "Which is the strongest and most inert suture, used to close a sternotomy?",
+   "options": [
+    {
+     "id": "a",
+     "text": "Silk",
+     "correct": false,
+     "why": "Reactive and slowly absorbable."
+    },
+    {
+     "id": "b",
+     "text": "Stainless steel",
+     "correct": true,
+     "why": "Correct — very high tensile strength, very inert, used for sternotomy."
+    },
+    {
+     "id": "c",
+     "text": "Vicryl",
+     "correct": false,
+     "why": "Braided absorbable, not for sternotomy."
+    },
+    {
+     "id": "d",
+     "text": "Catgut",
+     "correct": false,
+     "why": "Absorbable and obsolete."
+    },
+    {
+     "id": "e",
+     "text": "Nylon",
+     "correct": false,
+     "why": "Good strength but not the sternotomy choice."
+    }
+   ],
+   "explanation": [
+    "Steel has very high tensile strength and is very inert.",
+    "It is used to close the sternum after cardiac surgery."
+   ],
+   "keyFacts": [
+    "Steel closes the sternotomy."
+   ],
+   "teachingPoint": "Match extreme-strength needs to steel."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sur-ch1-wound-healing-mcq-041",
+   "type": "single",
+   "sectionId": "s4",
+   "difficulty": 2,
+   "highYield": false,
+   "stem": "A scar overlying the elbow gradually shortens and limits extension. This is best described as:",
+   "options": [
+    {
+     "id": "a",
+     "text": "Keloid",
+     "correct": false,
+     "why": "Keloid overgrows the wound but does not primarily limit joint movement by shortening."
+    },
+    {
+     "id": "b",
+     "text": "Contracture",
+     "correct": true,
+     "why": "Correct — pathological scar shortening across a joint causing deformity."
+    },
+    {
+     "id": "c",
+     "text": "Hypertrophic scar",
+     "correct": false,
+     "why": "Raised within margins; does not by definition limit the joint."
+    },
+    {
+     "id": "d",
+     "text": "Dehiscence",
+     "correct": false,
+     "why": "That is wound breakdown."
+    },
+    {
+     "id": "e",
+     "text": "Normal maturation",
+     "correct": false,
+     "why": "Normal scars do not contract to limit a joint."
+    }
+   ],
+   "explanation": [
+    "A scar crossing a joint can shorten pathologically.",
+    "This contracture causes deformity; correct joint positioning during healing minimises it."
+   ],
+   "keyFacts": [
+    "Contracture crosses a joint and deforms it."
+   ],
+   "teachingPoint": "Position joints correctly while a scar matures."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sur-ch1-wound-healing-mcq-042",
+   "type": "single",
+   "sectionId": "s5",
+   "difficulty": 1,
+   "highYield": false,
+   "stem": "The typical colour sequence of a resolving contusion is:",
+   "options": [
+    {
+     "id": "a",
+     "text": "Green then bluish",
+     "correct": false,
+     "why": "This is the reverse order."
+    },
+    {
+     "id": "b",
+     "text": "Bluish then brown/green",
+     "correct": true,
+     "why": "Correct — extravasated blood breaks down."
+    },
+    {
+     "id": "c",
+     "text": "Yellow then red",
+     "correct": false,
+     "why": "Not the described sequence."
+    },
+    {
+     "id": "d",
+     "text": "Black then white",
+     "correct": false,
+     "why": "Not typical of a simple contusion."
+    },
+    {
+     "id": "e",
+     "text": "No colour change",
+     "correct": false,
+     "why": "A contusion changes colour as blood degrades."
+    }
+   ],
+   "explanation": [
+    "Extravasated blood is bluish initially.",
+    "As haemoglobin breaks down it turns brown then green."
+   ],
+   "keyFacts": [
+    "Contusion: bluish → brown/green."
+   ],
+   "teachingPoint": "Bruise colour tracks blood breakdown."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sur-ch1-wound-healing-mcq-043",
+   "type": "single",
+   "sectionId": "s8",
+   "difficulty": 1,
+   "highYield": false,
+   "stem": "Which best defines a chronic wound?",
+   "options": [
+    {
+     "id": "a",
+     "text": "Any painful wound",
+     "correct": false,
+     "why": "Pain does not define chronicity."
+    },
+    {
+     "id": "b",
+     "text": "A wound failing to heal in a reasonable time (~3 months)",
+     "correct": true,
+     "why": "Correct."
+    },
+    {
+     "id": "c",
+     "text": "A wound closed by primary intention",
+     "correct": false,
+     "why": "That is an acute clean wound."
+    },
+    {
+     "id": "d",
+     "text": "A wound less than 2 weeks old",
+     "correct": false,
+     "why": "That is acute."
+    },
+    {
+     "id": "e",
+     "text": "A wound on the face",
+     "correct": false,
+     "why": "Site does not define chronicity."
+    }
+   ],
+   "explanation": [
+    "Chronic wounds miss the normal healing timeline.",
+    "The usual threshold is about three months, with shared local hypoxia."
+   ],
+   "keyFacts": [
+    "Chronic = fails to heal within ~3 months."
+   ],
+   "teachingPoint": "Time and arrest define chronicity."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sur-ch1-wound-healing-mcq-044",
+   "type": "single",
+   "sectionId": "s6",
+   "difficulty": 1,
+   "highYield": false,
+   "stem": "Which is the correct pairing of wound and depth relationship?",
+   "options": [
+    {
+     "id": "a",
+     "text": "Incised wound — deeper than long",
+     "correct": false,
+     "why": "Incised wounds are longer than deep."
+    },
+    {
+     "id": "b",
+     "text": "Penetrating wound — deeper than long",
+     "correct": true,
+     "why": "Correct."
+    },
+    {
+     "id": "c",
+     "text": "Abrasion — full-thickness",
+     "correct": false,
+     "why": "Abrasions are superficial."
+    },
+    {
+     "id": "d",
+     "text": "Contusion — open wound",
+     "correct": false,
+     "why": "A contusion is closed."
+    },
+    {
+     "id": "e",
+     "text": "Missile wound — always superficial",
+     "correct": false,
+     "why": "Missile wounds are deep, high-energy."
+    }
+   ],
+   "explanation": [
+    "Penetrating wounds have a small opening but reach deep.",
+    "They are deeper than long — hence hidden deep injury."
+   ],
+   "keyFacts": [
+    "Penetrating = deeper than long."
+   ],
+   "teachingPoint": "Depth-to-length ratio flags hidden injury."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sur-ch1-wound-healing-mcq-045",
+   "type": "single",
+   "sectionId": "s10",
+   "difficulty": 1,
+   "highYield": false,
+   "stem": "The main purpose of a wound dressing is to:",
+   "options": [
+    {
+     "id": "a",
+     "text": "Guarantee sterility of the wound",
+     "correct": false,
+     "why": "Dressings limit but do not guarantee sterility."
+    },
+    {
+     "id": "b",
+     "text": "Provide the ideal environment for healing and limit bacterial overgrowth",
+     "correct": true,
+     "why": "Correct."
+    },
+    {
+     "id": "c",
+     "text": "Replace debridement",
+     "correct": false,
+     "why": "Dressings do not replace debridement."
+    },
+    {
+     "id": "d",
+     "text": "Provide tensile strength to the wound",
+     "correct": false,
+     "why": "Sutures, not dressings, provide strength."
+    },
+    {
+     "id": "e",
+     "text": "Speed collagen cross-linking chemically",
+     "correct": false,
+     "why": "Not the primary purpose."
+    }
+   ],
+   "explanation": [
+    "Dressings optimise the local environment.",
+    "They support healing and limit bacterial overgrowth."
+   ],
+   "keyFacts": [
+    "Dressing = optimal environment + fewer bacteria."
+   ],
+   "teachingPoint": "Dressings manage the wound micro-environment."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sur-ch1-wound-healing-mcq-046",
+   "type": "single",
+   "sectionId": "s3",
+   "difficulty": 3,
+   "highYield": false,
+   "stem": "Irradiated tissue heals poorly mainly because:",
+   "options": [
+    {
+     "id": "a",
+     "text": "It has excess collagen",
+     "correct": false,
+     "why": "Irradiation reduces, not increases, healthy repair."
+    },
+    {
+     "id": "b",
+     "text": "Endarteritis obliterans causes ischaemia",
+     "correct": true,
+     "why": "Correct."
+    },
+    {
+     "id": "c",
+     "text": "It becomes hyper-vascular",
+     "correct": false,
+     "why": "Irradiation reduces vascularity."
+    },
+    {
+     "id": "d",
+     "text": "It over-produces growth factors",
+     "correct": false,
+     "why": "The opposite occurs."
+    },
+    {
+     "id": "e",
+     "text": "It is permanently infected",
+     "correct": false,
+     "why": "Infection is not the primary mechanism."
+    }
+   ],
+   "explanation": [
+    "Radiation damages small vessels.",
+    "Endarteritis obliterans produces ischaemia that impairs contraction and granulation."
+   ],
+   "keyFacts": [
+    "Irradiation → endarteritis obliterans → ischaemia."
+   ],
+   "teachingPoint": "Radiation impairs healing via vessel damage."
+  }
+ ],
+ "emqs": [
+  {
+   "schema": "foundation.emq/v1",
+   "id": "sur-ch1-wound-healing-emq-001",
+   "type": "emq",
+   "theme": "Types of wound",
+   "sectionId": "s6",
+   "difficulty": 2,
+   "instruction": "For each description, select the single most likely wound type.",
+   "options": [
+    {
+     "id": "a",
+     "text": "Abrasion"
+    },
+    {
+     "id": "b",
+     "text": "Incised wound"
+    },
+    {
+     "id": "c",
+     "text": "Lacerated wound"
+    },
+    {
+     "id": "d",
+     "text": "Penetrating wound"
+    },
+    {
+     "id": "e",
+     "text": "Missile wound"
+    },
+    {
+     "id": "f",
+     "text": "Contusion"
+    },
+    {
+     "id": "g",
+     "text": "Haematoma"
+    },
+    {
+     "id": "h",
+     "text": "Bite"
+    }
+   ],
+   "stems": [
+    {
+     "stem": "A clean straight wound from a knife, longer than deep, with brisk bleeding.",
+     "answer": "b",
+     "why": "Sharp-blade cuts are clean and longer than deep."
+    },
+    {
+     "stem": "An irregular, devitalised, contaminated thigh wound after a road traffic accident, with skin sheared off the deep fascia.",
+     "answer": "c",
+     "why": "Blunt severe violence gives a lacerated, often degloving, wound."
+    },
+    {
+     "stem": "A small deep track from a screwdriver with a tiny external opening and poor drainage.",
+     "answer": "d",
+     "why": "A pointed object gives a deeper-than-long wound with a small opening."
+    },
+    {
+     "stem": "A wound where damage occurs far from the visible entry track, with cavitation.",
+     "answer": "e",
+     "why": "High-energy transfer causes cavitation and remote damage."
+    }
+   ]
+  },
+  {
+   "schema": "foundation.emq/v1",
+   "id": "sur-ch1-wound-healing-emq-002",
+   "type": "emq",
+   "theme": "Suture selection",
+   "sectionId": "s9",
+   "difficulty": 2,
+   "instruction": "For each situation, select the single most appropriate suture.",
+   "options": [
+    {
+     "id": "a",
+     "text": "Chromic catgut"
+    },
+    {
+     "id": "b",
+     "text": "Polyglactin (Vicryl)"
+    },
+    {
+     "id": "c",
+     "text": "Polydioxanone (PDS)"
+    },
+    {
+     "id": "d",
+     "text": "Polypropylene (Prolene)"
+    },
+    {
+     "id": "e",
+     "text": "Silk"
+    },
+    {
+     "id": "f",
+     "text": "Stainless steel"
+    },
+    {
+     "id": "g",
+     "text": "Nylon"
+    }
+   ],
+   "stems": [
+    {
+     "stem": "Closure of the abdominal wall and a hernia repair needing a durable inert monofilament.",
+     "answer": "d",
+     "why": "Prolene is the inert monofilament of choice for the abdominal wall/hernia."
+    },
+    {
+     "stem": "A slow-absorbing monofilament for a mass abdominal closure.",
+     "answer": "c",
+     "why": "PDS is the slowest-absorbing absorbable, ideal for slow-healing closure."
+    },
+    {
+     "stem": "A braided absorbable suture for a bowel anastomosis.",
+     "answer": "b",
+     "why": "Vicryl is a braided absorbable used for GI anastomoses."
+    },
+    {
+     "stem": "Closure of a sternotomy after open-heart surgery.",
+     "answer": "f",
+     "why": "Stainless steel closes the sternum."
+    }
+   ]
+  },
+  {
+   "schema": "foundation.emq/v1",
+   "id": "sur-ch1-wound-healing-emq-003",
+   "type": "emq",
+   "theme": "Chronic wounds",
+   "sectionId": "s8",
+   "difficulty": 2,
+   "instruction": "For each vignette, select the single most likely diagnosis.",
+   "options": [
+    {
+     "id": "a",
+     "text": "Venous ulcer"
+    },
+    {
+     "id": "b",
+     "text": "Ischaemic ulcer"
+    },
+    {
+     "id": "c",
+     "text": "Neuropathic (diabetic) ulcer"
+    },
+    {
+     "id": "d",
+     "text": "Pressure sore"
+    },
+    {
+     "id": "e",
+     "text": "Marjolin's ulcer"
+    },
+    {
+     "id": "f",
+     "text": "Basal cell carcinoma"
+    }
+   ],
+   "stems": [
+    {
+     "stem": "A painless ulcer under the metatarsal head of a diabetic foot at a pressure point.",
+     "answer": "c",
+     "why": "Neuropathic ulcers occur at pressure points and are painless."
+    },
+    {
+     "stem": "A shallow ulcer in the gaiter area with surrounding pigmentation; the commonest leg ulcer.",
+     "answer": "a",
+     "why": "Venous ulcers are commonest and sit in the gaiter area."
+    },
+    {
+     "stem": "A long-standing ulcer that now has raised, everted edges and will not heal.",
+     "answer": "e",
+     "why": "Malignant (squamous) change gives heaped, everted edges."
+    },
+    {
+     "stem": "A sacral ulcer in a bedridden patient with full-thickness loss short of the fascia.",
+     "answer": "d",
+     "why": "Sustained pressure over a bony prominence causes a pressure sore."
+    }
+   ]
+  },
+  {
+   "schema": "foundation.emq/v1",
+   "id": "sur-ch1-wound-healing-emq-004",
+   "type": "emq",
+   "theme": "Wound-healing biology",
+   "sectionId": "s1",
+   "difficulty": 2,
+   "instruction": "For each statement, select the single best-matching term.",
+   "options": [
+    {
+     "id": "a",
+     "text": "Myofibroblast"
+    },
+    {
+     "id": "b",
+     "text": "Macrophage"
+    },
+    {
+     "id": "c",
+     "text": "Collagen III"
+    },
+    {
+     "id": "d",
+     "text": "Collagen I"
+    },
+    {
+     "id": "e",
+     "text": "Epithelialisation"
+    },
+    {
+     "id": "f",
+     "text": "Granulation tissue"
+    },
+    {
+     "id": "g",
+     "text": "Remodelling"
+    }
+   ],
+   "stems": [
+    {
+     "stem": "Contains smooth-muscle actin and reduces wound size.",
+     "answer": "a",
+     "why": "The myofibroblast contracts the wound."
+    },
+    {
+     "stem": "Immature collagen deposited first, later replaced.",
+     "answer": "c",
+     "why": "Collagen III is laid down before collagen I."
+    },
+    {
+     "stem": "Covers a clean sutured wound in about 48 hours.",
+     "answer": "e",
+     "why": "Epithelialisation restores surface cover rapidly."
+    },
+    {
+     "stem": "New capillary buds plus fibroblasts filling the wound.",
+     "answer": "f",
+     "why": "Together these form granulation tissue."
+    }
+   ]
+  }
+ ],
+ "summary": "Wound healing runs through haemostasis/inflammation (~5 days, macrophage-led), proliferation (granulation tissue and epithelial migration) and maturation (collagen III → I over ~1 year, never regaining full strength). Wounds heal by primary, secondary or tertiary (delayed primary) intention. Healing is slowed by general factors (age, poor nutrition, vitamin C/A deficiency, diabetes, steroids) and local factors (poor vascularity, infection, tension, foreign body, irradiation); immobilisation helps. Know hypertrophic scar (within margins) versus keloid (beyond margins), and contracture across joints. Classify open wounds by mechanism, always suspecting deep injury in penetrating/missile trauma, and follow the contaminated-wound rule: no nerve/tendon repair, leave deep fascia and skin open. The commonest chronic leg ulcer is venous; grade pressure sores by depth; prefer monofilament (Prolene) for the abdominal wall and match dressings to exudate and infection."
+}

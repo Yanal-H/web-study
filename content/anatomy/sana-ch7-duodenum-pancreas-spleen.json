@@ -1,0 +1,934 @@
+{
+ "schema": "foundation.study-module/v1",
+ "id": "sana-ch7-duodenum-pancreas-spleen",
+ "subject": "Anatomy",
+ "title": "Duodenum, Pancreas & Spleen",
+ "source": {
+  "book": "Recall by Yanal — Surgical Anatomy",
+  "chapter": 7,
+  "title": "Duodenum, Pancreas & Spleen",
+  "pages": "—"
+ },
+ "brand": "by Yanal · Cairo 2026",
+ "estMinutes": 20,
+ "deck": "Anatomy::Duodenum, Pancreas & Spleen",
+ "tags": [
+  "anatomy",
+  "surgical-anatomy",
+  "duodenum-pancreas-spleen"
+ ],
+ "objectives": [
+  "Identify the key structures of Duodenum, Pancreas & Spleen at each level of dissection.",
+  "Relate the nerves, vessels and muscles of Duodenum, Pancreas & Spleen to their functions.",
+  "Localise the named spaces and regions of Duodenum, Pancreas & Spleen and list their contents.",
+  "Recognise the common clinical lesions associated with Duodenum, Pancreas & Spleen.",
+  "Reproduce the high-yield relations of Duodenum, Pancreas & Spleen tested in vivas and MCQs."
+ ],
+ "outline": [
+  "7.1 Duodenum",
+  "7.2 Pancreas",
+  "7.3 Spleen",
+  "7.4 Clinical Scenarios"
+ ],
+ "sections": [
+  {
+   "id": "s1",
+   "n": "7.1",
+   "title": "Duodenum",
+   "deck": "Duodenum",
+   "digest": "Imported Recall deck. This section holds the **duodenum** cards for Duodenum, Pancreas & Spleen. Open the flashcards for Duodenum to drill it; author a written digest here to turn the section into a reader page.",
+   "highYield": [],
+   "tables": [],
+   "pitfalls": [],
+   "figures": []
+  },
+  {
+   "id": "s2",
+   "n": "7.2",
+   "title": "Pancreas",
+   "deck": "Pancreas",
+   "digest": "Imported Recall deck. This section holds the **pancreas** cards for Duodenum, Pancreas & Spleen. Open the flashcards for Pancreas to drill it; author a written digest here to turn the section into a reader page.",
+   "highYield": [],
+   "tables": [],
+   "pitfalls": [],
+   "figures": []
+  },
+  {
+   "id": "s3",
+   "n": "7.3",
+   "title": "Spleen",
+   "deck": "Spleen",
+   "digest": "Imported Recall deck. This section holds the **spleen** cards for Duodenum, Pancreas & Spleen. Open the flashcards for Spleen to drill it; author a written digest here to turn the section into a reader page.",
+   "highYield": [],
+   "tables": [],
+   "pitfalls": [],
+   "figures": []
+  },
+  {
+   "id": "s4",
+   "n": "7.4",
+   "title": "Clinical Scenarios",
+   "deck": "Clinical Scenarios",
+   "digest": "Imported Recall deck. This section holds the **clinical scenarios** cards for Duodenum, Pancreas & Spleen. Open the flashcards for Clinical Scenarios to drill it; author a written digest here to turn the section into a reader page.",
+   "highYield": [],
+   "tables": [],
+   "pitfalls": [],
+   "figures": []
+  }
+ ],
+ "glossary": [],
+ "mnemonics": [],
+ "cards": [
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch7-duodenum-pancreas-spleen-card-001",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Duodenum",
+   "front": "Give the length and vertebral level of each part of the duodenum.",
+   "back": "First part about 5 cm at L1, second part about 7.5 cm descending from L1 to L3, third part about 10 cm crossing at L3, fourth part about 2.5 cm ascending to the duodenojejunal flexure at L2.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch7-duodenum-pancreas-spleen-card-002",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Duodenum",
+   "front": "Which part of the duodenum is intraperitoneal and why does that matter?",
+   "back": "Only the first 2.5 cm - the duodenal cap - is covered with peritoneum on both surfaces. The rest is retroperitoneal, so an anterior cap ulcer perforates freely into the greater sac while ulcers elsewhere perforate retroperitoneally with few early peritoneal signs.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch7-duodenum-pancreas-spleen-card-003",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Duodenum",
+   "front": "Name the posterior relations of the first part of the duodenum.",
+   "back": "The gastroduodenal artery, the bile duct, the portal vein and the inferior vena cava.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch7-duodenum-pancreas-spleen-card-004",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Duodenum",
+   "front": "Which structure lies immediately posterior to the second part of the duodenum?",
+   "back": "The hilum of the right kidney with the right renal vessels, the right ureter and the medial border of the right psoas.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch7-duodenum-pancreas-spleen-card-005",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Duodenum",
+   "front": "Which vessels cross the third part of the duodenum anteriorly?",
+   "back": "The superior mesenteric artery and vein in the root of the small bowel mesentery, which is the basis of superior mesenteric artery syndrome.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch7-duodenum-pancreas-spleen-card-006",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Duodenum",
+   "front": "Where does the bile duct enter the duodenum, and what marks the site?",
+   "back": "On the posteromedial wall of the second part at the major duodenal papilla, about 8 to 10 cm from the pylorus, at the junction of the upper two-thirds and lower third; the longitudinal mucosal fold above it points to the papilla at endoscopy.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch7-duodenum-pancreas-spleen-card-007",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Duodenum",
+   "front": "Describe the ampulla of Vater and the sphincter of Oddi.",
+   "back": "The bile duct and main pancreatic duct usually unite in a short common channel, the hepatopancreatic ampulla, opening at the major papilla. The sphincter of Oddi comprises separate sphincters around the terminal bile duct, the pancreatic duct and the ampulla itself.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch7-duodenum-pancreas-spleen-card-008",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Duodenum",
+   "front": "What is the common channel theory of gallstone pancreatitis?",
+   "back": "A stone impacted at the ampulla below the union of the two ducts allows bile to reflux into the pancreatic duct, or obstructs pancreatic outflow, initiating pancreatitis.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch7-duodenum-pancreas-spleen-card-009",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Duodenum",
+   "front": "Where is the minor duodenal papilla and what drains there?",
+   "back": "About 2 cm proximal and slightly anterior to the major papilla, draining the accessory duct of Santorini.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch7-duodenum-pancreas-spleen-card-010",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Duodenum",
+   "front": "Describe the blood supply of the duodenum and its embryological boundary.",
+   "back": "Proximal to the ampulla it is foregut, supplied by the superior pancreaticoduodenal branches of the gastroduodenal artery; distal to the ampulla it is midgut, supplied by the inferior pancreaticoduodenal branch of the superior mesenteric artery. The two form the anterior and posterior arcades.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch7-duodenum-pancreas-spleen-card-011",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Duodenum",
+   "front": "Why is the duodenum rarely resected in isolation?",
+   "back": "It shares the pancreaticoduodenal arcades intimately with the head of the pancreas, so devascularisation is unavoidable - which is why lesions of the second part require a pancreaticoduodenectomy.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch7-duodenum-pancreas-spleen-card-012",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Duodenum",
+   "front": "What is the ligament of Treitz and what does it define?",
+   "back": "The suspensory muscle of the duodenum from the right crus to the duodenojejunal flexure, fixing it to the left of L2. It marks the boundary between upper and lower gastrointestinal bleeding and is the landmark for the start of the jejunum.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch7-duodenum-pancreas-spleen-card-013",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Duodenum",
+   "front": "How does the Kocher manoeuvre expose the duodenum and pancreatic head?",
+   "back": "The peritoneum lateral to the second part is incised and the duodenum with the head of the pancreas is mobilised medially in the avascular plane in front of the inferior vena cava and right renal vein, exposing the posterior surface and allowing bimanual palpation.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch7-duodenum-pancreas-spleen-card-014",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Duodenum",
+   "front": "Why does a duodenal fistula cause such profound metabolic derangement?",
+   "back": "It drains a high-volume mixture of bile, pancreatic juice and gastric secretion, causing large fluid and electrolyte losses and severe digestion of the surrounding skin by activated enzymes.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch7-duodenum-pancreas-spleen-card-015",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Pancreas",
+   "front": "Name the parts of the pancreas and its vertebral level.",
+   "back": "Head with the uncinate process, neck, body and tail; it lies transversely across the posterior abdominal wall at the level of L1 to L2, in the transpyloric plane.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch7-duodenum-pancreas-spleen-card-016",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Pancreas",
+   "front": "What is the uncinate process and what passes behind it?",
+   "back": "The hook-shaped extension of the head passing behind the superior mesenteric vessels; the superior mesenteric artery and vein lie between the uncinate process behind and the neck in front.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch7-duodenum-pancreas-spleen-card-017",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Pancreas",
+   "front": "What lies behind the neck of the pancreas?",
+   "back": "The formation of the portal vein by the union of the superior mesenteric and splenic veins.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch7-duodenum-pancreas-spleen-card-018",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Pancreas",
+   "front": "Name the posterior relations of the body of the pancreas.",
+   "back": "The aorta, the origin of the superior mesenteric artery, the left crus, the left suprarenal, the left kidney and its vessels, and the splenic vein.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch7-duodenum-pancreas-spleen-card-019",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Pancreas",
+   "front": "Where does the tail of the pancreas lie and why is that dangerous?",
+   "back": "In the splenorenal ligament reaching the hilum of the spleen. During splenectomy the tail can be caught in a clamp or ligature, causing a pancreatic fistula or pseudocyst.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch7-duodenum-pancreas-spleen-card-020",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Pancreas",
+   "front": "Describe the main pancreatic duct of Wirsung.",
+   "back": "It runs the whole length of the gland nearer the posterior surface, receiving tributaries at right angles like a herringbone, and joins the bile duct at the ampulla.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch7-duodenum-pancreas-spleen-card-021",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Pancreas",
+   "front": "What is pancreas divisum and why does it matter?",
+   "back": "Failure of fusion of the dorsal and ventral duct systems, so most of the gland drains through the small accessory duct at the minor papilla. The relative outflow obstruction predisposes to recurrent pancreatitis.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch7-duodenum-pancreas-spleen-card-022",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Pancreas",
+   "front": "What is an annular pancreas and how does it present?",
+   "back": "A ring of pancreatic tissue encircling the second part of the duodenum from failure of the ventral bud to rotate fully, presenting with duodenal obstruction and the double bubble sign.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch7-duodenum-pancreas-spleen-card-023",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Pancreas",
+   "front": "Describe the arterial supply of the pancreas.",
+   "back": "The head by the anterior and posterior pancreaticoduodenal arcades from the gastroduodenal and superior mesenteric arteries; the neck, body and tail by the splenic artery through the dorsal pancreatic, great pancreatic (arteria pancreatica magna) and caudal branches.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch7-duodenum-pancreas-spleen-card-024",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Pancreas",
+   "front": "Describe the venous drainage of the pancreas and its surgical consequence.",
+   "back": "Short veins drain directly into the splenic, superior mesenteric and portal veins immediately behind the gland, so a tumour of the head or neck involves the portal-superior mesenteric confluence early and this determines resectability.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch7-duodenum-pancreas-spleen-card-025",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Pancreas",
+   "front": "Describe the lymphatic drainage of the pancreas.",
+   "back": "To the pancreaticosplenic nodes along the splenic artery and the pancreaticoduodenal nodes, then to the coeliac and superior mesenteric nodes - a rich, widely distributed field which is why nodal spread is early.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch7-duodenum-pancreas-spleen-card-026",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Pancreas",
+   "front": "Why is pancreatic pain felt in the back and eased by leaning forwards?",
+   "back": "The gland is retroperitoneal and its afferents run with the coeliac plexus to T6 to T10, so pain is epigastric and bores through to the back; leaning forwards relieves the pressure on the retroperitoneal plexus.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch7-duodenum-pancreas-spleen-card-027",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Pancreas",
+   "front": "Why does severe pancreatitis cause retroperitoneal fat necrosis and flank bruising?",
+   "back": "Activated lipase escapes into the loose retroperitoneal tissue and digests fat, and haemorrhagic exudate tracks along the fascial planes to the flank (Grey Turner's sign) and along the falciform ligament to the umbilicus (Cullen's sign).",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch7-duodenum-pancreas-spleen-card-028",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Pancreas",
+   "front": "Where does a pancreatic pseudocyst usually form and how is it drained internally?",
+   "back": "In the lesser sac, since the gland lies in its posterior wall. It is drained through the posterior wall of the stomach as a cystogastrostomy or into a Roux loop as a cystojejunostomy, once the wall has matured.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch7-duodenum-pancreas-spleen-card-029",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Pancreas",
+   "front": "Which vessel is at risk of a pseudoaneurysm in chronic pancreatitis, and why?",
+   "back": "The splenic artery, because it runs along the upper border of the gland and is exposed to enzymatic digestion; rupture into a pseudocyst or the gut causes catastrophic haemorrhage.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch7-duodenum-pancreas-spleen-card-030",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Pancreas",
+   "front": "Which structures are removed in a classical Whipple procedure?",
+   "back": "The head of the pancreas, the whole duodenum, the distal stomach with the pylorus, the gallbladder and the lower bile duct, with regional nodes - all sharing the pancreaticoduodenal blood supply.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch7-duodenum-pancreas-spleen-card-031",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Pancreas",
+   "front": "Which anatomical findings make a pancreatic head tumour unresectable?",
+   "back": "Encasement of the superior mesenteric artery or coeliac trunk, occlusion of the portal-superior mesenteric confluence beyond reconstruction, and distant or peritoneal metastasis - venous involvement alone may still be resectable with vein reconstruction.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch7-duodenum-pancreas-spleen-card-032",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Pancreas",
+   "front": "Why does carcinoma of the head of the pancreas cause painless obstructive jaundice with a palpable gallbladder?",
+   "back": "The tumour compresses the intrapancreatic bile duct gradually; Courvoisier's law states that a palpable gallbladder in a jaundiced patient is unlikely to be due to stones, because a stone-bearing gallbladder is usually fibrotic and cannot distend.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch7-duodenum-pancreas-spleen-card-033",
+   "type": "basic",
+   "sectionId": "s3",
+   "deck": "Spleen",
+   "front": "Describe the position and surface marking of the spleen.",
+   "back": "In the left hypochondrium beneath the ninth to eleventh ribs, its long axis along the tenth rib, separated from them by the diaphragm and the costodiaphragmatic recess of the pleura.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch7-duodenum-pancreas-spleen-card-034",
+   "type": "basic",
+   "sectionId": "s3",
+   "deck": "Spleen",
+   "front": "State the 1, 3, 5, 7, 9, 11 rule for the spleen.",
+   "back": "About 1 inch thick, 3 inches broad, 5 inches long, weighing about 7 ounces and lying beneath ribs 9 to 11.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch7-duodenum-pancreas-spleen-card-035",
+   "type": "basic",
+   "sectionId": "s3",
+   "deck": "Spleen",
+   "front": "Name the visceral relations that form the impressions on the spleen.",
+   "back": "The stomach, left kidney, splenic flexure of the colon and the tail of the pancreas.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch7-duodenum-pancreas-spleen-card-036",
+   "type": "basic",
+   "sectionId": "s3",
+   "deck": "Spleen",
+   "front": "Name the peritoneal ligaments of the spleen and their contents.",
+   "back": "The gastrosplenic ligament with the short gastric and left gastroepiploic vessels, and the splenorenal ligament with the splenic vessels and the tail of the pancreas; the phrenicocolic ligament supports its lower pole.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch7-duodenum-pancreas-spleen-card-037",
+   "type": "basic",
+   "sectionId": "s3",
+   "deck": "Spleen",
+   "front": "Why must the spleen enlarge considerably before it is palpable?",
+   "back": "It lies deep to the ribs and enlarges downwards, forwards and medially along the axis of the tenth rib; it must reach about three times normal size before its notched anterior border appears below the left costal margin.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch7-duodenum-pancreas-spleen-card-038",
+   "type": "basic",
+   "sectionId": "s3",
+   "deck": "Spleen",
+   "front": "How is splenomegaly distinguished from an enlarged left kidney on examination?",
+   "back": "The spleen has a notched anterior border, moves well with respiration, is not ballottable and one cannot get above it; a renal mass is ballottable, has no notch, and the examining hand can reach above it with a band of colonic resonance in front.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch7-duodenum-pancreas-spleen-card-039",
+   "type": "basic",
+   "sectionId": "s3",
+   "deck": "Spleen",
+   "front": "Describe the intrasplenic arterial arrangement and its surgical use.",
+   "back": "The splenic artery divides into superior and inferior polar branches which are end arteries supplying segments with relatively avascular planes between them, allowing segmental or partial splenectomy and splenorrhaphy.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch7-duodenum-pancreas-spleen-card-040",
+   "type": "basic",
+   "sectionId": "s3",
+   "deck": "Spleen",
+   "front": "Why does the spleen bleed so freely when injured?",
+   "back": "It is an encapsulated vascular sinusoidal organ receiving a large fraction of cardiac output through a short wide artery, and its thin capsule tears easily against the ribs; the tear does not spontaneously tamponade.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch7-duodenum-pancreas-spleen-card-041",
+   "type": "basic",
+   "sectionId": "s3",
+   "deck": "Spleen",
+   "front": "Explain delayed rupture of the spleen.",
+   "back": "An initial tear is contained by the capsule or by an organising subcapsular haematoma, which later ruptures as the clot liquefies and expands, causing sudden haemorrhage days or weeks after the injury.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch7-duodenum-pancreas-spleen-card-042",
+   "type": "basic",
+   "sectionId": "s3",
+   "deck": "Spleen",
+   "front": "What is Kehr's sign and what is its anatomical basis?",
+   "back": "Left shoulder-tip pain from blood irritating the left hemidiaphragm, referred through the phrenic nerve to the C4 dermatome, classically after splenic rupture.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch7-duodenum-pancreas-spleen-card-043",
+   "type": "basic",
+   "sectionId": "s3",
+   "deck": "Spleen",
+   "front": "Which structures are at risk during splenectomy?",
+   "back": "The tail of the pancreas in the splenorenal ligament, the greater curvature of the stomach when the short gastric vessels are ligated too close, and the splenic flexure of the colon at the phrenicocolic ligament.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch7-duodenum-pancreas-spleen-card-044",
+   "type": "basic",
+   "sectionId": "s3",
+   "deck": "Spleen",
+   "front": "Where are accessory spleens found and why do they matter?",
+   "back": "Most often at the splenic hilum, in the gastrosplenic and splenorenal ligaments, the greater omentum and the tail of the pancreas. If missed at splenectomy for a haematological disorder they hypertrophy and the disease recurs.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch7-duodenum-pancreas-spleen-card-045",
+   "type": "basic",
+   "sectionId": "s3",
+   "deck": "Spleen",
+   "front": "Why does splenectomy predispose to overwhelming infection by encapsulated organisms?",
+   "back": "The spleen removes opsonised encapsulated bacteria from the blood and produces tuftsin and opsonising antibody, so its loss removes the main filter for organisms such as pneumococcus, meningococcus and Haemophilus influenzae.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch7-duodenum-pancreas-spleen-card-046",
+   "type": "basic",
+   "sectionId": "s3",
+   "deck": "Spleen",
+   "front": "Which anatomical relation explains a left pleural effusion after splenectomy?",
+   "back": "The spleen lies against the diaphragm beneath the costodiaphragmatic recess, so subphrenic collection or diaphragmatic irritation after splenectomy readily produces a sympathetic effusion and left basal collapse.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch7-duodenum-pancreas-spleen-card-047",
+   "type": "cloze",
+   "sectionId": "s1",
+   "deck": "Duodenum",
+   "cloze": "Only the first {{c1::2.5 cm}} of the duodenum - the cap - is intraperitoneal.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch7-duodenum-pancreas-spleen-card-048",
+   "type": "cloze",
+   "sectionId": "s1",
+   "deck": "Duodenum",
+   "cloze": "The bile duct opens on the {{c1::posteromedial}} wall of the second part of the duodenum.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch7-duodenum-pancreas-spleen-card-049",
+   "type": "cloze",
+   "sectionId": "s1",
+   "deck": "Duodenum",
+   "cloze": "The embryological foregut-midgut boundary in the duodenum lies at the {{c1::ampulla of Vater}}.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch7-duodenum-pancreas-spleen-card-050",
+   "type": "cloze",
+   "sectionId": "s1",
+   "deck": "Duodenum",
+   "cloze": "The third part of the duodenum is crossed anteriorly by the {{c1::superior mesenteric vessels}}.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch7-duodenum-pancreas-spleen-card-051",
+   "type": "cloze",
+   "sectionId": "s1",
+   "deck": "Duodenum",
+   "cloze": "Mobilising the duodenum and pancreatic head medially is the {{c1::Kocher}} manoeuvre.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch7-duodenum-pancreas-spleen-card-052",
+   "type": "cloze",
+   "sectionId": "s2",
+   "deck": "Pancreas",
+   "cloze": "The {{c1::uncinate process}} of the pancreas passes behind the superior mesenteric vessels.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch7-duodenum-pancreas-spleen-card-053",
+   "type": "cloze",
+   "sectionId": "s2",
+   "deck": "Pancreas",
+   "cloze": "The portal vein is formed behind the {{c1::neck}} of the pancreas.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch7-duodenum-pancreas-spleen-card-054",
+   "type": "cloze",
+   "sectionId": "s2",
+   "deck": "Pancreas",
+   "cloze": "The main pancreatic duct is the duct of {{c1::Wirsung}}.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch7-duodenum-pancreas-spleen-card-055",
+   "type": "cloze",
+   "sectionId": "s2",
+   "deck": "Pancreas",
+   "cloze": "Failure of fusion of the dorsal and ventral pancreatic ducts is {{c1::pancreas divisum}}.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch7-duodenum-pancreas-spleen-card-056",
+   "type": "cloze",
+   "sectionId": "s2",
+   "deck": "Pancreas",
+   "cloze": "Flank bruising in severe pancreatitis is {{c1::Grey Turner's}} sign.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch7-duodenum-pancreas-spleen-card-057",
+   "type": "cloze",
+   "sectionId": "s2",
+   "deck": "Pancreas",
+   "cloze": "The vessel most at risk of pseudoaneurysm in chronic pancreatitis is the {{c1::splenic artery}}.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch7-duodenum-pancreas-spleen-card-058",
+   "type": "cloze",
+   "sectionId": "s3",
+   "deck": "Spleen",
+   "cloze": "The long axis of the spleen lies along the {{c1::tenth rib}}.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch7-duodenum-pancreas-spleen-card-059",
+   "type": "cloze",
+   "sectionId": "s3",
+   "deck": "Spleen",
+   "cloze": "The splenorenal ligament contains the splenic vessels and the {{c1::tail of the pancreas}}.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch7-duodenum-pancreas-spleen-card-060",
+   "type": "cloze",
+   "sectionId": "s3",
+   "deck": "Spleen",
+   "cloze": "Left shoulder-tip pain after splenic rupture is {{c1::Kehr's}} sign.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch7-duodenum-pancreas-spleen-card-061",
+   "type": "cloze",
+   "sectionId": "s3",
+   "deck": "Spleen",
+   "cloze": "The commonest site of an accessory spleen is the {{c1::splenic hilum}}.",
+   "difficulty": 1
+  }
+ ],
+ "mcqs": [
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sana-ch7-duodenum-pancreas-spleen-mcq-001",
+   "type": "single",
+   "sectionId": "s4",
+   "difficulty": 2,
+   "highYield": true,
+   "stem": "Five days after a difficult splenectomy the drain output rises sharply and is rich in amylase. Which anatomical relation explains this?",
+   "options": [
+    {
+     "id": "a",
+     "text": "The greater curvature was devascularised by ligation of the short gastric vessels",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "b",
+     "text": "The tail of the pancreas lies in the splenorenal ligament and was injured at the hilum",
+     "correct": true,
+     "why": "Key - B) The tail of the pancreas lies in the splenorenal ligament and was injured at the hilum. The tail of the pancreas reaches the splenic hilum within the splenorenal ligament, so a clamp or ligature at the pedicle can transect it, producing a pancreatic fistula with high amylase.\n\nWhy the others fail:\nA) The greater curvature was devascularised by ligation of the short gastric vessels - Devascularising the greater curvature causes gastric necrosis and perforation, giving enteric rather than amylase-rich drainage.\nC) The splenic flexure was injured at the phrenicocolic ligament - Colonic injury would give faeculent drainage, not amylase-rich fluid.\nD) The left kidney was mobilised with the specimen - The kidney lies behind the splenorenal ligament and is not involved in the pedicle, and renal injury would give urine, not amylase."
+    },
+    {
+     "id": "c",
+     "text": "The splenic flexure was injured at the phrenicocolic ligament",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "d",
+     "text": "The left kidney was mobilised with the specimen",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    }
+   ],
+   "explanation": [
+    "Key - B) The tail of the pancreas lies in the splenorenal ligament and was injured at the hilum. The tail of the pancreas reaches the splenic hilum within the splenorenal ligament, so a clamp or ligature at the pedicle can transect it, producing a pancreatic fistula with high amylase.\n\nWhy the others fail:\nA) The greater curvature was devascularised by ligation of the short gastric vessels - Devascularising the greater curvature causes gastric necrosis and perforation, giving enteric rather than amylase-rich drainage.\nC) The splenic flexure was injured at the phrenicocolic ligament - Colonic injury would give faeculent drainage, not amylase-rich fluid.\nD) The left kidney was mobilised with the specimen - The kidney lies behind the splenorenal ligament and is not involved in the pedicle, and renal injury would give urine, not amylase."
+   ],
+   "keyFacts": [
+    "Key - B) The tail of the pancreas lies in the splenorenal ligament and was injured at the hilum. The tail of the pancreas reaches the splenic hilum within the splenorenal ligament, so a clamp or ligature at the pedicle can transect it, producing a pancreatic fistula with high amylase.\n\nWhy the others fail:\nA) The greater curvature was devascularised by ligation of the short gastric vessels - Devascularising the greater curvature causes gastric necrosis and perforation, giving enteric rather than amylase-rich drainage.\nC) The splenic flexure was injured at the phrenicocolic ligament - Colonic injury would give faeculent drainage, not amylase-rich fluid.\nD) The left kidney was mobilised with the specimen - The kidney lies behind the splenorenal ligament and is not involved in the pedicle, and renal injury would give urine, not amylase."
+   ],
+   "teachingPoint": "Key - B) The tail of the pancreas lies in the splenorenal ligament and was injured at the hilum. The tail of the pancreas reaches the splenic hilum within the splenorenal ligament, so a clamp or ligature at the pedicle can transect it, producing a pancreatic fistula with high amylase.\n\nWhy the others fail:\nA) The greater curvature was devascularised by ligation of the short gastric vessels - Devascularising the greater curvature causes gastric necrosis and perforation, giving enteric rather than amylase-rich drainage.\nC) The splenic flexure was injured at the phrenicocolic ligament - Colonic injury would give faeculent drainage, not amylase-rich fluid.\nD) The left kidney was mobilised with the specimen - The kidney lies behind the splenorenal ligament and is not involved in the pedicle, and renal injury would give urine, not amylase."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sana-ch7-duodenum-pancreas-spleen-mcq-002",
+   "type": "single",
+   "sectionId": "s4",
+   "difficulty": 2,
+   "highYield": true,
+   "stem": "A CT scan in a patient with a pancreatic head mass shows tumour abutting but not encasing the superior mesenteric vein, with a patent confluence and no arterial involvement. What is the anatomical assessment of resectability?",
+   "options": [
+    {
+     "id": "a",
+     "text": "Unresectable, because any venous contact precludes resection",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "b",
+     "text": "Potentially resectable, since venous involvement can be managed with vein resection and reconstruction",
+     "correct": true,
+     "why": "Key - B) Potentially resectable, since venous involvement can be managed with vein resection and reconstruction. The portal-superior mesenteric confluence lies immediately behind the neck of the pancreas and short pancreatic veins drain into it, so venous contact is common and can be managed by segmental vein resection with reconstruction, whereas superior mesenteric artery or coeliac encasement is the true bar.\n\nWhy the others fail:\nA) Unresectable, because any venous contact precludes resection - Venous contact alone does not preclude resection in modern practice; it is arterial encasement that does.\nC) Unresectable, because the uncinate process lies behind the vein - The uncinate process normally lies behind the superior mesenteric vessels, so this is normal anatomy rather than a contraindication.\nD) Potentially resectable only if the gastroduodenal artery is also free - The gastroduodenal artery is divided as part of the Whipple procedure and its status is not the determinant of resectability."
+    },
+    {
+     "id": "c",
+     "text": "Unresectable, because the uncinate process lies behind the vein",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "d",
+     "text": "Potentially resectable only if the gastroduodenal artery is also free",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    }
+   ],
+   "explanation": [
+    "Key - B) Potentially resectable, since venous involvement can be managed with vein resection and reconstruction. The portal-superior mesenteric confluence lies immediately behind the neck of the pancreas and short pancreatic veins drain into it, so venous contact is common and can be managed by segmental vein resection with reconstruction, whereas superior mesenteric artery or coeliac encasement is the true bar.\n\nWhy the others fail:\nA) Unresectable, because any venous contact precludes resection - Venous contact alone does not preclude resection in modern practice; it is arterial encasement that does.\nC) Unresectable, because the uncinate process lies behind the vein - The uncinate process normally lies behind the superior mesenteric vessels, so this is normal anatomy rather than a contraindication.\nD) Potentially resectable only if the gastroduodenal artery is also free - The gastroduodenal artery is divided as part of the Whipple procedure and its status is not the determinant of resectability."
+   ],
+   "keyFacts": [
+    "Key - B) Potentially resectable, since venous involvement can be managed with vein resection and reconstruction. The portal-superior mesenteric confluence lies immediately behind the neck of the pancreas and short pancreatic veins drain into it, so venous contact is common and can be managed by segmental vein resection with reconstruction, whereas superior mesenteric artery or coeliac encasement is the true bar.\n\nWhy the others fail:\nA) Unresectable, because any venous contact precludes resection - Venous contact alone does not preclude resection in modern practice; it is arterial encasement that does.\nC) Unresectable, because the uncinate process lies behind the vein - The uncinate process normally lies behind the superior mesenteric vessels, so this is normal anatomy rather than a contraindication.\nD) Potentially resectable only if the gastroduodenal artery is also free - The gastroduodenal artery is divided as part of the Whipple procedure and its status is not the determinant of resectability."
+   ],
+   "teachingPoint": "Key - B) Potentially resectable, since venous involvement can be managed with vein resection and reconstruction. The portal-superior mesenteric confluence lies immediately behind the neck of the pancreas and short pancreatic veins drain into it, so venous contact is common and can be managed by segmental vein resection with reconstruction, whereas superior mesenteric artery or coeliac encasement is the true bar.\n\nWhy the others fail:\nA) Unresectable, because any venous contact precludes resection - Venous contact alone does not preclude resection in modern practice; it is arterial encasement that does.\nC) Unresectable, because the uncinate process lies behind the vein - The uncinate process normally lies behind the superior mesenteric vessels, so this is normal anatomy rather than a contraindication.\nD) Potentially resectable only if the gastroduodenal artery is also free - The gastroduodenal artery is divided as part of the Whipple procedure and its status is not the determinant of resectability."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sana-ch7-duodenum-pancreas-spleen-mcq-003",
+   "type": "single",
+   "sectionId": "s4",
+   "difficulty": 2,
+   "highYield": true,
+   "stem": "A patient with recurrent idiopathic pancreatitis has ERCP showing a short ventral duct at the major papilla and the bulk of the gland draining through the minor papilla. What is the diagnosis and its embryological basis?",
+   "options": [
+    {
+     "id": "a",
+     "text": "Annular pancreas - failure of the ventral bud to rotate",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "b",
+     "text": "Pancreas divisum - failure of fusion of the dorsal and ventral duct systems",
+     "correct": true,
+     "why": "Key - B) Pancreas divisum - failure of fusion of the dorsal and ventral duct systems. When the dorsal and ventral ducts fail to fuse, the large dorsal system drains through the small accessory duct at the minor papilla while only the small ventral duct reaches the major papilla, and the relative outflow obstruction causes recurrent pancreatitis.\n\nWhy the others fail:\nA) Annular pancreas - failure of the ventral bud to rotate - An annular pancreas encircles the duodenum and presents with obstruction, not with this ductal pattern.\nC) Choledochocele - cystic dilatation of the intraduodenal bile duct - A choledochocele is a cystic dilatation of the terminal bile duct and does not alter the pancreatic ductal anatomy in this way.\nD) Sphincter of Oddi dysfunction - functional narrowing at the ampulla - Sphincter dysfunction is a manometric diagnosis and does not produce a divided ductal system."
+    },
+    {
+     "id": "c",
+     "text": "Choledochocele - cystic dilatation of the intraduodenal bile duct",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "d",
+     "text": "Sphincter of Oddi dysfunction - functional narrowing at the ampulla",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    }
+   ],
+   "explanation": [
+    "Key - B) Pancreas divisum - failure of fusion of the dorsal and ventral duct systems. When the dorsal and ventral ducts fail to fuse, the large dorsal system drains through the small accessory duct at the minor papilla while only the small ventral duct reaches the major papilla, and the relative outflow obstruction causes recurrent pancreatitis.\n\nWhy the others fail:\nA) Annular pancreas - failure of the ventral bud to rotate - An annular pancreas encircles the duodenum and presents with obstruction, not with this ductal pattern.\nC) Choledochocele - cystic dilatation of the intraduodenal bile duct - A choledochocele is a cystic dilatation of the terminal bile duct and does not alter the pancreatic ductal anatomy in this way.\nD) Sphincter of Oddi dysfunction - functional narrowing at the ampulla - Sphincter dysfunction is a manometric diagnosis and does not produce a divided ductal system."
+   ],
+   "keyFacts": [
+    "Key - B) Pancreas divisum - failure of fusion of the dorsal and ventral duct systems. When the dorsal and ventral ducts fail to fuse, the large dorsal system drains through the small accessory duct at the minor papilla while only the small ventral duct reaches the major papilla, and the relative outflow obstruction causes recurrent pancreatitis.\n\nWhy the others fail:\nA) Annular pancreas - failure of the ventral bud to rotate - An annular pancreas encircles the duodenum and presents with obstruction, not with this ductal pattern.\nC) Choledochocele - cystic dilatation of the intraduodenal bile duct - A choledochocele is a cystic dilatation of the terminal bile duct and does not alter the pancreatic ductal anatomy in this way.\nD) Sphincter of Oddi dysfunction - functional narrowing at the ampulla - Sphincter dysfunction is a manometric diagnosis and does not produce a divided ductal system."
+   ],
+   "teachingPoint": "Key - B) Pancreas divisum - failure of fusion of the dorsal and ventral duct systems. When the dorsal and ventral ducts fail to fuse, the large dorsal system drains through the small accessory duct at the minor papilla while only the small ventral duct reaches the major papilla, and the relative outflow obstruction causes recurrent pancreatitis.\n\nWhy the others fail:\nA) Annular pancreas - failure of the ventral bud to rotate - An annular pancreas encircles the duodenum and presents with obstruction, not with this ductal pattern.\nC) Choledochocele - cystic dilatation of the intraduodenal bile duct - A choledochocele is a cystic dilatation of the terminal bile duct and does not alter the pancreatic ductal anatomy in this way.\nD) Sphincter of Oddi dysfunction - functional narrowing at the ampulla - Sphincter dysfunction is a manometric diagnosis and does not produce a divided ductal system."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sana-ch7-duodenum-pancreas-spleen-mcq-004",
+   "type": "single",
+   "sectionId": "s4",
+   "difficulty": 2,
+   "highYield": true,
+   "stem": "A jaundiced patient with weight loss has a palpable, non-tender gallbladder. Which anatomical principle argues against gallstones as the cause?",
+   "options": [
+    {
+     "id": "a",
+     "text": "The cystic duct is too narrow to allow distension",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "b",
+     "text": "A gallbladder chronically inflamed by stones is fibrotic and cannot distend, so a palpable gallbladder implies distal obstruction of another cause",
+     "correct": true,
+     "why": "Key - B) A gallbladder chronically inflamed by stones is fibrotic and cannot distend, so a palpable gallbladder implies distal obstruction of another cause. Courvoisier's law rests on the fact that longstanding stone disease scars and shrinks the gallbladder wall, so a palpably distended gallbladder with jaundice points to a distal obstruction such as a pancreatic head carcinoma.\n\nWhy the others fail:\nA) The cystic duct is too narrow to allow distension - The cystic duct calibre is not the determinant; the gallbladder distends readily when its wall is normal.\nC) Stones obstruct the common hepatic duct above the cystic duct - Obstruction above the cystic duct would give jaundice with a collapsed gallbladder, which is the opposite of what is described.\nD) The gallbladder is intraperitoneal and cannot be palpated when distended - A distended gallbladder is readily palpable below the ninth costal cartilage at the lateral border of the rectus."
+    },
+    {
+     "id": "c",
+     "text": "Stones obstruct the common hepatic duct above the cystic duct",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "d",
+     "text": "The gallbladder is intraperitoneal and cannot be palpated when distended",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    }
+   ],
+   "explanation": [
+    "Key - B) A gallbladder chronically inflamed by stones is fibrotic and cannot distend, so a palpable gallbladder implies distal obstruction of another cause. Courvoisier's law rests on the fact that longstanding stone disease scars and shrinks the gallbladder wall, so a palpably distended gallbladder with jaundice points to a distal obstruction such as a pancreatic head carcinoma.\n\nWhy the others fail:\nA) The cystic duct is too narrow to allow distension - The cystic duct calibre is not the determinant; the gallbladder distends readily when its wall is normal.\nC) Stones obstruct the common hepatic duct above the cystic duct - Obstruction above the cystic duct would give jaundice with a collapsed gallbladder, which is the opposite of what is described.\nD) The gallbladder is intraperitoneal and cannot be palpated when distended - A distended gallbladder is readily palpable below the ninth costal cartilage at the lateral border of the rectus."
+   ],
+   "keyFacts": [
+    "Key - B) A gallbladder chronically inflamed by stones is fibrotic and cannot distend, so a palpable gallbladder implies distal obstruction of another cause. Courvoisier's law rests on the fact that longstanding stone disease scars and shrinks the gallbladder wall, so a palpably distended gallbladder with jaundice points to a distal obstruction such as a pancreatic head carcinoma.\n\nWhy the others fail:\nA) The cystic duct is too narrow to allow distension - The cystic duct calibre is not the determinant; the gallbladder distends readily when its wall is normal.\nC) Stones obstruct the common hepatic duct above the cystic duct - Obstruction above the cystic duct would give jaundice with a collapsed gallbladder, which is the opposite of what is described.\nD) The gallbladder is intraperitoneal and cannot be palpated when distended - A distended gallbladder is readily palpable below the ninth costal cartilage at the lateral border of the rectus."
+   ],
+   "teachingPoint": "Key - B) A gallbladder chronically inflamed by stones is fibrotic and cannot distend, so a palpable gallbladder implies distal obstruction of another cause. Courvoisier's law rests on the fact that longstanding stone disease scars and shrinks the gallbladder wall, so a palpably distended gallbladder with jaundice points to a distal obstruction such as a pancreatic head carcinoma.\n\nWhy the others fail:\nA) The cystic duct is too narrow to allow distension - The cystic duct calibre is not the determinant; the gallbladder distends readily when its wall is normal.\nC) Stones obstruct the common hepatic duct above the cystic duct - Obstruction above the cystic duct would give jaundice with a collapsed gallbladder, which is the opposite of what is described.\nD) The gallbladder is intraperitoneal and cannot be palpated when distended - A distended gallbladder is readily palpable below the ninth costal cartilage at the lateral border of the rectus."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sana-ch7-duodenum-pancreas-spleen-mcq-005",
+   "type": "single",
+   "sectionId": "s4",
+   "difficulty": 2,
+   "highYield": true,
+   "stem": "During emergency laparotomy for trauma the surgeon needs to expose the retropancreatic inferior vena cava and the posterior surface of the pancreatic head. Which manoeuvre is used and which plane is developed?",
+   "options": [
+    {
+     "id": "a",
+     "text": "Kocher manoeuvre - the avascular plane behind the duodenum and pancreatic head in front of the cava",
+     "correct": true,
+     "why": "Key - A) Kocher manoeuvre - the avascular plane behind the duodenum and pancreatic head in front of the cava. Incising the peritoneum lateral to the second part of the duodenum and reflecting the duodenum with the pancreatic head medially develops an avascular plane in front of the inferior vena cava and right renal vein, exposing exactly these structures.\n\nWhy the others fail:\nB) Cattell-Braasch manoeuvre - the plane behind the descending colon - The Cattell-Braasch manoeuvre mobilises the right colon and small bowel mesentery to expose the infrarenal cava and iliac vessels, a complementary but different exposure.\nC) Mattox manoeuvre - the plane behind the left colon and spleen - The Mattox manoeuvre is a left-sided medial visceral rotation exposing the aorta, not the pancreatic head.\nD) Pringle manoeuvre - compression of the hepatoduodenal ligament - The Pringle manoeuvre controls hepatic inflow and exposes nothing of the retropancreatic region."
+    },
+    {
+     "id": "b",
+     "text": "Cattell-Braasch manoeuvre - the plane behind the descending colon",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "c",
+     "text": "Mattox manoeuvre - the plane behind the left colon and spleen",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "d",
+     "text": "Pringle manoeuvre - compression of the hepatoduodenal ligament",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    }
+   ],
+   "explanation": [
+    "Key - A) Kocher manoeuvre - the avascular plane behind the duodenum and pancreatic head in front of the cava. Incising the peritoneum lateral to the second part of the duodenum and reflecting the duodenum with the pancreatic head medially develops an avascular plane in front of the inferior vena cava and right renal vein, exposing exactly these structures.\n\nWhy the others fail:\nB) Cattell-Braasch manoeuvre - the plane behind the descending colon - The Cattell-Braasch manoeuvre mobilises the right colon and small bowel mesentery to expose the infrarenal cava and iliac vessels, a complementary but different exposure.\nC) Mattox manoeuvre - the plane behind the left colon and spleen - The Mattox manoeuvre is a left-sided medial visceral rotation exposing the aorta, not the pancreatic head.\nD) Pringle manoeuvre - compression of the hepatoduodenal ligament - The Pringle manoeuvre controls hepatic inflow and exposes nothing of the retropancreatic region."
+   ],
+   "keyFacts": [
+    "Key - A) Kocher manoeuvre - the avascular plane behind the duodenum and pancreatic head in front of the cava. Incising the peritoneum lateral to the second part of the duodenum and reflecting the duodenum with the pancreatic head medially develops an avascular plane in front of the inferior vena cava and right renal vein, exposing exactly these structures.\n\nWhy the others fail:\nB) Cattell-Braasch manoeuvre - the plane behind the descending colon - The Cattell-Braasch manoeuvre mobilises the right colon and small bowel mesentery to expose the infrarenal cava and iliac vessels, a complementary but different exposure.\nC) Mattox manoeuvre - the plane behind the left colon and spleen - The Mattox manoeuvre is a left-sided medial visceral rotation exposing the aorta, not the pancreatic head.\nD) Pringle manoeuvre - compression of the hepatoduodenal ligament - The Pringle manoeuvre controls hepatic inflow and exposes nothing of the retropancreatic region."
+   ],
+   "teachingPoint": "Key - A) Kocher manoeuvre - the avascular plane behind the duodenum and pancreatic head in front of the cava. Incising the peritoneum lateral to the second part of the duodenum and reflecting the duodenum with the pancreatic head medially develops an avascular plane in front of the inferior vena cava and right renal vein, exposing exactly these structures.\n\nWhy the others fail:\nB) Cattell-Braasch manoeuvre - the plane behind the descending colon - The Cattell-Braasch manoeuvre mobilises the right colon and small bowel mesentery to expose the infrarenal cava and iliac vessels, a complementary but different exposure.\nC) Mattox manoeuvre - the plane behind the left colon and spleen - The Mattox manoeuvre is a left-sided medial visceral rotation exposing the aorta, not the pancreatic head.\nD) Pringle manoeuvre - compression of the hepatoduodenal ligament - The Pringle manoeuvre controls hepatic inflow and exposes nothing of the retropancreatic region."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sana-ch7-duodenum-pancreas-spleen-mcq-006",
+   "type": "single",
+   "sectionId": "s4",
+   "difficulty": 2,
+   "highYield": true,
+   "stem": "A patient with chronic pancreatitis has sudden massive haematemesis and a falling haemoglobin. CT shows a pseudocyst in the lesser sac with a contrast blush inside it. Which vessel is bleeding and why is it that one?",
+   "options": [
+    {
+     "id": "a",
+     "text": "Gastroduodenal artery, eroded by a duodenal ulcer",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "b",
+     "text": "Splenic artery, digested by enzymes as it runs along the upper border of the pancreas",
+     "correct": true,
+     "why": "Key - B) Splenic artery, digested by enzymes as it runs along the upper border of the pancreas. The splenic artery runs along the upper border of the gland in immediate contact with it, so enzymatic digestion in chronic pancreatitis forms a pseudoaneurysm that ruptures into the pseudocyst and then into the gut through the pancreatic duct.\n\nWhy the others fail:\nA) Gastroduodenal artery, eroded by a duodenal ulcer - The gastroduodenal artery bleeds from a posterior duodenal ulcer, and the stem describes a pseudocyst rather than an ulcer.\nC) Left gastric artery, eroded from within the lesser omentum - The left gastric artery lies within the lesser omentum away from the pancreatic bed and is not typically involved.\nD) Superior mesenteric artery, compressed by the cyst - Compression of the superior mesenteric artery causes ischaemia rather than haemorrhage."
+    },
+    {
+     "id": "c",
+     "text": "Left gastric artery, eroded from within the lesser omentum",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "d",
+     "text": "Superior mesenteric artery, compressed by the cyst",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    }
+   ],
+   "explanation": [
+    "Key - B) Splenic artery, digested by enzymes as it runs along the upper border of the pancreas. The splenic artery runs along the upper border of the gland in immediate contact with it, so enzymatic digestion in chronic pancreatitis forms a pseudoaneurysm that ruptures into the pseudocyst and then into the gut through the pancreatic duct.\n\nWhy the others fail:\nA) Gastroduodenal artery, eroded by a duodenal ulcer - The gastroduodenal artery bleeds from a posterior duodenal ulcer, and the stem describes a pseudocyst rather than an ulcer.\nC) Left gastric artery, eroded from within the lesser omentum - The left gastric artery lies within the lesser omentum away from the pancreatic bed and is not typically involved.\nD) Superior mesenteric artery, compressed by the cyst - Compression of the superior mesenteric artery causes ischaemia rather than haemorrhage."
+   ],
+   "keyFacts": [
+    "Key - B) Splenic artery, digested by enzymes as it runs along the upper border of the pancreas. The splenic artery runs along the upper border of the gland in immediate contact with it, so enzymatic digestion in chronic pancreatitis forms a pseudoaneurysm that ruptures into the pseudocyst and then into the gut through the pancreatic duct.\n\nWhy the others fail:\nA) Gastroduodenal artery, eroded by a duodenal ulcer - The gastroduodenal artery bleeds from a posterior duodenal ulcer, and the stem describes a pseudocyst rather than an ulcer.\nC) Left gastric artery, eroded from within the lesser omentum - The left gastric artery lies within the lesser omentum away from the pancreatic bed and is not typically involved.\nD) Superior mesenteric artery, compressed by the cyst - Compression of the superior mesenteric artery causes ischaemia rather than haemorrhage."
+   ],
+   "teachingPoint": "Key - B) Splenic artery, digested by enzymes as it runs along the upper border of the pancreas. The splenic artery runs along the upper border of the gland in immediate contact with it, so enzymatic digestion in chronic pancreatitis forms a pseudoaneurysm that ruptures into the pseudocyst and then into the gut through the pancreatic duct.\n\nWhy the others fail:\nA) Gastroduodenal artery, eroded by a duodenal ulcer - The gastroduodenal artery bleeds from a posterior duodenal ulcer, and the stem describes a pseudocyst rather than an ulcer.\nC) Left gastric artery, eroded from within the lesser omentum - The left gastric artery lies within the lesser omentum away from the pancreatic bed and is not typically involved.\nD) Superior mesenteric artery, compressed by the cyst - Compression of the superior mesenteric artery causes ischaemia rather than haemorrhage."
+  }
+ ],
+ "emqs": [],
+ "summary": "Duodenum, Pancreas & Spleen: work through each section's cards to fix the structures, their relations and clinical lesions. Use the MCQs to test discrimination and the image-occlusion cards to rehearse identification."
+}

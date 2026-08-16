@@ -1,0 +1,983 @@
+{
+ "schema": "foundation.study-module/v1",
+ "id": "sana-ch8-liver-biliary-tree",
+ "subject": "Anatomy",
+ "title": "Liver & Biliary Tree",
+ "source": {
+  "book": "Recall by Yanal — Surgical Anatomy",
+  "chapter": 8,
+  "title": "Liver & Biliary Tree",
+  "pages": "—"
+ },
+ "brand": "by Yanal · Cairo 2026",
+ "estMinutes": 20,
+ "deck": "Anatomy::Liver & Biliary Tree",
+ "tags": [
+  "anatomy",
+  "surgical-anatomy",
+  "liver-biliary-tree"
+ ],
+ "objectives": [
+  "Identify the key structures of Liver & Biliary Tree at each level of dissection.",
+  "Relate the nerves, vessels and muscles of Liver & Biliary Tree to their functions.",
+  "Localise the named spaces and regions of Liver & Biliary Tree and list their contents.",
+  "Recognise the common clinical lesions associated with Liver & Biliary Tree.",
+  "Reproduce the high-yield relations of Liver & Biliary Tree tested in vivas and MCQs."
+ ],
+ "outline": [
+  "8.1 Liver Anatomy & Segments",
+  "8.2 Gallbladder & Calot's Triangle",
+  "8.3 Biliary Tree & Anomalies",
+  "8.4 Clinical Scenarios"
+ ],
+ "sections": [
+  {
+   "id": "s1",
+   "n": "8.1",
+   "title": "Liver Anatomy & Segments",
+   "deck": "Liver Anatomy & Segments",
+   "digest": "Imported Recall deck. This section holds the **liver anatomy & segments** cards for Liver & Biliary Tree. Open the flashcards for Liver Anatomy & Segments to drill it; author a written digest here to turn the section into a reader page.",
+   "highYield": [],
+   "tables": [],
+   "pitfalls": [],
+   "figures": []
+  },
+  {
+   "id": "s2",
+   "n": "8.2",
+   "title": "Gallbladder & Calot's Triangle",
+   "deck": "Gallbladder & Calot's Triangle",
+   "digest": "Imported Recall deck. This section holds the **gallbladder & calot's triangle** cards for Liver & Biliary Tree. Open the flashcards for Gallbladder & Calot's Triangle to drill it; author a written digest here to turn the section into a reader page.",
+   "highYield": [],
+   "tables": [],
+   "pitfalls": [],
+   "figures": []
+  },
+  {
+   "id": "s3",
+   "n": "8.3",
+   "title": "Biliary Tree & Anomalies",
+   "deck": "Biliary Tree & Anomalies",
+   "digest": "Imported Recall deck. This section holds the **biliary tree & anomalies** cards for Liver & Biliary Tree. Open the flashcards for Biliary Tree & Anomalies to drill it; author a written digest here to turn the section into a reader page.",
+   "highYield": [],
+   "tables": [],
+   "pitfalls": [],
+   "figures": []
+  },
+  {
+   "id": "s4",
+   "n": "8.4",
+   "title": "Clinical Scenarios",
+   "deck": "Clinical Scenarios",
+   "digest": "Imported Recall deck. This section holds the **clinical scenarios** cards for Liver & Biliary Tree. Open the flashcards for Clinical Scenarios to drill it; author a written digest here to turn the section into a reader page.",
+   "highYield": [],
+   "tables": [],
+   "pitfalls": [],
+   "figures": []
+  }
+ ],
+ "glossary": [],
+ "mnemonics": [],
+ "cards": [
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch8-liver-biliary-tree-card-001",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Liver Anatomy & Segments",
+   "front": "Name the four anatomical lobes of the liver as defined by peritoneal folds.",
+   "back": "Right and left lobes divided on the anterior surface by the falciform ligament, with the caudate and quadrate lobes on the posteroinferior surface.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch8-liver-biliary-tree-card-002",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Liver Anatomy & Segments",
+   "front": "Why is the anatomical division into lobes surgically useless?",
+   "back": "The falciform ligament is a peritoneal fold, not a vascular boundary; the true functional division follows the portal and hepatic venous distribution, and the plane of the falciform ligament lies well to the left of it.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch8-liver-biliary-tree-card-003",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Liver Anatomy & Segments",
+   "front": "Where does the true functional division of the liver lie?",
+   "back": "Along Cantlie's line, the principal plane from the fundus of the gallbladder to the left side of the inferior vena cava, in which the middle hepatic vein runs.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch8-liver-biliary-tree-card-004",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Liver Anatomy & Segments",
+   "front": "State the basis of the Couinaud segmental system.",
+   "back": "Eight segments, each with its own portal triad inflow and biliary drainage, separated by the three hepatic veins in the vertical planes and by the plane of the right and left portal veins horizontally, so each can be resected independently.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch8-liver-biliary-tree-card-005",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Liver Anatomy & Segments",
+   "front": "Which segment is the caudate lobe and what is unique about it?",
+   "back": "Segment I. It receives blood from both right and left portal systems and drains by short veins directly into the inferior vena cava rather than through the three main hepatic veins.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch8-liver-biliary-tree-card-006",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Liver Anatomy & Segments",
+   "front": "Why does the caudate lobe hypertrophy in Budd-Chiari syndrome?",
+   "back": "Its independent short veins into the cava preserve its outflow when the main hepatic veins are occluded, so it hypertrophies while the rest of the liver congests and atrophies.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch8-liver-biliary-tree-card-007",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Liver Anatomy & Segments",
+   "front": "Which segments form the left lateral section, and which resection removes them?",
+   "back": "Segments II and III, removed by a left lateral sectionectomy - the graft taken in paediatric living donor transplantation.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch8-liver-biliary-tree-card-008",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Liver Anatomy & Segments",
+   "front": "Which segments are removed in a right hepatectomy?",
+   "back": "Segments V, VI, VII and VIII, dividing along Cantlie's line to the right of the middle hepatic vein.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch8-liver-biliary-tree-card-009",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Liver Anatomy & Segments",
+   "front": "Which segment is the quadrate lobe and to which functional side does it belong?",
+   "back": "Segment IV, which is functionally part of the left liver even though it lies to the right of the falciform ligament.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch8-liver-biliary-tree-card-010",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Liver Anatomy & Segments",
+   "front": "Name the three hepatic veins and the planes they occupy.",
+   "back": "The right hepatic vein between the right anterior and posterior sections, the middle hepatic vein in Cantlie's line, and the left hepatic vein between segments II and III; the middle and left usually form a common trunk before entering the cava.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch8-liver-biliary-tree-card-011",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Liver Anatomy & Segments",
+   "front": "What is the bare area of the liver and what is its clinical importance?",
+   "back": "The triangular area on the posterosuperior surface between the layers of the coronary ligament in direct contact with the diaphragm. Infection can spread between liver and diaphragm here, and the veins of Sappey form a portosystemic communication across it.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch8-liver-biliary-tree-card-012",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Liver Anatomy & Segments",
+   "front": "Name the peritoneal ligaments of the liver.",
+   "back": "The falciform ligament with the ligamentum teres in its free edge, the upper and lower layers of the coronary ligament, the right and left triangular ligaments, and the lesser omentum.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch8-liver-biliary-tree-card-013",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Liver Anatomy & Segments",
+   "front": "Which structures pass through the porta hepatis and in what arrangement?",
+   "back": "The right and left hepatic ducts anteriorly, the right and left branches of the hepatic artery in the middle, and the right and left branches of the portal vein posteriorly, with nerves and lymphatics.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch8-liver-biliary-tree-card-014",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Liver Anatomy & Segments",
+   "front": "How does the liver receive its blood supply and in what proportions?",
+   "back": "About 25 to 30 per cent of flow and half the oxygen from the hepatic artery, and about 70 to 75 per cent of flow from the portal vein.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch8-liver-biliary-tree-card-015",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Liver Anatomy & Segments",
+   "front": "Why can the hepatic artery be ligated in trauma but the portal vein cannot?",
+   "back": "The liver tolerates hepatic artery ligation because portal flow and the collateral arterial supply from the phrenic and gastric vessels maintain it, whereas portal vein occlusion causes massive splanchnic congestion and hepatic failure.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch8-liver-biliary-tree-card-016",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Liver Anatomy & Segments",
+   "front": "Which structure is at greatest risk if the arterial supply to the bile duct is divided?",
+   "back": "The bile duct itself; it depends on the axial 3 o'clock and 9 o'clock arteries running along its lateral borders from the retroduodenal and right hepatic arteries, and stripping them causes an ischaemic stricture.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch8-liver-biliary-tree-card-017",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Liver Anatomy & Segments",
+   "front": "Why does the liver commonly harbour metastases from gastrointestinal cancers?",
+   "back": "It receives the entire portal venous drainage of the gut, so tumour cells shed into portal tributaries are filtered first through the hepatic sinusoids.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch8-liver-biliary-tree-card-018",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Liver Anatomy & Segments",
+   "front": "Where do amoebic liver abscesses usually form and why?",
+   "back": "In the right lobe, usually posterosuperiorly, because streamlined portal flow from the superior mesenteric vein preferentially enters the right portal branch.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch8-liver-biliary-tree-card-019",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Gallbladder & Calot's Triangle",
+   "front": "Name the parts of the gallbladder and give the surface marking of the fundus.",
+   "back": "Fundus, body, infundibulum with Hartmann's pouch, and neck leading to the cystic duct. The fundus lies where the lateral border of the right rectus crosses the ninth costal cartilage, in the transpyloric plane.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch8-liver-biliary-tree-card-020",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Gallbladder & Calot's Triangle",
+   "front": "What is Hartmann's pouch and why does it matter?",
+   "back": "A dilatation of the infundibulum near the neck where stones lodge. An impacted stone there obstructs the cystic duct, adheres to the common hepatic duct and distorts the anatomy of Calot's triangle, and is the origin of Mirizzi syndrome.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch8-liver-biliary-tree-card-021",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Gallbladder & Calot's Triangle",
+   "front": "What are the spiral valves of Heister and what is their clinical relevance?",
+   "back": "Crescentic mucosal folds in the cystic duct that keep it patent. They obstruct the retrograde passage of a catheter and can make cannulation and stone extraction difficult.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch8-liver-biliary-tree-card-022",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Gallbladder & Calot's Triangle",
+   "front": "Give the boundaries of Calot's triangle as used surgically.",
+   "back": "The cystic duct inferolaterally, the common hepatic duct medially, and the inferior surface of the liver above - the hepatocystic triangle.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch8-liver-biliary-tree-card-023",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Gallbladder & Calot's Triangle",
+   "front": "How did Calot originally define the triangle, and what is the difference?",
+   "back": "Calot's original description used the cystic artery as the superior boundary rather than the liver; the modern hepatocystic triangle uses the liver edge, which makes the cystic artery a content rather than a boundary.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch8-liver-biliary-tree-card-024",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Gallbladder & Calot's Triangle",
+   "front": "What lies within Calot's triangle?",
+   "back": "The cystic artery, the right hepatic artery, the cystic lymph node of Lund and lymphatics, and sometimes an accessory or aberrant right hepatic duct.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch8-liver-biliary-tree-card-025",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Gallbladder & Calot's Triangle",
+   "front": "Define the critical view of safety and why it prevents duct injury.",
+   "back": "The hepatocystic triangle is cleared of fat and fibrous tissue, the lower third of the gallbladder is separated from the liver bed, and exactly two structures are seen entering the gallbladder. Only then are they clipped, so the common duct cannot be mistaken for the cystic duct.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch8-liver-biliary-tree-card-026",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Gallbladder & Calot's Triangle",
+   "front": "Describe the classical mechanism of laparoscopic bile duct injury.",
+   "back": "Cephalad traction aligns the cystic duct with the common bile duct, so the common duct is mistaken for the cystic duct, clipped and divided, and the right hepatic artery running behind it is often injured with it.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch8-liver-biliary-tree-card-027",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Gallbladder & Calot's Triangle",
+   "front": "Where does the cystic artery usually arise and what course does it take?",
+   "back": "From the right hepatic artery within Calot's triangle, passing behind the common hepatic duct in the majority of people to reach the gallbladder neck, where it divides into superficial and deep branches.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch8-liver-biliary-tree-card-028",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Gallbladder & Calot's Triangle",
+   "front": "Name the important variations of the cystic artery.",
+   "back": "Origin from the gastroduodenal, common hepatic, left hepatic or superior mesenteric artery; a course anterior to the common hepatic duct; and a double cystic artery, which is why a single clipped vessel must never be assumed to be the only one.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch8-liver-biliary-tree-card-029",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Gallbladder & Calot's Triangle",
+   "front": "What is a Moynihan's hump (caterpillar turn)?",
+   "back": "A tortuous right hepatic artery looping up into Calot's triangle close to the gallbladder neck, easily mistaken for the cystic artery and divided, causing right lobe ischaemia.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch8-liver-biliary-tree-card-030",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Gallbladder & Calot's Triangle",
+   "front": "What are the ducts of Luschka and why do they matter?",
+   "back": "Small accessory bile ducts running in the gallbladder bed directly into the liver. If they are not sealed when the gallbladder is dissected off the bed they cause a postoperative bile leak.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch8-liver-biliary-tree-card-031",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Gallbladder & Calot's Triangle",
+   "front": "Describe the venous and lymphatic drainage of the gallbladder.",
+   "back": "Veins drain directly into the liver substance of segments IV and V and into the portal vein; lymph drains to the cystic node of Lund, the nodes of the porta hepatis and then the coeliac nodes, with direct communication into the liver - which is why gallbladder carcinoma involves segments IVb and V early.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch8-liver-biliary-tree-card-032",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Gallbladder & Calot's Triangle",
+   "front": "What is Mirizzi syndrome and how is it classified anatomically?",
+   "back": "Obstruction of the common hepatic duct by a stone impacted in the cystic duct or Hartmann's pouch. Type 1 is external compression only; higher types involve progressive erosion into the duct wall forming a cholecystocholedochal fistula.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch8-liver-biliary-tree-card-033",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Gallbladder & Calot's Triangle",
+   "front": "How does a gallstone ileus arise anatomically and where does the stone impact?",
+   "back": "A large stone erodes through the gallbladder into the adherent duodenum forming a cholecystoduodenal fistula, then passes down the small bowel to impact at its narrowest point, the terminal ileum.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch8-liver-biliary-tree-card-034",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Gallbladder & Calot's Triangle",
+   "front": "What is Rigler's triad?",
+   "back": "Small bowel obstruction, pneumobilia and an ectopic radio-opaque gallstone - the radiological signature of gallstone ileus.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch8-liver-biliary-tree-card-035",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Gallbladder & Calot's Triangle",
+   "front": "Why is referred pain in cholecystitis felt at the right shoulder tip and at the inferior angle of the right scapula?",
+   "back": "Irritation of the diaphragmatic peritoneum refers pain through the phrenic nerve to the C4 dermatome at the shoulder tip, while visceral afferents accompanying the sympathetic supply from T7 to T9 refer pain to the corresponding dermatomes over the scapula and epigastrium.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch8-liver-biliary-tree-card-036",
+   "type": "basic",
+   "sectionId": "s3",
+   "deck": "Biliary Tree & Anomalies",
+   "front": "Trace the normal extrahepatic biliary tree.",
+   "back": "The right and left hepatic ducts unite at the porta hepatis to form the common hepatic duct, which is joined by the cystic duct to become the common bile duct, ending at the ampulla in the second part of the duodenum.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch8-liver-biliary-tree-card-037",
+   "type": "basic",
+   "sectionId": "s3",
+   "deck": "Biliary Tree & Anomalies",
+   "front": "Give the length and the four parts of the common bile duct.",
+   "back": "About 7.5 to 8 cm, with supraduodenal, retroduodenal, intrapancreatic and intraduodenal parts.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch8-liver-biliary-tree-card-038",
+   "type": "basic",
+   "sectionId": "s3",
+   "deck": "Biliary Tree & Anomalies",
+   "front": "Describe the relations of the supraduodenal bile duct.",
+   "back": "It lies in the free edge of the lesser omentum, anterior and to the right, with the hepatic artery to its left and the portal vein behind them both.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch8-liver-biliary-tree-card-039",
+   "type": "basic",
+   "sectionId": "s3",
+   "deck": "Biliary Tree & Anomalies",
+   "front": "Where does the bile duct lie in relation to the pancreas and why does that matter?",
+   "back": "It runs in a groove or a tunnel on the posterior surface of the head of the pancreas, so a carcinoma or chronic inflammation of the head compresses it and causes obstructive jaundice.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch8-liver-biliary-tree-card-040",
+   "type": "basic",
+   "sectionId": "s3",
+   "deck": "Biliary Tree & Anomalies",
+   "front": "What is the blood supply of the common bile duct?",
+   "back": "Axial arteries running along its 3 o'clock and 9 o'clock borders, fed from below by the retroduodenal artery and from above by the right hepatic artery. Circumferential stripping causes ischaemic stricture.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch8-liver-biliary-tree-card-041",
+   "type": "basic",
+   "sectionId": "s3",
+   "deck": "Biliary Tree & Anomalies",
+   "front": "Name the important anatomical variations of the cystic duct.",
+   "back": "A long duct running parallel to and adherent to the common hepatic duct before joining it low down, a short or absent duct so the gallbladder appears to open directly into the common duct, and a spiral course joining the duct on its left side.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch8-liver-biliary-tree-card-042",
+   "type": "basic",
+   "sectionId": "s3",
+   "deck": "Biliary Tree & Anomalies",
+   "front": "Which biliary anomaly most often causes an inadvertent duct transection at cholecystectomy?",
+   "back": "A low-inserting or aberrant right sectoral duct draining into the cystic duct or the gallbladder itself, so that clipping the cystic duct occludes or divides the drainage of part of the right liver.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch8-liver-biliary-tree-card-043",
+   "type": "basic",
+   "sectionId": "s3",
+   "deck": "Biliary Tree & Anomalies",
+   "front": "What is the sphincter of Oddi and what are its components?",
+   "back": "The muscular complex around the terminal bile duct, the terminal pancreatic duct and the common ampulla, controlling flow of bile and pancreatic juice and preventing duodenal reflux.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch8-liver-biliary-tree-card-044",
+   "type": "basic",
+   "sectionId": "s3",
+   "deck": "Biliary Tree & Anomalies",
+   "front": "How is a choledochal cyst classified in outline?",
+   "back": "Type 1 fusiform dilatation of the common bile duct, type 2 a true diverticulum, type 3 a choledochocele within the duodenal wall, type 4 multiple intrahepatic and extrahepatic cysts, and type 5 intrahepatic cysts only, which is Caroli's disease.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch8-liver-biliary-tree-card-045",
+   "type": "basic",
+   "sectionId": "s3",
+   "deck": "Biliary Tree & Anomalies",
+   "front": "What is an anomalous pancreaticobiliary junction and why does it matter?",
+   "back": "The two ducts unite outside the duodenal wall, giving a long common channel beyond the control of the sphincter. Pancreatic juice refluxes into the bile duct, which is associated with choledochal cyst and with a raised risk of biliary malignancy.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch8-liver-biliary-tree-card-046",
+   "type": "basic",
+   "sectionId": "s3",
+   "deck": "Biliary Tree & Anomalies",
+   "front": "Where does a Klatskin tumour arise and why is it so difficult to resect?",
+   "back": "At the hilar confluence of the right and left hepatic ducts. Its position at the porta means early involvement of the portal vein bifurcation and both hepatic arteries, and resection usually requires a liver resection including the caudate lobe.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch8-liver-biliary-tree-card-047",
+   "type": "basic",
+   "sectionId": "s3",
+   "deck": "Biliary Tree & Anomalies",
+   "front": "Why does the caudate lobe often need to be removed with a hilar cholangiocarcinoma?",
+   "back": "The caudate lobe drains through several short ducts directly into the hilar confluence, so it is involved early and cannot be cleared without resection.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch8-liver-biliary-tree-card-048",
+   "type": "basic",
+   "sectionId": "s3",
+   "deck": "Biliary Tree & Anomalies",
+   "front": "What is biliary atresia and what operation addresses it?",
+   "back": "Progressive obliteration of the extrahepatic biliary tree in infancy; the Kasai portoenterostomy anastomoses a Roux loop to the transected fibrous porta hepatis, relying on microscopic ductules at the hilar plate to drain bile.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch8-liver-biliary-tree-card-049",
+   "type": "basic",
+   "sectionId": "s3",
+   "deck": "Biliary Tree & Anomalies",
+   "front": "Why is a Roux-en-Y hepaticojejunostomy the standard reconstruction for a bile duct injury?",
+   "back": "It provides a tension-free mucosa-to-mucosa anastomosis to well-vascularised duct above the level of injury, and the defunctioned limb keeps enteric contents away from the anastomosis, reducing cholangitis and stricture.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch8-liver-biliary-tree-card-050",
+   "type": "basic",
+   "sectionId": "s3",
+   "deck": "Biliary Tree & Anomalies",
+   "front": "Which structures does a surgeon divide to reach the hilar plate, and why is it lowered?",
+   "back": "The peritoneal reflection at the base of segment IV is incised and the plate lowered to expose the left hepatic duct where it runs a long extrahepatic course, giving a duct of adequate calibre for anastomosis.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch8-liver-biliary-tree-card-051",
+   "type": "cloze",
+   "sectionId": "s1",
+   "deck": "Liver Anatomy & Segments",
+   "cloze": "The true functional division of the liver runs along {{c1::Cantlie's line}}, from the gallbladder fossa to the inferior vena cava.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch8-liver-biliary-tree-card-052",
+   "type": "cloze",
+   "sectionId": "s1",
+   "deck": "Liver Anatomy & Segments",
+   "cloze": "The caudate lobe is segment {{c1::I}} and drains directly into the inferior vena cava.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch8-liver-biliary-tree-card-053",
+   "type": "cloze",
+   "sectionId": "s1",
+   "deck": "Liver Anatomy & Segments",
+   "cloze": "The quadrate lobe is segment {{c1::IV}} and belongs functionally to the left liver.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch8-liver-biliary-tree-card-054",
+   "type": "cloze",
+   "sectionId": "s1",
+   "deck": "Liver Anatomy & Segments",
+   "cloze": "A right hepatectomy removes segments {{c1::V, VI, VII and VIII}}.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch8-liver-biliary-tree-card-055",
+   "type": "cloze",
+   "sectionId": "s1",
+   "deck": "Liver Anatomy & Segments",
+   "cloze": "The middle hepatic vein runs within {{c1::Cantlie's line}}.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch8-liver-biliary-tree-card-056",
+   "type": "cloze",
+   "sectionId": "s1",
+   "deck": "Liver Anatomy & Segments",
+   "cloze": "The portal vein supplies about {{c1::70 to 75 per cent}} of hepatic blood flow.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch8-liver-biliary-tree-card-057",
+   "type": "cloze",
+   "sectionId": "s2",
+   "deck": "Gallbladder & Calot's Triangle",
+   "cloze": "The dilatation of the gallbladder infundibulum where stones lodge is {{c1::Hartmann's pouch}}.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch8-liver-biliary-tree-card-058",
+   "type": "cloze",
+   "sectionId": "s2",
+   "deck": "Gallbladder & Calot's Triangle",
+   "cloze": "The mucosal folds of the cystic duct are the spiral valves of {{c1::Heister}}.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch8-liver-biliary-tree-card-059",
+   "type": "cloze",
+   "sectionId": "s2",
+   "deck": "Gallbladder & Calot's Triangle",
+   "cloze": "The medial boundary of Calot's triangle is the {{c1::common hepatic duct}}.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch8-liver-biliary-tree-card-060",
+   "type": "cloze",
+   "sectionId": "s2",
+   "deck": "Gallbladder & Calot's Triangle",
+   "cloze": "The lymph node within Calot's triangle is the node of {{c1::Lund}}.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch8-liver-biliary-tree-card-061",
+   "type": "cloze",
+   "sectionId": "s2",
+   "deck": "Gallbladder & Calot's Triangle",
+   "cloze": "Accessory bile ducts in the gallbladder bed are the ducts of {{c1::Luschka}}.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch8-liver-biliary-tree-card-062",
+   "type": "cloze",
+   "sectionId": "s2",
+   "deck": "Gallbladder & Calot's Triangle",
+   "cloze": "Obstruction of the common hepatic duct by a stone in Hartmann's pouch is {{c1::Mirizzi}} syndrome.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch8-liver-biliary-tree-card-063",
+   "type": "cloze",
+   "sectionId": "s2",
+   "deck": "Gallbladder & Calot's Triangle",
+   "cloze": "A gallstone causing bowel obstruction impacts most often at the {{c1::terminal ileum}}.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch8-liver-biliary-tree-card-064",
+   "type": "cloze",
+   "sectionId": "s3",
+   "deck": "Biliary Tree & Anomalies",
+   "cloze": "The bile duct is supplied by axial arteries at the {{c1::3 and 9 o'clock}} positions.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch8-liver-biliary-tree-card-065",
+   "type": "cloze",
+   "sectionId": "s3",
+   "deck": "Biliary Tree & Anomalies",
+   "cloze": "A cholangiocarcinoma at the hilar confluence is a {{c1::Klatskin}} tumour.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch8-liver-biliary-tree-card-066",
+   "type": "cloze",
+   "sectionId": "s3",
+   "deck": "Biliary Tree & Anomalies",
+   "cloze": "Purely intrahepatic biliary cysts constitute {{c1::Caroli's}} disease.",
+   "difficulty": 1
+  }
+ ],
+ "mcqs": [
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sana-ch8-liver-biliary-tree-mcq-001",
+   "type": "single",
+   "sectionId": "s4",
+   "difficulty": 2,
+   "highYield": true,
+   "stem": "During laparoscopic cholecystectomy the surgeon clips and divides a duct after cephalad fundal traction, and bile leaks postoperatively with deranged liver function. Which mechanism best explains the injury?",
+   "options": [
+    {
+     "id": "a",
+     "text": "The cystic artery was divided instead of the cystic duct",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "b",
+     "text": "Cephalad traction aligned the cystic duct with the common bile duct, which was mistaken for it and divided",
+     "correct": true,
+     "why": "Key - B) Cephalad traction aligned the cystic duct with the common bile duct, which was mistaken for it and divided. Cephalad traction on the fundus tents the cystic duct into line with the common bile duct, so the common duct is taken for the cystic duct, clipped and divided - the classical laparoscopic injury, often with the right hepatic artery behind it.\n\nWhy the others fail:\nA) The cystic artery was divided instead of the cystic duct - Dividing the cystic artery causes bleeding, not a bile leak with deranged liver function.\nC) A duct of Luschka in the gallbladder bed was left unsealed - A duct of Luschka leak is a low-volume bile leak without obstruction and would not derange liver function in this way.\nD) The right hepatic duct was avulsed by traction on the infundibulum - Avulsion of the right hepatic duct by traction is not the recognised classical mechanism and would not follow deliberate clipping and division of a duct."
+    },
+    {
+     "id": "c",
+     "text": "A duct of Luschka in the gallbladder bed was left unsealed",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "d",
+     "text": "The right hepatic duct was avulsed by traction on the infundibulum",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    }
+   ],
+   "explanation": [
+    "Key - B) Cephalad traction aligned the cystic duct with the common bile duct, which was mistaken for it and divided. Cephalad traction on the fundus tents the cystic duct into line with the common bile duct, so the common duct is taken for the cystic duct, clipped and divided - the classical laparoscopic injury, often with the right hepatic artery behind it.\n\nWhy the others fail:\nA) The cystic artery was divided instead of the cystic duct - Dividing the cystic artery causes bleeding, not a bile leak with deranged liver function.\nC) A duct of Luschka in the gallbladder bed was left unsealed - A duct of Luschka leak is a low-volume bile leak without obstruction and would not derange liver function in this way.\nD) The right hepatic duct was avulsed by traction on the infundibulum - Avulsion of the right hepatic duct by traction is not the recognised classical mechanism and would not follow deliberate clipping and division of a duct."
+   ],
+   "keyFacts": [
+    "Key - B) Cephalad traction aligned the cystic duct with the common bile duct, which was mistaken for it and divided. Cephalad traction on the fundus tents the cystic duct into line with the common bile duct, so the common duct is taken for the cystic duct, clipped and divided - the classical laparoscopic injury, often with the right hepatic artery behind it.\n\nWhy the others fail:\nA) The cystic artery was divided instead of the cystic duct - Dividing the cystic artery causes bleeding, not a bile leak with deranged liver function.\nC) A duct of Luschka in the gallbladder bed was left unsealed - A duct of Luschka leak is a low-volume bile leak without obstruction and would not derange liver function in this way.\nD) The right hepatic duct was avulsed by traction on the infundibulum - Avulsion of the right hepatic duct by traction is not the recognised classical mechanism and would not follow deliberate clipping and division of a duct."
+   ],
+   "teachingPoint": "Key - B) Cephalad traction aligned the cystic duct with the common bile duct, which was mistaken for it and divided. Cephalad traction on the fundus tents the cystic duct into line with the common bile duct, so the common duct is taken for the cystic duct, clipped and divided - the classical laparoscopic injury, often with the right hepatic artery behind it.\n\nWhy the others fail:\nA) The cystic artery was divided instead of the cystic duct - Dividing the cystic artery causes bleeding, not a bile leak with deranged liver function.\nC) A duct of Luschka in the gallbladder bed was left unsealed - A duct of Luschka leak is a low-volume bile leak without obstruction and would not derange liver function in this way.\nD) The right hepatic duct was avulsed by traction on the infundibulum - Avulsion of the right hepatic duct by traction is not the recognised classical mechanism and would not follow deliberate clipping and division of a duct."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sana-ch8-liver-biliary-tree-mcq-002",
+   "type": "single",
+   "sectionId": "s4",
+   "difficulty": 2,
+   "highYield": true,
+   "stem": "A patient has Budd-Chiari syndrome. Imaging shows a grossly hypertrophied caudate lobe. Which anatomical property accounts for this?",
+   "options": [
+    {
+     "id": "a",
+     "text": "It receives arterial blood from both hepatic arteries",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "b",
+     "text": "It drains by short veins directly into the inferior vena cava rather than by the main hepatic veins",
+     "correct": true,
+     "why": "Key - B) It drains by short veins directly into the inferior vena cava rather than by the main hepatic veins. Segment I drains by several short veins straight into the cava, so when the three main hepatic veins occlude its outflow is preserved and it hypertrophies while the rest of the liver congests and atrophies.\n\nWhy the others fail:\nA) It receives arterial blood from both hepatic arteries - Dual arterial inflow does not protect against an outflow obstruction, which is the problem in Budd-Chiari syndrome.\nC) It lies outside the peritoneal cavity in the bare area - The bare area is a peritoneal relation of the right lobe and has nothing to do with caudate outflow.\nD) It has a dual portal and systemic venous inflow - The caudate does receive portal inflow from both sides, but inflow is not what determines its behaviour under outflow obstruction."
+    },
+    {
+     "id": "c",
+     "text": "It lies outside the peritoneal cavity in the bare area",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "d",
+     "text": "It has a dual portal and systemic venous inflow",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    }
+   ],
+   "explanation": [
+    "Key - B) It drains by short veins directly into the inferior vena cava rather than by the main hepatic veins. Segment I drains by several short veins straight into the cava, so when the three main hepatic veins occlude its outflow is preserved and it hypertrophies while the rest of the liver congests and atrophies.\n\nWhy the others fail:\nA) It receives arterial blood from both hepatic arteries - Dual arterial inflow does not protect against an outflow obstruction, which is the problem in Budd-Chiari syndrome.\nC) It lies outside the peritoneal cavity in the bare area - The bare area is a peritoneal relation of the right lobe and has nothing to do with caudate outflow.\nD) It has a dual portal and systemic venous inflow - The caudate does receive portal inflow from both sides, but inflow is not what determines its behaviour under outflow obstruction."
+   ],
+   "keyFacts": [
+    "Key - B) It drains by short veins directly into the inferior vena cava rather than by the main hepatic veins. Segment I drains by several short veins straight into the cava, so when the three main hepatic veins occlude its outflow is preserved and it hypertrophies while the rest of the liver congests and atrophies.\n\nWhy the others fail:\nA) It receives arterial blood from both hepatic arteries - Dual arterial inflow does not protect against an outflow obstruction, which is the problem in Budd-Chiari syndrome.\nC) It lies outside the peritoneal cavity in the bare area - The bare area is a peritoneal relation of the right lobe and has nothing to do with caudate outflow.\nD) It has a dual portal and systemic venous inflow - The caudate does receive portal inflow from both sides, but inflow is not what determines its behaviour under outflow obstruction."
+   ],
+   "teachingPoint": "Key - B) It drains by short veins directly into the inferior vena cava rather than by the main hepatic veins. Segment I drains by several short veins straight into the cava, so when the three main hepatic veins occlude its outflow is preserved and it hypertrophies while the rest of the liver congests and atrophies.\n\nWhy the others fail:\nA) It receives arterial blood from both hepatic arteries - Dual arterial inflow does not protect against an outflow obstruction, which is the problem in Budd-Chiari syndrome.\nC) It lies outside the peritoneal cavity in the bare area - The bare area is a peritoneal relation of the right lobe and has nothing to do with caudate outflow.\nD) It has a dual portal and systemic venous inflow - The caudate does receive portal inflow from both sides, but inflow is not what determines its behaviour under outflow obstruction."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sana-ch8-liver-biliary-tree-mcq-003",
+   "type": "single",
+   "sectionId": "s4",
+   "difficulty": 2,
+   "highYield": true,
+   "stem": "A hilar cholangiocarcinoma involves the confluence of the right and left hepatic ducts. Why does curative resection almost always include the caudate lobe?",
+   "options": [
+    {
+     "id": "a",
+     "text": "Because the caudate lobe shares its arterial supply with the tumour bed",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "b",
+     "text": "Because the caudate lobe drains by short ducts directly into the hilar confluence and is therefore involved early",
+     "correct": true,
+     "why": "Key - B) Because the caudate lobe drains by short ducts directly into the hilar confluence and is therefore involved early. Several short caudate ducts open directly into the confluence, so tumour at that point involves them early and clearance requires caudate resection.\n\nWhy the others fail:\nA) Because the caudate lobe shares its arterial supply with the tumour bed - Shared arterial supply does not determine the extent of a biliary cancer resection.\nC) Because the caudate lobe must be removed to reach the portal vein - The portal vein bifurcation is reached by lowering the hilar plate, not by removing the caudate.\nD) Because the caudate lobe is supplied only by the right portal vein - The caudate receives portal inflow from both right and left branches, so the statement is anatomically false."
+    },
+    {
+     "id": "c",
+     "text": "Because the caudate lobe must be removed to reach the portal vein",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "d",
+     "text": "Because the caudate lobe is supplied only by the right portal vein",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    }
+   ],
+   "explanation": [
+    "Key - B) Because the caudate lobe drains by short ducts directly into the hilar confluence and is therefore involved early. Several short caudate ducts open directly into the confluence, so tumour at that point involves them early and clearance requires caudate resection.\n\nWhy the others fail:\nA) Because the caudate lobe shares its arterial supply with the tumour bed - Shared arterial supply does not determine the extent of a biliary cancer resection.\nC) Because the caudate lobe must be removed to reach the portal vein - The portal vein bifurcation is reached by lowering the hilar plate, not by removing the caudate.\nD) Because the caudate lobe is supplied only by the right portal vein - The caudate receives portal inflow from both right and left branches, so the statement is anatomically false."
+   ],
+   "keyFacts": [
+    "Key - B) Because the caudate lobe drains by short ducts directly into the hilar confluence and is therefore involved early. Several short caudate ducts open directly into the confluence, so tumour at that point involves them early and clearance requires caudate resection.\n\nWhy the others fail:\nA) Because the caudate lobe shares its arterial supply with the tumour bed - Shared arterial supply does not determine the extent of a biliary cancer resection.\nC) Because the caudate lobe must be removed to reach the portal vein - The portal vein bifurcation is reached by lowering the hilar plate, not by removing the caudate.\nD) Because the caudate lobe is supplied only by the right portal vein - The caudate receives portal inflow from both right and left branches, so the statement is anatomically false."
+   ],
+   "teachingPoint": "Key - B) Because the caudate lobe drains by short ducts directly into the hilar confluence and is therefore involved early. Several short caudate ducts open directly into the confluence, so tumour at that point involves them early and clearance requires caudate resection.\n\nWhy the others fail:\nA) Because the caudate lobe shares its arterial supply with the tumour bed - Shared arterial supply does not determine the extent of a biliary cancer resection.\nC) Because the caudate lobe must be removed to reach the portal vein - The portal vein bifurcation is reached by lowering the hilar plate, not by removing the caudate.\nD) Because the caudate lobe is supplied only by the right portal vein - The caudate receives portal inflow from both right and left branches, so the statement is anatomically false."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sana-ch8-liver-biliary-tree-mcq-004",
+   "type": "single",
+   "sectionId": "s4",
+   "difficulty": 2,
+   "highYield": true,
+   "stem": "Ten days after cholecystectomy a patient has a persistent low-volume bile leak with normal liver function and a normal-calibre common duct on MRCP. Which source is most likely?",
+   "options": [
+    {
+     "id": "a",
+     "text": "Transected common bile duct",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "b",
+     "text": "Slipped cystic duct clip or a duct of Luschka in the gallbladder bed",
+     "correct": true,
+     "why": "Key - B) Slipped cystic duct clip or a duct of Luschka in the gallbladder bed. A slipped cystic duct clip or an unsealed subvesical duct of Luschka in the gallbladder bed produces exactly this picture - a low-volume leak with an intact, normal-calibre biliary tree and preserved liver function.\n\nWhy the others fail:\nA) Transected common bile duct - A transected common bile duct would give a high-volume leak with obstructive liver function tests and a dilated or discontinuous duct on imaging.\nC) Right hepatic duct injury - A right hepatic duct injury would usually derange liver function and show a discontinuity or an undrained sector on MRCP.\nD) Ampullary obstruction with duct blowout - Ampullary obstruction would cause jaundice and a dilated duct, neither of which is present."
+    },
+    {
+     "id": "c",
+     "text": "Right hepatic duct injury",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "d",
+     "text": "Ampullary obstruction with duct blowout",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    }
+   ],
+   "explanation": [
+    "Key - B) Slipped cystic duct clip or a duct of Luschka in the gallbladder bed. A slipped cystic duct clip or an unsealed subvesical duct of Luschka in the gallbladder bed produces exactly this picture - a low-volume leak with an intact, normal-calibre biliary tree and preserved liver function.\n\nWhy the others fail:\nA) Transected common bile duct - A transected common bile duct would give a high-volume leak with obstructive liver function tests and a dilated or discontinuous duct on imaging.\nC) Right hepatic duct injury - A right hepatic duct injury would usually derange liver function and show a discontinuity or an undrained sector on MRCP.\nD) Ampullary obstruction with duct blowout - Ampullary obstruction would cause jaundice and a dilated duct, neither of which is present."
+   ],
+   "keyFacts": [
+    "Key - B) Slipped cystic duct clip or a duct of Luschka in the gallbladder bed. A slipped cystic duct clip or an unsealed subvesical duct of Luschka in the gallbladder bed produces exactly this picture - a low-volume leak with an intact, normal-calibre biliary tree and preserved liver function.\n\nWhy the others fail:\nA) Transected common bile duct - A transected common bile duct would give a high-volume leak with obstructive liver function tests and a dilated or discontinuous duct on imaging.\nC) Right hepatic duct injury - A right hepatic duct injury would usually derange liver function and show a discontinuity or an undrained sector on MRCP.\nD) Ampullary obstruction with duct blowout - Ampullary obstruction would cause jaundice and a dilated duct, neither of which is present."
+   ],
+   "teachingPoint": "Key - B) Slipped cystic duct clip or a duct of Luschka in the gallbladder bed. A slipped cystic duct clip or an unsealed subvesical duct of Luschka in the gallbladder bed produces exactly this picture - a low-volume leak with an intact, normal-calibre biliary tree and preserved liver function.\n\nWhy the others fail:\nA) Transected common bile duct - A transected common bile duct would give a high-volume leak with obstructive liver function tests and a dilated or discontinuous duct on imaging.\nC) Right hepatic duct injury - A right hepatic duct injury would usually derange liver function and show a discontinuity or an undrained sector on MRCP.\nD) Ampullary obstruction with duct blowout - Ampullary obstruction would cause jaundice and a dilated duct, neither of which is present."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sana-ch8-liver-biliary-tree-mcq-005",
+   "type": "single",
+   "sectionId": "s4",
+   "difficulty": 2,
+   "highYield": true,
+   "stem": "During cholecystectomy a large tortuous artery is seen looping upwards into the hepatocystic triangle very close to the gallbladder neck. What is it and what is the consequence of dividing it?",
+   "options": [
+    {
+     "id": "a",
+     "text": "An accessory cystic artery - division is harmless",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "b",
+     "text": "A caterpillar turn of the right hepatic artery - division causes right lobe ischaemia",
+     "correct": true,
+     "why": "Key - B) A caterpillar turn of the right hepatic artery - division causes right lobe ischaemia. A Moynihan's hump or caterpillar turn is a tortuous right hepatic artery looping into the triangle; mistaking it for the cystic artery and dividing it devascularises the right liver and may also damage the bile duct's axial supply.\n\nWhy the others fail:\nA) An accessory cystic artery - division is harmless - An accessory cystic artery is small and its division is indeed harmless, but a large tortuous looping vessel is not that.\nC) The gastroduodenal artery - division causes duodenal ischaemia - The gastroduodenal artery arises behind the first part of the duodenum and does not loop into the hepatocystic triangle.\nD) A replaced left hepatic artery - division causes left lobe ischaemia - A replaced left hepatic artery runs in the lesser omentum towards the left, away from the gallbladder neck."
+    },
+    {
+     "id": "c",
+     "text": "The gastroduodenal artery - division causes duodenal ischaemia",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "d",
+     "text": "A replaced left hepatic artery - division causes left lobe ischaemia",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    }
+   ],
+   "explanation": [
+    "Key - B) A caterpillar turn of the right hepatic artery - division causes right lobe ischaemia. A Moynihan's hump or caterpillar turn is a tortuous right hepatic artery looping into the triangle; mistaking it for the cystic artery and dividing it devascularises the right liver and may also damage the bile duct's axial supply.\n\nWhy the others fail:\nA) An accessory cystic artery - division is harmless - An accessory cystic artery is small and its division is indeed harmless, but a large tortuous looping vessel is not that.\nC) The gastroduodenal artery - division causes duodenal ischaemia - The gastroduodenal artery arises behind the first part of the duodenum and does not loop into the hepatocystic triangle.\nD) A replaced left hepatic artery - division causes left lobe ischaemia - A replaced left hepatic artery runs in the lesser omentum towards the left, away from the gallbladder neck."
+   ],
+   "keyFacts": [
+    "Key - B) A caterpillar turn of the right hepatic artery - division causes right lobe ischaemia. A Moynihan's hump or caterpillar turn is a tortuous right hepatic artery looping into the triangle; mistaking it for the cystic artery and dividing it devascularises the right liver and may also damage the bile duct's axial supply.\n\nWhy the others fail:\nA) An accessory cystic artery - division is harmless - An accessory cystic artery is small and its division is indeed harmless, but a large tortuous looping vessel is not that.\nC) The gastroduodenal artery - division causes duodenal ischaemia - The gastroduodenal artery arises behind the first part of the duodenum and does not loop into the hepatocystic triangle.\nD) A replaced left hepatic artery - division causes left lobe ischaemia - A replaced left hepatic artery runs in the lesser omentum towards the left, away from the gallbladder neck."
+   ],
+   "teachingPoint": "Key - B) A caterpillar turn of the right hepatic artery - division causes right lobe ischaemia. A Moynihan's hump or caterpillar turn is a tortuous right hepatic artery looping into the triangle; mistaking it for the cystic artery and dividing it devascularises the right liver and may also damage the bile duct's axial supply.\n\nWhy the others fail:\nA) An accessory cystic artery - division is harmless - An accessory cystic artery is small and its division is indeed harmless, but a large tortuous looping vessel is not that.\nC) The gastroduodenal artery - division causes duodenal ischaemia - The gastroduodenal artery arises behind the first part of the duodenum and does not loop into the hepatocystic triangle.\nD) A replaced left hepatic artery - division causes left lobe ischaemia - A replaced left hepatic artery runs in the lesser omentum towards the left, away from the gallbladder neck."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sana-ch8-liver-biliary-tree-mcq-006",
+   "type": "single",
+   "sectionId": "s4",
+   "difficulty": 2,
+   "highYield": true,
+   "stem": "Why does gallbladder carcinoma involve segments IVb and V of the liver at an early stage?",
+   "options": [
+    {
+     "id": "a",
+     "text": "Because the gallbladder lies in the plane of the falciform ligament",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "b",
+     "text": "Because cystic veins drain directly into the adjacent liver substance of segments IV and V rather than through a single named vein",
+     "correct": true,
+     "why": "Key - B) Because cystic veins drain directly into the adjacent liver substance of segments IV and V rather than through a single named vein. The gallbladder has no single draining vein; its veins pass directly through the gallbladder bed into the substance of segments IVb and V and into the portal system, so tumour invades those segments early - which is why radical cholecystectomy includes them.\n\nWhy the others fail:\nA) Because the gallbladder lies in the plane of the falciform ligament - The gallbladder fossa marks Cantlie's line, not the falciform ligament, and position alone would not explain early parenchymal involvement.\nC) Because the cystic artery arises from the middle hepatic artery - There is no middle hepatic artery, and arterial origin does not determine the direction of tumour spread.\nD) Because lymph from the gallbladder drains first to the caudate lobe - Gallbladder lymph drains to the cystic node of Lund and the porta hepatis, not to the caudate lobe."
+    },
+    {
+     "id": "c",
+     "text": "Because the cystic artery arises from the middle hepatic artery",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "d",
+     "text": "Because lymph from the gallbladder drains first to the caudate lobe",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    }
+   ],
+   "explanation": [
+    "Key - B) Because cystic veins drain directly into the adjacent liver substance of segments IV and V rather than through a single named vein. The gallbladder has no single draining vein; its veins pass directly through the gallbladder bed into the substance of segments IVb and V and into the portal system, so tumour invades those segments early - which is why radical cholecystectomy includes them.\n\nWhy the others fail:\nA) Because the gallbladder lies in the plane of the falciform ligament - The gallbladder fossa marks Cantlie's line, not the falciform ligament, and position alone would not explain early parenchymal involvement.\nC) Because the cystic artery arises from the middle hepatic artery - There is no middle hepatic artery, and arterial origin does not determine the direction of tumour spread.\nD) Because lymph from the gallbladder drains first to the caudate lobe - Gallbladder lymph drains to the cystic node of Lund and the porta hepatis, not to the caudate lobe."
+   ],
+   "keyFacts": [
+    "Key - B) Because cystic veins drain directly into the adjacent liver substance of segments IV and V rather than through a single named vein. The gallbladder has no single draining vein; its veins pass directly through the gallbladder bed into the substance of segments IVb and V and into the portal system, so tumour invades those segments early - which is why radical cholecystectomy includes them.\n\nWhy the others fail:\nA) Because the gallbladder lies in the plane of the falciform ligament - The gallbladder fossa marks Cantlie's line, not the falciform ligament, and position alone would not explain early parenchymal involvement.\nC) Because the cystic artery arises from the middle hepatic artery - There is no middle hepatic artery, and arterial origin does not determine the direction of tumour spread.\nD) Because lymph from the gallbladder drains first to the caudate lobe - Gallbladder lymph drains to the cystic node of Lund and the porta hepatis, not to the caudate lobe."
+   ],
+   "teachingPoint": "Key - B) Because cystic veins drain directly into the adjacent liver substance of segments IV and V rather than through a single named vein. The gallbladder has no single draining vein; its veins pass directly through the gallbladder bed into the substance of segments IVb and V and into the portal system, so tumour invades those segments early - which is why radical cholecystectomy includes them.\n\nWhy the others fail:\nA) Because the gallbladder lies in the plane of the falciform ligament - The gallbladder fossa marks Cantlie's line, not the falciform ligament, and position alone would not explain early parenchymal involvement.\nC) Because the cystic artery arises from the middle hepatic artery - There is no middle hepatic artery, and arterial origin does not determine the direction of tumour spread.\nD) Because lymph from the gallbladder drains first to the caudate lobe - Gallbladder lymph drains to the cystic node of Lund and the porta hepatis, not to the caudate lobe."
+  }
+ ],
+ "emqs": [],
+ "summary": "Liver & Biliary Tree: work through each section's cards to fix the structures, their relations and clinical lesions. Use the MCQs to test discrimination and the image-occlusion cards to rehearse identification."
+}

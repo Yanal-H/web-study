@@ -2611,3 +2611,46 @@
     width: min(300px, calc(100vw - 24px));
   }
 }
+
+/* ---- authored occlusion figures (content packs) ---- */
+.occ-figure {
+  width: 100%;
+}
+.occ-label {
+  text-align: center;
+  font-size: 13px;
+  color: var(--text-faint);
+  margin-bottom: 10px;
+  letter-spacing: 0.03em;
+}
+.occ-view img {
+  border-radius: var(--r-md);
+  background: #fff;
+}
+.occ-mask.other {
+  background: color-mix(in srgb, var(--text-faint) 78%, transparent);
+  border-radius: 3px;
+  transition: opacity var(--dur) var(--ease);
+}
+.occ-mask.other.revealed {
+  opacity: 0.12;
+}
+.occ-mask.target {
+  background: color-mix(in srgb, var(--haki-red) 82%, transparent);
+  border: 2px solid var(--lightning);
+  color: #fff;
+  display: grid;
+  place-items: center;
+  font-weight: 800;
+  border-radius: 4px;
+  box-shadow: 0 0 18px -4px var(--haki-glow);
+}
+.occ-mask.target.revealed {
+  background: color-mix(in srgb, var(--success) 22%, transparent);
+  border-color: var(--success);
+  color: var(--text);
+  font-size: 12.5px;
+  padding: 2px;
+  text-align: center;
+  line-height: 1.15;
+}

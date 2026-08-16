@@ -1,0 +1,4057 @@
+{
+ "schema": "foundation.study-module/v1",
+ "id": "sur-ch3-surgical-infection",
+ "subject": "Surgery",
+ "title": "Principles of Surgical Infection and Infection Control",
+ "source": {
+  "book": "Surgery Department Books 2026 — Surgery 1 (SUR-423)",
+  "chapter": 3,
+  "title": "Principles of Surgical Infection and Infection Control",
+  "pages": "18-25"
+ },
+ "brand": "by Yanal · Cairo 2026",
+ "estMinutes": 35,
+ "deck": "Surgery::Surgical Infection and Infection Control",
+ "tags": [
+  "surgery",
+  "infection",
+  "infection-control",
+  "sur-423"
+ ],
+ "objectives": [
+  "Recommend patient and surgeon measures that minimise surgical site infection.",
+  "State the indications, timing and duration of surgical antibiotic prophylaxis.",
+  "Manage an established surgical wound infection, including when to add antibiotics.",
+  "Select an antibiotic from patient factors and the likely organism.",
+  "Classify the main antibiotic classes by spectrum and key toxicity.",
+  "Apply standard precautions, safe sharps handling and hand hygiene.",
+  "Distinguish cleaning, disinfection and sterilisation and choose the right method."
+ ],
+ "outline": [
+  "3.1 Reducing SSI: patient & surgeon",
+  "3.2 Prophylactic antibiotics",
+  "3.3 Treatment of established SSI",
+  "3.4 Choosing an antibiotic",
+  "3.5 Antibiotic classes",
+  "3.6 Complications of antibiotics",
+  "3.7 Standard precautions",
+  "3.8 Decontamination & sterilisation"
+ ],
+ "sections": [
+  {
+   "id": "s1",
+   "n": "3.1",
+   "title": "Reducing SSI: patient & surgeon",
+   "deck": "Infection control",
+   "digest": "Surgical site infection (**SSI**) is minimised by optimising the **patient**, the **surgeon** and the environment. Patient factors: correct predisposing conditions (control **diabetes**, stop smoking, correct nutritional deficiency), avoid operating during active infection, **clip rather than shave** hair just before incision (shaving causes micro-abrasions that colonise), and prepare the skin with antiseptic. Surgeon factors: short nails and proper scrubbing; meticulous technique with adequate **haemostasis**, gentle tissue handling, and avoidance of tight sutures or **dead space**; and delayed primary closure of heavily contaminated wounds.",
+   "highYield": [
+    "Clip, do not shave — shaving causes colonisable micro-abrasions.",
+    "Control diabetes, stop smoking and correct nutrition before elective surgery.",
+    "Good technique: haemostasis, gentle handling, no dead space or tight sutures.",
+    "Heavily contaminated wound → delayed primary closure."
+   ],
+   "tables": [
+    {
+     "title": "Reducing surgical site infection",
+     "columns": [
+      "Patient",
+      "Surgeon"
+     ],
+     "rows": [
+      [
+       "Control diabetes, stop smoking, correct nutrition",
+       "Short nails, proper scrub"
+      ],
+      [
+       "Avoid operating during active infection",
+       "Meticulous haemostasis, gentle handling"
+      ],
+      [
+       "Clip (not shave) hair just before incision",
+       "Avoid tight sutures and dead space"
+      ],
+      [
+       "Antiseptic skin preparation",
+       "Delayed primary closure of dirty wounds"
+      ]
+     ]
+    }
+   ],
+   "pitfalls": [
+    "Shaving the night before increases infection — clip immediately before incision instead."
+   ],
+   "figures": []
+  },
+  {
+   "id": "s2",
+   "n": "3.2",
+   "title": "Prophylactic antibiotics",
+   "deck": "Infection control",
+   "digest": "**Prophylactic antibiotics** are a brief course just before an operation to reduce organisms below the level that overcomes host defences. Indications: in **clean surgery** only when prosthetic material is implanted or the patient is high-risk (elderly, obese, smoker, immunocompromised); in **all contaminated classes** (clean-contaminated, contaminated, dirty). The antibiotic is given about **one hour before** incision, with a booster in long operations; prophylaxis should **not exceed one day**. A first-generation cephalosporin (**cefazolin/cephazolin**) is usual, but each hospital's infection-control committee may recommend an agent for its prevalent organism (e.g. **ampicillin-sulbactam**).",
+   "highYield": [
+    "Give prophylaxis ~1 hour before incision; do not continue beyond one day.",
+    "Clean surgery: prophylaxis only for prosthesis or high-risk patient.",
+    "All contaminated classes get prophylaxis.",
+    "Cefazolin or ampicillin-sulbactam are typical choices."
+   ],
+   "tables": [
+    {
+     "title": "Prophylaxis indications",
+     "columns": [
+      "Wound class",
+      "Prophylaxis?"
+     ],
+     "rows": [
+      [
+       "Clean",
+       "Only if prosthesis implanted or high-risk patient"
+      ],
+      [
+       "Clean-contaminated",
+       "Yes"
+      ],
+      [
+       "Contaminated",
+       "Yes"
+      ],
+      [
+       "Dirty",
+       "Yes"
+      ]
+     ]
+    }
+   ],
+   "pitfalls": [
+    "Prophylaxis is not treatment — do not continue it beyond one day.",
+    "Timing matters: give it about an hour before incision, not after."
+   ],
+   "figures": []
+  },
+  {
+   "id": "s3",
+   "n": "3.3",
+   "title": "Treatment of established SSI",
+   "deck": "Infection control",
+   "digest": "Established SSI is treated first by **liberal drainage** — open the wound by removing skin stitches. **Antibiotics** are added only if there is evidence of **invasive infection**: temperature **>38.5°C**, erythema **>5 cm**, or leucocyte count **>11,000**. Guide antibiotic choice by **culture and sensitivity**, and trace and correct any source of hospital-acquired infection. The treatment of an **abscess** is drainage; the treatment of a spreading infection (cellulitis) is antibiotics.",
+   "highYield": [
+    "Treat an established wound infection first by opening it (drainage).",
+    "Add antibiotics only for invasive infection: T >38.5°C, erythema >5 cm, or WBC >11,000.",
+    "Abscess → drainage; spreading infection → antibiotics.",
+    "Guide antibiotics by culture and sensitivity."
+   ],
+   "tables": [
+    {
+     "title": "Signs of invasive infection (add antibiotics)",
+     "columns": [
+      "Sign",
+      "Threshold"
+     ],
+     "rows": [
+      [
+       "Temperature",
+       ">38.5°C"
+      ],
+      [
+       "Erythema",
+       ">5 cm"
+      ],
+      [
+       "Leucocyte count",
+       ">11,000"
+      ]
+     ]
+    }
+   ],
+   "pitfalls": [
+    "An abscess needs drainage, not just antibiotics — antibiotics alone will not cure a collection."
+   ],
+   "figures": []
+  },
+  {
+   "id": "s4",
+   "n": "3.4",
+   "title": "Choosing an antibiotic",
+   "deck": "Antibiotics",
+   "digest": "Before starting therapy, weigh the **patient** and the **likely organism**. Patient factors: allergy, age, renal/hepatic function, host resistance (compromised by recent hospitalisation or antibiotics in the last 90 days), ability to take oral drugs, pregnancy/lactation, and the organism's sensitivity. Principles: send relevant **culture and sensitivity** (urine, sputum, pus) early; choose an agent effective against the likely pathogen while avoiding needlessly toxic or costly drugs; judge course length by the pathology and clinical/laboratory response, avoiding prolonged courses; change agents based on culture **and** clinical response — do not switch for culture results alone if the patient is responding.",
+   "highYield": [
+    "Send culture and sensitivity early, before or as therapy starts.",
+    "Recent hospitalisation or antibiotics (90 days) implies a resistant flora.",
+    "Do not change a working antibiotic for culture results alone."
+   ],
+   "tables": [],
+   "pitfalls": [
+    "A satisfactory clinical response outweighs a discordant culture — do not switch needlessly."
+   ],
+   "figures": []
+  },
+  {
+   "id": "s5",
+   "n": "3.5",
+   "title": "Antibiotic classes",
+   "deck": "Antibiotics",
+   "digest": "**Beta-lactams** inhibit cell-wall synthesis. **Penicillins:** penicillin G (Gram-positives, spirochaetes); semisynthetic (methicillin) for staph/strep; ampicillin (enterococci, some Gram-negatives); amoxicillin + a **beta-lactamase inhibitor** (clavulanate) broadens cover. **Cephalosporins:** 1st gen (cefazolin, cephalexin) strong Gram-positive; 2nd gen (cefuroxime, cefoxitin) better Gram-negative, some anaerobic; 3rd gen (ceftriaxone, ceftazidime, cefotaxime) strong Gram-negative, variable Gram-positive; 4th gen (cefepime). **Carbapenems** (imipenem, meropenem, ertapenem) are broadest. **Aminoglycosides** (gentamicin, tobramycin, amikacin) hit Gram-negative aerobes but are oto- and nephrotoxic — a last resort, monitored by levels. **Quinolones** (ciprofloxacin, levofloxacin) target Gram-negative aerobes (UTIs). **Glycopeptides** (**vancomycin**) cover Gram-positives including **MRSA** and are the drug of choice for **Clostridioides difficile** colitis. **Trimethoprim-sulfamethoxazole** covers Gram-negatives and Pneumocystis/Nocardia. **Macrolides** (erythromycin, azithromycin, clarithromycin) cover Gram-positives and suit beta-lactam-allergic patients.",
+   "highYield": [
+    "Vancomycin: MRSA and C. difficile colitis drug of choice.",
+    "Aminoglycosides: Gram-negative aerobes, oto/nephrotoxic — monitor and limit.",
+    "Cephalosporin trend: Gram-positive cover falls and Gram-negative rises across generations.",
+    "Carbapenems are the broadest-spectrum beta-lactams.",
+    "Add a beta-lactamase inhibitor (clavulanate/sulbactam) to broaden a penicillin."
+   ],
+   "tables": [
+    {
+     "title": "Antibiotic classes (typical spectrum)",
+     "columns": [
+      "Class",
+      "Example",
+      "Main target"
+     ],
+     "rows": [
+      [
+       "Penicillin + inhibitor",
+       "Amoxicillin-clavulanate",
+       "Broad Gram +/−, some anaerobes"
+      ],
+      [
+       "1st-gen cephalosporin",
+       "Cefazolin",
+       "Gram-positive (surgical prophylaxis)"
+      ],
+      [
+       "3rd-gen cephalosporin",
+       "Ceftriaxone",
+       "Gram-negative aerobes"
+      ],
+      [
+       "Carbapenem",
+       "Meropenem",
+       "Very broad incl. Pseudomonas, anaerobes"
+      ],
+      [
+       "Aminoglycoside",
+       "Gentamicin",
+       "Gram-negative aerobes (toxic)"
+      ],
+      [
+       "Quinolone",
+       "Ciprofloxacin",
+       "Gram-negative aerobes (UTI)"
+      ],
+      [
+       "Glycopeptide",
+       "Vancomycin",
+       "MRSA, C. difficile"
+      ],
+      [
+       "Macrolide",
+       "Azithromycin",
+       "Gram-positive; penicillin allergy"
+      ]
+     ]
+    },
+    {
+     "title": "Cephalosporin generations",
+     "columns": [
+      "Generation",
+      "Examples",
+      "Cover trend"
+     ],
+     "rows": [
+      [
+       "1st",
+       "Cefazolin, cephalexin",
+       "Best Gram-positive"
+      ],
+      [
+       "2nd",
+       "Cefuroxime, cefoxitin",
+       "Some anaerobic (cefoxitin)"
+      ],
+      [
+       "3rd",
+       "Ceftriaxone, ceftazidime, cefotaxime",
+       "Strong Gram-negative"
+      ],
+      [
+       "4th",
+       "Cefepime",
+       "Broad"
+      ]
+     ]
+    }
+   ],
+   "pitfalls": [
+    "MRSA is resistant to all first-generation cephalosporins — use vancomycin.",
+    "Aminoglycosides are a last resort; prefer safer 3rd-gen cephalosporins/quinolones where possible."
+   ],
+   "figures": []
+  },
+  {
+   "id": "s6",
+   "n": "3.6",
+   "title": "Complications of antibiotics",
+   "deck": "Antibiotics",
+   "digest": "Antibiotic complications: **hypersensitivity** (common with penicillin/streptomycin — urticaria, fever, angioneurotic oedema, asthma, rarely anaphylaxis); **vitamin B deficiency** from altered bowel flora with prolonged use; **superinfection** with resistant strains (Proteus, Pseudomonas, Candida) affecting mouth, bowel, urinary tract or lung; and **specific toxicities** such as the nephro- and ototoxicity of aminoglycosides. Prolonged broad-spectrum use also risks **Clostridioides difficile** colitis.",
+   "highYield": [
+    "Penicillin/streptomycin → hypersensitivity, rarely anaphylaxis.",
+    "Aminoglycosides → nephrotoxicity and ototoxicity.",
+    "Broad-spectrum use → superinfection and C. difficile colitis."
+   ],
+   "tables": [],
+   "pitfalls": [
+    "A history of penicillin anaphylaxis contraindicates the drug — do not re-challenge casually."
+   ],
+   "figures": []
+  },
+  {
+   "id": "s7",
+   "n": "3.7",
+   "title": "Standard precautions",
+   "deck": "Infection control",
+   "digest": "**Nosocomial** infections are acquired in hospital. **Standard precautions** prevent transmission via blood, body fluids, non-intact skin and mucosa, and are used for every patient regardless of status. **Hand hygiene** (soap-and-water or alcohol gel) is the single most effective measure and is done before/after patient contact and after touching fluids/contaminated items even when gloved. **PPE:** gloves for contact with fluids/non-intact skin; mask, gown and goggles when splash is likely. **Sharps:** never recap used needles; discard immediately into a puncture-resistant sharps container. **Safe injection:** new needle and syringe for each access and each patient. For hepatitis/HIV, add double gloves, full-face mask, eye protection, waterproof gowns, and pass sharps indirectly in a kidney basin.",
+   "highYield": [
+    "Hand hygiene is the single most effective measure against hospital-acquired infection.",
+    "Never recap needles; discard into a puncture-resistant sharps container.",
+    "Perform hand hygiene even when gloves were worn.",
+    "For hepatitis/HIV surgery: double gloves, eye protection, indirect sharps passing."
+   ],
+   "tables": [],
+   "pitfalls": [
+    "Gloves do not replace hand hygiene — wash/gel after removing them.",
+    "Recapping needles is a classic cause of needle-stick injury — do not do it."
+   ],
+   "figures": []
+  },
+  {
+   "id": "s8",
+   "n": "3.8",
+   "title": "Decontamination & sterilisation",
+   "deck": "Infection control",
+   "digest": "**Decontamination** removes microbial contaminants by cleaning, disinfection or sterilisation. **Cleaning** removes visible soil and is a prerequisite — most disinfectants fail in the presence of organic matter. **Disinfection** reduces viable organisms to acceptable levels: **antiseptics** are disinfectants safe on tissue (chlorhexidine, povidone-iodine, alcohol, hexachlorophene); moist heat (boiling) or chemical agents such as **glutaraldehyde (Cidex)** disinfect heat-sensitive endoscopes (rinse with sterile saline afterwards as it is toxic). **Sterilisation** destroys all organisms including spores; the standard is **steam autoclaving at 134°C, 2 atmospheres for 20–30 minutes**. Alternatives: **ethylene oxide** for heat-sensitive items, glutaraldehyde with long immersion, gamma irradiation (industrial), and gas plasma (delicate catheters/wires).",
+   "highYield": [
+    "Clean before you disinfect — organic matter inactivates disinfectants.",
+    "Autoclave standard: 134°C, 2 atmospheres, 20–30 minutes.",
+    "Glutaraldehyde (Cidex) disinfects endoscopes; rinse with sterile saline (toxic).",
+    "Ethylene oxide/gamma/gas plasma sterilise heat-sensitive items."
+   ],
+   "tables": [
+    {
+     "title": "Common antiseptics",
+     "columns": [
+      "Antiseptic",
+      "Use"
+     ],
+     "rows": [
+      [
+       "Chlorhexidine",
+       "Skin preparation"
+      ],
+      [
+       "Povidone-iodine",
+       "Skin prep, handwash, open wounds; broad Gram +/−"
+      ],
+      [
+       "Alcohol (70%)",
+       "Skin preparation"
+      ],
+      [
+       "Hexachlorophene",
+       "Skin prep/handwash; Gram-positive"
+      ]
+     ]
+    },
+    {
+     "title": "Sterilisation methods",
+     "columns": [
+      "Method",
+      "Use"
+     ],
+     "rows": [
+      [
+       "Steam autoclave (134°C, 2 atm, 20–30 min)",
+       "Standard for heat-stable items"
+      ],
+      [
+       "Ethylene oxide gas",
+       "Heat-sensitive equipment"
+      ],
+      [
+       "Glutaraldehyde (long immersion)",
+       "Endoscopes/scopes"
+      ],
+      [
+       "Gamma irradiation",
+       "Industrial (catheters, syringes)"
+      ],
+      [
+       "Gas plasma",
+       "Delicate catheters, endovascular wires"
+      ]
+     ]
+    }
+   ],
+   "pitfalls": [
+    "Disinfection is not sterilisation — spores survive disinfection.",
+    "Rinse glutaraldehyde-treated scopes with sterile saline before use; the agent is toxic."
+   ],
+   "figures": []
+  }
+ ],
+ "glossary": [
+  {
+   "term": "surgical site infection",
+   "kind": "condition",
+   "def": "Infection of a surgical wound; minimised by patient/surgeon/environment measures.",
+   "aliases": [
+    "SSI"
+   ]
+  },
+  {
+   "term": "prophylactic antibiotics",
+   "kind": "procedure",
+   "def": "Brief peri-operative antibiotic course to reduce wound infection.",
+   "aliases": [
+    "antibiotic prophylaxis"
+   ]
+  },
+  {
+   "term": "cefazolin",
+   "kind": "drug",
+   "def": "First-generation cephalosporin used for surgical prophylaxis.",
+   "aliases": [
+    "cephazolin"
+   ]
+  },
+  {
+   "term": "ampicillin-sulbactam",
+   "kind": "drug",
+   "def": "Penicillin/beta-lactamase-inhibitor combination used for prophylaxis.",
+   "aliases": [
+    "ampicillin sulbactam"
+   ]
+  },
+  {
+   "term": "beta-lactam",
+   "kind": "drug",
+   "def": "Antibiotic class inhibiting bacterial cell-wall synthesis.",
+   "aliases": [
+    "b-lactam",
+    "beta lactam"
+   ]
+  },
+  {
+   "term": "penicillin",
+   "kind": "drug",
+   "def": "Beta-lactam active mainly against Gram-positives (penicillin G).",
+   "aliases": [
+    "penicillins",
+    "penicillin G"
+   ]
+  },
+  {
+   "term": "cephalosporin",
+   "kind": "drug",
+   "def": "Beta-lactam class spanning four generations of spectrum.",
+   "aliases": [
+    "cephalosporins"
+   ]
+  },
+  {
+   "term": "carbapenem",
+   "kind": "drug",
+   "def": "Broadest beta-lactam (imipenem, meropenem, ertapenem).",
+   "aliases": [
+    "carbapenems"
+   ]
+  },
+  {
+   "term": "aminoglycoside",
+   "kind": "drug",
+   "def": "Gram-negative agent that is oto- and nephrotoxic (gentamicin).",
+   "aliases": [
+    "aminoglycosides",
+    "gentamicin"
+   ]
+  },
+  {
+   "term": "quinolone",
+   "kind": "drug",
+   "def": "Gram-negative agent used for urinary infections (ciprofloxacin).",
+   "aliases": [
+    "quinolones",
+    "fluoroquinolone"
+   ]
+  },
+  {
+   "term": "vancomycin",
+   "kind": "drug",
+   "def": "Glycopeptide for MRSA and C. difficile colitis.",
+   "aliases": [
+    "glycopeptide"
+   ]
+  },
+  {
+   "term": "macrolide",
+   "kind": "drug",
+   "def": "Gram-positive agent for penicillin-allergic patients (azithromycin).",
+   "aliases": [
+    "macrolides"
+   ]
+  },
+  {
+   "term": "clavulanate",
+   "kind": "drug",
+   "def": "Beta-lactamase inhibitor broadening amoxicillin's spectrum.",
+   "aliases": [
+    "clavulanic acid"
+   ]
+  },
+  {
+   "term": "MRSA",
+   "kind": "organism",
+   "def": "Methicillin-resistant Staphylococcus aureus; treated with vancomycin."
+  },
+  {
+   "term": "Clostridioides difficile",
+   "kind": "organism",
+   "def": "Cause of antibiotic-associated colitis; treated with vancomycin/metronidazole.",
+   "aliases": [
+    "clostridium difficile",
+    "c. difficile",
+    "c diff"
+   ]
+  },
+  {
+   "term": "Staphylococcus",
+   "kind": "organism",
+   "def": "Coagulase-producing cocci that tend to localise infection and form pus.",
+   "aliases": [
+    "staphylococci",
+    "staph aureus"
+   ]
+  },
+  {
+   "term": "Streptococcus",
+   "kind": "organism",
+   "def": "Hyaluronidase-producing cocci that tend to cause spreading infection.",
+   "aliases": [
+    "streptococci"
+   ]
+  },
+  {
+   "term": "coagulase",
+   "kind": "mediator",
+   "def": "Staphylococcal enzyme that localises infection and promotes pus."
+  },
+  {
+   "term": "hyaluronidase",
+   "kind": "mediator",
+   "def": "Streptococcal spreading factor."
+  },
+  {
+   "term": "gas gangrene",
+   "kind": "warning",
+   "def": "Clostridial myositis; toxic patient with crepitus, treated by debridement + antibiotics.",
+   "aliases": [
+    "clostridial myositis"
+   ]
+  },
+  {
+   "term": "necrotising fasciitis",
+   "kind": "warning",
+   "def": "Rapid fascial necrosis; toxic patient, needs prompt extensive debridement.",
+   "aliases": [
+    "necrotizing fasciitis"
+   ]
+  },
+  {
+   "term": "nosocomial infection",
+   "kind": "condition",
+   "def": "Infection acquired in hospital.",
+   "aliases": [
+    "hospital-acquired infection",
+    "nosocomial"
+   ]
+  },
+  {
+   "term": "standard precautions",
+   "kind": "procedure",
+   "def": "Infection-control practices used for every patient."
+  },
+  {
+   "term": "hand hygiene",
+   "kind": "procedure",
+   "def": "Soap-and-water or alcohol gel; the most effective infection-control measure."
+  },
+  {
+   "term": "personal protective equipment",
+   "kind": "procedure",
+   "def": "Gloves, mask, gown and goggles used against splash/contact.",
+   "aliases": [
+    "PPE"
+   ]
+  },
+  {
+   "term": "decontamination",
+   "kind": "procedure",
+   "def": "Removing contaminants by cleaning, disinfection or sterilisation."
+  },
+  {
+   "term": "disinfection",
+   "kind": "procedure",
+   "def": "Reducing viable organisms to acceptable levels."
+  },
+  {
+   "term": "sterilisation",
+   "kind": "procedure",
+   "def": "Destroying all organisms including spores.",
+   "aliases": [
+    "sterilization"
+   ]
+  },
+  {
+   "term": "autoclave",
+   "kind": "procedure",
+   "def": "Steam-under-pressure steriliser (134°C, 2 atm).",
+   "aliases": [
+    "autoclaving"
+   ]
+  },
+  {
+   "term": "glutaraldehyde",
+   "kind": "drug",
+   "def": "Chemical disinfectant (Cidex) for endoscopes.",
+   "aliases": [
+    "cidex"
+   ]
+  },
+  {
+   "term": "ethylene oxide",
+   "kind": "procedure",
+   "def": "Gas sterilisation for heat-sensitive equipment.",
+   "aliases": [
+    "EO gas"
+   ]
+  },
+  {
+   "term": "chlorhexidine",
+   "kind": "drug",
+   "def": "Skin-preparation antiseptic.",
+   "aliases": [
+    "hibiscrub"
+   ]
+  },
+  {
+   "term": "povidone-iodine",
+   "kind": "drug",
+   "def": "Broad antiseptic for skin prep and open wounds.",
+   "aliases": [
+    "betadine",
+    "povidone iodine"
+   ]
+  }
+ ],
+ "mnemonics": [
+  {
+   "cue": "Rubor, tumor, calor, dolor, functio laesa",
+   "expansion": "Cardinal signs of an infected wound: redness, swelling, heat, pain, loss of function",
+   "for": "s3"
+  },
+  {
+   "cue": "5 Moments",
+   "expansion": "WHO five moments of hand hygiene: before patient contact, before aseptic task, after body-fluid exposure, after patient contact, after touching patient surroundings",
+   "for": "s7"
+  },
+  {
+   "cue": "Up the generations",
+   "expansion": "Across cephalosporin generations Gram-positive cover falls while Gram-negative cover rises",
+   "for": "s5"
+  }
+ ],
+ "cards": [
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch3-surgical-infection-card-001",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "SSI reduction::Patient",
+   "front": "Why is clipping preferred to shaving before surgery?",
+   "back": "Shaving causes micro-abrasions that become colonised by bacteria; clipping avoids this.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch3-surgical-infection-card-002",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "SSI reduction::Patient",
+   "front": "Name three patient factors to correct before elective surgery.",
+   "back": "Control diabetes, stop smoking and correct nutritional deficiency.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch3-surgical-infection-card-003",
+   "type": "cloze",
+   "sectionId": "s1",
+   "deck": "SSI reduction::Patient",
+   "cloze": "Hair should be removed by {{c1::clipping}} just before skin incision, not by shaving.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch3-surgical-infection-card-004",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "SSI reduction::Surgeon",
+   "front": "Name three elements of meticulous surgical technique that reduce SSI.",
+   "back": "Adequate haemostasis, gentle tissue handling, and avoiding tight sutures or dead space.",
+   "difficulty": 2
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch3-surgical-infection-card-005",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "SSI reduction::Surgeon",
+   "front": "How is a heavily contaminated wound best closed to reduce infection?",
+   "back": "By delayed primary closure.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch3-surgical-infection-card-006",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "SSI reduction::Patient",
+   "front": "Should elective surgery proceed during an active infection?",
+   "back": "No — avoid operating in patients with active infection where possible.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch3-surgical-infection-card-007",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Prophylaxis::Definition",
+   "front": "What are prophylactic antibiotics for?",
+   "back": "A brief pre-operative course to reduce organisms below the level that overcomes host defences.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch3-surgical-infection-card-008",
+   "type": "cloze",
+   "sectionId": "s2",
+   "deck": "Prophylaxis::Timing",
+   "cloze": "The prophylactic antibiotic is given about {{c1::one hour}} before surgery.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch3-surgical-infection-card-009",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Prophylaxis::Timing",
+   "front": "How long may surgical antibiotic prophylaxis continue?",
+   "back": "It should not exceed one day.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch3-surgical-infection-card-010",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Prophylaxis::Indications",
+   "front": "When is prophylaxis indicated in clean surgery?",
+   "back": "Only when prosthetic material is implanted or the patient is high-risk (elderly, obese, smoker, immunocompromised).",
+   "difficulty": 2
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch3-surgical-infection-card-011",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Prophylaxis::Indications",
+   "front": "Which wound classes always receive prophylaxis?",
+   "back": "All contaminated classes: clean-contaminated, contaminated and dirty.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch3-surgical-infection-card-012",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Prophylaxis::Agent",
+   "front": "Which antibiotics are typical first choices for prophylaxis?",
+   "back": "A first-generation cephalosporin (cefazolin) or ampicillin-sulbactam.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch3-surgical-infection-card-013",
+   "type": "type",
+   "sectionId": "s2",
+   "deck": "Prophylaxis::Timing",
+   "front": "Maximum duration of surgical prophylaxis (in days).",
+   "back": "1",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch3-surgical-infection-card-014",
+   "type": "basic",
+   "sectionId": "s3",
+   "deck": "SSI treatment::Drainage",
+   "front": "What is the first treatment of an established wound infection?",
+   "back": "Liberal drainage — open the wound by removing skin stitches.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch3-surgical-infection-card-015",
+   "type": "basic",
+   "sectionId": "s3",
+   "deck": "SSI treatment::Antibiotics",
+   "front": "When are antibiotics added to a drained wound infection?",
+   "back": "Only with evidence of invasive infection: temperature >38.5°C, erythema >5 cm, or WBC >11,000.",
+   "difficulty": 2
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch3-surgical-infection-card-016",
+   "type": "cloze",
+   "sectionId": "s3",
+   "deck": "SSI treatment::Antibiotics",
+   "cloze": "Invasive infection is suggested by erythema more than {{c1::5}} cm around the wound.",
+   "difficulty": 2
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch3-surgical-infection-card-017",
+   "type": "basic",
+   "sectionId": "s3",
+   "deck": "SSI treatment::Principles",
+   "front": "What treats an abscess versus a spreading infection?",
+   "back": "An abscess needs drainage; a spreading infection needs antibiotics.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch3-surgical-infection-card-018",
+   "type": "basic",
+   "sectionId": "s3",
+   "deck": "SSI treatment::Principles",
+   "front": "What should guide antibiotic choice in SSI?",
+   "back": "Culture and sensitivity tests.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch3-surgical-infection-card-019",
+   "type": "basic",
+   "sectionId": "s4",
+   "deck": "Choice::Patient",
+   "front": "Which recent factors imply the host may harbour resistant organisms?",
+   "back": "Previous hospitalisation or antibiotic therapy within the last 90 days.",
+   "difficulty": 2
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch3-surgical-infection-card-020",
+   "type": "basic",
+   "sectionId": "s4",
+   "deck": "Choice::Principles",
+   "front": "What samples are sent early when managing SSI?",
+   "back": "Relevant culture and sensitivity samples (urine, sputum or pus).",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch3-surgical-infection-card-021",
+   "type": "basic",
+   "sectionId": "s4",
+   "deck": "Choice::Principles",
+   "front": "Should you change a working antibiotic because of a discordant culture result?",
+   "back": "No — if there is a satisfactory clinical response, do not change for culture alone.",
+   "difficulty": 2
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch3-surgical-infection-card-022",
+   "type": "cloze",
+   "sectionId": "s4",
+   "deck": "Choice::Patient",
+   "cloze": "Patient factors in antibiotic choice include allergy, age, renal/hepatic function and {{c1::pregnancy/lactation}}.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch3-surgical-infection-card-023",
+   "type": "basic",
+   "sectionId": "s5",
+   "deck": "Classes::Beta-lactams",
+   "front": "How do beta-lactam antibiotics work?",
+   "back": "They inhibit bacterial cell-wall synthesis, causing cell lysis.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch3-surgical-infection-card-024",
+   "type": "cloze",
+   "sectionId": "s5",
+   "deck": "Classes::Penicillins",
+   "cloze": "Adding a beta-lactamase inhibitor such as {{c1::clavulanate}} broadens amoxicillin's spectrum.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch3-surgical-infection-card-025",
+   "type": "basic",
+   "sectionId": "s5",
+   "deck": "Classes::Cephalosporins",
+   "front": "How does cephalosporin spectrum change across generations?",
+   "back": "Gram-positive cover falls while Gram-negative cover rises (1st → 3rd/4th).",
+   "difficulty": 2
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch3-surgical-infection-card-026",
+   "type": "basic",
+   "sectionId": "s5",
+   "deck": "Classes::Cephalosporins",
+   "front": "Give a first-generation cephalosporin used in surgery.",
+   "back": "Cefazolin (or cephalexin).",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch3-surgical-infection-card-027",
+   "type": "basic",
+   "sectionId": "s5",
+   "deck": "Classes::Carbapenems",
+   "front": "Which class has the broadest spectrum, covering Pseudomonas and anaerobes?",
+   "back": "Carbapenems (imipenem, meropenem, ertapenem).",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch3-surgical-infection-card-028",
+   "type": "basic",
+   "sectionId": "s5",
+   "deck": "Classes::Aminoglycosides",
+   "front": "Two major toxicities of aminoglycosides?",
+   "back": "Ototoxicity and nephrotoxicity.",
+   "difficulty": 2
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch3-surgical-infection-card-029",
+   "type": "basic",
+   "sectionId": "s5",
+   "deck": "Classes::Glycopeptides",
+   "front": "What is vancomycin the drug of choice for?",
+   "back": "MRSA and Clostridioides difficile colitis.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch3-surgical-infection-card-030",
+   "type": "cloze",
+   "sectionId": "s5",
+   "deck": "Classes::Glycopeptides",
+   "cloze": "Vancomycin is a {{c1::glycopeptide}} active against MRSA.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch3-surgical-infection-card-031",
+   "type": "basic",
+   "sectionId": "s5",
+   "deck": "Classes::Quinolones",
+   "front": "Common clinical use of quinolones?",
+   "back": "Urinary tract infections (Gram-negative aerobes).",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch3-surgical-infection-card-032",
+   "type": "basic",
+   "sectionId": "s5",
+   "deck": "Classes::Macrolides",
+   "front": "When are macrolides especially useful?",
+   "back": "In patients allergic to beta-lactam agents (they cover Gram-positives).",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch3-surgical-infection-card-033",
+   "type": "basic",
+   "sectionId": "s5",
+   "deck": "Classes::TMP-SMX",
+   "front": "Which unusual organisms does trimethoprim-sulfamethoxazole cover?",
+   "back": "Pneumocystis carinii (jirovecii) and Nocardia.",
+   "difficulty": 2
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch3-surgical-infection-card-034",
+   "type": "type",
+   "sectionId": "s5",
+   "deck": "Classes::Glycopeptides",
+   "front": "Drug of choice for C. difficile colitis (one word).",
+   "back": "vancomycin",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch3-surgical-infection-card-035",
+   "type": "basic",
+   "sectionId": "s6",
+   "deck": "Complications::Hypersensitivity",
+   "front": "Which antibiotics classically cause hypersensitivity?",
+   "back": "Penicillin and streptomycin (urticaria, angioneurotic oedema, rarely anaphylaxis).",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch3-surgical-infection-card-036",
+   "type": "basic",
+   "sectionId": "s6",
+   "deck": "Complications::Superinfection",
+   "front": "Which organisms typically cause superinfection?",
+   "back": "Resistant strains such as Proteus, Pseudomonas or Candida.",
+   "difficulty": 2
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch3-surgical-infection-card-037",
+   "type": "cloze",
+   "sectionId": "s6",
+   "deck": "Complications::Vitamins",
+   "cloze": "Prolonged antibiotics cause {{c1::vitamin B}} deficiency by altering bowel flora.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch3-surgical-infection-card-038",
+   "type": "basic",
+   "sectionId": "s6",
+   "deck": "Complications::Toxicity",
+   "front": "Which class is noted for nephrotoxicity and ototoxicity?",
+   "back": "Aminoglycosides.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch3-surgical-infection-card-039",
+   "type": "basic",
+   "sectionId": "s7",
+   "deck": "Precautions::Hand hygiene",
+   "front": "What is the single most effective measure against hospital-acquired infection?",
+   "back": "Proper hand hygiene.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch3-surgical-infection-card-040",
+   "type": "cloze",
+   "sectionId": "s7",
+   "deck": "Precautions::Hand hygiene",
+   "cloze": "Hand hygiene is performed even when {{c1::gloves}} were worn during contact.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch3-surgical-infection-card-041",
+   "type": "basic",
+   "sectionId": "s7",
+   "deck": "Precautions::Sharps",
+   "front": "How should used needles be handled?",
+   "back": "Discarded immediately into a puncture-resistant sharps container, never recapped or removed from the syringe.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch3-surgical-infection-card-042",
+   "type": "basic",
+   "sectionId": "s7",
+   "deck": "Precautions::PPE",
+   "front": "When are mask, gown and goggles used?",
+   "back": "When there is a reasonable chance of a splash or spray of blood or body fluids.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch3-surgical-infection-card-043",
+   "type": "basic",
+   "sectionId": "s7",
+   "deck": "Precautions::Hepatitis-HIV",
+   "front": "Name three extra precautions when operating on hepatitis/HIV patients.",
+   "back": "Double gloves, eye protection and passing sharps indirectly in a kidney basin (also full-face mask, waterproof gowns).",
+   "difficulty": 2
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch3-surgical-infection-card-044",
+   "type": "basic",
+   "sectionId": "s7",
+   "deck": "Precautions::Definition",
+   "front": "Define a nosocomial infection.",
+   "back": "An infection acquired in hospital.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch3-surgical-infection-card-045",
+   "type": "basic",
+   "sectionId": "s8",
+   "deck": "Decontamination::Cleaning",
+   "front": "Why must cleaning precede disinfection?",
+   "back": "Most disinfectants are inactivated by dirt and organic matter.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch3-surgical-infection-card-046",
+   "type": "basic",
+   "sectionId": "s8",
+   "deck": "Decontamination::Sterilisation",
+   "front": "State the standard autoclave parameters.",
+   "back": "Steam at 134°C and 2 atmospheres for 20–30 minutes.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch3-surgical-infection-card-047",
+   "type": "cloze",
+   "sectionId": "s8",
+   "deck": "Decontamination::Sterilisation",
+   "cloze": "{{c1::Ethylene oxide}} gas is used to sterilise heat-sensitive equipment.",
+   "difficulty": 2
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch3-surgical-infection-card-048",
+   "type": "basic",
+   "sectionId": "s8",
+   "deck": "Decontamination::Disinfection",
+   "front": "Which agent disinfects endoscopes, and what is done afterwards?",
+   "back": "Glutaraldehyde (Cidex); rinse with sterile saline before use as it is toxic.",
+   "difficulty": 2
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch3-surgical-infection-card-049",
+   "type": "basic",
+   "sectionId": "s8",
+   "deck": "Decontamination::Antiseptics",
+   "front": "Name two antiseptics used for skin preparation.",
+   "back": "Chlorhexidine and povidone-iodine (also 70% alcohol).",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch3-surgical-infection-card-050",
+   "type": "basic",
+   "sectionId": "s8",
+   "deck": "Decontamination::Sterilisation",
+   "front": "What distinguishes sterilisation from disinfection?",
+   "back": "Sterilisation destroys all organisms including spores; disinfection only reduces viable organisms.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch3-surgical-infection-card-051",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "SSI reduction::Patient",
+   "front": "What skin measure precedes incision?",
+   "back": "Skin preparation with an antiseptic.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch3-surgical-infection-card-052",
+   "type": "cloze",
+   "sectionId": "s1",
+   "deck": "SSI reduction::Surgeon",
+   "cloze": "The surgeon should have short nails and should {{c1::scrub}} properly.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch3-surgical-infection-card-053",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "SSI reduction::Environment",
+   "front": "Why avoid leaving dead space in a wound?",
+   "back": "Dead space collects fluid/haematoma that predisposes to infection.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch3-surgical-infection-card-054",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Prophylaxis::Booster",
+   "front": "When is a booster prophylactic dose given?",
+   "back": "During a lengthy operation; further doses depend on contamination.",
+   "difficulty": 2
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch3-surgical-infection-card-055",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Prophylaxis::Indications",
+   "front": "Give two high-risk patient features that justify clean-case prophylaxis.",
+   "back": "Old age, obesity, smoking or immunocompromise.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch3-surgical-infection-card-056",
+   "type": "cloze",
+   "sectionId": "s2",
+   "deck": "Prophylaxis::Agent",
+   "cloze": "A hospital's {{c1::infection-control committee}} recommends the prophylactic agent for its prevalent organism.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch3-surgical-infection-card-057",
+   "type": "basic",
+   "sectionId": "s3",
+   "deck": "SSI treatment::Antibiotics",
+   "front": "Give the three thresholds defining invasive wound infection.",
+   "back": "Temperature >38.5°C, erythema >5 cm, and leucocyte count >11,000.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch3-surgical-infection-card-058",
+   "type": "basic",
+   "sectionId": "s3",
+   "deck": "SSI treatment::Source",
+   "front": "Besides local care, what must be done about hospital-acquired infection?",
+   "back": "Trace and correct its source.",
+   "difficulty": 2
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch3-surgical-infection-card-059",
+   "type": "cloze",
+   "sectionId": "s3",
+   "deck": "SSI treatment::Drainage",
+   "cloze": "An established wound infection is opened by removing the {{c1::skin stitches}}.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch3-surgical-infection-card-060",
+   "type": "basic",
+   "sectionId": "s4",
+   "deck": "Choice::Principles",
+   "front": "How is the length of an antibiotic course judged?",
+   "back": "By the pathology and the clinical and laboratory assessment; avoid prolonged courses.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch3-surgical-infection-card-061",
+   "type": "basic",
+   "sectionId": "s4",
+   "deck": "Choice::Principles",
+   "front": "Why avoid toxic or very costly antibiotics?",
+   "back": "Because an equally effective, safer or cheaper substitute is usually available.",
+   "difficulty": 2
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch3-surgical-infection-card-062",
+   "type": "basic",
+   "sectionId": "s5",
+   "deck": "Classes::Penicillins",
+   "front": "Prototype penicillin and its main spectrum?",
+   "back": "Penicillin G — mainly Gram-positives such as streptococci and spirochaetes.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch3-surgical-infection-card-063",
+   "type": "basic",
+   "sectionId": "s5",
+   "deck": "Classes::Penicillins",
+   "front": "What does ampicillin add over penicillin G?",
+   "back": "Activity against enterococci and some Gram-negative bacteria.",
+   "difficulty": 2
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch3-surgical-infection-card-064",
+   "type": "cloze",
+   "sectionId": "s5",
+   "deck": "Classes::Cephalosporins",
+   "cloze": "Second-generation cephalosporins such as {{c1::cefoxitin}} also cover some anaerobes.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch3-surgical-infection-card-065",
+   "type": "basic",
+   "sectionId": "s5",
+   "deck": "Classes::Cephalosporins",
+   "front": "Name a third-generation cephalosporin.",
+   "back": "Ceftriaxone, ceftazidime or cefotaxime.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch3-surgical-infection-card-066",
+   "type": "basic",
+   "sectionId": "s5",
+   "deck": "Classes::Cephalosporins",
+   "front": "Name the fourth-generation cephalosporin mentioned.",
+   "back": "Cefepime.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch3-surgical-infection-card-067",
+   "type": "basic",
+   "sectionId": "s5",
+   "deck": "Classes::Aminoglycosides",
+   "front": "Name three aminoglycosides.",
+   "back": "Gentamicin, tobramycin and amikacin.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch3-surgical-infection-card-068",
+   "type": "basic",
+   "sectionId": "s5",
+   "deck": "Classes::Aminoglycosides",
+   "front": "How is aminoglycoside toxicity monitored?",
+   "back": "By serum creatinine and drug levels; use is limited and controlled.",
+   "difficulty": 2
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch3-surgical-infection-card-069",
+   "type": "basic",
+   "sectionId": "s5",
+   "deck": "Classes::Macrolides",
+   "front": "Name three macrolides.",
+   "back": "Erythromycin, azithromycin and clarithromycin.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch3-surgical-infection-card-070",
+   "type": "basic",
+   "sectionId": "s5",
+   "deck": "Classes::TMP-SMX",
+   "front": "Give the common name for trimethoprim-sulfamethoxazole.",
+   "back": "Septrin (co-trimoxazole).",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch3-surgical-infection-card-071",
+   "type": "cloze",
+   "sectionId": "s5",
+   "deck": "Classes::Beta-lactams",
+   "cloze": "Beta-lactams cause bacterial {{c1::cell lysis}} by blocking cell-wall synthesis.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch3-surgical-infection-card-072",
+   "type": "basic",
+   "sectionId": "s6",
+   "deck": "Complications::Hypersensitivity",
+   "front": "List features of antibiotic hypersensitivity.",
+   "back": "Urticaria, fever, angioneurotic oedema, asthma and rarely anaphylaxis.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch3-surgical-infection-card-073",
+   "type": "basic",
+   "sectionId": "s6",
+   "deck": "Complications::Superinfection",
+   "front": "Which sites are commonly affected by superinfection?",
+   "back": "Mouth, bowel, urinary tract or lung.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch3-surgical-infection-card-074",
+   "type": "basic",
+   "sectionId": "s7",
+   "deck": "Precautions::Gloves",
+   "front": "When should gloves be worn?",
+   "back": "When touching blood, body fluids, non-intact skin, mucous membranes or contaminated items.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch3-surgical-infection-card-075",
+   "type": "basic",
+   "sectionId": "s7",
+   "deck": "Precautions::Injection",
+   "front": "State two safe injection practices.",
+   "back": "New needle/syringe for each vial or IV-bag access and for each patient; single-patient vials where possible.",
+   "difficulty": 2
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch3-surgical-infection-card-076",
+   "type": "cloze",
+   "sectionId": "s7",
+   "deck": "Precautions::Sharps",
+   "cloze": "Used sharps go into a leak-proof, {{c1::puncture-resistant}} container.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch3-surgical-infection-card-077",
+   "type": "basic",
+   "sectionId": "s8",
+   "deck": "Decontamination::Levels",
+   "front": "Name the three methods of decontamination.",
+   "back": "Cleaning, disinfection and sterilisation.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch3-surgical-infection-card-078",
+   "type": "basic",
+   "sectionId": "s8",
+   "deck": "Decontamination::Antiseptics",
+   "front": "Which antiseptic is fast-acting and usable on open wounds?",
+   "back": "Povidone-iodine (effective against Gram-positive and Gram-negative organisms).",
+   "difficulty": 2
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch3-surgical-infection-card-079",
+   "type": "cloze",
+   "sectionId": "s8",
+   "deck": "Decontamination::Sterilisation",
+   "cloze": "The standard autoclave attains {{c1::134}}°C at 2 atmospheres.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch3-surgical-infection-card-080",
+   "type": "basic",
+   "sectionId": "s8",
+   "deck": "Decontamination::Sterilisation",
+   "front": "Which sterilisation method suits delicate endovascular wires in hospital?",
+   "back": "Gas plasma.",
+   "difficulty": 2
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch3-surgical-infection-card-081",
+   "type": "basic",
+   "sectionId": "s5",
+   "deck": "Classes::Glycopeptides",
+   "front": "Which cocci, besides MRSA, does vancomycin cover?",
+   "back": "Anaerobic Gram-positive cocci such as enterococci.",
+   "difficulty": 2
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch3-surgical-infection-card-082",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "SSI reduction::Surgeon",
+   "front": "Why avoid tight sutures?",
+   "back": "They cause ischaemia, increasing infection and impairing healing.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch3-surgical-infection-card-083",
+   "type": "basic",
+   "sectionId": "s3",
+   "deck": "SSI treatment::Principles",
+   "front": "What is the treatment of a spreading (non-collected) infection?",
+   "back": "Antibiotics.",
+   "difficulty": 2
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch3-surgical-infection-card-084",
+   "type": "basic",
+   "sectionId": "s6",
+   "deck": "Complications::Cdiff",
+   "front": "Which colitis follows overgrowth of Clostridioides difficile?",
+   "back": "Antibiotic-associated (pseudomembranous) colitis; vancomycin is a treatment.",
+   "difficulty": 2
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch3-surgical-infection-card-085",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Prophylaxis::Definition",
+   "front": "What is the aim of prophylaxis in terms of organisms?",
+   "back": "To reduce organisms below the level that can overcome host defences.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch3-surgical-infection-card-086",
+   "type": "basic",
+   "sectionId": "s7",
+   "deck": "Precautions::Definition",
+   "front": "What routes do standard precautions target?",
+   "back": "Blood, body fluids, non-intact skin and mucous membranes.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch3-surgical-infection-card-087",
+   "type": "basic",
+   "sectionId": "s8",
+   "deck": "Decontamination::Disinfection",
+   "front": "What is disinfection by moist heat?",
+   "back": "Boiling water.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch3-surgical-infection-card-088",
+   "type": "basic",
+   "sectionId": "s5",
+   "deck": "Classes::Quinolones",
+   "front": "Name three quinolones.",
+   "back": "Norfloxacin, ciprofloxacin and levofloxacin.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch3-surgical-infection-card-089",
+   "type": "basic",
+   "sectionId": "s4",
+   "deck": "Choice::Principles",
+   "front": "Which samples are most useful for culture in SSI?",
+   "back": "Urine, sputum or pus.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch3-surgical-infection-card-090",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Prophylaxis::Booster",
+   "front": "What determines whether further prophylactic doses are given?",
+   "back": "The degree of wound contamination during the operation.",
+   "difficulty": 2
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sur-ch3-surgical-infection-card-091",
+   "type": "basic",
+   "sectionId": "s5",
+   "deck": "Classes::Cephalosporins",
+   "front": "Are MRSA strains sensitive to first-generation cephalosporins?",
+   "back": "No — methicillin-resistant strains are invariably resistant to them.",
+   "difficulty": 1
+  }
+ ],
+ "mcqs": [
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sur-ch3-surgical-infection-mcq-001",
+   "type": "single",
+   "sectionId": "s1",
+   "difficulty": 2,
+   "highYield": true,
+   "stem": "Which method of pre-operative hair removal carries the lowest infection risk?",
+   "options": [
+    {
+     "id": "a",
+     "text": "Shaving the night before",
+     "correct": false,
+     "why": "Increases infection via micro-abrasions colonised overnight."
+    },
+    {
+     "id": "b",
+     "text": "Shaving in the anaesthetic room",
+     "correct": false,
+     "why": "Still causes abrasions."
+    },
+    {
+     "id": "c",
+     "text": "Clipping just before incision",
+     "correct": true,
+     "why": "Correct."
+    },
+    {
+     "id": "d",
+     "text": "Depilatory cream without testing",
+     "correct": false,
+     "why": "Not the preferred described method."
+    },
+    {
+     "id": "e",
+     "text": "No removal in any case",
+     "correct": false,
+     "why": "Removal is sometimes needed; the question is the method."
+    }
+   ],
+   "explanation": [
+    "Shaving causes micro-abrasions that colonise.",
+    "Clipping immediately before incision is preferred."
+   ],
+   "keyFacts": [
+    "Clip, do not shave."
+   ],
+   "teachingPoint": "Choose the least traumatic hair removal."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sur-ch3-surgical-infection-mcq-002",
+   "type": "single",
+   "sectionId": "s2",
+   "difficulty": 2,
+   "highYield": true,
+   "stem": "Prophylactic antibiotics for a clean operation are indicated when:",
+   "options": [
+    {
+     "id": "a",
+     "text": "Every clean operation, routinely",
+     "correct": false,
+     "why": "Clean cases usually do not need prophylaxis."
+    },
+    {
+     "id": "b",
+     "text": "A prosthesis is implanted or the patient is high-risk",
+     "correct": true,
+     "why": "Correct."
+    },
+    {
+     "id": "c",
+     "text": "The operation lasts over 30 minutes",
+     "correct": false,
+     "why": "Duration alone is not the indication."
+    },
+    {
+     "id": "d",
+     "text": "The surgeon prefers it",
+     "correct": false,
+     "why": "Not an evidence-based indication."
+    },
+    {
+     "id": "e",
+     "text": "Only if the patient requests it",
+     "correct": false,
+     "why": "Not how prophylaxis is decided."
+    }
+   ],
+   "explanation": [
+    "Clean surgery generally needs no prophylaxis.",
+    "Exceptions are prosthetic implantation or a high-risk patient."
+   ],
+   "keyFacts": [
+    "Clean case prophylaxis: prosthesis or high-risk only."
+   ],
+   "teachingPoint": "Reserve clean-case prophylaxis for clear indications."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sur-ch3-surgical-infection-mcq-003",
+   "type": "single",
+   "sectionId": "s2",
+   "difficulty": 2,
+   "highYield": true,
+   "stem": "Surgical antibiotic prophylaxis is best given:",
+   "options": [
+    {
+     "id": "a",
+     "text": "The evening before surgery",
+     "correct": false,
+     "why": "Too early to be effective at incision."
+    },
+    {
+     "id": "b",
+     "text": "About one hour before incision",
+     "correct": true,
+     "why": "Correct."
+    },
+    {
+     "id": "c",
+     "text": "At the end of the operation",
+     "correct": false,
+     "why": "Too late for prophylaxis."
+    },
+    {
+     "id": "d",
+     "text": "For five days post-operatively",
+     "correct": false,
+     "why": "Prophylaxis should not exceed one day."
+    },
+    {
+     "id": "e",
+     "text": "Only if the wound looks dirty afterwards",
+     "correct": false,
+     "why": "That is treatment, not prophylaxis."
+    }
+   ],
+   "explanation": [
+    "Tissue levels must be adequate at incision.",
+    "Give the dose about an hour before, not continued beyond one day."
+   ],
+   "keyFacts": [
+    "Prophylaxis ~1 h pre-incision, ≤1 day."
+   ],
+   "teachingPoint": "Timing determines efficacy."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sur-ch3-surgical-infection-mcq-004",
+   "type": "single",
+   "sectionId": "s3",
+   "difficulty": 2,
+   "highYield": true,
+   "stem": "A drained wound infection now has a temperature of 39°C, spreading erythema of 7 cm and WBC 14,000. The correct addition is:",
+   "options": [
+    {
+     "id": "a",
+     "text": "Continue drainage alone",
+     "correct": false,
+     "why": "Invasive signs are present, warranting antibiotics."
+    },
+    {
+     "id": "b",
+     "text": "Add antibiotics guided by culture and sensitivity",
+     "correct": true,
+     "why": "Correct."
+    },
+    {
+     "id": "c",
+     "text": "Close the wound immediately",
+     "correct": false,
+     "why": "Do not close an infected wound."
+    },
+    {
+     "id": "d",
+     "text": "Start high-dose steroids",
+     "correct": false,
+     "why": "Not indicated."
+    },
+    {
+     "id": "e",
+     "text": "Give prophylactic antibiotics for five days",
+     "correct": false,
+     "why": "This is treatment, not prophylaxis."
+    }
+   ],
+   "explanation": [
+    "Invasive infection is defined by T >38.5°C, erythema >5 cm, or WBC >11,000.",
+    "All are met, so add culture-guided antibiotics."
+   ],
+   "keyFacts": [
+    "Invasive signs → add culture-guided antibiotics."
+   ],
+   "teachingPoint": "Escalate when invasion is evident."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sur-ch3-surgical-infection-mcq-005",
+   "type": "single",
+   "sectionId": "s3",
+   "difficulty": 2,
+   "highYield": true,
+   "stem": "The correct primary treatment of a wound abscess is:",
+   "options": [
+    {
+     "id": "a",
+     "text": "Antibiotics alone",
+     "correct": false,
+     "why": "Antibiotics cannot clear a collection alone."
+    },
+    {
+     "id": "b",
+     "text": "Drainage",
+     "correct": true,
+     "why": "Correct."
+    },
+    {
+     "id": "c",
+     "text": "Warm compresses only",
+     "correct": false,
+     "why": "Insufficient for an established abscess."
+    },
+    {
+     "id": "d",
+     "text": "Immediate primary closure",
+     "correct": false,
+     "why": "Do not close an abscess cavity."
+    },
+    {
+     "id": "e",
+     "text": "Observation",
+     "correct": false,
+     "why": "A collection needs drainage."
+    }
+   ],
+   "explanation": [
+    "An abscess is a localised collection.",
+    "The treatment is drainage; antibiotics treat spreading infection."
+   ],
+   "keyFacts": [
+    "Abscess = drainage."
+   ],
+   "teachingPoint": "Drain collections; do not just prescribe."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sur-ch3-surgical-infection-mcq-006",
+   "type": "single",
+   "sectionId": "s5",
+   "difficulty": 2,
+   "highYield": true,
+   "stem": "A patient develops a wound infection with methicillin-resistant Staphylococcus aureus. The most appropriate antibiotic is:",
+   "options": [
+    {
+     "id": "a",
+     "text": "Cefazolin",
+     "correct": false,
+     "why": "MRSA is resistant to first-generation cephalosporins."
+    },
+    {
+     "id": "b",
+     "text": "Vancomycin",
+     "correct": true,
+     "why": "Correct."
+    },
+    {
+     "id": "c",
+     "text": "Amoxicillin",
+     "correct": false,
+     "why": "Ineffective against MRSA."
+    },
+    {
+     "id": "d",
+     "text": "Gentamicin",
+     "correct": false,
+     "why": "Poor Gram-positive cover."
+    },
+    {
+     "id": "e",
+     "text": "Ciprofloxacin",
+     "correct": false,
+     "why": "Not the drug of choice for MRSA."
+    }
+   ],
+   "explanation": [
+    "MRSA resists beta-lactams including cephalosporins.",
+    "Vancomycin, a glycopeptide, is the appropriate choice."
+   ],
+   "keyFacts": [
+    "MRSA → vancomycin."
+   ],
+   "teachingPoint": "Match resistant organisms to their agents."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sur-ch3-surgical-infection-mcq-007",
+   "type": "single",
+   "sectionId": "s5",
+   "difficulty": 2,
+   "highYield": true,
+   "stem": "Which antibiotic is the drug of choice for antibiotic-associated Clostridioides difficile colitis?",
+   "options": [
+    {
+     "id": "a",
+     "text": "Gentamicin",
+     "correct": false,
+     "why": "Not effective for C. difficile colitis."
+    },
+    {
+     "id": "b",
+     "text": "Vancomycin (oral)",
+     "correct": true,
+     "why": "Correct."
+    },
+    {
+     "id": "c",
+     "text": "Ceftriaxone",
+     "correct": false,
+     "why": "A cephalosporin can precipitate C. difficile."
+    },
+    {
+     "id": "d",
+     "text": "Amoxicillin",
+     "correct": false,
+     "why": "Broad-spectrum use can cause it."
+    },
+    {
+     "id": "e",
+     "text": "Azithromycin",
+     "correct": false,
+     "why": "Not the drug of choice."
+    }
+   ],
+   "explanation": [
+    "C. difficile overgrows after broad-spectrum antibiotics.",
+    "Oral vancomycin is a drug of choice (with metronidazole)."
+   ],
+   "keyFacts": [
+    "C. difficile colitis → vancomycin."
+   ],
+   "teachingPoint": "Treat the colitis, stop the offending drug."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sur-ch3-surgical-infection-mcq-008",
+   "type": "single",
+   "sectionId": "s5",
+   "difficulty": 2,
+   "highYield": false,
+   "stem": "Aminoglycosides such as gentamicin are best described as:",
+   "options": [
+    {
+     "id": "a",
+     "text": "Broad Gram-positive agents",
+     "correct": false,
+     "why": "They are weak against Gram-positives."
+    },
+    {
+     "id": "b",
+     "text": "Gram-negative agents that are oto- and nephrotoxic",
+     "correct": true,
+     "why": "Correct."
+    },
+    {
+     "id": "c",
+     "text": "First-line for all surgical prophylaxis",
+     "correct": false,
+     "why": "Toxicity limits routine use."
+    },
+    {
+     "id": "d",
+     "text": "Anaerobic agents",
+     "correct": false,
+     "why": "They have little anaerobic activity."
+    },
+    {
+     "id": "e",
+     "text": "Cell-wall inhibitors",
+     "correct": false,
+     "why": "They inhibit protein synthesis."
+    }
+   ],
+   "explanation": [
+    "Aminoglycosides target Gram-negative aerobes.",
+    "They are oto- and nephrotoxic, so are limited and monitored."
+   ],
+   "keyFacts": [
+    "Aminoglycosides: Gram-negative, toxic, last resort."
+   ],
+   "teachingPoint": "Weigh efficacy against toxicity."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sur-ch3-surgical-infection-mcq-009",
+   "type": "single",
+   "sectionId": "s5",
+   "difficulty": 2,
+   "highYield": false,
+   "stem": "Across cephalosporin generations, the general trend is:",
+   "options": [
+    {
+     "id": "a",
+     "text": "Increasing Gram-positive, decreasing Gram-negative cover",
+     "correct": false,
+     "why": "This is reversed."
+    },
+    {
+     "id": "b",
+     "text": "Decreasing Gram-positive, increasing Gram-negative cover",
+     "correct": true,
+     "why": "Correct."
+    },
+    {
+     "id": "c",
+     "text": "No change in spectrum",
+     "correct": false,
+     "why": "The spectrum shifts markedly."
+    },
+    {
+     "id": "d",
+     "text": "Loss of all activity by the third generation",
+     "correct": false,
+     "why": "Third-generation agents are potent Gram-negative drugs."
+    },
+    {
+     "id": "e",
+     "text": "Anaerobic cover in every generation",
+     "correct": false,
+     "why": "Only some (e.g. cefoxitin) cover anaerobes."
+    }
+   ],
+   "explanation": [
+    "First-generation cephalosporins are best against Gram-positives.",
+    "Later generations gain Gram-negative cover and lose some Gram-positive."
+   ],
+   "keyFacts": [
+    "Higher generation → more Gram-negative, less Gram-positive."
+   ],
+   "teachingPoint": "Track the generational shift."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sur-ch3-surgical-infection-mcq-010",
+   "type": "single",
+   "sectionId": "s7",
+   "difficulty": 2,
+   "highYield": true,
+   "stem": "The single most effective measure to reduce hospital-acquired infection is:",
+   "options": [
+    {
+     "id": "a",
+     "text": "Prophylactic antibiotics",
+     "correct": false,
+     "why": "Useful but not the most effective single measure."
+    },
+    {
+     "id": "b",
+     "text": "Hand hygiene",
+     "correct": true,
+     "why": "Correct."
+    },
+    {
+     "id": "c",
+     "text": "Wearing a mask at all times",
+     "correct": false,
+     "why": "Not the single most effective measure."
+    },
+    {
+     "id": "d",
+     "text": "Isolation of every patient",
+     "correct": false,
+     "why": "Not feasible or the key measure."
+    },
+    {
+     "id": "e",
+     "text": "Ultraviolet room sterilisation",
+     "correct": false,
+     "why": "Not the primary measure."
+    }
+   ],
+   "explanation": [
+    "Hand hygiene interrupts transmission between patients.",
+    "It is the single most effective infection-control measure."
+   ],
+   "keyFacts": [
+    "Hand hygiene is number one."
+   ],
+   "teachingPoint": "Clean hands prevent most transmission."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sur-ch3-surgical-infection-mcq-011",
+   "type": "single",
+   "sectionId": "s7",
+   "difficulty": 2,
+   "highYield": true,
+   "stem": "Which practice increases the risk of a needle-stick injury?",
+   "options": [
+    {
+     "id": "a",
+     "text": "Discarding needles immediately",
+     "correct": false,
+     "why": "Safe practice."
+    },
+    {
+     "id": "b",
+     "text": "Recapping used needles",
+     "correct": true,
+     "why": "Correct — recapping is a classic cause."
+    },
+    {
+     "id": "c",
+     "text": "Using a puncture-resistant container",
+     "correct": false,
+     "why": "Safe practice."
+    },
+    {
+     "id": "d",
+     "text": "Passing sharps in a kidney basin",
+     "correct": false,
+     "why": "A safe, indirect method."
+    },
+    {
+     "id": "e",
+     "text": "Using a new needle per patient",
+     "correct": false,
+     "why": "Safe practice."
+    }
+   ],
+   "explanation": [
+    "Used needles must be discarded, not recapped.",
+    "Recapping is a classic cause of needle-stick injury."
+   ],
+   "keyFacts": [
+    "Never recap needles."
+   ],
+   "teachingPoint": "Handle sharps to avoid injury."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sur-ch3-surgical-infection-mcq-012",
+   "type": "single",
+   "sectionId": "s8",
+   "difficulty": 2,
+   "highYield": true,
+   "stem": "Which is the standard method of sterilisation in a hospital?",
+   "options": [
+    {
+     "id": "a",
+     "text": "Boiling water",
+     "correct": false,
+     "why": "Boiling disinfects but does not sterilise spores."
+    },
+    {
+     "id": "b",
+     "text": "Steam autoclaving at 134°C, 2 atmospheres",
+     "correct": true,
+     "why": "Correct."
+    },
+    {
+     "id": "c",
+     "text": "70% alcohol wipe",
+     "correct": false,
+     "why": "An antiseptic, not sterilisation."
+    },
+    {
+     "id": "d",
+     "text": "Glutaraldehyde for 5 minutes",
+     "correct": false,
+     "why": "Short immersion disinfects, not sterilises."
+    },
+    {
+     "id": "e",
+     "text": "Ultraviolet light",
+     "correct": false,
+     "why": "Not the standard steriliser."
+    }
+   ],
+   "explanation": [
+    "Sterilisation destroys all organisms including spores.",
+    "The standard is steam autoclaving (134°C, 2 atm, 20–30 min)."
+   ],
+   "keyFacts": [
+    "Autoclave = standard sterilisation."
+   ],
+   "teachingPoint": "Distinguish disinfection from sterilisation."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sur-ch3-surgical-infection-mcq-013",
+   "type": "single",
+   "sectionId": "s8",
+   "difficulty": 2,
+   "highYield": false,
+   "stem": "Why must instruments be cleaned before disinfection?",
+   "options": [
+    {
+     "id": "a",
+     "text": "To make them look tidy",
+     "correct": false,
+     "why": "The reason is microbiological, not cosmetic."
+    },
+    {
+     "id": "b",
+     "text": "Because organic matter inactivates most disinfectants",
+     "correct": true,
+     "why": "Correct."
+    },
+    {
+     "id": "c",
+     "text": "To warm them up",
+     "correct": false,
+     "why": "Irrelevant."
+    },
+    {
+     "id": "d",
+     "text": "To sharpen them",
+     "correct": false,
+     "why": "Irrelevant."
+    },
+    {
+     "id": "e",
+     "text": "Because disinfectants are cheaper on clean items",
+     "correct": false,
+     "why": "Not the reason."
+    }
+   ],
+   "explanation": [
+    "Most disinfectants fail in the presence of dirt/organic matter.",
+    "Cleaning is therefore a prerequisite."
+   ],
+   "keyFacts": [
+    "Clean first — soil inactivates disinfectant."
+   ],
+   "teachingPoint": "Sequence decontamination correctly."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sur-ch3-surgical-infection-mcq-014",
+   "type": "single",
+   "sectionId": "s8",
+   "difficulty": 2,
+   "highYield": false,
+   "stem": "After chemical disinfection of an endoscope with glutaraldehyde, the scope should be:",
+   "options": [
+    {
+     "id": "a",
+     "text": "Used immediately",
+     "correct": false,
+     "why": "The agent is toxic and must be rinsed off."
+    },
+    {
+     "id": "b",
+     "text": "Rinsed with sterile saline before use",
+     "correct": true,
+     "why": "Correct."
+    },
+    {
+     "id": "c",
+     "text": "Autoclaved",
+     "correct": false,
+     "why": "Endoscopes are heat-sensitive."
+    },
+    {
+     "id": "d",
+     "text": "Wiped with alcohol only",
+     "correct": false,
+     "why": "Insufficient to remove toxic residue."
+    },
+    {
+     "id": "e",
+     "text": "Left to air-dry for a week",
+     "correct": false,
+     "why": "Not the described step."
+    }
+   ],
+   "explanation": [
+    "Glutaraldehyde is toxic to tissue.",
+    "Scopes are rinsed with sterile saline before use."
+   ],
+   "keyFacts": [
+    "Rinse glutaraldehyde scopes with sterile saline."
+   ],
+   "teachingPoint": "Remove toxic residues before use."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sur-ch3-surgical-infection-mcq-015",
+   "type": "single",
+   "sectionId": "s6",
+   "difficulty": 2,
+   "highYield": true,
+   "stem": "A patient given prolonged broad-spectrum antibiotics develops profuse diarrhoea. The most likely cause is:",
+   "options": [
+    {
+     "id": "a",
+     "text": "Vitamin B deficiency",
+     "correct": false,
+     "why": "Occurs but does not usually cause profuse diarrhoea."
+    },
+    {
+     "id": "b",
+     "text": "Clostridioides difficile colitis",
+     "correct": true,
+     "why": "Correct."
+    },
+    {
+     "id": "c",
+     "text": "Penicillin anaphylaxis",
+     "correct": false,
+     "why": "Presents differently."
+    },
+    {
+     "id": "d",
+     "text": "Aminoglycoside ototoxicity",
+     "correct": false,
+     "why": "Affects hearing/balance."
+    },
+    {
+     "id": "e",
+     "text": "Simple dietary upset",
+     "correct": false,
+     "why": "Less likely given the antibiotic history."
+    }
+   ],
+   "explanation": [
+    "Broad-spectrum antibiotics disturb bowel flora.",
+    "C. difficile overgrowth causes antibiotic-associated colitis."
+   ],
+   "keyFacts": [
+    "Broad-spectrum + diarrhoea → think C. difficile."
+   ],
+   "teachingPoint": "Suspect C. difficile after antibiotics."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sur-ch3-surgical-infection-mcq-016",
+   "type": "single",
+   "sectionId": "s5",
+   "difficulty": 2,
+   "highYield": false,
+   "stem": "Which agent broadens a penicillin's spectrum by inhibiting beta-lactamase?",
+   "options": [
+    {
+     "id": "a",
+     "text": "Gentamicin",
+     "correct": false,
+     "why": "An aminoglycoside, not an inhibitor."
+    },
+    {
+     "id": "b",
+     "text": "Clavulanate",
+     "correct": true,
+     "why": "Correct."
+    },
+    {
+     "id": "c",
+     "text": "Vancomycin",
+     "correct": false,
+     "why": "A glycopeptide."
+    },
+    {
+     "id": "d",
+     "text": "Ciprofloxacin",
+     "correct": false,
+     "why": "A quinolone."
+    },
+    {
+     "id": "e",
+     "text": "Metronidazole",
+     "correct": false,
+     "why": "An anaerobic agent, not a beta-lactamase inhibitor."
+    }
+   ],
+   "explanation": [
+    "Beta-lactamase inhibitors protect the penicillin ring.",
+    "Clavulanate broadens amoxicillin's spectrum."
+   ],
+   "keyFacts": [
+    "Clavulanate = beta-lactamase inhibitor."
+   ],
+   "teachingPoint": "Combine drugs to defeat resistance."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sur-ch3-surgical-infection-mcq-017",
+   "type": "single",
+   "sectionId": "s4",
+   "difficulty": 2,
+   "highYield": false,
+   "stem": "A patient responding well clinically has a culture suggesting a different antibiotic. You should:",
+   "options": [
+    {
+     "id": "a",
+     "text": "Switch immediately to match the culture",
+     "correct": false,
+     "why": "Do not switch for culture alone if responding."
+    },
+    {
+     "id": "b",
+     "text": "Continue the current effective antibiotic",
+     "correct": true,
+     "why": "Correct."
+    },
+    {
+     "id": "c",
+     "text": "Stop all antibiotics",
+     "correct": false,
+     "why": "Not indicated mid-response."
+    },
+    {
+     "id": "d",
+     "text": "Add a second broad-spectrum agent",
+     "correct": false,
+     "why": "Unnecessary escalation."
+    },
+    {
+     "id": "e",
+     "text": "Double the current dose",
+     "correct": false,
+     "why": "Not indicated by the culture alone."
+    }
+   ],
+   "explanation": [
+    "Culture guides but does not override a good clinical response.",
+    "Do not change a working antibiotic for culture results alone."
+   ],
+   "keyFacts": [
+    "Treat the patient, not the culture."
+   ],
+   "teachingPoint": "Let clinical response lead."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sur-ch3-surgical-infection-mcq-018",
+   "type": "single",
+   "sectionId": "s5",
+   "difficulty": 1,
+   "highYield": false,
+   "stem": "Which class is most appropriate for a straightforward Gram-negative urinary tract infection?",
+   "options": [
+    {
+     "id": "a",
+     "text": "Vancomycin",
+     "correct": false,
+     "why": "Gram-positive agent."
+    },
+    {
+     "id": "b",
+     "text": "A quinolone (e.g. ciprofloxacin)",
+     "correct": true,
+     "why": "Correct."
+    },
+    {
+     "id": "c",
+     "text": "A macrolide",
+     "correct": false,
+     "why": "Mainly Gram-positive."
+    },
+    {
+     "id": "d",
+     "text": "A first-generation cephalosporin",
+     "correct": false,
+     "why": "Better for Gram-positives."
+    },
+    {
+     "id": "e",
+     "text": "Metronidazole",
+     "correct": false,
+     "why": "An anaerobic agent."
+    }
+   ],
+   "explanation": [
+    "Quinolones target Gram-negative aerobes.",
+    "They are commonly used for urinary tract infections."
+   ],
+   "keyFacts": [
+    "Quinolone for Gram-negative UTI."
+   ],
+   "teachingPoint": "Match the class to the site/organism."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sur-ch3-surgical-infection-mcq-019",
+   "type": "single",
+   "sectionId": "s1",
+   "difficulty": 1,
+   "highYield": false,
+   "stem": "Which surgical technique factor reduces surgical site infection?",
+   "options": [
+    {
+     "id": "a",
+     "text": "Leaving dead space",
+     "correct": false,
+     "why": "Dead space predisposes to infection."
+    },
+    {
+     "id": "b",
+     "text": "Meticulous haemostasis and gentle handling",
+     "correct": true,
+     "why": "Correct."
+    },
+    {
+     "id": "c",
+     "text": "Tight sutures to close firmly",
+     "correct": false,
+     "why": "Tight sutures cause ischaemia and infection."
+    },
+    {
+     "id": "d",
+     "text": "Rapid rough dissection",
+     "correct": false,
+     "why": "Increases tissue trauma."
+    },
+    {
+     "id": "e",
+     "text": "Primary closure of dirty wounds",
+     "correct": false,
+     "why": "Dirty wounds need delayed closure."
+    }
+   ],
+   "explanation": [
+    "Good technique minimises trauma, haematoma and dead space.",
+    "This reduces infection risk."
+   ],
+   "keyFacts": [
+    "Haemostasis + gentle handling reduce SSI."
+   ],
+   "teachingPoint": "Technique is part of infection control."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sur-ch3-surgical-infection-mcq-020",
+   "type": "single",
+   "sectionId": "s6",
+   "difficulty": 1,
+   "highYield": false,
+   "stem": "Which antibiotic class most classically causes hypersensitivity reactions?",
+   "options": [
+    {
+     "id": "a",
+     "text": "Aminoglycosides",
+     "correct": false,
+     "why": "Noted for oto/nephrotoxicity, not classic hypersensitivity."
+    },
+    {
+     "id": "b",
+     "text": "Penicillins",
+     "correct": true,
+     "why": "Correct."
+    },
+    {
+     "id": "c",
+     "text": "Quinolones",
+     "correct": false,
+     "why": "Not the classic culprit."
+    },
+    {
+     "id": "d",
+     "text": "Glycopeptides",
+     "correct": false,
+     "why": "Cause 'red man' with rapid infusion, but penicillin is the classic allergen."
+    },
+    {
+     "id": "e",
+     "text": "Macrolides",
+     "correct": false,
+     "why": "Not the classic hypersensitivity culprit."
+    }
+   ],
+   "explanation": [
+    "Penicillins (and streptomycin) classically cause hypersensitivity.",
+    "Reactions range from urticaria to anaphylaxis."
+   ],
+   "keyFacts": [
+    "Penicillin = classic hypersensitivity."
+   ],
+   "teachingPoint": "Always check penicillin allergy."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sur-ch3-surgical-infection-mcq-021",
+   "type": "single",
+   "sectionId": "s2",
+   "difficulty": 1,
+   "highYield": false,
+   "stem": "Which is a correct principle of surgical antibiotic prophylaxis?",
+   "options": [
+    {
+     "id": "a",
+     "text": "Continue for a week to be safe",
+     "correct": false,
+     "why": "Prophylaxis should not exceed one day."
+    },
+    {
+     "id": "b",
+     "text": "Give it about an hour before incision",
+     "correct": true,
+     "why": "Correct."
+    },
+    {
+     "id": "c",
+     "text": "Only start it if infection appears",
+     "correct": false,
+     "why": "That is treatment, not prophylaxis."
+    },
+    {
+     "id": "d",
+     "text": "Use the most toxic agent available",
+     "correct": false,
+     "why": "Choose effective, safe agents."
+    },
+    {
+     "id": "e",
+     "text": "Give it after skin closure",
+     "correct": false,
+     "why": "Too late to be prophylactic."
+    }
+   ],
+   "explanation": [
+    "Adequate tissue levels are needed at incision.",
+    "Give ~1 h before and do not exceed one day."
+   ],
+   "keyFacts": [
+    "Right drug, right time, short course."
+   ],
+   "teachingPoint": "Prophylaxis is brief and timed."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sur-ch3-surgical-infection-mcq-022",
+   "type": "single",
+   "sectionId": "s7",
+   "difficulty": 1,
+   "highYield": false,
+   "stem": "Standard precautions should be applied to:",
+   "options": [
+    {
+     "id": "a",
+     "text": "Only patients known to be infectious",
+     "correct": false,
+     "why": "They apply to all patients."
+    },
+    {
+     "id": "b",
+     "text": "All patients regardless of infection status",
+     "correct": true,
+     "why": "Correct."
+    },
+    {
+     "id": "c",
+     "text": "Only surgical patients",
+     "correct": false,
+     "why": "They apply everywhere."
+    },
+    {
+     "id": "d",
+     "text": "Only during operations",
+     "correct": false,
+     "why": "They apply to all care."
+    },
+    {
+     "id": "e",
+     "text": "Only when blood is visible",
+     "correct": false,
+     "why": "They apply routinely."
+    }
+   ],
+   "explanation": [
+    "Standard precautions assume any patient may transmit infection.",
+    "They are used for everyone, infectious or not."
+   ],
+   "keyFacts": [
+    "Standard precautions = for everyone."
+   ],
+   "teachingPoint": "Treat every patient as potentially infectious."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sur-ch3-surgical-infection-mcq-023",
+   "type": "single",
+   "sectionId": "s8",
+   "difficulty": 2,
+   "highYield": false,
+   "stem": "Which sterilisation method is most appropriate for heat-sensitive equipment?",
+   "options": [
+    {
+     "id": "a",
+     "text": "Steam autoclave",
+     "correct": false,
+     "why": "Heat may damage sensitive items."
+    },
+    {
+     "id": "b",
+     "text": "Ethylene oxide gas",
+     "correct": true,
+     "why": "Correct."
+    },
+    {
+     "id": "c",
+     "text": "Boiling",
+     "correct": false,
+     "why": "Only disinfects."
+    },
+    {
+     "id": "d",
+     "text": "Dry heat at high temperature",
+     "correct": false,
+     "why": "Still heat-based."
+    },
+    {
+     "id": "e",
+     "text": "Alcohol immersion",
+     "correct": false,
+     "why": "An antiseptic, not sterilisation."
+    }
+   ],
+   "explanation": [
+    "Heat-sensitive items cannot be autoclaved.",
+    "Ethylene oxide gas sterilises them (gamma/gas plasma also)."
+   ],
+   "keyFacts": [
+    "Heat-sensitive → ethylene oxide."
+   ],
+   "teachingPoint": "Match steriliser to the material."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sur-ch3-surgical-infection-mcq-024",
+   "type": "single",
+   "sectionId": "s5",
+   "difficulty": 1,
+   "highYield": false,
+   "stem": "Which statement about vancomycin is correct?",
+   "options": [
+    {
+     "id": "a",
+     "text": "It is a cell-membrane channel blocker",
+     "correct": false,
+     "why": "It inhibits cell-wall synthesis."
+    },
+    {
+     "id": "b",
+     "text": "It is effective against MRSA and Gram-positive cocci",
+     "correct": true,
+     "why": "Correct."
+    },
+    {
+     "id": "c",
+     "text": "It is a first-line Gram-negative agent",
+     "correct": false,
+     "why": "It has little Gram-negative activity."
+    },
+    {
+     "id": "d",
+     "text": "It is an aminoglycoside",
+     "correct": false,
+     "why": "It is a glycopeptide."
+    },
+    {
+     "id": "e",
+     "text": "It is used mainly for urinary infections",
+     "correct": false,
+     "why": "That is a quinolone role."
+    }
+   ],
+   "explanation": [
+    "Vancomycin is a glycopeptide inhibiting cell-wall synthesis.",
+    "It covers MRSA and Gram-positive cocci and treats C. difficile colitis."
+   ],
+   "keyFacts": [
+    "Vancomycin = Gram-positive/MRSA/C. difficile."
+   ],
+   "teachingPoint": "Know vancomycin's niche."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sur-ch3-surgical-infection-mcq-025",
+   "type": "single",
+   "sectionId": "s3",
+   "difficulty": 2,
+   "highYield": false,
+   "stem": "Antibiotics are indicated in a wound infection when which threshold is met?",
+   "options": [
+    {
+     "id": "a",
+     "text": "Any redness at the wound",
+     "correct": false,
+     "why": "Minor erythema alone does not define invasion."
+    },
+    {
+     "id": "b",
+     "text": "Erythema greater than 5 cm",
+     "correct": true,
+     "why": "Correct — one of the invasive-infection criteria."
+    },
+    {
+     "id": "c",
+     "text": "Any serous discharge",
+     "correct": false,
+     "why": "Not itself an invasive-infection criterion."
+    },
+    {
+     "id": "d",
+     "text": "Mild wound tenderness",
+     "correct": false,
+     "why": "Non-specific."
+    },
+    {
+     "id": "e",
+     "text": "A normal temperature",
+     "correct": false,
+     "why": "Argues against invasive infection."
+    }
+   ],
+   "explanation": [
+    "Invasive infection: T >38.5°C, erythema >5 cm, or WBC >11,000.",
+    "Erythema >5 cm meets the criterion."
+   ],
+   "keyFacts": [
+    "Erythema >5 cm = invasive sign."
+   ],
+   "teachingPoint": "Use objective thresholds."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sur-ch3-surgical-infection-mcq-026",
+   "type": "single",
+   "sectionId": "s5",
+   "difficulty": 2,
+   "highYield": false,
+   "stem": "Which organism produces coagulase and tends to localise infection with pus formation?",
+   "options": [
+    {
+     "id": "a",
+     "text": "Streptococcus",
+     "correct": false,
+     "why": "Produces hyaluronidase and spreads."
+    },
+    {
+     "id": "b",
+     "text": "Staphylococcus",
+     "correct": true,
+     "why": "Correct."
+    },
+    {
+     "id": "c",
+     "text": "Pseudomonas",
+     "correct": false,
+     "why": "Not defined by coagulase."
+    },
+    {
+     "id": "d",
+     "text": "Clostridium",
+     "correct": false,
+     "why": "Causes gas gangrene."
+    },
+    {
+     "id": "e",
+     "text": "Escherichia coli",
+     "correct": false,
+     "why": "Not the coagulase producer."
+    }
+   ],
+   "explanation": [
+    "Staphylococci produce coagulase.",
+    "This localises infection and produces pus."
+   ],
+   "keyFacts": [
+    "Staph = coagulase, localised pus."
+   ],
+   "teachingPoint": "Contrast staph with spreading strep."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sur-ch3-surgical-infection-mcq-027",
+   "type": "single",
+   "sectionId": "s8",
+   "difficulty": 2,
+   "highYield": false,
+   "stem": "Disinfection differs from sterilisation in that disinfection:",
+   "options": [
+    {
+     "id": "a",
+     "text": "Destroys spores",
+     "correct": false,
+     "why": "Only sterilisation reliably destroys spores."
+    },
+    {
+     "id": "b",
+     "text": "Reduces organisms but may not kill spores",
+     "correct": true,
+     "why": "Correct."
+    },
+    {
+     "id": "c",
+     "text": "Is always by heat",
+     "correct": false,
+     "why": "It may be chemical."
+    },
+    {
+     "id": "d",
+     "text": "Is unnecessary if cleaning is done",
+     "correct": false,
+     "why": "Cleaning does not replace disinfection."
+    },
+    {
+     "id": "e",
+     "text": "Kills all viruses always",
+     "correct": false,
+     "why": "Disinfection reduces, not necessarily eliminates all."
+    }
+   ],
+   "explanation": [
+    "Disinfection lowers viable organisms to acceptable levels.",
+    "Spores can survive; sterilisation destroys them."
+   ],
+   "keyFacts": [
+    "Disinfection spares spores; sterilisation does not."
+   ],
+   "teachingPoint": "Choose the level to the risk."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sur-ch3-surgical-infection-mcq-028",
+   "type": "single",
+   "sectionId": "s6",
+   "difficulty": 1,
+   "highYield": false,
+   "stem": "Which is a specific toxicity of aminoglycosides to warn about?",
+   "options": [
+    {
+     "id": "a",
+     "text": "Hepatotoxicity",
+     "correct": false,
+     "why": "Not the classic aminoglycoside toxicity."
+    },
+    {
+     "id": "b",
+     "text": "Nephrotoxicity and ototoxicity",
+     "correct": true,
+     "why": "Correct."
+    },
+    {
+     "id": "c",
+     "text": "Cardiotoxicity",
+     "correct": false,
+     "why": "Not the classic aminoglycoside toxicity."
+    },
+    {
+     "id": "d",
+     "text": "Photosensitivity",
+     "correct": false,
+     "why": "More typical of tetracyclines/quinolones."
+    },
+    {
+     "id": "e",
+     "text": "Tendon rupture",
+     "correct": false,
+     "why": "Associated with quinolones."
+    }
+   ],
+   "explanation": [
+    "Aminoglycosides accumulate in kidney and inner ear.",
+    "They cause nephrotoxicity and ototoxicity."
+   ],
+   "keyFacts": [
+    "Aminoglycosides: kidney + ear."
+   ],
+   "teachingPoint": "Monitor levels to limit toxicity."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sur-ch3-surgical-infection-mcq-029",
+   "type": "single",
+   "sectionId": "s4",
+   "difficulty": 2,
+   "highYield": false,
+   "stem": "Which patient factor most suggests a resistant organism when choosing empirical antibiotics?",
+   "options": [
+    {
+     "id": "a",
+     "text": "First-ever hospital visit",
+     "correct": false,
+     "why": "Suggests community flora."
+    },
+    {
+     "id": "b",
+     "text": "Antibiotic therapy within the last 90 days",
+     "correct": true,
+     "why": "Correct."
+    },
+    {
+     "id": "c",
+     "text": "Young age with no comorbidity",
+     "correct": false,
+     "why": "Lower resistance risk."
+    },
+    {
+     "id": "d",
+     "text": "No recent healthcare contact",
+     "correct": false,
+     "why": "Lower resistance risk."
+    },
+    {
+     "id": "e",
+     "text": "A short elective admission only",
+     "correct": false,
+     "why": "Lower risk than recent antibiotics."
+    }
+   ],
+   "explanation": [
+    "Recent antibiotics or hospitalisation select resistant flora.",
+    "This compromises host resistance and guides broader empirical cover."
+   ],
+   "keyFacts": [
+    "Recent antibiotics/hospital → resistant flora."
+   ],
+   "teachingPoint": "History shapes empirical choice."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sur-ch3-surgical-infection-mcq-030",
+   "type": "single",
+   "sectionId": "s1",
+   "difficulty": 1,
+   "highYield": false,
+   "stem": "Which is a correct patient-side measure to reduce SSI?",
+   "options": [
+    {
+     "id": "a",
+     "text": "Shave the operative site the night before",
+     "correct": false,
+     "why": "Shaving early increases infection."
+    },
+    {
+     "id": "b",
+     "text": "Control diabetes and stop smoking pre-operatively",
+     "correct": true,
+     "why": "Correct."
+    },
+    {
+     "id": "c",
+     "text": "Operate through active infection to save time",
+     "correct": false,
+     "why": "Avoid operating during active infection."
+    },
+    {
+     "id": "d",
+     "text": "Skip skin antisepsis if the skin looks clean",
+     "correct": false,
+     "why": "Antiseptic prep is required."
+    },
+    {
+     "id": "e",
+     "text": "Leave dead space to reduce operating time",
+     "correct": false,
+     "why": "Dead space predisposes to infection."
+    }
+   ],
+   "explanation": [
+    "Optimising the patient lowers infection risk.",
+    "Control diabetes, stop smoking and correct nutrition first."
+   ],
+   "keyFacts": [
+    "Prepare the patient before elective surgery."
+   ],
+   "teachingPoint": "Modifiable factors matter."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sur-ch3-surgical-infection-mcq-031",
+   "type": "single",
+   "sectionId": "s5",
+   "difficulty": 2,
+   "highYield": false,
+   "stem": "Which antibiotic is effective against Pseudomonas and anaerobes as a broad agent?",
+   "options": [
+    {
+     "id": "a",
+     "text": "Cefazolin",
+     "correct": false,
+     "why": "First-generation, narrow Gram-positive."
+    },
+    {
+     "id": "b",
+     "text": "Meropenem",
+     "correct": true,
+     "why": "Correct — a carbapenem."
+    },
+    {
+     "id": "c",
+     "text": "Penicillin G",
+     "correct": false,
+     "why": "Mainly Gram-positive."
+    },
+    {
+     "id": "d",
+     "text": "Erythromycin",
+     "correct": false,
+     "why": "A macrolide, Gram-positive."
+    },
+    {
+     "id": "e",
+     "text": "Norfloxacin",
+     "correct": false,
+     "why": "A quinolone, not the broadest agent."
+    }
+   ],
+   "explanation": [
+    "Carbapenems are the broadest beta-lactams.",
+    "Meropenem covers Pseudomonas and anaerobes."
+   ],
+   "keyFacts": [
+    "Carbapenem = broadest cover."
+   ],
+   "teachingPoint": "Reserve carbapenems for broad needs."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sur-ch3-surgical-infection-mcq-032",
+   "type": "single",
+   "sectionId": "s6",
+   "difficulty": 2,
+   "highYield": false,
+   "stem": "Prolonged antibiotics can cause vitamin B deficiency because they:",
+   "options": [
+    {
+     "id": "a",
+     "text": "Damage the liver",
+     "correct": false,
+     "why": "Not the described mechanism."
+    },
+    {
+     "id": "b",
+     "text": "Alter bowel flora that synthesise vitamins",
+     "correct": true,
+     "why": "Correct."
+    },
+    {
+     "id": "c",
+     "text": "Bind vitamin B directly",
+     "correct": false,
+     "why": "Not the mechanism."
+    },
+    {
+     "id": "d",
+     "text": "Increase renal excretion of vitamins",
+     "correct": false,
+     "why": "Not the described mechanism."
+    },
+    {
+     "id": "e",
+     "text": "Block gastric absorption",
+     "correct": false,
+     "why": "Not the described mechanism."
+    }
+   ],
+   "explanation": [
+    "Gut flora contribute to vitamin synthesis.",
+    "Prolonged antibiotics disturb this, causing vitamin B deficiency."
+   ],
+   "keyFacts": [
+    "Antibiotics + flora loss → vitamin B deficiency."
+   ],
+   "teachingPoint": "Consider flora effects of long courses."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sur-ch3-surgical-infection-mcq-033",
+   "type": "single",
+   "sectionId": "s7",
+   "difficulty": 1,
+   "highYield": false,
+   "stem": "When should hand hygiene be performed relative to glove use?",
+   "options": [
+    {
+     "id": "a",
+     "text": "Only if gloves were not worn",
+     "correct": false,
+     "why": "Perform it even when gloves were worn."
+    },
+    {
+     "id": "b",
+     "text": "Before and after patient contact, including after glove removal",
+     "correct": true,
+     "why": "Correct."
+    },
+    {
+     "id": "c",
+     "text": "Only before donning gloves",
+     "correct": false,
+     "why": "Also after removal."
+    },
+    {
+     "id": "d",
+     "text": "Only after visibly soiled contact",
+     "correct": false,
+     "why": "It is routine, not only when soiled."
+    },
+    {
+     "id": "e",
+     "text": "Never, if alcohol gel is unavailable",
+     "correct": false,
+     "why": "Soap and water is an alternative."
+    }
+   ],
+   "explanation": [
+    "Gloves do not replace hand hygiene.",
+    "Perform it before/after contact and after removing gloves."
+   ],
+   "keyFacts": [
+    "Hand hygiene even after gloves."
+   ],
+   "teachingPoint": "Gloves plus hand hygiene, not either alone."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sur-ch3-surgical-infection-mcq-034",
+   "type": "single",
+   "sectionId": "s8",
+   "difficulty": 1,
+   "highYield": false,
+   "stem": "Which agent is a topical disinfectant safe to apply to tissue?",
+   "options": [
+    {
+     "id": "a",
+     "text": "Glutaraldehyde",
+     "correct": false,
+     "why": "Toxic to tissue; for instruments."
+    },
+    {
+     "id": "b",
+     "text": "An antiseptic such as chlorhexidine",
+     "correct": true,
+     "why": "Correct."
+    },
+    {
+     "id": "c",
+     "text": "Ethylene oxide",
+     "correct": false,
+     "why": "A gas steriliser."
+    },
+    {
+     "id": "d",
+     "text": "Gamma radiation",
+     "correct": false,
+     "why": "Industrial sterilisation."
+    },
+    {
+     "id": "e",
+     "text": "Autoclave steam",
+     "correct": false,
+     "why": "Instrument sterilisation."
+    }
+   ],
+   "explanation": [
+    "Antiseptics are disinfectants safe on epithelial tissue.",
+    "Chlorhexidine and povidone-iodine are examples."
+   ],
+   "keyFacts": [
+    "Antiseptic = tissue-safe disinfectant."
+   ],
+   "teachingPoint": "Do not confuse antiseptics with steriliser chemicals."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sur-ch3-surgical-infection-mcq-035",
+   "type": "single",
+   "sectionId": "s2",
+   "difficulty": 2,
+   "highYield": true,
+   "stem": "How long should surgical antibiotic prophylaxis usually continue?",
+   "options": [
+    {
+     "id": "a",
+     "text": "Not beyond one day",
+     "correct": true,
+     "why": "Correct."
+    },
+    {
+     "id": "b",
+     "text": "At least three days",
+     "correct": false,
+     "why": "Exceeds recommended duration."
+    },
+    {
+     "id": "c",
+     "text": "Seven days",
+     "correct": false,
+     "why": "Far too long for prophylaxis."
+    },
+    {
+     "id": "d",
+     "text": "Until the drains are removed",
+     "correct": false,
+     "why": "Not the rule for prophylaxis."
+    },
+    {
+     "id": "e",
+     "text": "Until the wound heals",
+     "correct": false,
+     "why": "That is treatment, not prophylaxis."
+    }
+   ],
+   "explanation": [
+    "Prophylaxis reduces peri-operative contamination.",
+    "It should not exceed one day."
+   ],
+   "keyFacts": [
+    "Prophylaxis ≤ 1 day."
+   ],
+   "teachingPoint": "Short and timed, not prolonged."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sur-ch3-surgical-infection-mcq-036",
+   "type": "single",
+   "sectionId": "s5",
+   "difficulty": 2,
+   "highYield": false,
+   "stem": "A penicillin-allergic patient needs cover for a Gram-positive infection. A reasonable choice is:",
+   "options": [
+    {
+     "id": "a",
+     "text": "Amoxicillin",
+     "correct": false,
+     "why": "A penicillin — contraindicated."
+    },
+    {
+     "id": "b",
+     "text": "A macrolide (e.g. azithromycin)",
+     "correct": true,
+     "why": "Correct."
+    },
+    {
+     "id": "c",
+     "text": "Cefazolin",
+     "correct": false,
+     "why": "Some cross-reactivity risk; not the described first choice for allergy."
+    },
+    {
+     "id": "d",
+     "text": "Gentamicin",
+     "correct": false,
+     "why": "Poor Gram-positive cover."
+    },
+    {
+     "id": "e",
+     "text": "Ciprofloxacin",
+     "correct": false,
+     "why": "Mainly Gram-negative."
+    }
+   ],
+   "explanation": [
+    "Macrolides cover Gram-positives.",
+    "They are used when beta-lactams are contraindicated by allergy."
+   ],
+   "keyFacts": [
+    "Penicillin allergy → macrolide for Gram-positives."
+   ],
+   "teachingPoint": "Have a beta-lactam alternative ready."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sur-ch3-surgical-infection-mcq-037",
+   "type": "single",
+   "sectionId": "s3",
+   "difficulty": 2,
+   "highYield": true,
+   "stem": "Which statement about abscess management is correct?",
+   "options": [
+    {
+     "id": "a",
+     "text": "Antibiotics alone usually cure it",
+     "correct": false,
+     "why": "A collection needs drainage."
+    },
+    {
+     "id": "b",
+     "text": "Drainage is the primary treatment",
+     "correct": true,
+     "why": "Correct."
+    },
+    {
+     "id": "c",
+     "text": "It should be closed primarily",
+     "correct": false,
+     "why": "Do not close an abscess cavity."
+    },
+    {
+     "id": "d",
+     "text": "It never needs antibiotics even if invasive",
+     "correct": false,
+     "why": "Antibiotics are added for invasive signs."
+    },
+    {
+     "id": "e",
+     "text": "Heat alone resolves most abscesses",
+     "correct": false,
+     "why": "Not for an established abscess."
+    }
+   ],
+   "explanation": [
+    "An abscess is a localised pus collection.",
+    "Drainage is primary; antibiotics are for spreading/invasive infection."
+   ],
+   "keyFacts": [
+    "Drain the abscess first."
+   ],
+   "teachingPoint": "Source control precedes antibiotics."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sur-ch3-surgical-infection-mcq-038",
+   "type": "single",
+   "sectionId": "s1",
+   "difficulty": 1,
+   "highYield": false,
+   "stem": "Delayed primary closure is most appropriate for a:",
+   "options": [
+    {
+     "id": "a",
+     "text": "Clean elective incision",
+     "correct": false,
+     "why": "Primary closure suits clean wounds."
+    },
+    {
+     "id": "b",
+     "text": "Heavily contaminated wound",
+     "correct": true,
+     "why": "Correct."
+    },
+    {
+     "id": "c",
+     "text": "Superficial abrasion",
+     "correct": false,
+     "why": "Managed with dressings."
+    },
+    {
+     "id": "d",
+     "text": "Simple surgical wound with good haemostasis",
+     "correct": false,
+     "why": "Primary closure is fine."
+    },
+    {
+     "id": "e",
+     "text": "Sutured facial laceration seen early",
+     "correct": false,
+     "why": "Early clean wounds close primarily."
+    }
+   ],
+   "explanation": [
+    "Heavily contaminated wounds risk infection if closed at once.",
+    "Delayed primary closure reduces this risk."
+   ],
+   "keyFacts": [
+    "Dirty wound → delayed primary closure."
+   ],
+   "teachingPoint": "Delay closure when contamination is high."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sur-ch3-surgical-infection-mcq-039",
+   "type": "single",
+   "sectionId": "s5",
+   "difficulty": 2,
+   "highYield": false,
+   "stem": "Which class inhibits bacterial protein synthesis rather than the cell wall?",
+   "options": [
+    {
+     "id": "a",
+     "text": "Penicillins",
+     "correct": false,
+     "why": "Inhibit cell-wall synthesis."
+    },
+    {
+     "id": "b",
+     "text": "Aminoglycosides",
+     "correct": true,
+     "why": "Correct."
+    },
+    {
+     "id": "c",
+     "text": "Cephalosporins",
+     "correct": false,
+     "why": "Inhibit cell-wall synthesis."
+    },
+    {
+     "id": "d",
+     "text": "Carbapenems",
+     "correct": false,
+     "why": "Inhibit cell-wall synthesis."
+    },
+    {
+     "id": "e",
+     "text": "Glycopeptides",
+     "correct": false,
+     "why": "Inhibit cell-wall synthesis."
+    }
+   ],
+   "explanation": [
+    "Beta-lactams and glycopeptides act on the cell wall.",
+    "Aminoglycosides interfere with protein synthesis."
+   ],
+   "keyFacts": [
+    "Aminoglycosides → protein synthesis."
+   ],
+   "teachingPoint": "Group agents by mechanism."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sur-ch3-surgical-infection-mcq-040",
+   "type": "single",
+   "sectionId": "s8",
+   "difficulty": 1,
+   "highYield": false,
+   "stem": "The correct order of decontamination when organic soil is present is:",
+   "options": [
+    {
+     "id": "a",
+     "text": "Disinfect, then clean",
+     "correct": false,
+     "why": "Cleaning must come first."
+    },
+    {
+     "id": "b",
+     "text": "Clean, then disinfect or sterilise",
+     "correct": true,
+     "why": "Correct."
+    },
+    {
+     "id": "c",
+     "text": "Sterilise, then clean",
+     "correct": false,
+     "why": "Cleaning precedes sterilisation."
+    },
+    {
+     "id": "d",
+     "text": "Disinfect only",
+     "correct": false,
+     "why": "Cleaning is a prerequisite."
+    },
+    {
+     "id": "e",
+     "text": "No cleaning needed if autoclaved",
+     "correct": false,
+     "why": "Soil must be removed first."
+    }
+   ],
+   "explanation": [
+    "Organic matter inactivates disinfectants.",
+    "Clean first, then disinfect or sterilise."
+   ],
+   "keyFacts": [
+    "Clean → disinfect/sterilise."
+   ],
+   "teachingPoint": "Respect the decontamination sequence."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sur-ch3-surgical-infection-mcq-041",
+   "type": "single",
+   "sectionId": "s7",
+   "difficulty": 1,
+   "highYield": false,
+   "stem": "Which is a correct safe-injection practice?",
+   "options": [
+    {
+     "id": "a",
+     "text": "Reuse a needle between patients if wiped",
+     "correct": false,
+     "why": "Never reuse between patients."
+    },
+    {
+     "id": "b",
+     "text": "Use a new needle and syringe for each patient",
+     "correct": true,
+     "why": "Correct."
+    },
+    {
+     "id": "c",
+     "text": "Access multiple patients from one vial freely",
+     "correct": false,
+     "why": "Prefer single-patient vials."
+    },
+    {
+     "id": "d",
+     "text": "Recap needles to store them",
+     "correct": false,
+     "why": "Never recap."
+    },
+    {
+     "id": "e",
+     "text": "Share syringes if the needle is changed",
+     "correct": false,
+     "why": "Unsafe practice."
+    }
+   ],
+   "explanation": [
+    "Bloodborne outbreaks prompted stricter injection rules.",
+    "Use a new needle and syringe for each access and each patient."
+   ],
+   "keyFacts": [
+    "New needle/syringe every patient."
+   ],
+   "teachingPoint": "Never reuse injection equipment."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sur-ch3-surgical-infection-mcq-042",
+   "type": "single",
+   "sectionId": "s6",
+   "difficulty": 1,
+   "highYield": false,
+   "stem": "Which is a recognised complication of antibiotic therapy?",
+   "options": [
+    {
+     "id": "a",
+     "text": "Improved bowel flora diversity",
+     "correct": false,
+     "why": "The opposite occurs."
+    },
+    {
+     "id": "b",
+     "text": "Superinfection with resistant organisms",
+     "correct": true,
+     "why": "Correct."
+    },
+    {
+     "id": "c",
+     "text": "Guaranteed cure of any infection",
+     "correct": false,
+     "why": "Not true."
+    },
+    {
+     "id": "d",
+     "text": "Reversal of allergies",
+     "correct": false,
+     "why": "Not a complication."
+    },
+    {
+     "id": "e",
+     "text": "Increased vitamin B synthesis",
+     "correct": false,
+     "why": "Prolonged use reduces it."
+    }
+   ],
+   "explanation": [
+    "Antibiotics can select resistant strains.",
+    "Superinfection with Proteus, Pseudomonas or Candida may follow."
+   ],
+   "keyFacts": [
+    "Antibiotics → superinfection risk."
+   ],
+   "teachingPoint": "Anticipate the downsides of therapy."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sur-ch3-surgical-infection-mcq-043",
+   "type": "single",
+   "sectionId": "s4",
+   "difficulty": 1,
+   "highYield": false,
+   "stem": "Before starting antibiotic therapy for SSI, the surgeon should primarily consider:",
+   "options": [
+    {
+     "id": "a",
+     "text": "The patient status and the likely organism",
+     "correct": true,
+     "why": "Correct."
+    },
+    {
+     "id": "b",
+     "text": "Only the cheapest available drug",
+     "correct": false,
+     "why": "Cost is secondary to efficacy/safety."
+    },
+    {
+     "id": "c",
+     "text": "Only the broadest possible agent",
+     "correct": false,
+     "why": "Not without considering the likely pathogen."
+    },
+    {
+     "id": "d",
+     "text": "The patient's blood group",
+     "correct": false,
+     "why": "Irrelevant to antibiotic choice."
+    },
+    {
+     "id": "e",
+     "text": "The surgeon's personal preference",
+     "correct": false,
+     "why": "Not an evidence-based basis."
+    }
+   ],
+   "explanation": [
+    "Rational prescribing weighs host and organism.",
+    "Consider patient status and the most likely causative organism."
+   ],
+   "keyFacts": [
+    "Think patient + likely organism."
+   ],
+   "teachingPoint": "Prescribe rationally."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sur-ch3-surgical-infection-mcq-044",
+   "type": "single",
+   "sectionId": "s5",
+   "difficulty": 2,
+   "highYield": false,
+   "stem": "Amoxicillin-clavulanate is preferred over amoxicillin because clavulanate:",
+   "options": [
+    {
+     "id": "a",
+     "text": "Kills anaerobes directly",
+     "correct": false,
+     "why": "It inhibits an enzyme, not a direct killer."
+    },
+    {
+     "id": "b",
+     "text": "Inhibits beta-lactamase, restoring activity",
+     "correct": true,
+     "why": "Correct."
+    },
+    {
+     "id": "c",
+     "text": "Improves oral absorption",
+     "correct": false,
+     "why": "Not the mechanism."
+    },
+    {
+     "id": "d",
+     "text": "Reduces allergy risk",
+     "correct": false,
+     "why": "Not the mechanism."
+    },
+    {
+     "id": "e",
+     "text": "Adds Gram-positive cover only",
+     "correct": false,
+     "why": "It broadens across Gram +/− and some anaerobes."
+    }
+   ],
+   "explanation": [
+    "Beta-lactamase inactivates plain amoxicillin.",
+    "Clavulanate inhibits the enzyme, restoring and broadening activity."
+   ],
+   "keyFacts": [
+    "Clavulanate defeats beta-lactamase."
+   ],
+   "teachingPoint": "Combine to overcome resistance."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sur-ch3-surgical-infection-mcq-045",
+   "type": "single",
+   "sectionId": "s3",
+   "difficulty": 2,
+   "highYield": false,
+   "stem": "Which finding would justify adding antibiotics to a drained wound infection?",
+   "options": [
+    {
+     "id": "a",
+     "text": "Temperature 37.2°C",
+     "correct": false,
+     "why": "Below the invasive threshold."
+    },
+    {
+     "id": "b",
+     "text": "Leucocyte count 14,000",
+     "correct": true,
+     "why": "Correct — exceeds 11,000."
+    },
+    {
+     "id": "c",
+     "text": "Erythema of 2 cm",
+     "correct": false,
+     "why": "Below the 5 cm threshold."
+    },
+    {
+     "id": "d",
+     "text": "A small amount of serous ooze",
+     "correct": false,
+     "why": "Not an invasive criterion."
+    },
+    {
+     "id": "e",
+     "text": "Mild discomfort only",
+     "correct": false,
+     "why": "Non-specific."
+    }
+   ],
+   "explanation": [
+    "Invasive criteria: T >38.5°C, erythema >5 cm, WBC >11,000.",
+    "A WBC of 14,000 meets one criterion."
+   ],
+   "keyFacts": [
+    "WBC >11,000 = invasive sign."
+   ],
+   "teachingPoint": "Apply the numeric thresholds."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sur-ch3-surgical-infection-mcq-046",
+   "type": "single",
+   "sectionId": "s8",
+   "difficulty": 1,
+   "highYield": false,
+   "stem": "Which is true of ethylene oxide?",
+   "options": [
+    {
+     "id": "a",
+     "text": "It is the standard method for heat-stable steel",
+     "correct": false,
+     "why": "Autoclaving is standard for those."
+    },
+    {
+     "id": "b",
+     "text": "It sterilises heat-sensitive equipment",
+     "correct": true,
+     "why": "Correct."
+    },
+    {
+     "id": "c",
+     "text": "It only disinfects, not sterilises",
+     "correct": false,
+     "why": "It sterilises."
+    },
+    {
+     "id": "d",
+     "text": "It is a topical antiseptic",
+     "correct": false,
+     "why": "It is a gas steriliser."
+    },
+    {
+     "id": "e",
+     "text": "It requires 134°C steam",
+     "correct": false,
+     "why": "That is autoclaving."
+    }
+   ],
+   "explanation": [
+    "Heat-sensitive items cannot be autoclaved.",
+    "Ethylene oxide gas sterilises them."
+   ],
+   "keyFacts": [
+    "Ethylene oxide sterilises heat-sensitive kit."
+   ],
+   "teachingPoint": "Pick the steriliser for the material."
+  }
+ ],
+ "emqs": [
+  {
+   "schema": "foundation.emq/v1",
+   "id": "sur-ch3-surgical-infection-emq-001",
+   "type": "emq",
+   "theme": "Antibiotic selection",
+   "sectionId": "s5",
+   "difficulty": 2,
+   "instruction": "For each clinical situation, select the single most appropriate antibiotic.",
+   "options": [
+    {
+     "id": "a",
+     "text": "Cefazolin"
+    },
+    {
+     "id": "b",
+     "text": "Vancomycin"
+    },
+    {
+     "id": "c",
+     "text": "Gentamicin"
+    },
+    {
+     "id": "d",
+     "text": "Ciprofloxacin"
+    },
+    {
+     "id": "e",
+     "text": "Metronidazole"
+    },
+    {
+     "id": "f",
+     "text": "Amoxicillin-clavulanate"
+    },
+    {
+     "id": "g",
+     "text": "Azithromycin"
+    }
+   ],
+   "stems": [
+    {
+     "stem": "Routine antibiotic prophylaxis for a clean orthopaedic implant.",
+     "answer": "a",
+     "why": "A first-generation cephalosporin (cefazolin) is standard prophylaxis."
+    },
+    {
+     "stem": "A wound infection growing MRSA.",
+     "answer": "b",
+     "why": "Vancomycin covers MRSA."
+    },
+    {
+     "stem": "An uncomplicated Gram-negative urinary tract infection.",
+     "answer": "d",
+     "why": "A quinolone targets Gram-negative urinary pathogens."
+    },
+    {
+     "stem": "A Gram-positive infection in a patient with severe penicillin allergy.",
+     "answer": "g",
+     "why": "A macrolide is used when beta-lactams are contraindicated."
+    }
+   ]
+  },
+  {
+   "schema": "foundation.emq/v1",
+   "id": "sur-ch3-surgical-infection-emq-002",
+   "type": "emq",
+   "theme": "Decontamination methods",
+   "sectionId": "s8",
+   "difficulty": 2,
+   "instruction": "For each requirement, select the single most appropriate method.",
+   "options": [
+    {
+     "id": "a",
+     "text": "Steam autoclave"
+    },
+    {
+     "id": "b",
+     "text": "Ethylene oxide gas"
+    },
+    {
+     "id": "c",
+     "text": "Glutaraldehyde"
+    },
+    {
+     "id": "d",
+     "text": "Gamma irradiation"
+    },
+    {
+     "id": "e",
+     "text": "70% alcohol"
+    },
+    {
+     "id": "f",
+     "text": "Boiling water"
+    }
+   ],
+   "stems": [
+    {
+     "stem": "Sterilising a heat-stable stainless-steel instrument set.",
+     "answer": "a",
+     "why": "Steam autoclaving is the standard for heat-stable items."
+    },
+    {
+     "stem": "Sterilising heat-sensitive electronic equipment in hospital.",
+     "answer": "b",
+     "why": "Ethylene oxide sterilises heat-sensitive equipment."
+    },
+    {
+     "stem": "Chemical disinfection of a flexible endoscope.",
+     "answer": "c",
+     "why": "Glutaraldehyde disinfects endoscopes."
+    },
+    {
+     "stem": "Industrial-scale sterilisation of pre-packed catheters and syringes.",
+     "answer": "d",
+     "why": "Gamma irradiation is used industrially."
+    }
+   ]
+  },
+  {
+   "schema": "foundation.emq/v1",
+   "id": "sur-ch3-surgical-infection-emq-003",
+   "type": "emq",
+   "theme": "Managing surgical infection",
+   "sectionId": "s3",
+   "difficulty": 2,
+   "instruction": "For each scenario, select the single best next step.",
+   "options": [
+    {
+     "id": "a",
+     "text": "Open the wound (drainage)"
+    },
+    {
+     "id": "b",
+     "text": "Add culture-guided antibiotics"
+    },
+    {
+     "id": "c",
+     "text": "Reassure and observe"
+    },
+    {
+     "id": "d",
+     "text": "Primary closure"
+    },
+    {
+     "id": "e",
+     "text": "Delayed primary closure"
+    },
+    {
+     "id": "f",
+     "text": "Vancomycin for C. difficile"
+    }
+   ],
+   "stems": [
+    {
+     "stem": "An established wound infection with intact stitches and pus beneath.",
+     "answer": "a",
+     "why": "Liberal drainage by removing stitches is the first step."
+    },
+    {
+     "stem": "A drained infection now with T 39°C, erythema 8 cm and WBC 13,000.",
+     "answer": "b",
+     "why": "Invasive signs warrant culture-guided antibiotics."
+    },
+    {
+     "stem": "A heavily contaminated traumatic wound at the end of debridement.",
+     "answer": "e",
+     "why": "Delayed primary closure is used for heavily contaminated wounds."
+    },
+    {
+     "stem": "Profuse diarrhoea after prolonged broad-spectrum antibiotics.",
+     "answer": "f",
+     "why": "This suggests C. difficile colitis, treated with vancomycin."
+    }
+   ]
+  },
+  {
+   "schema": "foundation.emq/v1",
+   "id": "sur-ch3-surgical-infection-emq-004",
+   "type": "emq",
+   "theme": "Antibiotic mechanisms & toxicity",
+   "sectionId": "s5",
+   "difficulty": 2,
+   "instruction": "For each description, select the single best-matching class.",
+   "options": [
+    {
+     "id": "a",
+     "text": "Beta-lactams"
+    },
+    {
+     "id": "b",
+     "text": "Aminoglycosides"
+    },
+    {
+     "id": "c",
+     "text": "Quinolones"
+    },
+    {
+     "id": "d",
+     "text": "Glycopeptides"
+    },
+    {
+     "id": "e",
+     "text": "Macrolides"
+    },
+    {
+     "id": "f",
+     "text": "Carbapenems"
+    }
+   ],
+   "stems": [
+    {
+     "stem": "Inhibit cell-wall synthesis and include penicillins and cephalosporins.",
+     "answer": "a",
+     "why": "Beta-lactams inhibit cell-wall synthesis."
+    },
+    {
+     "stem": "Effective Gram-negative agents limited by oto- and nephrotoxicity.",
+     "answer": "b",
+     "why": "Aminoglycosides are toxic Gram-negative agents."
+    },
+    {
+     "stem": "Broadest beta-lactams covering Pseudomonas and anaerobes.",
+     "answer": "f",
+     "why": "Carbapenems are the broadest-spectrum beta-lactams."
+    },
+    {
+     "stem": "Cover MRSA and treat Clostridioides difficile colitis.",
+     "answer": "d",
+     "why": "Glycopeptides (vancomycin) cover MRSA and C. difficile."
+    }
+   ]
+  }
+ ],
+ "summary": "Minimise SSI by optimising the patient (control diabetes, stop smoking, clip not shave, antiseptic prep) and surgeon (scrub, haemostasis, gentle handling, no dead space, delayed closure of dirty wounds). Give prophylaxis about an hour before incision for prosthetic or high-risk clean cases and all contaminated classes, not beyond one day (cefazolin or ampicillin-sulbactam). Treat an established infection first by drainage, adding culture-guided antibiotics only for invasive signs (T >38.5°C, erythema >5 cm, WBC >11,000); drain an abscess, give antibiotics for spreading infection. Know the antibiotic classes — beta-lactams, cephalosporin generations, carbapenems, toxic aminoglycosides, quinolones for Gram-negative UTIs, vancomycin for MRSA and C. difficile, macrolides for penicillin allergy — and their complications. Hand hygiene is the single most effective precaution; never recap needles; and remember the decontamination ladder from cleaning through disinfection to autoclave sterilisation (134°C, 2 atm, 20–30 min)."
+}
