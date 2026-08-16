@@ -125,7 +125,15 @@ export interface StudyState {
   mcqSession: any | null;
   /** v7: per-card scheduling for shipped/imported content cards, keyed by card id */
   cardSched: Record<string, any>;
+  /** v8: focus-timer tally — total minutes, completed blocks, and minutes per day */
+  focus: FocusTally;
   [k: string]: unknown;
+}
+
+export interface FocusTally {
+  totalMin: number;
+  sessions: number;
+  byDay: Record<string, number>;
 }
 
 export interface Subject {

@@ -11,6 +11,8 @@ import { useStore } from '../state/useStore';
 import { toggleTheme, isDark, applyTheme } from '../state/theme';
 import { applyHaki } from '../state/haki';
 import HakiField from '../features/effects/HakiField';
+import FocusTimer from '../features/timer/FocusTimer';
+import MusicPlayer from '../features/music/MusicPlayer';
 
 function BrandMark({ size = 40 }: { size?: number }) {
   return (
@@ -220,6 +222,11 @@ function Shell() {
             </Routes>
           </Suspense>
         </main>
+      </div>
+
+      <div className="dock no-print">
+        <FocusTimer />
+        <MusicPlayer />
       </div>
 
       <Watermark />

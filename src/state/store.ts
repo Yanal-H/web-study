@@ -102,6 +102,7 @@ export function defaultState(): AppState {
       mcqNotes: {},
       mcqSession: null,
       cardSched: {},
+      focus: { totalMin: 0, sessions: 0, byDay: {} },
     },
     // v4 settings — every tunable (scheduler / session / mcq / appearance / goals)
     settings: JSON.parse(JSON.stringify(SETTINGS_DEFAULTS)) as AppSettings,
@@ -206,6 +207,14 @@ export function runMigrations(s: any): AppState {
   //   Additive: shipped content cards are scheduled by id here, WITHOUT touching
   //   the user's own s.flashcards (their ef/interval/reps/due stay exactly as-is).
   if (!s.study.cardSched || typeof s.study.cardSched !== 'object') s.study.cardSched = {};
+
+  // v7 -> v8: focus-timer totals. Additive only — no existing field is read or
+  // rewritten, so a v7 blob loads unchanged and simply gains an empty tally.
+  if (!s.study.focus || typeof s.study.focus !== 'object')
+    s.study.focus = { totalMin: 0, sessions: 0, byDay: {} };
+  if (typeof s.study.focus.totalMin !== 'number') s.study.focus.totalMin = 0;
+  if (typeof s.study.focus.sessions !== 'number') s.study.focus.sessions = 0;
+  if (!s.study.focus.byDay || typeof s.study.focus.byDay !== 'object') s.study.focus.byDay = {};
   s.schemaVersion = SCHEMA_VERSION;
   return s as AppState;
 }

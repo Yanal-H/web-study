@@ -42,15 +42,17 @@ function legacyV3Payload() {
   };
 }
 
-describe('runMigrations — lossless v3→v6 upgrade', () => {
+describe('runMigrations — lossless v3→v8 upgrade', () => {
   it('preserves all existing user data and fills additive fields', () => {
     const s = runMigrations(legacyV3Payload());
 
     // version bumped to current
     expect(s.schemaVersion).toBe(SCHEMA_VERSION);
-    expect(SCHEMA_VERSION).toBe(7);
+    expect(SCHEMA_VERSION).toBe(8);
     // v7 additive: content-card scheduling map exists, user cards untouched
     expect(s.study.cardSched).toEqual({});
+    // v8 additive: focus tally exists and starts empty
+    expect(s.study.focus).toEqual({ totalMin: 0, sessions: 0, byDay: {} });
     expect(s.flashcards.find((c) => c.id === 'c1')!.interval).toBe(12);
 
     // untouched user content survives verbatim

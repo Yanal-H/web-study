@@ -168,6 +168,18 @@ export default function SettingsView() {
             onChange={(v) => setAppearance('colourTerms', v)}
           />
         </Row>
+        <Row label="Sound" desc="Haki impacts, answer feedback and the timer chime. Synthesised — no files.">
+          <Switch
+            label="Sound"
+            checked={((state.settings as Record<string, any>).sound?.effects ?? true) !== false}
+            onChange={(v) =>
+              update((s) => {
+                const snd = ((s.settings as Record<string, any>).sound ||= {});
+                snd.effects = v;
+              })
+            }
+          />
+        </Row>
         <Row label="Reduce motion" desc="Minimise animations.">
           <Switch
             label="Reduce motion"

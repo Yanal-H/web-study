@@ -16,10 +16,11 @@ export const THEME_KEY = 'foundation_theme';
  * Current schema version.
  *
  * v1→v5 shipped in the single-file app. Phase 0 bumps to 6 with a RESERVED,
- * no-op migration step (see runMigrations). Bumping the version does not change
- * any data semantics — it only reserves the slot for future additive work.
+ * no-op migration step (see runMigrations). v7 adds per-card scheduling for
+ * shipped content; v8 adds the focus-timer tally. Every step is additive: no
+ * existing field is renamed, moved or dropped, so any older blob loads intact.
  */
-export const SCHEMA_VERSION = 7;
+export const SCHEMA_VERSION = 8;
 
 /* ---- v8 default settings (additive; every tunable lives here) ---- */
 export const SCHED_DEFAULTS: SchedulerSettings = {
@@ -79,6 +80,7 @@ export const SETTINGS_DEFAULTS: AppSettings = {
     colourTerms: true,
   },
   goals: { dailyGoal: 50 },
+  sound: { effects: true, volume: 0.55, musicVolume: 0.7 },
 };
 
 export const COLORS = [

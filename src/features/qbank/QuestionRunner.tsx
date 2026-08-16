@@ -17,6 +17,7 @@ import { useToast } from '../../design/Toast';
 import type { Mcq, Option } from '../../content/schema';
 import { renderInline } from '../../lib/lexicon';
 import { globalIndex } from '../../lib/useLexicon';
+import { sfx } from '../../lib/sound';
 
 export default function QuestionRunner({ onExit }: { onExit: () => void }) {
   const state = useStore();
@@ -167,6 +168,8 @@ export default function QuestionRunner({ onExit }: { onExit: () => void }) {
     if (immediate) {
       setSubmitted(true);
       setSurge(ok ? 'ok' : 'no');
+      if (ok) sfx.correct();
+      else sfx.wrong();
       setTimeout(() => setSurge(null), 620);
       record(next);
       const last = session!.index + 1 >= session!.ids.length;

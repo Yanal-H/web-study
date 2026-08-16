@@ -182,6 +182,46 @@ export const IconFlag = (p: IconProps) => (
   </Svg>
 );
 
+export const IconMusic = (p: IconProps) => (
+  <Svg {...p}>
+    <path d="M9 18V5l11-2v13" />
+    <circle cx="6.5" cy="18" r="2.5" />
+    <circle cx="17.5" cy="16" r="2.5" />
+  </Svg>
+);
+export const IconPlay = (p: IconProps) => (
+  <Svg {...p}>
+    <path d="M7 4.5v15l12-7.5z" fill="currentColor" stroke="none" />
+  </Svg>
+);
+export const IconPause = (p: IconProps) => (
+  <Svg {...p}>
+    <path d="M8 4.5v15M16 4.5v15" strokeWidth={2.6} />
+  </Svg>
+);
+export const IconSkip = (p: IconProps) => (
+  <Svg {...p}>
+    <path d="M5 5l9 7-9 7z" fill="currentColor" stroke="none" />
+    <path d="M18 5v14" />
+  </Svg>
+);
+export const IconClose = (p: IconProps) => (
+  <Svg {...p}>
+    <path d="M6 6l12 12M18 6L6 18" />
+  </Svg>
+);
+export const IconTimer = (p: IconProps) => (
+  <Svg {...p}>
+    <circle cx="12" cy="13" r="8" />
+    <path d="M12 9v4l2.5 2M9 2h6" />
+  </Svg>
+);
+export const IconStop = (p: IconProps) => (
+  <Svg {...p}>
+    <rect x="6" y="6" width="12" height="12" rx="2" fill="currentColor" stroke="none" />
+  </Svg>
+);
+
 export const NAV_ICONS: Record<string, (p: IconProps) => JSX.Element> = {
   '': IconDashboard,
   study: IconStudy,

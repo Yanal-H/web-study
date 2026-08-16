@@ -6,6 +6,7 @@ import { Button, ProgressRing } from '../../design/primitives';
 import { IconFlag, IconCheck } from '../../design/icons';
 import { renderRich, renderInline } from '../../lib/lexicon';
 import { globalIndex } from '../../lib/useLexicon';
+import { sfx } from '../../lib/sound';
 import { OcclusionView } from './Occlusion';
 
 const GRADES: Array<{ g: Grade; label: string; key: string; tone: string }> = [
@@ -55,7 +56,12 @@ export default function ReviewSession({
       undo.current.push({ item, prev, idx });
       setTally((t) => ({ ...t, reviewed: t.reviewed + 1, [g]: (t as any)[g] + 1 }));
       setImpact({ g, key: Date.now() });
-      setCombo((c) => (g === 'good' || g === 'easy' ? c + 1 : 0));
+    sfx.grade(g);
+      setCombo((c) => {
+      const n = g === 'good' || g === 'easy' ? c + 1 : 0;
+      if (n >= 3) sfx.combo(n);
+      return n;
+    });
       setRevealed(false);
       setTyped('');
       setHint(false);

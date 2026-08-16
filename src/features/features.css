@@ -2257,3 +2257,357 @@
   color: var(--text-dim);
   padding: 40px;
 }
+
+/* ===================================================================
+   DOCK — focus timer + music, present on every page
+   =================================================================== */
+.dock {
+  position: fixed;
+  right: 18px;
+  bottom: 18px;
+  z-index: 60;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+  pointer-events: none;
+}
+.dock > * {
+  pointer-events: auto;
+}
+.timer-fab,
+.music-fab {
+  display: grid;
+  place-items: center;
+  min-width: 44px;
+  height: 44px;
+  padding: 0 12px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+  color: var(--text-dim);
+  cursor: pointer;
+  box-shadow: var(--shadow);
+  transition: all var(--dur-fast) var(--ease);
+}
+.timer-fab:hover,
+.music-fab:hover {
+  color: var(--text);
+  border-color: var(--border-strong);
+  transform: translateY(-2px);
+}
+.timer-fab.running {
+  border-color: transparent;
+  background: var(--grad-haki);
+  color: #fff;
+  box-shadow: 0 0 26px -8px var(--haki-glow);
+}
+.timer-fab-time {
+  font-family: var(--font-mono);
+  font-size: 13.5px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+.music-fab.spinning svg {
+  animation: spin 4.5s linear infinite;
+}
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.timer-panel,
+.music-panel {
+  width: 268px;
+  padding: 14px;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  background: var(--surface-1);
+  box-shadow: var(--shadow-lg);
+  animation: dockIn 200ms var(--ease) both;
+}
+@keyframes dockIn {
+  from { opacity: 0; transform: translateY(10px) scale(0.98); }
+  to { opacity: 1; transform: none; }
+}
+.tp-head,
+.mp-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+.tp-title,
+.mp-title {
+  font-size: 11.5px;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--text-faint);
+}
+.tp-x,
+.mp-x {
+  border: 0;
+  background: none;
+  color: var(--text-faint);
+  cursor: pointer;
+  padding: 2px;
+  border-radius: 6px;
+}
+.tp-x:hover,
+.mp-x:hover {
+  color: var(--text);
+  background: var(--surface-hover);
+}
+
+/* ---- timer ---- */
+.tp-dial {
+  position: relative;
+  width: 132px;
+  height: 132px;
+  margin: 4px auto 12px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background:
+    conic-gradient(var(--haki-red) calc(var(--pct, 0) * 360deg), var(--surface-2) 0),
+    var(--surface-2);
+  transition: background 250ms linear;
+}
+.tp-dial::after {
+  content: '';
+  position: absolute;
+  inset: 9px;
+  border-radius: 50%;
+  background: var(--surface-1);
+  border: 1px solid var(--border-soft);
+}
+.tp-clock {
+  position: relative;
+  z-index: 1;
+  font-family: var(--font-mono);
+  font-size: 30px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+}
+.tp-presets {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+  margin-bottom: 10px;
+}
+.tp-preset {
+  padding: 7px 0;
+  border-radius: var(--r-sm);
+  border: 1px solid var(--border-soft);
+  background: var(--surface-2);
+  color: var(--text-dim);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--dur-fast) var(--ease);
+}
+.tp-preset:hover {
+  border-color: var(--border-strong);
+  color: var(--text);
+}
+.tp-preset.on {
+  border-color: transparent;
+  background: var(--grad-haki);
+  color: #fff;
+}
+.tp-controls {
+  display: flex;
+  gap: 8px;
+}
+.tp-main {
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px;
+  border-radius: var(--r-md);
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+  color: var(--text);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--dur-fast) var(--ease);
+}
+.tp-main:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.tp-sec {
+  width: 42px;
+  border-radius: var(--r-md);
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+  color: var(--text-faint);
+  cursor: pointer;
+}
+.tp-sec:hover {
+  color: var(--error);
+  border-color: var(--error);
+}
+.tp-foot {
+  margin-top: 10px;
+  text-align: center;
+  font-size: 12px;
+  color: var(--text-faint);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---- music ---- */
+.mp-now {
+  font-weight: 650;
+  font-size: 14px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin-bottom: 8px;
+}
+.mp-empty {
+  font-size: 13px;
+  color: var(--text-faint);
+  margin-bottom: 10px;
+  line-height: 1.5;
+}
+.mp-seek,
+.mp-vol input {
+  width: 100%;
+  accent-color: var(--haki-red);
+}
+.mp-time {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11.5px;
+  color: var(--text-faint);
+  font-variant-numeric: tabular-nums;
+  margin-bottom: 8px;
+}
+.mp-controls {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+.mp-controls button {
+  border: 1px solid var(--border-soft);
+  background: var(--surface-2);
+  color: var(--text-dim);
+  border-radius: var(--r-sm);
+  height: 34px;
+  padding: 0 10px;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  transition: all var(--dur-fast) var(--ease);
+}
+.mp-controls button:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+.mp-controls button:not(:disabled):hover {
+  color: var(--text);
+  border-color: var(--border-strong);
+}
+.mp-play {
+  background: var(--grad-haki) !important;
+  color: #fff !important;
+  border-color: transparent !important;
+  min-width: 44px;
+}
+.mp-shuffle {
+  margin-left: auto;
+  font-size: 11.5px;
+}
+.mp-shuffle.on {
+  color: var(--accent) !important;
+  border-color: var(--accent) !important;
+}
+.mp-vol {
+  display: grid;
+  gap: 4px;
+  font-size: 11.5px;
+  color: var(--text-faint);
+  margin-bottom: 10px;
+}
+.mp-list {
+  max-height: 168px;
+  overflow: auto;
+  display: grid;
+  gap: 2px;
+  margin-bottom: 8px;
+}
+.mp-row {
+  display: grid;
+  grid-template-columns: 1fr 24px;
+  align-items: center;
+  border-radius: var(--r-sm);
+}
+.mp-row.on {
+  background: var(--accent-soft);
+}
+.mp-row-main {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  border: 0;
+  background: none;
+  color: inherit;
+  text-align: left;
+  padding: 6px 8px;
+  cursor: pointer;
+  min-width: 0;
+  font-size: 12.5px;
+}
+.mp-row-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.mp-row-size {
+  color: var(--text-faint);
+  flex: none;
+}
+.mp-row-del {
+  border: 0;
+  background: none;
+  color: var(--text-faint);
+  cursor: pointer;
+  padding: 4px;
+}
+.mp-row-del:hover {
+  color: var(--error);
+}
+.mp-add {
+  width: 100%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px;
+  border-radius: var(--r-md);
+  border: 1px dashed var(--border-strong);
+  background: none;
+  color: var(--text-dim);
+  font-size: 13px;
+  cursor: pointer;
+}
+.mp-add:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+@media (max-width: 560px) {
+  .dock {
+    right: 12px;
+    bottom: 12px;
+  }
+  .timer-panel,
+  .music-panel {
+    width: min(300px, calc(100vw - 24px));
+  }
+}
