@@ -15,6 +15,7 @@ import { recordResult, toggleFlag, isFlagged } from './perf';
 import { makeUserCard } from '../flashcards/makeCard';
 import { useToast } from '../../design/Toast';
 import type { Mcq, Option } from '../../content/schema';
+import { getChapter } from '../../content/loader';
 import { renderInline } from '../../lib/lexicon';
 import { globalIndex } from '../../lib/useLexicon';
 import { sfx } from '../../lib/sound';
@@ -248,10 +249,15 @@ export default function QuestionRunner({ onExit }: { onExit: () => void }) {
             </div>
           )}
           <div className="row spread" style={{ marginBottom: 10 }}>
-            <Badge tone={q.difficulty === 3 ? 'error' : q.difficulty === 2 ? 'warning' : 'success'}>
-              Level {q.difficulty}
-            </Badge>
-            {isMulti && <Badge tone="info">Select all that apply</Badge>}
+            <div className="row" style={{ gap: 8, flexWrap: 'wrap' }}>
+              <Badge tone={q.difficulty === 3 ? 'error' : q.difficulty === 2 ? 'warning' : 'success'}>
+                Level {q.difficulty}
+              </Badge>
+              {isMulti && <Badge tone="info">Select all that apply</Badge>}
+            </div>
+            <span className="qb-source" title="Where this question comes from">
+              {sourceOf(q)}
+            </span>
           </div>
 
           {q.figure && <QFigure fig={q.figure} />}
@@ -327,6 +333,13 @@ export default function QuestionRunner({ onExit }: { onExit: () => void }) {
       </div>
     </div>
   );
+}
+
+/** Subject, chapter and section, so a question is never context-free. */
+function sourceOf(q: Mcq & { chapterId?: string; subject?: string }): string {
+  const ch = q.chapterId ? getChapter(q.chapterId) : undefined;
+  const section = ch?.sections.find((sec) => sec.id === (q.sectionId || q.sectionTag));
+  return [ch?.subject ?? q.subject, ch?.title, section?.title].filter(Boolean).join(' › ');
 }
 
 function Explanation({ q, correct, onMakeCard }: { q: Mcq; correct: boolean; onMakeCard: () => void }) {

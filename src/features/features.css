@@ -3123,3 +3123,15 @@
   background: var(--error-soft);
   color: var(--error);
 }
+.qb-source {
+  font-size: 11.5px;
+  color: var(--text-faint);
+  text-align: right;
+  max-width: 55%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+@media (max-width: 560px) {
+  .qb-source { display: none; }
+}

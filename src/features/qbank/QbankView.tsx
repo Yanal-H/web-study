@@ -2,7 +2,10 @@ import { useMemo, useState } from 'react';
 import { useStore } from '../../state/useStore';
 import { Card, Button, Stat, Segmented } from '../../design/primitives';
 import { useUserContentVersion } from '../../content/userContent';
-import { allMcqs, allEmqs } from '../../content/loader';
+import { allMcqs, allEmqs, getChapter } from '../../content/loader';
+
+/** Chapter title for an id, falling back to the id when a pack has been removed. */
+const chapterTitle = (id: string) => getChapter(id)?.title ?? id;
 import {
   buildPool,
   poolCount,
@@ -37,12 +40,28 @@ export default function QbankView() {
   const [mode, setMode] = useState<QMode>('study');
   const [special, setSpecial] = useState<Special>('all');
   const [subject, setSubject] = useState<string>('');
+  const [chapter, setChapter] = useState<string>('');
   const [difficulties, setDifficulties] = useState<number[]>([1, 2, 3]);
   const [size, setSize] = useState<number>(20);
 
   const bank = useMemo(() => allMcqs(), [uv]);
   const emqs = useMemo(() => allEmqs(), [uv]);
-  const subjects = useMemo(() => [...new Set(bank.map((q) => q.subject))], [bank]);
+  const subjects = useMemo(() => [...new Set(bank.map((q) => q.subject))].sort(), [bank]);
+  /** chapters within the chosen subject, with how many questions each holds */
+  const chapters = useMemo(() => {
+    const counts = new Map<string, { id: string; title: string; n: number }>();
+    for (const q of bank) {
+      if (subject && q.subject !== subject) continue;
+      const row = counts.get(q.chapterId) || {
+        id: q.chapterId,
+        title: chapterTitle(q.chapterId),
+        n: 0,
+      };
+      row.n++;
+      counts.set(q.chapterId, row);
+    }
+    return [...counts.values()].sort((a, b) => a.title.localeCompare(b.title));
+  }, [bank, subject]);
   const perf = state.study.mcqPerf || {};
   const ids = Object.keys(perf);
   const attempted = ids.filter((q) => perf[q]!.attempts > 0).length;
@@ -50,6 +69,7 @@ export default function QbankView() {
 
   const filter = {
     subjects: subject ? [subject] : undefined,
+    chapters: chapter ? [chapter] : undefined,
     difficulties,
     special,
   };
@@ -146,11 +166,35 @@ export default function QbankView() {
             </div>
             <div>
               <div className="setup-label">Subject</div>
-              <select className="select" value={subject} onChange={(e) => setSubject(e.target.value)} style={{ minWidth: 160 }}>
+              <select
+                className="select"
+                value={subject}
+                onChange={(e) => {
+                  setSubject(e.target.value);
+                  setChapter(''); // a chapter from the old subject would empty the pool
+                }}
+                style={{ minWidth: 160 }}
+              >
                 <option value="">All subjects</option>
                 {subjects.map((s) => (
                   <option key={s} value={s}>
                     {s}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div>
+              <div className="setup-label">Chapter</div>
+              <select
+                className="select"
+                value={chapter}
+                onChange={(e) => setChapter(e.target.value)}
+                style={{ minWidth: 220 }}
+              >
+                <option value="">All chapters{chapters.length ? ` (${chapters.length})` : ''}</option>
+                {chapters.map((c) => (
+                  <option key={c.id} value={c.id}>
+                    {c.title} · {c.n}
                   </option>
                 ))}
               </select>

@@ -42,8 +42,8 @@ export default function StudyView() {
           <h1>Study</h1>
           <div className="sub">Your library of chapters — read, then drill.</div>
         </div>
-        <Button variant="primary" onClick={() => setImporting(true)}>
-          <IconUpload size={17} /> Import chapter
+        <Button variant="ghost" size="sm" onClick={() => setImporting(true)}>
+          <IconUpload size={15} /> Import your own
         </Button>
       </header>
 
@@ -72,7 +72,7 @@ export default function StudyView() {
               </Button>
             }
           >
-            Shipped chapters appear here after a build; you can also import your own chapter JSON.
+            Chapters you have been given appear here. You can also import your own.
           </EmptyState>
         </Card>
       ) : (

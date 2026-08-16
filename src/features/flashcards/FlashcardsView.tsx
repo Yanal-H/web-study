@@ -151,7 +151,7 @@ export default function FlashcardsView() {
         <Stat label="Your cards" value={state.flashcards.length} />
       </div>
 
-      <div className="cols cols-2">
+      <div className="cols">
         <Card>
           <div className="row spread" style={{ alignItems: 'baseline', marginBottom: 8 }}>
             <div className="card-eyebrow" style={{ margin: 0 }}>Review</div>
@@ -183,16 +183,7 @@ export default function FlashcardsView() {
             <Button size="sm" onClick={() => setMode('browse')}>
               Browse
             </Button>
-          </div>
-        </Card>
-
-        <Card>
-          <div className="card-eyebrow">Import / export (Anki TSV/CSV)</div>
-          <p className="muted" style={{ fontSize: 13, marginTop: -2 }}>
-            Round-trips front, back, tags and type.
-          </p>
-          <div className="row wrap" style={{ gap: 8, marginTop: 8 }}>
-            <Button size="sm" onClick={() => setImporting(true)}>
+            <Button size="sm" variant="ghost" onClick={() => setImporting(true)}>
               <IconUpload size={15} /> Import
             </Button>
             <ExportButton />
