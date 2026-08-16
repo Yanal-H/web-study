@@ -148,12 +148,15 @@ export default function NotesView() {
             {mode === 'edit' ? (
               <div className="note-editor">
                 <textarea
-                  className="textarea"
+                  className="textarea note-textarea"
                   value={active.body}
                   aria-label="Note body"
                   placeholder={'# Heading\n\nWrite in **Markdown**. Link with [[Another note]].\n\n> [!note] Callouts work too.'}
                   onChange={(e) => writeNote(active.id, { body: e.target.value })}
                 />
+                <div className="note-count">
+                  {(active.body.trim().match(/\S+/g) || []).length} words · {active.body.length} chars
+                </div>
               </div>
             ) : (
               <div

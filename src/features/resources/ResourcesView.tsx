@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useStore } from '../../state/useStore';
 import { update, uid } from '../../state/store';
-import { Card, Button, Input, Field, IconButton, EmptyState } from '../../design/primitives';
+import { Card, Button, Input, Field, EmptyState } from '../../design/primitives';
 import { Dialog } from '../../design/Dialog';
 import { IconPlus, IconTrash, IconResources } from '../../design/icons';
 import { useToast } from '../../design/Toast';
@@ -54,27 +54,33 @@ export default function ResourcesView() {
           </EmptyState>
         </Card>
       ) : (
-        <div className="list">
-          {list.map((r) => (
-            <div className="list-row" key={r.id}>
-              <div className="lr-main">
-                <div className="lr-title">
-                  {r.url ? (
-                    <a href={r.url} target="_blank" rel="noopener noreferrer">
-                      {r.title || r.name || safeHost(r.url)}
-                    </a>
-                  ) : (
-                    r.title || r.name || 'Resource'
-                  )}
+        <div className="res-grid">
+          {list.map((r) => {
+            const title = r.title || r.name || (r.url ? safeHost(r.url) : 'Resource');
+            const Wrapper: any = r.url ? 'a' : 'div';
+            const wprops = r.url ? { href: r.url, target: '_blank', rel: 'noopener noreferrer' } : {};
+            return (
+              <Wrapper className="res-tile" key={r.id} {...wprops}>
+                <div className="res-letter">{title.charAt(0).toUpperCase()}</div>
+                <div className="res-main">
+                  <div className="res-title">{title}</div>
+                  {r.url && <div className="res-host">{safeHost(r.url)}</div>}
+                  {r.note && <div className="res-note">{r.note}</div>}
                 </div>
-                {r.url && <div className="lr-sub">{safeHost(r.url)}</div>}
-                {r.note && <div className="lr-sub">{r.note}</div>}
-              </div>
-              <IconButton label="Delete" onClick={() => remove(r.id)}>
-                <IconTrash size={16} />
-              </IconButton>
-            </div>
-          ))}
+                <button
+                  className="btn btn--ghost btn--icon res-del"
+                  aria-label="Delete"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    remove(r.id);
+                  }}
+                >
+                  <IconTrash size={15} />
+                </button>
+              </Wrapper>
+            );
+          })}
         </div>
       )}
 

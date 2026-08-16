@@ -6,6 +6,7 @@ import { IconPlus, IconTrash, IconCheck, IconPlanner } from '../../design/icons'
 import { useToast } from '../../design/Toast';
 
 const DAYS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+const TODAY = DAYS[(new Date().getDay() + 6) % 7];
 
 export default function PlannerView() {
   const state = useStore();
@@ -59,8 +60,9 @@ export default function PlannerView() {
         >
           <div className="planner-corner">Block</div>
           {DAYS.map((d) => (
-            <div className="planner-daylabel" key={d}>
+            <div className={`planner-daylabel${d === TODAY ? ' today' : ''}`} key={d}>
               {d}
+              {d === TODAY && <span className="today-dot" />}
             </div>
           ))}
           {blocks.map((b) => (
@@ -86,6 +88,25 @@ export default function PlannerView() {
               <IconPlus size={17} /> Add
             </Button>
           </div>
+
+          {state.tasks.length > 0 &&
+            (() => {
+              const done = state.tasks.filter((t: any) => t.done).length;
+              const pct = state.tasks.length ? (done / state.tasks.length) * 100 : 0;
+              return (
+                <div style={{ marginTop: 14 }}>
+                  <div className="row spread" style={{ fontSize: 12.5, color: 'var(--text-faint)', marginBottom: 5 }}>
+                    <span>This week</span>
+                    <span>
+                      {done}/{state.tasks.length} done
+                    </span>
+                  </div>
+                  <div className="qb-bar-track">
+                    <div className="qb-bar-fill" style={{ width: `${pct}%`, background: 'var(--grad-haki)' }} />
+                  </div>
+                </div>
+              );
+            })()}
 
           {state.tasks.length === 0 ? (
             <EmptyState icon={<IconPlanner size={22} />} title="No tasks yet">
@@ -145,16 +166,19 @@ function FragmentRow({
   return (
     <>
       <div className="planner-blocklabel">{block}</div>
-      {days.map((d) => (
-        <div className="planner-cell" key={d}>
-          <textarea
-            aria-label={`${block} ${d}`}
-            value={get(cellKey(block, d))}
-            onChange={(e) => onChange(block, d, e.target.value)}
-            placeholder="—"
-          />
-        </div>
-      ))}
+      {days.map((d) => {
+        const val = get(cellKey(block, d));
+        return (
+          <div className={`planner-cell${d === TODAY ? ' today' : ''}${val ? ' filled' : ''}`} key={d}>
+            <textarea
+              aria-label={`${block} ${d}`}
+              value={val}
+              onChange={(e) => onChange(block, d, e.target.value)}
+              placeholder="—"
+            />
+          </div>
+        );
+      })}
     </>
   );
 }

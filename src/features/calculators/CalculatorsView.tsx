@@ -292,7 +292,7 @@ function CalcCard({ calc }: { calc: Calc }) {
       </div>
 
       <div className="calc-result">
-        <div className="cr-value" style={{ color: toneColor }}>
+        <div className="cr-value pulse-key" key={result ? result.value : 'none'} style={{ color: toneColor }}>
           {result ? result.value : '—'}
         </div>
         {result && <div className="cr-interp">{result.interp}</div>}

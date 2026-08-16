@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useStore } from '../../state/useStore';
 import { update, uid } from '../../state/store';
-import { Card, Button, Input, Textarea, Field, IconButton, EmptyState } from '../../design/primitives';
+import { Card, Button, Input, Textarea, Field, EmptyState } from '../../design/primitives';
 import { Dialog } from '../../design/Dialog';
 import { IconPlus, IconTrash, IconMnemonics } from '../../design/icons';
 import { useToast } from '../../design/Toast';
@@ -46,19 +46,9 @@ export default function MnemonicsView() {
           </EmptyState>
         </Card>
       ) : (
-        <div className="list">
+        <div className="mnem-grid">
           {list.map((m) => (
-            <div className="list-row" key={m.id} style={{ alignItems: 'flex-start' }}>
-              <div className="lr-main">
-                <div className="lr-title">{m.title || m.key || 'Mnemonic'}</div>
-                <div className="lr-sub" style={{ color: 'var(--text-dim)', fontSize: 13.5, marginTop: 4 }}>
-                  {m.text || m.body}
-                </div>
-              </div>
-              <IconButton label="Delete" onClick={() => remove(m.id)}>
-                <IconTrash size={16} />
-              </IconButton>
-            </div>
+            <MnemonicCard key={m.id} m={m} onRemove={() => remove(m.id)} />
           ))}
         </div>
       )}
@@ -76,6 +66,35 @@ export default function MnemonicsView() {
         />
       )}
     </>
+  );
+}
+
+function MnemonicCard({ m, onRemove }: { m: any; onRemove: () => void }) {
+  const [open, setOpen] = useState(false);
+  return (
+    <div
+      className={`mnem-card${open ? ' open' : ''}`}
+      onClick={() => setOpen((o) => !o)}
+      role="button"
+      tabIndex={0}
+      onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && setOpen((o) => !o)}
+    >
+      <div className="mnem-cue">{m.title || m.key || 'Mnemonic'}</div>
+      <div className="mnem-exp">{m.text || m.body}</div>
+      <div className="mnem-foot">
+        <span className="mnem-hint">{open ? 'Tap to hide' : 'Tap to reveal'}</span>
+        <button
+          className="btn btn--ghost btn--icon"
+          aria-label="Delete"
+          onClick={(e) => {
+            e.stopPropagation();
+            onRemove();
+          }}
+        >
+          <IconTrash size={15} />
+        </button>
+      </div>
+    </div>
   );
 }
 

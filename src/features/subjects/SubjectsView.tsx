@@ -1,18 +1,39 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useStore } from '../../state/useStore';
 import { update, uid } from '../../state/store';
 import { COLORS } from '../../state/constants';
 import { Button, IconButton, Card, Field, Input, EmptyState } from '../../design/primitives';
 import { Dialog } from '../../design/Dialog';
 import { useToast } from '../../design/Toast';
-import { IconPlus, IconEdit, IconTrash, IconSubjects } from '../../design/icons';
+import { IconPlus, IconEdit, IconTrash, IconSubjects, IconChevron } from '../../design/icons';
+import { allCards, allMcqs } from '../../content/loader';
+import { useUserContentVersion } from '../../content/userContent';
 import type { Subject } from '../../state/types';
 
 export default function SubjectsView() {
   const state = useStore();
   const toast = useToast();
+  const navigate = useNavigate();
+  const uv = useUserContentVersion();
   const [editing, setEditing] = useState<Subject | null>(null);
   const [creating, setCreating] = useState(false);
+
+  // content available per subject (cards + questions) — powers each card's stats
+  const bySubject = useMemo(() => {
+    const m = new Map<string, { cards: number; mcqs: number }>();
+    for (const c of allCards()) {
+      const e = m.get(c.subject) || { cards: 0, mcqs: 0 };
+      e.cards++;
+      m.set(c.subject, e);
+    }
+    for (const q of allMcqs()) {
+      const e = m.get(q.subject) || { cards: 0, mcqs: 0 };
+      e.mcqs++;
+      m.set(q.subject, e);
+    }
+    return m;
+  }, [uv]);
 
   function remove(id: string) {
     update((s) => {
@@ -49,27 +70,54 @@ export default function SubjectsView() {
         </Card>
       ) : (
         <div className="subject-grid">
-          {state.subjects.map((sub) => (
-            <div className="subject-card" key={sub.id}>
-              <div className="sc-bar" style={{ background: sub.color }} />
-              <div className="row spread" style={{ alignItems: 'flex-start' }}>
-                <div style={{ minWidth: 0 }}>
-                  <h3>{sub.name}</h3>
-                  <div className="sc-meta">
-                    {(sub.topics?.length ?? 0)} topic{(sub.topics?.length ?? 0) === 1 ? '' : 's'}
+          {state.subjects.map((sub) => {
+            const stats = bySubject.get(sub.name) || { cards: 0, mcqs: 0 };
+            const hasContent = stats.cards > 0 || stats.mcqs > 0;
+            return (
+              <div
+                className={`subject-card sc-live${hasContent ? ' sc-clickable' : ''}`}
+                key={sub.id}
+                style={{ ['--sc-color' as string]: sub.color }}
+                onClick={() => hasContent && navigate('/study')}
+              >
+                <div className="sc-bar" style={{ background: sub.color }} />
+                <div className="sc-glow" />
+                <div className="row spread" style={{ alignItems: 'flex-start' }}>
+                  <div style={{ minWidth: 0 }}>
+                    <h3>{sub.name}</h3>
+                    <div className="sc-meta">
+                      {(sub.topics?.length ?? 0)} topic{(sub.topics?.length ?? 0) === 1 ? '' : 's'}
+                    </div>
+                  </div>
+                  <div className="lr-actions" onClick={(e) => e.stopPropagation()}>
+                    <IconButton label="Edit subject" onClick={() => setEditing(sub)}>
+                      <IconEdit size={16} />
+                    </IconButton>
+                    <IconButton label="Delete subject" onClick={() => remove(sub.id)}>
+                      <IconTrash size={16} />
+                    </IconButton>
                   </div>
                 </div>
-                <div className="lr-actions">
-                  <IconButton label="Edit subject" onClick={() => setEditing(sub)}>
-                    <IconEdit size={16} />
-                  </IconButton>
-                  <IconButton label="Delete subject" onClick={() => remove(sub.id)}>
-                    <IconTrash size={16} />
-                  </IconButton>
+                <div className="sc-foot">
+                  {hasContent ? (
+                    <>
+                      <span className="sc-chip" style={{ color: sub.color }}>
+                        {stats.cards} cards
+                      </span>
+                      <span className="sc-chip" style={{ color: sub.color }}>
+                        {stats.mcqs} questions
+                      </span>
+                      <span className="sc-open">
+                        Open <IconChevron size={13} />
+                      </span>
+                    </>
+                  ) : (
+                    <span className="sc-meta">No content yet</span>
+                  )}
                 </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       )}
 
