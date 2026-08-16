@@ -1,15 +1,19 @@
-import { useState } from 'react';
+import { lazy, Suspense, useState } from 'react';
 import { useStore } from '../../state/useStore';
 import { update, uid } from '../../state/store';
 import { Card, Button, Input, Field, EmptyState } from '../../design/primitives';
 import { Dialog } from '../../design/Dialog';
 import { IconPlus, IconTrash, IconResources } from '../../design/icons';
 import { useToast } from '../../design/Toast';
+import { Tabs } from '../../design/primitives';
+
+const FileLibrary = lazy(() => import('./FileLibrary'));
 
 export default function ResourcesView() {
   const state = useStore();
   const toast = useToast();
   const [adding, setAdding] = useState(false);
+  const [tab, setTab] = useState<'files' | 'links'>('files');
   const list: any[] = Array.isArray(state.resources) ? state.resources : [];
 
   function remove(id: string) {
@@ -32,14 +36,33 @@ export default function ResourcesView() {
       <header className="page-head row spread" style={{ alignItems: 'flex-end' }}>
         <div>
           <h1>Resources</h1>
-          <div className="sub">Reference links and material.</div>
+          <div className="sub">Your books and files, plus the links you keep coming back to.</div>
         </div>
-        <Button variant="primary" onClick={() => setAdding(true)}>
-          <IconPlus size={17} /> New resource
-        </Button>
+        {tab === 'links' && (
+          <Button variant="primary" onClick={() => setAdding(true)}>
+            <IconPlus size={17} /> New link
+          </Button>
+        )}
       </header>
 
-      {list.length === 0 ? (
+      <div style={{ marginBottom: 'var(--sp-4)' }}>
+        <Tabs
+          value={tab}
+          onChange={setTab}
+          tabs={[
+            { value: 'files', label: 'Files & books' },
+            { value: 'links', label: `Links${list.length ? ` · ${list.length}` : ''}` },
+          ]}
+        />
+      </div>
+
+      {tab === 'files' && (
+        <Suspense fallback={<div className="route-fallback">Loading…</div>}>
+          <FileLibrary />
+        </Suspense>
+      )}
+
+      {tab === 'links' && (list.length === 0 ? (
         <Card>
           <EmptyState
             icon={<IconResources size={22} />}
@@ -82,7 +105,7 @@ export default function ResourcesView() {
             );
           })}
         </div>
-      )}
+      ))}
 
       {adding && (
         <AddResource
