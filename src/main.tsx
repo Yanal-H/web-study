@@ -11,6 +11,7 @@ import './features/features.css';
 import './features/dashboard/hero.css';
 import './features/effects/effects.css';
 import './features/gate/watermark.css';
+import './design/strength.css';
 
 import { state } from './state/store';
 import { applyFontScale, applyDensity, applyColourTerms } from './features/settings/appearance';

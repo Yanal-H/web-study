@@ -72,28 +72,30 @@
 :root[data-theme='midnight'] {
   color-scheme: dark;
 
-  --bg: #0e1217;
-  --bg-2: #0b0e13;
-  --surface-1: #151a21;
-  --surface-2: #1b212a;
-  --surface-3: #222a34;
-  --surface-hover: #202834;
+  /* near-black with a faint warm/crimson undertone — a darker stage that makes
+     the red read as heat rather than decoration */
+  --bg: #0b0c10;
+  --bg-2: #08080b;
+  --surface-1: #14151b;
+  --surface-2: #1b1d25;
+  --surface-3: #24262f;
+  --surface-hover: #22242d;
 
-  --border: #2a333f;
-  --border-soft: #1e2530;
-  --border-strong: #38434f;
+  --border: #2c2e39;
+  --border-soft: #1f2028;
+  --border-strong: #3d3f4d;
 
-  --text: #e8edf3;
-  --text-dim: #a3aec0;
-  --text-faint: #6b7684;
-  --text-inverse: #0b0e13;
+  --text: #f2f4f8;
+  --text-dim: #a6adbb;
+  --text-faint: #6d7482;
+  --text-inverse: #08080b;
 
   /* Conqueror's haki red is the app's colour, not a highlight sitting on one. */
-  --accent: #ff2d55;
-  --accent-strong: #d81143;
-  --accent-soft: rgba(255, 45, 85, 0.14);
+  --accent: #ff1f47;
+  --accent-strong: #c40d34;
+  --accent-soft: rgba(255, 31, 71, 0.16);
   --accent-contrast: #ffffff;
-  --accent-glow: rgba(255, 45, 85, 0.32);
+  --accent-glow: rgba(255, 31, 71, 0.42);
 
   --success: #34d399;
   --warning: #fbbf24;

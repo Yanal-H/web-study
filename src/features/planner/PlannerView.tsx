@@ -1,12 +1,18 @@
-import { useState } from 'react';
-import { useStore } from '../../state/useStore';
+import { useMemo, useState } from 'react';
+import { useStore, useStoreVersion } from '../../state/useStore';
 import { update, commit, uid } from '../../state/store';
 import { Card, Button, Input, IconButton, EmptyState } from '../../design/primitives';
 import { IconPlus, IconTrash, IconCheck, IconPlanner } from '../../design/icons';
 import { useToast } from '../../design/Toast';
+import { parseTask, dueLabel, TYPE_META, type ParsedTask } from './parse';
 
 const DAYS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 const TODAY = DAYS[(new Date().getDay() + 6) % 7];
+const DAY_MS = 86_400_000;
+const midnight = () => {
+  const d = new Date();
+  return new Date(d.getFullYear(), d.getMonth(), d.getDate()).getTime();
+};
 
 export default function PlannerView() {
   const state = useStore();
@@ -23,11 +29,22 @@ export default function PlannerView() {
     commit();
   }
 
+  const preview: ParsedTask | null = task.trim() ? parseTask(task) : null;
+
   function addTask() {
     const t = task.trim();
     if (!t) return;
+    const p = parseTask(t);
     update((s) => {
-      s.tasks.unshift({ id: uid(), title: t, done: false, created: Date.now() });
+      s.tasks.unshift({
+        id: uid(),
+        title: p.title,
+        done: false,
+        created: Date.now(),
+        type: p.type,
+        due: p.due,
+        priority: p.priority,
+      });
     });
     setTask('');
     toast('Task added', 'success');
@@ -36,7 +53,10 @@ export default function PlannerView() {
   function toggleTask(id: string) {
     update((s) => {
       const t = s.tasks.find((x: any) => x.id === id);
-      if (t) t.done = !t.done;
+      if (t) {
+        t.done = !t.done;
+        t.completedAt = t.done ? Date.now() : undefined;
+      }
     });
   }
 
@@ -71,82 +91,160 @@ export default function PlannerView() {
         </div>
       </Card>
 
-      <section className="section">
-        <div className="section-head">
-          <h2>Tasks</h2>
-          <span className="see">{state.tasks.filter((t: any) => !t.done).length} open</span>
-        </div>
-        <Card>
-          <div className="row" style={{ gap: 8 }}>
-            <Input
-              value={task}
-              placeholder="Add a task…"
-              onChange={(e) => setTask(e.target.value)}
-              onKeyDown={(e) => e.key === 'Enter' && addTask()}
-            />
-            <Button variant="primary" onClick={addTask}>
-              <IconPlus size={17} /> Add
-            </Button>
-          </div>
-
-          {state.tasks.length > 0 &&
-            (() => {
-              const done = state.tasks.filter((t: any) => t.done).length;
-              const pct = state.tasks.length ? (done / state.tasks.length) * 100 : 0;
-              return (
-                <div style={{ marginTop: 14 }}>
-                  <div className="row spread" style={{ fontSize: 12.5, color: 'var(--text-faint)', marginBottom: 5 }}>
-                    <span>This week</span>
-                    <span>
-                      {done}/{state.tasks.length} done
-                    </span>
-                  </div>
-                  <div className="qb-bar-track">
-                    <div className="qb-bar-fill" style={{ width: `${pct}%`, background: 'var(--grad-haki)' }} />
-                  </div>
-                </div>
-              );
-            })()}
-
-          {state.tasks.length === 0 ? (
-            <EmptyState icon={<IconPlanner size={22} />} title="No tasks yet">
-              Jot down what you need to get through this week.
-            </EmptyState>
-          ) : (
-            <div className="list" style={{ marginTop: 14 }}>
-              {state.tasks.map((t: any) => (
-                <div className="list-row" key={t.id}>
-                  <button
-                    className="switch"
-                    role="checkbox"
-                    aria-checked={!!t.done}
-                    aria-label={t.done ? 'Mark incomplete' : 'Mark complete'}
-                    onClick={() => toggleTask(t.id)}
-                    style={{ width: 26, height: 26, borderRadius: 8, display: 'grid', placeItems: 'center' }}
-                  >
-                    {t.done && <IconCheck size={15} style={{ color: '#fff' }} />}
-                  </button>
-                  <div className="lr-main">
-                    <div
-                      className="lr-title"
-                      style={{
-                        textDecoration: t.done ? 'line-through' : 'none',
-                        color: t.done ? 'var(--text-faint)' : 'var(--text)',
-                      }}
-                    >
-                      {t.title}
-                    </div>
-                  </div>
-                  <IconButton label="Delete task" onClick={() => removeTask(t.id)}>
-                    <IconTrash size={16} />
-                  </IconButton>
-                </div>
-              ))}
-            </div>
-          )}
-        </Card>
-      </section>
+      <TaskBoard
+        task={task}
+        setTask={setTask}
+        preview={preview}
+        addTask={addTask}
+        toggleTask={toggleTask}
+        removeTask={removeTask}
+      />
     </>
+  );
+}
+
+/** The task list, grouped into an agenda: overdue, today, this week, later, no date, done. */
+function TaskBoard({
+  task,
+  setTask,
+  preview,
+  addTask,
+  toggleTask,
+  removeTask,
+}: {
+  task: string;
+  setTask: (v: string) => void;
+  preview: ParsedTask | null;
+  addTask: () => void;
+  toggleTask: (id: string) => void;
+  removeTask: (id: string) => void;
+}) {
+  const state = useStore();
+  const v = useStoreVersion();
+
+  const groups = useMemo(() => {
+    const today = midnight();
+    const weekEnd = today + 7 * DAY_MS;
+    const buckets: Record<string, any[]> = {
+      Overdue: [], Today: [], 'This week': [], Later: [], 'No date': [], Done: [],
+    };
+    const open = state.tasks.filter((t: any) => !t.done);
+    const rank = (t: any) => (t.priority || 0);
+    open.sort((a: any, b: any) => rank(b) - rank(a) || (a.due ?? Infinity) - (b.due ?? Infinity));
+    for (const t of open) {
+      if (t.due == null) buckets['No date']!.push(t);
+      else if (t.due < today) buckets['Overdue']!.push(t);
+      else if (t.due === today) buckets['Today']!.push(t);
+      else if (t.due < weekEnd) buckets['This week']!.push(t);
+      else buckets['Later']!.push(t);
+    }
+    buckets['Done'] = state.tasks.filter((t: any) => t.done).slice(0, 12);
+    return buckets;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [state.tasks, v]);
+
+  const openCount = state.tasks.filter((t: any) => !t.done).length;
+  const overdue = groups['Overdue']!.length;
+
+  return (
+    <section className="section">
+      <div className="section-head">
+        <h2>Tasks</h2>
+        <span className="see">
+          {openCount} open{overdue ? ` · ${overdue} overdue` : ''}
+        </span>
+      </div>
+      <Card>
+        <div className="row" style={{ gap: 8 }}>
+          <Input
+            value={task}
+            placeholder="Add a task — e.g. “drill upper limb tomorrow !!”"
+            onChange={(e) => setTask(e.target.value)}
+            onKeyDown={(e) => e.key === 'Enter' && addTask()}
+          />
+          <Button variant="primary" onClick={addTask}>
+            <IconPlus size={17} /> Add
+          </Button>
+        </div>
+
+        {preview && (preview.due != null || preview.priority > 0 || preview.type !== 'task') && (
+          <div className="task-preview">
+            <span className="tp-title">{preview.title}</span>
+            <span className={`task-type t-${preview.type}`} style={{ ['--h' as string]: TYPE_META[preview.type].hue }}>
+              {TYPE_META[preview.type].label}
+            </span>
+            {preview.due != null && <span className="task-due">{dueLabel(preview.due)}</span>}
+            {preview.priority > 0 && <span className={`task-pri p${preview.priority}`}>{preview.priority === 2 ? 'Urgent' : 'Important'}</span>}
+          </div>
+        )}
+
+        {openCount === 0 && groups['Done']!.length === 0 ? (
+          <EmptyState icon={<IconPlanner size={22} />} title="No tasks yet">
+            Type naturally — a day (“friday”, “tomorrow”, “in 3 days”), a kind (“read”,
+            “drill”, “mcqs”), and “!” for priority all get picked up.
+          </EmptyState>
+        ) : (
+          <div style={{ marginTop: 14 }}>
+            {Object.entries(groups).map(([label, items]) =>
+              items.length === 0 ? null : (
+                <div className="task-group" key={label}>
+                  <div className={`task-group-head${label === 'Overdue' ? ' overdue' : ''}`}>
+                    {label}
+                    <span>{items.length}</span>
+                  </div>
+                  <div className="list">
+                    {items.map((t: any) => (
+                      <TaskRow key={t.id} t={t} onToggle={() => toggleTask(t.id)} onRemove={() => removeTask(t.id)} />
+                    ))}
+                  </div>
+                </div>
+              )
+            )}
+          </div>
+        )}
+      </Card>
+    </section>
+  );
+}
+
+function TaskRow({ t, onToggle, onRemove }: { t: any; onToggle: () => void; onRemove: () => void }) {
+  const type = (t.type || 'task') as keyof typeof TYPE_META;
+  const overdue = !t.done && t.due != null && t.due < midnight();
+  return (
+    <div className={`list-row task-row${t.priority ? ` pri-${t.priority}` : ''}`}>
+      <button
+        className="switch"
+        role="checkbox"
+        aria-checked={!!t.done}
+        aria-label={t.done ? 'Mark incomplete' : 'Mark complete'}
+        onClick={onToggle}
+        style={{ width: 26, height: 26, borderRadius: 8, display: 'grid', placeItems: 'center' }}
+      >
+        {t.done && <IconCheck size={15} style={{ color: '#fff' }} />}
+      </button>
+      <div className="lr-main">
+        <div
+          className="lr-title"
+          style={{
+            textDecoration: t.done ? 'line-through' : 'none',
+            color: t.done ? 'var(--text-faint)' : 'var(--text)',
+          }}
+        >
+          {t.title}
+        </div>
+        <div className="task-meta">
+          {TYPE_META[type] && type !== 'task' && (
+            <span className={`task-type t-${type}`} style={{ ['--h' as string]: TYPE_META[type].hue }}>
+              {TYPE_META[type].label}
+            </span>
+          )}
+          {t.due != null && <span className={`task-due${overdue ? ' overdue' : ''}`}>{dueLabel(t.due)}</span>}
+        </div>
+      </div>
+      <IconButton label="Delete task" onClick={onRemove}>
+        <IconTrash size={16} />
+      </IconButton>
+    </div>
   );
 }
 
