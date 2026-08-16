@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '../../design/primitives';
+import { haki } from '../../lib/sound';
 
 /** One jagged vertical lightning path from top to bottom with a little jitter. */
 function boltPath(x: number, width: number, height: number, segs: number, seed: number): string {
@@ -62,7 +63,13 @@ export default function Hero({
   }, [tick]);
 
   return (
-    <section className="haki-hero" aria-label="Foundation">
+    <section
+      className="haki-hero"
+      aria-label="Foundation"
+      // the signature is the one place a full release belongs
+      onClick={() => haki(1)}
+      title="Release"
+    >
       <div className="haki-aura" aria-hidden="true" />
       <div className="haki-vignette" aria-hidden="true" />
 

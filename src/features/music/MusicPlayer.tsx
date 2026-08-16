@@ -4,6 +4,7 @@ import { update } from '../../state/store';
 import { useStore } from '../../state/useStore';
 import { IconMusic, IconPlay, IconPause, IconSkip, IconTrash, IconPlus, IconClose } from '../../design/icons';
 import { musicEngine, TRACKS } from '../../lib/music';
+import { EQ_PRESETS, connectEq, setEqPreset, type EqPreset } from '../../lib/eq';
 
 /**
  * Offline music. Tracks are the user's own audio files, stored in IndexedDB and
@@ -25,11 +26,13 @@ export default function MusicPlayer() {
   const [builtIn, setBuiltIn] = useState<string | null>(null);
   const [adding, setAdding] = useState(false);
   const [notice, setNotice] = useState<string | null>(null);
+  const eqRef = useRef(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const urlRef = useRef<string | null>(null);
   const fileRef = useRef<HTMLInputElement>(null);
 
   const volume = typeof cfg.musicVolume === 'number' ? cfg.musicVolume : 0.7;
+  const eq = (cfg.eq as EqPreset) || 'flat';
   const current = tracks[index];
 
   const refresh = useCallback(async () => {
@@ -82,6 +85,11 @@ export default function MusicPlayer() {
     musicEngine().setVolume(volume);
   }, [volume]);
 
+  useEffect(() => {
+    setEqPreset(eq);
+    musicEngine().setEq(eq);
+  }, [eq]);
+
   useEffect(() => () => musicEngine().stop(), []);
 
   useEffect(
@@ -90,6 +98,40 @@ export default function MusicPlayer() {
     },
     []
   );
+
+  /**
+   * Play a stored track. Selecting the track that is already current does not
+   * change `current?.id`, so the load effect never fires — which is why picking
+   * the only track in the list used to do nothing at all. Playback is started
+   * here explicitly instead.
+   */
+  async function select(i: number) {
+    const t = tracks[i];
+    if (!t) return;
+    musicEngine().stop();
+    setBuiltIn(null);
+    setIndex(i);
+    const el = audioRef.current;
+    if (!el) return;
+    try {
+      if (!el.src || tracks[index]?.id !== t.id) {
+        const blob = await getBlob(t.id);
+        if (!blob) throw new Error('the file is no longer stored on this device');
+        if (urlRef.current) URL.revokeObjectURL(urlRef.current);
+        const url = URL.createObjectURL(blob);
+        urlRef.current = url;
+        el.src = url;
+      }
+      el.volume = volume;
+      if (!eqRef.current) eqRef.current = connectEq(el, eq);
+      await el.play();
+      setPlaying(true);
+    } catch (err) {
+      setPlaying(false);
+      setNotice(playError(el, err));
+      setTimeout(() => setNotice(null), 4200);
+    }
+  }
 
   function playBuiltIn(id: string) {
     const eng = musicEngine();
@@ -108,14 +150,38 @@ export default function MusicPlayer() {
   function toggle() {
     const el = audioRef.current;
     if (!el || !current) return;
-    // starting a file stops the synth
-    musicEngine().stop();
-    setBuiltIn(null);
     if (playing) {
       el.pause();
       setPlaying(false);
-    } else {
-      void el.play().then(() => setPlaying(true)).catch(() => setPlaying(false));
+      return;
+    }
+    void select(index);
+  }
+
+  /** Select from an explicit list — used right after an import, before state settles. */
+  async function selectFrom(rows: FileMeta[], i: number) {
+    const t = rows[i];
+    if (!t) return;
+    musicEngine().stop();
+    setBuiltIn(null);
+    setIndex(i);
+    const el = audioRef.current;
+    if (!el) return;
+    try {
+      const blob = await getBlob(t.id);
+      if (!blob) throw new Error('the file is no longer stored on this device');
+      if (urlRef.current) URL.revokeObjectURL(urlRef.current);
+      const url = URL.createObjectURL(blob);
+      urlRef.current = url;
+      el.src = url;
+      el.volume = volume;
+      if (!eqRef.current) eqRef.current = connectEq(el, eq);
+      await el.play();
+      setPlaying(true);
+    } catch (err) {
+      setPlaying(false);
+      setNotice(playError(el, err));
+      setTimeout(() => setNotice(null), 4200);
     }
   }
 
@@ -147,12 +213,10 @@ export default function MusicPlayer() {
       // silently appending to a list the student cannot see
       const first = rows.findIndex((t) => t.id === added[0]);
       setSource('files');
-      setIndex(first >= 0 ? first : 0);
-      musicEngine().stop();
-      setBuiltIn(null);
-      setPlaying(true);
       setNotice(`Added ${added.length} track${added.length === 1 ? '' : 's'}`);
       setTimeout(() => setNotice(null), 2600);
+      // give React the new list before selecting into it
+      setTimeout(() => void selectFrom(rows, first >= 0 ? first : 0), 0);
     } catch (err) {
       setNotice(`Could not add that file: ${(err as Error).message}`);
     } finally {
@@ -288,6 +352,27 @@ export default function MusicPlayer() {
             </button>
           </div>
 
+          <label className="mp-vol mp-eq">
+            Sound shape
+            <select
+              className="select"
+              value={eq}
+              aria-label="Sound shape"
+              onChange={(e) =>
+                update((s) => {
+                  const snd = ((s.settings as Record<string, any>).sound ||= {});
+                  snd.eq = e.target.value;
+                })
+              }
+            >
+              {EQ_PRESETS.map((pr) => (
+                <option key={pr.id} value={pr.id}>
+                  {pr.name}
+                </option>
+              ))}
+            </select>
+          </label>
+
           <label className="mp-vol">
             Volume
             <input
@@ -311,13 +396,7 @@ export default function MusicPlayer() {
             <div className="mp-list mp-files">
               {tracks.map((t, i) => (
                 <div className={`mp-row${i === index ? ' on' : ''}`} key={t.id}>
-                  <button
-                    className="mp-row-main"
-                    onClick={() => {
-                      setIndex(i);
-                      setPlaying(true);
-                    }}
-                  >
+                  <button className="mp-row-main" onClick={() => void select(i)}>
                     <span className="mp-row-name">{t.name.replace(/\.[a-z0-9]+$/i, '')}</span>
                     <span className="mp-row-size">{formatBytes(t.size)}</span>
                   </button>
@@ -353,6 +432,18 @@ export default function MusicPlayer() {
       )}
     </>
   );
+}
+
+/** Turn a media failure into something a student can act on. */
+function playError(el: HTMLAudioElement | null, err: unknown): string {
+  const code = el?.error?.code;
+  if (code === 4) return 'This browser cannot decode that file. Try an mp3 or m4a.';
+  if (code === 3) return 'That file looks damaged and could not be decoded.';
+  if (code === 2) return 'The file could not be read from storage.';
+  const msg = (err as Error)?.message || '';
+  if (/NotAllowedError|gesture|user activation/i.test(msg))
+    return 'Tap play once — the browser blocked audio until you interact.';
+  return msg ? `Could not play that track: ${msg}` : 'Could not play that track.';
 }
 
 function clock(sec: number): string {

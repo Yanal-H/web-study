@@ -88,11 +88,12 @@
   --text-faint: #6b7684;
   --text-inverse: #0b0e13;
 
-  --accent: #2dd4bf; /* transformative teal */
-  --accent-strong: #14b8a6;
-  --accent-soft: rgba(45, 212, 191, 0.14);
-  --accent-contrast: #04211d;
-  --accent-glow: rgba(45, 212, 191, 0.28);
+  /* Conqueror's haki red is the app's colour, not a highlight sitting on one. */
+  --accent: #ff2d55;
+  --accent-strong: #d81143;
+  --accent-soft: rgba(255, 45, 85, 0.14);
+  --accent-contrast: #ffffff;
+  --accent-glow: rgba(255, 45, 85, 0.32);
 
   --success: #34d399;
   --warning: #fbbf24;
@@ -125,7 +126,7 @@
   --haki-violet: #7c3aed;
   --lightning: #ffe3ea;
   --haki-glow: rgba(255, 45, 85, 0.55);
-  --grad-haki: linear-gradient(135deg, #ff2d55, #7c3aed 55%, #22d3ee);
+  --grad-haki: linear-gradient(120deg, #ff5470, #ff2d55 42%, #b3123b 78%, #7c3aed);
   --card-glow: 0 0 0 1px var(--border), 0 18px 50px -24px var(--accent-glow);
 
   /* ---- CONCEPT COLOURS (dark) — one hue per class, spread round the wheel.
@@ -166,11 +167,12 @@
   --text-faint: #8a94a0;
   --text-inverse: #faf9f4;
 
-  --accent: #0d9488;
-  --accent-strong: #0f766e;
-  --accent-soft: rgba(13, 148, 136, 0.12);
+  /* the same red, darkened so it still reads on paper */
+  --accent: #c2123f;
+  --accent-strong: #97002f;
+  --accent-soft: rgba(194, 18, 63, 0.1);
   --accent-contrast: #ffffff;
-  --accent-glow: rgba(13, 148, 136, 0.22);
+  --accent-glow: rgba(194, 18, 63, 0.2);
 
   --success: #0f9d63;
   --warning: #b57314;
@@ -202,7 +204,7 @@
   --haki-violet: #7c3aed;
   --lightning: #ffe3ea;
   --haki-glow: rgba(255, 45, 85, 0.5);
-  --grad-haki: linear-gradient(135deg, #ff2d55, #7c3aed 55%, #0d9488);
+  --grad-haki: linear-gradient(120deg, #ff5470, #ff2d55 42%, #b3123b 78%, #7c3aed);
   --card-glow: 0 0 0 1px var(--border), 0 18px 50px -28px var(--accent-glow);
 
   /* ---- CONCEPT COLOURS (light) — same hues, darkened for contrast on paper ---- */
@@ -237,7 +239,7 @@
     --text-dim: #55606d;
     --text-faint: #8a94a0;
     --text-inverse: #faf9f4;
-    --accent: #0d9488;
+    --accent: #c2123f;
     --accent-strong: #0f766e;
     --accent-soft: rgba(13, 148, 136, 0.12);
     --accent-contrast: #ffffff;

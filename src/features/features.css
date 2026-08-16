@@ -3080,3 +3080,31 @@
     width: 100%;
   }
 }
+
+/* ---- page titles carry the haki, not just the hero ---- */
+.page-head h1 {
+  background: var(--grad-haki);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  background-size: 220% 100%;
+  animation: titleFlow 14s ease-in-out infinite;
+}
+@keyframes titleFlow {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+:root[data-haki='off'] .page-head h1,
+:root.reduce-motion .page-head h1 {
+  animation: none;
+}
+/* the sweep under a title reads as the strike that made it */
+.page-head h1::after {
+  background: var(--grad-haki);
+}
+.mp-eq .select {
+  width: 100%;
+  font-size: 12px;
+  padding: 5px 8px;
+}

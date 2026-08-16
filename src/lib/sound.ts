@@ -170,17 +170,44 @@ function noiseHit({
 
 /* ------------------------------------------------------------------ effects */
 
-/** The haki strike: a crack of lightning over a low rolling rumble. */
+/**
+ * Conqueror's haki — a strike with weight behind it.
+ *
+ * Built in four layers, because that is what makes a sound feel physical rather
+ * than loud: a hard transient you hear first, a body that carries the pitch
+ * down, a sub-bass drop you feel in the chest, and a long rumbling tail that
+ * decays away. Everything is scheduled relative to one start time so the layers
+ * lock together instead of smearing.
+ */
 export function thunder(intensity = 1) {
-  const k = Math.max(0.35, intensity);
-  // the crack
-  noiseHit({ dur: 0.11, gain: 0.55 * k, freq: 9000, toFreq: 2200, type: 'bandpass', q: 0.6 });
-  noiseHit({ dur: 0.07, gain: 0.4 * k, freq: 4200, toFreq: 1400, type: 'bandpass', q: 1.1, delay: 0.02 });
-  // the roll behind it
-  noiseHit({ dur: 1.25 * k, gain: 0.5 * k, freq: 900, toFreq: 45, delay: 0.04 });
-  noiseHit({ dur: 1.8 * k, gain: 0.3 * k, freq: 380, toFreq: 32, delay: 0.16 });
-  // the pressure you feel more than hear
-  tone({ freq: 96, to: 30, dur: 0.9 * k, type: 'sine', gain: 0.45 * k, delay: 0.02 });
+  const k = Math.max(0.4, intensity);
+
+  // 1. the transient: the whip-crack that arrives before anything else
+  noiseHit({ dur: 0.05, gain: 0.75 * k, freq: 12000, toFreq: 5200, type: 'bandpass', q: 0.5 });
+  noiseHit({ dur: 0.13, gain: 0.6 * k, freq: 7000, toFreq: 1200, type: 'bandpass', q: 0.8, delay: 0.006 });
+
+  // 2. the body: a burst of pressure sweeping down through the mid-range
+  noiseHit({ dur: 0.55 * k, gain: 0.62 * k, freq: 2400, toFreq: 110, type: 'lowpass', q: 1.4, delay: 0.02 });
+
+  // 3. the drop: two detuned sines falling into sub-bass, which is the part
+  //    that reads as power rather than volume
+  tone({ freq: 150, to: 26, dur: 1.1 * k, type: 'sine', gain: 0.6 * k, delay: 0.01 });
+  tone({ freq: 96, to: 21, dur: 1.35 * k, type: 'sine', gain: 0.5 * k, delay: 0.035 });
+  tone({ freq: 62, to: 18, dur: 1.6 * k, type: 'triangle', gain: 0.34 * k, delay: 0.06 });
+
+  // 4. the tail: rolling rumble that keeps going after the strike has gone
+  noiseHit({ dur: 2.1 * k, gain: 0.42 * k, freq: 700, toFreq: 34, delay: 0.09 });
+  noiseHit({ dur: 2.9 * k, gain: 0.26 * k, freq: 260, toFreq: 24, delay: 0.28 });
+}
+
+/**
+ * A full haki release: the strike, then a second and third rolling behind it,
+ * the way a big hit echoes off everything around it.
+ */
+export function haki(intensity = 1) {
+  thunder(intensity);
+  window.setTimeout(() => thunder(intensity * 0.55), 190);
+  window.setTimeout(() => thunder(intensity * 0.3), 430);
 }
 
 /** Soft tick when a card flips. */
@@ -221,11 +248,12 @@ export function combo(n: number) {
 
 /** Play something immediately so a student can hear that sound is working. */
 export function test() {
-  thunder(1);
+  haki(1);
 }
 
 export const sfx = {
   thunder,
+  haki,
   flip,
   correct,
   wrong,

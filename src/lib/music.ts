@@ -10,6 +10,8 @@
 // If you want real released music instead (NCS and similar), download the files
 // and add them in the player: those play from IndexedDB alongside these.
 
+import { EQ_PRESETS, type EqDef } from './eq';
+
 export interface TrackDef {
   id: string;
   name: string;
@@ -184,6 +186,10 @@ export class MusicEngine {
   private bar = 0;
   private track: TrackDef = TRACKS[0]!;
   private _volume = 0.7;
+  private eq: EqDef = EQ_PRESETS[0]!;
+  private low: BiquadFilterNode | null = null;
+  private mid: BiquadFilterNode | null = null;
+  private high: BiquadFilterNode | null = null;
   playing = false;
 
   /** how far ahead notes are queued, and how often we top the queue up */
@@ -198,8 +204,23 @@ export class MusicEngine {
       this.ctx = new Ctor();
       this.master = this.ctx.createGain();
       this.master.gain.value = this._volume * this.track.gain;
+      // the same three-band shape the file player uses, so a preset sounds
+      // the same whichever source is playing
+      const low = this.ctx.createBiquadFilter();
+      low.type = 'lowshelf';
+      low.frequency.value = 180;
+      const mid = this.ctx.createBiquadFilter();
+      mid.type = 'peaking';
+      mid.Q.value = 0.9;
+      const high = this.ctx.createBiquadFilter();
+      high.type = 'highshelf';
+      high.frequency.value = 4200;
+      this.low = low;
+      this.mid = mid;
+      this.high = high;
       const comp = this.ctx.createDynamicsCompressor();
-      this.master.connect(comp).connect(this.ctx.destination);
+      this.master.connect(low).connect(mid).connect(high).connect(comp).connect(this.ctx.destination);
+      this.applyEq();
     }
     if (this.ctx.state === 'suspended') void this.ctx.resume();
     return this.ctx;
@@ -209,9 +230,24 @@ export class MusicEngine {
     return this._volume;
   }
 
+  private applyEq() {
+    if (!this.ctx || !this.low || !this.mid || !this.high) return;
+    const t = this.ctx.currentTime;
+    this.low.gain.setTargetAtTime(this.eq.low, t, 0.05);
+    this.mid.gain.setTargetAtTime(this.eq.mid, t, 0.05);
+    this.mid.frequency.setTargetAtTime(this.eq.midHz, t, 0.05);
+    this.high.gain.setTargetAtTime(this.eq.high, t, 0.05);
+  }
+
+  setEq(id: string) {
+    this.eq = EQ_PRESETS.find((p) => p.id === id) || EQ_PRESETS[0]!;
+    this.applyEq();
+    if (this.master) this.master.gain.value = this._volume * this.track.gain * this.eq.trim;
+  }
+
   setVolume(v: number) {
     this._volume = Math.max(0, Math.min(1, v));
-    if (this.master) this.master.gain.value = this._volume * this.track.gain;
+    if (this.master) this.master.gain.value = this._volume * this.track.gain * this.eq.trim;
   }
 
   get trackId() {
