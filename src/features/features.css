@@ -3303,3 +3303,208 @@
   color: transparent;
   -webkit-text-fill-color: transparent;
 }
+
+/* ===================================================================
+   ACTIVITY CALENDAR — dated contribution grid, glass + glow
+   =================================================================== */
+.acal {
+  position: relative;
+}
+.acal-scroll {
+  overflow-x: auto;
+  padding-bottom: 4px;
+  scrollbar-width: thin;
+}
+.acal-grid {
+  display: grid;
+  gap: 3px;
+  min-width: 520px;
+}
+.acal-corner,
+.acal-month,
+.acal-wd {
+  font-size: 10px;
+  color: var(--text-faint);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+.acal-month {
+  padding-bottom: 3px;
+  align-self: end;
+}
+.acal-wd {
+  display: grid;
+  place-items: center start;
+  padding-right: 4px;
+}
+.acal-cell {
+  aspect-ratio: 1;
+  border-radius: 3px;
+  background: var(--heat-0);
+  transition: transform var(--dur-fast) var(--ease), box-shadow var(--dur-fast) var(--ease);
+  min-height: 12px;
+}
+.acal-cell.empty {
+  background: transparent;
+}
+.acal-cell.future {
+  background: repeating-linear-gradient(
+    45deg,
+    var(--heat-0),
+    var(--heat-0) 2px,
+    transparent 2px,
+    transparent 4px
+  );
+  opacity: 0.5;
+}
+/* five heat levels, each hotter and more luminous than the last */
+.acal-cell.lvl-1 { background: color-mix(in srgb, var(--accent) 26%, var(--heat-0)); }
+.acal-cell.lvl-2 { background: color-mix(in srgb, var(--accent) 48%, var(--heat-0)); }
+.acal-cell.lvl-3 {
+  background: color-mix(in srgb, var(--accent) 72%, var(--heat-0));
+  box-shadow: 0 0 6px -1px var(--accent-glow);
+}
+.acal-cell.lvl-4 {
+  background: var(--accent);
+  box-shadow: 0 0 10px -1px var(--accent-glow), 0 0 2px var(--accent) inset;
+}
+.acal-cell:hover {
+  transform: scale(1.35);
+  z-index: 2;
+  box-shadow: 0 0 0 1.5px var(--accent), 0 4px 12px -4px var(--accent-glow);
+}
+.acal-cell.today {
+  box-shadow: 0 0 0 1.5px var(--accent);
+}
+.acal-cell.today.lvl-0 {
+  box-shadow: 0 0 0 1.5px color-mix(in srgb, var(--accent) 60%, transparent);
+}
+.acal-tip {
+  position: absolute;
+  transform: translate(-50%, calc(-100% - 8px));
+  background: var(--surface-3);
+  border: 1px solid var(--border-strong);
+  color: var(--text);
+  font-size: 12px;
+  padding: 5px 9px;
+  border-radius: 7px;
+  white-space: nowrap;
+  pointer-events: none;
+  z-index: 5;
+  box-shadow: var(--shadow-lg);
+  font-variant-numeric: tabular-nums;
+}
+.acal-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 12px;
+  font-size: 11.5px;
+  color: var(--text-faint);
+  flex-wrap: wrap;
+}
+.acal-legend {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.acal-legend i {
+  width: 11px;
+  height: 11px;
+  border-radius: 3px;
+  display: inline-block;
+}
+
+/* ---- dated 14-day forecast ---- */
+.forecast2 {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 1fr;
+  gap: 3px;
+  margin-top: 16px;
+  align-items: end;
+}
+.fcol {
+  display: grid;
+  gap: 4px;
+  justify-items: center;
+}
+.fcol-bar-wrap {
+  height: 84px;
+  width: 100%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+.fcol-bar {
+  width: 60%;
+  min-height: 2px;
+  border-radius: 4px 4px 2px 2px;
+  background: color-mix(in srgb, var(--accent) 42%, var(--surface-3));
+  position: relative;
+  transition: height var(--dur-slow) var(--ease), background var(--dur-fast) var(--ease);
+}
+.fcol.today .fcol-bar {
+  background: var(--grad-haki);
+  box-shadow: 0 0 12px -3px var(--accent-glow);
+}
+.fcol:hover .fcol-bar {
+  background: var(--accent);
+}
+.fcol-n {
+  position: absolute;
+  top: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--text-dim);
+  font-variant-numeric: tabular-nums;
+}
+.fcol-wd {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--text-faint);
+  text-transform: uppercase;
+}
+.fcol-wd.wknd {
+  color: var(--accent);
+}
+.fcol-dom {
+  font-size: 10px;
+  color: var(--text-faint);
+  font-variant-numeric: tabular-nums;
+}
+.fcol.today .fcol-dom {
+  color: var(--accent);
+  font-weight: 700;
+}
+
+/* ---- planner: dated day headers + week label ---- */
+.week-of {
+  font-size: 12.5px;
+  color: var(--text-faint);
+  font-weight: 600;
+  padding: 5px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--border-soft);
+  background: var(--surface-1);
+}
+.planner-daylabel {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+.pd-name {
+  font-weight: 650;
+}
+.pd-date {
+  font-size: 11px;
+  color: var(--text-faint);
+  font-variant-numeric: tabular-nums;
+}
+.planner-daylabel.today .pd-date {
+  color: var(--accent);
+  font-weight: 700;
+}

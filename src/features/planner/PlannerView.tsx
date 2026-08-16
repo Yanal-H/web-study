@@ -22,6 +22,21 @@ export default function PlannerView() {
     ? state.planner.blocks
     : ['Morning', 'Midday', 'Afternoon', 'Evening', 'Night'];
 
+  // the real Mon→Sun dates of the current week, so the grid is anchored in time
+  const weekDates = useMemo(() => {
+    const now = new Date();
+    const monday = new Date(now);
+    monday.setDate(now.getDate() - ((now.getDay() + 6) % 7));
+    return DAYS.map((_, i) => {
+      const d = new Date(monday);
+      d.setDate(monday.getDate() + i);
+      return {
+        dom: d.getDate(),
+        label: monday.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' }),
+      };
+    });
+  }, []);
+
   const cellKey = (b: string, d: string) => `${b}|${d}`;
 
   function setCell(b: string, d: string, val: string) {
@@ -68,9 +83,12 @@ export default function PlannerView() {
 
   return (
     <>
-      <header className="page-head">
-        <h1>Planner</h1>
-        <div className="sub">Block out your week and keep a running task list.</div>
+      <header className="page-head row spread" style={{ alignItems: 'flex-end' }}>
+        <div>
+          <h1>Planner</h1>
+          <div className="sub">Block out your week and keep a running task list.</div>
+        </div>
+        <div className="week-of">Week of {weekDates[0]?.label}</div>
       </header>
 
       <Card padSm>
@@ -79,9 +97,10 @@ export default function PlannerView() {
           style={{ gridTemplateColumns: `120px repeat(${DAYS.length}, minmax(120px, 1fr))` }}
         >
           <div className="planner-corner">Block</div>
-          {DAYS.map((d) => (
+          {DAYS.map((d, di) => (
             <div className={`planner-daylabel${d === TODAY ? ' today' : ''}`} key={d}>
-              {d}
+              <span className="pd-name">{d}</span>
+              <span className="pd-date">{weekDates[di]?.dom}</span>
               {d === TODAY && <span className="today-dot" />}
             </div>
           ))}

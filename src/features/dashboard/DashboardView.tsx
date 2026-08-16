@@ -6,21 +6,13 @@ import { whenContentReady } from '../../data/bootstrap';
 import { markActivity, commit } from '../../state/store';
 import { Card, Stat, Badge, ProgressRing, Button, EmptyState } from '../../design/primitives';
 import { IconFlame, IconTarget, IconFlashcards, IconQbank, IconStudy, IconCheck } from '../../design/icons';
-import {
-  computeStreak,
-  heatmapWeeks,
-  heatLevel,
-  forecast,
-  weakMcqs,
-  todayProgress,
-} from '../../lib/stats';
+import { computeStreak, forecast, weakMcqs, todayProgress } from '../../lib/stats';
 import { collectItems, queueStats } from '../flashcards/deck';
 import { allMcqs } from '../../content/loader';
 import { isDue as mcqDue } from '../qbank/perf';
 import { useUserContentVersion } from '../../content/userContent';
 import Hero from './Hero';
-
-const WEEKDAYS = ['', 'Mon', '', 'Wed', '', 'Fri', ''];
+import ActivityCalendar from './ActivityCalendar';
 
 export default function DashboardView() {
   const state = useStore();
@@ -28,7 +20,6 @@ export default function DashboardView() {
 
   const uv = useUserContentVersion();
   const streak = computeStreak(state.activity);
-  const weeks = heatmapWeeks(state.activity, 17);
   // unified due across everything: flashcards (content + user) + MCQ reviews
   const sv = useStoreVersion();
   // personal cards from the local store, shipped cards from the engine (IndexedDB)
@@ -182,53 +173,14 @@ export default function DashboardView() {
         </Card>
       </div>
 
-      {/* Heatmap */}
+      {/* Activity calendar */}
       <section className="section">
         <div className="section-head">
           <h2>Activity</h2>
-          <span className="see">{totalActive} active days recorded</span>
+          <span className="see">last 6 months</span>
         </div>
         <Card>
-          <div className="row" style={{ alignItems: 'flex-start', gap: 8 }}>
-            <div
-              style={{
-                display: 'grid',
-                gridTemplateRows: 'repeat(7, 13px)',
-                gap: 3,
-                marginRight: 2,
-                fontSize: 9.5,
-                color: 'var(--text-faint)',
-              }}
-            >
-              {WEEKDAYS.map((d, i) => (
-                <span key={i} style={{ lineHeight: '13px' }}>
-                  {d}
-                </span>
-              ))}
-            </div>
-            <div className="heatmap">
-              {weeks.map((col, ci) => (
-                <div className="heat-col" key={ci}>
-                  {col.map((cell) => (
-                    <div
-                      key={cell.key}
-                      className={`heat-cell heat-${heatLevel(cell.count)}`}
-                      title={`${cell.key}: ${cell.count} review${cell.count === 1 ? '' : 's'}`}
-                    />
-                  ))}
-                </div>
-              ))}
-            </div>
-          </div>
-          <div className="heat-legend">
-            Less
-            <span className="heat-cell heat-0" />
-            <span className="heat-cell heat-1" />
-            <span className="heat-cell heat-2" />
-            <span className="heat-cell heat-3" />
-            <span className="heat-cell heat-4" />
-            More
-          </div>
+          <ActivityCalendar activity={state.activity} weeks={26} />
         </Card>
       </section>
 
@@ -244,17 +196,25 @@ export default function DashboardView() {
               No scheduled cards yet — your forecast fills in as you build a deck.
             </div>
           ) : (
-            <div className="forecast" style={{ marginTop: 18 }}>
-              {fc.map((n, i) => (
-                <div
-                  key={i}
-                  className={`fbar${i === 0 ? ' today' : ''}`}
-                  style={{ height: `${(n / maxFc) * 100}%` }}
-                  title={`+${i}d: ${n} due`}
-                >
-                  {i % 2 === 0 && <span>{i === 0 ? 'now' : `+${i}`}</span>}
-                </div>
-              ))}
+            <div className="forecast2">
+              {fc.map((n, i) => {
+                const day = new Date();
+                day.setDate(day.getDate() + i);
+                const wd = day.toLocaleDateString('en-GB', { weekday: 'narrow' });
+                const dom = day.getDate();
+                const weekendCol = day.getDay() === 0 || day.getDay() === 6;
+                return (
+                  <div className={`fcol${i === 0 ? ' today' : ''}`} key={i} title={`${day.toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'short' })}: ${n} due`}>
+                    <div className="fcol-bar-wrap">
+                      <div className="fcol-bar" style={{ height: `${Math.max(n ? 8 : 0, (n / maxFc) * 100)}%` }}>
+                        {n > 0 && <span className="fcol-n">{n}</span>}
+                      </div>
+                    </div>
+                    <div className={`fcol-wd${weekendCol ? ' wknd' : ''}`}>{wd}</div>
+                    <div className="fcol-dom">{i === 0 ? 'today' : dom}</div>
+                  </div>
+                );
+              })}
             </div>
           )}
         </Card>

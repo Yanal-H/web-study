@@ -4,7 +4,7 @@ import { Card, Button, Stat, Segmented } from '../../design/primitives';
 import { Dialog } from '../../design/Dialog';
 import { useToast } from '../../design/Toast';
 import { IconFlashcards, IconUpload, IconDownload, IconPlus } from '../../design/icons';
-import { heatmapWeeks, heatLevel } from '../../lib/stats';
+import ActivityCalendar from '../dashboard/ActivityCalendar';
 import { allCards } from '../../content/loader';
 import { useUserContentVersion } from '../../content/userContent';
 import {
@@ -50,7 +50,6 @@ export default function FlashcardsView() {
     [uv, state.flashcards, state.schemaVersion, sv]
   );
   const userStats = useMemo(() => queueStats(userItems), [userItems, state.study.cardSched]);
-  const weeks = useMemo(() => heatmapWeeks(state.activity, 17), [state.activity, sv]);
   const contentCount = useMemo(() => allCards().length, [uv]);
 
   const refreshDecks = useCallback(async () => {
@@ -212,15 +211,7 @@ export default function FlashcardsView() {
           <h2>Review activity</h2>
         </div>
         <Card>
-          <div className="heatmap">
-            {weeks.map((col, ci) => (
-              <div className="heat-col" key={ci}>
-                {col.map((cell) => (
-                  <div key={cell.key} className={`heat-cell heat-${heatLevel(cell.count)}`} title={`${cell.key}: ${cell.count}`} />
-                ))}
-              </div>
-            ))}
-          </div>
+          <ActivityCalendar activity={state.activity} weeks={26} />
         </Card>
       </section>
 
