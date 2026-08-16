@@ -1,14 +1,16 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useStore } from '../../state/useStore';
+import { useStore, useStoreVersion } from '../../state/useStore';
 import { update, uid } from '../../state/store';
 import { COLORS } from '../../state/constants';
-import { Button, IconButton, Card, Field, Input, EmptyState } from '../../design/primitives';
+import { Button, IconButton, Card, Field, Input, EmptyState, ProgressRing } from '../../design/primitives';
 import { Dialog } from '../../design/Dialog';
 import { useToast } from '../../design/Toast';
 import { IconPlus, IconEdit, IconTrash, IconSubjects, IconChevron } from '../../design/icons';
 import { allCards, allMcqs } from '../../content/loader';
 import { useUserContentVersion } from '../../content/userContent';
+import { deckStats } from '../../data/session';
+import { whenContentReady } from '../../data/bootstrap';
 import type { Subject } from '../../state/types';
 
 export default function SubjectsView() {
@@ -16,8 +18,28 @@ export default function SubjectsView() {
   const toast = useToast();
   const navigate = useNavigate();
   const uv = useUserContentVersion();
+  const sv = useStoreVersion();
   const [editing, setEditing] = useState<Subject | null>(null);
   const [creating, setCreating] = useState(false);
+
+  // engine-backed learned/due per subject (a subject is the deck-path root)
+  const [engine, setEngine] = useState<Record<string, { learned: number; due: number; total: number }>>({});
+  useEffect(() => {
+    let alive = true;
+    void whenContentReady().then(async () => {
+      const names = state.subjects.map((s) => s.name);
+      const out: Record<string, { learned: number; due: number; total: number }> = {};
+      for (const name of names) {
+        const s = await deckStats(name);
+        out[name] = { learned: s.total - s.neu, due: s.due, total: s.total };
+      }
+      if (alive) setEngine(out);
+    });
+    return () => {
+      alive = false;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [uv, sv, state.subjects.length]);
 
   // content available per subject (cards + questions) — powers each card's stats
   const bySubject = useMemo(() => {
@@ -73,6 +95,7 @@ export default function SubjectsView() {
           {state.subjects.map((sub) => {
             const stats = bySubject.get(sub.name) || { cards: 0, mcqs: 0 };
             const hasContent = stats.cards > 0 || stats.mcqs > 0;
+            const eng = engine[sub.name];
             return (
               <div
                 className={`subject-card sc-live${hasContent ? ' sc-clickable' : ''}`}
@@ -83,10 +106,16 @@ export default function SubjectsView() {
                 <div className="sc-bar" style={{ background: sub.color }} />
                 <div className="sc-glow" />
                 <div className="row spread" style={{ alignItems: 'flex-start' }}>
-                  <div style={{ minWidth: 0 }}>
-                    <h3>{sub.name}</h3>
-                    <div className="sc-meta">
-                      {(sub.topics?.length ?? 0)} topic{(sub.topics?.length ?? 0) === 1 ? '' : 's'}
+                  <div style={{ minWidth: 0, display: 'flex', gap: 12, alignItems: 'center' }}>
+                    {hasContent && eng && eng.total > 0 && (
+                      <ProgressRing value={eng.learned / eng.total} size={46} color={sub.color} />
+                    )}
+                    <div style={{ minWidth: 0 }}>
+                      <h3>{sub.name}</h3>
+                      <div className="sc-meta">
+                        {(sub.topics?.length ?? 0)} topic{(sub.topics?.length ?? 0) === 1 ? '' : 's'}
+                        {eng && eng.total > 0 && ` · ${Math.round((eng.learned / eng.total) * 100)}% seen`}
+                      </div>
                     </div>
                   </div>
                   <div className="lr-actions" onClick={(e) => e.stopPropagation()}>
@@ -107,6 +136,11 @@ export default function SubjectsView() {
                       <span className="sc-chip" style={{ color: sub.color }}>
                         {stats.mcqs} questions
                       </span>
+                      {eng && eng.due > 0 && (
+                        <span className="sc-chip" style={{ color: 'var(--k-warning)' }}>
+                          {eng.due} due
+                        </span>
+                      )}
                       <span className="sc-open">
                         Open <IconChevron size={13} />
                       </span>

@@ -202,12 +202,15 @@ export function ProgressRing({
   stroke = 8,
   label,
   sublabel,
+  color,
 }: {
   value: number; // 0..1
   size?: number;
   stroke?: number;
   label?: ReactNode;
   sublabel?: ReactNode;
+  /** override the ring colour (defaults to the accent) */
+  color?: string;
 }) {
   const r = (size - stroke) / 2;
   const c = 2 * Math.PI * r;
@@ -226,6 +229,7 @@ export function ProgressRing({
           strokeLinecap="round"
           strokeDasharray={c}
           strokeDashoffset={off}
+          style={color ? { stroke: color } : undefined}
         />
       </svg>
       {(label || sublabel) && (
