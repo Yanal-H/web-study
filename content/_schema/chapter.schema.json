@@ -48,6 +48,68 @@
           "type": "number",
           "exclusiveMinimum": 0
         },
+        "deck": {
+          "type": "string"
+        },
+        "objectives": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": []
+        },
+        "summary": {
+          "type": "string"
+        },
+        "glossary": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "term": {
+                "type": "string",
+                "minLength": 1
+              },
+              "kind": {
+                "type": "string",
+                "enum": [
+                  "drug",
+                  "organism",
+                  "cell",
+                  "mediator",
+                  "condition",
+                  "test",
+                  "procedure",
+                  "structure",
+                  "value",
+                  "warning"
+                ]
+              },
+              "def": {
+                "type": "string"
+              },
+              "aliases": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "default": []
+              }
+            },
+            "required": [
+              "term"
+            ],
+            "additionalProperties": false
+          },
+          "default": []
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": []
+        },
         "outline": {
           "type": "array",
           "items": {
@@ -166,6 +228,9 @@
                   "additionalProperties": false
                 },
                 "default": []
+              },
+              "deck": {
+                "type": "string"
               }
             },
             "required": [
@@ -303,6 +368,9 @@
                   "alt"
                 ],
                 "additionalProperties": false
+              },
+              "deck": {
+                "type": "string"
               }
             },
             "required": [

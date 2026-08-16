@@ -48,6 +48,36 @@ export const TableSchema = z.object({
 });
 export type Table = z.infer<typeof TableSchema>;
 
+/* ---- TERM KIND ---- the concept classes the reader colours consistently.
+ * One colour per class, used identically in the reader, on cards and in questions,
+ * so a drug always looks like a drug and a number always looks like a number. */
+export const TERM_KINDS = [
+  'drug',
+  'organism',
+  'cell',
+  'mediator',
+  'condition',
+  'test',
+  'procedure',
+  'structure',
+  'value',
+  'warning',
+] as const;
+export const TermKindSchema = z.enum(TERM_KINDS);
+export type TermKind = (typeof TERM_KINDS)[number];
+
+/* ---- GLOSSARY ---- authored key terms. Doubles as the chapter's colour lexicon
+ * and as the reader's glossary panel, so one authored list drives both. */
+export const GlossaryEntrySchema = z.object({
+  term: z.string().min(1),
+  kind: TermKindSchema.optional(),
+  /** short definition shown in the glossary and on hover */
+  def: z.string().optional(),
+  /** other spellings/abbreviations that mean the same thing */
+  aliases: z.array(z.string()).default([]),
+});
+export type GlossaryEntry = z.infer<typeof GlossaryEntrySchema>;
+
 /* ---- SECTION ---- summarised digest + exam-facing extras */
 export const SectionSchema = z.object({
   id: z.string().min(1),
@@ -59,6 +89,8 @@ export const SectionSchema = z.object({
   tables: z.array(TableSchema).default([]),
   pitfalls: z.array(z.string()).default([]),
   figures: z.array(FigureSchema).default([]),
+  /** deck label for this section's cards; defaults to the section title */
+  deck: z.string().optional(),
 });
 export type Section = z.infer<typeof SectionSchema>;
 
@@ -80,6 +112,13 @@ export const CardSchema = z
     tags: z.array(z.string()).optional(),
     difficulty: z.number().int().min(1).max(3).optional(),
     image: FigureSchema.optional(),
+    /**
+     * Deck path for this card, relative to the chapter's deck root, using "::"
+     * between levels — e.g. "Phases::Inflammatory". Combined with the chapter root
+     * this yields Subject :: Chapter :: Section :: Sub-topic, i.e. decks,
+     * sub-decks and sub-sub-decks. Omit and the card lands in its section's deck.
+     */
+    deck: z.string().optional(),
   })
   .superRefine((c, ctx) => {
     if (c.type === 'cloze') {
@@ -199,6 +238,18 @@ export const ChapterSchema = z.object({
     .optional(),
   brand: z.string().optional(),
   estMinutes: z.number().positive().optional(),
+  /**
+   * Deck root for every card in this chapter, "::" between levels.
+   * Defaults to "<subject>::<title>" when omitted.
+   */
+  deck: z.string().optional(),
+  /** what a student should be able to do after this chapter */
+  objectives: z.array(z.string()).default([]),
+  /** one-paragraph recap shown at the end of the reader */
+  summary: z.string().optional(),
+  /** key terms — powers both the glossary panel and the colour lexicon */
+  glossary: z.array(GlossaryEntrySchema).default([]),
+  tags: z.array(z.string()).default([]),
   outline: z.array(z.string()).default([]),
   sections: z.array(SectionSchema).min(1),
   mnemonics: z.array(MnemonicSchema).default([]),

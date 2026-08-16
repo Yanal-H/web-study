@@ -28,13 +28,21 @@ const template = {
   subject: 'Surgery',
   title: 'Chapter title',
   source: { book: 'Reference book', chapter: 1, title: 'Original chapter title', pages: '1-11' },
+  brand: 'by Yanal · Cairo 2026',
   estMinutes: 30,
+  deck: 'Surgery::Chapter title',
+  tags: ['surgery', 'year-4'],
+  objectives: [
+    'State what a student should be able to do after this chapter.',
+    'Four to eight objectives, each starting with a verb.',
+  ],
   outline: ['1.1 First section', '1.2 Second section'],
   sections: [
     {
       id: 's1',
       n: '1.1',
       title: 'First section',
+      deck: 'First section',
       digest:
         'Lead sentence stating the core idea. Then the essential mechanism / classification / management, with the **load-bearing terms** in bold. Summarise to roughly 40–60% of the source — never transcribe.',
       highYield: ['A crisp, exam-facing one-liner.', 'Three to six of these per section.'],
@@ -55,6 +63,11 @@ const template = {
       ],
     },
   ],
+  glossary: [
+    { term: 'myofibroblast', kind: 'cell', def: 'Actin-rich fibroblast that contracts a wound.', aliases: ['myofibroblasts'] },
+    { term: 'TGF-β', kind: 'mediator', def: 'Growth factor driving fibroblast activity and collagen synthesis.' },
+    { term: 'cellulitis', kind: 'condition', def: 'Spreading infection of skin and subcutaneous tissue.' },
+  ],
   mnemonics: [{ cue: 'CUE', expansion: 'What the cue stands for', for: 's1' }],
   cards: [
     {
@@ -62,6 +75,7 @@ const template = {
       id: 'subject-ch1-card-001',
       type: 'basic',
       sectionId: 's1',
+      deck: 'First section::Core concepts',
       front: 'Question shown first.',
       back: 'Answer.',
       extra: 'Optional elaboration.',
@@ -73,6 +87,7 @@ const template = {
       id: 'subject-ch1-card-002',
       type: 'cloze',
       sectionId: 's1',
+      deck: 'First section::Core concepts',
       cloze: 'Wound contraction is driven by {{c1::myofibroblasts}}.',
       difficulty: 1,
     },
@@ -96,7 +111,27 @@ const template = {
       teachingPoint: 'The single lesson to remember.',
     },
   ],
-  emqs: [],
+  emqs: [
+    {
+      schema: 'foundation.emq/v1',
+      id: 'subject-ch1-emq-001',
+      type: 'emq',
+      theme: 'Theme of the option bank',
+      instruction: 'For each scenario below, select the single most likely answer.',
+      sectionId: 's1',
+      difficulty: 2,
+      options: [
+        { id: 'a', text: 'Option A' },
+        { id: 'b', text: 'Option B' },
+        { id: 'c', text: 'Option C' },
+      ],
+      stems: [
+        { stem: 'First short vignette.', answer: 'a', why: 'Why A fits this vignette.' },
+        { stem: 'Second short vignette.', answer: 'c', why: 'Why C fits this vignette.' },
+      ],
+    },
+  ],
+  summary: 'One paragraph that recaps the chapter for a student revising the night before.',
 };
 writeFileSync(join(outDir, 'template.json'), JSON.stringify(template, null, 2) + '\n');
 
