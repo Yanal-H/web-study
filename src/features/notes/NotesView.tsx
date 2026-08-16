@@ -38,6 +38,10 @@ export default function NotesView() {
   const notes = useMemo(() => readNotes(state.notes), [state.notes, v]);
   const [activeId, setActiveId] = useState<string | null>(notes[0]?.id ?? null);
   const [mode, setMode] = useState<'edit' | 'preview'>('edit');
+  const [query, setQuery] = useState('');
+  const shownNotes = query.trim()
+    ? notes.filter((n) => `${n.title} ${n.body}`.toLowerCase().includes(query.trim().toLowerCase()))
+    : notes;
 
   const active = notes.find((n) => n.id === activeId) ?? null;
 
@@ -106,20 +110,38 @@ export default function NotesView() {
 
       <div className="notes-layout">
         <div className="notes-list">
-          {notes.length === 0 && (
+          {notes.length > 3 && (
+            <input
+              className="input note-search"
+              placeholder="Search notes…"
+              aria-label="Search notes"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+            />
+          )}
+          {shownNotes.length === 0 && (
             <div className="muted" style={{ padding: 12, fontSize: 13 }}>
-              No notes yet.
+              {query ? 'No notes match.' : 'No notes yet.'}
             </div>
           )}
-          {notes.map((n) => (
-            <div
-              key={n.id}
-              className={`note-item${n.id === activeId ? ' active' : ''}`}
-              onClick={() => setActiveId(n.id)}
-            >
-              {n.title || 'Untitled'}
-            </div>
-          ))}
+          {shownNotes.map((n) => {
+            const preview = n.body.replace(/[#>*`[\]{}]/g, '').replace(/\s+/g, ' ').trim().slice(0, 60);
+            return (
+              <button
+                key={n.id}
+                className={`note-item${n.id === activeId ? ' active' : ''}`}
+                onClick={() => setActiveId(n.id)}
+              >
+                <span className="ni-title">{n.title || 'Untitled'}</span>
+                {preview && <span className="ni-preview">{preview}</span>}
+                {n.updated > 0 && (
+                  <span className="ni-date">
+                    {new Date(n.updated).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })}
+                  </span>
+                )}
+              </button>
+            );
+          })}
         </div>
 
         {active ? (
