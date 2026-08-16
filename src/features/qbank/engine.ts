@@ -136,7 +136,15 @@ export interface SessionSummary {
   accuracy: number;
   byTag: Record<string, { correct: number; total: number }>;
   bySubject: Record<string, { correct: number; total: number }>;
+  byChapter: Record<string, { correct: number; total: number }>;
+  byDifficulty: Record<number, { correct: number; total: number }>;
   timeMs: number;
+  /** mean time per answered question, ms */
+  avgMs: number;
+  /** slowest answered question and its time */
+  slowest: { id: string; ms: number } | null;
+  /** the ids the student got wrong, in session order */
+  incorrectIds: string[];
 }
 
 export function summarise(s: McqSession): SessionSummary {
@@ -144,18 +152,35 @@ export function summarise(s: McqSession): SessionSummary {
   let correct = 0;
   const byTag: SessionSummary['byTag'] = {};
   const bySubject: SessionSummary['bySubject'] = {};
+  const byChapter: SessionSummary['byChapter'] = {};
+  const byDifficulty: SessionSummary['byDifficulty'] = {};
   let timeMs = 0;
+  let slowest: { id: string; ms: number } | null = null;
+  const incorrectIds: string[] = [];
   const answered = Object.keys(s.answers);
   for (const qid of answered) {
     const a = s.answers[qid]!;
     const q = byId.get(qid);
     if (a.correct) correct++;
+    else incorrectIds.push(qid);
     timeMs += a.timeMs || 0;
+    if ((a.timeMs || 0) > (slowest?.ms ?? 0)) slowest = { id: qid, ms: a.timeMs || 0 };
     if (q) {
       const sub = q.subject || 'Other';
       bySubject[sub] = bySubject[sub] || { correct: 0, total: 0 };
       bySubject[sub].total++;
       if (a.correct) bySubject[sub].correct++;
+
+      const ch = q.chapterId || 'Other';
+      byChapter[ch] = byChapter[ch] || { correct: 0, total: 0 };
+      byChapter[ch].total++;
+      if (a.correct) byChapter[ch].correct++;
+
+      const diff = q.difficulty || 1;
+      byDifficulty[diff] = byDifficulty[diff] || { correct: 0, total: 0 };
+      byDifficulty[diff].total++;
+      if (a.correct) byDifficulty[diff].correct++;
+
       for (const t of q.tags || []) {
         byTag[t] = byTag[t] || { correct: 0, total: 0 };
         byTag[t].total++;
@@ -163,6 +188,8 @@ export function summarise(s: McqSession): SessionSummary {
       }
     }
   }
+  // preserve session order for the incorrect list
+  incorrectIds.sort((x, y) => s.ids.indexOf(x) - s.ids.indexOf(y));
   return {
     total: s.ids.length,
     answered: answered.length,
@@ -170,6 +197,11 @@ export function summarise(s: McqSession): SessionSummary {
     accuracy: answered.length ? correct / answered.length : 0,
     byTag,
     bySubject,
+    byChapter,
+    byDifficulty,
     timeMs,
+    avgMs: answered.length ? timeMs / answered.length : 0,
+    slowest,
+    incorrectIds,
   };
 }

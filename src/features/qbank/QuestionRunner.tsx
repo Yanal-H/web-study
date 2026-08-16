@@ -6,6 +6,7 @@ import {
   getSession,
   saveSession,
   endSession,
+  startSession,
   bankById,
   isAnswerCorrect,
   summarise,
@@ -210,7 +211,23 @@ export default function QuestionRunner({ onExit }: { onExit: () => void }) {
   }
 
   if (showResults) {
-    return <Results session={session} onExit={() => { endSession(); onExit(); }} />;
+    return (
+      <Results
+        session={session}
+        onExit={() => {
+          endSession();
+          onExit();
+        }}
+        onRedo={(ids) => {
+          endSession();
+          const next = startSession(session!.mode, ids);
+          setShowResults(false);
+          setChosen([]);
+          setSubmitted(false);
+          setSession(next);
+        }}
+      />
+    );
   }
 
   const flagged = isFlagged(q.id);
@@ -389,49 +406,106 @@ function Navigator({ session, onJump }: { session: McqSession; onJump: (i: numbe
   );
 }
 
-function Results({ session, onExit }: { session: McqSession; onExit: () => void }) {
+const DIFF_LABEL: Record<number, string> = { 1: 'Level 1 · recall', 2: 'Level 2 · applied', 3: 'Level 3 · hard' };
+
+function fmtTime(ms: number): string {
+  const s = Math.round(ms / 1000);
+  if (s < 60) return `${s}s`;
+  return `${Math.floor(s / 60)}m ${s % 60}s`;
+}
+
+function Results({ session, onExit, onRedo }: { session: McqSession; onExit: () => void; onRedo: (ids: string[]) => void }) {
   const toast = useToast();
   const byId = bankById();
   const sum = summarise(session);
-  const missed = Object.keys(session.answers).filter((qid) => !session.answers[qid]!.correct);
+  const grade = sum.accuracy >= 0.8 ? 'strong' : sum.accuracy >= 0.6 ? 'fair' : 'weak';
+
   return (
     <div className="qb-results">
-      <div style={{ textAlign: 'center' }}>
-        <ProgressRing value={sum.accuracy} size={130} label={`${Math.round(sum.accuracy * 100)}%`} sublabel="correct" />
-        <h2 style={{ marginTop: 16 }}>Session complete</h2>
+      <div className={`qb-result-head grade-${grade}`}>
+        <ProgressRing value={sum.accuracy} size={140} label={`${Math.round(sum.accuracy * 100)}%`} sublabel="correct" />
+        <h2 style={{ marginTop: 16 }}>
+          {grade === 'strong' ? 'Strong session' : grade === 'fair' ? 'Session complete' : 'Room to grow'}
+        </h2>
         <p className="muted">
-          {sum.correct}/{sum.answered} correct · {Math.round(sum.timeMs / 1000)}s total
+          {sum.correct}/{sum.answered} correct
         </p>
       </div>
 
-      {Object.keys(sum.bySubject).length > 0 && (
-        <Card style={{ marginTop: 20 }}>
-          <div className="card-eyebrow">By subject</div>
-          {Object.entries(sum.bySubject).map(([s, v]) => (
-            <Bar key={s} label={s} correct={v.correct} total={v.total} />
-          ))}
-        </Card>
+      {/* timing + effort at a glance */}
+      <div className="qb-metrics">
+        <div className="qb-metric">
+          <div className="qbm-value">{fmtTime(sum.timeMs)}</div>
+          <div className="qbm-label">Total time</div>
+        </div>
+        <div className="qb-metric">
+          <div className="qbm-value">{fmtTime(sum.avgMs)}</div>
+          <div className="qbm-label">Avg / question</div>
+        </div>
+        <div className="qb-metric">
+          <div className="qbm-value">{sum.incorrectIds.length}</div>
+          <div className="qbm-label">Incorrect</div>
+        </div>
+        {sum.slowest && (
+          <div className="qb-metric">
+            <div className="qbm-value">{fmtTime(sum.slowest.ms)}</div>
+            <div className="qbm-label">Slowest</div>
+          </div>
+        )}
+      </div>
+
+      {sum.incorrectIds.length > 0 && (
+        <div className="row" style={{ justifyContent: 'center', gap: 10, marginTop: 16, flexWrap: 'wrap' }}>
+          <Button variant="primary" onClick={() => onRedo(sum.incorrectIds)}>
+            Redo {sum.incorrectIds.length} incorrect
+          </Button>
+          <Button
+            onClick={() => {
+              sum.incorrectIds.forEach((qid) => {
+                const q = byId.get(qid);
+                if (q) makeUserCard({ front: q.stem, back: q.options.filter((o) => o.correct).map((o) => o.text).join('; '), tags: ['from-qbank'] });
+              });
+              toast(`${sum.incorrectIds.length} flashcards created`, 'success');
+            }}
+          >
+            <IconFlashcards size={15} /> Cards from all missed
+          </Button>
+        </div>
       )}
-      {Object.keys(sum.byTag).length > 0 && (
-        <Card style={{ marginTop: 14 }}>
-          <div className="card-eyebrow">By topic</div>
-          {Object.entries(sum.byTag).sort((a, b) => a[1].correct / a[1].total - b[1].correct / b[1].total).slice(0, 8).map(([t, v]) => (
-            <Bar key={t} label={t} correct={v.correct} total={v.total} />
-          ))}
+
+      {Object.keys(sum.byChapter).length > 0 && (
+        <Card style={{ marginTop: 20 }}>
+          <div className="card-eyebrow">By chapter</div>
+          {Object.entries(sum.byChapter)
+            .sort((a, b) => a[1].correct / a[1].total - b[1].correct / b[1].total)
+            .map(([id, v]) => (
+              <Bar key={id} label={getChapter(id)?.title || id} correct={v.correct} total={v.total} />
+            ))}
         </Card>
       )}
 
-      {missed.length > 0 && (
+      {Object.keys(sum.byDifficulty).length > 1 && (
         <Card style={{ marginTop: 14 }}>
-          <div className="card-eyebrow">Missed ({missed.length})</div>
+          <div className="card-eyebrow">By difficulty</div>
+          {Object.entries(sum.byDifficulty)
+            .sort((a, b) => Number(a[0]) - Number(b[0]))
+            .map(([d, v]) => (
+              <Bar key={d} label={DIFF_LABEL[Number(d)] || `Level ${d}`} correct={v.correct} total={v.total} />
+            ))}
+        </Card>
+      )}
+
+      {sum.incorrectIds.length > 0 && (
+        <Card style={{ marginTop: 14 }}>
+          <div className="card-eyebrow">Missed ({sum.incorrectIds.length})</div>
           <div className="list" style={{ marginTop: 8 }}>
-            {missed.map((qid) => {
+            {sum.incorrectIds.map((qid) => {
               const q = byId.get(qid);
               if (!q) return null;
               return (
                 <div className="list-row" key={qid} style={{ alignItems: 'flex-start' }}>
                   <div className="lr-main">
-                    <div className="lr-title">{q.stem}</div>
+                    <div className="lr-title" dangerouslySetInnerHTML={{ __html: renderInline(q.stem, globalIndex()) }} />
                     <div className="lr-sub" style={{ color: 'var(--success)' }}>
                       {q.options.filter((o) => o.correct).map((o) => o.text).join('; ')}
                     </div>

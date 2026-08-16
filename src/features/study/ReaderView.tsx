@@ -3,8 +3,9 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { getChapter, chapterCards, chapterMcqs, listChapters } from '../../content/loader';
 import { useUserContentVersion } from '../../content/userContent';
 import { useStore } from '../../state/useStore';
+import { chapterProgress } from './progress';
 import { update } from '../../state/store';
-import { Card, Button, Badge, Tabs } from '../../design/primitives';
+import { Card, Button, Badge, Tabs, ProgressRing } from '../../design/primitives';
 import { IconChevron, IconFlashcards, IconQbank, IconCheck } from '../../design/icons';
 import { renderMarkdown } from '../../lib/markdown';
 import { renderRich, renderInline, KIND_LABEL, type LexIndex, type TermKind } from '../../lib/lexicon';
@@ -12,6 +13,22 @@ import { useLexicon } from '../../lib/useLexicon';
 import type { Figure, Table as TableT, GlossaryEntry } from '../../content/schema';
 
 type Tab = 'read' | 'cards' | 'questions';
+
+/** A live chapter-mastery ring: sections read blended with question accuracy. */
+function MasteryRing({ chapter }: { chapter: NonNullable<ReturnType<typeof getChapter>> }) {
+  useStore(); // re-render as reading/answering progresses
+  const p = chapterProgress(chapter);
+  const mastery = p.mcqAccuracy == null ? p.readPct : p.readPct * 0.5 + p.mcqAccuracy * 0.5;
+  return (
+    <div className="mastery-ring no-print" title="Chapter mastery: reading blended with question accuracy">
+      <ProgressRing value={mastery} size={72} label={`${Math.round(mastery * 100)}%`} />
+      <div className="mastery-meta">
+        <div>{p.sectionsRead}/{p.sectionsTotal} read</div>
+        {p.mcqAccuracy != null && <div>{Math.round(p.mcqAccuracy * 100)}% on {p.mcqAttempted} Q</div>}
+      </div>
+    </div>
+  );
+}
 
 /** Resolve a [[wikilink]] target to a chapter route (matches chapter or section title). */
 function resolveWikilink(target: string): string | null {
@@ -34,16 +51,40 @@ export default function ReaderView() {
   const [focus, setFocus] = useState(false);
   const [progress, setProgress] = useState(0);
 
-  // reading progress from window scroll
+  // reading progress from window scroll, and remember where you left off per chapter
   useEffect(() => {
+    if (tab !== 'read' || !id) return;
+    const key = `foundation_read_pos_${id}`;
+    let raf = 0;
     const onScroll = () => {
       const h = document.documentElement;
       const max = h.scrollHeight - h.clientHeight;
       setProgress(max > 0 ? Math.min(1, h.scrollTop / max) : 0);
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => {
+        try {
+          sessionStorage.setItem(key, String(h.scrollTop));
+        } catch {
+          /* storage full or unavailable — position is a nicety, not critical */
+        }
+      });
     };
     window.addEventListener('scroll', onScroll, { passive: true });
     onScroll();
-    return () => window.removeEventListener('scroll', onScroll);
+    // restore the saved position after layout settles
+    const saved = Number(sessionStorage.getItem(key) || 0);
+    if (saved > 0) {
+      const restore = setTimeout(() => window.scrollTo({ top: saved }), 60);
+      return () => {
+        clearTimeout(restore);
+        cancelAnimationFrame(raf);
+        window.removeEventListener('scroll', onScroll);
+      };
+    }
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener('scroll', onScroll);
+    };
   }, [tab, id]);
 
   if (!chapter) {
@@ -80,19 +121,22 @@ export default function ReaderView() {
         </div>
       </div>
 
-      <header className="page-head">
-        <div className="card-eyebrow">
-          {chapter.subject}
-          {chapter.origin === 'personal' ? ' · Imported' : ''}
-          {chapter.estMinutes ? ` · ${chapter.estMinutes} min read` : ''}
-        </div>
-        <h1>{chapter.title}</h1>
-        {chapter.source?.book && (
-          <div className="sub">
-            {chapter.source.book}
-            {chapter.source.pages ? ` · pp. ${chapter.source.pages}` : ''}
+      <header className="page-head row spread" style={{ alignItems: 'flex-start' }}>
+        <div>
+          <div className="card-eyebrow">
+            {chapter.subject}
+            {chapter.origin === 'personal' ? ' · Imported' : ''}
+            {chapter.estMinutes ? ` · ${chapter.estMinutes} min read` : ''}
           </div>
-        )}
+          <h1>{chapter.title}</h1>
+          {chapter.source?.book && (
+            <div className="sub">
+              {chapter.source.book}
+              {chapter.source.pages ? ` · pp. ${chapter.source.pages}` : ''}
+            </div>
+          )}
+        </div>
+        <MasteryRing chapter={chapter} />
       </header>
 
       <div style={{ marginBottom: 'var(--sp-4)' }} className="no-print">
