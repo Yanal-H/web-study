@@ -40,7 +40,27 @@ export type BootstrapPhase =
  * every boot: it returns immediately once the stamp matches and the card store
  * is non-empty.
  */
-export async function ensureContentLoaded(
+let inFlight: Promise<BootstrapReport> | null = null;
+
+/**
+ * Resolves once the shipped packs are in the engine. Views awaiting this render
+ * their first real numbers instead of an empty state that never refreshes.
+ */
+export function whenContentReady(): Promise<BootstrapReport> {
+  return inFlight ?? ensureContentLoaded();
+}
+
+export function ensureContentLoaded(
+  onPhase?: (p: BootstrapPhase) => void
+): Promise<BootstrapReport> {
+  if (inFlight) return inFlight;
+  inFlight = runBootstrap(onPhase).finally(() => {
+    inFlight = null;
+  });
+  return inFlight;
+}
+
+async function runBootstrap(
   onPhase?: (p: BootstrapPhase) => void
 ): Promise<BootstrapReport> {
   const packs = listChapters();
@@ -68,6 +88,8 @@ export async function ensureContentLoaded(
 
   localStorage.setItem(STAMP_KEY, stamp);
   const cards = await countStore(CARDS);
+  const { invalidateDeckTree } = await import('./session');
+  invalidateDeckTree();
   onPhase?.({ phase: 'ready', cards });
   return { imported, cards, skipped };
 }

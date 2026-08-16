@@ -1,4 +1,4 @@
-import { lazy, Suspense, useMemo, useRef, useState } from 'react';
+import { lazy, Suspense, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useStore } from '../../state/useStore';
 import { Card, Button, Stat, Segmented } from '../../design/primitives';
 import { Dialog } from '../../design/Dialog';
@@ -15,7 +15,10 @@ import {
   itemsInDeck,
   type ReviewItem,
 } from './deck';
-import DeckTree from './DeckTree';
+import { engineQueue, mergeTrees, findNode } from './engineBridge';
+import { deckTree as engineDeckTree, type EngineDeckNode } from '../../data/session';
+import { whenContentReady } from '../../data/bootstrap';
+import DeckBrowser from './DeckBrowser';
 import ReviewSession from './ReviewSession';
 import { exportTSV, parseDelimited, importCards } from './anki';
 import { makeUserCard } from './makeCard';
@@ -37,23 +40,60 @@ export default function FlashcardsView() {
   const [creating, setCreating] = useState(false);
   const [importing, setImporting] = useState(false);
 
-  const items = useMemo(() => collectItems(), [uv, state.flashcards, state.schemaVersion]);
-  const stats = useMemo(() => queueStats(items), [items, state.study.cardSched]);
+  const [engineTree, setEngineTree] = useState<EngineDeckNode[]>([]);
+  const [engineStats, setEngineStats] = useState({ due: 0, neu: 0, total: 0 });
+
+  // personal cards still live in the local store; content cards come from the engine
+  const userItems = useMemo(
+    () => collectItems().filter((i) => i.source === 'user'),
+    [uv, state.flashcards, state.schemaVersion]
+  );
+  const userStats = useMemo(() => queueStats(userItems), [userItems, state.study.cardSched]);
   const weeks = useMemo(() => heatmapWeeks(state.activity, 17), [state.activity]);
   const contentCount = useMemo(() => allCards().length, [uv]);
-  const tree = useMemo(() => buildDeckTree(items), [items, state.study.cardSched]);
-  const scoped = useMemo(() => (deck ? itemsInDeck(items, deck) : items), [items, deck]);
-  const scopedStats = useMemo(() => queueStats(scoped), [scoped, state.study.cardSched]);
 
-  function start(path = deck, force?: 'all' | 'due') {
+  const refreshDecks = useCallback(async () => {
+    await whenContentReady();
+    const tree = await engineDeckTree();
+    setEngineTree(tree);
+    setEngineStats(
+      tree.reduce(
+        (a, n) => ({ due: a.due + n.due, neu: a.neu + n.neu, total: a.total + n.total }),
+        { due: 0, neu: 0, total: 0 }
+      )
+    );
+  }, []);
+
+  useEffect(() => {
+    if (mode === 'home') void refreshDecks();
+  }, [mode, refreshDecks]);
+
+  const tree = useMemo(
+    () => mergeTrees(engineTree, buildDeckTree(userItems)),
+    [engineTree, userItems, state.study.cardSched]
+  );
+  const stats = {
+    due: engineStats.due + userStats.due,
+    neu: engineStats.neu + userStats.neu,
+    total: engineStats.total + userStats.total,
+  };
+  const scopedStats = deck ? scopeOf(tree, deck, userItems) : stats;
+
+  async function start(path = deck, force?: 'all' | 'due') {
     const S = state.settings.scheduler;
-    const pool = path ? itemsInDeck(items, path) : items;
     const how = force ?? scope;
-    const q =
+    // engine cards in batches, personal cards from the local store
+    const fromEngine = await engineQueue(path, {
+      newLimit: how === 'due' ? S.newPerDay : 9999,
+      reviewLimit: how === 'due' ? S.reviewsPerDay : 9999,
+      includeAll: how === 'all',
+    });
+    const userPool = path ? itemsInDeck(userItems, path) : userItems;
+    const fromUser =
       how === 'due'
-        ? buildQueue(pool, { newLimit: S.newPerDay, reviewLimit: S.reviewsPerDay })
-        : // "study all" — everything, new + review, ignoring caps
-          [...pool];
+        ? buildQueue(userPool, { newLimit: S.newPerDay, reviewLimit: S.reviewsPerDay })
+        : [...userPool];
+    const q = [...fromEngine, ...fromUser];
     if (q.length === 0) {
       toast(path ? 'Nothing due in that deck — switch to All.' : 'Nothing due — try “Study all”.');
       return;
@@ -62,12 +102,10 @@ export default function FlashcardsView() {
     setMode('review');
   }
 
-  function studyDeck(path: string) {
+  async function studyDeck(path: string) {
     setDeck(path);
-    const pool = itemsInDeck(items, path);
-    const S = state.settings.scheduler;
-    const ready = buildQueue(pool, { newLimit: S.newPerDay, reviewLimit: S.reviewsPerDay });
-    start(path, ready.length ? 'due' : 'all');
+    const node = findNode(tree, path);
+    await start(path, node && node.due + node.neu > 0 ? 'due' : 'all');
   }
 
   if (mode === 'review') {
@@ -132,7 +170,7 @@ export default function FlashcardsView() {
             ]}
             ariaLabel="Review scope"
           />
-          <Button variant="primary" block style={{ marginTop: 14 }} onClick={() => start()}>
+          <Button variant="primary" block style={{ marginTop: 14 }} onClick={() => void start()}>
             <IconFlashcards size={18} /> Start review
           </Button>
           <div className="row wrap" style={{ gap: 8, marginTop: 12 }}>
@@ -164,11 +202,16 @@ export default function FlashcardsView() {
 
       <section className="section">
         <div className="section-head">
-          <h2>Decks</h2>
-          <span className="see">{tree.length} top-level</span>
+          <h2>Topics</h2>
+          <span className="see">{tree.length} subjects</span>
         </div>
         <Card padSm>
-          <DeckTree nodes={tree} selected={deck} onSelect={setDeck} onStudy={studyDeck} />
+          <DeckBrowser
+            nodes={tree}
+            path={deck}
+            onPath={setDeck}
+            onStudy={(p) => void studyDeck(p)}
+          />
         </Card>
       </section>
 
@@ -193,6 +236,14 @@ export default function FlashcardsView() {
       {importing && <ImportDialog onClose={() => setImporting(false)} />}
     </>
   );
+}
+
+/** Counts for the selected deck: the merged tree already has them rolled up. */
+function scopeOf(tree: any[], deck: string, _user: ReviewItem[]) {
+  const node = findNode(tree, deck);
+  return node
+    ? { due: node.due, neu: node.neu, total: node.total }
+    : { due: 0, neu: 0, total: 0 };
 }
 
 function ExportButton() {

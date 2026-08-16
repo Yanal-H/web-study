@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { state, commit } from '../../state/store';
-import { scheduleCard, gradeLabel, type Grade, type CardSched } from '../../lib/scheduler';
-import { persistGrade, restoreSched, itemSched, type ReviewItem } from './deck';
+import { type Grade, type CardSched } from '../../lib/scheduler';
+import { gradeItem, undoGrade, gradePreview, type ReviewItem, type GradeUndo } from './deck';
 import { Button, ProgressRing } from '../../design/primitives';
 import { IconFlag, IconCheck } from '../../design/icons';
 import { chapterImage } from '../../content/loader';
@@ -10,12 +10,27 @@ import { globalIndex } from '../../lib/useLexicon';
 import { sfx } from '../../lib/sound';
 import { OcclusionView, MaskedFigure } from './Occlusion';
 
-const GRADES: Array<{ g: Grade; label: string; key: string; tone: string }> = [
-  { g: 'again', label: 'Again', key: '1', tone: 'var(--grade-again)' },
-  { g: 'hard', label: 'Hard', key: '2', tone: 'var(--grade-hard)' },
-  { g: 'good', label: 'Good', key: '3', tone: 'var(--grade-good)' },
-  { g: 'easy', label: 'Easy', key: '4', tone: 'var(--grade-easy)' },
+const GRADES: Array<{ g: Grade; label: string; key: string; tone: string; hint: string }> = [
+  { g: 'again', label: 'Again', key: '1', tone: 'var(--grade-again)', hint: 'forgot it' },
+  { g: 'hard', label: 'Hard', key: '2', tone: 'var(--grade-hard)', hint: 'a struggle' },
+  { g: 'good', label: 'Good', key: '3', tone: 'var(--grade-good)', hint: 'recalled it' },
+  { g: 'easy', label: 'Easy', key: '4', tone: 'var(--grade-easy)', hint: 'instant' },
 ];
+
+const STATE_LABEL: Record<string, string> = {
+  new: 'New card',
+  learning: 'Learning',
+  relearning: 'Relearning',
+  review: 'Review',
+};
+
+/** Stability, in words a student reads at a glance. */
+function fmtDays(d: number): string {
+  if (d < 1) return `${Math.max(1, Math.round(d * 24))} h`;
+  if (d < 30) return `${Math.round(d)} d`;
+  if (d < 365) return `${(d / 30.44).toFixed(1)} mo`;
+  return `${(d / 365.25).toFixed(1)} y`;
+}
 
 function clozeFront(s: string): string {
   return s.replace(/\{\{c\d+::([^}]*?)(?:::([^}]*?))?\}\}/g, (_m, _ans, hint) => {
@@ -38,7 +53,7 @@ export default function ReviewSession({
   const [revealed, setRevealed] = useState(false);
   const [typed, setTyped] = useState('');
   const [hint, setHint] = useState(false);
-  const undo = useRef<Array<{ item: ReviewItem; prev: CardSched | undefined; idx: number }>>([]);
+  const undo = useRef<GradeUndo[]>([]);
   const [tally, setTally] = useState({ reviewed: 0, again: 0, hard: 0, good: 0, easy: 0 });
   const [swipeHint, setSwipeHint] = useState<Grade | null>(null);
   const [impact, setImpact] = useState<{ g: Grade; key: number } | null>(null);
@@ -47,14 +62,23 @@ export default function ReviewSession({
   const done = idx >= queue.length;
   const item = queue[idx];
 
+  // what is still ahead in this session, by card state
+  const ahead = queue.slice(idx).reduce(
+    (a, it) => {
+      const st = it.sched?.state ?? (state.study.cardSched[it.key] as CardSched | undefined)?.state;
+      if (!st || st === 'new') a.neu++;
+      else if (st === 'learning' || st === 'relearning') a.learn++;
+      else a.due++;
+      return a;
+    },
+    { neu: 0, learn: 0, due: 0 }
+  );
+  const cardState = item?.sched?.state ?? (state.study.cardSched[item?.key ?? ''] as CardSched | undefined)?.state ?? 'new';
+
   const grade = useCallback(
     (g: Grade) => {
       if (!item) return;
-      const prev = state.study.cardSched[item.key] as CardSched | undefined;
-      const cur = itemSched(item);
-      const next = scheduleCard(S, cur, g);
-      persistGrade(item, next);
-      undo.current.push({ item, prev, idx });
+      undo.current.push(gradeItem(item, g, S, idx));
       setTally((t) => ({ ...t, reviewed: t.reviewed + 1, [g]: (t as any)[g] + 1 }));
       setImpact({ g, key: Date.now() });
     sfx.grade(g);
@@ -74,7 +98,7 @@ export default function ReviewSession({
   const doUndo = useCallback(() => {
     const last = undo.current.pop();
     if (!last) return;
-    restoreSched(last.item, last.prev);
+    undoGrade(last);
     setIdx(last.idx);
     setRevealed(true);
     setTally((t) => ({ ...t, reviewed: Math.max(0, t.reviewed - 1) }));
@@ -181,6 +205,11 @@ export default function ReviewSession({
         </Button>
         <div className="review-progress">
           {combo >= 2 && <span className="combo-chip">⚡ {combo} streak</span>}
+          <span className="rc-counts" title="Still to come: new · learning · due">
+            <span className="rc-new">{ahead.neu}</span>
+            <span className="rc-learn">{ahead.learn}</span>
+            <span className="rc-due">{ahead.due}</span>
+          </span>
           {idx + 1} / {queue.length}
         </div>
         <button
@@ -206,6 +235,19 @@ export default function ReviewSession({
       >
         {swipeHint && <div className={`swipe-hint swipe-${swipeHint}`}>{swipeHint}</div>}
 
+        <div className="fc-state">
+          <span className={`fc-chip st-${cardState}`}>{STATE_LABEL[cardState] || cardState}</span>
+          {item!.sched && item!.sched.reps > 0 && (
+            <span className="fc-chip">
+              seen {item!.sched.reps}×{item!.sched.lapses ? ` · ${item!.sched.lapses} lapse${item!.sched.lapses === 1 ? '' : 's'}` : ''}
+            </span>
+          )}
+          {item!.sched && item!.sched.S > 0 && (
+            <span className="fc-chip" title="How long this card is expected to stay learned">
+              memory {fmtDays(item!.sched.S)}
+            </span>
+          )}
+        </div>
         <div className="fc-deck" title={item!.deck}>
           {item!.deck.split('::').map((part, i, arr) => (
             <span key={i} className={i === arr.length - 1 ? 'fc-deck-leaf' : undefined}>
@@ -243,7 +285,8 @@ export default function ReviewSession({
           {GRADES.map((gr) => (
             <button key={gr.g} className="grade-btn" style={{ ['--gt' as string]: gr.tone }} onClick={() => grade(gr.g)}>
               <span className="grade-label">{gr.label}</span>
-              <span className="grade-interval">{gradeLabel(S, itemSched(item!), gr.g)}</span>
+              <span className="grade-interval">{gradePreview(item!, S, gr.g)}</span>
+              <span className="grade-sub">{gr.hint}</span>
               <span className="grade-key">{gr.key}</span>
             </button>
           ))}

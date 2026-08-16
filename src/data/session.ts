@@ -90,3 +90,87 @@ export async function deckStats(deck: string, now = Date.now()): Promise<DeckSta
   const [due, neu] = await Promise.all([dueCount(deck, now), newCount(deck)]);
   return { due, neu, total };
 }
+
+/* ------------------------------------------------------- deck tree */
+
+export interface EngineDeckNode {
+  name: string;
+  path: string;
+  children: EngineDeckNode[];
+  own: number;
+  total: number;
+  due: number;
+  neu: number;
+}
+
+/**
+ * Deck tree with rolled-up due/new/total counts.
+ *
+ * One cursor pass over the scheduling store tallies every deck at once, which
+ * beats asking each of a few hundred decks for its own count. The result is
+ * cached until the next rating, because the tree only changes when a card moves
+ * between states.
+ */
+let treeCache: { at: number; tree: EngineDeckNode[] } | null = null;
+
+export function invalidateDeckTree() {
+  treeCache = null;
+}
+
+export async function deckTree(now = Date.now()): Promise<EngineDeckNode[]> {
+  if (treeCache && now - treeCache.at < 30_000) return treeCache.tree;
+
+  const { openDB, SCHEDULING } = await import('./db');
+  const db = await openDB();
+  const tally = new Map<string, { total: number; due: number; neu: number }>();
+  await new Promise<void>((resolve, reject) => {
+    const cur = db.transaction([SCHEDULING], 'readonly').objectStore(SCHEDULING).openCursor();
+    cur.onsuccess = () => {
+      const c = cur.result;
+      if (!c) return resolve();
+      const row = c.value as Scheduling;
+      if (!row.suspended) {
+        const t = tally.get(row.deck) || { total: 0, due: 0, neu: 0 };
+        t.total++;
+        if (row.state === 'new') t.neu++;
+        else if (row.due <= now) t.due++;
+        tally.set(row.deck, t);
+      }
+      c.continue();
+    };
+    cur.onerror = () => reject(cur.error);
+  });
+
+  const roots: EngineDeckNode[] = [];
+  const index = new Map<string, EngineDeckNode>();
+  for (const [deck, t] of tally) {
+    const parts = deck.split('::').map((p) => p.trim()).filter(Boolean);
+    let path = '';
+    let siblings = roots;
+    for (const part of parts) {
+      path = path ? `${path}::${part}` : part;
+      let node = index.get(path);
+      if (!node) {
+        node = { name: part, path, children: [], own: 0, total: 0, due: 0, neu: 0 };
+        index.set(path, node);
+        siblings.push(node);
+      }
+      node.total += t.total;
+      node.due += t.due;
+      node.neu += t.neu;
+      siblings = node.children;
+    }
+    const leaf = index.get(path);
+    if (leaf) leaf.own += t.total;
+  }
+
+  const sortTree = (ns: EngineDeckNode[]) => {
+    ns.sort((a, b) => a.name.localeCompare(b.name));
+    ns.forEach((n) => sortTree(n.children));
+  };
+  sortTree(roots);
+  // An empty tally means the import has not finished yet — caching that would
+  // leave the decks page blank until the cache expired.
+  if (roots.length) treeCache = { at: now, tree: roots };
+  return roots;
+}

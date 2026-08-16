@@ -23,6 +23,8 @@ export default function MusicPlayer() {
   const [shuffle, setShuffle] = useState(false);
   const [source, setSource] = useState<'built-in' | 'files'>('built-in');
   const [builtIn, setBuiltIn] = useState<string | null>(null);
+  const [adding, setAdding] = useState(false);
+  const [notice, setNotice] = useState<string | null>(null);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const urlRef = useRef<string | null>(null);
   const fileRef = useRef<HTMLInputElement>(null);
@@ -58,7 +60,16 @@ export default function MusicPlayer() {
       if (!el) return;
       el.src = url;
       el.volume = volume;
-      if (playing) void el.play().catch(() => setPlaying(false));
+      if (playing) {
+        try {
+          await el.play();
+        } catch {
+          // a browser that refuses autoplay needs one tap on Play
+          setPlaying(false);
+          setNotice('Tap play to start — the browser blocked autoplay.');
+          setTimeout(() => setNotice(null), 3200);
+        }
+      }
     })();
     return () => {
       cancelled = true;
@@ -123,9 +134,31 @@ export default function MusicPlayer() {
 
   async function add(list: FileList | null) {
     if (!list?.length) return;
-    for (const f of Array.from(list)) await putFile(f, { kind: 'audio' });
-    await refresh();
-    if (fileRef.current) fileRef.current.value = '';
+    setAdding(true);
+    try {
+      const added: string[] = [];
+      for (const f of Array.from(list)) {
+        const meta = await putFile(f, { kind: 'audio' });
+        added.push(meta.id);
+      }
+      const rows = await listFiles('audio');
+      setTracks(rows);
+      // land on the track that was just added and start it, rather than
+      // silently appending to a list the student cannot see
+      const first = rows.findIndex((t) => t.id === added[0]);
+      setSource('files');
+      setIndex(first >= 0 ? first : 0);
+      musicEngine().stop();
+      setBuiltIn(null);
+      setPlaying(true);
+      setNotice(`Added ${added.length} track${added.length === 1 ? '' : 's'}`);
+      setTimeout(() => setNotice(null), 2600);
+    } catch (err) {
+      setNotice(`Could not add that file: ${(err as Error).message}`);
+    } finally {
+      setAdding(false);
+      if (fileRef.current) fileRef.current.value = '';
+    }
   }
 
   async function remove(id: string) {
@@ -146,6 +179,11 @@ export default function MusicPlayer() {
         onTimeUpdate={(e) => setProgress(e.currentTarget.currentTime)}
         onLoadedMetadata={(e) => setDuration(e.currentTarget.duration || 0)}
         onEnded={() => step(1)}
+        onError={() => {
+          setPlaying(false);
+          setNotice('That file could not be played on this device.');
+          setTimeout(() => setNotice(null), 3200);
+        }}
         onPlay={() => setPlaying(true)}
         onPause={() => setPlaying(false)}
       />
@@ -291,9 +329,10 @@ export default function MusicPlayer() {
             </div>
           )}
 
-          <button className="mp-add" onClick={() => fileRef.current?.click()}>
-            <IconPlus size={14} /> Add tracks
+          <button className="mp-add" onClick={() => fileRef.current?.click()} disabled={adding}>
+            <IconPlus size={14} /> {adding ? 'Adding…' : 'Add tracks'}
           </button>
+          {notice && <div className="mp-notice">{notice}</div>}
           <div className="mp-note">
             Drop in your own downloads — NCS and anything else you already have. They stay on
             this device and play offline.

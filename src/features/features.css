@@ -2731,3 +2731,297 @@
   color: var(--accent);
   font-weight: 650;
 }
+.mp-notice {
+  margin-top: 8px;
+  padding: 7px 9px;
+  border-radius: var(--r-sm);
+  background: var(--accent-soft);
+  color: var(--text);
+  font-size: 11.5px;
+  line-height: 1.4;
+}
+
+/* ===================================================================
+   DECK BROWSER — topics as a contents page, one level at a time
+   =================================================================== */
+.deck-crumbs {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 2px;
+  font-size: 12.5px;
+  margin-bottom: 12px;
+}
+.deck-crumbs button {
+  border: 0;
+  background: none;
+  color: var(--text-faint);
+  cursor: pointer;
+  padding: 3px 6px;
+  border-radius: 6px;
+  font-size: 12.5px;
+}
+.deck-crumbs button:hover {
+  color: var(--text);
+  background: var(--surface-hover);
+}
+.deck-crumbs button.here {
+  color: var(--text);
+  font-weight: 650;
+}
+.crumb-sep {
+  color: var(--text-faint);
+  opacity: 0.7;
+}
+
+.deck-current {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  flex-wrap: wrap;
+  padding: 14px 16px;
+  margin-bottom: 14px;
+  border-radius: var(--r-md);
+  border: 1px solid var(--border-soft);
+  background: linear-gradient(100deg, var(--accent-soft), transparent 70%);
+}
+.dc-name {
+  font-family: var(--font-display, inherit);
+  font-size: 19px;
+  font-weight: 650;
+}
+.dc-sub {
+  font-size: 12.5px;
+  color: var(--text-dim);
+  margin-top: 2px;
+}
+.dc-study {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 16px;
+  border-radius: var(--r-md);
+  border: 0;
+  background: var(--grad-haki);
+  color: #fff;
+  font-weight: 650;
+  font-size: 13.5px;
+  cursor: pointer;
+  box-shadow: 0 0 22px -8px var(--haki-glow);
+}
+.dc-study:hover {
+  filter: brightness(1.08);
+}
+
+.deck-contents {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 6px;
+  counter-reset: topic;
+}
+.deck-entry {
+  display: grid;
+  grid-template-columns: 1fr 34px;
+  align-items: stretch;
+  gap: 6px;
+  border-radius: var(--r-md);
+  border: 1px solid var(--border-soft);
+  background: var(--surface-1);
+  overflow: hidden;
+  position: relative;
+  transition: border-color var(--dur-fast) var(--ease), transform var(--dur-fast) var(--ease),
+    box-shadow var(--dur-fast) var(--ease);
+}
+/* the topic's own colour, as a spine down the left edge */
+.deck-entry::before {
+  content: '';
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 3px;
+  background: hsl(var(--hue, 340) 70% 55%);
+  opacity: 0.75;
+}
+.deck-entry:hover {
+  border-color: hsl(var(--hue, 340) 60% 55% / 0.55);
+  transform: translateY(-1px);
+  box-shadow: 0 12px 28px -22px hsl(var(--hue, 340) 70% 50%);
+}
+.deck-entry.has-work::before {
+  opacity: 1;
+  box-shadow: 0 0 12px hsl(var(--hue, 340) 80% 55% / 0.6);
+}
+.de-open {
+  display: grid;
+  grid-template-columns: 34px 1fr auto auto;
+  align-items: center;
+  gap: 12px;
+  border: 0;
+  background: none;
+  color: inherit;
+  text-align: left;
+  padding: 12px 8px 12px 14px;
+  cursor: pointer;
+  min-width: 0;
+}
+.de-num {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  color: hsl(var(--hue, 340) 60% 58%);
+  font-variant-numeric: tabular-nums;
+}
+.de-body {
+  min-width: 0;
+}
+.de-name {
+  display: block;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: -0.005em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.de-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  font-size: 11.5px;
+  color: var(--text-faint);
+  margin-top: 3px;
+}
+.de-due {
+  color: var(--k-warning);
+  font-weight: 650;
+}
+.de-new {
+  color: var(--info);
+  font-weight: 650;
+}
+.de-kids {
+  color: hsl(var(--hue, 340) 50% 58%);
+}
+.de-bar {
+  display: block;
+  height: 3px;
+  margin-top: 7px;
+  border-radius: 999px;
+  background: var(--surface-2);
+  overflow: hidden;
+  max-width: 340px;
+}
+.de-bar-fill {
+  display: block;
+  height: 100%;
+  border-radius: 999px;
+  background: hsl(var(--hue, 340) 65% 55%);
+  transition: width var(--dur) var(--ease);
+}
+.de-pct {
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-faint);
+}
+.de-study {
+  border: 0;
+  border-left: 1px solid var(--border-soft);
+  background: var(--surface-2);
+  color: var(--text-faint);
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  transition: all var(--dur-fast) var(--ease);
+}
+.de-study:hover {
+  background: var(--grad-haki);
+  color: #fff;
+}
+@media (max-width: 560px) {
+  .de-open {
+    grid-template-columns: 26px 1fr auto;
+    gap: 9px;
+    padding-left: 11px;
+  }
+  .de-pct {
+    display: none;
+  }
+}
+
+/* ---- review card: state, history and what each answer costs ---- */
+.fc-state {
+  position: absolute;
+  top: 40px;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  padding: 0 16px;
+}
+.fc-chip {
+  font-size: 10.5px;
+  letter-spacing: 0.03em;
+  padding: 2px 8px;
+  border-radius: 999px;
+  border: 1px solid var(--border-soft);
+  background: var(--surface-2);
+  color: var(--text-faint);
+  white-space: nowrap;
+}
+.fc-chip.st-new {
+  color: var(--info);
+  border-color: color-mix(in srgb, var(--info) 45%, transparent);
+}
+.fc-chip.st-learning,
+.fc-chip.st-relearning {
+  color: var(--warning);
+  border-color: color-mix(in srgb, var(--warning) 45%, transparent);
+}
+.fc-chip.st-review {
+  color: var(--success);
+  border-color: color-mix(in srgb, var(--success) 45%, transparent);
+}
+.flashcard {
+  padding-top: clamp(64px, 8vw, 84px);
+}
+.rc-counts {
+  display: inline-flex;
+  gap: 5px;
+  margin-right: 10px;
+  font-variant-numeric: tabular-nums;
+}
+.rc-counts span {
+  min-width: 22px;
+  text-align: center;
+  padding: 1px 5px;
+  border-radius: 5px;
+  font-size: 11.5px;
+  font-weight: 700;
+}
+.rc-new {
+  color: var(--info);
+  background: var(--info-soft);
+}
+.rc-learn {
+  color: var(--warning);
+  background: var(--warning-soft);
+}
+.rc-due {
+  color: var(--success);
+  background: var(--success-soft);
+}
+.grade-sub {
+  display: block;
+  font-size: 10.5px;
+  color: var(--text-faint);
+  margin-top: 1px;
+}
+.grade-interval {
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--gt);
+}

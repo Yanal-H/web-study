@@ -3,8 +3,10 @@
 // id in state.study.cardSched (additive, v7); user cards keep their own fields.
 import { state, commit, markActivity } from '../../state/store';
 import { allCards } from '../../content/loader';
-import type { CardSched } from '../../lib/scheduler';
-import { cardIsDue, isNewCard } from '../../lib/scheduler';
+import type { CardSched, Grade } from '../../lib/scheduler';
+import { cardIsDue, isNewCard, scheduleCard, gradeLabel } from '../../lib/scheduler';
+import type { Scheduling } from '../../data/db';
+import { previewIntervals as fsrsPreview } from '../../data/fsrs';
 
 export interface OcclusionRegion {
   x: number;
@@ -36,7 +38,9 @@ export interface RenderCard {
 
 export interface ReviewItem {
   key: string; // unique scheduling key
-  source: 'content' | 'user';
+  source: 'content' | 'user' | 'engine';
+  /** engine items carry their FSRS row; content/user items use state.study.cardSched */
+  sched?: Scheduling;
   card: RenderCard;
   chapterId?: string;
   subject?: string;
@@ -277,5 +281,87 @@ export function deckPaths(nodes: DeckNode[]): string[] {
     }
   };
   walk(nodes);
+  return out;
+}
+
+/* --------------------------------------------------- grading, either engine */
+
+/** Anki's ratings, which is what FSRS takes. */
+const RATING: Record<Grade, 1 | 2 | 3 | 4> = { again: 1, hard: 2, good: 3, easy: 4 };
+
+export interface GradeUndo {
+  item: ReviewItem;
+  /** the SM-2 row, for content and personal cards */
+  prev?: CardSched;
+  /** the FSRS row, for engine cards */
+  prevSched?: Scheduling;
+  idx: number;
+}
+
+/**
+ * Grade a card through whichever scheduler owns it.
+ *
+ * Engine cards go to FSRS in IndexedDB; cards still held in the local store keep
+ * the SM-2+ path, so a session can mix both without the caller caring which.
+ */
+export function gradeItem(
+  item: ReviewItem,
+  g: Grade,
+  settings: Parameters<typeof scheduleCard>[0],
+  idx: number
+): GradeUndo {
+  if (item.source === 'engine' && item.sched) {
+    const prevSched = item.sched;
+    void import('../../data/session').then(async (m) => {
+      const next = await m.rateCard(
+        { cardId: item.key.replace(/^engine:/, ''), deck: item.deck, sched: prevSched, card: {} as never },
+        RATING[g]
+      );
+      item.sched = next;
+      m.invalidateDeckTree();
+    });
+    markActivity();
+    commit();
+    return { item, prevSched, idx };
+  }
+  const prev = state.study.cardSched[item.key] as CardSched | undefined;
+  const next = scheduleCard(settings, itemSched(item), g);
+  persistGrade(item, next);
+  return { item, prev, idx };
+}
+
+/** Put a graded card back the way it was. */
+export function undoGrade(u: GradeUndo) {
+  if (u.item.source === 'engine' && u.prevSched) {
+    const prevSched = u.prevSched;
+    u.item.sched = prevSched;
+    void import('../../data/session').then((m) => {
+      void m.restoreScheduling(prevSched);
+      m.invalidateDeckTree();
+    });
+    return;
+  }
+  restoreSched(u.item, u.prev);
+}
+
+/** The interval each button would give, for the preview under the grade row. */
+export function gradePreview(
+  item: ReviewItem,
+  settings: Parameters<typeof scheduleCard>[0],
+  g: Grade
+): string {
+  if (item.source === 'engine' && item.sched) {
+    return enginePreview(item.sched)[RATING[g]];
+  }
+  return gradeLabel(settings, itemSched(item), g);
+}
+
+/** Cached FSRS previews — recomputed only when the card changes. */
+let previewFor: { cardId: string; at: number; out: Record<1 | 2 | 3 | 4, string> } | null = null;
+function enginePreview(sched: Scheduling): Record<1 | 2 | 3 | 4, string> {
+  if (previewFor && previewFor.cardId === sched.cardId && previewFor.at === sched.due)
+    return previewFor.out;
+  const out = fsrsPreview(sched, Date.now());
+  previewFor = { cardId: sched.cardId, at: sched.due, out };
   return out;
 }
