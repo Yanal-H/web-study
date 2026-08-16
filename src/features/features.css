@@ -3108,3 +3108,18 @@
   font-size: 12px;
   padding: 5px 8px;
 }
+.mp-fmt {
+  display: inline-block;
+  margin-right: 6px;
+  padding: 1px 5px;
+  border-radius: 4px;
+  font-size: 9.5px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  background: var(--surface-3);
+  color: var(--text-faint);
+}
+.mp-fmt.bad {
+  background: var(--error-soft);
+  color: var(--error);
+}

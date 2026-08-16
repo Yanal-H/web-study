@@ -1,5 +1,15 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { listFiles, putFile, deleteFile, getBlob, formatBytes, type FileMeta } from '../../lib/blobs';
+import {
+  listFiles,
+  putFile,
+  deleteFile,
+  getBlob,
+  formatBytes,
+  repairAudioKinds,
+  canPlay,
+  extOf,
+  type FileMeta,
+} from '../../lib/blobs';
 import { update } from '../../state/store';
 import { useStore } from '../../state/useStore';
 import { IconMusic, IconPlay, IconPause, IconSkip, IconTrash, IconPlus, IconClose } from '../../design/icons';
@@ -37,6 +47,8 @@ export default function MusicPlayer() {
 
   const refresh = useCallback(async () => {
     try {
+      // pick up anything filed under an older format list before listing
+      await repairAudioKinds();
       setTracks(await listFiles('audio'));
     } catch {
       setTracks([]);
@@ -203,9 +215,17 @@ export default function MusicPlayer() {
     setAdding(true);
     try {
       const added: string[] = [];
+      const undecodable: string[] = [];
       for (const f of Array.from(list)) {
         const meta = await putFile(f, { kind: 'audio' });
         added.push(meta.id);
+        if (!canPlay(f.name, f.type)) undecodable.push(extOf(f.name).toUpperCase() || f.name);
+      }
+      if (undecodable.length) {
+        setNotice(
+          `Stored, but this browser cannot decode ${[...new Set(undecodable)].join(', ')}. Try Chrome or Safari, or convert to mp3.`
+        );
+        setTimeout(() => setNotice(null), 6000);
       }
       const rows = await listFiles('audio');
       setTracks(rows);
@@ -398,7 +418,12 @@ export default function MusicPlayer() {
                 <div className={`mp-row${i === index ? ' on' : ''}`} key={t.id}>
                   <button className="mp-row-main" onClick={() => void select(i)}>
                     <span className="mp-row-name">{t.name.replace(/\.[a-z0-9]+$/i, '')}</span>
-                    <span className="mp-row-size">{formatBytes(t.size)}</span>
+                    <span className="mp-row-size">
+                      <span className={`mp-fmt${canPlay(t.name, t.type) ? '' : ' bad'}`}>
+                        {extOf(t.name).toUpperCase() || 'FILE'}
+                      </span>
+                      {formatBytes(t.size)}
+                    </span>
                   </button>
                   <button className="mp-row-del" aria-label={`Remove ${t.name}`} onClick={() => void remove(t.id)}>
                     <IconTrash size={13} />

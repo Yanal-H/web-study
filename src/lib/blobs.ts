@@ -175,3 +175,62 @@ export async function download(id: string, filename?: string): Promise<void> {
   a.remove();
   setTimeout(() => URL.revokeObjectURL(url), 10_000);
 }
+
+
+/** MIME types worth asking the browser about, keyed by extension. */
+const MIME_BY_EXT: Record<string, string> = {
+  mp3: 'audio/mpeg',
+  m4a: 'audio/mp4; codecs="mp4a.40.2"',
+  m4b: 'audio/mp4',
+  mp4: 'audio/mp4; codecs="mp4a.40.2"',
+  aac: 'audio/aac',
+  ogg: 'audio/ogg; codecs="vorbis"',
+  oga: 'audio/ogg',
+  opus: 'audio/ogg; codecs="opus"',
+  wav: 'audio/wav',
+  flac: 'audio/flac',
+  weba: 'audio/webm',
+  webm: 'audio/webm; codecs="opus"',
+  wma: 'audio/x-ms-wma',
+  aif: 'audio/aiff',
+  aiff: 'audio/aiff',
+};
+
+export function extOf(name: string): string {
+  const m = name.toLowerCase().match(/\.([a-z0-9]+)$/);
+  return m ? m[1]! : '';
+}
+
+/**
+ * Can this browser decode the file? Returns 'probably', 'maybe' or '' exactly as
+ * canPlayType does — m4a and mp4 are AAC, which Chrome and Safari decode but a
+ * codec-free Chromium build does not, and it is far better to say so up front
+ * than to fail silently on play.
+ */
+export function canPlay(name: string, type: string): string {
+  if (typeof document === 'undefined') return 'maybe';
+  const el = document.createElement('audio');
+  const guesses = [type, MIME_BY_EXT[extOf(name)]].filter(Boolean) as string[];
+  for (const g of guesses) {
+    const verdict = el.canPlayType(g);
+    if (verdict) return verdict;
+  }
+  return '';
+}
+
+/**
+ * Re-file anything whose name says audio but whose stored kind says otherwise.
+ * Tracks added before the format list grew are sitting in the library invisible
+ * to the player; this puts them back where they belong. Returns how many moved.
+ */
+export async function repairAudioKinds(): Promise<number> {
+  const all = await listFiles();
+  let moved = 0;
+  for (const f of all) {
+    if (f.kind !== 'audio' && (AUDIO_EXT.test(f.name) || f.type.startsWith('audio/'))) {
+      await updateMeta(f.id, { kind: 'audio' });
+      moved++;
+    }
+  }
+  return moved;
+}
