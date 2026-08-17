@@ -146,9 +146,9 @@ function Shell() {
   useEffect(() => {
     if (!cmdOpen) return;
     let alive = true;
-    void import('../lib/search').then((m) => {
+    void import('../lib/searchIndex').then(async (m) => {
+      const docs = await m.buildIndex(state.notes);
       if (!alive) return;
-      const docs = m.buildSearchDocs(state);
       setSearchFn(() => (query: string) =>
         m.searchDocs(docs, query, 18).map((d) => ({
           id: d.id,
