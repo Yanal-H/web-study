@@ -104,6 +104,13 @@ export default function ReaderView() {
   const cards = chapterCards(chapter);
   const mcqs = chapterMcqs(chapter);
 
+  // neighbouring chapters in the same subject, for a "keep moving" pager
+  const siblings = useMemo(() => {
+    const all = listChapters().filter((c) => c.subject === chapter.subject);
+    const i = all.findIndex((c) => c.id === chapter.id);
+    return { prev: i > 0 ? all[i - 1] : undefined, next: i >= 0 && i < all.length - 1 ? all[i + 1] : undefined };
+  }, [chapter.id, chapter.subject, uv]);
+
   return (
     <div className={focus ? 'reader-focus' : ''}>
       {tab === 'read' && <div className="reading-progress" style={{ width: `${progress * 100}%` }} />}
@@ -154,6 +161,27 @@ export default function ReaderView() {
       {tab === 'read' && <ReadTab chapter={chapter} onNavigate={navigate} />}
       {tab === 'cards' && <CardsTab cards={cards} onNavigate={navigate} />}
       {tab === 'questions' && <QuestionsTab mcqs={mcqs} chapterId={chapter.id} onNavigate={navigate} />}
+
+      {(siblings.prev || siblings.next) && (
+        <nav className="chapter-pager no-print" aria-label="Chapter navigation">
+          {siblings.prev ? (
+            <button className="cp-card cp-prev" onClick={() => navigate(`/study/${encodeURIComponent(siblings.prev!.id)}`)}>
+              <span className="cp-dir"><IconChevron size={14} style={{ transform: 'rotate(180deg)' }} /> Previous</span>
+              <span className="cp-title">{siblings.prev.title}</span>
+            </button>
+          ) : (
+            <span />
+          )}
+          {siblings.next ? (
+            <button className="cp-card cp-next" onClick={() => navigate(`/study/${encodeURIComponent(siblings.next!.id)}`)}>
+              <span className="cp-dir">Next <IconChevron size={14} /></span>
+              <span className="cp-title">{siblings.next.title}</span>
+            </button>
+          ) : (
+            <span />
+          )}
+        </nav>
+      )}
     </div>
   );
 }

@@ -3886,3 +3886,57 @@
   margin: 4px 0;
   padding-left: 20px;
 }
+
+/* ---- Reader chapter pager: keep moving through a subject ---- */
+.chapter-pager {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--sp-3);
+  margin-top: var(--sp-6);
+  padding-top: var(--sp-5);
+  border-top: 1px solid var(--border-soft);
+}
+.cp-card {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 14px 16px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border-soft);
+  background: var(--surface-1);
+  cursor: pointer;
+  transition: transform var(--transition), border-color var(--transition), box-shadow var(--transition);
+}
+.cp-next {
+  text-align: right;
+  align-items: flex-end;
+}
+.cp-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--accent);
+  box-shadow: 0 14px 30px -22px var(--accent-glow);
+}
+.cp-dir {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 700;
+  color: var(--accent);
+}
+.cp-title {
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.25;
+}
+@media (max-width: 560px) {
+  .chapter-pager {
+    grid-template-columns: 1fr;
+  }
+  .cp-next {
+    text-align: left;
+    align-items: flex-start;
+  }
+}
