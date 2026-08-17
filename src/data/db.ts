@@ -70,6 +70,8 @@ export const SCHEDULING = 'scheduling';
 export const MEDIA = 'media';
 export const REVIEWS = 'reviews';
 
+import * as mem from './contentStore';
+
 let dbPromise: Promise<IDBDatabase> | null = null;
 
 export function openDB(): Promise<IDBDatabase> {
@@ -226,106 +228,80 @@ export async function newCount(deck: string): Promise<number> {
   return total;
 }
 
-/* --------------------------------------------------------------- decks */
+/* --------------------------------------------------------------- decks
 
-/** Every distinct deck path, read from the index keys — never from card rows. */
+   Deck queries read the in-memory content store. They used to walk the CARDS
+   `deck` index in IndexedDB; the cards are no longer written to disk, so the
+   same aggregation now happens over the session's card list. The deck tree is
+   small even for a large bank, so this stays cheap. */
+
+/** Every distinct deck path that has at least one card. */
 export async function allDeckKeys(): Promise<string[]> {
-  const db = await openDB();
-  const t = db.transaction([CARDS], 'readonly');
-  const idx = t.objectStore(CARDS).index('deck');
-  const keys = new Set<string>();
-  await new Promise<void>((resolve, reject) => {
-    const cur = idx.openKeyCursor(null, 'nextunique');
-    cur.onsuccess = () => {
-      const c = cur.result;
-      if (c) {
-        keys.add(c.key as string);
-        c.continue();
-      } else resolve();
-    };
-    cur.onerror = () => reject(cur.error);
-  });
-  return [...keys];
+  return mem.allDeckKeys();
 }
 
 /** A deck path and every path nested beneath it. */
 export async function decksUnder(deck: string): Promise<string[]> {
-  const all = await allDeckKeys();
-  const prefix = `${deck}::`;
-  return all.filter((d) => d === deck || d.startsWith(prefix));
+  return mem.decksUnder(deck);
 }
 
-/** Card counts per deck path, aggregated from index keys. */
+/** Card counts per deck path. */
 export async function deckCounts(): Promise<Record<string, number>> {
-  const db = await openDB();
-  const t = db.transaction([CARDS], 'readonly');
-  const idx = t.objectStore(CARDS).index('deck');
-  const counts: Record<string, number> = {};
-  await new Promise<void>((resolve, reject) => {
-    const cur = idx.openKeyCursor();
-    cur.onsuccess = () => {
-      const c = cur.result;
-      if (c) {
-        const k = c.key as string;
-        counts[k] = (counts[k] || 0) + 1;
-        c.continue();
-      } else resolve();
-    };
-    cur.onerror = () => reject(cur.error);
-  });
-  return counts;
+  return mem.deckCounts();
 }
 
 /* --------------------------------------------------------------- reads */
 
 export async function getCard(id: string): Promise<StoredCard | undefined> {
-  const db = await openDB();
-  return req(db.transaction([CARDS], 'readonly').objectStore(CARDS).get(id));
+  return mem.cards.get(id) as StoredCard | undefined;
 }
 
 export async function getCards(ids: string[]): Promise<StoredCard[]> {
   if (ids.length === 0) return [];
-  const db = await openDB();
-  const store = db.transaction([CARDS], 'readonly').objectStore(CARDS);
-  return Promise.all(ids.map((id) => req<StoredCard>(store.get(id)))).then((rows) =>
-    rows.filter(Boolean)
-  );
+  return ids.map((id) => mem.cards.get(id)).filter(Boolean) as unknown as StoredCard[];
 }
 
+/** Scheduling is PERSONAL PROGRESS — it stays on disk and survives the session. */
 export async function getScheduling(cardId: string): Promise<Scheduling | undefined> {
   const db = await openDB();
   return req(db.transaction([SCHEDULING], 'readonly').objectStore(SCHEDULING).get(cardId));
 }
 
 export async function getMedia(imageId: string): Promise<{ imageId: string; src: string } | undefined> {
-  const db = await openDB();
-  return req(db.transaction([MEDIA], 'readonly').objectStore(MEDIA).get(imageId));
+  return mem.media.get(imageId) as { imageId: string; src: string } | undefined;
 }
 
 export async function getChapterMeta<T = unknown>(id: string): Promise<T | undefined> {
-  const db = await openDB();
-  return req(db.transaction([CHAPTERS], 'readonly').objectStore(CHAPTERS).get(id));
+  return mem.chapters.get(id) as T | undefined;
 }
 
 export async function listChapterMeta<T = unknown>(): Promise<T[]> {
-  const db = await openDB();
-  return req(db.transaction([CHAPTERS], 'readonly').objectStore(CHAPTERS).getAll());
+  return mem.chapters.all() as T[];
 }
 
 export async function countStore(store: string): Promise<number> {
+  const table = mem.memTable(store);
+  if (table) return table.size;
   const db = await openDB();
   return req(db.transaction([store], 'readonly').objectStore(store).count());
 }
 
-/** Every row in a store. Used by reconciliation to find obsolete shipped rows. */
+/** Every row in a store. Used by reconciliation to find obsolete rows. */
 export async function getAllRows<T = unknown>(store: string): Promise<T[]> {
+  const table = mem.memTable(store);
+  if (table) return table.all() as T[];
   const db = await openDB();
   return req(db.transaction([store], 'readonly').objectStore(store).getAll() as IDBRequest<T[]>);
 }
 
-/** Delete a set of keys from a store in one transaction. No-op on an empty list. */
+/** Delete a set of keys from a store. No-op on an empty list. */
 export async function deleteKeys(store: string, keys: string[]): Promise<void> {
   if (keys.length === 0) return;
+  const table = mem.memTable(store);
+  if (table) {
+    for (const k of keys) table.delete(k);
+    return;
+  }
   const db = await openDB();
   const t = db.transaction([store], 'readwrite');
   const os = t.objectStore(store);
@@ -335,16 +311,13 @@ export async function deleteKeys(store: string, keys: string[]): Promise<void> {
 
 /** MCQ ids for a chapter, without loading the questions. */
 export async function mcqIdsForChapter(chapterId: string): Promise<string[]> {
-  const db = await openDB();
-  const idx = db.transaction([MCQS], 'readonly').objectStore(MCQS).index('chapterId');
-  return req(idx.getAllKeys(IDBKeyRange.only(chapterId))) as Promise<string[]>;
+  return mem.mcqIdsForChapter(chapterId);
 }
 
 export async function getMcqs<T = unknown>(chapterId?: string): Promise<T[]> {
-  const db = await openDB();
-  const store = db.transaction([MCQS], 'readonly').objectStore(MCQS);
-  if (!chapterId) return req(store.getAll());
-  return req(store.index('chapterId').getAll(IDBKeyRange.only(chapterId)));
+  const all = mem.mcqs.all();
+  if (!chapterId) return all as T[];
+  return all.filter((q) => q.chapterId === chapterId) as T[];
 }
 
 /* -------------------------------------------------------------- writes */
@@ -359,9 +332,17 @@ export async function putScheduling(s: Scheduling, review?: Omit<ReviewLog, 'id'
   await done(t);
 }
 
-/** Write many rows in one transaction. Callers chunk to keep transactions short. */
+/**
+ * Write many rows. Content goes to memory for the session; personal data goes to
+ * disk in one transaction (callers chunk to keep transactions short).
+ */
 export async function bulkPut(store: string, rows: unknown[]): Promise<void> {
   if (rows.length === 0) return;
+  const table = mem.memTable(store);
+  if (table) {
+    for (const row of rows) table.put(row as mem.MemRow);
+    return;
+  }
   const db = await openDB();
   const t = db.transaction([store], 'readwrite');
   const os = t.objectStore(store);
@@ -378,11 +359,38 @@ export async function reviewsSince(ts: number): Promise<ReviewLog[]> {
 
 /** Wipe every store. Used by tests and by a deliberate "rebuild library". */
 export async function clearAll(): Promise<void> {
+  mem.clearContent();
   const db = await openDB();
   const stores = [CHAPTERS, CARDS, MCQS, SCHEDULING, MEDIA, REVIEWS];
   const t = db.transaction(stores, 'readwrite');
   for (const s of stores) t.objectStore(s).clear();
   await done(t);
+}
+
+/**
+ * Delete any authored content left on disk by an older build.
+ *
+ * Content is no longer written to IndexedDB, but a device that ran a previous
+ * version still has the whole library sitting in it — which is exactly what this
+ * design is meant to prevent. Run once at boot so upgrading actually removes it
+ * rather than leaving a copy behind forever.
+ *
+ * Scheduling and review history are NOT touched: that is the student's own work.
+ */
+export async function purgePersistedContent(): Promise<number> {
+  if (typeof indexedDB === 'undefined') return 0;
+  const db = await openDB();
+  const stores = [CHAPTERS, CARDS, MCQS, MEDIA];
+  let removed = 0;
+  for (const s of stores) {
+    const n = await req(db.transaction([s], 'readonly').objectStore(s).count()).catch(() => 0);
+    removed += n;
+  }
+  if (removed === 0) return 0;
+  const t = db.transaction(stores, 'readwrite');
+  for (const s of stores) t.objectStore(s).clear();
+  await done(t);
+  return removed;
 }
 
 /**

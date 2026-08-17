@@ -19,20 +19,31 @@ private site — Steps 5 and 6 are content and polish.
 Two accounts, both free: **Vercel** (already set up if your site is live) and
 **Supabase** (new).
 
-### One honest thing before you start
+### Two honest things before you start
 
-You cannot stop a signed-in student saving your content. Every website sends its
-code to the browser — that is how the web works — and anyone signed in can copy
-what they can see. No service, and no amount of money, changes this.
+**1. You cannot stop a signed-in student saving your content.** Every website
+sends its code to the browser — that is how the web works — and anyone signed in
+can copy what they can see. No service, and no amount of money, changes this.
 
 What this setup *does* give you, and what most sites get wrong:
 
 - A visitor who is not signed in gets **nothing** — no chapters, no cards, not
   even a cached copy. (Before this, everything was downloadable by anyone.)
 - Only people with your university email domain can create an account.
+- Chapters are **never stored on the student's device**. They are downloaded
+  into memory each visit and gone when the tab closes, so a borrowed, lost or
+  resold phone carries no library, and revoking someone actually takes effect.
 - You can remove anyone's access instantly.
 - Every page carries the email of the account it was served to, so a leaked
   screenshot points somewhere.
+
+**2. Foundation needs a connection.** Because nothing is kept on the device,
+students must be online to open their chapters — on the ward, on the metro, they
+will see "No connection" instead of their notes. Their *progress and personal
+notes* stay on the device and are never lost; only the chapters need the network.
+
+If offline studying matters more to you than keeping copies off devices, say so
+and it can be changed back — the trade is one or the other, not both.
 
 ---
 
@@ -166,8 +177,11 @@ Publish**, without touching the command line or redeploying.
 ## Step 7 — Give it to your students
 
 Send them the URL. That is all they need. They sign in with their university
-email, get a code, and they are in. First load needs internet; after that the
-app works offline on their device.
+email, get a code, and they are in.
+
+Tell them they need to be **online to study** — the chapters download each time
+and are not kept on the phone. Their progress, notes and personal cards are
+saved on the device and do not need a connection.
 
 Nothing they do can change your content — the database refuses writes from any
 account that is not on your admin list, on every device, no matter what they
@@ -198,25 +212,48 @@ Your email is not in `admin_emails()`. Re-run the SQL from Step 2 with the
 correct address — re-running is safe.
 
 **Students do not see a chapter you just published**
-They get it on their next load. Ask them to reload. If it still does not appear,
-open Settings → Card engine → **Re-import chapters** on their device.
+They get it on their next load. Ask them to reload — chapters are fetched fresh
+every visit, so a reload is always enough.
+
+**A student says the app is empty / "No connection"**
+They are offline, or the Supabase project is paused (see below). Chapters are not
+stored on the device, so no connection means no chapters. Their own progress and
+notes are untouched and will be there when they reconnect.
 
 **"The chapters table does not exist yet"**
 Step 2 has not been run, or was run against a different project.
 
 **The site was fine, then everything stopped**
 Supabase pauses free projects after 7 days with **no** activity — a holiday
-could do it. Open the Supabase dashboard and click Resume. Students' devices
-keep working offline from what they already downloaded.
+could do it. Open the Supabase dashboard and click Resume. While it is paused
+students cannot load chapters at all, so resume it before term restarts.
 
 ---
 
-## What is never sent anywhere
+## What lives where
 
-Progress, review history, notes and personal cards stay **on each student's
-device**. They are not uploaded, not visible to you, and not visible to anyone
-else. The only thing that travels is the chapters you publish, in one direction:
-you publish, students receive.
+| | Where it lives | Survives closing the tab? |
+|---|---|---|
+| Your chapters | Downloaded into memory each visit | **No** — by design |
+| Student progress and review history | That student's device | Yes |
+| Notes and personal cards | That student's device | Yes |
+
+Progress, review history, notes and personal cards are never uploaded, not
+visible to you, and not visible to anyone else. The only thing that travels is
+the chapters you publish, in one direction: you publish, students receive.
+
+### Watch your Supabase usage
+
+Because chapters download every visit rather than being cached, this uses more
+bandwidth than a normal site. Your current content is **225 KB compressed**, and
+the free tier allows **5 GB/month** — about **23,000 chapter loads**.
+
+For 1000 students that is roughly **23 visits each per month**, or a bit under
+one a day. Comfortable for most cohorts, but keep an eye on **Supabase →
+Settings → Usage** as your content grows: doubling the chapters halves the
+number of visits that fit. If you approach the limit, the fix is to load each
+chapter only when a student opens it rather than all of them at sign-in — ask
+and it can be built.
 
 ---
 

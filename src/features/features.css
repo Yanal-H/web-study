@@ -4327,3 +4327,66 @@
   word-spacing: 0.08em;
   line-height: 1.9;
 }
+
+/* ------------------------------------------------------- content status
+
+   Foundation downloads its chapters each session rather than keeping them on the
+   device, so "still loading" and "no connection" are states students will
+   actually meet. Fixed to the bottom so it never displaces what they are
+   reading, and out of the way of the dock. */
+
+.content-status {
+  position: fixed;
+  left: 50%;
+  bottom: 18px;
+  transform: translateX(-50%);
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  max-width: min(560px, calc(100vw - 32px));
+  padding: 11px 16px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+  color: var(--text-dim);
+  box-shadow: 0 12px 40px -18px rgba(0, 0, 0, 0.7);
+  font-size: 13.5px;
+  line-height: 1.5;
+}
+
+/* A warning needs room to explain itself, so it stops being a pill. */
+.content-status--warn {
+  border-radius: var(--radius-2, 12px);
+  border-color: var(--warning);
+  background: var(--warning-soft);
+  color: var(--text);
+  flex-wrap: wrap;
+}
+
+.content-status strong {
+  color: var(--text);
+}
+
+.content-spinner {
+  width: 14px;
+  height: 14px;
+  flex: none;
+  border-radius: 50%;
+  border: 2px solid var(--border-strong);
+  border-top-color: var(--accent);
+  animation: contentSpin 0.8s linear infinite;
+}
+@keyframes contentSpin {
+  to { transform: rotate(360deg); }
+}
+:root.reduce-motion .content-spinner {
+  animation-duration: 2.4s;
+}
+@media (prefers-reduced-motion: reduce) {
+  .content-spinner { animation-duration: 2.4s; }
+}
+
+@media print {
+  .content-status { display: none; }
+}

@@ -134,26 +134,37 @@ function Shell() {
     return () => document.removeEventListener('keydown', onKey);
   }, [navigate]);
 
-  // Hydrate whatever chapters this device already holds, then check the content
-  // store for anything new. The first step is what makes the app work offline;
-  // the second is what delivers a chapter published since the student last opened
-  // it. Neither blocks the UI, and a failure of either leaves the app as it was.
+  // Download this session's chapters.
+  //
+  // Content is held in memory only, so every visit starts empty and fetches
+  // again — that is the deliberate cost of keeping no copy on the device. Before
+  // downloading, remove any library left on disk by an older build, so upgrading
+  // actually takes the copy away instead of leaving it behind.
+  const [content, setContent] = useState<'loading' | 'ready' | 'offline' | 'empty'>('loading');
   useEffect(() => {
-    void ensureContentLoaded()
-      .catch((e) => console.error('content hydration failed', e))
-      .finally(() => {
-        void import('../data/remoteContent').then((m) =>
-          m.syncPublishedInBackground(async (report) => {
-            if (report.imported.length || report.removed.length) {
-              // New chapters are in IndexedDB but not yet in the in-memory list
-              // the reader renders from; re-read it and nudge subscribers.
-              const { rehydrateChapters } = await import('../data/bootstrap');
-              await rehydrateChapters();
-              notify();
-            }
-          })
-        );
-      });
+    let alive = true;
+    void (async () => {
+      await ensureContentLoaded().catch((e) => console.error('content boot failed', e));
+
+      const m = await import('../data/remoteContent');
+      const report = await m.syncPublishedContent().catch(() => null);
+      if (!alive) return;
+
+      const { rehydrateChapters } = await import('../data/bootstrap');
+      const count = await rehydrateChapters().catch(() => 0);
+      const { invalidateDeckTree } = await import('../data/session');
+      invalidateDeckTree();
+      notify();
+
+      if (!report || report.skipped === 'offline' || report.skipped === 'unreachable') {
+        setContent(count > 0 ? 'ready' : 'offline');
+      } else {
+        setContent(count > 0 ? 'ready' : 'empty');
+      }
+    })();
+    return () => {
+      alive = false;
+    };
   }, []);
 
   // Ask the browser to keep this origin's data even under storage pressure. Without
@@ -323,9 +334,47 @@ function Shell() {
 
       <Watermark />
 
+      {content !== 'ready' && <ContentStatus status={content} />}
+
       {cmdOpen && <CommandPalette commands={commands} search={searchFn} onClose={() => setCmdOpen(false)} />}
       {helpOpen && <ShortcutsHelp onClose={() => setHelpOpen(false)} />}
     </>
+  );
+}
+
+/**
+ * A quiet banner while chapters download, and an honest message when they cannot.
+ *
+ * The app is online-only, so "no connection" is a real state a student will meet
+ * — on a hospital corridor, on the metro — and it deserves a clear explanation
+ * rather than an empty library that looks broken. Their own progress and notes
+ * are on the device and still there, which the message says.
+ */
+function ContentStatus({ status }: { status: 'loading' | 'offline' | 'empty' }) {
+  if (status === 'loading') {
+    return (
+      <div className="content-status" role="status">
+        <span className="content-spinner" aria-hidden="true" />
+        Loading your chapters…
+      </div>
+    );
+  }
+  if (status === 'offline') {
+    return (
+      <div className="content-status content-status--warn" role="alert">
+        <strong>No connection.</strong> Foundation loads its chapters fresh each time, so you need
+        to be online to study. Your progress and notes are safe on this device.
+        <button className="btn btn--sm" onClick={() => window.location.reload()}>
+          Try again
+        </button>
+      </div>
+    );
+  }
+  return (
+    <div className="content-status content-status--warn" role="status">
+      <strong>No chapters yet.</strong> Once your administrator publishes them they will appear
+      here automatically.
+    </div>
   );
 }
 
