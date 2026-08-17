@@ -12,11 +12,12 @@ export interface AiConfig {
 }
 
 export const AI_MODELS: Array<{ value: string; label: string }> = [
-  { value: 'claude-haiku-4-5-20251001', label: 'Claude Haiku 4.5 — fast, cheap' },
+  { value: 'claude-opus-5', label: 'Claude Opus 5 — deepest (recommended)' },
   { value: 'claude-sonnet-5', label: 'Claude Sonnet 5 — balanced' },
-  { value: 'claude-opus-5', label: 'Claude Opus 5 — deepest' },
+  { value: 'claude-haiku-4-5-20251001', label: 'Claude Haiku 4.5 — fast, cheap' },
 ];
 
+// Default to the deepest model so explanations are as thorough as possible.
 const DEFAULTS: AiConfig = { enabled: false, apiKey: '', model: AI_MODELS[0]!.value };
 
 export function getAiConfig(): AiConfig {
@@ -30,6 +31,24 @@ export function setAiConfig(patch: Partial<AiConfig>): void {
     Object.assign(cur, patch);
   });
 }
+
+// One-time: move a config still on the old cheap default onto Opus, so existing
+// setups get the deepest explanations. Guarded by a flag so a later, deliberate
+// choice of a different model is never overridden.
+(function upgradeToOpusOnce() {
+  if (typeof localStorage === 'undefined') return;
+  const FLAG = 'foundation_ai_opus_default_v1';
+  try {
+    if (localStorage.getItem(FLAG)) return;
+    const raw = (liveState.settings as Record<string, unknown>).ai as Partial<AiConfig> | undefined;
+    if (raw && (!raw.model || raw.model === 'claude-haiku-4-5-20251001')) {
+      setAiConfig({ model: 'claude-opus-5' });
+    }
+    localStorage.setItem(FLAG, '1');
+  } catch {
+    /* best-effort */
+  }
+})();
 
 /** True when the tutor is switched on and a key has been entered. */
 export function aiReady(): boolean {
@@ -83,9 +102,65 @@ export interface AiMessage {
 
 export type AiResult = { ok: true; text: string } | { ok: false; error: AiError };
 
+/** Fallback model for keys that cannot use Opus (no premium/tier access). */
+const FALLBACK_MODEL = 'claude-sonnet-5';
+
+type RawResult = AiResult & { downgradeable?: boolean };
+
+/** A single request against one model. Flags errors that mean "this key can't use that model". */
+async function rawChat(
+  system: string,
+  messages: AiMessage[],
+  model: string,
+  apiKey: string,
+  opts: { maxTokens?: number; signal?: AbortSignal }
+): Promise<RawResult> {
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      signal: opts.signal,
+      headers: {
+        'content-type': 'application/json',
+        'x-api-key': apiKey,
+        'anthropic-version': '2023-06-01',
+        'anthropic-dangerous-direct-browser-access': 'true',
+      },
+      body: JSON.stringify({ model, max_tokens: opts.maxTokens ?? 1000, system, messages }),
+    });
+    if (!res.ok) {
+      let detail = `Request failed (${res.status}).`;
+      try {
+        const j = await res.json();
+        detail = j?.error?.message || detail;
+      } catch {
+        /* keep the status-code message */
+      }
+      // 403/404 or a message about the model/permission/tier means the key can't use it.
+      const downgradeable =
+        res.status === 403 ||
+        res.status === 404 ||
+        /model|permission|not[_ ]?found|not allowed|access|tier|entitl/i.test(detail);
+      if (res.status === 401) detail = 'Your API key was rejected — check it in Settings.';
+      return { ok: false, error: fail('http', detail), downgradeable };
+    }
+    const data = await res.json();
+    const text = Array.isArray(data?.content)
+      ? data.content.map((b: { text?: string }) => b?.text || '').join('').trim()
+      : '';
+    if (!text) return { ok: false, error: fail('parse', 'The tutor returned an empty reply.') };
+    return { ok: true, text };
+  } catch (e) {
+    const msg = e instanceof Error && e.name === 'AbortError' ? 'Cancelled.' : 'Could not reach the AI service.';
+    return { ok: false, error: fail('offline', msg) };
+  }
+}
+
 /**
  * Multi-turn chat against the Anthropic Messages API, direct from the browser.
- * Pass the whole conversation so follow-up questions keep their context.
+ * Pass the whole conversation so follow-up questions keep their context. If the
+ * chosen model (Opus by default) is not available to the key, it retries once
+ * with Sonnet and remembers that, so students without premium access still get a
+ * strong answer instead of an error.
  */
 export async function aiChat(
   system: string,
@@ -99,44 +174,20 @@ export async function aiChat(
   if (typeof navigator !== 'undefined' && navigator.onLine === false) {
     return { ok: false, error: fail('offline', 'You are offline — the AI tutor needs a connection.') };
   }
-  try {
-    const res = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      signal: opts.signal,
-      headers: {
-        'content-type': 'application/json',
-        'x-api-key': cfg.apiKey.trim(),
-        'anthropic-version': '2023-06-01',
-        'anthropic-dangerous-direct-browser-access': 'true',
-      },
-      body: JSON.stringify({
-        model: cfg.model || DEFAULTS.model,
-        max_tokens: opts.maxTokens ?? 1000,
-        system,
-        messages,
-      }),
-    });
-    if (!res.ok) {
-      let detail = `Request failed (${res.status}).`;
-      try {
-        const j = await res.json();
-        detail = j?.error?.message || detail;
-      } catch {
-        /* keep the status-code message */
-      }
-      if (res.status === 401) detail = 'Your API key was rejected — check it in Settings.';
-      return { ok: false, error: fail('http', detail) };
+  const key = cfg.apiKey.trim();
+  const primary = cfg.model || DEFAULTS.model;
+  const first = await rawChat(system, messages, primary, key, opts);
+  if (first.ok) return first;
+
+  if (first.downgradeable && primary !== FALLBACK_MODEL) {
+    const alt = await rawChat(system, messages, FALLBACK_MODEL, key, opts);
+    if (alt.ok) {
+      // this key cannot use the premium model — settle on the fallback going forward
+      setAiConfig({ model: FALLBACK_MODEL });
+      return alt;
     }
-    const data = await res.json();
-    const text = Array.isArray(data?.content)
-      ? data.content.map((b: { text?: string }) => b?.text || '').join('').trim()
-      : '';
-    if (!text) return { ok: false, error: fail('parse', 'The tutor returned an empty reply.') };
-    return { ok: true, text };
-  } catch (e) {
-    const msg = e instanceof Error && e.name === 'AbortError' ? 'Cancelled.' : 'Could not reach the AI service.';
-    return { ok: false, error: fail('offline', msg) };
   }
+  return { ok: false, error: first.error };
 }
 
 /** One-shot completion — a single user turn. Thin wrapper over aiChat. */

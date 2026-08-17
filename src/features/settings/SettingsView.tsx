@@ -457,8 +457,8 @@ export default function SettingsView() {
             onChange={(e) => setAiConfig({ apiKey: e.target.value })}
           />
         </Row>
-        <Row label="Model" desc="Faster and cheaper, or deeper and slower.">
-          <Select value={ai.model} onChange={(e) => setAiConfig({ model: e.target.value })} style={{ minWidth: 220 }}>
+        <Row label="Model" desc="Opus gives the deepest explanations. If your key cannot use Opus, it falls back to Sonnet automatically.">
+          <Select value={ai.model} onChange={(e) => setAiConfig({ model: e.target.value })} style={{ minWidth: 240 }}>
             {AI_MODELS.map((m) => (
               <option key={m.value} value={m.value}>
                 {m.label}
