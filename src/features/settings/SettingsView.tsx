@@ -440,7 +440,9 @@ export default function SettingsView() {
         <p className="section-lead">
           Optional. Off by default — the app works fully offline without it. When you switch it on and add
           your own key, a <strong>Hint</strong> and <strong>Explain with AI</strong> button appear on each
-          question. Nothing is sent anywhere until you press one of them.
+          question, and an <strong>Explain with AI</strong> button on each flashcard once you reveal the
+          answer. The explanation walks through the right answer and why each wrong option is wrong. Nothing
+          is sent anywhere until you press one of them.
         </p>
         <Row label="Enable AI tutor" desc="Adds live hints and explanations to the question bank.">
           <Switch label="Enable AI tutor" checked={ai.enabled} onChange={(v) => setAiConfig({ enabled: v })} />

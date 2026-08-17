@@ -133,9 +133,10 @@ export async function aiComplete(
 }
 
 const TUTOR_SYSTEM =
-  'You are a concise medical-school tutor helping a student with an exam question. ' +
-  'Use British spelling. Be rigorous and correct. Do not invent facts or citations. ' +
-  'Keep answers tight and readable in plain prose or short bullet points. No preamble.';
+  'You are a rigorous, encouraging medical-school tutor. Use British spelling. Be correct and ' +
+  'precise; never invent facts, citations, trials or numbers — if unsure of a specific figure, ' +
+  'explain the idea without it. Write clearly with short paragraphs or bullet points and match the ' +
+  'depth to what is asked. No preamble and no sign-off.';
 
 /** Build a plain-text description of an MCQ for the model. */
 function describeQuestion(q: {
@@ -170,7 +171,29 @@ export function explainPrompt(q: {
     user:
       describeQuestion(q) +
       `\n\nThe correct answer is: ${correct}.\n\n` +
-      'Explain in 3–5 short bullet points: why the correct answer is right, why the main distractors are wrong, ' +
-      'and one high-yield take-home point. Keep it exam-focused.',
+      'Give a complete teaching explanation a student could revise from:\n' +
+      '1. **Why the correct answer is right** — state the underlying mechanism or principle, not just the fact.\n' +
+      '2. **Every other option, one by one** (A, B, C, …) — explain specifically why each is wrong or less correct; ' +
+      'do not skip any.\n' +
+      '3. **Take-home** — one high-yield point, plus the common trap or misconception this question targets.\n' +
+      'Be thorough but exam-relevant, and use the headings/bullets above so it is easy to scan.',
+  };
+}
+
+/** A full teaching explanation for a flashcard, shown once the answer is revealed. */
+export function explainCardPrompt(card: { front?: string; back?: string; cloze?: string }) {
+  const body = card.cloze
+    ? `Cloze card (answers are inside {{c::…}}): ${card.cloze}`
+    : `Front (prompt): ${card.front ?? ''}\nBack (answer): ${card.back ?? ''}`;
+  return {
+    system: TUTOR_SYSTEM,
+    user:
+      `${body}\n\n` +
+      'Give a complete teaching explanation of this flashcard a student could revise from:\n' +
+      '1. **Why the answer is correct** — the underlying mechanism or reasoning, not just a restatement.\n' +
+      '2. **Key associations** — the related facts, classic links and how this fits the bigger topic.\n' +
+      '3. **Common confusions** — what students wrongly answer here and how to tell those apart from the right answer.\n' +
+      '4. **Take-home** — one high-yield point.\n' +
+      'Be thorough but exam-relevant; use the headings/bullets above.',
   };
 }

@@ -3,11 +3,13 @@ import { state, commit } from '../../state/store';
 import { type Grade, type CardSched } from '../../lib/scheduler';
 import { gradeItem, undoGrade, gradePreview, type ReviewItem, type GradeUndo } from './deck';
 import { Button, ProgressRing } from '../../design/primitives';
-import { IconFlag, IconCheck, IconChevron } from '../../design/icons';
+import { IconFlag, IconCheck, IconChevron, IconSparkle } from '../../design/icons';
 import { chapterImage } from '../../content/loader';
 import { renderRich, renderInline } from '../../lib/lexicon';
+import { renderMarkdown } from '../../lib/markdown';
 import { globalIndex } from '../../lib/useLexicon';
 import { sfx } from '../../lib/sound';
+import { aiComplete, aiReady, explainCardPrompt, aiCacheGet, aiCacheSet } from '../../lib/ai';
 import { OcclusionView, MaskedFigure } from './Occlusion';
 
 const GRADES: Array<{ g: Grade; label: string; key: string; tone: string; hint: string }> = [
@@ -58,9 +60,34 @@ export default function ReviewSession({
   const [swipeHint, setSwipeHint] = useState<Grade | null>(null);
   const [impact, setImpact] = useState<{ g: Grade; key: number } | null>(null);
   const [combo, setCombo] = useState(0);
+  const [ai, setAi] = useState<{ loading: boolean; text: string; err: string }>({ loading: false, text: '', err: '' });
 
   const done = idx >= queue.length;
   const item = queue[idx];
+
+  // the AI explanation belongs to one card; clear it whenever the card changes
+  useEffect(() => {
+    setAi({ loading: false, text: '', err: '' });
+  }, [idx]);
+
+  async function explainCard() {
+    if (!item) return;
+    const key = `cardexplain:${item.key}`;
+    const cached = aiCacheGet(key);
+    if (cached) {
+      setAi({ loading: false, text: cached, err: '' });
+      return;
+    }
+    setAi({ loading: true, text: '', err: '' });
+    const prompt = explainCardPrompt(item.card);
+    const res = await aiComplete(prompt.system, prompt.user, { maxTokens: 1000 });
+    if (res.ok) {
+      setAi({ loading: false, text: res.text, err: '' });
+      aiCacheSet(key, res.text);
+    } else {
+      setAi({ loading: false, text: '', err: res.error.message });
+    }
+  }
 
   // what is still ahead in this session, by card state
   const ahead = queue.slice(idx).reduce(
@@ -291,6 +318,30 @@ export default function ReviewSession({
           </button>
         )}
       </div>
+
+      {/* AI tutor — appears once the answer is shown, only when switched on with a key */}
+      {revealed && aiReady() && (
+        <div className="fc-ai no-print">
+          {!ai.text && !ai.err && (
+            <button className="ai-btn" onClick={() => void explainCard()} disabled={ai.loading}>
+              <IconSparkle size={15} /> {ai.loading ? 'Thinking…' : 'Explain with AI'}
+            </button>
+          )}
+          {(ai.text || ai.err) && (
+            <div className={`ai-panel ${ai.err ? 'ai-panel--err' : ''}`}>
+              <div className="ai-panel-head">
+                <IconSparkle size={14} /> AI tutor
+                <span className="ai-panel-note">generated live — verify against the card</span>
+              </div>
+              {ai.err ? (
+                <p className="ai-panel-body">{ai.err}</p>
+              ) : (
+                <div className="ai-panel-body md" dangerouslySetInnerHTML={{ __html: renderMarkdown(ai.text) }} />
+              )}
+            </div>
+          )}
+        </div>
+      )}
 
       {!revealed ? (
         <div className="review-actions">

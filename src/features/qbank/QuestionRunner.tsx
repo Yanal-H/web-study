@@ -166,7 +166,7 @@ export default function QuestionRunner({ onExit }: { onExit: () => void }) {
     }
     setAi({ mode, loading: true, text: '', err: '' });
     const prompt = mode === 'hint' ? hintPrompt(q) : explainPrompt(q);
-    const res = await aiComplete(prompt.system, prompt.user, { maxTokens: mode === 'hint' ? 160 : 700 });
+    const res = await aiComplete(prompt.system, prompt.user, { maxTokens: mode === 'hint' ? 160 : 1200 });
     if (res.ok) {
       setAi({ mode, loading: false, text: res.text, err: '' });
       aiCacheSet(cacheKey, res.text);
