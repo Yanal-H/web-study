@@ -19,7 +19,9 @@ import {
 } from './db';
 import { newScheduling } from './fsrs';
 import type { Chapter } from '../content/schema';
-import { cardDeckPath, deckRoot } from '../content/loader';
+// From ./deck, not ./loader: loader eagerly globs every chapter JSON, and this
+// module runs inside the import worker, which must not carry the whole corpus.
+import { cardDeckPath, deckRoot } from '../content/deck';
 
 const CHUNK = 500;
 

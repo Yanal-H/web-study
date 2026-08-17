@@ -7,7 +7,8 @@
 
 import type { Chapter } from '../content/schema';
 import { listChapters } from '../content/loader';
-import { importPack, type ImportProgress } from './importPack';
+import type { ImportProgress } from './importPack';
+import { importPackOffThread } from './importClient';
 import { countStore, CARDS } from './db';
 
 const STAMP_KEY = 'foundation_content_stamp_v1';
@@ -115,7 +116,7 @@ async function runBootstrap(
   for (const pack of packs) {
     onPhase?.({ phase: 'importing', done: imported, of: packs.length });
     try {
-      await importPack(pack as Chapter, (current) =>
+      await importPackOffThread(pack as Chapter, (current) =>
         onPhase?.({ phase: 'importing', done: imported, of: packs.length, current })
       );
       imported++;

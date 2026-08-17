@@ -10,6 +10,7 @@ import {
   type GlossaryEntry,
 } from './schema';
 import { getUserChapters } from './userContent';
+import { cardDeckPath } from './deck';
 
 export type ContentOrigin = 'shipped' | 'personal';
 
@@ -48,29 +49,10 @@ export function getChapter(id: string): LoadedChapter | undefined {
 
 /* ---- normalised accessors (fill section ids, option ids, deck paths) ---- */
 
-/** Deck root for a chapter: authored `deck`, else "<subject>::<title>". */
-export function deckRoot(ch: Chapter): string {
-  return (ch.deck || `${ch.subject}::${ch.title}`).trim();
-}
-
-/** Join deck path parts, dropping empties and normalising the "::" separator. */
-export function joinDeck(...parts: Array<string | undefined>): string {
-  return parts
-    .flatMap((p) => (p || '').split('::'))
-    .map((p) => p.trim())
-    .filter(Boolean)
-    .join('::');
-}
-
-/**
- * Full deck path for a card: chapter root :: (card.deck ?? section.deck ?? section title).
- * That is Subject :: Chapter :: Section :: Sub-topic — decks, sub-decks, sub-sub-decks.
- */
-export function cardDeckPath(ch: Chapter, c: Card): string {
-  const section = ch.sections.find((s) => s.id === (c.sectionId || c.tag));
-  const leaf = c.deck || section?.deck || section?.title;
-  return joinDeck(deckRoot(ch), leaf);
-}
+// Deck-path helpers live in ./deck (no content imports) so the import worker can
+// use them without pulling this file's eager content glob. Re-exported here so
+// every existing `from '../content/loader'` import keeps working.
+export { deckRoot, joinDeck, cardDeckPath } from './deck';
 
 export function chapterCards(ch: Chapter): Card[] {
   return ch.cards.map((c, i) => ({

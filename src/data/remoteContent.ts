@@ -17,7 +17,7 @@
 
 import type { Chapter } from '../content/schema';
 import { ChapterSchema } from '../content/schema';
-import { importPack } from './importPack';
+import { importPackOffThread } from './importClient';
 
 const MANIFEST_KEY = 'foundation_published_v1';
 
@@ -130,7 +130,7 @@ export async function syncPublishedContent(): Promise<SyncReport> {
       const parsed = ChapterSchema.safeParse(data.pack);
       if (!parsed.success) throw new Error('pack failed validation');
 
-      await importPack(parsed.data as Chapter);
+      await importPackOffThread(parsed.data as Chapter);
       manifest[item.id] = item.revision;
       report.imported.push(item.id);
       // Record progress after each pack: a failure on pack 5 must not discard the

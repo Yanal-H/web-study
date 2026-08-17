@@ -38,7 +38,12 @@ export function buildIndex(notes: AppState['notes']): Promise<SearchDoc[]> {
       resolve(docs);
     };
     const onMsg = (e: MessageEvent) => {
-      if (e.data && e.data.type === 'docs') finish(e.data.docs as SearchDoc[]);
+      if (!e.data) return;
+      if (e.data.type === 'docs') finish(e.data.docs as SearchDoc[]);
+      // The worker builds from the card engine; when that is not yet populated it
+      // reports 'empty' rather than returning a partial index, and we rebuild here
+      // from the shipped packs so ⌘K is never missing half the library.
+      else if (e.data.type === 'empty') finish(fallback());
     };
     w.addEventListener('message', onMsg);
     w.onerror = () => {
