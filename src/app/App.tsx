@@ -1,4 +1,4 @@
-import { Suspense, useEffect, useMemo, useState } from 'react';
+import { Suspense, useEffect, useMemo, useRef, useState } from 'react';
 import { NavLink, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import { ROUTES, prefetchRoutes } from './routes';
 import Watermark from '../features/gate/Watermark';
@@ -69,22 +69,47 @@ function Shell() {
     else setTimeout(run, 1200);
   }, []);
 
-  // global keyboard shortcuts
+  // global keyboard shortcuts — including chorded "g then <key>" navigation
+  const gChord = useRef(false);
+  const gTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   useEffect(() => {
+    const GO: Record<string, string> = {
+      d: '/', s: '/study', q: '/qbank', f: '/flashcards', b: '/subjects',
+      p: '/planner', n: '/notes', c: '/calculators', m: '/mnemonics', r: '/resources', e: '/settings',
+    };
     const onKey = (e: KeyboardEvent) => {
       const target = e.target as HTMLElement;
       const typing = /^(INPUT|TEXTAREA|SELECT)$/.test(target.tagName) || target.isContentEditable;
       if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
         e.preventDefault();
         setCmdOpen((v) => !v);
-      } else if (!typing && e.key === '?') {
+        return;
+      }
+      if (typing || e.metaKey || e.ctrlKey || e.altKey) return;
+      // second key of a "g <key>" chord
+      if (gChord.current) {
+        gChord.current = false;
+        const route = GO[e.key.toLowerCase()];
+        if (route) {
+          e.preventDefault();
+          navigate(route);
+        }
+        return;
+      }
+      if (e.key === 'g') {
+        gChord.current = true;
+        if (gTimer.current) clearTimeout(gTimer.current);
+        gTimer.current = setTimeout(() => (gChord.current = false), 1200);
+        return;
+      }
+      if (e.key === '?') {
         e.preventDefault();
         setHelpOpen((v) => !v);
       }
     };
     document.addEventListener('keydown', onKey);
     return () => document.removeEventListener('keydown', onKey);
-  }, []);
+  }, [navigate]);
 
   // Load the shipped packs into the card engine once, in the background.
   useEffect(() => {
@@ -282,6 +307,8 @@ function NavItem({ path, label, onGo }: { path: string; label: string; onGo: () 
 function ShortcutsHelp({ onClose }: { onClose: () => void }) {
   const rows: Array<[string, string]> = [
     ['⌘K / Ctrl+K', 'Open the command palette'],
+    ['g then s / q / f', 'Go to Study / Questions / Flashcards'],
+    ['g then d / b / p', 'Go to Dashboard / Subjects / Planner'],
     ['?', 'Show this help'],
     ['↑ ↓', 'Move within the palette'],
     ['↵', 'Run the selected command'],
