@@ -82,9 +82,11 @@ export async function sendCode(emailRaw: string): Promise<AuthResult> {
   });
 
   if (error) {
-    // The server rejects a disallowed domain here too. Surface its wording when
-    // it is specific, so the student is not told something the server disagrees with.
-    if (/domain|not allowed|denied/i.test(error.message)) {
+    // The server rejects a disallowed domain too. It often reports that as a
+    // generic "Database error saving new user" rather than the trigger's own
+    // wording, so match both — otherwise a refused student is told something
+    // vague and has no idea what to fix.
+    if (/domain|not allowed|denied|database error saving/i.test(error.message)) {
       return {
         ok: false,
         message: ALLOWED_EMAIL_DOMAIN
