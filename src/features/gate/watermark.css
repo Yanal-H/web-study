@@ -34,3 +34,27 @@
     font-size: 18px;
   }
 }
+
+/* The signed-in account, under the signature. Faint enough to ignore while
+   studying, legible enough to identify the source of a shared screenshot. */
+.wm-user {
+  font-size: 9px;
+  letter-spacing: 0.02em;
+  color: var(--text-faint);
+  opacity: 0.55;
+  max-width: 22ch;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Printing is the easiest way to walk off with a chapter, so the seal must
+   survive it — print styles elsewhere hide chrome, this stays. */
+@media print {
+  .watermark,
+  .wm-user {
+    display: block !important;
+    opacity: 0.75 !important;
+    color: #555 !important;
+  }
+}

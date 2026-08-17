@@ -1,6 +1,11 @@
 import { describe, expect, it } from 'vitest';
 import { buildSearchDocs, searchDocs } from './search';
 import type { AppState } from '../state/types';
+import { loadTestContent } from '../test/content';
+
+// Chapters are no longer bundled with the app, so a test that asserts against
+// real content has to load it explicitly.
+loadTestContent();
 
 const state = {
   notes: { n1: { id: 'n1', title: 'My wound note', body: 'granulation tissue notes' } },

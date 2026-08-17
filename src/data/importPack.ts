@@ -35,7 +35,14 @@ export interface ImportProgress {
 
 const idle = () => new Promise<void>((r) => setTimeout(r, 0));
 
-/** Chapter metadata only — the reader's half of a pack, with the bulk stripped out. */
+/**
+ * Chapter metadata — the reader's half of a pack, plus the authored pack itself.
+ *
+ * `pack` is kept because chapters no longer ship inside the JS bundle: this row is
+ * now the device's only copy of the authored chapter, and it is what the reader
+ * hydrates from when the student is offline. The card and MCQ *stores* remain the
+ * query path for the due queue and deck counts — those never read this field.
+ */
 export function chapterMeta(pack: Chapter) {
   const { cards, mcqs, images, ...meta } = pack as Chapter & { images?: unknown };
   void cards;
@@ -50,6 +57,7 @@ export function chapterMeta(pack: Chapter) {
       emqs: pack.emqs.length,
       sections: pack.sections.length,
     },
+    pack,
   };
 }
 

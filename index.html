@@ -25,313 +25,41 @@
     </script>
 
     <!--
-      Soft access gate. This is a deterrent, not real security (a determined user can
-      bypass client-side gating). Real gating belongs at the host (Vercel password /
-      SSO). To change the passphrase, replace GATE_HASH with the FNV-1a of the new
-      phrase. Current phrase: "youcandoit". Session-only (sessionStorage).
-    -->
-    <script>
-      (function () {
-        var GATE_HASH = 4082204366;
-        window.__GATE_HASH = GATE_HASH;
-        try {
-          if (sessionStorage.getItem('foundation_gate_' + GATE_HASH) === '1') {
-            document.documentElement.classList.add('unlocked');
-            return;
-          }
-        } catch (e) {}
-        document.documentElement.classList.add('locked');
-      })();
-    </script>
+      Access control lives in the app (src/features/auth), not here.
 
-    <!-- Critical, flash-free gate CSS (inline so it applies before the bundle loads). -->
+      This used to hold a pre-React passphrase gate. It was removed because it
+      protected nothing: the check ran in the browser, and every chapter was
+      bundled into the JavaScript, so anyone who loaded the page already had the
+      whole library whether or not they typed the phrase.
+
+      Sign-in is now server-verified (Supabase email codes) and the content is
+      fetched only for an authenticated student. A visitor who is not signed in
+      receives an empty shell.
+    -->
+
+    <!-- Pre-paint shell for the first load, so there is no white flash before React. -->
     <style>
-      html.locked #root {
-        display: none !important;
-      }
-      #gate {
-        display: none;
-      }
-      html.locked #gate {
-        display: flex;
-      }
-      html.unlocked #gate {
-        display: none;
-      }
-      #gate {
+      #boot {
         position: fixed;
         inset: 0;
-        z-index: 9999;
-        align-items: center;
-        justify-content: center;
-        padding: 24px;
-        overflow: hidden;
-        background:
-          radial-gradient(40% 55% at 22% 82%, rgba(255, 45, 85, 0.28), transparent 62%),
-          radial-gradient(42% 55% at 82% 18%, rgba(124, 58, 237, 0.28), transparent 64%),
-          radial-gradient(1200px 600px at 50% -10%, rgba(45, 212, 191, 0.06), transparent 60%),
-          #07070c;
-        color: #e8edf3;
-        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial,
-          sans-serif;
-      }
-      #gate .gate-bolts {
-        position: absolute;
-        inset: 0;
-        width: 100%;
-        height: 100%;
-        pointer-events: none;
-        mix-blend-mode: screen;
-        opacity: 0.9;
-      }
-      #gate .gbolt {
-        stroke: #ffe3ea;
-        stroke-width: 1.4;
-        fill: none;
-        filter: drop-shadow(0 0 6px rgba(255, 45, 85, 0.9));
-        opacity: 0;
-        animation: gbolt 5s infinite;
-      }
-      #gate .gbolt.b2 {
-        animation-delay: 2.4s;
-      }
-      @keyframes gbolt {
-        0%, 100% { opacity: 0; }
-        3% { opacity: 1; }
-        7% { opacity: 0.2; }
-        10% { opacity: 0.9; }
-        14% { opacity: 0; }
-      }
-      @media (prefers-reduced-motion: reduce) {
-        #gate .gbolt { animation: none; opacity: 0.12; }
-        #gate .gate-card.shake { animation: none; }
-      }
-      /* the lock screen stays dark + haki in every theme (a dramatic splash) */
-      #gate .gate-card {
-        width: 100%;
-        max-width: 380px;
-        background: rgba(21, 26, 33, 0.72);
-        border: 1px solid #2a333f;
-        border-radius: 20px;
-        padding: 30px 26px;
-        text-align: center;
-        box-shadow: 0 24px 60px -24px rgba(0, 0, 0, 0.6);
-        backdrop-filter: blur(10px);
-      }
-
-      #gate .gate-mark {
-        width: 46px;
-        height: 46px;
-        margin: 0 auto 14px;
-        border-radius: 13px;
-        background: linear-gradient(140deg, #ff2d55, #7c3aed);
         display: grid;
         place-items: center;
+        background: #0b0c10;
+        color: #6d7482;
+        font: 500 14px/1.5 ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
       }
-      #gate .gate-sign {
-        font-family: 'Great Vibes', 'Snell Roundhand', 'Segoe Script', cursive;
-        font-size: 48px;
-        line-height: 1;
-        margin-bottom: 4px;
-        background: linear-gradient(135deg, #ff2d55, #7c3aed 60%, #2dd4bf);
-        -webkit-background-clip: text;
-        background-clip: text;
-        color: transparent;
-        filter: drop-shadow(0 3px 14px rgba(255, 45, 85, 0.45));
+      html[data-theme='paper'] #boot {
+        background: #f3f1ea;
+        color: #8a94a0;
       }
-      #gate h1 {
-        font-size: 19px;
-        margin: 6px 0 4px;
-        font-weight: 600;
-      }
-      #gate p {
-        margin: 0 0 18px;
-        font-size: 13.5px;
-        opacity: 0.72;
-      }
-      #gate input {
-        width: 100%;
-        padding: 12px 14px;
-        border-radius: 11px;
-        border: 1px solid #2a333f;
-        background: rgba(14, 17, 22, 0.5);
-        color: inherit;
-        font-size: 15px;
-        outline: none;
-        text-align: center;
-      }
-
-      #gate input:focus {
-        border-color: #2dd4bf;
-        box-shadow: 0 0 0 3px rgba(45, 212, 191, 0.18);
-      }
-      #gate button {
-        margin-top: 12px;
-        width: 100%;
-        padding: 12px 14px;
-        border: none;
-        border-radius: 11px;
-        background: linear-gradient(140deg, #ff2d55, #7c3aed 60%, #2dd4bf);
-        color: #fff;
-        font-size: 15px;
-        font-weight: 600;
-        cursor: pointer;
-      }
-      #gate button:hover {
-        filter: brightness(1.05);
-      }
-      #gate .gate-err {
+      #boot.gone {
         display: none;
-        color: #f87171;
-        font-size: 13px;
-        margin-top: 10px;
-      }
-      #gate .gate-foot {
-        margin-top: 18px;
-        font-size: 12px;
-        opacity: 0.55;
-      }
-      @keyframes gateShake {
-        0%,
-        100% {
-          transform: translateX(0);
-        }
-        20%,
-        60% {
-          transform: translateX(-7px);
-        }
-        40%,
-        80% {
-          transform: translateX(7px);
-        }
-      }
-      #gate .gate-card.shake {
-        animation: gateShake 0.42s;
       }
     </style>
   </head>
   <body>
-    <!-- Soft access gate overlay -->
-    <div id="gate" role="dialog" aria-modal="true" aria-label="Access">
-      <svg class="gate-bolts" viewBox="0 0 800 600" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-        <path class="gbolt" d="M250 -10 L240 120 L275 150 L235 260 L270 300 L245 460 L280 610" />
-        <path class="gbolt b2" d="M560 -10 L575 110 L540 160 L585 250 L550 320 L590 470 L560 610" />
-      </svg>
-      <div class="gate-card" id="gateCard">
-        <div class="gate-mark">
-          <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="#04211d"
-            stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M12 3 2 8l10 5 10-5-10-5Z" />
-            <path d="M6 10.5V16c0 1.5 2.7 3 6 3s6-1.5 6-3v-5.5" />
-          </svg>
-        </div>
-        <div class="gate-sign">Yanal</div>
-        <h1>Foundation</h1>
-        <p>Enter the passphrase to continue.</p>
-        <input
-          id="gateInput"
-          type="password"
-          autocomplete="off"
-          autocapitalize="off"
-          spellcheck="false"
-          aria-label="Passphrase"
-          placeholder="passphrase"
-        />
-        <button id="gateBtn" type="button">Unlock</button>
-        <div class="gate-err" id="gateErr" role="alert">That's not the passphrase. Try again.</div>
-        <div class="gate-foot">by Yanal · Cairo 2026</div>
-      </div>
-    </div>
-
-    <script>
-      /* soft access gate — wiring (hash + storage decided pre-paint in <head>) */
-      (function () {
-        var GATE_HASH = window.__GATE_HASH;
-        function fnv(s) {
-          var h = 2166136261 >>> 0;
-          for (var i = 0; i < s.length; i++) {
-            h ^= s.charCodeAt(i);
-            h = Math.imul(h, 16777619) >>> 0;
-          }
-          return h >>> 0;
-        }
-        var gate = document.getElementById('gate'),
-          inp = document.getElementById('gateInput'),
-          btn = document.getElementById('gateBtn'),
-          err = document.getElementById('gateErr'),
-          card = document.getElementById('gateCard');
-        if (!document.documentElement.classList.contains('locked')) return; // already unlocked this session
-        function unlock() {
-          var v = (inp.value || '').trim();
-          if (fnv(v) === GATE_HASH) {
-            try {
-              sessionStorage.setItem('foundation_gate_' + GATE_HASH, '1');
-            } catch (e) {}
-            document.documentElement.classList.remove('locked');
-            document.documentElement.classList.add('unlocked');
-            gate.style.display = 'none';
-            // restore the app to assistive tech and move focus into it
-            var root = document.getElementById('root');
-            if (root) {
-              root.removeAttribute('inert');
-              root.removeAttribute('aria-hidden');
-              root.setAttribute('tabindex', '-1');
-              try {
-                root.focus();
-              } catch (e) {}
-              setTimeout(function () {
-                root.removeAttribute('tabindex');
-              }, 0);
-            }
-          } else {
-            err.style.display = 'block';
-            card.classList.add('shake');
-            setTimeout(function () {
-              card.classList.remove('shake');
-            }, 420);
-            inp.select();
-          }
-        }
-        btn.addEventListener('click', unlock);
-        inp.addEventListener('keydown', function (e) {
-          if (e.key === 'Enter') {
-            e.preventDefault();
-            unlock();
-          }
-        });
-        // Trap focus within the gate: Tab/Shift+Tab cycle only its two controls.
-        gate.addEventListener('keydown', function (e) {
-          if (e.key !== 'Tab') return;
-          if (e.shiftKey && document.activeElement === inp) {
-            e.preventDefault();
-            btn.focus();
-          } else if (!e.shiftKey && document.activeElement === btn) {
-            e.preventDefault();
-            inp.focus();
-          }
-        });
-        setTimeout(function () {
-          try {
-            inp.focus();
-          } catch (e) {}
-        }, 60);
-      })();
-    </script>
-
     <div id="root"></div>
-    <script>
-      /* While locked, hide the app shell from assistive tech and take it out of the
-         tab order, so a screen-reader user cannot wander into the app behind the gate. */
-      (function () {
-        if (document.documentElement.classList.contains('locked')) {
-          var r = document.getElementById('root');
-          if (r) {
-            r.setAttribute('inert', '');
-            r.setAttribute('aria-hidden', 'true');
-          }
-        }
-      })();
-    </script>
+    <div id="boot">Loading…</div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

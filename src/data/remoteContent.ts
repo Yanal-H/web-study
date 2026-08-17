@@ -1,27 +1,29 @@
-// The shared-content overlay: chapters published after the build.
+// Chapter content, fetched for a signed-in student.
 //
-// Foundation ships its chapters inside the bundle, and that stays the base layer.
-// This module adds an OPTIONAL overlay so the cohort can receive a new chapter
-// without waiting for a redeploy. Everything here is written to be skippable:
+// This is where the security model actually bites. Chapters used to be compiled
+// into the JavaScript bundle, which meant anyone who opened the URL had the whole
+// library whether or not they got past the passphrase. Now they live in a
+// Supabase table behind row-level security: an unauthenticated request returns
+// nothing, so a visitor without an approved account gets an empty shell.
 //
-//   - It never blocks boot. Bootstrap finishes on shipped content; this runs after.
-//   - It never throws into the UI. Any failure leaves the app exactly as it was.
-//   - It never deletes anything a student still needs. Packs already imported stay
-//     until the server explicitly stops publishing them.
-//   - Offline, it does nothing at all and the cached packs keep working, because
-//     they were imported into IndexedDB the first time they arrived.
+// Everything else about the app is unchanged. Once a pack has been fetched it is
+// imported into IndexedDB, and from then on the reader, the due queue and search
+// all work from the device with no network — so the app is still offline-first
+// after the first signed-in load.
 //
-// The manifest of what we have imported lives in localStorage, so an offline boot
-// still knows which chapters are "published" and must be protected from the
-// shipped-set reconciliation (see reconcile.ts).
+// Rules this module keeps:
+//   - Never block the UI. Content arrives in the background.
+//   - Never throw at the student. A failed sync leaves what they already have.
+//   - Never delete rows on a partial failure — see reconcile.ts for the sweep.
 
 import type { Chapter } from '../content/schema';
 import { ChapterSchema } from '../content/schema';
 import { importPackOffThread } from './importClient';
+import { supabase } from '../lib/supabase';
 
 const MANIFEST_KEY = 'foundation_published_v1';
 
-/** What we have successfully imported: chapter id → revision published by the server. */
+/** What we have successfully imported: chapter id -> revision from the server. */
 type LocalManifest = Record<string, string>;
 
 export interface RemoteItem {
@@ -31,12 +33,12 @@ export interface RemoteItem {
 }
 
 export interface SyncReport {
-  /** false when the server has no shared store configured — the normal, supported case. */
+  /** false when this deployment has no Supabase project configured. */
   configured: boolean;
   imported: string[];
   removed: string[];
   failed: string[];
-  /** Set when the sync could not run at all (offline, server down). Not an error to show. */
+  /** Set when the sync could not run (offline, signed out). Not an error to show. */
   skipped?: string;
 }
 
@@ -59,107 +61,126 @@ function writeManifest(m: LocalManifest): void {
 }
 
 /**
- * Chapter ids that came from the shared store. Reconciliation must be told about
- * these or it will treat every published chapter as a removed shipped one and
- * delete it. Reads from localStorage so it is correct offline and synchronous.
+ * Chapter ids that came from the content store. Reconciliation sweeps rows that
+ * are not in the *shipped* set, so without this it would treat every fetched
+ * chapter as removed and delete material the student is revising from.
+ * Reads localStorage so it is correct offline and synchronous.
  */
 export function publishedIds(): Set<string> {
   return new Set(Object.keys(readManifest()));
 }
 
-/** True when this deployment has a shared store at all. Used to shape admin UI copy. */
-export async function isSharedStoreConfigured(): Promise<boolean> {
+/** True when this deployment has a content store at all. */
+export function isSharedStoreConfigured(): boolean {
+  return supabase !== null;
+}
+
+/**
+ * Forget which revisions we hold, so the next sync re-downloads every chapter.
+ * Used by "Re-import chapters". Card and scheduling rows are untouched — importing
+ * overwrites content by id and never resets a student's progress.
+ */
+export function resetContentSync(): void {
   try {
-    const res = await fetch('/api/content', { method: 'GET' });
-    if (!isJson(res)) return false;
-    if (res.status === 503) return false;
-    return res.ok;
+    localStorage.removeItem(MANIFEST_KEY);
   } catch {
-    return false;
+    /* nothing to clear */
   }
 }
 
 /**
- * A static host answers /api/content with index.html, not JSON. Treat anything
- * that is not JSON as "no backend here" rather than parsing HTML as a manifest.
- */
-function isJson(res: Response): boolean {
-  return (res.headers.get('content-type') || '').includes('application/json');
-}
-
-/**
- * Pull the published manifest and import anything new or changed.
+ * Fetch the manifest and import anything new or changed.
  *
- * Only packs whose revision differs from what we already imported are fetched, so
- * a steady state costs one small request. Validation runs again client-side: the
- * server validates on publish, but a pack reaching IndexedDB unchecked would put
- * unvalidated material in front of a student, and content integrity is worth the
- * few milliseconds.
+ * Only packs whose revision differs from what we already hold are downloaded, so
+ * a steady state costs one small query and no content transfer at all. That is
+ * what keeps 1000 students inside a free tier.
+ *
+ * Content is validated client-side as well as on publish: a pack reaching
+ * IndexedDB unchecked would put unvalidated material in front of a student, and
+ * medical content integrity is worth the few milliseconds.
  */
 export async function syncPublishedContent(): Promise<SyncReport> {
   const report: SyncReport = { configured: false, imported: [], removed: [], failed: [] };
+  if (!supabase) return { ...report, skipped: 'not-configured' };
 
-  let items: RemoteItem[];
-  try {
-    const res = await fetch('/api/content', { method: 'GET' });
-    if (!isJson(res) || res.status === 503) return { ...report, skipped: 'not-configured' };
-    if (!res.ok) return { ...report, skipped: `http-${res.status}` };
-    const data = (await res.json()) as { ok?: boolean; items?: RemoteItem[] };
-    if (!data.ok || !Array.isArray(data.items)) return { ...report, skipped: 'bad-manifest' };
-    items = data.items;
-  } catch {
-    // Offline or unreachable: keep whatever is already imported and say nothing.
-    return { ...report, skipped: 'offline' };
-  }
+  // Signed out: RLS would return nothing anyway, so do not even ask.
+  const { data: sessionData } = await supabase.auth.getSession();
+  if (!sessionData.session) return { ...report, skipped: 'signed-out' };
+
+  // Manifest first — id and revision only, never the pack bodies.
+  const { data: rows, error } = await supabase
+    .from('chapters')
+    .select('id, revision, updated_at');
+
+  if (error || !rows) return { ...report, skipped: 'unreachable' };
 
   report.configured = true;
   const manifest = readManifest();
   const seen = new Set<string>();
 
-  for (const item of items) {
-    if (!item || typeof item.id !== 'string' || typeof item.revision !== 'string') continue;
-    seen.add(item.id);
-    if (manifest[item.id] === item.revision) continue; // already have this exact revision
+  for (const row of rows as Array<{ id: string; revision: string }>) {
+    if (!row || typeof row.id !== 'string' || typeof row.revision !== 'string') continue;
+    seen.add(row.id);
+    if (manifest[row.id] === row.revision) continue; // already have this revision
 
     try {
-      const res = await fetch(`/api/content?id=${encodeURIComponent(item.id)}`);
-      if (!res.ok || !isJson(res)) throw new Error(`fetch failed (${res.status})`);
-      const data = (await res.json()) as { ok?: boolean; pack?: unknown };
-      if (!data.ok) throw new Error('server declined');
+      const { data: full, error: e2 } = await supabase
+        .from('chapters')
+        .select('pack')
+        .eq('id', row.id)
+        .single();
+      if (e2 || !full) throw new Error('fetch failed');
 
-      const parsed = ChapterSchema.safeParse(data.pack);
+      const parsed = ChapterSchema.safeParse((full as { pack: unknown }).pack);
       if (!parsed.success) throw new Error('pack failed validation');
 
       await importPackOffThread(parsed.data as Chapter);
-      manifest[item.id] = item.revision;
-      report.imported.push(item.id);
-      // Record progress after each pack: a failure on pack 5 must not discard the
-      // fact that packs 1-4 imported successfully.
+      manifest[row.id] = row.revision;
+      report.imported.push(row.id);
+      // Record after each pack: a failure on pack 5 must not discard the fact
+      // that packs 1-4 imported successfully.
       writeManifest(manifest);
     } catch {
-      report.failed.push(item.id);
+      report.failed.push(row.id);
     }
   }
 
-  // Packs the server no longer publishes: drop them from the manifest so the next
-  // reconcile pass may clean their rows. Removal is deliberately manifest-only
-  // here — deleting rows is reconcile.ts's job, and it runs against a fully
-  // successful fetch, never a partial one.
+  // Chapters the server no longer carries.
   for (const id of Object.keys(manifest)) {
     if (!seen.has(id)) {
       delete manifest[id];
       report.removed.push(id);
     }
   }
-  if (report.removed.length) writeManifest(manifest);
+
+  if (report.removed.length) {
+    writeManifest(manifest);
+    // Delete their rows too, so an unpublished chapter stops appearing in decks
+    // and the due queue instead of lingering as ghost rows.
+    //
+    // Guarded on a CLEAN sync: if any chapter failed to download, the manifest is
+    // an incomplete picture of what the server holds, and reconciling against it
+    // would delete material that is still published. Better a ghost row until the
+    // next sync than deleting a student's chapter by mistake.
+    if (report.failed.length === 0) {
+      try {
+        const { reconcileShipped } = await import('./reconcile');
+        const { rehydrateChapters } = await import('./bootstrap');
+        await rehydrateChapters();
+        const { listChapters } = await import('../content/loader');
+        await reconcileShipped(listChapters() as Chapter[]);
+      } catch {
+        // Cleanup is housekeeping, never a correctness requirement.
+      }
+    }
+  }
 
   return report;
 }
 
 /**
  * Run the sync in the background, after boot. Deliberately returns void and
- * swallows everything: a student mid-revision must never see a failure from an
- * optional overlay.
+ * swallows everything: a student mid-revision must never see a failure here.
  */
 export function syncPublishedInBackground(onDone?: (r: SyncReport) => void): void {
   const run = () => {
@@ -176,5 +197,5 @@ export function syncPublishedInBackground(onDone?: (r: SyncReport) => void): voi
   };
   const win = window as unknown as { requestIdleCallback?: (cb: () => void) => void };
   if (win.requestIdleCallback) win.requestIdleCallback(run);
-  else setTimeout(run, 2000);
+  else setTimeout(run, 1200);
 }

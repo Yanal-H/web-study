@@ -3,6 +3,9 @@ import { state } from '../../state/store';
 import { buildPool, poolCount, isAnswerCorrect, startSession, getSession, saveSession, endSession, bank } from './engine';
 import { recordResult, toggleFlag } from './perf';
 import type { Mcq } from '../../content/schema';
+import { loadTestContent } from '../../test/content';
+
+loadTestContent();
 
 beforeEach(() => {
   localStorage.clear();

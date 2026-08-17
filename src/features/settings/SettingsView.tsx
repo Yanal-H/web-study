@@ -17,8 +17,10 @@ import { useToast } from '../../design/Toast';
 import { IconDownload, IconUpload, IconSun, IconMoon, IconSparkle } from '../../design/icons';
 import { sfx } from '../../lib/sound';
 import { getAiConfig, setAiConfig, AI_MODELS } from '../../lib/ai';
-import { isAdmin, setAdmin, unlockAdmin } from '../../lib/admin';
+import { checkAdmin } from '../../lib/admin';
 import { listPublished, publishPack, unpublishPack } from '../../lib/publish';
+import { useAuth, signOut } from '../auth/session';
+import { authConfigured } from '../../lib/supabase';
 import type { RemoteItem } from '../../data/remoteContent';
 import { replayTour } from '../onboarding/WelcomeTour';
 import { resetEngineProgress } from '../../data/db';
@@ -81,62 +83,109 @@ function StorageMeter() {
   );
 }
 
-/** Enter the admin key (server-verified) to unlock the administrator surface on this device. */
+/**
+ * The administrator surface.
+ *
+ * There is no key to type: whether this account may publish is decided by the
+ * database policy against the signed-in identity, and we simply ask it. That
+ * means the controls below only appear for an account the SERVER agrees is an
+ * administrator — and even if this check were bypassed, every write would still
+ * be refused.
+ */
 function AdminPanel() {
-  const toast = useToast();
-  useStore(); // re-render when the admin flag changes
-  const [key, setKey] = useState('');
-  const [busy, setBusy] = useState(false);
+  const auth = useAuth();
+  const [admin, setAdminState] = useState<boolean | null>(null);
 
-  if (isAdmin()) {
+  useEffect(() => {
+    let alive = true;
+    if (auth.phase !== 'signed-in') {
+      setAdminState(false);
+      return;
+    }
+    void checkAdmin().then((v) => {
+      if (alive) setAdminState(v);
+    });
+    return () => {
+      alive = false;
+    };
+  }, [auth.phase, auth.userId]);
+
+  if (!authConfigured()) {
     return (
-      <>
-        <Row label="Administrator" desc="This device has admin access.">
-          <Button
-            onClick={() => {
-              setAdmin(false);
-              toast('Signed out of admin');
-            }}
-          >
-            Sign out of admin
-          </Button>
-        </Row>
-        <PublishPanel />
-      </>
+      <Row
+        label="Administrator"
+        desc="Sign-in is not set up on this deployment yet — see DEPLOY.md."
+      >
+        <span className="muted">Not configured</span>
+      </Row>
     );
   }
 
-  async function unlock() {
-    setBusy(true);
-    const res = await unlockAdmin(key);
-    setBusy(false);
-    if (res.ok) {
-      setKey('');
-      toast('Administrator unlocked', 'success');
-    } else {
-      toast(res.message || 'Could not unlock admin', 'error');
-    }
+  if (admin === null) {
+    return (
+      <Row label="Administrator" desc="Checking your access.">
+        <span className="muted">Checking…</span>
+      </Row>
+    );
+  }
+
+  if (!admin) {
+    return (
+      <Row
+        label="Administrator"
+        desc="This account cannot change shared content. That is decided on the server, so it is the same on every device you sign in from."
+      >
+        <span className="muted">Student</span>
+      </Row>
+    );
   }
 
   return (
-    <Row label="Admin key" desc="Only the administrator device should enter this.">
-      <div className="row" style={{ gap: 8 }}>
-        <Input
-          type="password"
-          placeholder="Admin key"
-          autoComplete="off"
-          value={key}
-          style={{ width: 200 }}
-          onChange={(e) => setKey(e.target.value)}
-          onKeyDown={(e) => {
-            if (e.key === 'Enter' && key.trim()) void unlock();
+    <>
+      <Row label="Administrator" desc={`Signed in as ${auth.email ?? 'admin'} — you can publish chapters.`}>
+        <span className="muted">Administrator</span>
+      </Row>
+      <PublishPanel />
+    </>
+  );
+}
+
+/** Who is signed in on this device, and the way out. */
+function AccountPanel() {
+  const auth = useAuth();
+  const [busy, setBusy] = useState(false);
+
+  if (!authConfigured()) {
+    return (
+      <Row
+        label="Sign-in"
+        desc="Not set up on this deployment yet. Add the Supabase keys in your hosting settings and redeploy — see DEPLOY.md."
+      >
+        <span className="muted">Not configured</span>
+      </Row>
+    );
+  }
+
+  return (
+    <>
+      <Row label="Signed in as" desc="Your chapters and questions are tied to this account.">
+        <span style={{ fontSize: 14 }}>{auth.email || '—'}</span>
+      </Row>
+      <Row
+        label="Sign out"
+        desc="Signs out on this device only. Your progress, notes and personal cards stay on this device and are waiting when you sign back in."
+      >
+        <Button
+          disabled={busy}
+          onClick={() => {
+            setBusy(true);
+            void signOut();
           }}
-        />
-        <Button variant="primary" disabled={busy || !key.trim()} onClick={() => void unlock()}>
-          {busy ? 'Checking…' : 'Unlock'}
+        >
+          {busy ? 'Signing out…' : 'Sign out'}
         </Button>
-      </div>
-    </Row>
+      </Row>
+    </>
   );
 }
 
@@ -265,6 +314,7 @@ function Switch({ checked, onChange, label }: { checked: boolean; onChange: (v: 
 }
 
 const SECTIONS = [
+  { id: 'account', label: 'Account' },
   { id: 'appearance', label: 'Appearance' },
   { id: 'study', label: 'Study' },
   { id: 'questions', label: 'Questions' },
@@ -446,6 +496,12 @@ export default function SettingsView() {
           ))}
         </nav>
       </div>
+
+      <Card className="settings-section" id="set-account">
+        <h2>Account</h2>
+        <p className="section-lead">Who you are signed in as on this device.</p>
+        <AccountPanel />
+      </Card>
 
       <Card className="settings-section" id="set-appearance">
         <h2>Appearance</h2>

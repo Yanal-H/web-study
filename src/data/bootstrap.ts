@@ -1,17 +1,17 @@
-// First-run bootstrap: move the shipped packs into the card engine once, then
-// never touch them again.
+// Boot the card engine from what is already on this device.
 //
-// Packs arrive through the content loader, are written into IndexedDB once, and
-// from then on the engine answers every card query from the database — the due
-// queue, deck counts and review batches never touch the pack objects again.
+// Chapters no longer ship inside the JavaScript bundle — they are fetched for a
+// signed-in student and written into IndexedDB (see remoteContent.ts). So boot is
+// now a HYDRATION step, not an import step: read the chapters already stored and
+// hand them to the in-memory list the reader renders from.
+//
+// This is what keeps the app offline-first despite content living behind
+// sign-in: after the first authenticated load, everything needed is on the
+// device and boot never touches the network.
 
 import type { Chapter } from '../content/schema';
-import { listChapters } from '../content/loader';
-import type { ImportProgress } from './importPack';
-import { importPackOffThread } from './importClient';
-import { countStore, CARDS } from './db';
-
-const STAMP_KEY = 'foundation_content_stamp_v1';
+import { setLoadedChapters } from '../content/loader';
+import { countStore, getAllRows, CARDS, CHAPTERS } from './db';
 
 /** FNV-1a → base36. Cheap, deterministic, dependency-free. */
 function fnv1a(s: string): string {
@@ -26,10 +26,8 @@ function fnv1a(s: string): string {
 /**
  * A short, deterministic revision id over a chapter's *meaningful authored fields*
  * — not just its counts. A fixed rationale, a renamed section, a re-ordered option,
- * a changed tag or a swapped figure all change it, so a redeploy that preserves
- * counts still triggers a re-import. Computed once at bootstrap (the content is
- * already in memory), never per render. Exported so a future "what changed" diff
- * can reuse it.
+ * a changed tag or a swapped figure all change it, so republishing content that
+ * preserves counts still triggers a re-import.
  */
 export function chapterRevision(c: {
   title: string;
@@ -47,44 +45,24 @@ export function chapterRevision(c: {
     parts.push(q.stem, String(q.difficulty));
     for (const o of q.options) parts.push(o.text, String(o.correct), o.why || '');
   }
-  return fnv1a(parts.join(''));
-}
-
-/**
- * Changes whenever the shipped set changes — a new pack, a dropped pack, or a
- * pack whose *content* changed (via chapterRevision), which is what triggers a
- * re-import.
- */
-export function shippedStamp(): string {
-  return listChapters()
-    .map((c) => `${c.id}:${chapterRevision(c)}`)
-    .sort()
-    .join('|');
+  return fnv1a(parts.join(''));
 }
 
 export interface BootstrapReport {
-  imported: number;
+  /** Chapters hydrated into memory from the device. */
+  chapters: number;
   cards: number;
-  skipped: string[];
 }
 
 export type BootstrapPhase =
   | { phase: 'idle' }
-  | { phase: 'importing'; done: number; of: number; current?: ImportProgress }
+  | { phase: 'hydrating' }
   | { phase: 'ready'; cards: number }
   | { phase: 'error'; message: string };
 
-/**
- * Import every shipped pack that is not already in the engine. Safe to call on
- * every boot: it returns immediately once the stamp matches and the card store
- * is non-empty.
- */
 let inFlight: Promise<BootstrapReport> | null = null;
 
-/**
- * Resolves once the shipped packs are in the engine. Views awaiting this render
- * their first real numbers instead of an empty state that never refreshes.
- */
+/** Resolves once the stored chapters are in memory. */
 export function whenContentReady(): Promise<BootstrapReport> {
   return inFlight ?? ensureContentLoaded();
 }
@@ -99,61 +77,37 @@ export function ensureContentLoaded(
   return inFlight;
 }
 
-async function runBootstrap(
-  onPhase?: (p: BootstrapPhase) => void
-): Promise<BootstrapReport> {
-  const packs = listChapters();
-  const stamp = shippedStamp();
-  const cardsPresent = await countStore(CARDS).catch(() => 0);
-
-  if (cardsPresent > 0 && localStorage.getItem(STAMP_KEY) === stamp) {
-    onPhase?.({ phase: 'ready', cards: cardsPresent });
-    return { imported: 0, cards: cardsPresent, skipped: [] };
-  }
-
-  const skipped: string[] = [];
-  let imported = 0;
-  for (const pack of packs) {
-    onPhase?.({ phase: 'importing', done: imported, of: packs.length });
-    try {
-      await importPackOffThread(pack as Chapter, (current) =>
-        onPhase?.({ phase: 'importing', done: imported, of: packs.length, current })
-      );
-      imported++;
-    } catch {
-      // Preserve every pack that did import — never roll a sibling back — and
-      // remember this one so the next boot retries it.
-      skipped.push(pack.id);
-    }
-  }
-
-  // Completion means EVERY pack imported. If any failed, leave the stamp unset so
-  // the next boot re-runs and retries the missing packs (importPack is idempotent).
-  if (skipped.length === 0) {
-    // Only reconcile against a fully-imported set — otherwise a pack that failed to
-    // import would look "removed" and its rows would be wrongly deleted.
-    try {
-      const { reconcileShipped } = await import('./reconcile');
-      // Chapters published to the shared store are legitimately in the engine but
-      // are not part of the shipped set — protect them, or reconciling would read
-      // them as removed and delete a student's downloaded material.
-      const { publishedIds } = await import('./remoteContent');
-      await reconcileShipped(packs as Chapter[], publishedIds());
-    } catch {
-      // reconciliation is a cleanup, not a correctness requirement — never block boot
-    }
-    localStorage.setItem(STAMP_KEY, stamp);
-  } else {
-    localStorage.removeItem(STAMP_KEY);
-  }
-  const cards = await countStore(CARDS);
-  const { invalidateDeckTree } = await import('./session');
-  invalidateDeckTree();
-  onPhase?.({ phase: 'ready', cards });
-  return { imported, cards, skipped };
+/** Row shape written by importPack.chapterMeta — `pack` is the authored chapter. */
+interface StoredChapterRow {
+  id: string;
+  pack?: Chapter;
 }
 
-/** Force the next boot to re-import every pack (used by "rebuild library"). */
-export function invalidateContent() {
-  localStorage.removeItem(STAMP_KEY);
+async function runBootstrap(onPhase?: (p: BootstrapPhase) => void): Promise<BootstrapReport> {
+  onPhase?.({ phase: 'hydrating' });
+  try {
+    const rows = await getAllRows<StoredChapterRow>(CHAPTERS);
+    // Rows written before `pack` existed have no authored copy; skip rather than
+    // crash, and the next content sync will rewrite them complete.
+    const packs = rows.map((r) => r.pack).filter((p): p is Chapter => !!p && Array.isArray(p.sections));
+    setLoadedChapters(packs);
+
+    const cards = await countStore(CARDS).catch(() => 0);
+    onPhase?.({ phase: 'ready', cards });
+    return { chapters: packs.length, cards };
+  } catch (e) {
+    // No IndexedDB (private mode, or a locked-down browser). The app still runs;
+    // it simply has no chapters until storage works.
+    setLoadedChapters([]);
+    onPhase?.({ phase: 'error', message: e instanceof Error ? e.message : String(e) });
+    return { chapters: 0, cards: 0 };
+  }
+}
+
+/** Re-read the device's chapters into memory — after a content sync imports new packs. */
+export async function rehydrateChapters(): Promise<number> {
+  const rows = await getAllRows<StoredChapterRow>(CHAPTERS).catch(() => [] as StoredChapterRow[]);
+  const packs = rows.map((r) => r.pack).filter((p): p is Chapter => !!p && Array.isArray(p.sections));
+  setLoadedChapters(packs);
+  return packs.length;
 }

@@ -2,7 +2,6 @@
 // (imported) content is merged on top. Shipped and personal content are kept
 // clearly separated by `origin`.
 import {
-  ChapterSchema,
   type Chapter,
   type Card,
   type Mcq,
@@ -18,29 +17,39 @@ export interface LoadedChapter extends Chapter {
   origin: ContentOrigin;
 }
 
-// Build-time glob of every chapter JSON under /content (project root). Eager so the
-// data is inlined into the bundle — no runtime fetch, works offline.
-const modules = import.meta.glob('/content/**/*.json', { eager: true, import: 'default' });
+// Chapters are NOT bundled any more.
+//
+// This file used to hold `import.meta.glob('/content/**/*.json', { eager: true })`,
+// which compiled every chapter into the JavaScript. That made the whole library a
+// free download for anyone who opened the URL — no sign-in required — and it is
+// exactly what the move to authenticated content was meant to stop.
+//
+// Chapters now arrive from the content store for a signed-in student, are written
+// into IndexedDB, and are hydrated back into this in-memory list at boot. The list
+// stays synchronous because the reader, study library and mnemonics all read it
+// during render; only where it is FILLED FROM has changed.
 
-function buildShipped(): LoadedChapter[] {
-  const out: LoadedChapter[] = [];
-  for (const path in modules) {
-    if (path.includes('/_schema/')) continue;
-    const parsed = ChapterSchema.safeParse(modules[path]);
-    if (parsed.success) out.push({ ...parsed.data, origin: 'shipped' });
-    else console.error(`Shipped content failed schema at ${path}`, parsed.error.issues);
-  }
-  return out;
+let LOADED: LoadedChapter[] = [];
+
+/**
+ * Replace the in-memory chapter list. Called after hydrating from IndexedDB and
+ * after new content is imported.
+ */
+export function setLoadedChapters(chapters: Chapter[]): void {
+  LOADED = chapters.map((c) => ({ ...c, origin: 'shipped' as const }));
 }
 
-const SHIPPED: LoadedChapter[] = buildShipped();
+/** How many chapters are currently loaded — used by boot to decide what to show. */
+export function loadedCount(): number {
+  return LOADED.length;
+}
 
-/** All chapters: shipped first, then personal (personal id shadows a shipped id). */
+/** All chapters: store content first, then personal (personal id shadows a store id). */
 export function listChapters(): LoadedChapter[] {
   const personal = getUserChapters().map((c) => ({ ...c, origin: 'personal' as const }));
   const personalIds = new Set(personal.map((c) => c.id));
-  const shipped = SHIPPED.filter((c) => !personalIds.has(c.id));
-  return [...shipped, ...personal];
+  const base = LOADED.filter((c) => !personalIds.has(c.id));
+  return [...base, ...personal];
 }
 
 export function getChapter(id: string): LoadedChapter | undefined {

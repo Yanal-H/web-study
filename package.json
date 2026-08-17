@@ -3,7 +3,7 @@
   "private": true,
   "version": "9.0.0-phase0",
   "type": "module",
-  "description": "Foundation · Med School Study Toolkit — offline-first study website (by Yanal · Cairo 2026)",
+  "description": "Foundation \u00b7 Med School Study Toolkit \u2014 offline-first study website (by Yanal \u00b7 Cairo 2026)",
   "scripts": {
     "dev": "vite",
     "prebuild": "npm run validate:content",
@@ -13,9 +13,11 @@
     "lint": "eslint . --ext .ts,.tsx",
     "test": "vitest run",
     "validate:content": "vite-node scripts/validate-content.ts",
-    "make:schema": "vite-node scripts/make-schema.ts"
+    "make:schema": "vite-node scripts/make-schema.ts",
+    "upload:content": "vite-node scripts/upload-content.ts"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.112.3",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.26.2",

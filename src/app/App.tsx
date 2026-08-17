@@ -8,12 +8,15 @@ import type { Command } from '../design/CommandPalette';
 import { Dialog } from '../design/Dialog';
 import { NAV_ICONS, IconMenu, IconSun, IconMoon, IconCommand } from '../design/icons';
 import { useStore } from '../state/useStore';
+import { notify } from '../state/store';
 import { toggleTheme, isDark, applyTheme } from '../state/theme';
 import { applyHaki } from '../state/haki';
 import HakiField from '../features/effects/HakiField';
 import FocusTimer from '../features/timer/FocusTimer';
 import MusicPlayer from '../features/music/MusicPlayer';
 import { ensureContentLoaded } from '../data/bootstrap';
+import { useAuth } from '../features/auth/session';
+import SignIn from '../features/auth/SignIn';
 
 function BrandMark({ size = 40 }: { size?: number }) {
   return (
@@ -41,9 +44,29 @@ const TOOLS = ['planner', 'notes', 'calculators', 'mnemonics', 'resources'];
 export default function App() {
   return (
     <ToastProvider>
-      <Shell />
+      <Gate />
     </ToastProvider>
   );
+}
+
+/**
+ * Nothing renders — and no content is fetched — until there is a session.
+ *
+ * 'checking' is a real state, not a nicety: reading the stored session is async,
+ * so without it a returning student sees the sign-in screen flash before being
+ * let in, which reads as "it forgot me".
+ */
+function Gate() {
+  const auth = useAuth();
+
+  useEffect(() => {
+    // Hand the pre-React loading shell over to us once we know which way this goes.
+    if (auth.phase !== 'checking') document.getElementById('boot')?.classList.add('gone');
+  }, [auth.phase]);
+
+  if (auth.phase === 'checking') return null; // #boot is still showing
+  if (auth.phase === 'signed-out') return <SignIn />;
+  return <Shell />;
 }
 
 function Shell() {
@@ -111,15 +134,25 @@ function Shell() {
     return () => document.removeEventListener('keydown', onKey);
   }, [navigate]);
 
-  // Load the shipped packs into the card engine once, in the background. Once
-  // those are in, pick up any chapters published to the shared store since the
-  // build — an optional overlay that stays silent when there is no server,
-  // no connection, or nothing new.
+  // Hydrate whatever chapters this device already holds, then check the content
+  // store for anything new. The first step is what makes the app work offline;
+  // the second is what delivers a chapter published since the student last opened
+  // it. Neither blocks the UI, and a failure of either leaves the app as it was.
   useEffect(() => {
     void ensureContentLoaded()
-      .catch((e) => console.error('content bootstrap failed', e))
+      .catch((e) => console.error('content hydration failed', e))
       .finally(() => {
-        void import('../data/remoteContent').then((m) => m.syncPublishedInBackground());
+        void import('../data/remoteContent').then((m) =>
+          m.syncPublishedInBackground(async (report) => {
+            if (report.imported.length || report.removed.length) {
+              // New chapters are in IndexedDB but not yet in the in-memory list
+              // the reader renders from; re-read it and nudge subscribers.
+              const { rehydrateChapters } = await import('../data/bootstrap');
+              await rehydrateChapters();
+              notify();
+            }
+          })
+        );
       });
   }, []);
 

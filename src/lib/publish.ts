@@ -1,71 +1,75 @@
-// Publishing shared content — the owner's side of the shared-content store.
+// Publishing chapters to the cohort — the owner's side of the content store.
 //
-// Every call here is a request the SERVER re-authorises. Nothing in this file is
-// a security boundary: it exists to give the owner a clear, honest interface and
-// to report exactly what the server said, including refusals.
+// Nothing in this file is a security boundary. Whether a write is allowed is
+// decided by the row-level security policy in the database, against the caller's
+// real signed-in identity. This module exists to give a clear interface and to
+// report exactly what the server said, including refusals.
 
-import { ChapterSchema, formatZodError } from '../content/schema';
-import { adminToken, clearAdminToken } from './admin';
+import { ChapterSchema, formatZodError, type Chapter } from '../content/schema';
+import { supabase } from './supabase';
 import type { RemoteItem } from '../data/remoteContent';
 
 export interface PublishResult {
   ok: boolean;
   message: string;
-  /** Validation problems, when the pack was rejected for being malformed. */
+  /** Validation problems, when a pack was rejected for being malformed. */
   issues?: string[];
 }
 
-function isJson(res: Response): boolean {
-  return (res.headers.get('content-type') || '').includes('application/json');
+/**
+ * Revision of a pack — students compare this to decide whether to re-download,
+ * so it must change whenever the content does. FNV-1a over the canonical JSON.
+ */
+function revisionOf(pack: Chapter): string {
+  const s = JSON.stringify(pack);
+  let h = 2166136261;
+  for (let i = 0; i < s.length; i++) {
+    h ^= s.charCodeAt(i);
+    h = Math.imul(h, 16777619);
+  }
+  return (h >>> 0).toString(36);
 }
 
-/** Turn a server response into a message the owner can act on. */
-async function describe(res: Response, okMessage: string): Promise<PublishResult> {
-  if (!isJson(res)) {
-    return { ok: false, message: 'The shared content store is not set up on this server yet.' };
+/** Turn a database error into something the owner can act on. */
+function describeError(message: string): string {
+  if (/row-level security|permission|policy/i.test(message)) {
+    return 'Your account is not an administrator. Add your email to admin_emails() in the SQL setup.';
   }
-  const data = (await res.json().catch(() => null)) as
-    | { ok?: boolean; error?: string; issues?: string[] }
-    | null;
+  if (/jwt|expired|not authenticated/i.test(message)) {
+    return 'Your session expired. Sign out and back in, then try again.';
+  }
+  if (/relation .* does not exist/i.test(message)) {
+    return 'The chapters table does not exist yet. Run supabase/setup.sql first.';
+  }
+  return message;
+}
 
-  if (res.ok && data?.ok) return { ok: true, message: okMessage };
-
-  if (res.status === 401) {
-    // The token expired or was rejected — make the owner unlock again rather than
-    // leaving the UI claiming admin rights the server no longer honours.
-    clearAdminToken();
-    return { ok: false, message: 'Your admin session expired. Enter the admin key again.' };
-  }
-  if (res.status === 503) {
-    return { ok: false, message: 'The shared content store is not set up on this server yet.' };
-  }
+/** What is published right now. Any signed-in student may read this. */
+export async function listPublished(): Promise<{ configured: boolean; items: RemoteItem[] }> {
+  if (!supabase) return { configured: false, items: [] };
+  const { data, error } = await supabase
+    .from('chapters')
+    .select('id, revision, updated_at')
+    .order('id');
+  if (error || !data) return { configured: false, items: [] };
   return {
-    ok: false,
-    message: data?.error || `The server refused that (${res.status}).`,
-    issues: data?.issues,
+    configured: true,
+    items: (data as Array<{ id: string; revision: string; updated_at: string }>).map((r) => ({
+      id: r.id,
+      revision: r.revision,
+      updatedAt: Date.parse(r.updated_at) || 0,
+    })),
   };
 }
 
-/** What is published right now. Public — no token needed. */
-export async function listPublished(): Promise<{ configured: boolean; items: RemoteItem[] }> {
-  try {
-    const res = await fetch('/api/content');
-    if (!isJson(res) || res.status === 503) return { configured: false, items: [] };
-    const data = (await res.json()) as { ok?: boolean; items?: RemoteItem[] };
-    return { configured: !!data.ok, items: data.items ?? [] };
-  } catch {
-    return { configured: false, items: [] };
-  }
-}
-
 /**
- * Publish one chapter pack. Validated here first so an obviously broken file is
- * reported instantly with line-level detail, and validated again server-side so a
- * bad pack can never reach students even if this check is bypassed.
+ * Publish one chapter pack.
+ *
+ * Validated here so a broken file is reported instantly with line-level detail.
+ * The database still decides whether this account may write at all.
  */
 export async function publishPack(rawJson: string): Promise<PublishResult> {
-  const token = adminToken();
-  if (!token) return { ok: false, message: 'Unlock admin with your key first.' };
+  if (!supabase) return { ok: false, message: 'Sign-in is not set up on this deployment yet.' };
 
   let parsed: unknown;
   try {
@@ -83,29 +87,26 @@ export async function publishPack(rawJson: string): Promise<PublishResult> {
     };
   }
 
-  try {
-    const res = await fetch('/api/content', {
-      method: 'POST',
-      headers: { 'content-type': 'application/json', authorization: `Bearer ${token}` },
-      body: JSON.stringify(check.data),
-    });
-    return await describe(res, `Published “${check.data.title}”. Students receive it on their next load.`);
-  } catch {
-    return { ok: false, message: 'Could not reach the server.' };
-  }
+  const pack = check.data;
+  const { error } = await supabase.from('chapters').upsert({
+    id: pack.id,
+    revision: revisionOf(pack),
+    subject: pack.subject,
+    title: pack.title,
+    pack,
+  });
+
+  if (error) return { ok: false, message: describeError(error.message) };
+  return {
+    ok: true,
+    message: `Published “${pack.title}”. Students receive it on their next load.`,
+  };
 }
 
 /** Stop publishing a pack. Students keep what they already downloaded until they sync. */
 export async function unpublishPack(id: string): Promise<PublishResult> {
-  const token = adminToken();
-  if (!token) return { ok: false, message: 'Unlock admin with your key first.' };
-  try {
-    const res = await fetch(`/api/content?id=${encodeURIComponent(id)}`, {
-      method: 'DELETE',
-      headers: { authorization: `Bearer ${token}` },
-    });
-    return await describe(res, `Unpublished ${id}.`);
-  } catch {
-    return { ok: false, message: 'Could not reach the server.' };
-  }
+  if (!supabase) return { ok: false, message: 'Sign-in is not set up on this deployment yet.' };
+  const { error } = await supabase.from('chapters').delete().eq('id', id);
+  if (error) return { ok: false, message: describeError(error.message) };
+  return { ok: true, message: `Unpublished ${id}.` };
 }
