@@ -8,14 +8,21 @@
  * Hashed asset filenames make cache-first safe: a new build ships new URLs, so stale
  * assets are never served for changed code. Bump CACHE_VERSION to force a full refresh.
  */
-const CACHE_VERSION = 'foundation-v3';
+// CACHE_VERSION and PRECACHE are rewritten at build time by the precache-manifest
+// Vite plugin: the version gains the build hash (so a new deploy re-installs the SW)
+// and PRECACHE gains every hashed asset. If the plugin never runs (dev, or a build
+// without it), these defaults keep the SW behaving exactly as before.
+const CACHE_VERSION = 'foundation-v3' /*__BUILD_ID__*/;
 const SHELL_URL = '/index.html';
+const PRECACHE = ['/', SHELL_URL /*__PRECACHE__*/];
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches
       .open(CACHE_VERSION)
-      .then((cache) => cache.addAll(['/', SHELL_URL]))
+      // Resilient precache: cache each URL independently so a single 404 or a slow
+      // asset never aborts the whole install. Falls back to caching just the shell.
+      .then((cache) => Promise.allSettled(PRECACHE.map((u) => cache.add(u))))
       .catch(() => {})
       .then(() => self.skipWaiting())
   );
