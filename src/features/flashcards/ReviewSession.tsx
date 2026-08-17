@@ -294,9 +294,13 @@ export default function ReviewSession({
         )}
       </div>
 
-      {/* AI tutor — hint before you flip, full explanation after; chat any time.
-          Renders only when the tutor is switched on with a key (AiTutor guards). */}
-      <div className="fc-ai">
+      {/* The box below the card: a brief authored answer note (once revealed) and the
+          AI buttons — hint before you flip, full explanation after, chat any time.
+          AiTutor renders only when the tutor is switched on with a key. */}
+      <div className="answer-box">
+        {revealed && c.extra && c.type !== 'cloze' && (
+          <div className="answer-note md" dangerouslySetInnerHTML={{ __html: renderInline(c.extra, globalIndex()) }} />
+        )}
         <AiTutor
           cacheKey={`cardexplain:${item!.key}`}
           hintPrompt={hintCardPrompt(c).user}
@@ -425,6 +429,8 @@ function CardBack({ card, typed }: { card: ReviewItem['card']; typed: string }) 
   }
   const a = card.type === 'reversed' ? card.front : card.back;
   const correct = card.type === 'type' && typed.trim().toLowerCase() === (a || '').trim().toLowerCase();
+  // The card face stays brief — just the answer. Any authored detail (extra) is
+  // shown in the box below, next to the AI buttons.
   return (
     <div className="fc-back">
       {card.type === 'type' && typed && (
@@ -433,9 +439,6 @@ function CardBack({ card, typed }: { card: ReviewItem['card']; typed: string }) 
         </div>
       )}
       <div className="fc-text" dangerouslySetInnerHTML={{ __html: renderInline(a || '', globalIndex()) }} />
-      {card.extra && (
-        <div className="fc-extra" dangerouslySetInnerHTML={{ __html: renderInline(card.extra, globalIndex()) }} />
-      )}
     </div>
   );
 }

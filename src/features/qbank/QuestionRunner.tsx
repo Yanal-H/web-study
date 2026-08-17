@@ -20,7 +20,7 @@ import { getChapter } from '../../content/loader';
 import { renderInline } from '../../lib/lexicon';
 import { globalIndex } from '../../lib/useLexicon';
 import { sfx } from '../../lib/sound';
-import { hintPrompt, explainPrompt } from '../../lib/ai';
+import { hintPrompt, explainPrompt, aiReady } from '../../lib/ai';
 import AiTutor from '../ai/AiTutor';
 
 export default function QuestionRunner({ onExit }: { onExit: () => void }) {
@@ -257,6 +257,7 @@ export default function QuestionRunner({ onExit }: { onExit: () => void }) {
       </div>
 
       <div className="qb-layout">
+        <div className="qb-main">
         <Card
           key={q.id}
           className={`qb-question qb-swap${surge ? ` surge-${surge}` : ''}`}
@@ -312,16 +313,6 @@ export default function QuestionRunner({ onExit }: { onExit: () => void }) {
             })}
           </div>
 
-          {/* AI tutor — only renders when switched on with a key (AiTutor guards internally) */}
-          <AiTutor
-            cacheKey={`explain:${q.id}`}
-            explainPrompt={explainPrompt(q).user}
-            hintPrompt={hintPrompt(q).user}
-            canHint={!submitted}
-            canExplain={submitted}
-            contextForChat={mcqContext(q, submitted)}
-          />
-
           {!submitted && immediate && state.settings.mcq.confidenceTracking && (
             <div className="row" style={{ gap: 8, marginTop: 12, alignItems: 'center' }}>
               <span className="muted" style={{ fontSize: 13 }}>Confidence:</span>
@@ -332,11 +323,6 @@ export default function QuestionRunner({ onExit }: { onExit: () => void }) {
               ))}
             </div>
           )}
-
-          {submitted && <Explanation q={q} correct={!!session.answers[q.id]?.correct} onMakeCard={() => {
-            makeUserCard({ front: q.stem, back: q.options.filter((o) => o.correct).map((o) => o.text).join('; ') + (q.teachingPoint ? ` — ${q.teachingPoint}` : ''), tags: ['from-qbank'] });
-            toast('Flashcard created', 'success');
-          }} />}
 
           <div className="row spread" style={{ marginTop: 18 }}>
             <Button variant="ghost" size="sm" disabled={session.index === 0} onClick={() => go(-1)}>
@@ -357,6 +343,32 @@ export default function QuestionRunner({ onExit }: { onExit: () => void }) {
             )}
           </div>
         </Card>
+
+        {/* The box below the answer card: the brief authored rationale (once answered)
+            and the AI buttons — hint before, explanation + chat after. */}
+        {(submitted || aiReady()) && (
+          <div className="answer-box qb-answerbox">
+            {submitted && (
+              <Explanation
+                q={q}
+                correct={!!session.answers[q.id]?.correct}
+                onMakeCard={() => {
+                  makeUserCard({ front: q.stem, back: q.options.filter((o) => o.correct).map((o) => o.text).join('; ') + (q.teachingPoint ? ` — ${q.teachingPoint}` : ''), tags: ['from-qbank'] });
+                  toast('Flashcard created', 'success');
+                }}
+              />
+            )}
+            <AiTutor
+              cacheKey={`explain:${q.id}`}
+              explainPrompt={explainPrompt(q).user}
+              hintPrompt={hintPrompt(q).user}
+              canHint={!submitted}
+              canExplain={submitted}
+              contextForChat={mcqContext(q, submitted)}
+            />
+          </div>
+        )}
+        </div>
 
         <Navigator session={session} onJump={jump} />
       </div>
