@@ -1,0 +1,1192 @@
+{
+ "schema": "foundation.study-module/v1",
+ "id": "sana-ch3-inguinoscrotal-testis",
+ "subject": "Anatomy",
+ "title": "Inguinoscrotal & Testis",
+ "source": {
+  "book": "Recall by Yanal — Surgical Anatomy",
+  "chapter": 3,
+  "title": "Inguinoscrotal & Testis",
+  "pages": "—"
+ },
+ "brand": "by Yanal · Cairo 2026",
+ "estMinutes": 20,
+ "deck": "Anatomy::Inguinoscrotal & Testis",
+ "tags": [
+  "anatomy",
+  "surgical-anatomy",
+  "inguinoscrotal-testis"
+ ],
+ "objectives": [
+  "Identify the key structures of Inguinoscrotal & Testis at each level of dissection.",
+  "Relate the nerves, vessels and muscles of Inguinoscrotal & Testis to their functions.",
+  "Localise the named spaces and regions of Inguinoscrotal & Testis and list their contents.",
+  "Recognise the common clinical lesions associated with Inguinoscrotal & Testis.",
+  "Reproduce the high-yield relations of Inguinoscrotal & Testis tested in vivas and MCQs."
+ ],
+ "outline": [
+  "3.1 Descent & Processus Vaginalis",
+  "3.2 Testis, Cord & Torsion",
+  "3.3 Lymphatic Drainage & Staging",
+  "3.4 Clinical Scenarios"
+ ],
+ "sections": [
+  {
+   "id": "s1",
+   "n": "3.1",
+   "title": "Descent & Processus Vaginalis",
+   "deck": "Descent & Processus Vaginalis",
+   "digest": "Imported Recall deck. This section holds the **descent & processus vaginalis** cards for Inguinoscrotal & Testis. Open the flashcards for Descent & Processus Vaginalis to drill it; author a written digest here to turn the section into a reader page.",
+   "highYield": [],
+   "tables": [],
+   "pitfalls": [],
+   "figures": []
+  },
+  {
+   "id": "s2",
+   "n": "3.2",
+   "title": "Testis, Cord & Torsion",
+   "deck": "Testis, Cord & Torsion",
+   "digest": "Imported Recall deck. This section holds the **testis, cord & torsion** cards for Inguinoscrotal & Testis. Open the flashcards for Testis, Cord & Torsion to drill it; author a written digest here to turn the section into a reader page.",
+   "highYield": [],
+   "tables": [],
+   "pitfalls": [],
+   "figures": []
+  },
+  {
+   "id": "s3",
+   "n": "3.3",
+   "title": "Lymphatic Drainage & Staging",
+   "deck": "Lymphatic Drainage & Staging",
+   "digest": "Imported Recall deck. This section holds the **lymphatic drainage & staging** cards for Inguinoscrotal & Testis. Open the flashcards for Lymphatic Drainage & Staging to drill it; author a written digest here to turn the section into a reader page.",
+   "highYield": [],
+   "tables": [],
+   "pitfalls": [],
+   "figures": []
+  },
+  {
+   "id": "s4",
+   "n": "3.4",
+   "title": "Clinical Scenarios",
+   "deck": "Clinical Scenarios",
+   "digest": "Imported Recall deck. This section holds the **clinical scenarios** cards for Inguinoscrotal & Testis. Open the flashcards for Clinical Scenarios to drill it; author a written digest here to turn the section into a reader page.",
+   "highYield": [],
+   "tables": [],
+   "pitfalls": [],
+   "figures": []
+  }
+ ],
+ "glossary": [],
+ "mnemonics": [],
+ "cards": [
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch3-inguinoscrotal-testis-card-001",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Descent & Processus Vaginalis",
+   "front": "Where does the testis develop and what is the surgical consequence of that site?",
+   "back": "On the posterior abdominal wall at the level of L2, from the genital ridge. Its artery, veins and lymphatics arise and drain at that level and remain there whatever the final position of the testis.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch3-inguinoscrotal-testis-card-002",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Descent & Processus Vaginalis",
+   "front": "What is the gubernaculum and what does it do?",
+   "back": "A mesenchymal cord running from the lower pole of the testis to the scrotal swelling. It guides descent and is represented in the adult by the scrotal ligament.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch3-inguinoscrotal-testis-card-003",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Descent & Processus Vaginalis",
+   "front": "What is the processus vaginalis?",
+   "back": "A diverticulum of peritoneum that precedes the testis through the abdominal wall; its distal part persists as the tunica vaginalis while the rest normally obliterates.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch3-inguinoscrotal-testis-card-004",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Descent & Processus Vaginalis",
+   "front": "Give the timetable of testicular descent.",
+   "back": "The testis reaches the deep ring by about the seventh month, traverses the canal in the eighth month and lies in the scrotum by birth or shortly after in the term infant.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch3-inguinoscrotal-testis-card-005",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Descent & Processus Vaginalis",
+   "front": "Which coverings does the testis acquire during descent?",
+   "back": "Internal spermatic fascia at the deep ring from the fascia transversalis, cremasteric muscle and fascia from the internal oblique in the canal, and external spermatic fascia at the superficial ring from the external oblique aponeurosis.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch3-inguinoscrotal-testis-card-006",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Descent & Processus Vaginalis",
+   "front": "What results from complete failure of the processus vaginalis to obliterate?",
+   "back": "A congenital indirect inguinal hernia, or a communicating (congenital) hydrocele if the tract is too narrow to admit bowel.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch3-inguinoscrotal-testis-card-007",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Descent & Processus Vaginalis",
+   "front": "Name the four types of hydrocele defined by the fate of the processus vaginalis.",
+   "back": "Vaginal hydrocele in a closed tunica, congenital (communicating) hydrocele with a patent tract to the peritoneum, infantile hydrocele in which the processus is closed at the deep ring but not below, and encysted hydrocele of the cord in which a middle segment stays patent as an isolated cyst.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch3-inguinoscrotal-testis-card-008",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Descent & Processus Vaginalis",
+   "front": "How is a hydrocele of the canal of Nuck formed?",
+   "back": "By persistence of the processus vaginalis alongside the round ligament in the female, giving a cystic swelling in the inguinal canal or labium majus.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch3-inguinoscrotal-testis-card-009",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Descent & Processus Vaginalis",
+   "front": "Distinguish an undescended from an ectopic testis.",
+   "back": "An undescended testis has been arrested somewhere along the normal line of descent - abdomen, inguinal canal or superficial inguinal pouch. An ectopic testis has left the normal path after emerging from the superficial ring.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch3-inguinoscrotal-testis-card-010",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Descent & Processus Vaginalis",
+   "front": "Name the sites of an ectopic testis.",
+   "back": "The superficial inguinal pouch of Denis Browne (the commonest), the femoral triangle, the perineum, the root of the penis (pubopenile) and the opposite side of the scrotum.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch3-inguinoscrotal-testis-card-011",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Descent & Processus Vaginalis",
+   "front": "Why is the superficial inguinal pouch a source of diagnostic confusion?",
+   "back": "The testis lies superficial to the external oblique aponeurosis just above and lateral to the superficial ring, so it feels as if it is in the groin yet cannot be brought into the scrotum, mimicking a retractile testis.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch3-inguinoscrotal-testis-card-012",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Descent & Processus Vaginalis",
+   "front": "Which surgical problems follow an undescended testis?",
+   "back": "Impaired spermatogenesis, an increased risk of malignancy that is not abolished by orchidopexy, an associated patent processus and hernia, and greater vulnerability to trauma and torsion.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch3-inguinoscrotal-testis-card-013",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Descent & Processus Vaginalis",
+   "front": "How does an undescended testis change the lymphatic spread of a later tumour?",
+   "back": "The lymphatic drainage still follows the testicular vessels to the para-aortic nodes, so the nodal field is unchanged. It is previous scrotal or inguinal surgery, not the ectopic position itself, that adds inguinal nodes.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch3-inguinoscrotal-testis-card-014",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Descent & Processus Vaginalis",
+   "front": "What is the anatomical basis of orchidopexy?",
+   "back": "The sac is separated and ligated at the deep ring and the cord is mobilised retroperitoneally to gain length, allowing the testis to be placed in a dartos pouch without tension on the testicular vessels.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch3-inguinoscrotal-testis-card-015",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Testis, Cord & Torsion",
+   "front": "List the layers covering the testis from the skin inwards.",
+   "back": "Skin, dartos muscle, external spermatic fascia, cremasteric muscle and fascia, internal spermatic fascia, parietal and visceral layers of the tunica vaginalis, then the tunica albuginea.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch3-inguinoscrotal-testis-card-016",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Testis, Cord & Torsion",
+   "front": "Match the scrotal layers to their abdominal wall equivalents.",
+   "back": "Dartos corresponds to Scarpa's fascia, external spermatic fascia to the external oblique aponeurosis, cremaster to the internal oblique, internal spermatic fascia to the fascia transversalis, and the tunica vaginalis to the peritoneum.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch3-inguinoscrotal-testis-card-017",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Testis, Cord & Torsion",
+   "front": "What is the tunica vaginalis and how far does it invest the testis?",
+   "back": "The distal remnant of the processus vaginalis. It covers the front and sides of the testis but not its posterior surface, where the epididymis and vessels enter.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch3-inguinoscrotal-testis-card-018",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Testis, Cord & Torsion",
+   "front": "What is the tunica albuginea and why does it matter in trauma and tumour?",
+   "back": "The tough fibrous capsule of the testis. It confines swelling so that testicular pain is severe, and its rupture in trauma is the indication for exploration; a tumour rarely breaches it, which is why testicular cancer spreads by lymphatics rather than to the scrotal skin.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch3-inguinoscrotal-testis-card-019",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Testis, Cord & Torsion",
+   "front": "Where does the testicular artery arise and at what level?",
+   "back": "From the abdominal aorta at the level of L2, just below the renal arteries.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch3-inguinoscrotal-testis-card-020",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Testis, Cord & Torsion",
+   "front": "What are the collateral arteries of the testis?",
+   "back": "The artery to the vas from the inferior vesical artery and the cremasteric artery from the inferior epigastric artery. Their anastomoses can maintain the testis when the testicular artery is divided high, which is the basis of the Fowler-Stephens orchidopexy.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch3-inguinoscrotal-testis-card-021",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Testis, Cord & Torsion",
+   "front": "What is the pampiniform plexus and what is its function?",
+   "back": "A network of veins around the testicular artery in the cord that acts as a counter-current heat exchanger, cooling arterial blood and keeping the testis a few degrees below core temperature.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch3-inguinoscrotal-testis-card-022",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Testis, Cord & Torsion",
+   "front": "Where does the right testicular vein drain, and where does the left?",
+   "back": "The right drains obliquely into the inferior vena cava; the left drains at a right angle into the left renal vein.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch3-inguinoscrotal-testis-card-023",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Testis, Cord & Torsion",
+   "front": "Give three anatomical reasons why a varicocele is usually left-sided.",
+   "back": "The left testicular vein is longer, it enters the left renal vein at a right angle rather than obliquely, and it may be compressed where the left renal vein passes between the aorta and the superior mesenteric artery (the nutcracker effect); a loaded sigmoid colon adds pressure.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch3-inguinoscrotal-testis-card-024",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Testis, Cord & Torsion",
+   "front": "Why does a sudden left varicocele in an older man demand imaging of the kidney?",
+   "back": "Renal cell carcinoma can invade the left renal vein and obstruct the drainage of the left testicular vein, so a new varicocele that does not empty on lying down suggests a renal tumour.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch3-inguinoscrotal-testis-card-025",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Testis, Cord & Torsion",
+   "front": "What is the bell-clapper deformity?",
+   "back": "A high investment of the tunica vaginalis that surrounds the testis and the lower cord completely, so the testis hangs free like a bell clapper and can rotate within the tunica. It is usually bilateral.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch3-inguinoscrotal-testis-card-026",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Testis, Cord & Torsion",
+   "front": "Distinguish intravaginal from extravaginal torsion.",
+   "back": "Intravaginal torsion occurs within the tunica vaginalis on a bell-clapper deformity and is the type seen in adolescents. Extravaginal torsion involves the whole cord and its coverings above the tunica and occurs in the neonate, whose tunica is not yet fixed to the dartos.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch3-inguinoscrotal-testis-card-027",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Testis, Cord & Torsion",
+   "front": "Which anatomical signs help distinguish torsion from epididymo-orchitis?",
+   "back": "In torsion the testis is high and transversely lying, the cremasteric reflex is lost, and elevation does not relieve the pain (negative Prehn's sign). In epididymo-orchitis the reflex is preserved and elevation eases the pain.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch3-inguinoscrotal-testis-card-028",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Testis, Cord & Torsion",
+   "front": "Why does testicular torsion need surgery within about six hours?",
+   "back": "The testis is supplied by a single long end artery with limited collateral flow, and twisting occludes the venous return first, so haemorrhagic infarction proceeds rapidly.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch3-inguinoscrotal-testis-card-029",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Testis, Cord & Torsion",
+   "front": "Why is the contralateral testis fixed at the same operation?",
+   "back": "The bell-clapper deformity that allowed torsion is a bilateral anatomical variant, so the other side is at equal risk.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch3-inguinoscrotal-testis-card-030",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Testis, Cord & Torsion",
+   "front": "What is the appendix testis and what is its clinical relevance?",
+   "back": "The hydatid of Morgagni, a remnant of the paramesonephric duct at the upper pole. Torsion of this appendage gives the blue dot sign and mimics testicular torsion.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch3-inguinoscrotal-testis-card-031",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Testis, Cord & Torsion",
+   "front": "Describe the course of the vas deferens from the epididymis to the prostate.",
+   "back": "It ascends behind the testis in the cord, passes through the inguinal canal, turns around the lateral side of the inferior epigastric artery at the deep ring, crosses the external iliac vessels, runs on the lateral pelvic wall crossing above the ureter, then passes between the bladder and the seminal vesicle to the ejaculatory duct.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch3-inguinoscrotal-testis-card-032",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Testis, Cord & Torsion",
+   "front": "How is the vas identified in the cord at vasectomy?",
+   "back": "By its firm cord-like consistency, feeling like whipcord between the fingers, and by its posteromedial position within the cord separate from the softer pampiniform plexus.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch3-inguinoscrotal-testis-card-033",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Testis, Cord & Torsion",
+   "front": "Which structure crosses over the ureter in the male pelvis, and what is the surgical rhyme?",
+   "back": "The vas deferens crosses in front of the ureter - water under the bridge - as with the uterine artery in the female.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch3-inguinoscrotal-testis-card-034",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Testis, Cord & Torsion",
+   "front": "What is the blood supply of the scrotal skin?",
+   "back": "Anteriorly the external pudendal branches of the femoral artery, posteriorly the scrotal branches of the internal pudendal artery. This is entirely separate from the testicular supply.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch3-inguinoscrotal-testis-card-035",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Testis, Cord & Torsion",
+   "front": "What is the nerve supply of the scrotum?",
+   "back": "Anteriorly the ilioinguinal nerve and the genital branch of the genitofemoral nerve (L1), posteriorly the perineal branches of the pudendal nerve and the perineal branch of the posterior cutaneous nerve of the thigh (S3).",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch3-inguinoscrotal-testis-card-036",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Testis, Cord & Torsion",
+   "front": "Why is testicular pain often felt in the loin and around the umbilicus?",
+   "back": "The testicular afferents accompany the sympathetic supply back to T10 and L1, the segments of its embryological origin, so pain is referred to the T10 dermatome around the umbilicus and to the loin.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch3-inguinoscrotal-testis-card-037",
+   "type": "basic",
+   "sectionId": "s3",
+   "deck": "Lymphatic Drainage & Staging",
+   "front": "Where does lymph from the testis drain?",
+   "back": "Along the testicular vessels to the para-aortic (lumbar) nodes at the level of L1 to L2, following the embryological origin of the organ.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch3-inguinoscrotal-testis-card-038",
+   "type": "basic",
+   "sectionId": "s3",
+   "deck": "Lymphatic Drainage & Staging",
+   "front": "Where does lymph from the scrotal skin drain?",
+   "back": "To the superficial inguinal nodes, like the rest of the skin below the umbilicus.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch3-inguinoscrotal-testis-card-039",
+   "type": "basic",
+   "sectionId": "s3",
+   "deck": "Lymphatic Drainage & Staging",
+   "front": "Why does that difference change operative practice in testicular tumour?",
+   "back": "A scrotal incision or a scrotal biopsy contaminates a field that drains to the inguinal nodes and creates a second nodal basin, changing staging and requiring wider treatment. Orchidectomy for tumour is therefore done through an inguinal incision.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch3-inguinoscrotal-testis-card-040",
+   "type": "basic",
+   "sectionId": "s3",
+   "deck": "Lymphatic Drainage & Staging",
+   "front": "Describe the anatomy of a radical (inguinal) orchidectomy.",
+   "back": "The inguinal canal is opened, the cord is clamped and divided at the deep ring before the testis is mobilised, so that venous and lymphatic spread is prevented, and the testis is then delivered from the scrotum without breaching scrotal skin.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch3-inguinoscrotal-testis-card-041",
+   "type": "basic",
+   "sectionId": "s3",
+   "deck": "Lymphatic Drainage & Staging",
+   "front": "Which nodes are involved first by a right-sided and by a left-sided testicular tumour?",
+   "back": "A right testicular tumour drains first to the interaortocaval and precaval nodes near the right renal hilum; a left tumour drains to the para-aortic nodes lateral to the aorta below the left renal vein.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch3-inguinoscrotal-testis-card-042",
+   "type": "basic",
+   "sectionId": "s3",
+   "deck": "Lymphatic Drainage & Staging",
+   "front": "Which nerves are at risk in retroperitoneal lymph node dissection and what is the functional loss?",
+   "back": "The lumbar sympathetic chain and hypogastric plexus. Bilateral injury causes failure of emission and retrograde ejaculation, which is why nerve-sparing templates are used.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch3-inguinoscrotal-testis-card-043",
+   "type": "basic",
+   "sectionId": "s3",
+   "deck": "Lymphatic Drainage & Staging",
+   "front": "Where does the epididymis drain its lymph?",
+   "back": "Also to the para-aortic nodes with the testis, though some vessels follow the vas to the external iliac nodes.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch3-inguinoscrotal-testis-card-044",
+   "type": "basic",
+   "sectionId": "s3",
+   "deck": "Lymphatic Drainage & Staging",
+   "front": "How does the lymphatic drainage of the penis differ between skin and glans?",
+   "back": "Penile skin drains to the superficial inguinal nodes, whereas the glans and corpora drain to the deep inguinal nodes including the node of Cloquet and then to the external iliac nodes.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch3-inguinoscrotal-testis-card-045",
+   "type": "basic",
+   "sectionId": "s3",
+   "deck": "Lymphatic Drainage & Staging",
+   "front": "Why does a hydrocele or an inguinal hernia never metastasise to inguinal nodes, but a scrotal carcinoma does?",
+   "back": "Scrotal skin is a somatic structure draining to the inguinal nodes, whereas the testis and its coverings retain their abdominal drainage. Chimney sweep's cancer of the scrotal skin therefore spreads to the groin nodes.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch3-inguinoscrotal-testis-card-046",
+   "type": "cloze",
+   "sectionId": "s1",
+   "deck": "Descent & Processus Vaginalis",
+   "cloze": "The testis develops on the posterior abdominal wall at the level of {{c1::L2}}.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch3-inguinoscrotal-testis-card-047",
+   "type": "cloze",
+   "sectionId": "s1",
+   "deck": "Descent & Processus Vaginalis",
+   "cloze": "The distal part of the processus vaginalis persists as the {{c1::tunica vaginalis}}.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch3-inguinoscrotal-testis-card-048",
+   "type": "cloze",
+   "sectionId": "s1",
+   "deck": "Descent & Processus Vaginalis",
+   "cloze": "A patent processus vaginalis too narrow for bowel produces a {{c1::congenital (communicating) hydrocele}}.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch3-inguinoscrotal-testis-card-049",
+   "type": "cloze",
+   "sectionId": "s1",
+   "deck": "Descent & Processus Vaginalis",
+   "cloze": "The commonest site of an ectopic testis is the {{c1::superficial inguinal pouch of Denis Browne}}.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch3-inguinoscrotal-testis-card-050",
+   "type": "cloze",
+   "sectionId": "s2",
+   "deck": "Testis, Cord & Torsion",
+   "cloze": "The testicular artery arises from the abdominal aorta just below the {{c1::renal arteries}}.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch3-inguinoscrotal-testis-card-051",
+   "type": "cloze",
+   "sectionId": "s2",
+   "deck": "Testis, Cord & Torsion",
+   "cloze": "The left testicular vein drains into the {{c1::left renal vein}}.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch3-inguinoscrotal-testis-card-052",
+   "type": "cloze",
+   "sectionId": "s2",
+   "deck": "Testis, Cord & Torsion",
+   "cloze": "Torsion within the tunica vaginalis occurs on a {{c1::bell-clapper deformity}}.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch3-inguinoscrotal-testis-card-053",
+   "type": "cloze",
+   "sectionId": "s2",
+   "deck": "Testis, Cord & Torsion",
+   "cloze": "Loss of the {{c1::cremasteric reflex}} is a key sign of testicular torsion.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch3-inguinoscrotal-testis-card-054",
+   "type": "cloze",
+   "sectionId": "s2",
+   "deck": "Testis, Cord & Torsion",
+   "cloze": "Torsion of the appendix testis produces the {{c1::blue dot}} sign.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch3-inguinoscrotal-testis-card-055",
+   "type": "cloze",
+   "sectionId": "s2",
+   "deck": "Testis, Cord & Torsion",
+   "cloze": "In the cord the vas deferens hooks around the lateral side of the {{c1::inferior epigastric artery}}.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch3-inguinoscrotal-testis-card-056",
+   "type": "cloze",
+   "sectionId": "s3",
+   "deck": "Lymphatic Drainage & Staging",
+   "cloze": "The testis drains its lymph to the {{c1::para-aortic (lumbar)}} nodes.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch3-inguinoscrotal-testis-card-057",
+   "type": "cloze",
+   "sectionId": "s3",
+   "deck": "Lymphatic Drainage & Staging",
+   "cloze": "The scrotal skin drains its lymph to the {{c1::superficial inguinal}} nodes.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch3-inguinoscrotal-testis-card-058",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Testis, Cord & Torsion",
+   "front": "Describe the internal architecture of the testis.",
+   "back": "The tunica albuginea thickens posteriorly into the mediastinum testis, from which septa divide the organ into about 250 lobules, each containing seminiferous tubules that drain into the rete testis in the mediastinum and then through efferent ductules into the head of the epididymis.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch3-inguinoscrotal-testis-card-059",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Testis, Cord & Torsion",
+   "front": "Name the parts of the epididymis and the surgical relevance of each.",
+   "back": "The head receives the efferent ductules and is the site of a spermatocele or an epididymal cyst; the body and tail lie along the posterolateral border and are the usual site of tuberculous involvement, which classically begins in the globus minor at the tail.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch3-inguinoscrotal-testis-card-060",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Testis, Cord & Torsion",
+   "front": "Why is the scrotal septum important clinically?",
+   "back": "The dartos continues inwards as a median septum, so a collection or infection is usually confined to one side; the median raphe marks it externally, and the two testes and their coverings remain independent.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch3-inguinoscrotal-testis-card-061",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Testis, Cord & Torsion",
+   "front": "Why does a hydrocele transilluminate but a haematocele or tumour does not?",
+   "back": "A hydrocele is clear serous fluid within the tunica vaginalis, which transmits light. Blood, thickened tunica or solid tumour is opaque, so a testicular swelling that does not transilluminate must be treated as a tumour until proven otherwise.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch3-inguinoscrotal-testis-card-062",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Testis, Cord & Torsion",
+   "front": "Why is it possible to get above a scrotal swelling in a hydrocele but not in an inguinoscrotal hernia?",
+   "back": "A hydrocele arises within the tunica vaginalis and has no connection to the abdomen, so the cord is normal above it. A hernia is continuous with the abdominal contents through the superficial ring, so no upper margin can be defined.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch3-inguinoscrotal-testis-card-063",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Testis, Cord & Torsion",
+   "front": "Why does testicular tumour spread to lymph nodes rather than to the scrotal wall?",
+   "back": "The tunica albuginea is a dense fibrous barrier that tumour rarely crosses, so spread is along the rich lymphatics accompanying the testicular vessels to the para-aortic nodes.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch3-inguinoscrotal-testis-card-064",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Testis, Cord & Torsion",
+   "front": "Which structures are found at the different levels of the spermatic cord, and why does this matter at exploration?",
+   "back": "At the deep ring the constituents converge as the vas hooks round the inferior epigastric artery; within the canal all three coverings are present; in the neck of the scrotum the cord is most superficial and is the site chosen for vasectomy and for cord block.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch3-inguinoscrotal-testis-card-065",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Descent & Processus Vaginalis",
+   "front": "Why is a patent processus vaginalis so often bilateral in infants, and what follows for management?",
+   "back": "Obliteration occurs late and independently on the two sides, so the contralateral processus is often still patent when one side presents. Contralateral exploration is therefore considered in the very young, whereas in older children the risk falls.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch3-inguinoscrotal-testis-card-066",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Descent & Processus Vaginalis",
+   "front": "Which structures make up the layers divided in a scrotal approach to the testis?",
+   "back": "Skin and dartos, external spermatic fascia, cremasteric fascia, internal spermatic fascia, then the parietal tunica vaginalis, entering the space in which a hydrocele lies.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch3-inguinoscrotal-testis-card-067",
+   "type": "basic",
+   "sectionId": "s3",
+   "deck": "Lymphatic Drainage & Staging",
+   "front": "Why does the pattern of retroperitoneal nodal spread differ between right and left testicular tumours?",
+   "back": "Lymphatic crossover is predominantly right to left, so a right-sided tumour may involve left para-aortic nodes as well as the interaortocaval group, while a left-sided tumour rarely crosses to the right - which is why nodal dissection templates are asymmetrical.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch3-inguinoscrotal-testis-card-068",
+   "type": "cloze",
+   "sectionId": "s2",
+   "deck": "Testis, Cord & Torsion",
+   "cloze": "Seminiferous tubules drain into the {{c1::rete testis}} within the mediastinum testis.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch3-inguinoscrotal-testis-card-069",
+   "type": "cloze",
+   "sectionId": "s2",
+   "deck": "Testis, Cord & Torsion",
+   "cloze": "Tuberculous epididymitis classically begins in the {{c1::globus minor (tail)}} of the epididymis.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch3-inguinoscrotal-testis-card-070",
+   "type": "cloze",
+   "sectionId": "s2",
+   "deck": "Testis, Cord & Torsion",
+   "cloze": "A scrotal swelling that does not transilluminate must be treated as a {{c1::testicular tumour}} until proven otherwise.",
+   "difficulty": 1
+  }
+ ],
+ "mcqs": [
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sana-ch3-inguinoscrotal-testis-mcq-001",
+   "type": "single",
+   "sectionId": "s4",
+   "difficulty": 2,
+   "highYield": true,
+   "stem": "A 16-year-old has sudden severe left testicular pain. The testis is high and transverse, the cremasteric reflex is absent and elevation does not help. Which anatomical variant underlies this?",
+   "options": [
+    {
+     "id": "a",
+     "text": "A patent processus vaginalis",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "b",
+     "text": "High investment of the tunica vaginalis around the cord",
+     "correct": true,
+     "why": "Key - B) High investment of the tunica vaginalis around the cord. A tunica vaginalis that invests the testis and lower cord completely leaves the testis suspended like a bell clapper, free to rotate within it - the deformity behind intravaginal torsion.\n\nWhy the others fail:\nA) A patent processus vaginalis - A patent processus produces a congenital hernia or hydrocele, not torsion.\nC) Absence of the gubernaculum - The gubernaculum guides descent; its remnant is the scrotal ligament, and its absence is not the recognised cause of this picture.\nD) An accessory testicular artery from the inferior epigastric artery - The cremasteric artery is a collateral vessel from the inferior epigastric artery and has no role in producing torsion."
+    },
+    {
+     "id": "c",
+     "text": "Absence of the gubernaculum",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "d",
+     "text": "An accessory testicular artery from the inferior epigastric artery",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    }
+   ],
+   "explanation": [
+    "Key - B) High investment of the tunica vaginalis around the cord. A tunica vaginalis that invests the testis and lower cord completely leaves the testis suspended like a bell clapper, free to rotate within it - the deformity behind intravaginal torsion.\n\nWhy the others fail:\nA) A patent processus vaginalis - A patent processus produces a congenital hernia or hydrocele, not torsion.\nC) Absence of the gubernaculum - The gubernaculum guides descent; its remnant is the scrotal ligament, and its absence is not the recognised cause of this picture.\nD) An accessory testicular artery from the inferior epigastric artery - The cremasteric artery is a collateral vessel from the inferior epigastric artery and has no role in producing torsion."
+   ],
+   "keyFacts": [
+    "Key - B) High investment of the tunica vaginalis around the cord. A tunica vaginalis that invests the testis and lower cord completely leaves the testis suspended like a bell clapper, free to rotate within it - the deformity behind intravaginal torsion.\n\nWhy the others fail:\nA) A patent processus vaginalis - A patent processus produces a congenital hernia or hydrocele, not torsion.\nC) Absence of the gubernaculum - The gubernaculum guides descent; its remnant is the scrotal ligament, and its absence is not the recognised cause of this picture.\nD) An accessory testicular artery from the inferior epigastric artery - The cremasteric artery is a collateral vessel from the inferior epigastric artery and has no role in producing torsion."
+   ],
+   "teachingPoint": "Key - B) High investment of the tunica vaginalis around the cord. A tunica vaginalis that invests the testis and lower cord completely leaves the testis suspended like a bell clapper, free to rotate within it - the deformity behind intravaginal torsion.\n\nWhy the others fail:\nA) A patent processus vaginalis - A patent processus produces a congenital hernia or hydrocele, not torsion.\nC) Absence of the gubernaculum - The gubernaculum guides descent; its remnant is the scrotal ligament, and its absence is not the recognised cause of this picture.\nD) An accessory testicular artery from the inferior epigastric artery - The cremasteric artery is a collateral vessel from the inferior epigastric artery and has no role in producing torsion."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sana-ch3-inguinoscrotal-testis-mcq-002",
+   "type": "single",
+   "sectionId": "s4",
+   "difficulty": 2,
+   "highYield": true,
+   "stem": "A 28-year-old man has a firm painless testicular mass. Which incision should be used to remove it and why?",
+   "options": [
+    {
+     "id": "a",
+     "text": "Scrotal, because it gives the most direct access",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "b",
+     "text": "Inguinal, with early clamping of the cord at the deep ring",
+     "correct": true,
+     "why": "Key - B) Inguinal, with early clamping of the cord at the deep ring. The inguinal approach with early high clamping of the cord respects the para-aortic drainage of the testis and prevents venous and lymphatic dissemination during mobilisation.\n\nWhy the others fail:\nA) Scrotal, because it gives the most direct access - A scrotal incision breaches skin that drains to the inguinal nodes and creates a second nodal basin, altering staging and treatment.\nC) Midline lower abdominal, to allow simultaneous node dissection - A midline laparotomy is not the primary approach for the tumour itself; node dissection is a separate staged decision.\nD) Perineal, to avoid the inguinal nodes - A perineal incision has no role in testicular surgery and would still violate the scrotal lymphatic field."
+    },
+    {
+     "id": "c",
+     "text": "Midline lower abdominal, to allow simultaneous node dissection",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "d",
+     "text": "Perineal, to avoid the inguinal nodes",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    }
+   ],
+   "explanation": [
+    "Key - B) Inguinal, with early clamping of the cord at the deep ring. The inguinal approach with early high clamping of the cord respects the para-aortic drainage of the testis and prevents venous and lymphatic dissemination during mobilisation.\n\nWhy the others fail:\nA) Scrotal, because it gives the most direct access - A scrotal incision breaches skin that drains to the inguinal nodes and creates a second nodal basin, altering staging and treatment.\nC) Midline lower abdominal, to allow simultaneous node dissection - A midline laparotomy is not the primary approach for the tumour itself; node dissection is a separate staged decision.\nD) Perineal, to avoid the inguinal nodes - A perineal incision has no role in testicular surgery and would still violate the scrotal lymphatic field."
+   ],
+   "keyFacts": [
+    "Key - B) Inguinal, with early clamping of the cord at the deep ring. The inguinal approach with early high clamping of the cord respects the para-aortic drainage of the testis and prevents venous and lymphatic dissemination during mobilisation.\n\nWhy the others fail:\nA) Scrotal, because it gives the most direct access - A scrotal incision breaches skin that drains to the inguinal nodes and creates a second nodal basin, altering staging and treatment.\nC) Midline lower abdominal, to allow simultaneous node dissection - A midline laparotomy is not the primary approach for the tumour itself; node dissection is a separate staged decision.\nD) Perineal, to avoid the inguinal nodes - A perineal incision has no role in testicular surgery and would still violate the scrotal lymphatic field."
+   ],
+   "teachingPoint": "Key - B) Inguinal, with early clamping of the cord at the deep ring. The inguinal approach with early high clamping of the cord respects the para-aortic drainage of the testis and prevents venous and lymphatic dissemination during mobilisation.\n\nWhy the others fail:\nA) Scrotal, because it gives the most direct access - A scrotal incision breaches skin that drains to the inguinal nodes and creates a second nodal basin, altering staging and treatment.\nC) Midline lower abdominal, to allow simultaneous node dissection - A midline laparotomy is not the primary approach for the tumour itself; node dissection is a separate staged decision.\nD) Perineal, to avoid the inguinal nodes - A perineal incision has no role in testicular surgery and would still violate the scrotal lymphatic field."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sana-ch3-inguinoscrotal-testis-mcq-003",
+   "type": "single",
+   "sectionId": "s4",
+   "difficulty": 2,
+   "highYield": true,
+   "stem": "A 55-year-old man develops a new left varicocele that does not decompress when he lies down. Which anatomical relation makes this significant?",
+   "options": [
+    {
+     "id": "a",
+     "text": "The left testicular vein drains into the left renal vein",
+     "correct": true,
+     "why": "Key - A) The left testicular vein drains into the left renal vein. The left testicular vein ends in the left renal vein, so a renal tumour invading that vein obstructs testicular venous drainage and produces a varicocele that fails to empty on lying flat.\n\nWhy the others fail:\nB) The left testicular artery is longer than the right - Arterial length has no bearing on venous distension.\nC) The left testis lies lower than the right - The normal lower position of the left testis is a cosmetic observation, not a cause of obstruction.\nD) The left spermatic cord passes through a wider deep ring - Deep ring size relates to hernia, not to varicocele."
+    },
+    {
+     "id": "b",
+     "text": "The left testicular artery is longer than the right",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "c",
+     "text": "The left testis lies lower than the right",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "d",
+     "text": "The left spermatic cord passes through a wider deep ring",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    }
+   ],
+   "explanation": [
+    "Key - A) The left testicular vein drains into the left renal vein. The left testicular vein ends in the left renal vein, so a renal tumour invading that vein obstructs testicular venous drainage and produces a varicocele that fails to empty on lying flat.\n\nWhy the others fail:\nB) The left testicular artery is longer than the right - Arterial length has no bearing on venous distension.\nC) The left testis lies lower than the right - The normal lower position of the left testis is a cosmetic observation, not a cause of obstruction.\nD) The left spermatic cord passes through a wider deep ring - Deep ring size relates to hernia, not to varicocele."
+   ],
+   "keyFacts": [
+    "Key - A) The left testicular vein drains into the left renal vein. The left testicular vein ends in the left renal vein, so a renal tumour invading that vein obstructs testicular venous drainage and produces a varicocele that fails to empty on lying flat.\n\nWhy the others fail:\nB) The left testicular artery is longer than the right - Arterial length has no bearing on venous distension.\nC) The left testis lies lower than the right - The normal lower position of the left testis is a cosmetic observation, not a cause of obstruction.\nD) The left spermatic cord passes through a wider deep ring - Deep ring size relates to hernia, not to varicocele."
+   ],
+   "teachingPoint": "Key - A) The left testicular vein drains into the left renal vein. The left testicular vein ends in the left renal vein, so a renal tumour invading that vein obstructs testicular venous drainage and produces a varicocele that fails to empty on lying flat.\n\nWhy the others fail:\nB) The left testicular artery is longer than the right - Arterial length has no bearing on venous distension.\nC) The left testis lies lower than the right - The normal lower position of the left testis is a cosmetic observation, not a cause of obstruction.\nD) The left spermatic cord passes through a wider deep ring - Deep ring size relates to hernia, not to varicocele."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sana-ch3-inguinoscrotal-testis-mcq-004",
+   "type": "single",
+   "sectionId": "s4",
+   "difficulty": 2,
+   "highYield": true,
+   "stem": "A boy has an empty right hemiscrotum, and the testis is palpable superficial to the external oblique aponeurosis above and lateral to the superficial ring but cannot be milked into the scrotum. What is this?",
+   "options": [
+    {
+     "id": "a",
+     "text": "Retractile testis",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "b",
+     "text": "Undescended testis in the canal",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "c",
+     "text": "Ectopic testis in the superficial inguinal pouch",
+     "correct": true,
+     "why": "Key - C) Ectopic testis in the superficial inguinal pouch. The superficial inguinal pouch of Denis Browne lies between the external oblique aponeurosis and Scarpa's fascia; a testis there is palpable, superficial and cannot be brought to the scrotum.\n\nWhy the others fail:\nA) Retractile testis - A retractile testis can be brought down into the scrotum and stays there briefly, which is not the case here.\nB) Undescended testis in the canal - A testis in the canal lies deep to the external oblique aponeurosis and is usually impalpable, not superficial to it.\nD) Femoral ectopic testis - A femoral ectopic testis lies below the inguinal ligament in the femoral triangle."
+    },
+    {
+     "id": "d",
+     "text": "Femoral ectopic testis",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    }
+   ],
+   "explanation": [
+    "Key - C) Ectopic testis in the superficial inguinal pouch. The superficial inguinal pouch of Denis Browne lies between the external oblique aponeurosis and Scarpa's fascia; a testis there is palpable, superficial and cannot be brought to the scrotum.\n\nWhy the others fail:\nA) Retractile testis - A retractile testis can be brought down into the scrotum and stays there briefly, which is not the case here.\nB) Undescended testis in the canal - A testis in the canal lies deep to the external oblique aponeurosis and is usually impalpable, not superficial to it.\nD) Femoral ectopic testis - A femoral ectopic testis lies below the inguinal ligament in the femoral triangle."
+   ],
+   "keyFacts": [
+    "Key - C) Ectopic testis in the superficial inguinal pouch. The superficial inguinal pouch of Denis Browne lies between the external oblique aponeurosis and Scarpa's fascia; a testis there is palpable, superficial and cannot be brought to the scrotum.\n\nWhy the others fail:\nA) Retractile testis - A retractile testis can be brought down into the scrotum and stays there briefly, which is not the case here.\nB) Undescended testis in the canal - A testis in the canal lies deep to the external oblique aponeurosis and is usually impalpable, not superficial to it.\nD) Femoral ectopic testis - A femoral ectopic testis lies below the inguinal ligament in the femoral triangle."
+   ],
+   "teachingPoint": "Key - C) Ectopic testis in the superficial inguinal pouch. The superficial inguinal pouch of Denis Browne lies between the external oblique aponeurosis and Scarpa's fascia; a testis there is palpable, superficial and cannot be brought to the scrotum.\n\nWhy the others fail:\nA) Retractile testis - A retractile testis can be brought down into the scrotum and stays there briefly, which is not the case here.\nB) Undescended testis in the canal - A testis in the canal lies deep to the external oblique aponeurosis and is usually impalpable, not superficial to it.\nD) Femoral ectopic testis - A femoral ectopic testis lies below the inguinal ligament in the femoral triangle."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sana-ch3-inguinoscrotal-testis-mcq-005",
+   "type": "single",
+   "sectionId": "s4",
+   "difficulty": 2,
+   "highYield": true,
+   "stem": "During orchidopexy for an intra-abdominal testis the cord is too short. The surgeon divides the testicular vessels high, relying on collateral supply. Which vessels maintain the testis?",
+   "options": [
+    {
+     "id": "a",
+     "text": "Inferior epigastric and superficial external pudendal arteries",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "b",
+     "text": "Artery to the vas and cremasteric artery",
+     "correct": true,
+     "why": "Key - B) Artery to the vas and cremasteric artery. The artery to the vas from the inferior vesical artery and the cremasteric artery from the inferior epigastric artery anastomose with the testicular artery and can sustain the testis after high division - the Fowler-Stephens principle.\n\nWhy the others fail:\nA) Inferior epigastric and superficial external pudendal arteries - The superficial external pudendal artery supplies scrotal skin only and cannot perfuse the testis.\nC) Internal pudendal and obturator arteries - The internal pudendal artery supplies the perineum and the obturator artery the medial thigh; neither reaches the testis.\nD) Inferior vesical and superior rectal arteries - The superior rectal artery is a hindgut vessel with no testicular contribution."
+    },
+    {
+     "id": "c",
+     "text": "Internal pudendal and obturator arteries",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "d",
+     "text": "Inferior vesical and superior rectal arteries",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    }
+   ],
+   "explanation": [
+    "Key - B) Artery to the vas and cremasteric artery. The artery to the vas from the inferior vesical artery and the cremasteric artery from the inferior epigastric artery anastomose with the testicular artery and can sustain the testis after high division - the Fowler-Stephens principle.\n\nWhy the others fail:\nA) Inferior epigastric and superficial external pudendal arteries - The superficial external pudendal artery supplies scrotal skin only and cannot perfuse the testis.\nC) Internal pudendal and obturator arteries - The internal pudendal artery supplies the perineum and the obturator artery the medial thigh; neither reaches the testis.\nD) Inferior vesical and superior rectal arteries - The superior rectal artery is a hindgut vessel with no testicular contribution."
+   ],
+   "keyFacts": [
+    "Key - B) Artery to the vas and cremasteric artery. The artery to the vas from the inferior vesical artery and the cremasteric artery from the inferior epigastric artery anastomose with the testicular artery and can sustain the testis after high division - the Fowler-Stephens principle.\n\nWhy the others fail:\nA) Inferior epigastric and superficial external pudendal arteries - The superficial external pudendal artery supplies scrotal skin only and cannot perfuse the testis.\nC) Internal pudendal and obturator arteries - The internal pudendal artery supplies the perineum and the obturator artery the medial thigh; neither reaches the testis.\nD) Inferior vesical and superior rectal arteries - The superior rectal artery is a hindgut vessel with no testicular contribution."
+   ],
+   "teachingPoint": "Key - B) Artery to the vas and cremasteric artery. The artery to the vas from the inferior vesical artery and the cremasteric artery from the inferior epigastric artery anastomose with the testicular artery and can sustain the testis after high division - the Fowler-Stephens principle.\n\nWhy the others fail:\nA) Inferior epigastric and superficial external pudendal arteries - The superficial external pudendal artery supplies scrotal skin only and cannot perfuse the testis.\nC) Internal pudendal and obturator arteries - The internal pudendal artery supplies the perineum and the obturator artery the medial thigh; neither reaches the testis.\nD) Inferior vesical and superior rectal arteries - The superior rectal artery is a hindgut vessel with no testicular contribution."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sana-ch3-inguinoscrotal-testis-mcq-006",
+   "type": "single",
+   "sectionId": "s4",
+   "difficulty": 2,
+   "highYield": true,
+   "stem": "A man with a chronic scrotal skin ulcer proves to have squamous carcinoma. Which nodes should be examined first?",
+   "options": [
+    {
+     "id": "a",
+     "text": "Para-aortic nodes",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "b",
+     "text": "Superficial inguinal nodes",
+     "correct": true,
+     "why": "Key - B) Superficial inguinal nodes. Scrotal skin is somatic skin below the umbilicus and drains to the superficial inguinal nodes, the classic pattern of chimney sweep's carcinoma.\n\nWhy the others fail:\nA) Para-aortic nodes - Para-aortic nodes drain the testis itself, which reflects its abdominal origin rather than the skin.\nC) External iliac nodes - External iliac nodes are a second-tier station reached only after the inguinal groups.\nD) Deep inguinal nodes only - The deep inguinal nodes receive the glans penis and the deep lymphatics rather than scrotal skin."
+    },
+    {
+     "id": "c",
+     "text": "External iliac nodes",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "d",
+     "text": "Deep inguinal nodes only",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    }
+   ],
+   "explanation": [
+    "Key - B) Superficial inguinal nodes. Scrotal skin is somatic skin below the umbilicus and drains to the superficial inguinal nodes, the classic pattern of chimney sweep's carcinoma.\n\nWhy the others fail:\nA) Para-aortic nodes - Para-aortic nodes drain the testis itself, which reflects its abdominal origin rather than the skin.\nC) External iliac nodes - External iliac nodes are a second-tier station reached only after the inguinal groups.\nD) Deep inguinal nodes only - The deep inguinal nodes receive the glans penis and the deep lymphatics rather than scrotal skin."
+   ],
+   "keyFacts": [
+    "Key - B) Superficial inguinal nodes. Scrotal skin is somatic skin below the umbilicus and drains to the superficial inguinal nodes, the classic pattern of chimney sweep's carcinoma.\n\nWhy the others fail:\nA) Para-aortic nodes - Para-aortic nodes drain the testis itself, which reflects its abdominal origin rather than the skin.\nC) External iliac nodes - External iliac nodes are a second-tier station reached only after the inguinal groups.\nD) Deep inguinal nodes only - The deep inguinal nodes receive the glans penis and the deep lymphatics rather than scrotal skin."
+   ],
+   "teachingPoint": "Key - B) Superficial inguinal nodes. Scrotal skin is somatic skin below the umbilicus and drains to the superficial inguinal nodes, the classic pattern of chimney sweep's carcinoma.\n\nWhy the others fail:\nA) Para-aortic nodes - Para-aortic nodes drain the testis itself, which reflects its abdominal origin rather than the skin.\nC) External iliac nodes - External iliac nodes are a second-tier station reached only after the inguinal groups.\nD) Deep inguinal nodes only - The deep inguinal nodes receive the glans penis and the deep lymphatics rather than scrotal skin."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sana-ch3-inguinoscrotal-testis-mcq-007",
+   "type": "single",
+   "sectionId": "s4",
+   "difficulty": 2,
+   "highYield": true,
+   "stem": "A neonate is found to have a firm, non-tender, discoloured testis at birth. Which type of torsion is this and where is the twist?",
+   "options": [
+    {
+     "id": "a",
+     "text": "Intravaginal, within the tunica vaginalis",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "b",
+     "text": "Extravaginal, involving the whole cord and its coverings",
+     "correct": true,
+     "why": "Key - B) Extravaginal, involving the whole cord and its coverings. In the neonate the tunica vaginalis is not yet adherent to the dartos, so the whole cord with its coverings rotates - extravaginal torsion, usually established in utero.\n\nWhy the others fail:\nA) Intravaginal, within the tunica vaginalis - Intravaginal torsion requires a bell-clapper tunica and is the adolescent pattern.\nC) Torsion of the appendix testis - Torsion of the appendix testis causes a tender blue dot in an older child, not a painless discoloured testis at birth.\nD) Torsion of a hydatid of Morgagni within the epididymis - The hydatid of Morgagni is an upper pole appendage; its torsion is a localised painful lesion, not this presentation."
+    },
+    {
+     "id": "c",
+     "text": "Torsion of the appendix testis",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "d",
+     "text": "Torsion of a hydatid of Morgagni within the epididymis",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    }
+   ],
+   "explanation": [
+    "Key - B) Extravaginal, involving the whole cord and its coverings. In the neonate the tunica vaginalis is not yet adherent to the dartos, so the whole cord with its coverings rotates - extravaginal torsion, usually established in utero.\n\nWhy the others fail:\nA) Intravaginal, within the tunica vaginalis - Intravaginal torsion requires a bell-clapper tunica and is the adolescent pattern.\nC) Torsion of the appendix testis - Torsion of the appendix testis causes a tender blue dot in an older child, not a painless discoloured testis at birth.\nD) Torsion of a hydatid of Morgagni within the epididymis - The hydatid of Morgagni is an upper pole appendage; its torsion is a localised painful lesion, not this presentation."
+   ],
+   "keyFacts": [
+    "Key - B) Extravaginal, involving the whole cord and its coverings. In the neonate the tunica vaginalis is not yet adherent to the dartos, so the whole cord with its coverings rotates - extravaginal torsion, usually established in utero.\n\nWhy the others fail:\nA) Intravaginal, within the tunica vaginalis - Intravaginal torsion requires a bell-clapper tunica and is the adolescent pattern.\nC) Torsion of the appendix testis - Torsion of the appendix testis causes a tender blue dot in an older child, not a painless discoloured testis at birth.\nD) Torsion of a hydatid of Morgagni within the epididymis - The hydatid of Morgagni is an upper pole appendage; its torsion is a localised painful lesion, not this presentation."
+   ],
+   "teachingPoint": "Key - B) Extravaginal, involving the whole cord and its coverings. In the neonate the tunica vaginalis is not yet adherent to the dartos, so the whole cord with its coverings rotates - extravaginal torsion, usually established in utero.\n\nWhy the others fail:\nA) Intravaginal, within the tunica vaginalis - Intravaginal torsion requires a bell-clapper tunica and is the adolescent pattern.\nC) Torsion of the appendix testis - Torsion of the appendix testis causes a tender blue dot in an older child, not a painless discoloured testis at birth.\nD) Torsion of a hydatid of Morgagni within the epididymis - The hydatid of Morgagni is an upper pole appendage; its torsion is a localised painful lesion, not this presentation."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sana-ch3-inguinoscrotal-testis-mcq-008",
+   "type": "single",
+   "sectionId": "s4",
+   "difficulty": 2,
+   "highYield": true,
+   "stem": "Why does an inguinal hernia repair carry a small risk of testicular atrophy?",
+   "options": [
+    {
+     "id": "a",
+     "text": "Because the testicular artery may be injured or thrombosed during dissection of the cord",
+     "correct": true,
+     "why": "Key - A) Because the testicular artery may be injured or thrombosed during dissection of the cord. Dissection of the cord can injure or thrombose the testicular artery and the pampiniform plexus, and the resulting ischaemic orchitis may end in atrophy.\n\nWhy the others fail:\nB) Because the ilioinguinal nerve carries vasomotor fibres to the testis - The ilioinguinal nerve is sensory to the scrotum and does not control testicular perfusion.\nC) Because the cremasteric artery is always divided - The cremasteric artery is small and often divided without consequence; alone it does not explain atrophy.\nD) Because ligation of the sac interrupts the pampiniform plexus - Ligation of the sac at its neck is a peritoneal step and need not involve the venous plexus if the plane is correct."
+    },
+    {
+     "id": "b",
+     "text": "Because the ilioinguinal nerve carries vasomotor fibres to the testis",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "c",
+     "text": "Because the cremasteric artery is always divided",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "d",
+     "text": "Because ligation of the sac interrupts the pampiniform plexus",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    }
+   ],
+   "explanation": [
+    "Key - A) Because the testicular artery may be injured or thrombosed during dissection of the cord. Dissection of the cord can injure or thrombose the testicular artery and the pampiniform plexus, and the resulting ischaemic orchitis may end in atrophy.\n\nWhy the others fail:\nB) Because the ilioinguinal nerve carries vasomotor fibres to the testis - The ilioinguinal nerve is sensory to the scrotum and does not control testicular perfusion.\nC) Because the cremasteric artery is always divided - The cremasteric artery is small and often divided without consequence; alone it does not explain atrophy.\nD) Because ligation of the sac interrupts the pampiniform plexus - Ligation of the sac at its neck is a peritoneal step and need not involve the venous plexus if the plane is correct."
+   ],
+   "keyFacts": [
+    "Key - A) Because the testicular artery may be injured or thrombosed during dissection of the cord. Dissection of the cord can injure or thrombose the testicular artery and the pampiniform plexus, and the resulting ischaemic orchitis may end in atrophy.\n\nWhy the others fail:\nB) Because the ilioinguinal nerve carries vasomotor fibres to the testis - The ilioinguinal nerve is sensory to the scrotum and does not control testicular perfusion.\nC) Because the cremasteric artery is always divided - The cremasteric artery is small and often divided without consequence; alone it does not explain atrophy.\nD) Because ligation of the sac interrupts the pampiniform plexus - Ligation of the sac at its neck is a peritoneal step and need not involve the venous plexus if the plane is correct."
+   ],
+   "teachingPoint": "Key - A) Because the testicular artery may be injured or thrombosed during dissection of the cord. Dissection of the cord can injure or thrombose the testicular artery and the pampiniform plexus, and the resulting ischaemic orchitis may end in atrophy.\n\nWhy the others fail:\nB) Because the ilioinguinal nerve carries vasomotor fibres to the testis - The ilioinguinal nerve is sensory to the scrotum and does not control testicular perfusion.\nC) Because the cremasteric artery is always divided - The cremasteric artery is small and often divided without consequence; alone it does not explain atrophy.\nD) Because ligation of the sac interrupts the pampiniform plexus - Ligation of the sac at its neck is a peritoneal step and need not involve the venous plexus if the plane is correct."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sana-ch3-inguinoscrotal-testis-mcq-009",
+   "type": "single",
+   "sectionId": "s4",
+   "difficulty": 2,
+   "highYield": true,
+   "stem": "A boy with an impalpable testis is explored laparoscopically. The testicular vessels and the vas are seen entering the deep ring. What does this finding mean?",
+   "options": [
+    {
+     "id": "a",
+     "text": "The testis is absent and no further exploration is needed",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "b",
+     "text": "The testis lies in the inguinal canal or the superficial inguinal pouch and the groin must be explored",
+     "correct": true,
+     "why": "Key - B) The testis lies in the inguinal canal or the superficial inguinal pouch and the groin must be explored. Cord structures entering the deep ring mean the testis lies distal to it, so the groin is opened to find a testis in the canal or the superficial inguinal pouch, or a nubbin.\n\nWhy the others fail:\nA) The testis is absent and no further exploration is needed - Absence cannot be concluded when both the vessels and the vas are seen entering the ring; the structures must lead to something.\nC) The testis is intra-abdominal and a staged Fowler-Stephens procedure is required - A Fowler-Stephens approach is used when the testis is seen intra-abdominally with short vessels, which is not what is described.\nD) There is a vanishing testis and the vessels end blindly - A vanishing testis is diagnosed when blind-ending vessels are found intra-abdominally, not when they pass through the ring."
+    },
+    {
+     "id": "c",
+     "text": "The testis is intra-abdominal and a staged Fowler-Stephens procedure is required",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "d",
+     "text": "There is a vanishing testis and the vessels end blindly",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    }
+   ],
+   "explanation": [
+    "Key - B) The testis lies in the inguinal canal or the superficial inguinal pouch and the groin must be explored. Cord structures entering the deep ring mean the testis lies distal to it, so the groin is opened to find a testis in the canal or the superficial inguinal pouch, or a nubbin.\n\nWhy the others fail:\nA) The testis is absent and no further exploration is needed - Absence cannot be concluded when both the vessels and the vas are seen entering the ring; the structures must lead to something.\nC) The testis is intra-abdominal and a staged Fowler-Stephens procedure is required - A Fowler-Stephens approach is used when the testis is seen intra-abdominally with short vessels, which is not what is described.\nD) There is a vanishing testis and the vessels end blindly - A vanishing testis is diagnosed when blind-ending vessels are found intra-abdominally, not when they pass through the ring."
+   ],
+   "keyFacts": [
+    "Key - B) The testis lies in the inguinal canal or the superficial inguinal pouch and the groin must be explored. Cord structures entering the deep ring mean the testis lies distal to it, so the groin is opened to find a testis in the canal or the superficial inguinal pouch, or a nubbin.\n\nWhy the others fail:\nA) The testis is absent and no further exploration is needed - Absence cannot be concluded when both the vessels and the vas are seen entering the ring; the structures must lead to something.\nC) The testis is intra-abdominal and a staged Fowler-Stephens procedure is required - A Fowler-Stephens approach is used when the testis is seen intra-abdominally with short vessels, which is not what is described.\nD) There is a vanishing testis and the vessels end blindly - A vanishing testis is diagnosed when blind-ending vessels are found intra-abdominally, not when they pass through the ring."
+   ],
+   "teachingPoint": "Key - B) The testis lies in the inguinal canal or the superficial inguinal pouch and the groin must be explored. Cord structures entering the deep ring mean the testis lies distal to it, so the groin is opened to find a testis in the canal or the superficial inguinal pouch, or a nubbin.\n\nWhy the others fail:\nA) The testis is absent and no further exploration is needed - Absence cannot be concluded when both the vessels and the vas are seen entering the ring; the structures must lead to something.\nC) The testis is intra-abdominal and a staged Fowler-Stephens procedure is required - A Fowler-Stephens approach is used when the testis is seen intra-abdominally with short vessels, which is not what is described.\nD) There is a vanishing testis and the vessels end blindly - A vanishing testis is diagnosed when blind-ending vessels are found intra-abdominally, not when they pass through the ring."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sana-ch3-inguinoscrotal-testis-mcq-010",
+   "type": "single",
+   "sectionId": "s4",
+   "difficulty": 2,
+   "highYield": true,
+   "stem": "A man treated years earlier for a right inguinal hernia now has a right testicular tumour. Which additional nodal group must be considered that would not be involved in an untreated patient?",
+   "options": [
+    {
+     "id": "a",
+     "text": "Left para-aortic nodes",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "b",
+     "text": "Superficial inguinal nodes",
+     "correct": true,
+     "why": "Key - B) Superficial inguinal nodes. Previous inguinal or scrotal surgery divides and reroutes lymphatics into the field draining to the superficial inguinal nodes, so that group becomes a genuine site of spread and must be included in staging.\n\nWhy the others fail:\nA) Left para-aortic nodes - Left para-aortic involvement occurs by the usual right to left lymphatic crossover and is not a consequence of previous surgery.\nC) Coeliac nodes - Coeliac nodes drain foregut structures and have no relation to the testis.\nD) Internal iliac nodes - Internal iliac nodes drain the pelvic viscera and the anal canal below the dentate line, not the testis."
+    },
+    {
+     "id": "c",
+     "text": "Coeliac nodes",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "d",
+     "text": "Internal iliac nodes",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    }
+   ],
+   "explanation": [
+    "Key - B) Superficial inguinal nodes. Previous inguinal or scrotal surgery divides and reroutes lymphatics into the field draining to the superficial inguinal nodes, so that group becomes a genuine site of spread and must be included in staging.\n\nWhy the others fail:\nA) Left para-aortic nodes - Left para-aortic involvement occurs by the usual right to left lymphatic crossover and is not a consequence of previous surgery.\nC) Coeliac nodes - Coeliac nodes drain foregut structures and have no relation to the testis.\nD) Internal iliac nodes - Internal iliac nodes drain the pelvic viscera and the anal canal below the dentate line, not the testis."
+   ],
+   "keyFacts": [
+    "Key - B) Superficial inguinal nodes. Previous inguinal or scrotal surgery divides and reroutes lymphatics into the field draining to the superficial inguinal nodes, so that group becomes a genuine site of spread and must be included in staging.\n\nWhy the others fail:\nA) Left para-aortic nodes - Left para-aortic involvement occurs by the usual right to left lymphatic crossover and is not a consequence of previous surgery.\nC) Coeliac nodes - Coeliac nodes drain foregut structures and have no relation to the testis.\nD) Internal iliac nodes - Internal iliac nodes drain the pelvic viscera and the anal canal below the dentate line, not the testis."
+   ],
+   "teachingPoint": "Key - B) Superficial inguinal nodes. Previous inguinal or scrotal surgery divides and reroutes lymphatics into the field draining to the superficial inguinal nodes, so that group becomes a genuine site of spread and must be included in staging.\n\nWhy the others fail:\nA) Left para-aortic nodes - Left para-aortic involvement occurs by the usual right to left lymphatic crossover and is not a consequence of previous surgery.\nC) Coeliac nodes - Coeliac nodes drain foregut structures and have no relation to the testis.\nD) Internal iliac nodes - Internal iliac nodes drain the pelvic viscera and the anal canal below the dentate line, not the testis."
+  }
+ ],
+ "emqs": [],
+ "summary": "Inguinoscrotal & Testis: work through each section's cards to fix the structures, their relations and clinical lesions. Use the MCQs to test discrimination and the image-occlusion cards to rehearse identification."
+}

@@ -1,0 +1,138 @@
+/*
+ * Emits a machine-checkable JSON Schema from the Zod definitions, plus a documented
+ * template.json, so content (authored by hand or by a Claude pipeline) can be
+ * written against a checkable contract. Run: `npm run make:schema` (vite-node).
+ */
+import { writeFileSync, mkdirSync } from 'node:fs';
+import { join, dirname } from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { zodToJsonSchema } from 'zod-to-json-schema';
+import { ChapterSchema } from '../src/content/schema';
+
+const root = join(dirname(fileURLToPath(import.meta.url)), '..');
+const outDir = join(root, 'content', '_schema');
+mkdirSync(outDir, { recursive: true });
+
+const jsonSchema = zodToJsonSchema(ChapterSchema, {
+  name: 'FoundationChapter',
+  $refStrategy: 'none',
+});
+writeFileSync(join(outDir, 'chapter.schema.json'), JSON.stringify(jsonSchema, null, 2) + '\n');
+
+// A documented, minimal, VALID example authors can copy. Field intents live in
+// _docs (ignored by the schema's passthrough-free objects? no — kept in a sibling
+// key so the example itself still validates).
+const template = {
+  schema: 'foundation.study-module/v1',
+  id: 'subject-ch1-slug',
+  subject: 'Surgery',
+  title: 'Chapter title',
+  source: { book: 'Reference book', chapter: 1, title: 'Original chapter title', pages: '1-11' },
+  brand: 'by Yanal · Cairo 2026',
+  estMinutes: 30,
+  deck: 'Surgery::Chapter title',
+  tags: ['surgery', 'year-4'],
+  objectives: [
+    'State what a student should be able to do after this chapter.',
+    'Four to eight objectives, each starting with a verb.',
+  ],
+  outline: ['1.1 First section', '1.2 Second section'],
+  sections: [
+    {
+      id: 's1',
+      n: '1.1',
+      title: 'First section',
+      deck: 'First section',
+      digest:
+        'Lead sentence stating the core idea. Then the essential mechanism / classification / management, with the **load-bearing terms** in bold. Summarise to roughly 40–60% of the source — never transcribe.',
+      highYield: ['A crisp, exam-facing one-liner.', 'Three to six of these per section.'],
+      tables: [
+        {
+          title: 'Turn any ≥3-item comparison into a table',
+          columns: ['Column A', 'Column B'],
+          rows: [['row 1 a', 'row 1 b']],
+        },
+      ],
+      pitfalls: ['A common trap or examiner favourite.'],
+      figures: [
+        {
+          kind: 'described',
+          alt: 'Required accessible description of the figure.',
+          described: 'Prose fallback when no image asset exists.',
+        },
+      ],
+    },
+  ],
+  glossary: [
+    { term: 'myofibroblast', kind: 'cell', def: 'Actin-rich fibroblast that contracts a wound.', aliases: ['myofibroblasts'] },
+    { term: 'TGF-β', kind: 'mediator', def: 'Growth factor driving fibroblast activity and collagen synthesis.' },
+    { term: 'cellulitis', kind: 'condition', def: 'Spreading infection of skin and subcutaneous tissue.' },
+  ],
+  mnemonics: [{ cue: 'CUE', expansion: 'What the cue stands for', for: 's1' }],
+  cards: [
+    {
+      schema: 'foundation.card/v2',
+      id: 'subject-ch1-card-001',
+      type: 'basic',
+      sectionId: 's1',
+      deck: 'First section::Core concepts',
+      front: 'Question shown first.',
+      back: 'Answer.',
+      extra: 'Optional elaboration.',
+      hint: 'Optional hint.',
+      difficulty: 1,
+    },
+    {
+      schema: 'foundation.card/v2',
+      id: 'subject-ch1-card-002',
+      type: 'cloze',
+      sectionId: 's1',
+      deck: 'First section::Core concepts',
+      cloze: 'Wound contraction is driven by {{c1::myofibroblasts}}.',
+      difficulty: 1,
+    },
+  ],
+  mcqs: [
+    {
+      schema: 'foundation.mcq/v2',
+      id: 'subject-ch1-mcq-001',
+      type: 'single',
+      sectionId: 's1',
+      difficulty: 1,
+      stem: 'Single-best-answer question stem?',
+      options: [
+        { id: 'a', text: 'Correct option', correct: true, why: 'Why it is right.' },
+        { id: 'b', text: 'Distractor', correct: false, why: 'Why it is wrong.' },
+        { id: 'c', text: 'Distractor', correct: false, why: 'Why it is wrong.' },
+        { id: 'd', text: 'Distractor', correct: false, why: 'Why it is wrong.' },
+      ],
+      explanation: ['Ordered explanation, one idea per line.'],
+      keyFacts: ['A distilled fact.'],
+      teachingPoint: 'The single lesson to remember.',
+    },
+  ],
+  emqs: [
+    {
+      schema: 'foundation.emq/v1',
+      id: 'subject-ch1-emq-001',
+      type: 'emq',
+      theme: 'Theme of the option bank',
+      instruction: 'For each scenario below, select the single most likely answer.',
+      sectionId: 's1',
+      difficulty: 2,
+      options: [
+        { id: 'a', text: 'Option A' },
+        { id: 'b', text: 'Option B' },
+        { id: 'c', text: 'Option C' },
+      ],
+      stems: [
+        { stem: 'First short vignette.', answer: 'a', why: 'Why A fits this vignette.' },
+        { stem: 'Second short vignette.', answer: 'c', why: 'Why C fits this vignette.' },
+      ],
+    },
+  ],
+  summary: 'One paragraph that recaps the chapter for a student revising the night before.',
+};
+writeFileSync(join(outDir, 'template.json'), JSON.stringify(template, null, 2) + '\n');
+
+console.log('wrote content/_schema/chapter.schema.json and content/_schema/template.json');

@@ -1,0 +1,1968 @@
+{
+ "schema": "foundation.study-module/v1",
+ "id": "sana-ch1-anterior-abdominal-wall",
+ "subject": "Anatomy",
+ "title": "Anterior Abdominal Wall",
+ "source": {
+  "book": "Recall by Yanal — Surgical Anatomy",
+  "chapter": 1,
+  "title": "Anterior Abdominal Wall",
+  "pages": "—"
+ },
+ "brand": "by Yanal · Cairo 2026",
+ "estMinutes": 20,
+ "deck": "Anatomy::Anterior Abdominal Wall",
+ "tags": [
+  "anatomy",
+  "surgical-anatomy",
+  "anterior-abdominal-wall"
+ ],
+ "objectives": [
+  "Identify the key structures of Anterior Abdominal Wall at each level of dissection.",
+  "Relate the nerves, vessels and muscles of Anterior Abdominal Wall to their functions.",
+  "Localise the named spaces and regions of Anterior Abdominal Wall and list their contents.",
+  "Recognise the common clinical lesions associated with Anterior Abdominal Wall.",
+  "Reproduce the high-yield relations of Anterior Abdominal Wall tested in vivas and MCQs."
+ ],
+ "outline": [
+  "1.1 Layers & Fasciae",
+  "1.2 Muscles & Aponeuroses",
+  "1.3 Rectus Sheath & Linea Alba",
+  "1.4 Nerves & Vessels",
+  "1.5 Incisions & Closure",
+  "1.6 Clinical Scenarios",
+  "1.7 Surface Anatomy & Planes",
+  "1.8 Other Hernias"
+ ],
+ "sections": [
+  {
+   "id": "s1",
+   "n": "1.1",
+   "title": "Layers & Fasciae",
+   "deck": "Layers & Fasciae",
+   "digest": "Imported Recall deck. This section holds the **layers & fasciae** cards for Anterior Abdominal Wall. Open the flashcards for Layers & Fasciae to drill it; author a written digest here to turn the section into a reader page.",
+   "highYield": [],
+   "tables": [],
+   "pitfalls": [],
+   "figures": []
+  },
+  {
+   "id": "s2",
+   "n": "1.2",
+   "title": "Muscles & Aponeuroses",
+   "deck": "Muscles & Aponeuroses",
+   "digest": "Imported Recall deck. This section holds the **muscles & aponeuroses** cards for Anterior Abdominal Wall. Open the flashcards for Muscles & Aponeuroses to drill it; author a written digest here to turn the section into a reader page.",
+   "highYield": [],
+   "tables": [],
+   "pitfalls": [],
+   "figures": []
+  },
+  {
+   "id": "s3",
+   "n": "1.3",
+   "title": "Rectus Sheath & Linea Alba",
+   "deck": "Rectus Sheath & Linea Alba",
+   "digest": "Imported Recall deck. This section holds the **rectus sheath & linea alba** cards for Anterior Abdominal Wall. Open the flashcards for Rectus Sheath & Linea Alba to drill it; author a written digest here to turn the section into a reader page.",
+   "highYield": [],
+   "tables": [],
+   "pitfalls": [],
+   "figures": []
+  },
+  {
+   "id": "s4",
+   "n": "1.4",
+   "title": "Nerves & Vessels",
+   "deck": "Nerves & Vessels",
+   "digest": "Imported Recall deck. This section holds the **nerves & vessels** cards for Anterior Abdominal Wall. Open the flashcards for Nerves & Vessels to drill it; author a written digest here to turn the section into a reader page.",
+   "highYield": [],
+   "tables": [],
+   "pitfalls": [],
+   "figures": []
+  },
+  {
+   "id": "s5",
+   "n": "1.5",
+   "title": "Incisions & Closure",
+   "deck": "Incisions & Closure",
+   "digest": "Imported Recall deck. This section holds the **incisions & closure** cards for Anterior Abdominal Wall. Open the flashcards for Incisions & Closure to drill it; author a written digest here to turn the section into a reader page.",
+   "highYield": [],
+   "tables": [],
+   "pitfalls": [],
+   "figures": []
+  },
+  {
+   "id": "s6",
+   "n": "1.6",
+   "title": "Clinical Scenarios",
+   "deck": "Clinical Scenarios",
+   "digest": "Imported Recall deck. This section holds the **clinical scenarios** cards for Anterior Abdominal Wall. Open the flashcards for Clinical Scenarios to drill it; author a written digest here to turn the section into a reader page.",
+   "highYield": [],
+   "tables": [],
+   "pitfalls": [],
+   "figures": []
+  },
+  {
+   "id": "s7",
+   "n": "1.7",
+   "title": "Surface Anatomy & Planes",
+   "deck": "Surface Anatomy & Planes",
+   "digest": "Imported Recall deck. This section holds the **surface anatomy & planes** cards for Anterior Abdominal Wall. Open the flashcards for Surface Anatomy & Planes to drill it; author a written digest here to turn the section into a reader page.",
+   "highYield": [],
+   "tables": [],
+   "pitfalls": [],
+   "figures": []
+  },
+  {
+   "id": "s8",
+   "n": "1.8",
+   "title": "Other Hernias",
+   "deck": "Other Hernias",
+   "digest": "Imported Recall deck. This section holds the **other hernias** cards for Anterior Abdominal Wall. Open the flashcards for Other Hernias to drill it; author a written digest here to turn the section into a reader page.",
+   "highYield": [],
+   "tables": [],
+   "pitfalls": [],
+   "figures": []
+  }
+ ],
+ "glossary": [],
+ "mnemonics": [],
+ "cards": [
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch1-anterior-abdominal-wall-card-001",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Layers & Fasciae",
+   "front": "Name the layers crossed, in order, by a scalpel entering the peritoneal cavity through the anterior abdominal wall lateral to the rectus and below the umbilicus.",
+   "back": "Skin, Camper's fatty fascia, Scarpa's membranous fascia, external oblique, internal oblique, transversus abdominis, fascia transversalis, extraperitoneal fat, parietal peritoneum.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch1-anterior-abdominal-wall-card-002",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Layers & Fasciae",
+   "front": "What is Camper's fascia and where does it continue?",
+   "back": "The fatty superficial layer of the superficial fascia. It continues into the thigh as ordinary subcutaneous fat and loses its fat in the scrotum, where it becomes the dartos muscle.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch1-anterior-abdominal-wall-card-003",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Layers & Fasciae",
+   "front": "What is Scarpa's fascia?",
+   "back": "The deep membranous layer of the superficial fascia of the lower abdominal wall, best defined below the umbilicus and in the midline.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch1-anterior-abdominal-wall-card-004",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Layers & Fasciae",
+   "front": "Where does Scarpa's fascia attach inferiorly, and what is the surgical consequence?",
+   "back": "It fuses with the fascia lata of the thigh about one finger-breadth below the inguinal ligament (Holden's line). Fluid deep to it therefore cannot track into the thigh.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch1-anterior-abdominal-wall-card-005",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Layers & Fasciae",
+   "front": "Which perineal fascia is the direct continuation of Scarpa's fascia?",
+   "back": "Colles' fascia of the superficial perineal pouch; in the scrotum the same layer becomes the dartos and in the penis Buck's outer covering.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch1-anterior-abdominal-wall-card-006",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Layers & Fasciae",
+   "front": "Explain the distribution of extravasated urine after rupture of the bulbar urethra in fascial terms.",
+   "back": "Urine enters the superficial perineal pouch and is contained by Colles' fascia, so it spreads into the scrotum and penis and up the anterior abdominal wall deep to Scarpa's fascia, but never into the thigh because Scarpa's fascia fuses with the fascia lata.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch1-anterior-abdominal-wall-card-007",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Layers & Fasciae",
+   "front": "Why is there no true deep fascia over the anterior abdominal wall?",
+   "back": "The wall must distend. A tough investing layer would prevent this, so the membranous layer simply blends with the fascia lata at the thigh and with the aponeurosis of external oblique elsewhere.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch1-anterior-abdominal-wall-card-008",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Layers & Fasciae",
+   "front": "What is the fascia transversalis?",
+   "back": "The continuous layer of fascia lining the whole inner surface of the abdominal wall, between the transversus abdominis and the extraperitoneal fat.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch1-anterior-abdominal-wall-card-009",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Layers & Fasciae",
+   "front": "Name three structures derived from the fascia transversalis.",
+   "back": "The deep inguinal ring and the internal spermatic fascia, the anterior wall of the femoral sheath, and the posterior wall of the inguinal canal.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch1-anterior-abdominal-wall-card-010",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Layers & Fasciae",
+   "front": "Which surgical plane is the extraperitoneal fat used for, and why is it valuable?",
+   "back": "It is the plane of totally extraperitoneal (TEP) hernia repair and of extraperitoneal approaches to the bladder, iliac vessels and lumbar sympathetic chain. The peritoneum is never opened, so bowel is not exposed and adhesions are avoided.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch1-anterior-abdominal-wall-card-011",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Layers & Fasciae",
+   "front": "Define the retropubic space of Retzius.",
+   "back": "The extraperitoneal space between the pubis and the transversalis fascia anteriorly and the bladder posteriorly, containing fat and the prevesical venous plexus. It is the plane entered for open prostatectomy and for retropubic mesh.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch1-anterior-abdominal-wall-card-012",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Layers & Fasciae",
+   "front": "What is the space of Bogros?",
+   "back": "The lateral extension of the retropubic space, between the transversalis fascia and the peritoneum in the iliac fossa. It is the space into which preperitoneal mesh is laid in TEP and TAPP repairs.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch1-anterior-abdominal-wall-card-013",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Layers & Fasciae",
+   "front": "What is the linea semilunaris?",
+   "back": "The curved lateral border of the rectus abdominis, where the aponeuroses of the three flat muscles fuse to form the rectus sheath. It runs from the ninth costal cartilage to the pubic tubercle.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch1-anterior-abdominal-wall-card-014",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Layers & Fasciae",
+   "front": "Where does a Spigelian hernia occur and why is it easily missed?",
+   "back": "Through the Spigelian fascia at the junction of the linea semilunaris with the arcuate line, lateral to the rectus. The sac spreads deep to the intact external oblique aponeurosis, so there is often no visible lump - it is an interstitial hernia.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch1-anterior-abdominal-wall-card-015",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Layers & Fasciae",
+   "front": "Which layers form the umbilicus?",
+   "back": "Skin adherent to a fibrous cicatrix, the fused linea alba and transversalis fascia, and peritoneum. There is no fat and no muscle, which is why it is a congenital weak point.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch1-anterior-abdominal-wall-card-016",
+   "type": "basic",
+   "sectionId": "s1",
+   "deck": "Layers & Fasciae",
+   "front": "Which three fibrous cords converge on the deep surface of the umbilicus?",
+   "back": "The ligamentum teres (obliterated left umbilical vein) above, and the median umbilical ligament (urachus) with the two medial umbilical ligaments (obliterated umbilical arteries) below.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch1-anterior-abdominal-wall-card-017",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Muscles & Aponeuroses",
+   "front": "External oblique - origin.",
+   "back": "The outer surfaces of the lower eight ribs, interdigitating with serratus anterior and latissimus dorsi.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch1-anterior-abdominal-wall-card-018",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Muscles & Aponeuroses",
+   "front": "External oblique - insertion.",
+   "back": "The anterior half of the iliac crest, and by aponeurosis into the linea alba, pubic crest and pubic tubercle.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch1-anterior-abdominal-wall-card-019",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Muscles & Aponeuroses",
+   "front": "External oblique - nerve supply.",
+   "back": "The anterior rami of T7 to T11 (thoraco-abdominal nerves) and the subcostal nerve T12.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch1-anterior-abdominal-wall-card-020",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Muscles & Aponeuroses",
+   "front": "External oblique - direction of fibres and its surgical use.",
+   "back": "Downwards, forwards and medially - the hands-in-pockets direction. The aponeurosis is opened along this line in a groin incision so that it can be closed as a strong flap.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch1-anterior-abdominal-wall-card-021",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Muscles & Aponeuroses",
+   "front": "Internal oblique - origin.",
+   "back": "The thoracolumbar fascia, the anterior two-thirds of the iliac crest and the lateral two-thirds of the inguinal ligament.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch1-anterior-abdominal-wall-card-022",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Muscles & Aponeuroses",
+   "front": "Internal oblique - insertion.",
+   "back": "The lower three or four costal cartilages, the linea alba, and through the conjoint tendon into the pubic crest and pectineal line.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch1-anterior-abdominal-wall-card-023",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Muscles & Aponeuroses",
+   "front": "Internal oblique - nerve supply.",
+   "back": "T7 to T12 plus the iliohypogastric and ilioinguinal nerves (L1).",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch1-anterior-abdominal-wall-card-024",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Muscles & Aponeuroses",
+   "front": "Internal oblique - direction of fibres.",
+   "back": "Upwards, forwards and medially, at right angles to external oblique; its lowest fibres arch over the cord and become the conjoint tendon.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch1-anterior-abdominal-wall-card-025",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Muscles & Aponeuroses",
+   "front": "Transversus abdominis - origin.",
+   "back": "The inner surfaces of the lower six costal cartilages, the thoracolumbar fascia, the anterior two-thirds of the iliac crest and the lateral third of the inguinal ligament.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch1-anterior-abdominal-wall-card-026",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Muscles & Aponeuroses",
+   "front": "Transversus abdominis - insertion.",
+   "back": "The linea alba and, with the internal oblique, the conjoint tendon to the pubic crest and pectineal line.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch1-anterior-abdominal-wall-card-027",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Muscles & Aponeuroses",
+   "front": "Transversus abdominis - nerve supply.",
+   "back": "T7 to T12 with the iliohypogastric and ilioinguinal nerves (L1).",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch1-anterior-abdominal-wall-card-028",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Muscles & Aponeuroses",
+   "front": "Transversus abdominis - action.",
+   "back": "It is the main compressor of the abdominal contents and the deep corset of the wall; its arching lower fibres produce the shutter mechanism of the inguinal canal.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch1-anterior-abdominal-wall-card-029",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Muscles & Aponeuroses",
+   "front": "Rectus abdominis - origin.",
+   "back": "The pubic crest, pubic tubercle and the front of the pubic symphysis.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch1-anterior-abdominal-wall-card-030",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Muscles & Aponeuroses",
+   "front": "Rectus abdominis - insertion.",
+   "back": "The fifth, sixth and seventh costal cartilages and the xiphoid process.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch1-anterior-abdominal-wall-card-031",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Muscles & Aponeuroses",
+   "front": "Rectus abdominis - nerve supply.",
+   "back": "The anterior rami of T7 to T12, which enter the lateral edge of the sheath - so a vertical paramedian incision that retracts the muscle laterally preserves them.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch1-anterior-abdominal-wall-card-032",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Muscles & Aponeuroses",
+   "front": "Rectus abdominis - action.",
+   "back": "Flexion of the trunk, elevation of the pelvis and increase of intra-abdominal pressure in straining, coughing and expulsive efforts.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch1-anterior-abdominal-wall-card-033",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Muscles & Aponeuroses",
+   "front": "Describe the tendinous intersections of rectus abdominis and their surgical importance.",
+   "back": "There are usually three, at the xiphoid, the umbilicus and midway between. They adhere firmly to the anterior sheath but not to the posterior sheath, so a rectus sheath haematoma is limited anteriorly in compartments but can track freely behind the muscle.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch1-anterior-abdominal-wall-card-034",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Muscles & Aponeuroses",
+   "front": "Pyramidalis - attachments, nerve and surgical value.",
+   "back": "From the pubic crest to the linea alba, supplied by the subcostal nerve (T12). Its apex points to the midline, so it is a reliable guide to the linea alba in a Pfannenstiel incision.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch1-anterior-abdominal-wall-card-035",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Muscles & Aponeuroses",
+   "front": "What is the conjoint tendon and what does it form?",
+   "back": "The fused aponeuroses of the internal oblique and transversus abdominis, inserting into the pubic crest and the medial part of the pectineal line. It reinforces the medial part of the posterior wall of the inguinal canal.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch1-anterior-abdominal-wall-card-036",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Muscles & Aponeuroses",
+   "front": "What happens when the conjoint tendon is weak or wide?",
+   "back": "The medial part of the posterior wall of the inguinal canal loses support, and a direct inguinal hernia bulges through Hesselbach's triangle.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch1-anterior-abdominal-wall-card-037",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Muscles & Aponeuroses",
+   "front": "What is the inguinal ligament and between which points does it run?",
+   "back": "The thickened, in-rolled lower border of the external oblique aponeurosis, running from the anterior superior iliac spine to the pubic tubercle. It forms the floor of the inguinal canal.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch1-anterior-abdominal-wall-card-038",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Muscles & Aponeuroses",
+   "front": "Describe the lacunar ligament of Gimbernat.",
+   "back": "The triangular medial expansion of the inguinal ligament onto the pecten pubis. It forms the sharp medial boundary of the femoral ring and is the structure divided to release a strangulated femoral hernia.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch1-anterior-abdominal-wall-card-039",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Muscles & Aponeuroses",
+   "front": "What is the pectineal ligament of Cooper and which repair uses it?",
+   "back": "The strong periosteal ridge along the pecten pubis, the lateral continuation of the lacunar ligament. It is the anchoring structure of the McVay repair for femoral and large direct hernias.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch1-anterior-abdominal-wall-card-040",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Muscles & Aponeuroses",
+   "front": "Cremaster muscle - origin and nerve supply.",
+   "back": "Loops of muscle derived from the lower border of the internal oblique, supplied by the genital branch of the genitofemoral nerve (L1, L2).",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch1-anterior-abdominal-wall-card-041",
+   "type": "basic",
+   "sectionId": "s2",
+   "deck": "Muscles & Aponeuroses",
+   "front": "What is the afferent and efferent pathway of the cremasteric reflex?",
+   "back": "Afferent by the ilioinguinal nerve from the upper medial thigh, efferent by the genital branch of the genitofemoral nerve to the cremaster. Both are L1 and L2.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch1-anterior-abdominal-wall-card-042",
+   "type": "basic",
+   "sectionId": "s3",
+   "deck": "Rectus Sheath & Linea Alba",
+   "front": "Describe the rectus sheath above the costal margin.",
+   "back": "The anterior wall is the external oblique aponeurosis only. There is no posterior wall - the muscle lies directly on the fifth to seventh costal cartilages.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch1-anterior-abdominal-wall-card-043",
+   "type": "basic",
+   "sectionId": "s3",
+   "deck": "Rectus Sheath & Linea Alba",
+   "front": "Describe the rectus sheath between the costal margin and the arcuate line.",
+   "back": "The internal oblique aponeurosis splits. The anterior wall is external oblique plus the anterior lamina of internal oblique; the posterior wall is the posterior lamina of internal oblique plus transversus abdominis and the fascia transversalis.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch1-anterior-abdominal-wall-card-044",
+   "type": "basic",
+   "sectionId": "s3",
+   "deck": "Rectus Sheath & Linea Alba",
+   "front": "Describe the rectus sheath below the arcuate line.",
+   "back": "All three aponeuroses pass in front of the muscle. The posterior wall is only fascia transversalis, extraperitoneal fat and peritoneum.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch1-anterior-abdominal-wall-card-045",
+   "type": "basic",
+   "sectionId": "s3",
+   "deck": "Rectus Sheath & Linea Alba",
+   "front": "Where is the arcuate line of Douglas?",
+   "back": "About midway between the umbilicus and the pubic symphysis, roughly a hand's breadth below the umbilicus. It is the curved free lower border of the posterior rectus sheath.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch1-anterior-abdominal-wall-card-046",
+   "type": "basic",
+   "sectionId": "s3",
+   "deck": "Rectus Sheath & Linea Alba",
+   "front": "What happens to the inferior epigastric vessels at the arcuate line?",
+   "back": "They pierce the fascia transversalis and enter the sheath below the arcuate line, then run upwards on the deep surface of the rectus to anastomose with the superior epigastric artery.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch1-anterior-abdominal-wall-card-047",
+   "type": "basic",
+   "sectionId": "s3",
+   "deck": "Rectus Sheath & Linea Alba",
+   "front": "List the contents of the rectus sheath.",
+   "back": "Rectus abdominis and pyramidalis, the superior and inferior epigastric vessels, the terminal parts of the lower six thoracic nerves with their vessels, and lymphatics.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch1-anterior-abdominal-wall-card-048",
+   "type": "basic",
+   "sectionId": "s3",
+   "deck": "Rectus Sheath & Linea Alba",
+   "front": "Why does a lower midline incision expose peritoneum more quickly than an upper one?",
+   "back": "Below the arcuate line there is no aponeurotic posterior sheath, so after the linea alba only transversalis fascia, extraperitoneal fat and peritoneum separate the surgeon from the cavity.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch1-anterior-abdominal-wall-card-049",
+   "type": "basic",
+   "sectionId": "s3",
+   "deck": "Rectus Sheath & Linea Alba",
+   "front": "What is the linea alba?",
+   "back": "The midline raphe formed by the decussating aponeurotic fibres of the three flat muscles of both sides, extending from the xiphoid to the pubic symphysis.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch1-anterior-abdominal-wall-card-050",
+   "type": "basic",
+   "sectionId": "s3",
+   "deck": "Rectus Sheath & Linea Alba",
+   "front": "Why is the linea alba the chosen line for a midline laparotomy, and what is the price?",
+   "back": "It is avascular and free of nerves and muscle, so entry is quick and bloodless and can be extended from xiphoid to pubis. The price is a relatively poorly vascularised aponeurotic closure with a higher rate of burst abdomen and incisional hernia than a transverse wound.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch1-anterior-abdominal-wall-card-051",
+   "type": "basic",
+   "sectionId": "s3",
+   "deck": "Rectus Sheath & Linea Alba",
+   "front": "Where is the linea alba widest and what condition results?",
+   "back": "Above the umbilicus. Widening there produces divarication of the recti, a midline bulge on straining with no true defect, hernia sac or risk of strangulation.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch1-anterior-abdominal-wall-card-052",
+   "type": "basic",
+   "sectionId": "s3",
+   "deck": "Rectus Sheath & Linea Alba",
+   "front": "What is an epigastric hernia and what does it usually contain?",
+   "back": "A protrusion through a defect in the linea alba between the xiphoid and the umbilicus. It usually contains only extraperitoneal fat, and pain is out of proportion to the small size of the lump.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch1-anterior-abdominal-wall-card-053",
+   "type": "basic",
+   "sectionId": "s3",
+   "deck": "Rectus Sheath & Linea Alba",
+   "front": "Which vessel usually bleeds in a rectus sheath haematoma?",
+   "back": "The inferior epigastric artery or one of its branches, torn by sudden violent contraction of the rectus, by coughing, or by an injection or trocar.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch1-anterior-abdominal-wall-card-054",
+   "type": "basic",
+   "sectionId": "s3",
+   "deck": "Rectus Sheath & Linea Alba",
+   "front": "Why can a rectus sheath haematoma below the arcuate line be much larger and mimic an acute abdomen?",
+   "back": "There is no aponeurotic posterior sheath below the arcuate line, so blood tracks freely into the extraperitoneal space of the pelvis instead of being confined by the sheath.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch1-anterior-abdominal-wall-card-055",
+   "type": "basic",
+   "sectionId": "s3",
+   "deck": "Rectus Sheath & Linea Alba",
+   "front": "What is Fothergill's sign?",
+   "back": "A tender abdominal mass that does not cross the midline and stays palpable when the rectus is tensed by lifting the head. It indicates a rectus sheath haematoma rather than an intraperitoneal mass.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch1-anterior-abdominal-wall-card-056",
+   "type": "basic",
+   "sectionId": "s3",
+   "deck": "Rectus Sheath & Linea Alba",
+   "front": "Why should a stoma be brought out through the rectus muscle?",
+   "back": "The rectus and its sheath splint the trephine and reduce parastomal herniation, and the site stays clear of the costal margin, iliac crest, umbilicus and belt line.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch1-anterior-abdominal-wall-card-057",
+   "type": "basic",
+   "sectionId": "s4",
+   "deck": "Nerves & Vessels",
+   "front": "In which plane do the nerves and vessels of the abdominal wall run?",
+   "back": "The neurovascular plane between the internal oblique and the transversus abdominis - the same plane infiltrated in a transversus abdominis plane (TAP) block.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch1-anterior-abdominal-wall-card-058",
+   "type": "basic",
+   "sectionId": "s4",
+   "deck": "Nerves & Vessels",
+   "front": "Which segmental nerve supplies the skin over the xiphisternum, the umbilicus and just above the pubis?",
+   "back": "T7 at the xiphisternum, T10 at the umbilicus, and L1 just above the pubis and over the groin.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch1-anterior-abdominal-wall-card-059",
+   "type": "basic",
+   "sectionId": "s4",
+   "deck": "Nerves & Vessels",
+   "front": "Which nerve is at risk in a grid-iron incision placed too medially or too low, and what is the result?",
+   "back": "The iliohypogastric nerve. Division denervates the conjoint tendon, and the weakened posterior wall may later give a direct inguinal hernia on that side.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch1-anterior-abdominal-wall-card-060",
+   "type": "basic",
+   "sectionId": "s4",
+   "deck": "Nerves & Vessels",
+   "front": "Describe the course of the ilioinguinal nerve in the inguinal canal.",
+   "back": "It pierces the internal oblique, enters the canal without passing through the deep ring, runs in front of the spermatic cord and leaves through the superficial ring.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch1-anterior-abdominal-wall-card-061",
+   "type": "basic",
+   "sectionId": "s4",
+   "deck": "Nerves & Vessels",
+   "front": "What is lost when the ilioinguinal nerve is divided at hernia repair?",
+   "back": "Sensation over the root of the penis and upper scrotum or labium majus and the adjacent medial thigh, plus part of the motor supply to the conjoint tendon. Entrapment in a suture or in mesh instead gives chronic inguinodynia.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch1-anterior-abdominal-wall-card-062",
+   "type": "basic",
+   "sectionId": "s4",
+   "deck": "Nerves & Vessels",
+   "front": "Which artery supplies the upper anterior abdominal wall, and from where does it arise?",
+   "back": "The superior epigastric artery, the terminal branch of the internal thoracic artery, entering the sheath between the sternal and costal slips of the diaphragm.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch1-anterior-abdominal-wall-card-063",
+   "type": "basic",
+   "sectionId": "s4",
+   "deck": "Nerves & Vessels",
+   "front": "From where does the inferior epigastric artery arise?",
+   "back": "From the external iliac artery just above the inguinal ligament, medial to the deep inguinal ring.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch1-anterior-abdominal-wall-card-064",
+   "type": "basic",
+   "sectionId": "s4",
+   "deck": "Nerves & Vessels",
+   "front": "Where is the watershed of the anterior abdominal wall blood supply?",
+   "back": "At the level of the umbilicus, where the superior and inferior epigastric arteries anastomose within the rectus sheath.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch1-anterior-abdominal-wall-card-065",
+   "type": "basic",
+   "sectionId": "s4",
+   "deck": "Nerves & Vessels",
+   "front": "Which vessel is the pedicle of a TRAM flap and of a DIEP flap?",
+   "back": "The deep inferior epigastric artery and vein. The TRAM carries the rectus with it, while the DIEP dissects the perforators out of the muscle and spares it, reducing later abdominal wall weakness.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch1-anterior-abdominal-wall-card-066",
+   "type": "basic",
+   "sectionId": "s4",
+   "deck": "Nerves & Vessels",
+   "front": "Which superficial arteries cross the lower abdominal wall and from which trunk?",
+   "back": "The superficial epigastric, superficial circumflex iliac and superficial external pudendal arteries, all from the femoral artery in the femoral triangle.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch1-anterior-abdominal-wall-card-067",
+   "type": "basic",
+   "sectionId": "s4",
+   "deck": "Nerves & Vessels",
+   "front": "What is the surgical rule for lateral port placement in laparoscopy, in terms of the inferior epigastric artery?",
+   "back": "Place lateral ports lateral to the linea semilunaris, or transilluminate and inspect the peritoneum from inside - the artery lies in the lateral umbilical fold, so a port placed just lateral to that fold is the one that bleeds.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch1-anterior-abdominal-wall-card-068",
+   "type": "basic",
+   "sectionId": "s4",
+   "deck": "Nerves & Vessels",
+   "front": "Name the five peritoneal folds seen on the inner surface of the lower abdominal wall.",
+   "back": "One median umbilical fold (urachus), two medial umbilical folds (obliterated umbilical arteries) and two lateral umbilical folds (inferior epigastric vessels).",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch1-anterior-abdominal-wall-card-069",
+   "type": "basic",
+   "sectionId": "s4",
+   "deck": "Nerves & Vessels",
+   "front": "Which fossae lie between the umbilical folds and what herniates through each?",
+   "back": "The supravesical fossa (supravesical hernia), the medial inguinal fossa which corresponds to Hesselbach's triangle (direct hernia) and the lateral inguinal fossa at the deep ring (indirect hernia).",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch1-anterior-abdominal-wall-card-070",
+   "type": "basic",
+   "sectionId": "s4",
+   "deck": "Nerves & Vessels",
+   "front": "How does the venous drainage of the abdominal wall divide at the umbilicus?",
+   "back": "Above the umbilicus to the axillary vein through the lateral thoracic and thoraco-epigastric veins, below the umbilicus to the femoral vein through the superficial epigastric vein.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch1-anterior-abdominal-wall-card-071",
+   "type": "basic",
+   "sectionId": "s4",
+   "deck": "Nerves & Vessels",
+   "front": "How is the direction of flow in dilated abdominal wall veins used to separate caput medusae from inferior vena caval obstruction?",
+   "back": "In caput medusae the flow radiates away from the umbilicus in all directions. In caval obstruction the dilated veins are more lateral and flow is upwards below the umbilicus, carrying blood from the femoral to the axillary system.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch1-anterior-abdominal-wall-card-072",
+   "type": "basic",
+   "sectionId": "s4",
+   "deck": "Nerves & Vessels",
+   "front": "How do the lymphatics of the anterior abdominal wall drain?",
+   "back": "Above the umbilicus to the anterior axillary (pectoral) nodes, below the umbilicus to the superficial inguinal nodes.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch1-anterior-abdominal-wall-card-073",
+   "type": "basic",
+   "sectionId": "s5",
+   "deck": "Incisions & Closure",
+   "front": "Which layers does a midline laparotomy divide?",
+   "back": "Skin, superficial fascia, linea alba, transversalis fascia, extraperitoneal fat and peritoneum. No muscle, nerve or major vessel is cut.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch1-anterior-abdominal-wall-card-074",
+   "type": "basic",
+   "sectionId": "s5",
+   "deck": "Incisions & Closure",
+   "front": "What is the anatomical advantage of a paramedian incision?",
+   "back": "The rectus is retracted laterally rather than cut, so its segmental nerve supply is preserved, and the muscle is interposed between the anterior and posterior sheath suture lines, which strengthens the closure.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch1-anterior-abdominal-wall-card-075",
+   "type": "basic",
+   "sectionId": "s5",
+   "deck": "Incisions & Closure",
+   "front": "Describe Kocher's subcostal incision and its principal nerve hazard.",
+   "back": "An oblique muscle-cutting incision about one inch below and parallel to the costal margin, dividing the rectus and its sheaths medially. The eighth, ninth and tenth intercostal nerves are at risk, giving numbness or a bulge of the wall.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch1-anterior-abdominal-wall-card-076",
+   "type": "basic",
+   "sectionId": "s5",
+   "deck": "Incisions & Closure",
+   "front": "How is a McBurney grid-iron incision placed?",
+   "back": "At right angles to the spino-umbilical line, centred on the junction of its lateral third with the medial two-thirds - McBurney's point - about 5 to 6 cm long.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch1-anterior-abdominal-wall-card-077",
+   "type": "basic",
+   "sectionId": "s5",
+   "deck": "Incisions & Closure",
+   "front": "Why is the grid-iron incision called muscle-splitting?",
+   "back": "The external oblique aponeurosis is opened along its fibres, then the internal oblique and transversus are split along their own fibre directions rather than cut, so the wall closes back on itself and is strong.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch1-anterior-abdominal-wall-card-078",
+   "type": "basic",
+   "sectionId": "s5",
+   "deck": "Incisions & Closure",
+   "front": "What is a Lanz incision?",
+   "back": "A transverse skin-crease variant of the grid-iron placed in a Langer line at the same point, more cosmetic but with a greater risk to the iliohypogastric and ilioinguinal nerves.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch1-anterior-abdominal-wall-card-079",
+   "type": "basic",
+   "sectionId": "s5",
+   "deck": "Incisions & Closure",
+   "front": "Describe the Pfannenstiel incision layer by layer.",
+   "back": "A transverse curved skin incision about two finger-breadths above the symphysis, the anterior rectus sheath divided transversely and dissected off the recti, the recti separated in the midline, then the peritoneum opened vertically.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch1-anterior-abdominal-wall-card-080",
+   "type": "basic",
+   "sectionId": "s5",
+   "deck": "Incisions & Closure",
+   "front": "Why is a Pfannenstiel incision strong and cosmetic?",
+   "back": "It lies in a Langer line, and the transverse sheath incision is at right angles to the pull of the recti, so tension on the suture line is minimal and coughing is tolerated.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch1-anterior-abdominal-wall-card-081",
+   "type": "basic",
+   "sectionId": "s5",
+   "deck": "Incisions & Closure",
+   "front": "Why do transverse incisions burst less often than vertical ones?",
+   "back": "Their line runs with the direction of the aponeurotic fibres and the Langer lines, and the pull of the abdominal muscles is across the suture line rather than along it.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch1-anterior-abdominal-wall-card-082",
+   "type": "basic",
+   "sectionId": "s5",
+   "deck": "Incisions & Closure",
+   "front": "Which layer of the abdominal wall is the strongest and must be closed soundly?",
+   "back": "The linea alba or the anterior rectus sheath. Its secure closure is what holds the wound together; the peritoneum regenerates and need not be closed.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch1-anterior-abdominal-wall-card-083",
+   "type": "basic",
+   "sectionId": "s5",
+   "deck": "Incisions & Closure",
+   "front": "State the standard technical rule for mass closure of a midline wound.",
+   "back": "A continuous non-absorbable monofilament such as polypropylene, bites of about 1 cm from the fascial edge placed about 1 cm apart, and a suture length to wound length ratio of at least 4 to 1, tied without tension.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch1-anterior-abdominal-wall-card-084",
+   "type": "basic",
+   "sectionId": "s5",
+   "deck": "Incisions & Closure",
+   "front": "Define burst abdomen and its partial form.",
+   "back": "Disruption of an abdominal wound in the early postoperative period. In the partial form the deep layers separate with intact skin, which is the way most incisional hernias begin; in the complete form the wound gapes and prolapse of bowel is called evisceration.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch1-anterior-abdominal-wall-card-085",
+   "type": "basic",
+   "sectionId": "s5",
+   "deck": "Incisions & Closure",
+   "front": "Which layers are crossed by a supra-umbilical port and why is it the standard site?",
+   "back": "Skin, linea alba, transversalis fascia and peritoneum - no muscle and no major vessel, and the wall is thinnest and closest to the peritoneum there.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch1-anterior-abdominal-wall-card-086",
+   "type": "basic",
+   "sectionId": "s5",
+   "deck": "Incisions & Closure",
+   "front": "Where is Palmer's point and when is it used?",
+   "back": "In the left mid-clavicular line about 3 cm below the costal margin, used for the initial entry when periumbilical adhesions are expected. It avoids the usual site of adhesions and is remote from the aorta.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch1-anterior-abdominal-wall-card-087",
+   "type": "basic",
+   "sectionId": "s5",
+   "deck": "Incisions & Closure",
+   "front": "Why does a Rutherford Morison incision give good access to the right iliac fossa and the iliac vessels?",
+   "back": "It is an oblique muscle-cutting extension of the grid-iron running upwards and laterally towards the iliac crest; it opens the whole iliac fossa and can be taken extraperitoneally for renal transplantation.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch1-anterior-abdominal-wall-card-088",
+   "type": "cloze",
+   "sectionId": "s1",
+   "deck": "Layers & Fasciae",
+   "cloze": "The membranous layer of the superficial fascia is {{c1::Scarpa's fascia}}, which fuses with the fascia lata one finger-breadth below the inguinal ligament.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch1-anterior-abdominal-wall-card-089",
+   "type": "cloze",
+   "sectionId": "s1",
+   "deck": "Layers & Fasciae",
+   "cloze": "In the perineum, Scarpa's fascia continues as {{c1::Colles' fascia}}, which is why extravasated urine reaches the scrotum but not the thigh.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch1-anterior-abdominal-wall-card-090",
+   "type": "cloze",
+   "sectionId": "s1",
+   "deck": "Layers & Fasciae",
+   "cloze": "A Spigelian hernia protrudes at the junction of the linea semilunaris with the {{c1::arcuate line}}.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch1-anterior-abdominal-wall-card-091",
+   "type": "cloze",
+   "sectionId": "s2",
+   "deck": "Muscles & Aponeuroses",
+   "cloze": "The conjoint tendon is formed by the fused aponeuroses of {{c1::internal oblique and transversus abdominis}}.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch1-anterior-abdominal-wall-card-092",
+   "type": "cloze",
+   "sectionId": "s2",
+   "deck": "Muscles & Aponeuroses",
+   "cloze": "The inguinal ligament runs from the anterior superior iliac spine to the {{c1::pubic tubercle}}.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch1-anterior-abdominal-wall-card-093",
+   "type": "cloze",
+   "sectionId": "s2",
+   "deck": "Muscles & Aponeuroses",
+   "cloze": "The sharp medial boundary of the femoral ring is the {{c1::lacunar ligament of Gimbernat}}.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch1-anterior-abdominal-wall-card-094",
+   "type": "cloze",
+   "sectionId": "s3",
+   "deck": "Rectus Sheath & Linea Alba",
+   "cloze": "Below the arcuate line the posterior wall of the rectus sheath consists only of {{c1::fascia transversalis, extraperitoneal fat and peritoneum}}.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch1-anterior-abdominal-wall-card-095",
+   "type": "cloze",
+   "sectionId": "s3",
+   "deck": "Rectus Sheath & Linea Alba",
+   "cloze": "The arcuate line lies about {{c1::midway between the umbilicus and the pubic symphysis}}.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch1-anterior-abdominal-wall-card-096",
+   "type": "cloze",
+   "sectionId": "s3",
+   "deck": "Rectus Sheath & Linea Alba",
+   "cloze": "The tendinous intersections of the rectus adhere to the {{c1::anterior}} wall of the sheath only.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch1-anterior-abdominal-wall-card-097",
+   "type": "cloze",
+   "sectionId": "s4",
+   "deck": "Nerves & Vessels",
+   "cloze": "The dermatome of the umbilicus is {{c1::T10}}.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch1-anterior-abdominal-wall-card-098",
+   "type": "cloze",
+   "sectionId": "s4",
+   "deck": "Nerves & Vessels",
+   "cloze": "The nerves of the abdominal wall run in the plane between {{c1::internal oblique and transversus abdominis}}.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch1-anterior-abdominal-wall-card-099",
+   "type": "cloze",
+   "sectionId": "s4",
+   "deck": "Nerves & Vessels",
+   "cloze": "The inferior epigastric artery arises from the {{c1::external iliac artery}} just above the inguinal ligament.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch1-anterior-abdominal-wall-card-100",
+   "type": "cloze",
+   "sectionId": "s4",
+   "deck": "Nerves & Vessels",
+   "cloze": "The lateral umbilical fold is raised by the {{c1::inferior epigastric vessels}}.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch1-anterior-abdominal-wall-card-101",
+   "type": "cloze",
+   "sectionId": "s4",
+   "deck": "Nerves & Vessels",
+   "cloze": "Lymph from the abdominal wall above the umbilicus drains to the {{c1::axillary}} nodes.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch1-anterior-abdominal-wall-card-102",
+   "type": "cloze",
+   "sectionId": "s5",
+   "deck": "Incisions & Closure",
+   "cloze": "McBurney's point lies at the junction of the {{c1::lateral third and medial two-thirds}} of the line from the anterior superior iliac spine to the umbilicus.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch1-anterior-abdominal-wall-card-103",
+   "type": "cloze",
+   "sectionId": "s5",
+   "deck": "Incisions & Closure",
+   "cloze": "For mass closure the suture length to wound length ratio should be at least {{c1::4 to 1}}.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch1-anterior-abdominal-wall-card-104",
+   "type": "basic",
+   "sectionId": "s7",
+   "deck": "Surface Anatomy & Planes",
+   "front": "Name the four planes that divide the abdomen into nine regions.",
+   "back": "Two vertical midclavicular (lateral) planes, and two horizontal planes - the subcostal plane through the lowest point of the tenth costal cartilage and the transtubercular plane through the tubercles of the iliac crests at L5.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch1-anterior-abdominal-wall-card-105",
+   "type": "basic",
+   "sectionId": "s7",
+   "deck": "Surface Anatomy & Planes",
+   "front": "Where is the transpyloric plane of Addison and what lies in it?",
+   "back": "Midway between the suprasternal notch and the pubic symphysis, at the level of L1 and the tip of the ninth costal cartilage. It contains the pylorus, the neck of the pancreas, the origin of the superior mesenteric artery and portal vein, the duodenojejunal flexure, the hila of the kidneys and the fundus of the gallbladder.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch1-anterior-abdominal-wall-card-106",
+   "type": "basic",
+   "sectionId": "s7",
+   "deck": "Surface Anatomy & Planes",
+   "front": "Where is the supracristal plane and what does it mark?",
+   "back": "The line joining the highest points of the iliac crests, at the level of L4. It marks the aortic bifurcation and is the landmark for lumbar puncture.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch1-anterior-abdominal-wall-card-107",
+   "type": "basic",
+   "sectionId": "s7",
+   "deck": "Surface Anatomy & Planes",
+   "front": "Give the surface marking of the gallbladder fundus.",
+   "back": "Where the lateral border of the right rectus crosses the ninth costal cartilage - the tip of the ninth cartilage in the transpyloric plane, which is the point of maximal tenderness in Murphy's sign.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch1-anterior-abdominal-wall-card-108",
+   "type": "basic",
+   "sectionId": "s7",
+   "deck": "Surface Anatomy & Planes",
+   "front": "Give the surface marking of the spleen.",
+   "back": "Deep to the ninth to eleventh ribs on the left, with its long axis along the tenth rib; it must enlarge to about three times its size before it becomes palpable below the left costal margin.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch1-anterior-abdominal-wall-card-109",
+   "type": "basic",
+   "sectionId": "s7",
+   "deck": "Surface Anatomy & Planes",
+   "front": "Why does an enlarging spleen appear towards the right iliac fossa?",
+   "back": "It enlarges along the axis of the tenth rib, downwards, forwards and medially, keeping its notched anterior border palpable - which distinguishes it from a renal mass that enlarges vertically and is ballottable.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch1-anterior-abdominal-wall-card-110",
+   "type": "basic",
+   "sectionId": "s7",
+   "deck": "Surface Anatomy & Planes",
+   "front": "Which surface landmark marks the deep inguinal ring on abdominal examination?",
+   "back": "A point half an inch above the mid-inguinal point, immediately above the femoral pulse.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch1-anterior-abdominal-wall-card-111",
+   "type": "basic",
+   "sectionId": "s8",
+   "deck": "Other Hernias",
+   "front": "What is the anatomical difference between an umbilical and a paraumbilical hernia?",
+   "back": "A true umbilical hernia protrudes through the umbilical cicatrix itself and is the infantile type. A paraumbilical hernia protrudes through the linea alba immediately above or below the umbilicus, so the umbilicus is stretched into a crescent and the sac has a narrow fibrous neck.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch1-anterior-abdominal-wall-card-112",
+   "type": "basic",
+   "sectionId": "s8",
+   "deck": "Other Hernias",
+   "front": "Why does an infantile umbilical hernia usually resolve but an adult paraumbilical hernia does not?",
+   "back": "The infantile defect closes as the rectus muscles approximate and the cicatrix contracts with growth. The adult defect is a fixed fibrous ring in the linea alba under continuing intra-abdominal pressure, so it enlarges and its narrow neck predisposes to obstruction and strangulation.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch1-anterior-abdominal-wall-card-113",
+   "type": "basic",
+   "sectionId": "s8",
+   "deck": "Other Hernias",
+   "front": "What is an incisional hernia and through which layer does it occur?",
+   "back": "Herniation through the aponeurotic layer of a previous surgical wound, usually after partial disruption of the linea alba or rectus sheath; the skin and subcutaneous layers remain intact so the sac is covered only by scarred fascia and skin.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch1-anterior-abdominal-wall-card-114",
+   "type": "basic",
+   "sectionId": "s8",
+   "deck": "Other Hernias",
+   "front": "Why is an incisional hernia often multi-loculated and wide-necked?",
+   "back": "The fascial defect is irregular with several separate gaps bridged by scar, and adhesions divide the sac into compartments; the wide neck makes strangulation less likely but reduction less complete.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch1-anterior-abdominal-wall-card-115",
+   "type": "basic",
+   "sectionId": "s8",
+   "deck": "Other Hernias",
+   "front": "Give the boundaries of the inferior lumbar triangle of Petit.",
+   "back": "The iliac crest below, latissimus dorsi medially and the external oblique laterally, with the internal oblique in its floor.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch1-anterior-abdominal-wall-card-116",
+   "type": "basic",
+   "sectionId": "s8",
+   "deck": "Other Hernias",
+   "front": "Give the boundaries of the superior lumbar triangle of Grynfeltt.",
+   "back": "The twelfth rib and serratus posterior inferior above, quadratus lumborum medially and the internal oblique laterally, with the transversalis fascia in its floor. It is the commoner site of a lumbar hernia.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch1-anterior-abdominal-wall-card-117",
+   "type": "basic",
+   "sectionId": "s8",
+   "deck": "Other Hernias",
+   "front": "What is a divarication of the recti and why is it not repaired as a hernia?",
+   "back": "A widening of the linea alba with separation of the recti but no fascial defect; there is no sac, no neck and no risk of strangulation, so it is a cosmetic and functional problem only.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch1-anterior-abdominal-wall-card-118",
+   "type": "basic",
+   "sectionId": "s8",
+   "deck": "Other Hernias",
+   "front": "What is exomphalos and how does it differ anatomically from gastroschisis?",
+   "back": "In exomphalos the viscera herniate into the base of the umbilical cord and are covered by a sac of amnion and peritoneum, with the cord inserting on the sac. In gastroschisis there is a full-thickness defect of the abdominal wall usually to the right of a normally inserted cord, and the bowel is uncovered and exposed to amniotic fluid.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch1-anterior-abdominal-wall-card-119",
+   "type": "basic",
+   "sectionId": "s4",
+   "deck": "Nerves & Vessels",
+   "front": "Which nerves are blocked by a transversus abdominis plane block and which incisions does it cover?",
+   "back": "The anterior rami of T7 to L1 as they run in the neurovascular plane between internal oblique and transversus, giving analgesia to the anterolateral wall for transverse and grid-iron incisions and for stoma sites.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch1-anterior-abdominal-wall-card-120",
+   "type": "basic",
+   "sectionId": "s4",
+   "deck": "Nerves & Vessels",
+   "front": "Which nerves does a rectus sheath block target and why is it useful for a midline wound?",
+   "back": "The terminal branches of the lower intercostal nerves as they pierce the posterior wall of the sheath and run behind the rectus, so local anaesthetic deposited between the muscle and the posterior sheath covers the midline incision.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch1-anterior-abdominal-wall-card-121",
+   "type": "basic",
+   "sectionId": "s4",
+   "deck": "Nerves & Vessels",
+   "front": "Why does a paramedian incision cause less denervation than a Battle pararectal incision?",
+   "back": "A paramedian incision retracts the rectus laterally and enters medial to its nerve supply. A pararectal incision cuts through the lateral edge of the sheath where the nerves enter, denervating the medial part of the muscle and inviting an incisional hernia.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch1-anterior-abdominal-wall-card-122",
+   "type": "basic",
+   "sectionId": "s5",
+   "deck": "Incisions & Closure",
+   "front": "Which structure limits how far a Kocher incision can be extended medially?",
+   "back": "The falciform ligament and the midline; extension across the midline as a rooftop incision requires division of the falciform ligament, which then leaves the liver free to rotate.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch1-anterior-abdominal-wall-card-123",
+   "type": "basic",
+   "sectionId": "s5",
+   "deck": "Incisions & Closure",
+   "front": "What is the anatomy of a Mercedes or rooftop incision, and when is it chosen?",
+   "back": "Bilateral subcostal incisions joined in the midline, with or without a vertical midline extension to the xiphoid. It gives wide access to both subphrenic spaces for liver surgery and transplantation at the cost of dividing both recti and several segmental nerves.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch1-anterior-abdominal-wall-card-124",
+   "type": "basic",
+   "sectionId": "s5",
+   "deck": "Incisions & Closure",
+   "front": "Why should a laparoscopic port site of 10 mm or more be closed at the fascial level?",
+   "back": "The defect in the aponeurosis is large enough to admit omentum or bowel, and a port-site Richter's hernia may strangulate a knuckle of bowel with no obvious external lump.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch1-anterior-abdominal-wall-card-125",
+   "type": "cloze",
+   "sectionId": "s7",
+   "deck": "Surface Anatomy & Planes",
+   "cloze": "The transpyloric plane lies at the level of {{c1::L1}}.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch1-anterior-abdominal-wall-card-126",
+   "type": "cloze",
+   "sectionId": "s7",
+   "deck": "Surface Anatomy & Planes",
+   "cloze": "The supracristal plane lies at the level of {{c1::L4}}.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch1-anterior-abdominal-wall-card-127",
+   "type": "cloze",
+   "sectionId": "s7",
+   "deck": "Surface Anatomy & Planes",
+   "cloze": "The subcostal plane passes through the lowest point of the {{c1::tenth costal cartilage}}.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch1-anterior-abdominal-wall-card-128",
+   "type": "cloze",
+   "sectionId": "s8",
+   "deck": "Other Hernias",
+   "cloze": "A paraumbilical hernia protrudes through the {{c1::linea alba}} just above or below the umbilicus.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch1-anterior-abdominal-wall-card-129",
+   "type": "cloze",
+   "sectionId": "s8",
+   "deck": "Other Hernias",
+   "cloze": "The commoner lumbar hernia occurs through the superior lumbar triangle of {{c1::Grynfeltt}}.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch1-anterior-abdominal-wall-card-130",
+   "type": "cloze",
+   "sectionId": "s8",
+   "deck": "Other Hernias",
+   "cloze": "In gastroschisis the defect usually lies to the {{c1::right}} of a normally inserted umbilical cord.",
+   "difficulty": 1
+  },
+  {
+   "schema": "foundation.card/v2",
+   "id": "sana-ch1-anterior-abdominal-wall-card-131",
+   "type": "cloze",
+   "sectionId": "s4",
+   "deck": "Nerves & Vessels",
+   "cloze": "A transversus abdominis plane block deposits anaesthetic between the internal oblique and the {{c1::transversus abdominis}}.",
+   "difficulty": 1
+  }
+ ],
+ "mcqs": [
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sana-ch1-anterior-abdominal-wall-mcq-001",
+   "type": "single",
+   "sectionId": "s6",
+   "difficulty": 2,
+   "highYield": true,
+   "stem": "A young man falls astride a bar and ruptures his bulbar urethra. Over the next hours his scrotum, penis and lower abdominal wall become swollen and discoloured, but the thighs are spared. Which anatomical fact explains the sparing of the thighs?",
+   "options": [
+    {
+     "id": "a",
+     "text": "Buck's fascia is intact around the corpora",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "b",
+     "text": "Scarpa's fascia fuses with the fascia lata just below the inguinal ligament",
+     "correct": true,
+     "why": "Key - B) Scarpa's fascia fuses with the fascia lata just below the inguinal ligament. Urine in the superficial perineal pouch is contained by Colles' fascia, which is continuous with Scarpa's fascia; the fusion of Scarpa's fascia with the fascia lata below the inguinal ligament blocks descent into the thigh.\n\nWhy the others fail:\nA) Buck's fascia is intact around the corpora - Buck's fascia containment would keep the extravasation within the penis alone, which is not the pattern described.\nC) The dartos muscle contracts and prevents distal spread - Dartos is a thin subcutaneous muscle of the scrotum and offers no barrier to fluid tracking, and the scrotum in fact fills.\nD) The urine is confined by the tunica albuginea of the testis - The tunica albuginea invests the testis itself and has no relation to the superficial perineal space."
+    },
+    {
+     "id": "c",
+     "text": "The dartos muscle contracts and prevents distal spread",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "d",
+     "text": "The urine is confined by the tunica albuginea of the testis",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    }
+   ],
+   "explanation": [
+    "Key - B) Scarpa's fascia fuses with the fascia lata just below the inguinal ligament. Urine in the superficial perineal pouch is contained by Colles' fascia, which is continuous with Scarpa's fascia; the fusion of Scarpa's fascia with the fascia lata below the inguinal ligament blocks descent into the thigh.\n\nWhy the others fail:\nA) Buck's fascia is intact around the corpora - Buck's fascia containment would keep the extravasation within the penis alone, which is not the pattern described.\nC) The dartos muscle contracts and prevents distal spread - Dartos is a thin subcutaneous muscle of the scrotum and offers no barrier to fluid tracking, and the scrotum in fact fills.\nD) The urine is confined by the tunica albuginea of the testis - The tunica albuginea invests the testis itself and has no relation to the superficial perineal space."
+   ],
+   "keyFacts": [
+    "Key - B) Scarpa's fascia fuses with the fascia lata just below the inguinal ligament. Urine in the superficial perineal pouch is contained by Colles' fascia, which is continuous with Scarpa's fascia; the fusion of Scarpa's fascia with the fascia lata below the inguinal ligament blocks descent into the thigh.\n\nWhy the others fail:\nA) Buck's fascia is intact around the corpora - Buck's fascia containment would keep the extravasation within the penis alone, which is not the pattern described.\nC) The dartos muscle contracts and prevents distal spread - Dartos is a thin subcutaneous muscle of the scrotum and offers no barrier to fluid tracking, and the scrotum in fact fills.\nD) The urine is confined by the tunica albuginea of the testis - The tunica albuginea invests the testis itself and has no relation to the superficial perineal space."
+   ],
+   "teachingPoint": "Key - B) Scarpa's fascia fuses with the fascia lata just below the inguinal ligament. Urine in the superficial perineal pouch is contained by Colles' fascia, which is continuous with Scarpa's fascia; the fusion of Scarpa's fascia with the fascia lata below the inguinal ligament blocks descent into the thigh.\n\nWhy the others fail:\nA) Buck's fascia is intact around the corpora - Buck's fascia containment would keep the extravasation within the penis alone, which is not the pattern described.\nC) The dartos muscle contracts and prevents distal spread - Dartos is a thin subcutaneous muscle of the scrotum and offers no barrier to fluid tracking, and the scrotum in fact fills.\nD) The urine is confined by the tunica albuginea of the testis - The tunica albuginea invests the testis itself and has no relation to the superficial perineal space."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sana-ch1-anterior-abdominal-wall-mcq-002",
+   "type": "single",
+   "sectionId": "s6",
+   "difficulty": 2,
+   "highYield": true,
+   "stem": "A patient on warfarin develops sudden right lower abdominal pain after a bout of coughing. There is a tender mass that does not cross the midline and remains palpable when he lifts his head off the pillow. Which vessel is most likely to have bled?",
+   "options": [
+    {
+     "id": "a",
+     "text": "Superior epigastric artery",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "b",
+     "text": "Deep circumflex iliac artery",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "c",
+     "text": "Inferior epigastric artery",
+     "correct": true,
+     "why": "Key - C) Inferior epigastric artery. A tender mass confined to one side that persists on tensing the rectus - Fothergill's sign - is a rectus sheath haematoma, and the inferior epigastric artery within the sheath is the usual source.\n\nWhy the others fail:\nA) Superior epigastric artery - The superior epigastric artery supplies the upper sheath, and a haematoma from it would be epigastric rather than in the lower abdomen.\nB) Deep circumflex iliac artery - The deep circumflex iliac artery runs along the iliac crest outside the sheath, so bleeding from it would not be confined by the sheath.\nD) Superficial external pudendal artery - The superficial external pudendal artery is a small subcutaneous branch of the femoral artery and does not lie within the sheath."
+    },
+    {
+     "id": "d",
+     "text": "Superficial external pudendal artery",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    }
+   ],
+   "explanation": [
+    "Key - C) Inferior epigastric artery. A tender mass confined to one side that persists on tensing the rectus - Fothergill's sign - is a rectus sheath haematoma, and the inferior epigastric artery within the sheath is the usual source.\n\nWhy the others fail:\nA) Superior epigastric artery - The superior epigastric artery supplies the upper sheath, and a haematoma from it would be epigastric rather than in the lower abdomen.\nB) Deep circumflex iliac artery - The deep circumflex iliac artery runs along the iliac crest outside the sheath, so bleeding from it would not be confined by the sheath.\nD) Superficial external pudendal artery - The superficial external pudendal artery is a small subcutaneous branch of the femoral artery and does not lie within the sheath."
+   ],
+   "keyFacts": [
+    "Key - C) Inferior epigastric artery. A tender mass confined to one side that persists on tensing the rectus - Fothergill's sign - is a rectus sheath haematoma, and the inferior epigastric artery within the sheath is the usual source.\n\nWhy the others fail:\nA) Superior epigastric artery - The superior epigastric artery supplies the upper sheath, and a haematoma from it would be epigastric rather than in the lower abdomen.\nB) Deep circumflex iliac artery - The deep circumflex iliac artery runs along the iliac crest outside the sheath, so bleeding from it would not be confined by the sheath.\nD) Superficial external pudendal artery - The superficial external pudendal artery is a small subcutaneous branch of the femoral artery and does not lie within the sheath."
+   ],
+   "teachingPoint": "Key - C) Inferior epigastric artery. A tender mass confined to one side that persists on tensing the rectus - Fothergill's sign - is a rectus sheath haematoma, and the inferior epigastric artery within the sheath is the usual source.\n\nWhy the others fail:\nA) Superior epigastric artery - The superior epigastric artery supplies the upper sheath, and a haematoma from it would be epigastric rather than in the lower abdomen.\nB) Deep circumflex iliac artery - The deep circumflex iliac artery runs along the iliac crest outside the sheath, so bleeding from it would not be confined by the sheath.\nD) Superficial external pudendal artery - The superficial external pudendal artery is a small subcutaneous branch of the femoral artery and does not lie within the sheath."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sana-ch1-anterior-abdominal-wall-mcq-003",
+   "type": "single",
+   "sectionId": "s6",
+   "difficulty": 2,
+   "highYield": true,
+   "stem": "During laparoscopy a 5 mm port placed in the left lower quadrant bleeds briskly, and blood tracks along the peritoneum towards the umbilicus. Which fold should the surgeon have inspected before insertion?",
+   "options": [
+    {
+     "id": "a",
+     "text": "The median umbilical fold",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "b",
+     "text": "The medial umbilical fold",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "c",
+     "text": "The lateral umbilical fold",
+     "correct": true,
+     "why": "Key - C) The lateral umbilical fold. The lateral umbilical fold is raised by the inferior epigastric vessels, and a port placed just lateral to it is the classic cause of this bleed.\n\nWhy the others fail:\nA) The median umbilical fold - The median umbilical fold contains the obliterated urachus and carries no significant vessel.\nB) The medial umbilical fold - The medial umbilical fold contains the obliterated umbilical artery, which is a fibrous cord in the adult.\nD) The falciform ligament - The falciform ligament is in the upper abdomen and carries only the ligamentum teres and small paraumbilical veins."
+    },
+    {
+     "id": "d",
+     "text": "The falciform ligament",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    }
+   ],
+   "explanation": [
+    "Key - C) The lateral umbilical fold. The lateral umbilical fold is raised by the inferior epigastric vessels, and a port placed just lateral to it is the classic cause of this bleed.\n\nWhy the others fail:\nA) The median umbilical fold - The median umbilical fold contains the obliterated urachus and carries no significant vessel.\nB) The medial umbilical fold - The medial umbilical fold contains the obliterated umbilical artery, which is a fibrous cord in the adult.\nD) The falciform ligament - The falciform ligament is in the upper abdomen and carries only the ligamentum teres and small paraumbilical veins."
+   ],
+   "keyFacts": [
+    "Key - C) The lateral umbilical fold. The lateral umbilical fold is raised by the inferior epigastric vessels, and a port placed just lateral to it is the classic cause of this bleed.\n\nWhy the others fail:\nA) The median umbilical fold - The median umbilical fold contains the obliterated urachus and carries no significant vessel.\nB) The medial umbilical fold - The medial umbilical fold contains the obliterated umbilical artery, which is a fibrous cord in the adult.\nD) The falciform ligament - The falciform ligament is in the upper abdomen and carries only the ligamentum teres and small paraumbilical veins."
+   ],
+   "teachingPoint": "Key - C) The lateral umbilical fold. The lateral umbilical fold is raised by the inferior epigastric vessels, and a port placed just lateral to it is the classic cause of this bleed.\n\nWhy the others fail:\nA) The median umbilical fold - The median umbilical fold contains the obliterated urachus and carries no significant vessel.\nB) The medial umbilical fold - The medial umbilical fold contains the obliterated umbilical artery, which is a fibrous cord in the adult.\nD) The falciform ligament - The falciform ligament is in the upper abdomen and carries only the ligamentum teres and small paraumbilical veins."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sana-ch1-anterior-abdominal-wall-mcq-004",
+   "type": "single",
+   "sectionId": "s6",
+   "difficulty": 2,
+   "highYield": true,
+   "stem": "Two years after an open appendicectomy a man develops a direct inguinal hernia on the same side. Injury to which nerve at the original operation best explains this?",
+   "options": [
+    {
+     "id": "a",
+     "text": "Genitofemoral nerve",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "b",
+     "text": "Iliohypogastric nerve",
+     "correct": true,
+     "why": "Key - B) Iliohypogastric nerve. The iliohypogastric nerve supplies the conjoint tendon, and a grid-iron incision placed too low or too medial divides it, denervating the medial posterior wall and allowing a direct hernia.\n\nWhy the others fail:\nA) Genitofemoral nerve - The genitofemoral nerve supplies cremaster and a patch of thigh skin; its loss does not weaken the conjoint tendon.\nC) Subcostal nerve - The subcostal nerve lies well above the grid-iron incision and supplies the upper part of the wall.\nD) Lateral cutaneous nerve of the thigh - The lateral cutaneous nerve of the thigh is purely sensory to the lateral thigh and has no motor role in the wall."
+    },
+    {
+     "id": "c",
+     "text": "Subcostal nerve",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "d",
+     "text": "Lateral cutaneous nerve of the thigh",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    }
+   ],
+   "explanation": [
+    "Key - B) Iliohypogastric nerve. The iliohypogastric nerve supplies the conjoint tendon, and a grid-iron incision placed too low or too medial divides it, denervating the medial posterior wall and allowing a direct hernia.\n\nWhy the others fail:\nA) Genitofemoral nerve - The genitofemoral nerve supplies cremaster and a patch of thigh skin; its loss does not weaken the conjoint tendon.\nC) Subcostal nerve - The subcostal nerve lies well above the grid-iron incision and supplies the upper part of the wall.\nD) Lateral cutaneous nerve of the thigh - The lateral cutaneous nerve of the thigh is purely sensory to the lateral thigh and has no motor role in the wall."
+   ],
+   "keyFacts": [
+    "Key - B) Iliohypogastric nerve. The iliohypogastric nerve supplies the conjoint tendon, and a grid-iron incision placed too low or too medial divides it, denervating the medial posterior wall and allowing a direct hernia.\n\nWhy the others fail:\nA) Genitofemoral nerve - The genitofemoral nerve supplies cremaster and a patch of thigh skin; its loss does not weaken the conjoint tendon.\nC) Subcostal nerve - The subcostal nerve lies well above the grid-iron incision and supplies the upper part of the wall.\nD) Lateral cutaneous nerve of the thigh - The lateral cutaneous nerve of the thigh is purely sensory to the lateral thigh and has no motor role in the wall."
+   ],
+   "teachingPoint": "Key - B) Iliohypogastric nerve. The iliohypogastric nerve supplies the conjoint tendon, and a grid-iron incision placed too low or too medial divides it, denervating the medial posterior wall and allowing a direct hernia.\n\nWhy the others fail:\nA) Genitofemoral nerve - The genitofemoral nerve supplies cremaster and a patch of thigh skin; its loss does not weaken the conjoint tendon.\nC) Subcostal nerve - The subcostal nerve lies well above the grid-iron incision and supplies the upper part of the wall.\nD) Lateral cutaneous nerve of the thigh - The lateral cutaneous nerve of the thigh is purely sensory to the lateral thigh and has no motor role in the wall."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sana-ch1-anterior-abdominal-wall-mcq-005",
+   "type": "single",
+   "sectionId": "s6",
+   "difficulty": 2,
+   "highYield": true,
+   "stem": "A surgeon opens the abdomen through a lower midline incision. After dividing the linea alba, which structure is encountered next?",
+   "options": [
+    {
+     "id": "a",
+     "text": "The posterior lamina of the internal oblique aponeurosis",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "b",
+     "text": "The transversalis fascia with extraperitoneal fat and peritoneum",
+     "correct": true,
+     "why": "Key - B) The transversalis fascia with extraperitoneal fat and peritoneum. Below the arcuate line all three aponeuroses pass in front of the rectus, leaving only transversalis fascia, extraperitoneal fat and peritoneum behind.\n\nWhy the others fail:\nA) The posterior lamina of the internal oblique aponeurosis - The posterior lamina of internal oblique ends at the arcuate line and is absent below it.\nC) The arcuate line of Douglas - The arcuate line is the free lower border of the posterior sheath, an edge rather than a layer that is crossed in the midline.\nD) The posterior rectus sheath formed by transversus abdominis - Transversus abdominis contributes to the posterior sheath only above the arcuate line."
+    },
+    {
+     "id": "c",
+     "text": "The arcuate line of Douglas",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "d",
+     "text": "The posterior rectus sheath formed by transversus abdominis",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    }
+   ],
+   "explanation": [
+    "Key - B) The transversalis fascia with extraperitoneal fat and peritoneum. Below the arcuate line all three aponeuroses pass in front of the rectus, leaving only transversalis fascia, extraperitoneal fat and peritoneum behind.\n\nWhy the others fail:\nA) The posterior lamina of the internal oblique aponeurosis - The posterior lamina of internal oblique ends at the arcuate line and is absent below it.\nC) The arcuate line of Douglas - The arcuate line is the free lower border of the posterior sheath, an edge rather than a layer that is crossed in the midline.\nD) The posterior rectus sheath formed by transversus abdominis - Transversus abdominis contributes to the posterior sheath only above the arcuate line."
+   ],
+   "keyFacts": [
+    "Key - B) The transversalis fascia with extraperitoneal fat and peritoneum. Below the arcuate line all three aponeuroses pass in front of the rectus, leaving only transversalis fascia, extraperitoneal fat and peritoneum behind.\n\nWhy the others fail:\nA) The posterior lamina of the internal oblique aponeurosis - The posterior lamina of internal oblique ends at the arcuate line and is absent below it.\nC) The arcuate line of Douglas - The arcuate line is the free lower border of the posterior sheath, an edge rather than a layer that is crossed in the midline.\nD) The posterior rectus sheath formed by transversus abdominis - Transversus abdominis contributes to the posterior sheath only above the arcuate line."
+   ],
+   "teachingPoint": "Key - B) The transversalis fascia with extraperitoneal fat and peritoneum. Below the arcuate line all three aponeuroses pass in front of the rectus, leaving only transversalis fascia, extraperitoneal fat and peritoneum behind.\n\nWhy the others fail:\nA) The posterior lamina of the internal oblique aponeurosis - The posterior lamina of internal oblique ends at the arcuate line and is absent below it.\nC) The arcuate line of Douglas - The arcuate line is the free lower border of the posterior sheath, an edge rather than a layer that is crossed in the midline.\nD) The posterior rectus sheath formed by transversus abdominis - Transversus abdominis contributes to the posterior sheath only above the arcuate line."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sana-ch1-anterior-abdominal-wall-mcq-006",
+   "type": "single",
+   "sectionId": "s6",
+   "difficulty": 2,
+   "highYield": true,
+   "stem": "A breast reconstruction is planned with a DIEP flap. Which artery is dissected as the pedicle, and where does it arise?",
+   "options": [
+    {
+     "id": "a",
+     "text": "Superior epigastric artery, from the internal thoracic artery",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "b",
+     "text": "Deep inferior epigastric artery, from the external iliac artery",
+     "correct": true,
+     "why": "Key - B) Deep inferior epigastric artery, from the external iliac artery. The deep inferior epigastric artery arises from the external iliac artery just above the inguinal ligament and supplies the perforators of the lower abdominal skin that carry a DIEP flap.\n\nWhy the others fail:\nA) Superior epigastric artery, from the internal thoracic artery - The superior epigastric artery supplies the upper flap territory and is too small and too short to be the pedicle of a free flap.\nC) Superficial epigastric artery, from the femoral artery - The superficial epigastric artery is subcutaneous and small, and it is the pedicle of a SIEA flap, not a DIEP.\nD) Deep circumflex iliac artery, from the external iliac artery - The deep circumflex iliac artery supplies bone and the iliac crest flap, not the lower abdominal skin paddle."
+    },
+    {
+     "id": "c",
+     "text": "Superficial epigastric artery, from the femoral artery",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "d",
+     "text": "Deep circumflex iliac artery, from the external iliac artery",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    }
+   ],
+   "explanation": [
+    "Key - B) Deep inferior epigastric artery, from the external iliac artery. The deep inferior epigastric artery arises from the external iliac artery just above the inguinal ligament and supplies the perforators of the lower abdominal skin that carry a DIEP flap.\n\nWhy the others fail:\nA) Superior epigastric artery, from the internal thoracic artery - The superior epigastric artery supplies the upper flap territory and is too small and too short to be the pedicle of a free flap.\nC) Superficial epigastric artery, from the femoral artery - The superficial epigastric artery is subcutaneous and small, and it is the pedicle of a SIEA flap, not a DIEP.\nD) Deep circumflex iliac artery, from the external iliac artery - The deep circumflex iliac artery supplies bone and the iliac crest flap, not the lower abdominal skin paddle."
+   ],
+   "keyFacts": [
+    "Key - B) Deep inferior epigastric artery, from the external iliac artery. The deep inferior epigastric artery arises from the external iliac artery just above the inguinal ligament and supplies the perforators of the lower abdominal skin that carry a DIEP flap.\n\nWhy the others fail:\nA) Superior epigastric artery, from the internal thoracic artery - The superior epigastric artery supplies the upper flap territory and is too small and too short to be the pedicle of a free flap.\nC) Superficial epigastric artery, from the femoral artery - The superficial epigastric artery is subcutaneous and small, and it is the pedicle of a SIEA flap, not a DIEP.\nD) Deep circumflex iliac artery, from the external iliac artery - The deep circumflex iliac artery supplies bone and the iliac crest flap, not the lower abdominal skin paddle."
+   ],
+   "teachingPoint": "Key - B) Deep inferior epigastric artery, from the external iliac artery. The deep inferior epigastric artery arises from the external iliac artery just above the inguinal ligament and supplies the perforators of the lower abdominal skin that carry a DIEP flap.\n\nWhy the others fail:\nA) Superior epigastric artery, from the internal thoracic artery - The superior epigastric artery supplies the upper flap territory and is too small and too short to be the pedicle of a free flap.\nC) Superficial epigastric artery, from the femoral artery - The superficial epigastric artery is subcutaneous and small, and it is the pedicle of a SIEA flap, not a DIEP.\nD) Deep circumflex iliac artery, from the external iliac artery - The deep circumflex iliac artery supplies bone and the iliac crest flap, not the lower abdominal skin paddle."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sana-ch1-anterior-abdominal-wall-mcq-007",
+   "type": "single",
+   "sectionId": "s6",
+   "difficulty": 2,
+   "highYield": true,
+   "stem": "A patient with cirrhosis has dilated veins radiating from the umbilicus with flow directed away from it in every direction. Which anastomosis is decompressing?",
+   "options": [
+    {
+     "id": "a",
+     "text": "Left gastric with oesophageal veins",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "b",
+     "text": "Superior with middle and inferior rectal veins",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "c",
+     "text": "Paraumbilical veins with the superficial veins of the abdominal wall",
+     "correct": true,
+     "why": "Key - C) Paraumbilical veins with the superficial veins of the abdominal wall. Paraumbilical veins running in the falciform ligament open into the superficial epigastric and thoraco-epigastric veins, producing caput medusae with flow radiating away from the umbilicus.\n\nWhy the others fail:\nA) Left gastric with oesophageal veins - Left gastric to oesophageal shunting produces oesophageal varices, not a visible abdominal wall pattern.\nB) Superior with middle and inferior rectal veins - The rectal anastomosis produces anorectal varices, which are seen on proctoscopy rather than on the abdominal wall.\nD) Retroperitoneal veins of Retzius with the lumbar veins - The retroperitoneal veins of Retzius are deep and cannot be seen or assessed clinically."
+    },
+    {
+     "id": "d",
+     "text": "Retroperitoneal veins of Retzius with the lumbar veins",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    }
+   ],
+   "explanation": [
+    "Key - C) Paraumbilical veins with the superficial veins of the abdominal wall. Paraumbilical veins running in the falciform ligament open into the superficial epigastric and thoraco-epigastric veins, producing caput medusae with flow radiating away from the umbilicus.\n\nWhy the others fail:\nA) Left gastric with oesophageal veins - Left gastric to oesophageal shunting produces oesophageal varices, not a visible abdominal wall pattern.\nB) Superior with middle and inferior rectal veins - The rectal anastomosis produces anorectal varices, which are seen on proctoscopy rather than on the abdominal wall.\nD) Retroperitoneal veins of Retzius with the lumbar veins - The retroperitoneal veins of Retzius are deep and cannot be seen or assessed clinically."
+   ],
+   "keyFacts": [
+    "Key - C) Paraumbilical veins with the superficial veins of the abdominal wall. Paraumbilical veins running in the falciform ligament open into the superficial epigastric and thoraco-epigastric veins, producing caput medusae with flow radiating away from the umbilicus.\n\nWhy the others fail:\nA) Left gastric with oesophageal veins - Left gastric to oesophageal shunting produces oesophageal varices, not a visible abdominal wall pattern.\nB) Superior with middle and inferior rectal veins - The rectal anastomosis produces anorectal varices, which are seen on proctoscopy rather than on the abdominal wall.\nD) Retroperitoneal veins of Retzius with the lumbar veins - The retroperitoneal veins of Retzius are deep and cannot be seen or assessed clinically."
+   ],
+   "teachingPoint": "Key - C) Paraumbilical veins with the superficial veins of the abdominal wall. Paraumbilical veins running in the falciform ligament open into the superficial epigastric and thoraco-epigastric veins, producing caput medusae with flow radiating away from the umbilicus.\n\nWhy the others fail:\nA) Left gastric with oesophageal veins - Left gastric to oesophageal shunting produces oesophageal varices, not a visible abdominal wall pattern.\nB) Superior with middle and inferior rectal veins - The rectal anastomosis produces anorectal varices, which are seen on proctoscopy rather than on the abdominal wall.\nD) Retroperitoneal veins of Retzius with the lumbar veins - The retroperitoneal veins of Retzius are deep and cannot be seen or assessed clinically."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sana-ch1-anterior-abdominal-wall-mcq-008",
+   "type": "single",
+   "sectionId": "s6",
+   "difficulty": 2,
+   "highYield": true,
+   "stem": "A man presents with a tender lump in the left lower abdomen lateral to the rectus. Ultrasound shows bowel herniating through a defect deep to an intact external oblique aponeurosis. Which hernia is this?",
+   "options": [
+    {
+     "id": "a",
+     "text": "Epigastric hernia",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "b",
+     "text": "Spigelian hernia",
+     "correct": true,
+     "why": "Key - B) Spigelian hernia. A Spigelian hernia passes through the Spigelian fascia at the linea semilunaris near the arcuate line and spreads beneath the intact external oblique aponeurosis, so it is interstitial and often impalpable.\n\nWhy the others fail:\nA) Epigastric hernia - An epigastric hernia is a midline defect in the linea alba above the umbilicus and usually contains only fat.\nC) Umbilical hernia - An umbilical hernia arises at the umbilical cicatrix in the midline, not lateral to the rectus.\nD) Lumbar hernia - A lumbar hernia occurs posteriorly through the superior or inferior lumbar triangle."
+    },
+    {
+     "id": "c",
+     "text": "Umbilical hernia",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "d",
+     "text": "Lumbar hernia",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    }
+   ],
+   "explanation": [
+    "Key - B) Spigelian hernia. A Spigelian hernia passes through the Spigelian fascia at the linea semilunaris near the arcuate line and spreads beneath the intact external oblique aponeurosis, so it is interstitial and often impalpable.\n\nWhy the others fail:\nA) Epigastric hernia - An epigastric hernia is a midline defect in the linea alba above the umbilicus and usually contains only fat.\nC) Umbilical hernia - An umbilical hernia arises at the umbilical cicatrix in the midline, not lateral to the rectus.\nD) Lumbar hernia - A lumbar hernia occurs posteriorly through the superior or inferior lumbar triangle."
+   ],
+   "keyFacts": [
+    "Key - B) Spigelian hernia. A Spigelian hernia passes through the Spigelian fascia at the linea semilunaris near the arcuate line and spreads beneath the intact external oblique aponeurosis, so it is interstitial and often impalpable.\n\nWhy the others fail:\nA) Epigastric hernia - An epigastric hernia is a midline defect in the linea alba above the umbilicus and usually contains only fat.\nC) Umbilical hernia - An umbilical hernia arises at the umbilical cicatrix in the midline, not lateral to the rectus.\nD) Lumbar hernia - A lumbar hernia occurs posteriorly through the superior or inferior lumbar triangle."
+   ],
+   "teachingPoint": "Key - B) Spigelian hernia. A Spigelian hernia passes through the Spigelian fascia at the linea semilunaris near the arcuate line and spreads beneath the intact external oblique aponeurosis, so it is interstitial and often impalpable.\n\nWhy the others fail:\nA) Epigastric hernia - An epigastric hernia is a midline defect in the linea alba above the umbilicus and usually contains only fat.\nC) Umbilical hernia - An umbilical hernia arises at the umbilical cicatrix in the midline, not lateral to the rectus.\nD) Lumbar hernia - A lumbar hernia occurs posteriorly through the superior or inferior lumbar triangle."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sana-ch1-anterior-abdominal-wall-mcq-009",
+   "type": "single",
+   "sectionId": "s6",
+   "difficulty": 2,
+   "highYield": true,
+   "stem": "Which single technical factor most reliably reduces the risk of burst abdomen after a midline laparotomy?",
+   "options": [
+    {
+     "id": "a",
+     "text": "Closing the peritoneum as a separate layer",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "b",
+     "text": "Using absorbable braided suture for the sheath",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "c",
+     "text": "Mass closure with a suture length to wound length ratio of at least 4 to 1",
+     "correct": true,
+     "why": "Key - C) Mass closure with a suture length to wound length ratio of at least 4 to 1. Mass closure with adequate bites and a suture to wound length ratio of at least 4 to 1 distributes tension and is the single best established protection against disruption.\n\nWhy the others fail:\nA) Closing the peritoneum as a separate layer - The peritoneum regenerates within days and contributes nothing to the strength of the closure.\nB) Using absorbable braided suture for the sheath - Rapidly absorbed braided material loses strength before the aponeurosis has healed and is a recognised cause of disruption.\nD) Bringing the drain out through the main wound - A drain through the main wound weakens it and increases the risk of both infection and disruption."
+    },
+    {
+     "id": "d",
+     "text": "Bringing the drain out through the main wound",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    }
+   ],
+   "explanation": [
+    "Key - C) Mass closure with a suture length to wound length ratio of at least 4 to 1. Mass closure with adequate bites and a suture to wound length ratio of at least 4 to 1 distributes tension and is the single best established protection against disruption.\n\nWhy the others fail:\nA) Closing the peritoneum as a separate layer - The peritoneum regenerates within days and contributes nothing to the strength of the closure.\nB) Using absorbable braided suture for the sheath - Rapidly absorbed braided material loses strength before the aponeurosis has healed and is a recognised cause of disruption.\nD) Bringing the drain out through the main wound - A drain through the main wound weakens it and increases the risk of both infection and disruption."
+   ],
+   "keyFacts": [
+    "Key - C) Mass closure with a suture length to wound length ratio of at least 4 to 1. Mass closure with adequate bites and a suture to wound length ratio of at least 4 to 1 distributes tension and is the single best established protection against disruption.\n\nWhy the others fail:\nA) Closing the peritoneum as a separate layer - The peritoneum regenerates within days and contributes nothing to the strength of the closure.\nB) Using absorbable braided suture for the sheath - Rapidly absorbed braided material loses strength before the aponeurosis has healed and is a recognised cause of disruption.\nD) Bringing the drain out through the main wound - A drain through the main wound weakens it and increases the risk of both infection and disruption."
+   ],
+   "teachingPoint": "Key - C) Mass closure with a suture length to wound length ratio of at least 4 to 1. Mass closure with adequate bites and a suture to wound length ratio of at least 4 to 1 distributes tension and is the single best established protection against disruption.\n\nWhy the others fail:\nA) Closing the peritoneum as a separate layer - The peritoneum regenerates within days and contributes nothing to the strength of the closure.\nB) Using absorbable braided suture for the sheath - Rapidly absorbed braided material loses strength before the aponeurosis has healed and is a recognised cause of disruption.\nD) Bringing the drain out through the main wound - A drain through the main wound weakens it and increases the risk of both infection and disruption."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sana-ch1-anterior-abdominal-wall-mcq-010",
+   "type": "single",
+   "sectionId": "s6",
+   "difficulty": 2,
+   "highYield": true,
+   "stem": "During a Pfannenstiel incision for caesarean section the surgeon must identify the midline before separating the recti. Which small muscle points to it?",
+   "options": [
+    {
+     "id": "a",
+     "text": "Cremaster",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "b",
+     "text": "Pyramidalis",
+     "correct": true,
+     "why": "Key - B) Pyramidalis. Pyramidalis runs from the pubic crest to the linea alba with its apex on the midline, making it a reliable guide in a low transverse incision.\n\nWhy the others fail:\nA) Cremaster - Cremaster is a derivative of internal oblique found on the spermatic cord, not in the lower midline.\nC) Transversus abdominis - Transversus abdominis is a broad lateral muscle and does not mark the midline.\nD) Quadratus lumborum - Quadratus lumborum is a posterior abdominal wall muscle."
+    },
+    {
+     "id": "c",
+     "text": "Transversus abdominis",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "d",
+     "text": "Quadratus lumborum",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    }
+   ],
+   "explanation": [
+    "Key - B) Pyramidalis. Pyramidalis runs from the pubic crest to the linea alba with its apex on the midline, making it a reliable guide in a low transverse incision.\n\nWhy the others fail:\nA) Cremaster - Cremaster is a derivative of internal oblique found on the spermatic cord, not in the lower midline.\nC) Transversus abdominis - Transversus abdominis is a broad lateral muscle and does not mark the midline.\nD) Quadratus lumborum - Quadratus lumborum is a posterior abdominal wall muscle."
+   ],
+   "keyFacts": [
+    "Key - B) Pyramidalis. Pyramidalis runs from the pubic crest to the linea alba with its apex on the midline, making it a reliable guide in a low transverse incision.\n\nWhy the others fail:\nA) Cremaster - Cremaster is a derivative of internal oblique found on the spermatic cord, not in the lower midline.\nC) Transversus abdominis - Transversus abdominis is a broad lateral muscle and does not mark the midline.\nD) Quadratus lumborum - Quadratus lumborum is a posterior abdominal wall muscle."
+   ],
+   "teachingPoint": "Key - B) Pyramidalis. Pyramidalis runs from the pubic crest to the linea alba with its apex on the midline, making it a reliable guide in a low transverse incision.\n\nWhy the others fail:\nA) Cremaster - Cremaster is a derivative of internal oblique found on the spermatic cord, not in the lower midline.\nC) Transversus abdominis - Transversus abdominis is a broad lateral muscle and does not mark the midline.\nD) Quadratus lumborum - Quadratus lumborum is a posterior abdominal wall muscle."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sana-ch1-anterior-abdominal-wall-mcq-011",
+   "type": "single",
+   "sectionId": "s6",
+   "difficulty": 2,
+   "highYield": true,
+   "stem": "A balloon dissector is advanced in the plane behind the rectus during a totally extraperitoneal repair. Which anatomical feature allows the dissector to enter the preperitoneal space of Bogros without opening the peritoneum?",
+   "options": [
+    {
+     "id": "a",
+     "text": "The posterior rectus sheath is absent below the arcuate line, leaving only transversalis fascia between the muscle and the peritoneum",
+     "correct": true,
+     "why": "Key - A) The posterior rectus sheath is absent below the arcuate line, leaving only transversalis fascia between the muscle and the peritoneum. Below the arcuate line all three aponeuroses pass in front of the rectus, so the balloon placed on the posterior surface of the muscle meets only transversalis fascia and extraperitoneal fat and slides straight into the space of Bogros.\n\nWhy the others fail:\nB) The linea alba is deficient below the umbilicus - The linea alba is continuous to the pubic symphysis and is not deficient; it is the posterior sheath, not the midline, that ends at the arcuate line.\nC) The peritoneum is adherent to the transversalis fascia only above the arcuate line - The peritoneum is separated from the transversalis fascia by extraperitoneal fat throughout; adherence is not the relevant variable.\nD) The inferior epigastric vessels lie behind the peritoneum at this level - The inferior epigastric vessels lie between the transversalis fascia and the peritoneum, and they are a structure to be preserved during the dissection rather than the reason it is possible."
+    },
+    {
+     "id": "b",
+     "text": "The linea alba is deficient below the umbilicus",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "c",
+     "text": "The peritoneum is adherent to the transversalis fascia only above the arcuate line",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "d",
+     "text": "The inferior epigastric vessels lie behind the peritoneum at this level",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    }
+   ],
+   "explanation": [
+    "Key - A) The posterior rectus sheath is absent below the arcuate line, leaving only transversalis fascia between the muscle and the peritoneum. Below the arcuate line all three aponeuroses pass in front of the rectus, so the balloon placed on the posterior surface of the muscle meets only transversalis fascia and extraperitoneal fat and slides straight into the space of Bogros.\n\nWhy the others fail:\nB) The linea alba is deficient below the umbilicus - The linea alba is continuous to the pubic symphysis and is not deficient; it is the posterior sheath, not the midline, that ends at the arcuate line.\nC) The peritoneum is adherent to the transversalis fascia only above the arcuate line - The peritoneum is separated from the transversalis fascia by extraperitoneal fat throughout; adherence is not the relevant variable.\nD) The inferior epigastric vessels lie behind the peritoneum at this level - The inferior epigastric vessels lie between the transversalis fascia and the peritoneum, and they are a structure to be preserved during the dissection rather than the reason it is possible."
+   ],
+   "keyFacts": [
+    "Key - A) The posterior rectus sheath is absent below the arcuate line, leaving only transversalis fascia between the muscle and the peritoneum. Below the arcuate line all three aponeuroses pass in front of the rectus, so the balloon placed on the posterior surface of the muscle meets only transversalis fascia and extraperitoneal fat and slides straight into the space of Bogros.\n\nWhy the others fail:\nB) The linea alba is deficient below the umbilicus - The linea alba is continuous to the pubic symphysis and is not deficient; it is the posterior sheath, not the midline, that ends at the arcuate line.\nC) The peritoneum is adherent to the transversalis fascia only above the arcuate line - The peritoneum is separated from the transversalis fascia by extraperitoneal fat throughout; adherence is not the relevant variable.\nD) The inferior epigastric vessels lie behind the peritoneum at this level - The inferior epigastric vessels lie between the transversalis fascia and the peritoneum, and they are a structure to be preserved during the dissection rather than the reason it is possible."
+   ],
+   "teachingPoint": "Key - A) The posterior rectus sheath is absent below the arcuate line, leaving only transversalis fascia between the muscle and the peritoneum. Below the arcuate line all three aponeuroses pass in front of the rectus, so the balloon placed on the posterior surface of the muscle meets only transversalis fascia and extraperitoneal fat and slides straight into the space of Bogros.\n\nWhy the others fail:\nB) The linea alba is deficient below the umbilicus - The linea alba is continuous to the pubic symphysis and is not deficient; it is the posterior sheath, not the midline, that ends at the arcuate line.\nC) The peritoneum is adherent to the transversalis fascia only above the arcuate line - The peritoneum is separated from the transversalis fascia by extraperitoneal fat throughout; adherence is not the relevant variable.\nD) The inferior epigastric vessels lie behind the peritoneum at this level - The inferior epigastric vessels lie between the transversalis fascia and the peritoneum, and they are a structure to be preserved during the dissection rather than the reason it is possible."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sana-ch1-anterior-abdominal-wall-mcq-012",
+   "type": "single",
+   "sectionId": "s6",
+   "difficulty": 2,
+   "highYield": true,
+   "stem": "A patient returns four days after a Pfannenstiel incision with numbness over the mons and a bulge of the lower lateral abdominal wall on straining. Which single lesion explains both findings?",
+   "options": [
+    {
+     "id": "a",
+     "text": "Division of the ilioinguinal nerve alone",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "b",
+     "text": "Division of the iliohypogastric nerve at the lateral end of the incision",
+     "correct": true,
+     "why": "Key - B) Division of the iliohypogastric nerve at the lateral end of the incision. The iliohypogastric nerve is both sensory to the suprapubic skin and motor to the lower internal oblique and transversus, so division at the lateral limit of a transverse incision gives numbness with a denervation bulge.\n\nWhy the others fail:\nA) Division of the ilioinguinal nerve alone - The ilioinguinal nerve is sensory to the mons and upper labium but its loss alone does not weaken enough muscle to produce a bulge of the lateral wall.\nC) Transection of the lateral cutaneous nerve of the thigh - The lateral cutaneous nerve of the thigh is purely sensory to the lateral thigh and supplies no abdominal muscle.\nD) Injury to the genital branch of the genitofemoral nerve - The genital branch supplies cremaster and a small area of skin, and its injury causes a lost cremasteric reflex rather than an abdominal bulge."
+    },
+    {
+     "id": "c",
+     "text": "Transection of the lateral cutaneous nerve of the thigh",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "d",
+     "text": "Injury to the genital branch of the genitofemoral nerve",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    }
+   ],
+   "explanation": [
+    "Key - B) Division of the iliohypogastric nerve at the lateral end of the incision. The iliohypogastric nerve is both sensory to the suprapubic skin and motor to the lower internal oblique and transversus, so division at the lateral limit of a transverse incision gives numbness with a denervation bulge.\n\nWhy the others fail:\nA) Division of the ilioinguinal nerve alone - The ilioinguinal nerve is sensory to the mons and upper labium but its loss alone does not weaken enough muscle to produce a bulge of the lateral wall.\nC) Transection of the lateral cutaneous nerve of the thigh - The lateral cutaneous nerve of the thigh is purely sensory to the lateral thigh and supplies no abdominal muscle.\nD) Injury to the genital branch of the genitofemoral nerve - The genital branch supplies cremaster and a small area of skin, and its injury causes a lost cremasteric reflex rather than an abdominal bulge."
+   ],
+   "keyFacts": [
+    "Key - B) Division of the iliohypogastric nerve at the lateral end of the incision. The iliohypogastric nerve is both sensory to the suprapubic skin and motor to the lower internal oblique and transversus, so division at the lateral limit of a transverse incision gives numbness with a denervation bulge.\n\nWhy the others fail:\nA) Division of the ilioinguinal nerve alone - The ilioinguinal nerve is sensory to the mons and upper labium but its loss alone does not weaken enough muscle to produce a bulge of the lateral wall.\nC) Transection of the lateral cutaneous nerve of the thigh - The lateral cutaneous nerve of the thigh is purely sensory to the lateral thigh and supplies no abdominal muscle.\nD) Injury to the genital branch of the genitofemoral nerve - The genital branch supplies cremaster and a small area of skin, and its injury causes a lost cremasteric reflex rather than an abdominal bulge."
+   ],
+   "teachingPoint": "Key - B) Division of the iliohypogastric nerve at the lateral end of the incision. The iliohypogastric nerve is both sensory to the suprapubic skin and motor to the lower internal oblique and transversus, so division at the lateral limit of a transverse incision gives numbness with a denervation bulge.\n\nWhy the others fail:\nA) Division of the ilioinguinal nerve alone - The ilioinguinal nerve is sensory to the mons and upper labium but its loss alone does not weaken enough muscle to produce a bulge of the lateral wall.\nC) Transection of the lateral cutaneous nerve of the thigh - The lateral cutaneous nerve of the thigh is purely sensory to the lateral thigh and supplies no abdominal muscle.\nD) Injury to the genital branch of the genitofemoral nerve - The genital branch supplies cremaster and a small area of skin, and its injury causes a lost cremasteric reflex rather than an abdominal bulge."
+  },
+  {
+   "schema": "foundation.mcq/v2",
+   "id": "sana-ch1-anterior-abdominal-wall-mcq-013",
+   "type": "single",
+   "sectionId": "s6",
+   "difficulty": 2,
+   "highYield": true,
+   "stem": "A patient with tense ascites and a previous long midline scar needs paracentesis. Which of the following is the soundest anatomical reasoning for the site chosen?",
+   "options": [
+    {
+     "id": "a",
+     "text": "Midline below the umbilicus, since the linea alba is avascular",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "b",
+     "text": "Left lower quadrant lateral to the rectus sheath, since it is lateral to the inferior epigastric artery and away from adhesions under the old scar",
+     "correct": true,
+     "why": "Key - B) Left lower quadrant lateral to the rectus sheath, since it is lateral to the inferior epigastric artery and away from adhesions under the old scar. A point in the left lower quadrant lateral to the rectus is lateral to the inferior epigastric artery, distant from the midline adhesions, and overlies a usually empty descending colon.\n\nWhy the others fail:\nA) Midline below the umbilicus, since the linea alba is avascular - The linea alba is avascular but lies directly under the old scar, where bowel is likely to be adherent, and the urachus and a full bladder are additional hazards.\nC) Right lower quadrant at McBurney's point, since the caecum is mobile - The caecum is gas-filled and thin-walled and is the structure most easily punctured at McBurney's point.\nD) Right hypochondrium, since the liver falls away in ascites - The liver enlarges rather than falls away in many causes of ascites, and the right hypochondrium risks liver and gallbladder."
+    },
+    {
+     "id": "c",
+     "text": "Right lower quadrant at McBurney's point, since the caecum is mobile",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    },
+    {
+     "id": "d",
+     "text": "Right hypochondrium, since the liver falls away in ascites",
+     "correct": false,
+     "why": "Not the best answer here — see the explanation below."
+    }
+   ],
+   "explanation": [
+    "Key - B) Left lower quadrant lateral to the rectus sheath, since it is lateral to the inferior epigastric artery and away from adhesions under the old scar. A point in the left lower quadrant lateral to the rectus is lateral to the inferior epigastric artery, distant from the midline adhesions, and overlies a usually empty descending colon.\n\nWhy the others fail:\nA) Midline below the umbilicus, since the linea alba is avascular - The linea alba is avascular but lies directly under the old scar, where bowel is likely to be adherent, and the urachus and a full bladder are additional hazards.\nC) Right lower quadrant at McBurney's point, since the caecum is mobile - The caecum is gas-filled and thin-walled and is the structure most easily punctured at McBurney's point.\nD) Right hypochondrium, since the liver falls away in ascites - The liver enlarges rather than falls away in many causes of ascites, and the right hypochondrium risks liver and gallbladder."
+   ],
+   "keyFacts": [
+    "Key - B) Left lower quadrant lateral to the rectus sheath, since it is lateral to the inferior epigastric artery and away from adhesions under the old scar. A point in the left lower quadrant lateral to the rectus is lateral to the inferior epigastric artery, distant from the midline adhesions, and overlies a usually empty descending colon.\n\nWhy the others fail:\nA) Midline below the umbilicus, since the linea alba is avascular - The linea alba is avascular but lies directly under the old scar, where bowel is likely to be adherent, and the urachus and a full bladder are additional hazards.\nC) Right lower quadrant at McBurney's point, since the caecum is mobile - The caecum is gas-filled and thin-walled and is the structure most easily punctured at McBurney's point.\nD) Right hypochondrium, since the liver falls away in ascites - The liver enlarges rather than falls away in many causes of ascites, and the right hypochondrium risks liver and gallbladder."
+   ],
+   "teachingPoint": "Key - B) Left lower quadrant lateral to the rectus sheath, since it is lateral to the inferior epigastric artery and away from adhesions under the old scar. A point in the left lower quadrant lateral to the rectus is lateral to the inferior epigastric artery, distant from the midline adhesions, and overlies a usually empty descending colon.\n\nWhy the others fail:\nA) Midline below the umbilicus, since the linea alba is avascular - The linea alba is avascular but lies directly under the old scar, where bowel is likely to be adherent, and the urachus and a full bladder are additional hazards.\nC) Right lower quadrant at McBurney's point, since the caecum is mobile - The caecum is gas-filled and thin-walled and is the structure most easily punctured at McBurney's point.\nD) Right hypochondrium, since the liver falls away in ascites - The liver enlarges rather than falls away in many causes of ascites, and the right hypochondrium risks liver and gallbladder."
+  }
+ ],
+ "emqs": [],
+ "summary": "Anterior Abdominal Wall: work through each section's cards to fix the structures, their relations and clinical lesions. Use the MCQs to test discrimination and the image-occlusion cards to rehearse identification."
+}

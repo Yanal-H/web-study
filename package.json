@@ -1,0 +1,45 @@
+{
+  "name": "foundation-med-school-toolkit",
+  "private": true,
+  "version": "9.0.0-phase0",
+  "type": "module",
+  "description": "Foundation \u00b7 Med School Study Toolkit \u2014 offline-first study website (by Yanal \u00b7 Cairo 2026)",
+  "scripts": {
+    "dev": "vite",
+    "prebuild": "npm run validate:content",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview --port 4173",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint . --ext .ts,.tsx",
+    "test": "vitest run",
+    "validate:content": "vite-node scripts/validate-content.ts",
+    "make:schema": "vite-node scripts/make-schema.ts",
+    "upload:content": "vite-node scripts/upload-content.ts"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.112.3",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.26.2",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@testing-library/dom": "^10.4.1",
+    "@testing-library/react": "^16.0.1",
+    "@types/node": "^22.20.1",
+    "@types/react": "^18.3.11",
+    "@types/react-dom": "^18.3.0",
+    "@typescript-eslint/eslint-plugin": "^8.8.0",
+    "@typescript-eslint/parser": "^8.8.0",
+    "@vitejs/plugin-react": "^4.3.2",
+    "eslint": "^8.57.1",
+    "eslint-plugin-react-hooks": "^4.6.2",
+    "eslint-plugin-react-refresh": "^0.4.12",
+    "jsdom": "^25.0.1",
+    "prettier": "^3.3.3",
+    "typescript": "^5.5.4",
+    "vite": "^5.4.8",
+    "vitest": "^2.1.2",
+    "zod-to-json-schema": "^3.25.2"
+  }
+}

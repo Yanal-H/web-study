@@ -1,0 +1,179 @@
+/* Haki effects — the living field + app-wide energy. Gated by data-haki. */
+
+.haki-field {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+:root[data-haki='off'] .haki-field {
+  display: none;
+}
+
+/* content sits above the field */
+.app {
+  position: relative;
+  z-index: 1;
+}
+
+/* the field shows through the main column; keep sidebar/cards as opaque islands */
+.main {
+  background: transparent;
+}
+
+/* ---- headline underline: a haki bolt under every page title ---- */
+.page-head h1,
+.hero .hero-sig {
+  position: relative;
+}
+.page-head h1::after {
+  content: '';
+  position: absolute;
+  left: 2px;
+  bottom: -6px;
+  height: 3px;
+  width: min(140px, 40%);
+  border-radius: 3px;
+  background: var(--grad-haki);
+  background-size: 200% 100%;
+  box-shadow: 0 0 14px var(--haki-glow);
+  animation: hakiSweep 3.4s ease-in-out infinite, underlineIn 620ms var(--ease) both;
+}
+@keyframes underlineIn {
+  from {
+    transform: scaleX(0);
+    transform-origin: left;
+    opacity: 0;
+  }
+}
+@keyframes hakiSweep {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+/* ---- interactive card: diagonal spark sweep on hover ---- */
+.card--interactive {
+  position: relative;
+  overflow: hidden;
+}
+.card--interactive::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(120deg, transparent 30%, var(--haki-glow) 50%, transparent 70%);
+  transform: translateX(-120%);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s;
+}
+.card--interactive:hover::after {
+  opacity: 0.5;
+  animation: spark 0.7s ease;
+}
+@keyframes spark {
+  from {
+    transform: translateX(-120%);
+  }
+  to {
+    transform: translateX(120%);
+  }
+}
+
+/* ---- primary button: haki sheen ---- */
+.btn--primary {
+  position: relative;
+  overflow: hidden;
+}
+.btn--primary::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -60%;
+  width: 40%;
+  height: 100%;
+  background: linear-gradient(100deg, transparent, rgba(255, 255, 255, 0.35), transparent);
+  transform: skewX(-18deg);
+  animation: sheen 4.5s ease-in-out infinite;
+}
+@keyframes sheen {
+  0%,
+  60% {
+    left: -60%;
+  }
+  85%,
+  100% {
+    left: 160%;
+  }
+}
+
+/* ---- route entrance (every page) ---- */
+.page-head {
+  animation: routeIn 460ms var(--ease) both;
+}
+@keyframes routeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+}
+
+/* ---- heatmap: charged cells pulse ---- */
+.heat-4 {
+  animation: cellPulse 3s ease-in-out infinite;
+}
+@keyframes cellPulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 rgba(255, 45, 85, 0);
+  }
+  50% {
+    box-shadow: 0 0 8px var(--haki-glow);
+  }
+}
+
+/* ---- progress ring glow ---- */
+.ring-value {
+  filter: drop-shadow(0 0 5px var(--accent-glow));
+}
+
+/* ---- CALM: keep drift + glow, drop the loud strikes ---- */
+:root[data-haki='calm'] .page-head h1::after {
+  animation: underlineIn 620ms var(--ease) both;
+}
+:root[data-haki='calm'] .btn--primary::before,
+:root[data-haki='calm'] .heat-4 {
+  animation: none;
+}
+
+/* ---- OFF / reduced-motion: silence everything decorative ---- */
+:root[data-haki='off'] .page-head h1::after {
+  animation: none;
+  background: var(--accent);
+}
+:root[data-haki='off'] .card--interactive::after,
+:root[data-haki='off'] .btn--primary::before {
+  display: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .page-head h1::after,
+  .btn--primary::before,
+  .heat-4,
+  .page-head {
+    animation: none;
+  }
+  .card--interactive:hover::after {
+    animation: none;
+    opacity: 0;
+  }
+}
+:root.reduce-motion .page-head h1::after,
+:root.reduce-motion .btn--primary::before,
+:root.reduce-motion .heat-4,
+:root.reduce-motion .page-head {
+  animation: none;
+}

@@ -1,0 +1,60 @@
+/* Per-buyer watermark seal — faint signature + install id, always present once unlocked. */
+.watermark {
+  position: fixed;
+  right: 12px;
+  bottom: 10px;
+  z-index: 30;
+  pointer-events: none;
+  user-select: none;
+  text-align: right;
+  opacity: 0.5;
+  mix-blend-mode: luminosity;
+}
+.watermark .wm-sign {
+  font-family: 'Great Vibes', 'Snell Roundhand', 'Segoe Script', cursive;
+  font-size: 22px;
+  line-height: 1;
+  color: var(--text-faint);
+}
+.watermark .wm-id {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.06em;
+  color: var(--text-faint);
+  opacity: 0.8;
+}
+
+@media (max-width: 860px) {
+  .watermark {
+    right: 8px;
+    bottom: 6px;
+    opacity: 0.35;
+  }
+  .watermark .wm-sign {
+    font-size: 18px;
+  }
+}
+
+/* The signed-in account, under the signature. Faint enough to ignore while
+   studying, legible enough to identify the source of a shared screenshot. */
+.wm-user {
+  font-size: 9px;
+  letter-spacing: 0.02em;
+  color: var(--text-faint);
+  opacity: 0.55;
+  max-width: 22ch;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Printing is the easiest way to walk off with a chapter, so the seal must
+   survive it — print styles elsewhere hide chrome, this stays. */
+@media print {
+  .watermark,
+  .wm-user {
+    display: block !important;
+    opacity: 0.75 !important;
+    color: #555 !important;
+  }
+}

@@ -1,0 +1,452 @@
+/* Foundation · Med School Toolkit — base element styles + app shell (Phase 1). */
+
+* {
+  box-sizing: border-box;
+}
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-strong) transparent;
+}
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+*::-webkit-scrollbar-thumb {
+  background: var(--border-strong);
+  border-radius: 999px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+*::-webkit-scrollbar-thumb:hover {
+  background: var(--text-faint);
+  background-clip: content-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: var(--fs-base);
+  background: var(--bg);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  line-height: 1.55;
+}
+
+a {
+  color: var(--accent);
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  line-height: 1.15;
+  margin: 0 0 0.4em;
+  color: var(--text);
+}
+
+p {
+  margin: 0 0 0.9em;
+}
+
+code,
+kbd,
+.mono {
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+}
+
+::selection {
+  background: var(--accent-soft);
+}
+
+:focus-visible {
+  outline: none;
+  box-shadow: var(--ring);
+  border-radius: var(--radius-xs);
+}
+
+hr {
+  border: none;
+  border-top: 1px solid var(--border-soft);
+  margin: var(--sp-5) 0;
+}
+
+/* ---- APP SHELL ---- */
+.app {
+  display: grid;
+  grid-template-columns: var(--sidebar-w) 1fr;
+  min-height: 100vh;
+}
+
+.sidebar {
+  background: var(--bg-2);
+  border-right: 1px solid var(--border-soft);
+  padding: var(--sp-5) var(--sp-3);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: var(--sp-2) var(--sp-2) var(--sp-5);
+}
+.brand .mark {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background: var(--grad-accent);
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  box-shadow: 0 6px 18px -8px var(--accent-glow);
+}
+.brand .name {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+.brand .tag {
+  font-size: 10.5px;
+  color: var(--text-faint);
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  margin-top: 4px;
+}
+
+.nav-group-label {
+  font-size: 10.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-faint);
+  padding: var(--sp-4) var(--sp-3) var(--sp-2);
+}
+
+.navitem {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 9px 12px;
+  border-radius: var(--radius-sm);
+  color: var(--text-dim);
+  font-size: 14px;
+  font-weight: 500;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition:
+    background var(--transition),
+    color var(--transition);
+  text-decoration: none;
+}
+.navitem:hover {
+  background: var(--surface-hover);
+  color: var(--text);
+  text-decoration: none;
+}
+.navitem.active {
+  background: var(--accent-soft);
+  color: var(--text);
+  border-color: var(--border-soft);
+}
+.navitem .nav-ico {
+  width: 18px;
+  height: 18px;
+  flex: 0 0 auto;
+  color: currentColor;
+  opacity: 0.85;
+}
+.navitem.active .nav-ico {
+  color: var(--accent);
+  opacity: 1;
+}
+
+.sidebar-foot {
+  margin-top: auto;
+  padding: var(--sp-4) var(--sp-2) var(--sp-1);
+  font-size: 11.5px;
+  color: var(--text-faint);
+}
+.sidebar-foot .sig {
+  font-family: var(--font-signature);
+  font-size: 22px;
+  color: var(--text-dim);
+  line-height: 1;
+  display: block;
+  margin-bottom: 2px;
+}
+
+.main {
+  min-width: 0;
+  padding: var(--sp-6) clamp(18px, 4vw, 46px) var(--sp-8);
+  max-width: var(--maxw);
+  width: 100%;
+  position: relative;
+}
+.main::before {
+  /* subtle hero glow pulled from the palette */
+  content: '';
+  position: fixed;
+  inset: 0 0 auto 0;
+  height: 320px;
+  background: var(--grad-hero);
+  pointer-events: none;
+  z-index: 0;
+}
+.main > * {
+  position: relative;
+  z-index: 1;
+}
+
+.page-head {
+  margin-bottom: var(--sp-5);
+}
+.page-head h1 {
+  font-size: var(--fs-3xl);
+  margin-bottom: 4px;
+}
+.page-head .sub {
+  color: var(--text-dim);
+  font-size: var(--fs-md);
+}
+
+.route-fallback {
+  padding: var(--sp-7);
+  color: var(--text-faint);
+  font-size: 14px;
+}
+
+.stub-note {
+  margin-top: var(--sp-4);
+  padding: 14px 16px;
+  border: 1px dashed var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text-dim);
+  font-size: 14px;
+  background: var(--surface-1);
+}
+.stub-note code {
+  color: var(--accent);
+}
+
+/* utility layout helpers */
+.row {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+}
+.wrap {
+  flex-wrap: wrap;
+}
+.spread {
+  justify-content: space-between;
+}
+.grid {
+  display: grid;
+  gap: var(--sp-4);
+}
+.muted {
+  color: var(--text-dim);
+}
+.faint {
+  color: var(--text-faint);
+}
+
+/* ---- MOTION: entrance stagger, glow, alive bg ---- */
+@keyframes enterUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.enter > * {
+  animation: enterUp 460ms var(--ease) both;
+}
+.enter > *:nth-child(1) {
+  animation-delay: 30ms;
+}
+.enter > *:nth-child(2) {
+  animation-delay: 80ms;
+}
+.enter > *:nth-child(3) {
+  animation-delay: 130ms;
+}
+.enter > *:nth-child(4) {
+  animation-delay: 180ms;
+}
+.enter > *:nth-child(5) {
+  animation-delay: 230ms;
+}
+.enter > *:nth-child(6) {
+  animation-delay: 280ms;
+}
+
+/* interactive cards lift with an accent glow */
+.card--interactive:hover {
+  box-shadow: var(--card-glow);
+}
+
+/* active nav item gets a live accent bar + glow */
+.navitem.active {
+  position: relative;
+  box-shadow: inset 0 0 0 1px var(--border), 0 0 22px -12px var(--accent-glow);
+}
+.navitem.active::before {
+  content: '';
+  position: absolute;
+  left: -1px;
+  top: 8px;
+  bottom: 8px;
+  width: 3px;
+  border-radius: 3px;
+  background: var(--grad-accent);
+  box-shadow: 0 0 10px var(--accent-glow);
+}
+
+/* subtle living energy behind the main content */
+.main::after {
+  content: '';
+  position: fixed;
+  right: -8%;
+  top: 12%;
+  width: 460px;
+  height: 460px;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--accent-soft), transparent 68%);
+  filter: blur(30px);
+  pointer-events: none;
+  z-index: 0;
+  animation: floatOrb 16s ease-in-out infinite alternate;
+}
+@keyframes floatOrb {
+  from {
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 0.7;
+  }
+  to {
+    transform: translate3d(-30px, 40px, 0) scale(1.15);
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .enter > * {
+    animation: none;
+  }
+  .main::after {
+    animation: none;
+  }
+}
+:root.reduce-motion .enter > *,
+:root.reduce-motion .main::after {
+  animation: none;
+}
+
+/* ---- MOBILE ---- */
+.topbar {
+  display: none;
+}
+.scrim {
+  display: none;
+}
+
+@media (max-width: 900px) {
+  .app {
+    grid-template-columns: 1fr;
+  }
+  .topbar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 16px;
+    border-bottom: 1px solid var(--border-soft);
+    background: var(--bg-2);
+    position: sticky;
+    top: 0;
+    z-index: 40;
+  }
+  .topbar .brand {
+    padding: 0;
+    gap: 9px;
+  }
+  .topbar .brand .mark {
+    width: 32px;
+    height: 32px;
+    border-radius: 9px;
+  }
+  .topbar .brand .name {
+    font-size: 18px;
+  }
+  .menu-btn {
+    margin-left: auto;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    color: var(--text);
+    border-radius: var(--radius-sm);
+    padding: 8px 12px;
+    font-size: 14px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+  }
+  .sidebar {
+    position: fixed;
+    inset: 0 auto 0 0;
+    width: 264px;
+    z-index: 60;
+    transform: translateX(-105%);
+    transition: transform var(--transition);
+    height: 100vh;
+  }
+  .sidebar.open {
+    transform: translateX(0);
+    box-shadow: var(--shadow-lg);
+  }
+  .scrim {
+    display: block;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 55;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--transition);
+  }
+  .scrim.show {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .main {
+    padding: var(--sp-5) 18px var(--sp-8);
+  }
+  .main::before {
+    height: 220px;
+  }
+}

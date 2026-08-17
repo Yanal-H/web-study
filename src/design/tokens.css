@@ -1,0 +1,286 @@
+/*
+ * Foundation · Med School Toolkit — Design System (Phase 1).
+ *
+ * INTENT (per the Design Language Brief):
+ *  - Elevated, TINTED neutrals — never pure #000 / #fff. Dark theme sits on a cool
+ *    slate family with a faint blue undertone (technical, calm); light theme on a
+ *    warm stone/oatmeal (low-glare, long-reading). Each theme has 3-4 elevation
+ *    surfaces stepping up from the base.
+ *  - ONE loud colour: a jewel-toned "transformative teal", reserved for the primary
+ *    action and the active state. Everything else is neutral.
+ *  - Semantic set (success/warning/error/info) legible in both themes; the recall
+ *    grades (Again/Hard/Good/Easy) map onto them consistently.
+ *  - Micro-glow, not highlighter fills: energy appears as controlled accent glow on
+ *    focus rings, active tabs, small badges and CTA outlines.
+ *  - Gradients are built ONLY from palette tokens (hero, signature swash, rings).
+ *  - Purposeful, fast, reduced-motion-aware motion tokens.
+ *  - Full light/dark parity; the old midnight/paper/clinic aurora hexes are retired.
+ */
+
+:root {
+  /* ---- type ---- */
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-display: 'Fraunces', 'Iowan Old Style', Georgia, serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  --font-signature: 'Great Vibes', 'Snell Roundhand', cursive;
+
+  /* fluid type scale */
+  --fs-xs: 0.78rem;
+  --fs-sm: 0.86rem;
+  --fs-base: 0.95rem;
+  --fs-md: 1.05rem;
+  --fs-lg: 1.2rem;
+  --fs-xl: 1.5rem;
+  --fs-2xl: clamp(1.7rem, 3.2vw, 2.1rem);
+  --fs-3xl: clamp(2.1rem, 5vw, 3rem);
+  --fs-hero: clamp(2.6rem, 6vw, 4rem);
+
+  /* ---- geometry ---- */
+  --radius-xs: 7px;
+  --radius-sm: 10px;
+  --radius: 14px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+  --radius-pill: 999px;
+
+  --sp-1: 4px;
+  --sp-2: 8px;
+  --sp-3: 12px;
+  --sp-4: 16px;
+  --sp-5: 24px;
+  --sp-6: 32px;
+  --sp-7: 48px;
+  --sp-8: 64px;
+
+  --maxw: 1200px;
+  --sidebar-w: 256px;
+
+  /* ---- motion ---- */
+  --dur-fast: 120ms;
+  --dur: 200ms;
+  --dur-slow: 340ms;
+  --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --transition: var(--dur) var(--ease);
+}
+
+/* ===================================================================
+   DARK — cool slate, tinted near-black, 4 elevation surfaces (default)
+   =================================================================== */
+:root,
+:root[data-theme='dark'],
+:root[data-theme='midnight'] {
+  color-scheme: dark;
+
+  /* near-black with a faint warm/crimson undertone — a darker stage that makes
+     the red read as heat rather than decoration */
+  --bg: #0b0c10;
+  --bg-2: #08080b;
+  --surface-1: #14151b;
+  --surface-2: #1b1d25;
+  --surface-3: #24262f;
+  --surface-hover: #22242d;
+
+  --border: #2c2e39;
+  --border-soft: #1f2028;
+  --border-strong: #3d3f4d;
+
+  --text: #f2f4f8;
+  --text-dim: #a6adbb;
+  --text-faint: #6d7482;
+  --text-inverse: #08080b;
+
+  /* Conqueror's haki red is the app's colour, not a highlight sitting on one. */
+  --accent: #ff1f47;
+  --accent-strong: #c40d34;
+  --accent-soft: rgba(255, 31, 71, 0.16);
+  --accent-contrast: #ffffff;
+  --accent-glow: rgba(255, 31, 71, 0.42);
+
+  --success: #34d399;
+  --warning: #fbbf24;
+  --error: #f87171;
+  --info: #60a5fa;
+  --success-soft: rgba(52, 211, 153, 0.15);
+  --warning-soft: rgba(251, 191, 36, 0.15);
+  --error-soft: rgba(248, 113, 113, 0.15);
+  --info-soft: rgba(96, 165, 250, 0.15);
+
+  /* recall grades map onto semantics */
+  --grade-again: var(--error);
+  --grade-hard: var(--warning);
+  --grade-good: var(--success);
+  --grade-easy: var(--info);
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow: 0 10px 30px -12px rgba(0, 0, 0, 0.55);
+  --shadow-lg: 0 24px 60px -24px rgba(0, 0, 0, 0.65);
+  --ring: 0 0 0 3px var(--accent-glow);
+
+  --grad-hero: radial-gradient(1200px 520px at 78% -12%, var(--accent-soft), transparent 60%);
+  --grad-accent: linear-gradient(135deg, var(--accent), var(--accent-strong));
+  --heat-0: #171d25;
+
+  /* ---- HAKI / energy (Conqueror's haki — black core, crimson + violet arcs) ---- */
+  --haki-core: #07070c;
+  --haki-red: #ff2d55;
+  --haki-red-deep: #b3123b;
+  --haki-violet: #7c3aed;
+  --lightning: #ffe3ea;
+  --haki-glow: rgba(255, 45, 85, 0.55);
+  --grad-haki: linear-gradient(120deg, #ff5470, #ff2d55 42%, #b3123b 78%, #7c3aed);
+  --card-glow: 0 0 0 1px var(--border), 0 18px 50px -24px var(--accent-glow);
+
+  /* ---- CONCEPT COLOURS (dark) — one hue per class, spread round the wheel.
+     Used identically in the reader, on cards, in questions and in notes. ---- */
+  --k-value: #ff8a5c;
+  --k-drug: #f5b93f;
+  --k-organism: #a9dc55;
+  --k-cell: #45d9a6;
+  --k-mediator: #3fc9e8;
+  --k-test: #6fa8ff;
+  --k-structure: #a795ff;
+  --k-procedure: #dd8bf0;
+  --k-condition: #ff7fa5;
+  --k-warning: #ff3b52;
+  --k-tint: 14%;
+}
+
+/* ===================================================================
+   LIGHT — warm stone/oatmeal, low-glare, 4 elevation surfaces
+   =================================================================== */
+:root[data-theme='light'],
+:root[data-theme='paper'] {
+  color-scheme: light;
+
+  --bg: #f3f1ea;
+  --bg-2: #eceadf;
+  --surface-1: #faf9f4;
+  --surface-2: #ffffff;
+  --surface-3: #ffffff;
+  --surface-hover: #f1efe6;
+
+  --border: #e0dccf;
+  --border-soft: #ebe8dd;
+  --border-strong: #cec9b9;
+
+  --text: #22282f;
+  --text-dim: #55606d;
+  --text-faint: #8a94a0;
+  --text-inverse: #faf9f4;
+
+  /* the same red, darkened so it still reads on paper */
+  --accent: #c2123f;
+  --accent-strong: #97002f;
+  --accent-soft: rgba(194, 18, 63, 0.1);
+  --accent-contrast: #ffffff;
+  --accent-glow: rgba(194, 18, 63, 0.2);
+
+  --success: #0f9d63;
+  --warning: #b57314;
+  --error: #c93a4f;
+  --info: #2f6fd6;
+  --success-soft: rgba(15, 157, 99, 0.12);
+  --warning-soft: rgba(181, 115, 20, 0.12);
+  --error-soft: rgba(201, 58, 79, 0.12);
+  --info-soft: rgba(47, 111, 214, 0.12);
+
+  --grade-again: var(--error);
+  --grade-hard: var(--warning);
+  --grade-good: var(--success);
+  --grade-easy: var(--info);
+
+  --shadow-sm: 0 1px 2px rgba(60, 55, 40, 0.08);
+  --shadow: 0 10px 30px -16px rgba(60, 55, 40, 0.22);
+  --shadow-lg: 0 24px 60px -28px rgba(60, 55, 40, 0.26);
+  --ring: 0 0 0 3px var(--accent-glow);
+
+  --grad-hero: radial-gradient(1200px 520px at 78% -12%, var(--accent-soft), transparent 60%);
+  --grad-accent: linear-gradient(135deg, var(--accent), var(--accent-strong));
+  --heat-0: #e7e3d6;
+
+  /* haki stays dramatic even on the light theme (the hero is always a dark panel) */
+  --haki-core: #07070c;
+  --haki-red: #ff2d55;
+  --haki-red-deep: #b3123b;
+  --haki-violet: #7c3aed;
+  --lightning: #ffe3ea;
+  --haki-glow: rgba(255, 45, 85, 0.5);
+  --grad-haki: linear-gradient(120deg, #ff5470, #ff2d55 42%, #b3123b 78%, #7c3aed);
+  --card-glow: 0 0 0 1px var(--border), 0 18px 50px -28px var(--accent-glow);
+
+  /* ---- CONCEPT COLOURS (light) — same hues, darkened for contrast on paper ---- */
+  --k-value: #c2410c;
+  --k-drug: #a16207;
+  --k-organism: #4d7c0f;
+  --k-cell: #047857;
+  --k-mediator: #0369a1;
+  --k-test: #1d4ed8;
+  --k-structure: #6d28d9;
+  --k-procedure: #a21caf;
+  --k-condition: #be185d;
+  --k-warning: #be123c;
+  --k-tint: 10%;
+}
+
+/* Honour OS preference for the very first paint when no explicit choice is set.
+   (index.html resolves the stored/OS theme pre-paint; this is the CSS fallback.) */
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme]) {
+    color-scheme: light;
+    --bg: #f3f1ea;
+    --bg-2: #eceadf;
+    --surface-1: #faf9f4;
+    --surface-2: #ffffff;
+    --surface-3: #ffffff;
+    --surface-hover: #f1efe6;
+    --border: #e0dccf;
+    --border-soft: #ebe8dd;
+    --border-strong: #cec9b9;
+    --text: #22282f;
+    --text-dim: #55606d;
+    --text-faint: #8a94a0;
+    --text-inverse: #faf9f4;
+    --accent: #c2123f;
+    --accent-strong: #0f766e;
+    --accent-soft: rgba(13, 148, 136, 0.12);
+    --accent-contrast: #ffffff;
+    --accent-glow: rgba(13, 148, 136, 0.22);
+    --success: #0f9d63;
+    --warning: #b57314;
+    --error: #c93a4f;
+    --info: #2f6fd6;
+    --heat-0: #e7e3d6;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-fast: 0ms;
+    --dur: 0ms;
+    --dur-slow: 0ms;
+  }
+}
+
+/* explicit user opt-in (Settings › Reduce motion) */
+:root.reduce-motion {
+  --dur-fast: 0ms;
+  --dur: 0ms;
+  --dur-slow: 0ms;
+}
+:root.reduce-motion *,
+:root.reduce-motion *::before,
+:root.reduce-motion *::after {
+  animation-duration: 0.001ms !important;
+  transition-duration: 0.001ms !important;
+}
+
+/* compact density */
+:root.density-compact {
+  --sp-4: 12px;
+  --sp-5: 18px;
+  --sp-6: 24px;
+}
+:root.density-compact .card {
+  padding: var(--sp-4);
+}
