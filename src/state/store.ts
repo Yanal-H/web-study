@@ -258,20 +258,37 @@ export function load(): AppState {
 /** The live, in-memory app state. Mutated in place, persisted via save(). */
 export let state: AppState = load();
 
+/**
+ * A failed localStorage write (quota exceeded, private-mode blocks) must never be
+ * treated as a successful save. Store.set returns false in that case; we broadcast
+ * an event the shell listens for so the student is warned to free space or export,
+ * instead of losing data silently.
+ */
+function notifyStorageError() {
+  if (typeof window === 'undefined') return;
+  try {
+    window.dispatchEvent(new CustomEvent('foundation:storage-error'));
+  } catch {
+    /* no-op */
+  }
+}
+
 let saveTimer: ReturnType<typeof setTimeout> | null = null;
 export function save() {
   if (saveTimer) clearTimeout(saveTimer);
   saveTimer = setTimeout(() => {
-    Store.set(LS_KEY, JSON.stringify(state));
+    const ok = Store.set(LS_KEY, JSON.stringify(state));
     Store.set(THEME_KEY, state.theme);
+    if (!ok) notifyStorageError();
   }, 150);
 }
 
 /** Persist synchronously (no debounce) — useful for tests and beforeunload. */
 export function saveNow() {
   if (saveTimer) clearTimeout(saveTimer);
-  Store.set(LS_KEY, JSON.stringify(state));
+  const ok = Store.set(LS_KEY, JSON.stringify(state));
   Store.set(THEME_KEY, state.theme);
+  if (!ok) notifyStorageError();
 }
 
 export function markActivity() {

@@ -4026,3 +4026,21 @@
 .cloze-pop-btn:hover {
   filter: brightness(1.06);
 }
+
+/* ---- Settings storage meter ---- */
+.storage-meter {
+  margin: 12px 0 4px;
+}
+.storage-track {
+  height: 8px;
+  border-radius: 999px;
+  background: var(--surface-2);
+  overflow: hidden;
+  border: 1px solid var(--border-soft);
+}
+.storage-fill {
+  height: 100%;
+  background: var(--grad-accent, var(--accent));
+  border-radius: 999px;
+  transition: width var(--transition);
+}

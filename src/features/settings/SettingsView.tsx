@@ -1,4 +1,4 @@
-import { createContext, useContext, useRef, useState } from 'react';
+import { createContext, useContext, useEffect, useRef, useState } from 'react';
 import { useStore } from '../../state/useStore';
 import { state as liveState, commit, update, reloadState, Store, runMigrations } from '../../state/store';
 import { LS_KEY } from '../../state/constants';
@@ -12,8 +12,63 @@ import { sfx } from '../../lib/sound';
 import { getAiConfig, setAiConfig, AI_MODELS } from '../../lib/ai';
 import { resetEngineProgress } from '../../data/db';
 import { invalidateDeckTree } from '../../data/session';
+import { usage, requestPersistence, formatBytes } from '../../lib/blobs';
 import { looksLikeStateBackup, redactBackup } from './backup';
 import LibraryPanel from './LibraryPanel';
+
+/** Storage usage + whether the origin is protected from eviction, with a way to ask. */
+function StorageMeter() {
+  const toast = useToast();
+  const [space, setSpace] = useState<{ used: number; quota: number } | null>(null);
+  const [persisted, setPersisted] = useState<boolean | null>(null);
+
+  useEffect(() => {
+    let alive = true;
+    void usage().then((u) => alive && setSpace(u));
+    if (navigator.storage?.persisted)
+      navigator.storage.persisted().then((p) => alive && setPersisted(p)).catch(() => {});
+    return () => {
+      alive = false;
+    };
+  }, []);
+
+  const pct = space && space.quota ? Math.min(100, (space.used / space.quota) * 100) : 0;
+
+  async function protect() {
+    const ok = await requestPersistence();
+    setPersisted(ok);
+    toast(ok ? 'Storage protected from eviction' : 'The browser declined — keep a backup', ok ? 'success' : 'error');
+  }
+
+  return (
+    <div className="storage-meter">
+      {space && (
+        <>
+          <div className="storage-track" aria-hidden="true">
+            <div className="storage-fill" style={{ width: `${pct}%` }} />
+          </div>
+          <div className="muted" style={{ fontSize: 12.5, marginTop: 4 }}>
+            {formatBytes(space.used)} used{space.quota ? ` of about ${formatBytes(space.quota)}` : ''}
+          </div>
+        </>
+      )}
+      <div className="row spread" style={{ gap: 10, marginTop: 8, alignItems: 'center' }}>
+        <span className="muted" style={{ fontSize: 12.5 }}>
+          {persisted == null
+            ? 'Checking whether your data is protected…'
+            : persisted
+              ? 'Protected — the browser will not evict this data.'
+              : 'Not protected — the browser may evict this data under storage pressure.'}
+        </span>
+        {persisted === false && (
+          <Button size="sm" onClick={() => void protect()}>
+            Keep my data
+          </Button>
+        )}
+      </div>
+    </div>
+  );
+}
 
 function Switch({ checked, onChange, label }: { checked: boolean; onChange: (v: boolean) => void; label: string }) {
   return (
@@ -425,6 +480,7 @@ export default function SettingsView() {
         <p className="muted" style={{ fontSize: 13.5, marginTop: -6 }}>
           Everything is stored locally on this device. Back it up or move it between devices here.
         </p>
+        <StorageMeter />
         <div className="row wrap" style={{ gap: 10, marginTop: 8 }}>
           <Button onClick={exportData}>
             <IconDownload size={17} /> Export backup

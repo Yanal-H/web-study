@@ -2,7 +2,7 @@ import { Suspense, useEffect, useMemo, useState } from 'react';
 import { NavLink, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import { ROUTES, prefetchRoutes } from './routes';
 import Watermark from '../features/gate/Watermark';
-import { ToastProvider } from '../design/Toast';
+import { ToastProvider, useToast } from '../design/Toast';
 import { CommandPalette } from '../design/CommandPalette';
 import type { Command } from '../design/CommandPalette';
 import { Dialog } from '../design/Dialog';
@@ -90,6 +90,24 @@ function Shell() {
   useEffect(() => {
     void ensureContentLoaded().catch((e) => console.error('content bootstrap failed', e));
   }, []);
+
+  // Ask the browser to keep this origin's data even under storage pressure. Without
+  // this, iOS Safari can evict scheduling/notes/imports after ~7 days of non-use.
+  // Idempotent and silent on Chromium; requested once at boot for every student,
+  // not only those who upload a file to the library.
+  useEffect(() => {
+    void import('../lib/blobs').then((m) => m.requestPersistence()).catch(() => {});
+  }, []);
+
+  // A failed storage write (quota, private mode) is broadcast by the store; warn the
+  // student rather than let data loss pass silently.
+  const toast = useToast();
+  useEffect(() => {
+    const onErr = () =>
+      toast('Could not save — device storage may be full. Free some space or export a backup.', 'error');
+    window.addEventListener('foundation:storage-error', onErr);
+    return () => window.removeEventListener('foundation:storage-error', onErr);
+  }, [toast]);
 
   const commands = useMemo<Command[]>(() => {
     const dark = state.theme !== 'paper';
