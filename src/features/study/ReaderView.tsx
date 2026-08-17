@@ -328,12 +328,26 @@ function ReadTab({
           </a>
         ))}
         {ch.mnemonics.length > 0 && (
-          <a href="#mnemonics" className="toc-link">
+          <a
+            href="#mnemonics"
+            className="toc-link"
+            onClick={(e) => {
+              e.preventDefault();
+              document.getElementById('mnemonics')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }}
+          >
             Mnemonics
           </a>
         )}
         {ch.glossary.length > 0 && (
-          <a href="#glossary" className="toc-link">
+          <a
+            href="#glossary"
+            className="toc-link"
+            onClick={(e) => {
+              e.preventDefault();
+              document.getElementById('glossary')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }}
+          >
             Glossary
           </a>
         )}

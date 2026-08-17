@@ -240,9 +240,17 @@ export default function SettingsView() {
         />
         <nav className="settings-jump" aria-label="Settings sections">
           {SECTIONS.map((sec) => (
-            <a key={sec.id} href={`#set-${sec.id}`}>
+            // Buttons, not anchors: under HashRouter an href="#set-…" would be read
+            // as a route change and drop you on the Not-found page.
+            <button
+              key={sec.id}
+              type="button"
+              onClick={() =>
+                document.getElementById(`set-${sec.id}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+              }
+            >
               {sec.label}
-            </a>
+            </button>
           ))}
         </nav>
       </div>
@@ -351,7 +359,7 @@ export default function SettingsView() {
         </Row>
       </Card>
 
-      <Card className="settings-section">
+      <Card className="settings-section" id="set-study">
         <h2>Study goals & scheduling</h2>
         <Row label="Daily goal" desc="Reviews per day to aim for.">
           <Input

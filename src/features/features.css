@@ -3048,7 +3048,8 @@
   gap: 4px;
   flex-wrap: wrap;
 }
-.settings-jump a {
+.settings-jump a,
+.settings-jump button {
   font-size: 12.5px;
   padding: 5px 11px;
   border-radius: 999px;
@@ -3056,9 +3057,11 @@
   background: var(--surface-1);
   color: var(--text-dim);
   text-decoration: none;
+  cursor: pointer;
   transition: all var(--dur-fast) var(--ease);
 }
-.settings-jump a:hover {
+.settings-jump a:hover,
+.settings-jump button:hover {
   color: var(--text);
   border-color: var(--accent);
 }
