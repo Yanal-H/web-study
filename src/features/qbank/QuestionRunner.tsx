@@ -393,16 +393,44 @@ function sourceOf(q: Mcq & { chapterId?: string; subject?: string }): string {
   return [ch?.subject ?? q.subject, ch?.title, section?.title].filter(Boolean).join(' › ');
 }
 
+/**
+ * Trim a list of explanation lines to a word budget, cutting on a word boundary of
+ * the line that tips over the limit. Keeps the answer short and scannable; the full
+ * depth is one tap away in the AI tutor below.
+ */
+function capExplanation(lines: string[], limit = 200): { lines: string[]; truncated: boolean } {
+  const out: string[] = [];
+  let used = 0;
+  for (const line of lines) {
+    const words = line.split(/\s+/).filter(Boolean);
+    if (used + words.length <= limit) {
+      out.push(line);
+      used += words.length;
+    } else {
+      const room = limit - used;
+      if (room >= 8) out.push(words.slice(0, room).join(' ') + '…');
+      return { lines: out, truncated: true };
+    }
+  }
+  return { lines: out, truncated: false };
+}
+
 function Explanation({ q, correct, onMakeCard }: { q: Mcq; correct: boolean; onMakeCard: () => void }) {
+  const capped = capExplanation(q.explanation, 200);
   return (
     <div className={`qb-explain ${correct ? 'ok' : 'no'}`}>
       <div className="qb-verdict">{correct ? 'Correct' : 'Incorrect'}</div>
-      {q.explanation.length > 0 && (
+      {capped.lines.length > 0 && (
         <ol className="qb-explain-list">
-          {q.explanation.map((e, i) => (
+          {capped.lines.map((e, i) => (
             <li key={i} dangerouslySetInnerHTML={{ __html: renderInline(e, globalIndex()) }} />
           ))}
         </ol>
+      )}
+      {capped.truncated && (
+        <div className="muted" style={{ fontSize: 12.5, marginTop: 2 }}>
+          Trimmed to keep it brief — use <strong>Ask AI</strong> below for the full explanation.
+        </div>
       )}
       {q.keyFacts.length > 0 && (
         <div className="qb-keyfacts">

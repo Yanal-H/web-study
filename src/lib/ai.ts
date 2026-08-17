@@ -17,8 +17,10 @@ export const AI_MODELS: Array<{ value: string; label: string }> = [
   { value: 'claude-haiku-4-5-20251001', label: 'Claude Haiku 4.5 — fast, cheap' },
 ];
 
-// Default to the deepest model so explanations are as thorough as possible.
-const DEFAULTS: AiConfig = { enabled: false, apiKey: '', model: AI_MODELS[0]!.value };
+// On by default and defaulting to the deepest model, so the tutor is ready the
+// moment a key is added. With no key nothing is ever sent (aiReady stays false),
+// so the app is still fully offline until a key is entered.
+const DEFAULTS: AiConfig = { enabled: true, apiKey: '', model: AI_MODELS[0]!.value };
 
 export function getAiConfig(): AiConfig {
   const raw = (liveState.settings as Record<string, unknown>).ai as Partial<AiConfig> | undefined;
