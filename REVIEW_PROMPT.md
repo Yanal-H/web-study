@@ -1,96 +1,81 @@
-# Review prompt — Foundation Med-School Toolkit (v8)
+# Review prompt — Foundation Med-School Toolkit
 
-Paste everything below the line into another AI tool (Claude, GPT, Gemini, etc.), and
-attach the file `Foundation__Med_School_Toolkit-8.html` (or `index.html` — they are
-identical). The reviewer's job is to critique, **not** to rewrite the whole file. The
-output is meant to be handed straight back to the developer AI that builds the app.
+Paste everything below the line into another AI (Claude, GPT, Gemini, …) and attach
+the codebase digest **`REVIEW_BUNDLE.md`** (or the `foundation-app-source.zip`). The
+reviewer's job is to critique and propose concrete improvements — the output is handed
+straight back to the developer AI that builds the app, so findings must be specific and
+reference real files and line ranges.
 
 ---
 
-You are a senior reviewer auditing a **single-file, fully offline, zero-dependency
-HTML study application** for medical students. The entire app — HTML, CSS and
-JavaScript — lives in the one file attached. It persists to `localStorage`, runs with
-no network access of any kind, and ships under the brand **"by Yanal · Cairo 2026"**.
+You are a senior reviewer auditing an **offline-first medical-study web app** for medical
+students. It is a Vite + React 18 + TypeScript single-page app, deployed on Vercel,
+using `HashRouter`. All state persists locally; the only network request the app can
+ever make is the **opt-in AI tutor** (bring-your-own Anthropic key, off by default),
+and only after the student presses a button.
 
-Read the file end to end before writing anything. Then review it against the areas
-below and return findings in the exact format specified at the end.
+Read the digest before writing anything. Then review against the dimensions below and
+return findings in the exact format at the end.
 
-## Hard constraints you must respect (do not propose anything that breaks these)
-- **One self-contained `.html` file. Zero runtime dependencies, zero network fetches**
-  (no CDNs, no web fonts, no external images). Typography uses the system-font tokens
-  `--font-display / --font-ui / --font-mono`.
-- **Offline-first**, `localStorage` key `foundation_med_study_v1`, additive
-  migration-safe schema (currently `SCHEMA_VERSION = 4`) — no change may drop or
-  corrupt existing user data.
-- **No emoji anywhere** — icons are inline stroke SVGs.
+## Hard constraints — never propose anything that breaks these
+- **Zero runtime third-party or network fetches** other than the opt-in AI tutor.
+  Everything is self-hosted: no CDNs, no web fonts, no remote images. Typography uses
+  the system-font tokens `--font-display / --font-ui / --font-mono`.
+- **Offline-capable** and installable. The service worker prefetches every route chunk.
+- **Never lose user data.** Migrations are additive and lossless; an import backs up the
+  prior state first. Storage is `localStorage` (app state) + IndexedDB (the card engine
+  and the blob/file library).
+- **No emoji anywhere** — icons are inline stroke SVGs in `src/design/icons.tsx`.
 - **British spelling** throughout UI copy and comments.
-- Preserve the three themes (midnight / paper / clinic) and the flash-free pre-paint
-  theme script.
+- Preserve the brand: **"Yanal"**, the Great Vibes signature, and **"by Yanal · Cairo 2026"**.
+- Medical-content integrity: answers derived independently, cited where authored, nothing
+  fabricated. AI-tutor output is clearly labelled and never overrides the written rationale.
 
-## What the app already contains (so you don't "discover" it as missing)
-- Study Engine: baked chapter **modules** (`foundation.study-module/v1`), a textbook
-  **Reader** (sticky TOC, tables, must-know / pitfalls callouts, mark-reviewed).
-- **SM-2+ scheduler** (`scheduleCard`) with learning/relearning steps, ease deltas,
-  interval multipliers, fuzz, daily new/review caps, leech handling, sibling burying;
-  `sm2()` kept as a back-compat wrapper. Tunables in `state.settings.scheduler`.
-- **MCQ v2** (`foundation.mcq/v2`): vignette+stem, per-option rationale, ordered
-  `explanation[]`, `keyFacts[]`, difficulty 1–3, single / multi / EMQ types,
-  confidence tracking, immediate / end-of-set feedback, light Leitner spacing.
-- **Cards v2** (`foundation.card/v2`) in the shared `state.flashcards` store.
-- Settings drawer (gear icon), 14-day review forecast, weak-spot tag analytics, cram
-  mode, printable chapter view, undo-last-review, ⌘K palette, keyboard shortcuts.
-- Dashboard (contribution heatmap, streak with freeze), Planner, Q-Bank, Focus Timer
-  (Web Audio), Markdown Notes, cited Calculators, Mnemonics, Resources.
-- One baked chapter: **Surgery Ch.1 — Wound Healing** (95 cards, 46 MCQs).
+## Architecture (so you don't "discover" these as missing)
+- **App shell** `src/app/` — lazy routes (`routes.tsx`), the shell/nav/command palette
+  and shortcuts (`App.tsx`).
+- **State** `src/state/` — a reactive store over `localStorage` via `useSyncExternalStore`
+  (`useStore.ts`, `store.ts`); `useStoreVersion()` exists because the store object is
+  mutated in place, so memos must key on the version counter.
+- **Content-as-data** `src/content/` + `content/` — chapters validated by a Zod schema
+  (`src/content/schema.ts`, `foundation.study-module/v1`) at build time
+  (`scripts/validate-content.ts`) and at runtime import. 14 shipped chapters.
+- **Card engine** `src/data/` — IndexedDB stores for chapters/cards/mcqs/scheduling/media,
+  an FSRS scheduler, a `[deck, due]` compound index for O(log n) due-queue scans, chunked
+  idempotent import, one-time bootstrap of the shipped packs.
+- **Features** `src/features/` — dashboard, study (library + reader), subjects, flashcards
+  (Anki-style deck tree, SM-2+/FSRS review, occlusion), qbank (single/multi/EMQ with
+  per-option rationale + optional AI hints/explanations), planner, notes, calculators,
+  mnemonics, resources (in-app PDF reader + blob library), settings, focus timer, music.
+- **Design** `src/design/` — tokens (`tokens.css`), base/strength CSS, primitives,
+  the semantic colour lexicon (`src/lib/lexicon.ts`).
+- **Haki** — a synthesised living background (`src/features/effects/HakiField.tsx`) and a
+  red/black "haki" aesthetic; the ambient thunder sound has been removed.
 
 ## Review these dimensions
-1. **UX & visual design** — hierarchy, spacing, colour, motion, empty states,
-   first-run experience, and whether the Reader genuinely reads like a textbook.
-2. **Accessibility** — keyboard reachability, visible focus, ARIA roles/labels,
-   colour contrast in all three themes, `prefers-reduced-motion`, screen-reader flow,
-   target sizes.
-3. **Responsive** — behaviour at 375 / 768 / 1280 px; the mobile TOC; no horizontal
-   body scroll; touch ergonomics.
-4. **Spaced-repetition correctness** — audit `scheduleCard`: learning/relearning
-   transitions, lapse → relearn → graduate intervals, ease floor, fuzz, daily-cap
-   accounting, leech/suspend, and the four interval previews. Flag any state machine
-   bug or off-by-one.
-5. **MCQ pedagogy & medical accuracy** — sample the baked wound-healing MCQs and cards.
-   Flag any that are **clinically wrong, ambiguous, or have a weak/incorrect
-   distractor rationale**, and give the correction with a one-line justification from
-   standard surgical teaching. Do **not** invent facts or citations.
-6. **Security** — the hand-rolled Markdown subset and cloze/MCQ rendering must escape
-   HTML (XSS-safe). Try to find any injection path (digest, cloze answer, table cell,
-   note, MCQ option) that could execute markup.
-7. **Offline & data safety** — confirm no network calls; audit `runMigrations` for any
-   path that could lose keys or mis-upgrade a v2/v3 blob; check `localStorage` quota
-   handling.
-8. **Performance** — single ~350 KB file: parse/first-paint cost, large-DOM renders
-   (heatmap, 95-card lists), any layout thrash, needless full re-renders.
-9. **Code quality** — duplication, dead code, fragile selectors, event-listener leaks
-   on re-render, naming, and anything that will make adding the next chapter harder.
-10. **Content scale-up** — is the module/MCQ/card schema strong enough to add many more
-    chapters cleanly? Suggest schema or tooling improvements if not.
+1. **UX & visual design** — hierarchy, spacing, colour, motion, empty states, first-run
+   experience, cross-navigation between Study / Flashcards / Question Bank, and whether the
+   reader genuinely reads like a textbook.
+2. **Accessibility** — keyboard reachability, visible focus, ARIA roles/labels, contrast in
+   light and dark, `prefers-reduced-motion`, screen-reader flow.
+3. **Correctness & robustness** — the reactive-store memo pitfall, async engine loads, data
+   migrations, the FSRS/SM-2 scheduling, the import validation path, error handling.
+4. **Performance** — the 1.6 MB main bundle and how to split it (content data / vendor /
+   engine), virtualising very large deck lists, worker-side import, render churn from the
+   in-place store.
+5. **Medical & pedagogical value** — question quality, spaced-repetition design, whether the
+   study loop actually drives retention for a ~1000-student cohort.
+6. **Security & privacy** — the AI-tutor key handling (stored in `localStorage`, sent only in
+   the direct model call), the soft passphrase gate, export/backup safety.
 
-## Method
-- Prefer **concrete, high-confidence findings** over speculation. If you assert a bug,
-  describe the exact trigger and the wrong result.
-- Quote the smallest relevant code snippet or the function name + nearby text so the
-  developer can locate it (there are no stable line numbers once edited).
-- Propose **targeted fixes** — a small diff, a replacement snippet, or a precise
-  description — never a full-file rewrite.
-- Rank by impact. Be honest about severity; don't pad.
+## Output format
+Return a prioritised list. For each finding:
+- **Title** — one line.
+- **Severity** — critical / high / medium / low.
+- **Where** — file path(s) and, if you can, the function or line range.
+- **Problem** — what is wrong or weak, concretely.
+- **Fix** — a specific, actionable change (not "consider improving"). Small code sketches welcome.
+- **Constraint check** — confirm your fix respects every hard constraint above.
 
-## Output format (return exactly this)
-1. **Summary** — 3–5 sentences: overall quality and the single most important thing to fix.
-2. **Findings table** — columns: `ID | Area | Severity (P0/P1/P2) | Finding | Location | Suggested fix | Effort (S/M/L)`.
-   - P0 = correctness/security/data-loss/clinically-wrong content; P1 = significant UX/accessibility/perf; P2 = polish.
-3. **Detailed notes** — for each P0 and P1, a short paragraph with the trigger, why it
-   matters, and the concrete fix (snippet welcome).
-4. **Medical-accuracy audit** — a short list of any wound-healing card/MCQ that is
-   wrong or weak, each with the correction.
-5. **Top 10 prioritised action list** — the exact changes you'd make next, in order,
-   phrased as instructions a developer AI can execute directly.
-
-Keep it rigorous and specific. This report will be pasted back to the build agent as
-its work queue.
+Then finish with a short **"Top 5 to do first"** ordered list. Do not rewrite the whole app;
+propose changes the developer AI can apply file by file.
