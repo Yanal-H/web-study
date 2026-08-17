@@ -8,7 +8,7 @@
 
 import { useEffect, useState } from 'react';
 import type { Session } from '@supabase/supabase-js';
-import { supabase, emailDomainAllowed, ALLOWED_EMAIL_DOMAIN } from '../../lib/supabase';
+import { supabase, ALLOWED_EMAIL_DOMAIN } from '../../lib/supabase';
 
 export type AuthPhase = 'checking' | 'signed-out' | 'signed-in';
 
@@ -69,11 +69,13 @@ export interface AuthResult {
 export async function sendCode(emailRaw: string): Promise<AuthResult> {
   const email = emailRaw.trim().toLowerCase();
   if (!supabase) return { ok: false, message: 'Sign-in is not set up on this deployment yet.' };
+  // Syntax only. Whether this ADDRESS may sign in is not a question the browser
+  // can answer: the list of administrators lives in the database, and an earlier
+  // version of this function checked the domain here and locked the owner out of
+  // her own site — her address was on the admin list the browser cannot see.
+  // Send it, and let the server apply the rule it actually owns.
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
     return { ok: false, message: 'That does not look like an email address.' };
-  }
-  if (!emailDomainAllowed(email)) {
-    return { ok: false, message: `Use your @${ALLOWED_EMAIL_DOMAIN} address to sign in.` };
   }
 
   const { error } = await supabase.auth.signInWithOtp({

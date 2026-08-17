@@ -122,6 +122,11 @@ what it is allowed to do is decided by the rules you ran in Step 2.
    | `VITE_SUPABASE_ANON_KEY` | the anon public key from Step 3 |
    | `VITE_ALLOWED_EMAIL_DOMAIN` | your domain, e.g. `med.cu.edu.eg` |
 
+   `VITE_ALLOWED_EMAIL_DOMAIN` is **cosmetic** — it fills in the sign-in hint and
+   the placeholder, nothing more. Who may actually sign in is decided by the
+   database (Step 2), which is also the only place that knows your admin list.
+   Changing or removing this variable does not weaken access control.
+
 3. **Redeploy — this is the step people miss.** Environment variables are read
    when the site is *built*, so the running site knows nothing about them until
    you rebuild. Go to **Deployments**, click the ⋯ menu on the newest one, and
@@ -201,6 +206,11 @@ and is meant for testing — fine while you try it out, but before you invite 10
 students go to **Authentication → Emails → SMTP Settings** and connect a free
 email sender (Resend and Brevo both have free tiers). Otherwise students will
 hit the limit and quietly get nothing.
+
+**You are refused from your own site with a personal email**
+Administrators may sign in from any domain, but only if the address is in
+`admin_emails()`. Check with `select public.admin_emails();` and make sure it
+matches what you type at sign-in, character for character.
 
 **"Only @yourdomain addresses can use Foundation" for a valid student**
 The domain in Step 2 does not match their address exactly. Run

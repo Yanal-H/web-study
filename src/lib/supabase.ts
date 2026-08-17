@@ -18,9 +18,11 @@ const anonKey = import.meta.env.VITE_SUPABASE_ANON_KEY as string | undefined;
  * The domain students must sign in with, e.g. "student.university.edu".
  * Empty means any domain is allowed.
  *
- * This is a CONVENIENCE for error messages only. The real restriction is
- * enforced server-side by a Supabase trigger, because anything checked in the
- * browser can be edited by the person it is meant to restrict.
+ * PRESENTATION ONLY — used for the sign-in hint and the input placeholder. Do
+ * NOT gate sign-in on this. The real restriction is a Supabase trigger, which
+ * also knows the administrator list; a browser-side check does not, and one
+ * written here previously locked the owner out of her own site. Anything checked
+ * in the browser can be edited by the person it is meant to restrict anyway.
  */
 export const ALLOWED_EMAIL_DOMAIN = (
   (import.meta.env.VITE_ALLOWED_EMAIL_DOMAIN as string | undefined) || ''
@@ -47,10 +49,4 @@ export const supabase: SupabaseClient | null =
 /** False when this deployment has no Supabase project configured. */
 export function authConfigured(): boolean {
   return supabase !== null;
-}
-
-/** True when the address ends in the allowed domain (or no domain is enforced). */
-export function emailDomainAllowed(email: string): boolean {
-  if (!ALLOWED_EMAIL_DOMAIN) return true;
-  return email.trim().toLowerCase().endsWith('@' + ALLOWED_EMAIL_DOMAIN);
 }
