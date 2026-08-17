@@ -37,6 +37,36 @@ export function aiReady(): boolean {
   return c.enabled && c.apiKey.trim().length > 0;
 }
 
+/* ---- Answer cache: a hint/explanation is deterministic enough to reuse, so we
+ * keep the last few hundred replies in localStorage. Re-opening a question is then
+ * instant and free. FIFO-capped so it never grows without bound. ---- */
+const CACHE_KEY = 'foundation_ai_cache_v1';
+const CACHE_MAX = 300;
+
+function loadCache(): Record<string, string> {
+  try {
+    return JSON.parse(localStorage.getItem(CACHE_KEY) || '{}');
+  } catch {
+    return {};
+  }
+}
+
+export function aiCacheGet(key: string): string | null {
+  return loadCache()[key] ?? null;
+}
+
+export function aiCacheSet(key: string, value: string): void {
+  const c = loadCache();
+  c[key] = value;
+  const keys = Object.keys(c);
+  if (keys.length > CACHE_MAX) delete c[keys[0]!];
+  try {
+    localStorage.setItem(CACHE_KEY, JSON.stringify(c));
+  } catch {
+    /* storage full — the cache is a nicety, not critical */
+  }
+}
+
 export interface AiError {
   kind: 'no-key' | 'offline' | 'http' | 'parse';
   message: string;

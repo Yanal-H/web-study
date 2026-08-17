@@ -21,7 +21,7 @@ import { renderInline } from '../../lib/lexicon';
 import { renderMarkdown } from '../../lib/markdown';
 import { globalIndex } from '../../lib/useLexicon';
 import { sfx } from '../../lib/sound';
-import { aiComplete, aiReady, hintPrompt, explainPrompt } from '../../lib/ai';
+import { aiComplete, aiReady, hintPrompt, explainPrompt, aiCacheGet, aiCacheSet } from '../../lib/ai';
 import { IconSparkle } from '../../design/icons';
 
 export default function QuestionRunner({ onExit }: { onExit: () => void }) {
@@ -158,11 +158,21 @@ export default function QuestionRunner({ onExit }: { onExit: () => void }) {
 
   async function runAi(mode: 'hint' | 'explain') {
     if (!q) return;
+    const cacheKey = `${mode}:${q.id}`;
+    const cached = aiCacheGet(cacheKey);
+    if (cached) {
+      setAi({ mode, loading: false, text: cached, err: '' });
+      return;
+    }
     setAi({ mode, loading: true, text: '', err: '' });
     const prompt = mode === 'hint' ? hintPrompt(q) : explainPrompt(q);
     const res = await aiComplete(prompt.system, prompt.user, { maxTokens: mode === 'hint' ? 160 : 700 });
-    if (res.ok) setAi({ mode, loading: false, text: res.text, err: '' });
-    else setAi({ mode, loading: false, text: '', err: res.error.message });
+    if (res.ok) {
+      setAi({ mode, loading: false, text: res.text, err: '' });
+      aiCacheSet(cacheKey, res.text);
+    } else {
+      setAi({ mode, loading: false, text: '', err: res.error.message });
+    }
   }
 
   function choose(id: string) {
