@@ -11,6 +11,7 @@ import { IconDownload, IconUpload, IconSun, IconMoon, IconSparkle } from '../../
 import { sfx } from '../../lib/sound';
 import { getAiConfig, setAiConfig, AI_MODELS } from '../../lib/ai';
 import { isAdmin, setAdmin, unlockAdmin } from '../../lib/admin';
+import { replayTour } from '../onboarding/WelcomeTour';
 import { resetEngineProgress } from '../../data/db';
 import { invalidateDeckTree } from '../../data/session';
 import { usage, requestPersistence, formatBytes } from '../../lib/blobs';
@@ -414,6 +415,17 @@ export default function SettingsView() {
               document.documentElement.classList.toggle('reduce-motion', v);
             }}
           />
+        </Row>
+        <Row label="Welcome tour" desc="Show the getting-started guide again.">
+          <Button
+            size="sm"
+            onClick={() => {
+              replayTour();
+              toast('The tour will show on the Dashboard.');
+            }}
+          >
+            Show again
+          </Button>
         </Row>
       </Card>
 

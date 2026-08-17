@@ -13,6 +13,7 @@ import { isDue as mcqDue } from '../qbank/perf';
 import { useUserContentVersion } from '../../content/userContent';
 import Hero from './Hero';
 import ActivityCalendar from './ActivityCalendar';
+import WelcomeTour from '../onboarding/WelcomeTour';
 
 export default function DashboardView() {
   const state = useStore();
@@ -127,6 +128,7 @@ export default function DashboardView() {
 
   return (
     <>
+      {!(state.settings as Record<string, unknown>).onboarded && <WelcomeTour />}
       <Hero
         greeting={`${greet}.`}
         cta={{ text: nextAction.text, label: nextAction.cta, go: nextAction.go, icon: nextAction.icon }}

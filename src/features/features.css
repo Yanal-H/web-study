@@ -4242,3 +4242,50 @@
   color: var(--accent);
   border-color: var(--accent);
 }
+
+/* ---- Welcome / onboarding tour ---- */
+.tour-step {
+  text-align: center;
+  padding: 6px 4px 2px;
+}
+.tour-ico {
+  width: 56px;
+  height: 56px;
+  border-radius: 16px;
+  margin: 0 auto 14px;
+  display: grid;
+  place-items: center;
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+.tour-title {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 650;
+  margin: 0 0 8px;
+}
+.tour-body {
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: var(--text-dim);
+  max-width: 42ch;
+  margin: 0 auto;
+}
+.tour-dots {
+  display: flex;
+  gap: 6px;
+  justify-content: center;
+  margin-top: 18px;
+}
+.tour-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--border);
+  transition: background var(--transition), width var(--transition);
+}
+.tour-dot.on {
+  background: var(--accent);
+  width: 18px;
+  border-radius: 4px;
+}
