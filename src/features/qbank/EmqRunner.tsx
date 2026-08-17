@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Card, Button, Badge, ProgressRing } from '../../design/primitives';
 import { IconCheck } from '../../design/icons';
 import { recordResult } from './perf';
+import AiTutor from '../ai/AiTutor';
 import type { Emq } from '../../content/schema';
 
 type EmqWithMeta = Emq & { chapterId: string; subject: string };
@@ -44,6 +45,13 @@ function EmqSet({ emq, onExit }: { emq: EmqWithMeta; onExit: () => void }) {
 
   const answeredAll = emq.stems.every((_, i) => answers[i]);
   const correctCount = emq.stems.filter((s, i) => answers[i] === s.answer).length;
+
+  // plain-text description of the whole set, so the AI tutor has full context
+  const emqContext =
+    `Extended-matching set. Theme: ${emq.theme}.\nOptions:\n` +
+    emq.options.map((o) => `${o.id.toUpperCase()}. ${o.text}`).join('\n') +
+    `\n\nStems and correct answers:\n` +
+    emq.stems.map((s, i) => `${i + 1}. ${s.stem} → ${s.answer.toUpperCase()}`).join('\n');
 
   function submit() {
     setSubmitted(true);
@@ -115,6 +123,11 @@ function EmqSet({ emq, onExit }: { emq: EmqWithMeta; onExit: () => void }) {
           ) : (
             <Card style={{ marginTop: 12, textAlign: 'center' }}>
               <ProgressRing value={correctCount / emq.stems.length} size={96} label={`${correctCount}/${emq.stems.length}`} />
+              <AiTutor
+                cacheKey={`emq:${emq.id}`}
+                explainPrompt={`${emqContext}\n\nExplain each stem in turn: why its matched option is correct (with the mechanism), and briefly why the tempting alternatives are wrong. Use a short heading per stem. Be thorough but exam-relevant.`}
+                contextForChat={emqContext}
+              />
               <div className="row" style={{ justifyContent: 'center', marginTop: 14 }}>
                 <Button variant="primary" onClick={onExit}>
                   <IconCheck size={16} /> Done

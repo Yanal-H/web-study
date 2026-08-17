@@ -18,11 +18,10 @@ import { useToast } from '../../design/Toast';
 import type { Mcq, Option } from '../../content/schema';
 import { getChapter } from '../../content/loader';
 import { renderInline } from '../../lib/lexicon';
-import { renderMarkdown } from '../../lib/markdown';
 import { globalIndex } from '../../lib/useLexicon';
 import { sfx } from '../../lib/sound';
-import { aiComplete, aiReady, hintPrompt, explainPrompt, aiCacheGet, aiCacheSet } from '../../lib/ai';
-import { IconSparkle } from '../../design/icons';
+import { hintPrompt, explainPrompt } from '../../lib/ai';
+import AiTutor from '../ai/AiTutor';
 
 export default function QuestionRunner({ onExit }: { onExit: () => void }) {
   const state = useStore();
@@ -35,12 +34,6 @@ export default function QuestionRunner({ onExit }: { onExit: () => void }) {
   const [showResults, setShowResults] = useState(false);
   const [surge, setSurge] = useState<null | 'ok' | 'no'>(null);
   const [autoRun, setAutoRun] = useState(false);
-  const [ai, setAi] = useState<{ mode: 'hint' | 'explain' | null; loading: boolean; text: string; err: string }>({
-    mode: null,
-    loading: false,
-    text: '',
-    err: '',
-  });
   const [, force] = useState(0);
   const qStart = useRef(Date.now());
   const autoTimer = useRef<number | null>(null);
@@ -70,7 +63,6 @@ export default function QuestionRunner({ onExit }: { onExit: () => void }) {
     }
     qStart.current = Date.now();
     cancelAuto();
-    setAi({ mode: null, loading: false, text: '', err: '' });
   }, [session?.index]);
 
   useEffect(() => () => cancelAuto(), []);
@@ -154,25 +146,6 @@ export default function QuestionRunner({ onExit }: { onExit: () => void }) {
     if (autoTimer.current) window.clearTimeout(autoTimer.current);
     autoTimer.current = null;
     setAutoRun(false);
-  }
-
-  async function runAi(mode: 'hint' | 'explain') {
-    if (!q) return;
-    const cacheKey = `${mode}:${q.id}`;
-    const cached = aiCacheGet(cacheKey);
-    if (cached) {
-      setAi({ mode, loading: false, text: cached, err: '' });
-      return;
-    }
-    setAi({ mode, loading: true, text: '', err: '' });
-    const prompt = mode === 'hint' ? hintPrompt(q) : explainPrompt(q);
-    const res = await aiComplete(prompt.system, prompt.user, { maxTokens: mode === 'hint' ? 160 : 1200 });
-    if (res.ok) {
-      setAi({ mode, loading: false, text: res.text, err: '' });
-      aiCacheSet(cacheKey, res.text);
-    } else {
-      setAi({ mode, loading: false, text: '', err: res.error.message });
-    }
   }
 
   function choose(id: string) {
@@ -339,33 +312,15 @@ export default function QuestionRunner({ onExit }: { onExit: () => void }) {
             })}
           </div>
 
-          {/* AI tutor — only appears when the student has switched it on with their own key */}
-          {aiReady() && (
-            <div className="ai-controls no-print">
-              {!submitted ? (
-                <button className="ai-btn" onClick={() => runAi('hint')} disabled={ai.loading}>
-                  <IconSparkle size={15} /> {ai.loading && ai.mode === 'hint' ? 'Thinking…' : 'Hint'}
-                </button>
-              ) : (
-                <button className="ai-btn" onClick={() => runAi('explain')} disabled={ai.loading}>
-                  <IconSparkle size={15} /> {ai.loading && ai.mode === 'explain' ? 'Thinking…' : 'Explain with AI'}
-                </button>
-              )}
-            </div>
-          )}
-          {(ai.text || ai.err) && (
-            <div className={`ai-panel ${ai.err ? 'ai-panel--err' : ''}`}>
-              <div className="ai-panel-head">
-                <IconSparkle size={14} /> {ai.mode === 'hint' ? 'Hint' : 'AI tutor'}
-                <span className="ai-panel-note">generated live — verify against the rationale</span>
-              </div>
-              {ai.err ? (
-                <p className="ai-panel-body">{ai.err}</p>
-              ) : (
-                <div className="ai-panel-body md" dangerouslySetInnerHTML={{ __html: renderMarkdown(ai.text) }} />
-              )}
-            </div>
-          )}
+          {/* AI tutor — only renders when switched on with a key (AiTutor guards internally) */}
+          <AiTutor
+            cacheKey={`explain:${q.id}`}
+            explainPrompt={explainPrompt(q).user}
+            hintPrompt={hintPrompt(q).user}
+            canHint={!submitted}
+            canExplain={submitted}
+            contextForChat={mcqContext(q, submitted)}
+          />
 
           {!submitted && immediate && state.settings.mcq.confidenceTracking && (
             <div className="row" style={{ gap: 8, marginTop: 12, alignItems: 'center' }}>
@@ -407,6 +362,15 @@ export default function QuestionRunner({ onExit }: { onExit: () => void }) {
       </div>
     </div>
   );
+}
+
+/** A plain-text description of the question, so the AI chat has full context. */
+function mcqContext(q: Mcq, submitted: boolean): string {
+  const opts = q.options.map((o, i) => `${'ABCDEF'[i]}. ${o.text}`).join('\n');
+  const correct = submitted
+    ? `\nCorrect answer: ${q.options.filter((o) => o.correct).map((o) => o.text).join('; ')}`
+    : '';
+  return `Question:\n${q.stem}\n\nOptions:\n${opts}${correct}`;
 }
 
 /** Subject, chapter and section, so a question is never context-free. */

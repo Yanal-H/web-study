@@ -76,15 +76,22 @@ function fail(kind: AiError['kind'], message: string): AiError {
   return { kind, message };
 }
 
+export interface AiMessage {
+  role: 'user' | 'assistant';
+  content: string;
+}
+
+export type AiResult = { ok: true; text: string } | { ok: false; error: AiError };
+
 /**
- * One-shot completion against the Anthropic Messages API, direct from the browser.
- * Returns the assistant text, or an AiError describing what to tell the student.
+ * Multi-turn chat against the Anthropic Messages API, direct from the browser.
+ * Pass the whole conversation so follow-up questions keep their context.
  */
-export async function aiComplete(
+export async function aiChat(
   system: string,
-  user: string,
+  messages: AiMessage[],
   opts: { maxTokens?: number; signal?: AbortSignal } = {}
-): Promise<{ ok: true; text: string } | { ok: false; error: AiError }> {
+): Promise<AiResult> {
   const cfg = getAiConfig();
   if (!cfg.enabled || !cfg.apiKey.trim()) {
     return { ok: false, error: fail('no-key', 'Turn on the AI tutor and add your API key in Settings.') };
@@ -104,9 +111,9 @@ export async function aiComplete(
       },
       body: JSON.stringify({
         model: cfg.model || DEFAULTS.model,
-        max_tokens: opts.maxTokens ?? 700,
+        max_tokens: opts.maxTokens ?? 1000,
         system,
-        messages: [{ role: 'user', content: user }],
+        messages,
       }),
     });
     if (!res.ok) {
@@ -131,6 +138,18 @@ export async function aiComplete(
     return { ok: false, error: fail('offline', msg) };
   }
 }
+
+/** One-shot completion — a single user turn. Thin wrapper over aiChat. */
+export function aiComplete(
+  system: string,
+  user: string,
+  opts: { maxTokens?: number; signal?: AbortSignal } = {}
+): Promise<AiResult> {
+  return aiChat(system, [{ role: 'user', content: user }], opts);
+}
+
+/** The shared system prompt, exported so the chat panel can reuse it for follow-ups. */
+export const tutorSystem = () => TUTOR_SYSTEM;
 
 const TUTOR_SYSTEM =
   'You are a rigorous, encouraging medical-school tutor. Use British spelling. Be correct and ' +
@@ -177,6 +196,19 @@ export function explainPrompt(q: {
       'do not skip any.\n' +
       '3. **Take-home** — one high-yield point, plus the common trap or misconception this question targets.\n' +
       'Be thorough but exam-relevant, and use the headings/bullets above so it is easy to scan.',
+  };
+}
+
+/** A pre-reveal hint for a flashcard — guides recall without giving the answer. */
+export function hintCardPrompt(card: { front?: string; back?: string; cloze?: string }) {
+  const prompt = card.cloze
+    ? `Cloze card (the blanks are the answer): ${card.cloze.replace(/\{\{c\d+::([^}]*?)(?:::[^}]*?)?\}\}/g, '[...]')}`
+    : `Flashcard prompt: ${card.front ?? ''}`;
+  return {
+    system: TUTOR_SYSTEM,
+    user:
+      `${prompt}\n\nGive ONE short hint (2 sentences max) that guides me toward recalling the answer — ` +
+      'point at the concept or mechanism. Do NOT state the answer itself.',
   };
 }
 
