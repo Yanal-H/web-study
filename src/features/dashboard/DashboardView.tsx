@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState, type ReactNode } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useStore, useStoreVersion } from '../../state/useStore';
 import { deckStats } from '../../data/session';
@@ -64,6 +64,35 @@ export default function DashboardView() {
       .sort((a, b) => (a.lastOpened < b.lastOpened ? 1 : -1))
       .slice(0, 3);
   }, [state.study.progress, sv, uv]);
+
+  // planner tasks due today or overdue and still open
+  const todayTasks = useMemo(() => {
+    const end = new Date();
+    end.setHours(23, 59, 59, 999);
+    const endMs = end.getTime();
+    return ((state.tasks as Array<Record<string, unknown>>) || []).filter(
+      (t) => !t.done && typeof t.due === 'number' && (t.due as number) <= endMs
+    );
+  }, [state.tasks, sv]);
+
+  const routeForTask = (ty: unknown): string =>
+    ty === 'read' ? '/study' : ty === 'questions' ? '/qbank' : ty === 'drill' || ty === 'revise' ? '/flashcards' : '/planner';
+
+  // A single ordered plan for right now, stitched from every corner of the app.
+  type PlanItem = { key: string; icon: ReactNode; text: string; go: string; state?: unknown };
+  const plan: PlanItem[] = [];
+  if (due.due > 0)
+    plan.push({ key: 'cards', icon: <IconFlashcards size={17} />, text: `Review ${due.due} due card${due.due > 1 ? 's' : ''}`, go: '/flashcards' });
+  if (mcqDueCount > 0)
+    plan.push({ key: 'dueq', icon: <IconQbank size={17} />, text: `Answer ${mcqDueCount} question${mcqDueCount > 1 ? 's' : ''} due for review`, go: '/qbank' });
+  if (weak.length > 0)
+    plan.push({ key: 'weak', icon: <IconTarget size={17} />, text: `Shore up ${weak.length} weak question${weak.length > 1 ? 's' : ''}`, go: '/qbank' });
+  for (const t of todayTasks.slice(0, 4))
+    plan.push({ key: 'task-' + t.id, icon: <IconCheck size={17} />, text: String(t.title || 'Planned task'), go: routeForTask(t.type) });
+  if (due.neu > 0)
+    plan.push({ key: 'new', icon: <IconStudy size={17} />, text: `Learn ${due.neu} new card${due.neu > 1 ? 's' : ''}`, go: '/flashcards' });
+  if (recent[0])
+    plan.push({ key: 'read', icon: <IconStudy size={17} />, text: `Continue ${recent[0].ch!.title}`, go: `/study/${encodeURIComponent(recent[0].id)}` });
 
   // Next best action — a single, decisive recommendation.
   const nextAction = (() => {
@@ -140,6 +169,34 @@ export default function DashboardView() {
         <Stat label="Questions due" value={mcqDueCount} />
         <Stat label="Active days" value={totalActive} />
       </div>
+
+      {/* Today's plan — one ordered list to work top to bottom */}
+      <section className="section">
+        <div className="section-head">
+          <h2>Today&rsquo;s plan</h2>
+          {plan.length > 0 && <span className="see">{plan.length} step{plan.length > 1 ? 's' : ''}</span>}
+        </div>
+        <Card>
+          {plan.length === 0 ? (
+            <div className="muted" style={{ fontSize: 14, padding: '6px 0' }}>
+              Nothing outstanding. Open a chapter or start a fresh session whenever you are ready.
+            </div>
+          ) : (
+            <ol className="today-plan">
+              {plan.map((item, i) => (
+                <li key={item.key} className="tp-row">
+                  <span className="tp-index">{i + 1}</span>
+                  <span className="tp-ico">{item.icon}</span>
+                  <span className="tp-text">{item.text}</span>
+                  <Button size="sm" onClick={() => navigate(item.go, item.state ? { state: item.state } : undefined)}>
+                    Go
+                  </Button>
+                </li>
+              ))}
+            </ol>
+          )}
+        </Card>
+      </section>
 
       <div className="cols cols-2" style={{ marginTop: 'var(--sp-4)' }}>
         {/* Next best action */}

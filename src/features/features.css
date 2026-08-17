@@ -3940,3 +3940,45 @@
     align-items: flex-start;
   }
 }
+
+/* ---- Dashboard "Today's plan" ordered checklist ---- */
+.today-plan {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+.tp-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 4px;
+  border-bottom: 1px solid var(--border-soft);
+}
+.tp-row:last-child {
+  border-bottom: none;
+}
+.tp-index {
+  flex: 0 0 auto;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--accent);
+  background: var(--accent-soft);
+}
+.tp-ico {
+  flex: 0 0 auto;
+  color: var(--text-dim);
+  display: inline-flex;
+}
+.tp-text {
+  flex: 1;
+  min-width: 0;
+  font-size: 14.5px;
+  font-weight: 500;
+}

@@ -87,6 +87,15 @@ export default function ReaderView() {
     };
   }, [tab, id]);
 
+  // neighbouring chapters in the same subject, for a "keep moving" pager
+  // (computed before the early return so hook order is stable)
+  const siblings = useMemo(() => {
+    if (!chapter) return { prev: undefined, next: undefined };
+    const all = listChapters().filter((c) => c.subject === chapter.subject);
+    const i = all.findIndex((c) => c.id === chapter.id);
+    return { prev: i > 0 ? all[i - 1] : undefined, next: i >= 0 && i < all.length - 1 ? all[i + 1] : undefined };
+  }, [chapter, uv]);
+
   if (!chapter) {
     return (
       <>
@@ -103,13 +112,6 @@ export default function ReaderView() {
 
   const cards = chapterCards(chapter);
   const mcqs = chapterMcqs(chapter);
-
-  // neighbouring chapters in the same subject, for a "keep moving" pager
-  const siblings = useMemo(() => {
-    const all = listChapters().filter((c) => c.subject === chapter.subject);
-    const i = all.findIndex((c) => c.id === chapter.id);
-    return { prev: i > 0 ? all[i - 1] : undefined, next: i >= 0 && i < all.length - 1 ? all[i + 1] : undefined };
-  }, [chapter.id, chapter.subject, uv]);
 
   return (
     <div className={focus ? 'reader-focus' : ''}>
