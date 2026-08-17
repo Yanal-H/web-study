@@ -317,6 +317,22 @@ export async function countStore(store: string): Promise<number> {
   return req(db.transaction([store], 'readonly').objectStore(store).count());
 }
 
+/** Every row in a store. Used by reconciliation to find obsolete shipped rows. */
+export async function getAllRows<T = unknown>(store: string): Promise<T[]> {
+  const db = await openDB();
+  return req(db.transaction([store], 'readonly').objectStore(store).getAll() as IDBRequest<T[]>);
+}
+
+/** Delete a set of keys from a store in one transaction. No-op on an empty list. */
+export async function deleteKeys(store: string, keys: string[]): Promise<void> {
+  if (keys.length === 0) return;
+  const db = await openDB();
+  const t = db.transaction([store], 'readwrite');
+  const os = t.objectStore(store);
+  for (const k of keys) os.delete(k);
+  await done(t);
+}
+
 /** MCQ ids for a chapter, without loading the questions. */
 export async function mcqIdsForChapter(chapterId: string): Promise<string[]> {
   const db = await openDB();

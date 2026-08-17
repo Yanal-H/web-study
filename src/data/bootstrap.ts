@@ -129,6 +129,14 @@ async function runBootstrap(
   // Completion means EVERY pack imported. If any failed, leave the stamp unset so
   // the next boot re-runs and retries the missing packs (importPack is idempotent).
   if (skipped.length === 0) {
+    // Only reconcile against a fully-imported set — otherwise a pack that failed to
+    // import would look "removed" and its rows would be wrongly deleted.
+    try {
+      const { reconcileShipped } = await import('./reconcile');
+      await reconcileShipped(packs as Chapter[]);
+    } catch {
+      // reconciliation is a cleanup, not a correctness requirement — never block boot
+    }
     localStorage.setItem(STAMP_KEY, stamp);
   } else {
     localStorage.removeItem(STAMP_KEY);
