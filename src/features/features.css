@@ -825,7 +825,9 @@
 }
 .reader-body {
   min-width: 0;
-  max-width: 70ch;
+  /* Reading measure, set from Settings → Appearance. Shorter lines are easier
+     for the eye to track back to the next line. */
+  max-width: var(--reader-measure, 70ch);
   font-size: 1.05rem;
 }
 .reader-body .md {
@@ -4288,4 +4290,40 @@
   background: var(--accent);
   width: 18px;
   border-radius: 4px;
+}
+
+/* ---------------------------------------------------------------- reading comfort
+
+   Three opt-in controls for long reading sessions (Settings → Appearance). Each
+   is scoped to reading surfaces only: the app chrome, brand and accent colours
+   are deliberately left alone, so turning these on changes how the *text* reads
+   and nothing about the identity of the app. */
+
+/* Warm tone — a paper-like wash behind the chapter reader. Applied as a tint over
+   the existing surface rather than by rewriting theme tokens, so it composes with
+   both light and dark without needing a second palette. */
+:root[data-readtone='sepia'] .reader-body {
+  background: linear-gradient(0deg, rgba(190, 145, 70, 0.07), rgba(190, 145, 70, 0.07));
+  color: color-mix(in srgb, var(--text) 92%, #6b4f26);
+  border-radius: var(--radius-2, 12px);
+  padding: var(--sp-3, 14px) var(--sp-4, 18px);
+}
+:root[data-readtone='sepia'] .reader-body .md strong {
+  color: color-mix(in srgb, var(--text) 85%, #5a3f1c);
+}
+
+/* Dyslexia-friendly face. Uses stacks already present on the device — nothing is
+   downloaded, so this works offline like the rest of the app. Scoped to body copy
+   and card/question faces; headings keep the brand type so the page still reads
+   as Foundation. */
+:root.dyslexia-font .reader-body .md,
+:root.dyslexia-font .reader-body p,
+:root.dyslexia-font .reader-body li,
+:root.dyslexia-font .card-face,
+:root.dyslexia-font .qb-stem,
+:root.dyslexia-font .answer-box {
+  font-family: 'Comic Neue', 'OpenDyslexic', 'Comic Sans MS', 'Trebuchet MS', var(--font-body, sans-serif);
+  letter-spacing: 0.02em;
+  word-spacing: 0.08em;
+  line-height: 1.9;
 }

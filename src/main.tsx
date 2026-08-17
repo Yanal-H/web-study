@@ -14,7 +14,14 @@ import './features/gate/watermark.css';
 import './design/strength.css';
 
 import { state } from './state/store';
-import { applyFontScale, applyDensity, applyColourTerms } from './features/settings/appearance';
+import {
+  applyFontScale,
+  applyDensity,
+  applyColourTerms,
+  applyReadingTone,
+  applyMeasure,
+  applyDyslexiaFont,
+} from './features/settings/appearance';
 import { applyHaki } from './state/haki';
 import { installAudioUnlock } from './lib/sound';
 
@@ -24,6 +31,9 @@ if (ap) {
   applyFontScale(ap.fontScale);
   applyDensity(ap.density);
   applyColourTerms(ap.colourTerms !== false);
+  applyReadingTone((ap.readingTone as string) || 'default');
+  applyMeasure((ap.measure as string) || 'medium');
+  applyDyslexiaFont(!!ap.dyslexiaFont);
   if (ap.reducedMotion) document.documentElement.classList.add('reduce-motion');
 }
 applyHaki();

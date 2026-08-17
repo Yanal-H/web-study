@@ -1,16 +1,25 @@
-import { createContext, useContext, useEffect, useRef, useState } from 'react';
+import { createContext, useCallback, useContext, useEffect, useRef, useState } from 'react';
 import { useStore } from '../../state/useStore';
 import { state as liveState, commit, update, reloadState, Store, runMigrations } from '../../state/store';
 import { LS_KEY } from '../../state/constants';
 import { setTheme, isDark } from '../../state/theme';
 import { getHaki, setHaki, type HakiLevel } from '../../state/haki';
-import { applyFontScale, applyDensity, applyColourTerms } from './appearance';
+import {
+  applyFontScale,
+  applyDensity,
+  applyColourTerms,
+  applyReadingTone,
+  applyMeasure,
+  applyDyslexiaFont,
+} from './appearance';
 import { Card, Button, Segmented, Input, Select } from '../../design/primitives';
 import { useToast } from '../../design/Toast';
 import { IconDownload, IconUpload, IconSun, IconMoon, IconSparkle } from '../../design/icons';
 import { sfx } from '../../lib/sound';
 import { getAiConfig, setAiConfig, AI_MODELS } from '../../lib/ai';
 import { isAdmin, setAdmin, unlockAdmin } from '../../lib/admin';
+import { listPublished, publishPack, unpublishPack } from '../../lib/publish';
+import type { RemoteItem } from '../../data/remoteContent';
 import { replayTour } from '../onboarding/WelcomeTour';
 import { resetEngineProgress } from '../../data/db';
 import { invalidateDeckTree } from '../../data/session';
@@ -81,16 +90,19 @@ function AdminPanel() {
 
   if (isAdmin()) {
     return (
-      <Row label="Administrator" desc="This device has admin access.">
-        <Button
-          onClick={() => {
-            setAdmin(false);
-            toast('Signed out of admin');
-          }}
-        >
-          Sign out of admin
-        </Button>
-      </Row>
+      <>
+        <Row label="Administrator" desc="This device has admin access.">
+          <Button
+            onClick={() => {
+              setAdmin(false);
+              toast('Signed out of admin');
+            }}
+          >
+            Sign out of admin
+          </Button>
+        </Row>
+        <PublishPanel />
+      </>
     );
   }
 
@@ -125,6 +137,124 @@ function AdminPanel() {
         </Button>
       </div>
     </Row>
+  );
+}
+
+/**
+ * Publish chapters to the whole cohort without a redeploy.
+ *
+ * Everything here is admin-only in the UI and re-authorised by the server, so a
+ * student who forces the admin flag on their own device still cannot publish.
+ * Students' own notes, cards and progress are never touched by any of this.
+ */
+function PublishPanel() {
+  const toast = useToast();
+  const [items, setItems] = useState<RemoteItem[] | null>(null);
+  const [configured, setConfigured] = useState<boolean | null>(null);
+  const [busy, setBusy] = useState(false);
+  const [issues, setIssues] = useState<string[] | null>(null);
+  const fileRef = useRef<HTMLInputElement>(null);
+
+  const refresh = useCallback(async () => {
+    const res = await listPublished();
+    setConfigured(res.configured);
+    setItems(res.items);
+  }, []);
+
+  useEffect(() => {
+    void refresh();
+  }, [refresh]);
+
+  async function onFile(e: React.ChangeEvent<HTMLInputElement>) {
+    const files = Array.from(e.target.files || []);
+    if (files.length === 0) return;
+    setBusy(true);
+    setIssues(null);
+    let ok = 0;
+    const failures: string[] = [];
+    for (const file of files) {
+      const res = await publishPack(await file.text());
+      if (res.ok) ok++;
+      else {
+        failures.push(`${file.name}: ${res.message}`);
+        if (res.issues?.length) setIssues(res.issues.slice(0, 12));
+      }
+    }
+    setBusy(false);
+    if (fileRef.current) fileRef.current.value = '';
+    await refresh();
+    if (ok) toast(`Published ${ok} chapter${ok === 1 ? '' : 's'}`, 'success');
+    if (failures.length) toast(failures[0]!, 'error');
+  }
+
+  async function remove(id: string) {
+    setBusy(true);
+    const res = await unpublishPack(id);
+    setBusy(false);
+    await refresh();
+    toast(res.message, res.ok ? 'success' : 'error');
+  }
+
+  if (configured === false) {
+    return (
+      <Row
+        label="Shared chapters"
+        desc="Not set up on this server yet. Foundation works fully without it — students still get every chapter built into the app. To publish chapters without a redeploy, add a storage backend and ADMIN_KEY in your hosting settings (see api/README.md)."
+      >
+        <Button onClick={() => void refresh()}>Check again</Button>
+      </Row>
+    );
+  }
+
+  return (
+    <>
+      <Row
+        label="Publish a chapter"
+        desc="Send a chapter pack to everyone. It is validated before it is stored, so a broken file can never reach a student. Students receive it on their next load and keep it offline afterwards."
+      >
+        <div className="row" style={{ gap: 8 }}>
+          <input
+            ref={fileRef}
+            type="file"
+            accept="application/json,.json"
+            multiple
+            hidden
+            onChange={(e) => void onFile(e)}
+          />
+          <Button variant="primary" disabled={busy} onClick={() => fileRef.current?.click()}>
+            {busy ? 'Publishing…' : 'Choose pack JSON'}
+          </Button>
+        </div>
+      </Row>
+
+      {issues && (
+        <div className="ai-err" style={{ marginTop: 8 }}>
+          <strong>That pack was rejected:</strong>
+          <ul style={{ margin: '6px 0 0', paddingLeft: 18 }}>
+            {issues.map((i) => (
+              <li key={i}>{i}</li>
+            ))}
+          </ul>
+        </div>
+      )}
+
+      <Row label="Published chapters" desc="Live for the whole cohort right now.">
+        <div style={{ display: 'grid', gap: 6, justifyItems: 'end' }}>
+          {items === null && <span className="muted">Loading…</span>}
+          {items !== null && items.length === 0 && (
+            <span className="muted">Nothing published yet.</span>
+          )}
+          {items?.map((it) => (
+            <div key={it.id} className="row" style={{ gap: 8, alignItems: 'center' }}>
+              <span style={{ fontSize: 13 }}>{it.id}</span>
+              <Button size="sm" disabled={busy} onClick={() => void remove(it.id)}>
+                Unpublish
+              </Button>
+            </div>
+          ))}
+        </div>
+      </Row>
+    </>
   );
 }
 
@@ -183,6 +313,9 @@ export default function SettingsView() {
     if (key === 'fontScale') applyFontScale(value as string);
     if (key === 'density') applyDensity(value as string);
     if (key === 'colourTerms') applyColourTerms(!!value);
+    if (key === 'readingTone') applyReadingTone(value as string);
+    if (key === 'measure') applyMeasure(value as string);
+    if (key === 'dyslexiaFont') applyDyslexiaFont(!!value);
   }
 
   function exportData() {
@@ -371,6 +504,42 @@ export default function SettingsView() {
             label="Colour coding"
             checked={appearance.colourTerms !== false}
             onChange={(v) => setAppearance('colourTerms', v)}
+          />
+        </Row>
+        <Row
+          label="Reading tone"
+          desc="A warm, paper-like tint in the chapter reader for long sessions. Your theme and accent colours stay the same."
+        >
+          <Segmented
+            value={(appearance.readingTone as string) || 'default'}
+            onChange={(v) => setAppearance('readingTone', v)}
+            options={[
+              { value: 'default', label: 'Default' },
+              { value: 'sepia', label: 'Warm' },
+            ]}
+            ariaLabel="Reading tone"
+          />
+        </Row>
+        <Row label="Reading width" desc="How long each line runs in the chapter reader. Shorter lines are easier to track.">
+          <Segmented
+            value={(appearance.measure as string) || 'medium'}
+            onChange={(v) => setAppearance('measure', v)}
+            options={[
+              { value: 'narrow', label: 'Narrow' },
+              { value: 'medium', label: 'Medium' },
+              { value: 'wide', label: 'Wide' },
+            ]}
+            ariaLabel="Reading width"
+          />
+        </Row>
+        <Row
+          label="Dyslexia-friendly font"
+          desc="Switch reading text to a wider-spaced, heavier-bottomed face that many dyslexic readers find steadier. Uses fonts already on your device."
+        >
+          <Switch
+            label="Dyslexia-friendly font"
+            checked={!!appearance.dyslexiaFont}
+            onChange={(v) => setAppearance('dyslexiaFont', v)}
           />
         </Row>
         <Row label="Sound" desc="Answer feedback and the timer chime. Synthesised in the browser — no files. Browsers only allow sound after you have clicked once on the page.">

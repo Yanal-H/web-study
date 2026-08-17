@@ -133,7 +133,11 @@ async function runBootstrap(
     // import would look "removed" and its rows would be wrongly deleted.
     try {
       const { reconcileShipped } = await import('./reconcile');
-      await reconcileShipped(packs as Chapter[]);
+      // Chapters published to the shared store are legitimately in the engine but
+      // are not part of the shipped set — protect them, or reconciling would read
+      // them as removed and delete a student's downloaded material.
+      const { publishedIds } = await import('./remoteContent');
+      await reconcileShipped(packs as Chapter[], publishedIds());
     } catch {
       // reconciliation is a cleanup, not a correctness requirement — never block boot
     }

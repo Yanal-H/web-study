@@ -61,3 +61,57 @@ describe('reconcilePlan (H2 — obsolete rows only, never valid ones)', () => {
     expect(plan.chapters).toEqual([]);
   });
 });
+
+describe('reconcilePlan — published packs are protected from the shipped-set sweep', () => {
+  // Reconciliation runs against the SHIPPED set. Chapters that arrived from the
+  // shared content store are not in that set, so without protection every one of
+  // them would look "removed" and be deleted — losing material a student has
+  // already downloaded and may be revising offline.
+  const stored = {
+    cards: [
+      { id: 'ana-ch1-card-001', chapterId: 'ana-ch1' },
+      { id: 'pub-ch1-card-001', chapterId: 'pub-ch1' },
+      { id: 'pub-ch1-card-002', chapterId: 'pub-ch1' },
+    ],
+    mcqs: [
+      { id: 'ana-ch1-mcq-001', chapterId: 'ana-ch1' },
+      { id: 'pub-ch1-mcq-001', chapterId: 'pub-ch1' },
+    ],
+    chapters: [{ id: 'ana-ch1' }, { id: 'sur-ch1' }, { id: 'pub-ch1' }],
+  };
+
+  it('deletes a published chapter when it is NOT protected (the hazard being guarded)', () => {
+    const plan = reconcilePlan(current, stored);
+    expect(plan.chapters).toEqual(['pub-ch1']);
+    expect(plan.cards).toEqual(['pub-ch1-card-001', 'pub-ch1-card-002']);
+    expect(plan.mcqs).toEqual(['pub-ch1-mcq-001']);
+  });
+
+  it('keeps every row of a protected published chapter', () => {
+    const plan = reconcilePlan(current, stored, new Set(['pub-ch1']));
+    expect(plan).toEqual({ cards: [], mcqs: [], chapters: [] });
+  });
+
+  it('still removes genuinely obsolete shipped rows while protecting published ones', () => {
+    const plan = reconcilePlan(
+      current,
+      {
+        cards: [
+          { id: 'ana-ch1-card-999', chapterId: 'ana-ch1' }, // left the pack — obsolete
+          { id: 'pub-ch1-card-001', chapterId: 'pub-ch1' }, // published — protected
+          { id: 'old-ch9-card-001', chapterId: 'old-ch9' }, // chapter gone — obsolete
+        ],
+        mcqs: [],
+        chapters: [{ id: 'old-ch9' }, { id: 'pub-ch1' }],
+      },
+      new Set(['pub-ch1'])
+    );
+    expect(plan.cards).toEqual(['ana-ch1-card-999', 'old-ch9-card-001']);
+    expect(plan.chapters).toEqual(['old-ch9']);
+  });
+
+  it('protecting an id that is not stored changes nothing', () => {
+    const plan = reconcilePlan(current, stored, new Set(['pub-ch1', 'never-seen']));
+    expect(plan).toEqual({ cards: [], mcqs: [], chapters: [] });
+  });
+});

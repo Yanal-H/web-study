@@ -86,6 +86,8 @@ export default defineConfig({
     environment: 'jsdom',
     globals: true,
     setupFiles: ['./src/test/setup.ts'],
-    include: ['src/**/*.{test,spec}.{ts,tsx}'],
+    // api/ is deployed as Edge Functions and compiled by Vercel rather than by
+    // our tsconfig, but its auth and storage logic still has to be tested here.
+    include: ['src/**/*.{test,spec}.{ts,tsx}', 'api/**/*.{test,spec}.ts'],
   },
 });

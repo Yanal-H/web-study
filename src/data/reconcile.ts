@@ -41,6 +41,13 @@ export interface ReconcilePlan {
  * Pure: which stored rows are no longer backed by the current content set. A row
  * is obsolete when its chapter is gone, or when its id is no longer part of that
  * chapter. Everything still present is kept, untouched.
+ *
+ * `protectedIds` names chapters that are legitimately in the engine but NOT in
+ * `current` — packs published to the shared store rather than shipped in the
+ * build. Without it, reconciling against the shipped set alone would read every
+ * published chapter as "removed" and delete a student's downloaded material.
+ * Protection is by chapter id, so it holds even offline, when the published pack
+ * bodies are not available to compare against.
  */
 export function reconcilePlan(
   current: CurrentPack[],
@@ -48,27 +55,38 @@ export function reconcilePlan(
     cards: Array<{ id: string; chapterId: string }>;
     mcqs: Array<{ id: string; chapterId: string }>;
     chapters: Array<{ id: string }>;
-  }
+  },
+  protectedIds: Set<string> = new Set()
 ): ReconcilePlan {
   const byId = new Map(current.map((c) => [c.id, c]));
+  const keep = (chapterId: string) => protectedIds.has(chapterId);
   const cards = stored.cards
     .filter((r) => {
+      if (keep(r.chapterId)) return false;
       const p = byId.get(r.chapterId);
       return !p || !p.cardIds.has(r.id);
     })
     .map((r) => r.id);
   const mcqs = stored.mcqs
     .filter((r) => {
+      if (keep(r.chapterId)) return false;
       const p = byId.get(r.chapterId);
       return !p || !p.mcqIds.has(r.id);
     })
     .map((r) => r.id);
-  const chapters = stored.chapters.filter((c) => !byId.has(c.id)).map((c) => c.id);
+  const chapters = stored.chapters.filter((c) => !byId.has(c.id) && !keep(c.id)).map((c) => c.id);
   return { cards, mcqs, chapters };
 }
 
-/** Read the engine, compute the plan, and delete obsolete rows plus their scheduling/media. */
-export async function reconcileShipped(chapters: Chapter[]): Promise<ReconcilePlan> {
+/**
+ * Read the engine, compute the plan, and delete obsolete rows plus their
+ * scheduling/media. Pass `protectedIds` for chapters that came from the shared
+ * content store so they survive a reconcile against the shipped set.
+ */
+export async function reconcileShipped(
+  chapters: Chapter[],
+  protectedIds: Set<string> = new Set()
+): Promise<ReconcilePlan> {
   const [cards, mcqs, chapMeta, media] = await Promise.all([
     getAllRows<{ id: string; chapterId: string }>(CARDS),
     getAllRows<{ id: string; chapterId: string }>(MCQS),
@@ -76,7 +94,11 @@ export async function reconcileShipped(chapters: Chapter[]): Promise<ReconcilePl
     getAllRows<{ imageId: string }>(MEDIA),
   ]);
 
-  const plan = reconcilePlan(currentPacks(chapters), { cards, mcqs, chapters: chapMeta });
+  const plan = reconcilePlan(
+    currentPacks(chapters),
+    { cards, mcqs, chapters: chapMeta },
+    protectedIds
+  );
 
   if (plan.cards.length) {
     await deleteKeys(CARDS, plan.cards);

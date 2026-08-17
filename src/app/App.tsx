@@ -111,9 +111,16 @@ function Shell() {
     return () => document.removeEventListener('keydown', onKey);
   }, [navigate]);
 
-  // Load the shipped packs into the card engine once, in the background.
+  // Load the shipped packs into the card engine once, in the background. Once
+  // those are in, pick up any chapters published to the shared store since the
+  // build — an optional overlay that stays silent when there is no server,
+  // no connection, or nothing new.
   useEffect(() => {
-    void ensureContentLoaded().catch((e) => console.error('content bootstrap failed', e));
+    void ensureContentLoaded()
+      .catch((e) => console.error('content bootstrap failed', e))
+      .finally(() => {
+        void import('../data/remoteContent').then((m) => m.syncPublishedInBackground());
+      });
   }, []);
 
   // Ask the browser to keep this origin's data even under storage pressure. Without
