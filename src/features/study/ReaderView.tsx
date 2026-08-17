@@ -7,6 +7,7 @@ import { useStore } from '../../state/useStore';
 import { chapterProgress } from './progress';
 import { update } from '../../state/store';
 import { makeUserCard } from '../flashcards/makeCard';
+import ListenButton from '../tts/ListenButton';
 import { useToast } from '../../design/Toast';
 import { Card, Button, Badge, Tabs, ProgressRing } from '../../design/primitives';
 import { IconChevron, IconFlashcards, IconQbank, IconCheck } from '../../design/icons';
@@ -382,14 +383,17 @@ function ReadTab({
               <h2 style={{ flex: 1 }}>
                 {s.n ? <span className="sec-n">{s.n}</span> : null} {s.title}
               </h2>
-              <button
-                className={`btn btn--ghost btn--sm no-print ${readSections[s.id] ? 'read-on' : ''}`}
-                onClick={() => toggleRead(s.id)}
-                style={{ color: readSections[s.id] ? 'var(--success)' : undefined }}
-                aria-pressed={!!readSections[s.id]}
-              >
-                <IconCheck size={15} /> {readSections[s.id] ? 'Read' : 'Mark read'}
-              </button>
+              <div className="row no-print" style={{ gap: 6 }}>
+                <ListenButton text={`${s.title}. ${s.digest}`} />
+                <button
+                  className={`btn btn--ghost btn--sm ${readSections[s.id] ? 'read-on' : ''}`}
+                  onClick={() => toggleRead(s.id)}
+                  style={{ color: readSections[s.id] ? 'var(--success)' : undefined }}
+                  aria-pressed={!!readSections[s.id]}
+                >
+                  <IconCheck size={15} /> {readSections[s.id] ? 'Read' : 'Mark read'}
+                </button>
+              </div>
             </div>
             <div className="md" dangerouslySetInnerHTML={{ __html: renderRich(s.digest, lex) }} />
 

@@ -10,6 +10,7 @@ import { globalIndex } from '../../lib/useLexicon';
 import { sfx } from '../../lib/sound';
 import { hintCardPrompt, explainCardPrompt } from '../../lib/ai';
 import AiTutor from '../ai/AiTutor';
+import ListenButton from '../tts/ListenButton';
 import { OcclusionView, MaskedFigure } from './Occlusion';
 
 const GRADES: Array<{ g: Grade; label: string; key: string; tone: string; hint: string }> = [
@@ -197,6 +198,10 @@ export default function ReviewSession({
 
   const c = item!.card;
   const flagged = !!(state.study.cardSched[item!.key] as CardSched | undefined)?.flagged;
+  // text to read aloud: the prompt before you flip, the answer after
+  const frontText = c.type === 'cloze' ? '' : c.type === 'reversed' ? c.back || '' : c.front || '';
+  const backText = c.type === 'cloze' ? c.cloze || '' : c.type === 'reversed' ? c.front || '' : c.back || '';
+  const ttsText = (revealed ? backText : frontText) + (revealed && c.extra ? `. ${c.extra}` : '');
 
   return (
     <div className="review-wrap">
@@ -231,6 +236,7 @@ export default function ReviewSession({
               Flip
             </button>
           )}
+          {ttsText.trim() && <ListenButton text={ttsText} />}
           <button
             className={`btn btn--ghost btn--icon ${flagged ? 'flagged' : ''}`}
             aria-label="Flag card"

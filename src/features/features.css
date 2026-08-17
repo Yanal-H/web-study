@@ -4236,3 +4236,9 @@
   padding: 6px 2px 0;
   color: var(--text-dim);
 }
+
+/* ---- Read-aloud (Listen) button ---- */
+.listen-btn.on {
+  color: var(--accent);
+  border-color: var(--accent);
+}
