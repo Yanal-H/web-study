@@ -43,6 +43,17 @@ begin
   if allowed is null or allowed = '' then
     return new;  -- no restriction configured
   end if;
+
+  -- Administrators are always allowed, whatever domain they use.
+  --
+  -- Without this you can lock yourself out of your own site: the restriction
+  -- applies to every new account including yours, so an owner whose address is a
+  -- personal one (gmail, outlook) while students use a university domain could
+  -- never sign in to publish anything.
+  if lower(new.email) = any (select lower(unnest(public.admin_emails()))) then
+    return new;
+  end if;
+
   if lower(new.email) like '%@' || lower(allowed) then
     return new;
   end if;
