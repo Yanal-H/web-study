@@ -82,11 +82,19 @@ async function runBootstrap(
       );
       imported++;
     } catch {
+      // Preserve every pack that did import — never roll a sibling back — and
+      // remember this one so the next boot retries it.
       skipped.push(pack.id);
     }
   }
 
-  localStorage.setItem(STAMP_KEY, stamp);
+  // Completion means EVERY pack imported. If any failed, leave the stamp unset so
+  // the next boot re-runs and retries the missing packs (importPack is idempotent).
+  if (skipped.length === 0) {
+    localStorage.setItem(STAMP_KEY, stamp);
+  } else {
+    localStorage.removeItem(STAMP_KEY);
+  }
   const cards = await countStore(CARDS);
   const { invalidateDeckTree } = await import('./session');
   invalidateDeckTree();

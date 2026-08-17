@@ -368,3 +368,16 @@ export async function clearAll(): Promise<void> {
   for (const s of stores) t.objectStore(s).clear();
   await done(t);
 }
+
+/**
+ * Clear content-card scheduling and the review log, leaving the chapters, cards
+ * and MCQs themselves in place. Used by "reset study progress" so content cards
+ * become new again without having to re-import the whole library.
+ */
+export async function resetEngineProgress(): Promise<void> {
+  const db = await openDB();
+  const stores = [SCHEDULING, REVIEWS];
+  const t = db.transaction(stores, 'readwrite');
+  for (const s of stores) t.objectStore(s).clear();
+  await done(t);
+}

@@ -10,6 +10,9 @@ import { useToast } from '../../design/Toast';
 import { IconDownload, IconUpload, IconSun, IconMoon, IconSparkle } from '../../design/icons';
 import { sfx } from '../../lib/sound';
 import { getAiConfig, setAiConfig, AI_MODELS } from '../../lib/ai';
+import { resetEngineProgress } from '../../data/db';
+import { invalidateDeckTree } from '../../data/session';
+import { looksLikeStateBackup, redactBackup } from './backup';
 import LibraryPanel from './LibraryPanel';
 
 function Switch({ checked, onChange, label }: { checked: boolean; onChange: (v: boolean) => void; label: string }) {
@@ -69,39 +72,71 @@ export default function SettingsView() {
   }
 
   function exportData() {
-    const blob = new Blob([JSON.stringify(liveState, null, 2)], { type: 'application/json' });
+    // Redact secrets before the blob ever exists: the AI key (and any future secret)
+    // must never leave the device inside a shareable backup file.
+    const safe = redactBackup(liveState);
+    const blob = new Blob([JSON.stringify(safe, null, 2)], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
     a.download = `foundation-study-backup-${new Date().toISOString().slice(0, 10)}.json`;
     a.click();
     URL.revokeObjectURL(url);
-    toast('Backup downloaded', 'success');
+    toast('Backup downloaded — your API key is never included', 'success');
   }
 
   function importData(file: File) {
     const reader = new FileReader();
     reader.onload = () => {
+      // Safe ordering: parse → validate shape → migrate in memory → verify the
+      // migrated result → back up → write → verify the write → reload. The live
+      // store is never touched until a valid migrated representation exists, and a
+      // failed/partial write is rolled back rather than reported as success.
+      let parsed: unknown;
       try {
-        const parsed = JSON.parse(String(reader.result));
-        // back up current data before overwriting, then migrate the import losslessly
-        Store.set(LS_KEY + '__preimport_' + Date.now(), JSON.stringify(liveState));
-        const migrated = runMigrations(parsed);
-        Store.set(LS_KEY, JSON.stringify(migrated));
-        reloadState();
-        commit();
-        applyFontScale(liveState.settings.appearance.fontScale);
-        applyDensity(liveState.settings.appearance.density);
-        toast('Data imported', 'success');
+        parsed = JSON.parse(String(reader.result));
       } catch {
-        toast('That file could not be read', 'error');
+        toast('That file is not valid JSON.', 'error');
+        return;
       }
+      if (!looksLikeStateBackup(parsed)) {
+        toast('That file is not a Foundation backup — live data is unchanged.', 'error');
+        return;
+      }
+      let migrated: ReturnType<typeof runMigrations>;
+      try {
+        migrated = runMigrations(parsed);
+      } catch {
+        toast('That backup could not be migrated — live data is unchanged.', 'error');
+        return;
+      }
+      if (!migrated || typeof migrated !== 'object' || typeof migrated.schemaVersion !== 'number') {
+        toast('That backup is structurally invalid — live data is unchanged.', 'error');
+        return;
+      }
+      // Only now do we touch storage: back up the current blob first.
+      const prior = JSON.stringify(liveState);
+      Store.set(LS_KEY + '__preimport_' + Date.now(), prior);
+      const serialised = JSON.stringify(migrated);
+      const wrote = Store.set(LS_KEY, serialised);
+      // Verify the write actually landed; if not, restore and report the failure.
+      if (!wrote || Store.get(LS_KEY) !== serialised) {
+        Store.set(LS_KEY, prior);
+        toast('Import could not be saved — your data is unchanged.', 'error');
+        return;
+      }
+      reloadState();
+      commit();
+      applyFontScale(liveState.settings.appearance.fontScale);
+      applyDensity(liveState.settings.appearance.density);
+      toast('Data imported', 'success');
     };
     reader.readAsText(file);
   }
 
-  function resetProgress() {
-    // back up first, then clear only progress — keep subjects, notes, content, settings
+  async function resetProgress() {
+    // back up first, then clear ALL progress across both scheduling systems —
+    // keep subjects, notes, imported content and settings.
     Store.set(LS_KEY + '__prereset_' + Date.now(), JSON.stringify(liveState));
     update((s) => {
       s.activity = {};
@@ -110,6 +145,7 @@ export default function SettingsView() {
       s.study.mcqPerf = {};
       s.study.mcqNotes = {};
       s.study.mcqSession = null;
+      s.study.cardSched = {}; // v7 content-card scheduling that used to survive a reset
       s.study.daily = { date: new Date().toISOString().slice(0, 10), newDone: 0, revDone: 0 };
       s.flashcards.forEach((c) => {
         c.reps = 0;
@@ -120,8 +156,16 @@ export default function SettingsView() {
         c.history = [];
       });
     });
+    // The content cards are scheduled by the IndexedDB FSRS engine, not the store —
+    // clear their schedules and review log too, or the reset would be a half-reset.
+    try {
+      await resetEngineProgress();
+      invalidateDeckTree();
+    } catch {
+      // best-effort: the local reset already succeeded and was backed up
+    }
     setConfirmReset(false);
-    toast('Progress reset (a backup was kept)', 'success');
+    toast('Progress reset — personal and content-card schedules cleared (a backup was kept)', 'success');
   }
 
   return (
@@ -408,10 +452,11 @@ export default function SettingsView() {
         ) : (
           <div className="row wrap" style={{ gap: 10 }}>
             <span className="muted" style={{ fontSize: 13.5 }}>
-              This clears activity, schedules and question history (a backup is kept). Keep subjects
-              and notes. Sure?
+              This clears activity, question history and every card schedule — your personal cards
+              and the content cards alike — but keeps your subjects, notes and imported content. A
+              backup is kept. Sure?
             </span>
-            <Button variant="danger" onClick={resetProgress}>
+            <Button variant="danger" onClick={() => void resetProgress()}>
               Yes, reset
             </Button>
             <Button variant="ghost" onClick={() => setConfirmReset(false)}>
