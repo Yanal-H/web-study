@@ -52,10 +52,14 @@ export function setAiConfig(patch: Partial<AiConfig>): void {
   }
 })();
 
-/** True when the tutor is switched on and a key has been entered. */
+/**
+ * True when the tutor is switched on. A request then goes through the server proxy
+ * (no student key needed) or, if the student entered their own key, directly with
+ * that key. Either way the buttons are live; a missing server key surfaces as a
+ * clear message telling them to add their own.
+ */
 export function aiReady(): boolean {
-  const c = getAiConfig();
-  return c.enabled && c.apiKey.trim().length > 0;
+  return getAiConfig().enabled;
 }
 
 /* ---- Answer cache: a hint/explanation is deterministic enough to reuse, so we
@@ -109,8 +113,14 @@ const FALLBACK_MODEL = 'claude-sonnet-5';
 
 type RawResult = AiResult & { downgradeable?: boolean };
 
-/** A single request against one model. Flags errors that mean "this key can't use that model". */
-async function rawChat(
+/** Pull the assistant text out of an Anthropic-shaped response body. */
+function textFrom(data: unknown): string {
+  const content = (data as { content?: Array<{ text?: string }> })?.content;
+  return Array.isArray(content) ? content.map((b) => b?.text || '').join('').trim() : '';
+}
+
+/** Direct request with the student's own key (browser → Anthropic). */
+async function rawDirect(
   system: string,
   messages: AiMessage[],
   model: string,
@@ -132,23 +142,51 @@ async function rawChat(
     if (!res.ok) {
       let detail = `Request failed (${res.status}).`;
       try {
-        const j = await res.json();
-        detail = j?.error?.message || detail;
+        detail = (await res.json())?.error?.message || detail;
       } catch {
-        /* keep the status-code message */
+        /* keep status message */
       }
-      // 403/404 or a message about the model/permission/tier means the key can't use it.
       const downgradeable =
-        res.status === 403 ||
-        res.status === 404 ||
-        /model|permission|not[_ ]?found|not allowed|access|tier|entitl/i.test(detail);
+        res.status === 403 || res.status === 404 || /model|permission|not[_ ]?found|not allowed|access|tier|entitl/i.test(detail);
       if (res.status === 401) detail = 'Your API key was rejected — check it in Settings.';
       return { ok: false, error: fail('http', detail), downgradeable };
     }
+    const text = textFrom(await res.json());
+    if (!text) return { ok: false, error: fail('parse', 'The tutor returned an empty reply.') };
+    return { ok: true, text };
+  } catch (e) {
+    const msg = e instanceof Error && e.name === 'AbortError' ? 'Cancelled.' : 'Could not reach the AI service.';
+    return { ok: false, error: fail('offline', msg) };
+  }
+}
+
+/** Request through the same-origin server proxy — no student key needed. */
+async function rawProxy(
+  system: string,
+  messages: AiMessage[],
+  model: string,
+  opts: { maxTokens?: number; signal?: AbortSignal }
+): Promise<RawResult> {
+  const NO_SERVER = 'The AI tutor is not set up on the server — add your own API key in Settings to use it now.';
+  try {
+    const res = await fetch('/api/ai', {
+      method: 'POST',
+      signal: opts.signal,
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ system, messages, model, maxTokens: opts.maxTokens ?? 1000 }),
+    });
+    // A static host with no function returns HTML for /api/ai; treat non-JSON as "no server".
+    if (!(res.headers.get('content-type') || '').includes('application/json')) {
+      return { ok: false, error: fail('http', NO_SERVER) };
+    }
     const data = await res.json();
-    const text = Array.isArray(data?.content)
-      ? data.content.map((b: { text?: string }) => b?.text || '').join('').trim()
-      : '';
+    if (!res.ok) {
+      let detail = data?.error?.message || `Request failed (${res.status}).`;
+      if (res.status === 503 || res.status === 404) detail = NO_SERVER;
+      const downgradeable = res.status === 403 || /model|permission|tier|entitl/i.test(detail);
+      return { ok: false, error: fail('http', detail), downgradeable };
+    }
+    const text = textFrom(data);
     if (!text) return { ok: false, error: fail('parse', 'The tutor returned an empty reply.') };
     return { ok: true, text };
   } catch (e) {
@@ -158,11 +196,10 @@ async function rawChat(
 }
 
 /**
- * Multi-turn chat against the Anthropic Messages API, direct from the browser.
- * Pass the whole conversation so follow-up questions keep their context. If the
- * chosen model (Opus by default) is not available to the key, it retries once
- * with Sonnet and remembers that, so students without premium access still get a
- * strong answer instead of an error.
+ * Multi-turn chat. Uses the server proxy by default (so students need no key); if a
+ * student has entered their own key it goes direct with that key instead. If the
+ * chosen model (Opus by default) is unavailable, it retries once with Sonnet and
+ * remembers that, so no one is left with an error where a strong answer was possible.
  */
 export async function aiChat(
   system: string,
@@ -170,21 +207,21 @@ export async function aiChat(
   opts: { maxTokens?: number; signal?: AbortSignal } = {}
 ): Promise<AiResult> {
   const cfg = getAiConfig();
-  if (!cfg.enabled || !cfg.apiKey.trim()) {
-    return { ok: false, error: fail('no-key', 'Turn on the AI tutor and add your API key in Settings.') };
+  if (!cfg.enabled) {
+    return { ok: false, error: fail('no-key', 'Turn on the AI tutor in Settings.') };
   }
   if (typeof navigator !== 'undefined' && navigator.onLine === false) {
     return { ok: false, error: fail('offline', 'You are offline — the AI tutor needs a connection.') };
   }
   const key = cfg.apiKey.trim();
-  const primary = cfg.model || DEFAULTS.model;
-  const first = await rawChat(system, messages, primary, key, opts);
-  if (first.ok) return first;
+  const model = cfg.model || DEFAULTS.model;
+  const run = (m: string) => (key ? rawDirect(system, messages, m, key, opts) : rawProxy(system, messages, m, opts));
 
-  if (first.downgradeable && primary !== FALLBACK_MODEL) {
-    const alt = await rawChat(system, messages, FALLBACK_MODEL, key, opts);
+  const first = await run(model);
+  if (first.ok) return first;
+  if (first.downgradeable && model !== FALLBACK_MODEL) {
+    const alt = await run(FALLBACK_MODEL);
     if (alt.ok) {
-      // this key cannot use the premium model — settle on the fallback going forward
       setAiConfig({ model: FALLBACK_MODEL });
       return alt;
     }

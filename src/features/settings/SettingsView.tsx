@@ -446,18 +446,18 @@ export default function SettingsView() {
           AI tutor
         </h2>
         <p className="section-lead">
-          On by default, but it only ever activates once you add your own API key below — until then the app
-          stays fully offline and nothing is sent anywhere. The <strong>Hint</strong>,
-          <strong> Show explanation</strong> and <strong>Ask AI</strong> buttons appear on every question and
-          flashcard; add your key once and they all start working.
+          On by default. If your school has set up the shared AI server, it just works — no key needed.
+          Otherwise add your own Anthropic key below and it activates for you. The <strong>Hint</strong>,
+          <strong> Show explanation</strong> and <strong>Ask AI</strong> buttons are on every question and
+          flashcard; nothing is sent anywhere until you press one, and the rest of the app is fully offline.
         </p>
         <Row label="Enable AI tutor" desc="Adds live hints and explanations to the question bank.">
           <Switch label="Enable AI tutor" checked={ai.enabled} onChange={(v) => setAiConfig({ enabled: v })} />
         </Row>
-        <Row label="API key" desc="Your own Anthropic API key. Stored only on this device.">
+        <Row label="Your API key" desc="Optional when the shared server is set up. Your own Anthropic key, stored only on this device.">
           <Input
             type="password"
-            placeholder="sk-ant-…"
+            placeholder="sk-ant-… (leave blank to use the shared server)"
             autoComplete="off"
             value={ai.apiKey}
             style={{ width: 240, fontFamily: 'var(--font-mono)', fontSize: 12.5 }}
