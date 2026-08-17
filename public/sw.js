@@ -44,7 +44,12 @@ self.addEventListener('fetch', (event) => {
   if (req.method !== 'GET') return;
 
   const url = new URL(req.url);
-  if (url.origin !== self.location.origin) return; // never touch cross-origin
+  // Never touch cross-origin. This is also what keeps chapter content off the
+  // disk: chapters are fetched from Supabase, which is a different origin, so
+  // they are never written into the cache. Do not relax this to "cache
+  // everything" — it would quietly undo the online-only design and leave a full
+  // copy of the library on every student's device.
+  if (url.origin !== self.location.origin) return;
 
   // App navigations: serve fresh HTML when online, cached shell when offline.
   if (req.mode === 'navigate') {

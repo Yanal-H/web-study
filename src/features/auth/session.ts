@@ -117,7 +117,18 @@ export async function verifyCode(emailRaw: string, codeRaw: string): Promise<Aut
   return { ok: true };
 }
 
-/** Sign out on this device. Personal study data stays on the device. */
+/**
+ * Sign out on this device.
+ *
+ * Chapters are dropped from memory immediately — signing out must not leave the
+ * material readable, and must not hand it to whoever signs in next on a shared
+ * device. Personal study data (progress, review history, notes, personal cards)
+ * stays on the device and is waiting when they sign back in.
+ */
 export async function signOut(): Promise<void> {
+  const { forgetContent } = await import('../../data/remoteContent');
+  forgetContent();
+  const { clearAdminCache } = await import('../../lib/admin');
+  clearAdminCache();
   await supabase?.auth.signOut();
 }

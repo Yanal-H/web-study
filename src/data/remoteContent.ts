@@ -1,30 +1,34 @@
-// Chapter content, fetched for a signed-in student.
+// Chapter content, downloaded fresh for a signed-in student each session.
 //
-// This is where the security model actually bites. Chapters used to be compiled
-// into the JavaScript bundle, which meant anyone who opened the URL had the whole
-// library whether or not they got past the passphrase. Now they live in a
-// Supabase table behind row-level security: an unauthenticated request returns
-// nothing, so a visitor without an approved account gets an empty shell.
+// Chapters used to be compiled into the JavaScript bundle, so anyone who opened
+// the URL held the whole library whether or not they got past the passphrase.
+// They now live in a Supabase table behind row-level security: an
+// unauthenticated request returns nothing.
 //
-// Everything else about the app is unchanged. Once a pack has been fetched it is
-// imported into IndexedDB, and from then on the reader, the due queue and search
-// all work from the device with no network — so the app is still offline-first
-// after the first signed-in load.
+// The app is ONLINE-ONLY by choice. Downloaded chapters go into memory (see
+// contentStore.ts) and are gone when the tab closes, so no device keeps a copy
+// of the material. The cost is a connection on every visit; the gain is that a
+// borrowed, lost or resold phone carries nothing, and revoking an account is not
+// undone by a stale offline copy.
+//
+// Personal data is untouched by any of this — scheduling, review history, notes
+// and personal cards stay in IndexedDB and survive.
 //
 // Rules this module keeps:
-//   - Never block the UI. Content arrives in the background.
-//   - Never throw at the student. A failed sync leaves what they already have.
+//   - Never throw at the student. A failed sync leaves the session as it was.
 //   - Never delete rows on a partial failure — see reconcile.ts for the sweep.
 
 import type { Chapter } from '../content/schema';
 import { ChapterSchema } from '../content/schema';
 import { importPackOffThread } from './importClient';
 import { supabase } from '../lib/supabase';
+import { clearContent } from './contentStore';
 
-const MANIFEST_KEY = 'foundation_published_v1';
-
-/** What we have successfully imported: chapter id -> revision from the server. */
-type LocalManifest = Record<string, string>;
+// Which chapters this SESSION has already downloaded. Deliberately a plain
+// variable rather than localStorage: content lives in memory only, so a new page
+// load starts with nothing and must download again. Persisting this would make
+// the app think it holds chapters it no longer has.
+let sessionManifest: Record<string, string> = {};
 
 export interface RemoteItem {
   id: string;
@@ -42,32 +46,14 @@ export interface SyncReport {
   skipped?: string;
 }
 
-function readManifest(): LocalManifest {
-  try {
-    const raw = localStorage.getItem(MANIFEST_KEY);
-    const parsed = raw ? JSON.parse(raw) : null;
-    return parsed && typeof parsed === 'object' ? (parsed as LocalManifest) : {};
-  } catch {
-    return {};
-  }
-}
-
-function writeManifest(m: LocalManifest): void {
-  try {
-    localStorage.setItem(MANIFEST_KEY, JSON.stringify(m));
-  } catch {
-    // A full quota must not break content that is already imported and working.
-  }
-}
 
 /**
- * Chapter ids that came from the content store. Reconciliation sweeps rows that
- * are not in the *shipped* set, so without this it would treat every fetched
- * chapter as removed and delete material the student is revising from.
- * Reads localStorage so it is correct offline and synchronous.
+ * Chapter ids this session has downloaded. Reconciliation sweeps rows that are
+ * not in the current set, so without this it would treat every fetched chapter as
+ * removed and delete material the student is revising from.
  */
 export function publishedIds(): Set<string> {
-  return new Set(Object.keys(readManifest()));
+  return new Set(Object.keys(sessionManifest));
 }
 
 /** True when this deployment has a content store at all. */
@@ -81,23 +67,26 @@ export function isSharedStoreConfigured(): boolean {
  * overwrites content by id and never resets a student's progress.
  */
 export function resetContentSync(): void {
-  try {
-    localStorage.removeItem(MANIFEST_KEY);
-  } catch {
-    /* nothing to clear */
-  }
+  sessionManifest = {};
+}
+
+/** Drop every chapter from memory. Called on sign-out. */
+export function forgetContent(): void {
+  sessionManifest = {};
+  clearContent();
 }
 
 /**
- * Fetch the manifest and import anything new or changed.
+ * Download the chapters this session needs.
  *
- * Only packs whose revision differs from what we already hold are downloaded, so
- * a steady state costs one small query and no content transfer at all. That is
- * what keeps 1000 students inside a free tier.
+ * The manifest query is tiny (ids and revisions). Packs whose revision this
+ * session already holds are skipped, so a reload inside a live session costs
+ * almost nothing — but a NEW session starts with empty memory and downloads
+ * everything again, which is the deliberate trade for keeping nothing on disk.
  *
- * Content is validated client-side as well as on publish: a pack reaching
- * IndexedDB unchecked would put unvalidated material in front of a student, and
- * medical content integrity is worth the few milliseconds.
+ * Content is validated on the way in as well as on publish: unvalidated material
+ * reaching a student is a content-integrity problem, and it is worth the few
+ * milliseconds to check twice.
  */
 export async function syncPublishedContent(): Promise<SyncReport> {
   const report: SyncReport = { configured: false, imported: [], removed: [], failed: [] };
@@ -115,7 +104,7 @@ export async function syncPublishedContent(): Promise<SyncReport> {
   if (error || !rows) return { ...report, skipped: 'unreachable' };
 
   report.configured = true;
-  const manifest = readManifest();
+  const manifest = sessionManifest;
   const seen = new Set<string>();
 
   for (const row of rows as Array<{ id: string; revision: string }>) {
@@ -137,9 +126,6 @@ export async function syncPublishedContent(): Promise<SyncReport> {
       await importPackOffThread(parsed.data as Chapter);
       manifest[row.id] = row.revision;
       report.imported.push(row.id);
-      // Record after each pack: a failure on pack 5 must not discard the fact
-      // that packs 1-4 imported successfully.
-      writeManifest(manifest);
     } catch {
       report.failed.push(row.id);
     }
@@ -154,7 +140,6 @@ export async function syncPublishedContent(): Promise<SyncReport> {
   }
 
   if (report.removed.length) {
-    writeManifest(manifest);
     // Delete their rows too, so an unpublished chapter stops appearing in decks
     // and the due queue instead of lingering as ghost rows.
     //

@@ -5,13 +5,19 @@ An offline-first study website — a textbook **Reader**, **Recall-grade flashca
 planner, calculators and more. **by Yanal · Cairo 2026.**
 
 Multi-file **Vite + React + TypeScript** site on Vercel, with sign-in and chapter
-content served by Supabase. Offline after the first signed-in load, self-hosted
-fonts, no third-party requests beyond authentication and content.
+content served by Supabase. Self-hosted fonts, no third-party requests beyond
+authentication and content.
 
 **Access:** students sign in with an email code, restricted to one email domain.
-Chapters are **not** in the JavaScript bundle — they are fetched for a signed-in
-account and cached on the device — so a visitor who is not signed in receives an
-empty shell.
+Chapters are **not** in the JavaScript bundle and are **never written to disk** —
+they are downloaded into memory for a signed-in account and dropped when the tab
+closes. A visitor who is not signed in receives an empty shell.
+
+**Online-only, deliberately.** Keeping no copy on the device means a borrowed or
+lost phone carries no library and revoking an account is not undone by a stale
+offline cache. The cost is that studying needs a connection. Personal data —
+progress, review history, notes, personal cards — stays on the device and works
+regardless.
 
 > **Honest caveat:** a signed-in student can still extract what their browser has
 > received; that is true of every web app and cannot be engineered away. What this
@@ -108,10 +114,14 @@ them. Seed the chapters once with `npm run upload:content`.
 
 ## Offline & updates
 
-After the first **signed-in** visit the app boots and navigates fully offline,
-including downloaded chapters and any personally-imported chapter. Only that first
-load needs a connection, which is the unavoidable cost of not shipping the content
-to anonymous visitors. On a redeploy, `index.html`
+The app shell is cached by the service worker, so it boots instantly, but
+**chapters are fetched every visit and never cached** — that is what keeps them
+off the device. The service worker skips cross-origin requests, which is what
+enforces it; do not relax that rule.
+
+Personal data (progress, notes, personal cards) lives in IndexedDB and needs no
+connection. A device upgrading from an older build has its stored chapters purged
+at boot, so the copy an earlier version left behind is actually removed. On a redeploy, `index.html`
 is served `no-cache` so the new shell loads; a `vite:preloadError` guard reloads
 once if a lazy chunk hash changed. Open sessions and personal imports are never
 lost across a redeploy.
