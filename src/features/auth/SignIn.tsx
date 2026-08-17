@@ -145,6 +145,10 @@ export default function SignIn() {
       ) : (
         <>
           <p className="signin-lead">{note}</p>
+          <p className="signin-hint">
+            Type the 6-digit code below. If the email has a sign-in link instead, opening that
+            works too.
+          </p>
           <label className="signin-label" htmlFor="signin-code">
             6-digit code
           </label>

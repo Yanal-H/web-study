@@ -80,7 +80,13 @@ export async function sendCode(emailRaw: string): Promise<AuthResult> {
 
   const { error } = await supabase.auth.signInWithOtp({
     email,
-    options: { shouldCreateUser: true },
+    options: {
+      shouldCreateUser: true,
+      // Send any link in the email back to the site the student is actually on.
+      // Without this Supabase uses the project's Site URL, which defaults to
+      // http://localhost:3000 — a developer address that fails for everyone else.
+      emailRedirectTo: typeof window !== 'undefined' ? window.location.origin : undefined,
+    },
   });
 
   if (error) {

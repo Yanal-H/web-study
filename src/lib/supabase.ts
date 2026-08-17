@@ -40,8 +40,19 @@ export const supabase: SupabaseClient | null =
           persistSession: true,
           autoRefreshToken: true,
           storageKey: 'foundation_auth',
-          // We use 6-digit codes, not links, so there is no callback URL to parse.
-          detectSessionInUrl: false,
+          // Accept BOTH ways in: the 6-digit code typed into the app, and a link
+          // clicked in the email.
+          //
+          // Codes remain the design — links break in the in-app browsers students
+          // actually open mail from. But Supabase will not let you edit the email
+          // template until you have configured your own SMTP server, and its stock
+          // template sends a link and no code. Refusing to honour that link would
+          // mean nobody can sign in at all until SMTP is set up.
+          detectSessionInUrl: true,
+          // PKCE returns the credential in the QUERY STRING (?code=…). The implicit
+          // flow returns it in the URL fragment, which this app already uses for
+          // routing (HashRouter) — the two would fight over the same hash.
+          flowType: 'pkce',
         },
       })
     : null;
