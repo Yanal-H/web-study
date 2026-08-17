@@ -1,5 +1,4 @@
 import { useEffect, useRef } from 'react';
-import { thunder } from '../../lib/sound';
 
 /*
  * HakiField — the living energy behind the whole app. A single fixed canvas:
@@ -144,9 +143,6 @@ export default function HakiField() {
           const fork = boltPoints(mid[0], mid[1], mid[0] + (Math.random() - 0.5) * 300, endY * 0.92, 6);
           flash = { pts: main, fork, life: 20 };
           nextBolt = 150 + Math.random() * 360;
-          // Not every strike is overhead: about half of them carry, and quietly,
-          // so the room has weather rather than a metronome.
-          if (Math.random() < 0.6) thunder(0.55 + Math.random() * 0.45);
         }
         if (flash) {
           const a = flash.life / 20;

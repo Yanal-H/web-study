@@ -207,7 +207,7 @@ export default function SettingsView() {
             onChange={(v) => setAppearance('colourTerms', v)}
           />
         </Row>
-        <Row label="Sound" desc="Thunder, answer feedback and the timer chime. Synthesised in the browser — no files. Browsers only allow sound after you have clicked once on the page, and reduce-motion silences the ambient thunder along with the lightning.">
+        <Row label="Sound" desc="Answer feedback and the timer chime. Synthesised in the browser — no files. Browsers only allow sound after you have clicked once on the page.">
           <Switch
             label="Sound"
             checked={((state.settings as Record<string, any>).sound?.effects ?? true) !== false}
@@ -219,7 +219,7 @@ export default function SettingsView() {
             }
           />
         </Row>
-        <Row label="Sound volume" desc="Thunder, answer feedback and the timer chime.">
+        <Row label="Sound volume" desc="Answer feedback and the timer chime.">
           <div className="row" style={{ gap: 10, alignItems: 'center' }}>
             <input
               type="range"

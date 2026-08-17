@@ -171,7 +171,7 @@ function Shell() {
           <div className="name">Yanal</div>
         </div>
         <button className="menu-btn" type="button" onClick={() => setNavOpen(true)} aria-label="Open navigation">
-          <IconMenu size={18} /> Haki
+          <IconMenu size={18} /> Menu
         </button>
       </div>
 

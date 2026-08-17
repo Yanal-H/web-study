@@ -3604,20 +3604,19 @@
    (appended — additive, no overrides of earlier rules)
    ========================================================================= */
 
-/* ---- Route/page transition: content rises + fades on every navigation ---- */
+/* ---- Route/page transition: a crisp, quick fade + small rise, no blur ---- */
 .route-view {
-  animation: routeIn 0.42s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: routeIn 0.24s ease-out both;
+  will-change: opacity, transform;
 }
 @keyframes routeIn {
   from {
     opacity: 0;
-    transform: translateY(14px);
-    filter: blur(2px);
+    transform: translateY(8px);
   }
   to {
     opacity: 1;
     transform: translateY(0);
-    filter: blur(0);
   }
 }
 :root.reduce-motion .route-view {
@@ -3981,4 +3980,23 @@
   min-width: 0;
   font-size: 14.5px;
   font-weight: 500;
+}
+
+/* ---- In-app session swaps (no URL change) get the same gentle fade ---- */
+.qb-run,
+.qb-results,
+.review-page {
+  animation: routeIn 0.24s ease-out both;
+}
+:root.reduce-motion .qb-run,
+:root.reduce-motion .qb-results,
+:root.reduce-motion .review-page {
+  animation: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .qb-run,
+  .qb-results,
+  .review-page {
+    animation: none;
+  }
 }
