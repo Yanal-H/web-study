@@ -104,6 +104,7 @@
       }
       @media (prefers-reduced-motion: reduce) {
         #gate .gbolt { animation: none; opacity: 0.12; }
+        #gate .gate-card.shake { animation: none; }
       }
       /* the lock screen stays dark + haki in every theme (a dramatic splash) */
       #gate .gate-card {
@@ -237,7 +238,7 @@
           placeholder="passphrase"
         />
         <button id="gateBtn" type="button">Unlock</button>
-        <div class="gate-err" id="gateErr">That's not the passphrase. Try again.</div>
+        <div class="gate-err" id="gateErr" role="alert">That's not the passphrase. Try again.</div>
         <div class="gate-foot">by Yanal · Cairo 2026</div>
       </div>
     </div>
@@ -269,6 +270,19 @@
             document.documentElement.classList.remove('locked');
             document.documentElement.classList.add('unlocked');
             gate.style.display = 'none';
+            // restore the app to assistive tech and move focus into it
+            var root = document.getElementById('root');
+            if (root) {
+              root.removeAttribute('inert');
+              root.removeAttribute('aria-hidden');
+              root.setAttribute('tabindex', '-1');
+              try {
+                root.focus();
+              } catch (e) {}
+              setTimeout(function () {
+                root.removeAttribute('tabindex');
+              }, 0);
+            }
           } else {
             err.style.display = 'block';
             card.classList.add('shake');
@@ -285,6 +299,17 @@
             unlock();
           }
         });
+        // Trap focus within the gate: Tab/Shift+Tab cycle only its two controls.
+        gate.addEventListener('keydown', function (e) {
+          if (e.key !== 'Tab') return;
+          if (e.shiftKey && document.activeElement === inp) {
+            e.preventDefault();
+            btn.focus();
+          } else if (!e.shiftKey && document.activeElement === btn) {
+            e.preventDefault();
+            inp.focus();
+          }
+        });
         setTimeout(function () {
           try {
             inp.focus();
@@ -294,6 +319,19 @@
     </script>
 
     <div id="root"></div>
+    <script>
+      /* While locked, hide the app shell from assistive tech and take it out of the
+         tab order, so a screen-reader user cannot wander into the app behind the gate. */
+      (function () {
+        if (document.documentElement.classList.contains('locked')) {
+          var r = document.getElementById('root');
+          if (r) {
+            r.setAttribute('inert', '');
+            r.setAttribute('aria-hidden', 'true');
+          }
+        }
+      })();
+    </script>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
