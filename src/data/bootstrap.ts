@@ -12,13 +12,51 @@ import { countStore, CARDS } from './db';
 
 const STAMP_KEY = 'foundation_content_stamp_v1';
 
+/** FNV-1a → base36. Cheap, deterministic, dependency-free. */
+function fnv1a(s: string): string {
+  let h = 0x811c9dc5;
+  for (let i = 0; i < s.length; i++) {
+    h ^= s.charCodeAt(i);
+    h = Math.imul(h, 0x01000193);
+  }
+  return (h >>> 0).toString(36);
+}
+
+/**
+ * A short, deterministic revision id over a chapter's *meaningful authored fields*
+ * — not just its counts. A fixed rationale, a renamed section, a re-ordered option,
+ * a changed tag or a swapped figure all change it, so a redeploy that preserves
+ * counts still triggers a re-import. Computed once at bootstrap (the content is
+ * already in memory), never per render. Exported so a future "what changed" diff
+ * can reuse it.
+ */
+export function chapterRevision(c: {
+  title: string;
+  subject: string;
+  summary?: string;
+  sections: Array<{ id: string; title: string; digest: string; highYield?: string[]; pitfalls?: string[] }>;
+  cards: Array<{ type: string; front?: string; back?: string; cloze?: string; deck?: string }>;
+  mcqs: Array<{ stem: string; difficulty: number; options: Array<{ text: string; correct: boolean; why?: string }> }>;
+}): string {
+  const parts: string[] = [c.title, c.subject, c.summary || ''];
+  for (const s of c.sections)
+    parts.push(s.id, s.title, s.digest, (s.highYield || []).join('|'), (s.pitfalls || []).join('|'));
+  for (const card of c.cards) parts.push(card.type, card.front || '', card.back || '', card.cloze || '', card.deck || '');
+  for (const q of c.mcqs) {
+    parts.push(q.stem, String(q.difficulty));
+    for (const o of q.options) parts.push(o.text, String(o.correct), o.why || '');
+  }
+  return fnv1a(parts.join(''));
+}
+
 /**
  * Changes whenever the shipped set changes — a new pack, a dropped pack, or a
- * pack whose card count moved — which is what triggers a re-import.
+ * pack whose *content* changed (via chapterRevision), which is what triggers a
+ * re-import.
  */
 export function shippedStamp(): string {
   return listChapters()
-    .map((c) => `${c.id}:${c.cards.length}:${c.mcqs.length}`)
+    .map((c) => `${c.id}:${chapterRevision(c)}`)
     .sort()
     .join('|');
 }
