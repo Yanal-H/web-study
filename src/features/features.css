@@ -4225,3 +4225,11 @@
 }
 .answer-note > :first-child { margin-top: 0; }
 .answer-note > :last-child { margin-bottom: 0; }
+
+/* inline "enable AI in Settings" hint shown under the buttons when no key is set */
+.ai-err--inline {
+  flex-basis: 100%;
+  background: none;
+  padding: 6px 2px 0;
+  color: var(--text-dim);
+}

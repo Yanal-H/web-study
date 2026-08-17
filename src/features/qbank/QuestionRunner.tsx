@@ -20,7 +20,7 @@ import { getChapter } from '../../content/loader';
 import { renderInline } from '../../lib/lexicon';
 import { globalIndex } from '../../lib/useLexicon';
 import { sfx } from '../../lib/sound';
-import { hintPrompt, explainPrompt, aiReady } from '../../lib/ai';
+import { hintPrompt, explainPrompt } from '../../lib/ai';
 import AiTutor from '../ai/AiTutor';
 
 export default function QuestionRunner({ onExit }: { onExit: () => void }) {
@@ -43,7 +43,9 @@ export default function QuestionRunner({ onExit }: { onExit: () => void }) {
   /** answer the moment an option is clicked — no Submit step (single-answer only) */
   const instant = mcqCfg.instantAnswer !== false;
   /** 'correct' advances only when you got it right, so a miss always gets read */
-  const autoMode = (mcqCfg.autoAdvance as 'correct' | 'always' | 'off') ?? 'correct';
+  // Default OFF: answering never auto-jumps to the next question. You stay on the
+  // question to read the explanation and move on with Next (or →) when ready.
+  const autoMode = (mcqCfg.autoAdvance as 'correct' | 'always' | 'off') ?? 'off';
   const autoMs = (mcqCfg.autoAdvanceMs as number) ?? 1500;
 
   const q = session ? byId.get(session.ids[session.index]!) : undefined;
@@ -345,10 +347,10 @@ export default function QuestionRunner({ onExit }: { onExit: () => void }) {
         </Card>
 
         {/* The box below the answer card: the brief authored rationale (once answered)
-            and the AI buttons — hint before, explanation + chat after. */}
-        {(submitted || aiReady()) && (
-          <div className="answer-box qb-answerbox">
-            {submitted && (
+            and the AI buttons — hint before, explanation + chat after. Always shown so
+            the AI buttons are discoverable. */}
+        <div className="answer-box qb-answerbox">
+          {submitted && (
               <Explanation
                 q={q}
                 correct={!!session.answers[q.id]?.correct}
@@ -367,7 +369,6 @@ export default function QuestionRunner({ onExit }: { onExit: () => void }) {
               contextForChat={mcqContext(q, submitted)}
             />
           </div>
-        )}
         </div>
 
         <Navigator session={session} onJump={jump} />

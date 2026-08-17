@@ -408,7 +408,7 @@ export default function SettingsView() {
         </Row>
         <Row label="Auto-advance" desc="Move to the next question on its own after you answer.">
           <Segmented
-            value={(mcq.autoAdvance as string) ?? 'correct'}
+            value={(mcq.autoAdvance as string) ?? 'off'}
             onChange={(v) => update((s) => (s.settings.mcq.autoAdvance = v))}
             options={[
               { value: 'correct', label: 'When right' },

@@ -40,12 +40,16 @@ export default function AiTutor({ cacheKey, explainPrompt, hintPrompt, canHint =
 
   const shown = useMemo(() => turns.filter((t) => !t.hidden), [turns]);
 
-  if (!aiReady()) return null;
+  const NOT_READY = 'Turn on the AI tutor and add your API key in Settings to use this.';
 
   const apiMessages = (extra: Turn[] = []): AiMessage[] =>
     [...turns, ...extra].map((t) => ({ role: t.role, content: t.content }));
 
   async function seed(kind: 'hint' | 'explain') {
+    if (!aiReady()) {
+      setErr(NOT_READY);
+      return;
+    }
     const prompt = kind === 'hint' ? hintPrompt! : explainPrompt;
     if (kind === 'explain') {
       const cached = aiCacheGet(cacheKey);
@@ -74,6 +78,10 @@ export default function AiTutor({ cacheKey, explainPrompt, hintPrompt, canHint =
   }
 
   function openChat() {
+    if (!aiReady()) {
+      setErr(NOT_READY);
+      return;
+    }
     if (turns.length === 0) {
       setTurns([
         { role: 'user', content: `${contextForChat}\n\nI want to discuss this.`, hidden: true },
@@ -114,6 +122,7 @@ export default function AiTutor({ cacheKey, explainPrompt, hintPrompt, canHint =
           <button className="ai-btn" onClick={openChat}>
             Ask AI
           </button>
+          {err && <div className="ai-err ai-err--inline">{err}</div>}
         </div>
       ) : (
         <div className="ai-thread">
