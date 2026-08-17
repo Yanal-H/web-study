@@ -10,6 +10,7 @@ import { useToast } from '../../design/Toast';
 import { IconDownload, IconUpload, IconSun, IconMoon, IconSparkle } from '../../design/icons';
 import { sfx } from '../../lib/sound';
 import { getAiConfig, setAiConfig, AI_MODELS } from '../../lib/ai';
+import { isAdmin, setAdmin, unlockAdmin } from '../../lib/admin';
 import { resetEngineProgress } from '../../data/db';
 import { invalidateDeckTree } from '../../data/session';
 import { usage, requestPersistence, formatBytes } from '../../lib/blobs';
@@ -70,6 +71,62 @@ function StorageMeter() {
   );
 }
 
+/** Enter the admin key (server-verified) to unlock the administrator surface on this device. */
+function AdminPanel() {
+  const toast = useToast();
+  useStore(); // re-render when the admin flag changes
+  const [key, setKey] = useState('');
+  const [busy, setBusy] = useState(false);
+
+  if (isAdmin()) {
+    return (
+      <Row label="Administrator" desc="This device has admin access.">
+        <Button
+          onClick={() => {
+            setAdmin(false);
+            toast('Signed out of admin');
+          }}
+        >
+          Sign out of admin
+        </Button>
+      </Row>
+    );
+  }
+
+  async function unlock() {
+    setBusy(true);
+    const res = await unlockAdmin(key);
+    setBusy(false);
+    if (res.ok) {
+      setKey('');
+      toast('Administrator unlocked', 'success');
+    } else {
+      toast(res.message || 'Could not unlock admin', 'error');
+    }
+  }
+
+  return (
+    <Row label="Admin key" desc="Only the administrator device should enter this.">
+      <div className="row" style={{ gap: 8 }}>
+        <Input
+          type="password"
+          placeholder="Admin key"
+          autoComplete="off"
+          value={key}
+          style={{ width: 200 }}
+          onChange={(e) => setKey(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' && key.trim()) void unlock();
+          }}
+        />
+        <Button variant="primary" disabled={busy || !key.trim()} onClick={() => void unlock()}>
+          {busy ? 'Checking…' : 'Unlock'}
+        </Button>
+      </div>
+    </Row>
+  );
+}
+
 function Switch({ checked, onChange, label }: { checked: boolean; onChange: (v: boolean) => void; label: string }) {
   return (
     <button className="switch" role="switch" aria-checked={checked} aria-label={label} onClick={() => onChange(!checked)} />
@@ -83,6 +140,7 @@ const SECTIONS = [
   { id: 'ai', label: 'AI tutor' },
   { id: 'library', label: 'Library' },
   { id: 'data', label: 'Data' },
+  { id: 'admin', label: 'Admin' },
 ];
 
 /** The active filter, so every Row can hide itself without threading a prop. */
@@ -529,6 +587,17 @@ export default function SettingsView() {
             </Button>
           </div>
         )}
+      </Card>
+
+      <Card className="settings-section" id="set-admin">
+        <h2>Administrator</h2>
+        <p className="section-lead">
+          One device — yours — manages shared settings and content. Admin is verified against the server key
+          (<code>ADMIN_KEY</code>), so it cannot be faked by editing this device. Everyone else just studies:
+          their own progress and personal imports stay on their device, and they cannot change the shared
+          material.
+        </p>
+        <AdminPanel />
       </Card>
 
       <div className="row" style={{ justifyContent: 'space-between', color: 'var(--text-faint)', fontSize: 12 }}>
