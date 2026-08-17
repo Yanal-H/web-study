@@ -1,10 +1,13 @@
 import { useEffect, useMemo, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { useParams, useNavigate } from 'react-router-dom';
 import { getChapter, chapterCards, chapterMcqs, listChapters } from '../../content/loader';
 import { useUserContentVersion } from '../../content/userContent';
 import { useStore } from '../../state/useStore';
 import { chapterProgress } from './progress';
 import { update } from '../../state/store';
+import { makeUserCard } from '../flashcards/makeCard';
+import { useToast } from '../../design/Toast';
 import { Card, Button, Badge, Tabs, ProgressRing } from '../../design/primitives';
 import { IconChevron, IconFlashcards, IconQbank, IconCheck } from '../../design/icons';
 import { renderMarkdown } from '../../lib/markdown';
@@ -40,6 +43,61 @@ function resolveWikilink(target: string): string | null {
     }
   }
   return null;
+}
+
+/**
+ * When the student selects text in the reader, a small button floats above the
+ * selection: one click turns it into a cloze card — the selected span becomes the
+ * blank inside its own sentence — filed under this chapter's deck. Anki muscle
+ * memory, without leaving the page.
+ */
+function ClozePopover({ deckRoot }: { deckRoot: string }) {
+  const toast = useToast();
+  const [pop, setPop] = useState<{ text: string; context: string; top: number; left: number } | null>(null);
+
+  useEffect(() => {
+    function read() {
+      const s = window.getSelection();
+      if (!s || s.isCollapsed) return setPop(null);
+      const text = s.toString().replace(/\s+/g, ' ').trim();
+      if (text.length < 2 || text.length > 160) return setPop(null);
+      const anchor = s.anchorNode;
+      const host = anchor && (anchor.nodeType === 3 ? anchor.parentElement : (anchor as HTMLElement));
+      if (!host || !host.closest('.reader-body')) return setPop(null);
+      const rect = s.getRangeAt(0).getBoundingClientRect();
+      const block = host.closest('p,li,td,th,h1,h2,h3,h4,blockquote,.md') as HTMLElement | null;
+      const context = (block?.innerText || text).replace(/\s+/g, ' ').trim().slice(0, 400);
+      setPop({ text, context, top: rect.top - 10, left: rect.left + rect.width / 2 });
+    }
+    document.addEventListener('mouseup', read);
+    document.addEventListener('keyup', read);
+    return () => {
+      document.removeEventListener('mouseup', read);
+      document.removeEventListener('keyup', read);
+    };
+  }, []);
+
+  if (!pop) return null;
+
+  function make() {
+    if (!pop) return;
+    const cloze = pop.context.includes(pop.text)
+      ? pop.context.replace(pop.text, `{{c1::${pop.text}}}`)
+      : `{{c1::${pop.text}}}`;
+    makeUserCard({ type: 'cloze', cloze, deck: deckRoot, tags: ['from-reader'] });
+    toast('Cloze card created', 'success');
+    window.getSelection()?.removeAllRanges();
+    setPop(null);
+  }
+
+  return createPortal(
+    <div className="cloze-pop no-print" style={{ top: pop.top, left: pop.left }}>
+      <button className="cloze-pop-btn" onMouseDown={(e) => e.preventDefault()} onClick={make}>
+        <IconFlashcards size={14} /> Make cloze card
+      </button>
+    </div>,
+    document.body
+  );
 }
 
 export default function ReaderView() {
@@ -246,8 +304,11 @@ function ReadTab({
     }
   }
 
+  const deckRoot = ch.deck || `${ch.subject}::${ch.title}`;
+
   return (
     <div className="reader-layout">
+      <ClozePopover deckRoot={deckRoot} />
       <nav className="reader-toc" aria-label="Chapter contents">
         <div className="card-eyebrow" style={{ marginBottom: 8 }}>
           Contents

@@ -4000,3 +4000,29 @@
     animation: none;
   }
 }
+
+/* ---- Reader selection → cloze card popover ---- */
+.cloze-pop {
+  position: fixed;
+  transform: translate(-50%, -100%);
+  z-index: 80;
+  animation: routeIn 0.14s ease-out both;
+}
+.cloze-pop-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--accent);
+  background: var(--accent);
+  color: var(--accent-contrast);
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 10px 24px -10px var(--accent-glow);
+  white-space: nowrap;
+}
+.cloze-pop-btn:hover {
+  filter: brightness(1.06);
+}
