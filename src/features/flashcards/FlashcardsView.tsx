@@ -1,4 +1,5 @@
 import { lazy, Suspense, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import { useStore, useStoreVersion } from '../../state/useStore';
 import { Card, Button, Stat, Segmented } from '../../design/primitives';
 import { Dialog } from '../../design/Dialog';
@@ -33,10 +34,12 @@ export default function FlashcardsView() {
   const state = useStore();
   const uv = useUserContentVersion();
   const toast = useToast();
+  // a deck path handed over from the reader ("Review these cards") preselects it
+  const presetDeck = ((useLocation().state ?? null) as { deck?: string } | null)?.deck ?? '';
   const [mode, setMode] = useState<Mode>('home');
   const [queue, setQueue] = useState<ReviewItem[]>([]);
   const [scope, setScope] = useState<'all' | 'due'>('due');
-  const [deck, setDeck] = useState('');
+  const [deck, setDeck] = useState(presetDeck);
   const [creating, setCreating] = useState(false);
   const [importing, setImporting] = useState(false);
 

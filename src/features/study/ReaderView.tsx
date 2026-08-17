@@ -152,7 +152,7 @@ export default function ReaderView() {
       </div>
 
       {tab === 'read' && <ReadTab chapter={chapter} onNavigate={navigate} />}
-      {tab === 'cards' && <CardsTab cards={cards} chapterId={chapter.id} onNavigate={navigate} />}
+      {tab === 'cards' && <CardsTab cards={cards} onNavigate={navigate} />}
       {tab === 'questions' && <QuestionsTab mcqs={mcqs} chapterId={chapter.id} onNavigate={navigate} />}
     </div>
   );
@@ -410,17 +410,20 @@ function FigureBlock({ figure }: { figure: Figure }) {
 
 function CardsTab({
   cards,
-  chapterId,
   onNavigate,
 }: {
   cards: ReturnType<typeof chapterCards>;
-  chapterId: string;
-  onNavigate: (to: string) => void;
+  onNavigate: (to: string, opts?: { state?: unknown }) => void;
 }) {
   const decks = useMemo(() => {
     const m = new Map<string, number>();
     for (const c of cards) m.set(c.deck || '', (m.get(c.deck || '') || 0) + 1);
     return [...m.entries()].sort((a, b) => a[0].localeCompare(b[0]));
+  }, [cards]);
+  // the chapter's deck node is the first two segments (Subject::Chapter) of any card path
+  const deckPrefix = useMemo(() => {
+    const withDeck = cards.find((c) => c.deck);
+    return withDeck?.deck ? withDeck.deck.split('::').slice(0, 2).join('::') : '';
   }, [cards]);
   return (
     <>
@@ -431,7 +434,7 @@ function CardsTab({
             Scheduled with the rest of your collection. Review them from here.
           </div>
         </div>
-        <Button variant="primary" onClick={() => onNavigate(`/flashcards?chapter=${encodeURIComponent(chapterId)}`)}>
+        <Button variant="primary" onClick={() => onNavigate('/flashcards', { state: { deck: deckPrefix } })}>
           <IconFlashcards size={16} /> Review these cards
         </Button>
       </div>
