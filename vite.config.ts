@@ -21,6 +21,14 @@ export default defineConfig({
         entryFileNames: 'assets/[name]-[hash].js',
         chunkFileNames: 'assets/[name]-[hash].js',
         assetFileNames: 'assets/[name]-[hash][extname]',
+        // Keep the shipped chapter data (~1.5 MB of JSON) and the vendor libraries in
+        // their own immutable chunks, so app-code changes never rebust their cache and
+        // the shell script parses without the content payload inlined.
+        manualChunks(id) {
+          if (id.includes('/content/') && id.endsWith('.json')) return 'content-data';
+          if (id.includes('node_modules')) return 'vendor';
+          return undefined;
+        },
       },
     },
   },
