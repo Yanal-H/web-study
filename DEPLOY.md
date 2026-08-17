@@ -138,6 +138,38 @@ passphrase box, the redeploy has not finished or has not picked up the branch.
 
 ---
 
+## Step 4b — Make the email contain a CODE, not a link
+
+Supabase's default sign-in email sends a **link**, and that link points at
+`http://localhost:3000` — an address that only works on a developer's own
+machine. Students clicking it get "This site can't be reached".
+
+Foundation signs people in with a 6-digit code, so the template has to carry the
+code instead. This is not optional; without it your students receive an email
+with nothing usable in it.
+
+1. Supabase → **Authentication** → **Emails**
+2. Open the **Magic Link** template
+3. Replace its contents with:
+
+   ```html
+   <h2>Your Foundation sign-in code</h2>
+   <p>Enter this code to sign in:</p>
+   <p style="font-size:32px;font-weight:bold;letter-spacing:6px">{{ .Token }}</p>
+   <p>The code expires in 60 minutes.</p>
+   <p>If you didn't ask for this, you can ignore this email.</p>
+   ```
+
+   `{{ .Token }}` is the part that matters — it is what inserts the six digits.
+
+4. Save.
+5. Still under **Authentication**, open **URL Configuration** and set **Site URL**
+   to your real site address, so no email ever points at localhost again.
+
+**Worked when:** request a code and the email shows six large digits.
+
+---
+
 ## Step 5 — Upload your chapters
 
 Your chapters currently live as JSON files in `content/`. They are no longer
@@ -199,6 +231,9 @@ edit in their own browser.
 **"Sign-in is not set up on this deployment yet"**
 The environment variables are missing or you have not redeployed since adding
 them. Redo Step 4, including the redeploy.
+
+**The email arrives but has a link instead of a code / the link goes to localhost**
+The Magic Link template still has its default contents. Do Step 4b.
 
 **The code email never arrives**
 Check spam. Supabase's built-in email sender is rate-limited (a few per hour)
