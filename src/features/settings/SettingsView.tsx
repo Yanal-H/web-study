@@ -248,7 +248,7 @@ function PublishPanel() {
     return (
       <Row
         label="Shared chapters"
-        desc="Not set up on this server yet. Foundation works fully without it — students still get every chapter built into the app. To publish chapters without a redeploy, add a storage backend and ADMIN_KEY in your hosting settings (see api/README.md)."
+        desc="Not set up on this deployment yet. Add the Supabase keys in your hosting settings and run supabase/setup.sql — see DEPLOY.md."
       >
         <Button onClick={() => void refresh()}>Check again</Button>
       </Row>
@@ -829,10 +829,10 @@ export default function SettingsView() {
       <Card className="settings-section" id="set-admin">
         <h2>Administrator</h2>
         <p className="section-lead">
-          One device — yours — manages shared settings and content. Admin is verified against the server key
-          (<code>ADMIN_KEY</code>), so it cannot be faked by editing this device. Everyone else just studies:
-          their own progress and personal imports stay on their device, and they cannot change the shared
-          material.
+          Your account — not this device — decides who may publish. It is checked in the database against
+          the signed-in identity, so it is the same wherever you sign in, and editing anything in this
+          browser changes nothing. Everyone else just studies: their own progress and personal imports stay
+          on their device, and they cannot change the shared material.
         </p>
         <AdminPanel />
       </Card>

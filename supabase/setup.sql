@@ -97,10 +97,19 @@ create policy chapters_read on public.chapters
 -- Write: administrators only. A student who flips an "admin" flag in their own
 -- browser still fails here, because this is evaluated in the database against
 -- their real signed-in identity.
+-- Reads the email from the caller's sign-in token, NOT from auth.users.
+--
+-- The obvious version selects from auth.users — and silently fails. A signed-in
+-- user has no read permission on that table, so the subquery yields null, the
+-- comparison is false, and a genuine administrator is quietly told they are a
+-- student. No error, just the wrong answer.
+--
+-- The token already carries the verified email, so use that. It needs no table
+-- permissions, which also means this works from a row-level policy.
 create or replace function public.is_admin()
 returns boolean language sql stable as $$
   select coalesce(
-    lower((select email from auth.users where id = auth.uid())) = any(
+    lower(auth.jwt() ->> 'email') = any (
       select lower(unnest(public.admin_emails()))
     ),
     false
