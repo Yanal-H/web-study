@@ -138,35 +138,102 @@ passphrase box, the redeploy has not finished or has not picked up the branch.
 
 ---
 
-## Step 4b — Make the email contain a CODE, not a link
+## Step 4b — Connect a real email sender, and switch to codes
 
-Supabase's default sign-in email sends a **link**, and that link points at
-`http://localhost:3000` — an address that only works on a developer's own
-machine. Students clicking it get "This site can't be reached".
+**Do not skip this before inviting students.** Supabase's built-in email sender
+is a demo: it allows only a couple of messages per hour, and it will not let you
+edit the template. A cohort of 1000 hitting it means most students request a
+sign-in and silently receive nothing.
 
-Foundation signs people in with a 6-digit code, so the template has to carry the
-code instead. This is not optional; without it your students receive an email
-with nothing usable in it.
+Its stock template also sends a **link**, not a code, and points that link at
+`http://localhost:3000` — an address that only works on a developer's machine.
 
-1. Supabase → **Authentication** → **Emails**
-2. Open the **Magic Link** template
-3. Replace its contents with:
+Connecting your own sender fixes all three problems at once. **Brevo** is used
+here because its free tier does not require you to own a website domain.
 
-   ```html
-   <h2>Your Foundation sign-in code</h2>
-   <p>Enter this code to sign in:</p>
-   <p style="font-size:32px;font-weight:bold;letter-spacing:6px">{{ .Token }}</p>
-   <p>The code expires in 60 minutes.</p>
-   <p>If you didn't ask for this, you can ignore this email.</p>
-   ```
+### 1. Create the Brevo account
 
-   `{{ .Token }}` is the part that matters — it is what inserts the six digits.
+1. **brevo.com** → Sign up free, confirm the verification email.
 
-4. Save.
-5. Still under **Authentication**, open **URL Configuration** and set **Site URL**
-   to your real site address, so no email ever points at localhost again.
+### 2. Verify who the email comes from
 
-**Worked when:** request a code and the email shows six large digits.
+1. Your name (top right) → **Senders, Domains & Dedicated IPs** → **Senders** tab
+2. **Add a sender** — From name `Foundation`, From email your own address
+3. Save, then enter the code Brevo emails you. A green tick means done.
+
+### 3. Take the SMTP details
+
+1. Your name (top right) → **SMTP & API** → **SMTP** tab
+2. Note the **Server** (`smtp-relay.brevo.com`), **Port** (`587`) and **Login**
+   — the Login is NOT your own email address, copy it exactly
+3. **Generate a new SMTP key** and copy it straight away; it is shown once
+
+### 4. Give them to Supabase
+
+**Project Settings → Authentication → SMTP Settings**, enable **Custom SMTP**:
+
+| Field | Value |
+|---|---|
+| Sender email | the address you verified in step 2 |
+| Sender name | `Foundation` |
+| Host | `smtp-relay.brevo.com` |
+| Port | `587` |
+| Username | the Brevo **Login** |
+| Password | the **SMTP key** |
+
+Save.
+
+### 5. Switch the email to a code
+
+The "Set up custom SMTP to edit templates" notice is now gone.
+**Authentication → Emails → Magic Link**:
+
+- Subject: `Your Foundation sign-in code`
+- Body:
+
+  ```html
+  <h2>Your Foundation sign-in code</h2>
+  <p>Enter this code to sign in:</p>
+  <p style="font-size:32px;font-weight:bold;letter-spacing:6px">{{ .Token }}</p>
+  <p>The code expires in 60 minutes.</p>
+  <p>If you didn't ask for this, you can ignore this email.</p>
+  ```
+
+`{{ .Token }}` is the part that matters — it inserts the six digits.
+
+### 6. Raise the rate limit
+
+**Authentication → Rate Limits** — the email limit is low because of the demo
+sender. Raise it (100/hour is sensible for a cohort).
+
+### 7. Point emails at your permanent address
+
+**Authentication → URL Configuration → Site URL** — set it to the permanent
+Vercel address from Step 4c, never a per-deployment one.
+
+**Worked when:** request a code and the email arrives with six large digits.
+
+### How much email will you actually send?
+
+One message per *new* sign-in, not per visit: sessions persist and refresh, so a
+student signs in once and stays signed in. Onboarding 1000 students over a week
+is roughly 150 emails a day, comfortably inside Brevo's free 300/day.
+
+---
+
+## Step 4c — Use the permanent address, not a deployment one
+
+Every build gets a throwaway URL with a random code in it
+(`web-study-4d8pqz0xw-yanal2.vercel.app`). Those are frozen snapshots — they
+never update, so testing against one makes it look as though your changes never
+deploy.
+
+**Settings → Domains** lists your addresses. The permanent one has **no random
+code** in it. That is the one to give students, and the one to put in Supabase's
+Site URL.
+
+To claim a tidier name, use **Add Domain** on that page and try something like
+`foundation-yanal.vercel.app`. Free, and yours permanently.
 
 ---
 
@@ -235,12 +302,12 @@ them. Redo Step 4, including the redeploy.
 **The email arrives but has a link instead of a code / the link goes to localhost**
 The Magic Link template still has its default contents. Do Step 4b.
 
-**The code email never arrives**
-Check spam. Supabase's built-in email sender is rate-limited (a few per hour)
-and is meant for testing — fine while you try it out, but before you invite 1000
-students go to **Authentication → Emails → SMTP Settings** and connect a free
-email sender (Resend and Brevo both have free tiers). Otherwise students will
-hit the limit and quietly get nothing.
+**"Too many attempts just now" / the email never arrives**
+You are on Supabase's built-in sender, which allows only a couple of messages an
+hour. Do Step 4b. Also check spam.
+
+**My changes never seem to appear on the site**
+You are almost certainly on a per-deployment URL. See Step 4c.
 
 **You are refused from your own site with a personal email**
 Administrators may sign in from any domain, but only if the address is in
