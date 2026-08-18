@@ -33,6 +33,17 @@ export default function SignIn() {
     (step === 'email' ? emailRef : codeRef).current?.focus();
   }, [step]);
 
+  // A sign-in link that failed (expired, already used) sends the reason back in
+  // the URL; main.tsx stashes it before clearing the fragment. Show it once —
+  // otherwise the student lands back here with no idea why, which reads as the
+  // app looping rather than the link being stale.
+  useEffect(() => {
+    const stashed = sessionStorage.getItem('foundation_auth_error');
+    if (!stashed) return;
+    sessionStorage.removeItem('foundation_auth_error');
+    setErr(stashed);
+  }, []);
+
   // Resend countdown — a visible timer beats a button that silently does nothing.
   useEffect(() => {
     if (cooldown <= 0) return;

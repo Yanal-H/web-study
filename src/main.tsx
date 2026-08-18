@@ -55,16 +55,69 @@ void import('./data/db')
     // No IndexedDB, or it is locked. Nothing to clean up that we can reach.
   });
 
+/**
+ * Complete a sign-in that arrived as a link in an email.
+ *
+ * Supabase's implicit flow returns the session in the URL fragment:
+ *   https://site/#access_token=…&refresh_token=…&type=magiclink
+ *
+ * That is the same fragment HashRouter uses for routing, so the two cannot both
+ * be left to their own devices — hence detectSessionInUrl is off and this reads
+ * the tokens itself, hands them to Supabase, and clears the fragment before the
+ * router ever sees it.
+ *
+ * Tokens travel IN the link, so this works in whatever browser opens the email —
+ * which is the point. Students open mail in Gmail, which launches a different
+ * browser from the one they typed their address into; a flow that needs a secret
+ * left behind in the first browser bounces them back to sign-in forever.
+ *
+ * Errors come back the same way (#error=…&error_description=…) and are surfaced
+ * rather than swallowed, so an expired link says so instead of looking like a loop.
+ */
+async function consumeAuthFromUrl(): Promise<void> {
+  const raw = window.location.hash.replace(/^#\/?/, '');
+  if (!raw || (!raw.includes('access_token=') && !raw.includes('error='))) return;
+
+  const params = new URLSearchParams(raw);
+  const clearHash = () => {
+    // Back to the app's own route, without leaving tokens in history.
+    history.replaceState(null, '', window.location.pathname + window.location.search + '#/');
+  };
+
+  const errorDescription = params.get('error_description');
+  if (errorDescription) {
+    sessionStorage.setItem('foundation_auth_error', errorDescription.replace(/\+/g, ' '));
+    clearHash();
+    return;
+  }
+
+  const access_token = params.get('access_token');
+  const refresh_token = params.get('refresh_token');
+  if (!access_token || !refresh_token) return;
+
+  try {
+    const { supabase } = await import('./lib/supabase');
+    await supabase?.auth.setSession({ access_token, refresh_token });
+  } catch {
+    sessionStorage.setItem('foundation_auth_error', 'That sign-in link could not be used. Ask for a new one.');
+  }
+  clearHash();
+}
+
 const container = document.getElementById('root');
 if (!container) throw new Error('Root container #root not found');
 
-createRoot(container).render(
-  <React.StrictMode>
-    <HashRouter>
-      <App />
-    </HashRouter>
-  </React.StrictMode>
-);
+// Awaited before the first render so a student arriving from an email link lands
+// straight in the app, rather than seeing the sign-in screen flash first.
+void consumeAuthFromUrl().finally(() => {
+  createRoot(container).render(
+    <React.StrictMode>
+      <HashRouter>
+        <App />
+      </HashRouter>
+    </React.StrictMode>
+  );
+});
 
 // Register the offline service worker (production builds only; dev has no /sw.js).
 if ('serviceWorker' in navigator && import.meta.env.PROD) {

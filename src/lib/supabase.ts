@@ -40,19 +40,23 @@ export const supabase: SupabaseClient | null =
           persistSession: true,
           autoRefreshToken: true,
           storageKey: 'foundation_auth',
-          // Accept BOTH ways in: the 6-digit code typed into the app, and a link
-          // clicked in the email.
+          // The emailed link is consumed by hand in main.tsx, before React and
+          // HashRouter get near the URL — so this stays off.
+          detectSessionInUrl: false,
+          // Implicit, NOT pkce, and this is the whole point.
           //
-          // Codes remain the design — links break in the in-app browsers students
-          // actually open mail from. But Supabase will not let you edit the email
-          // template until you have configured your own SMTP server, and its stock
-          // template sends a link and no code. Refusing to honour that link would
-          // mean nobody can sign in at all until SMTP is set up.
-          detectSessionInUrl: true,
-          // PKCE returns the credential in the QUERY STRING (?code=…). The implicit
-          // flow returns it in the URL fragment, which this app already uses for
-          // routing (HashRouter) — the two would fight over the same hash.
-          flowType: 'pkce',
+          // PKCE keeps a secret in the browser that asked for the link and needs
+          // it back to complete sign-in. Students open email in Gmail, which
+          // launches a different browser from the one they typed their address
+          // into — so the secret is missing, the exchange fails, and they are
+          // bounced back to the sign-in screen with no explanation. An endless
+          // loop that looks like the app is broken.
+          //
+          // Implicit puts the tokens in the link itself, so it works in whatever
+          // browser opens it. Its usual drawback — tokens landing in the URL
+          // fragment, which HashRouter also owns — is handled by reading and
+          // clearing them ourselves before the router ever runs.
+          flowType: 'implicit',
         },
       })
     : null;
