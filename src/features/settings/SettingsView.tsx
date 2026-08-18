@@ -202,6 +202,8 @@ function PublishPanel() {
   const [configured, setConfigured] = useState<boolean | null>(null);
   const [busy, setBusy] = useState(false);
   const [issues, setIssues] = useState<string[] | null>(null);
+  const [paste, setPaste] = useState('');
+  const [pasteOpen, setPasteOpen] = useState(false);
   const fileRef = useRef<HTMLInputElement>(null);
 
   const refresh = useCallback(async () => {
@@ -234,6 +236,32 @@ function PublishPanel() {
     await refresh();
     if (ok) toast(`Published ${ok} chapter${ok === 1 ? '' : 's'}`, 'success');
     if (failures.length) toast(failures[0]!, 'error');
+  }
+
+  /**
+   * Publish from pasted text rather than a file.
+   *
+   * On a tablet an authored chapter usually arrives as text in a chat, and
+   * turning that into a .json file on disk is genuinely awkward — enough friction
+   * to stop content getting published at all. Pasting removes the step. The pack
+   * goes through exactly the same validation either way.
+   */
+  async function publishPasted() {
+    const text = paste.trim();
+    if (!text) return;
+    setBusy(true);
+    setIssues(null);
+    const res = await publishPack(text);
+    setBusy(false);
+    if (res.ok) {
+      setPaste('');
+      setPasteOpen(false);
+      await refresh();
+      toast(res.message, 'success');
+    } else {
+      if (res.issues?.length) setIssues(res.issues.slice(0, 12));
+      toast(res.message, 'error');
+    }
   }
 
   async function remove(id: string) {
@@ -273,8 +301,33 @@ function PublishPanel() {
           <Button variant="primary" disabled={busy} onClick={() => fileRef.current?.click()}>
             {busy ? 'Publishing…' : 'Choose pack JSON'}
           </Button>
+          <Button disabled={busy} onClick={() => setPasteOpen((v) => !v)}>
+            {pasteOpen ? 'Cancel paste' : 'Paste instead'}
+          </Button>
         </div>
       </Row>
+
+      {pasteOpen && (
+        <div style={{ marginTop: 10 }}>
+          <label className="muted" style={{ fontSize: 12.5, display: 'block', marginBottom: 6 }}>
+            Paste one chapter&rsquo;s JSON. Useful on a tablet, where saving a file first is fiddly.
+          </label>
+          <textarea
+            className="input"
+            rows={8}
+            spellCheck={false}
+            placeholder={'{\n  "schema": "foundation.study-module/v1",\n  "id": "sur-ch2-…",\n  …\n}'}
+            value={paste}
+            onChange={(e) => setPaste(e.target.value)}
+            style={{ width: '100%', fontFamily: 'var(--font-mono, monospace)', fontSize: 12.5 }}
+          />
+          <div className="row" style={{ gap: 8, marginTop: 8, justifyContent: 'flex-end' }}>
+            <Button variant="primary" disabled={busy || !paste.trim()} onClick={() => void publishPasted()}>
+              {busy ? 'Publishing…' : 'Publish this chapter'}
+            </Button>
+          </div>
+        </div>
+      )}
 
       {issues && (
         <div className="ai-err" style={{ marginTop: 8 }}>
