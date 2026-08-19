@@ -1,5 +1,9 @@
-// Runtime (personal) content — imported in-browser, stored in a SEPARATE namespaced
-// localStorage key so it is never clobbered by a redeploy of shipped content.
+// Legacy device-only chapter storage.
+//
+// Kept solely so an older browser profile can retain its data without a breaking
+// migration. The content loader no longer reads this store and the student UI no
+// longer exposes an import action: all visible curriculum is administrator-published
+// and server-authorised. Do not add new features that depend on this module.
 import { useSyncExternalStore } from 'react';
 import { ChapterSchema, formatZodError, type Chapter } from './schema';
 

@@ -287,13 +287,13 @@ function PublishPanel() {
     <>
       <Row
         label="Publish a chapter"
-        desc="Send a chapter pack to everyone. It is validated before it is stored, so a broken file can never reach a student. Students receive it on their next load and keep it offline afterwards."
+        desc="Send a chapter pack to everyone. It is validated before it is stored, so a broken file can never reach a student. Students receive the shared curriculum on their next load; only administrators can change it."
       >
         <div className="row" style={{ gap: 8 }}>
           <input
             ref={fileRef}
             type="file"
-            accept="application/json,.json"
+            accept="application/json,text/json,.json"
             multiple
             hidden
             onChange={(e) => void onFile(e)}
@@ -328,6 +328,12 @@ function PublishPanel() {
           </div>
         </div>
       )}
+
+      <p className="muted" style={{ fontSize: 12.5, margin: '4px 0 10px' }}>
+        Windows: choose one or more <code>.json</code> files. Honor Magic Pro 3: open this page in
+        Chrome, choose the file from Files, or paste the AI output directly. Use your administrator
+        account; a student account cannot publish.
+      </p>
 
       {issues && (
         <div className="ai-err" style={{ marginTop: 8 }}>
@@ -884,8 +890,8 @@ export default function SettingsView() {
         <p className="section-lead">
           Your account — not this device — decides who may publish. It is checked in the database against
           the signed-in identity, so it is the same wherever you sign in, and editing anything in this
-          browser changes nothing. Everyone else just studies: their own progress and personal imports stay
-          on their device, and they cannot change the shared material.
+          browser changes nothing. Everyone else just studies: their own progress and notes stay on their
+          device, and they cannot change the shared material.
         </p>
         <AdminPanel />
       </Card>

@@ -1,17 +1,21 @@
 import { useMemo } from 'react';
 import { allGlossary } from '../content/loader';
-import { useUserContentVersion, getUserVersion } from '../content/userContent';
+import { useStoreVersion } from '../state/useStore';
 import { buildIndex, type LexIndex } from './lexicon';
 import type { GlossaryEntry } from '../content/schema';
 
-let cache: { v: number; idx: LexIndex } | null = null;
+let cache: { v: string; idx: LexIndex } | null = null;
 
 /**
  * The app-wide index, for render helpers that sit outside a component.
  * Rebuilt only when imported content changes.
  */
 export function globalIndex(): LexIndex {
-  const v = getUserVersion();
+  // A content refresh replaces the in-memory pack list. The glossary signature
+  // prevents helpers outside React from holding an old vocabulary afterwards.
+  const v = allGlossary()
+    .map((entry) => `${entry.chapterId}:${entry.term}:${entry.def ?? ''}`)
+    .join('|');
   if (!cache || cache.v !== v) cache = { v, idx: buildIndex(allGlossary()) };
   return cache.idx;
 }
@@ -22,10 +26,10 @@ export function globalIndex(): LexIndex {
  * definitions the last word while reading it.
  */
 export function useLexicon(local: GlossaryEntry[] = []): LexIndex {
-  const uv = useUserContentVersion();
+  const storeVersion = useStoreVersion();
   return useMemo(
     () => buildIndex([...allGlossary(), ...local]),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [uv, local]
+    [storeVersion, local]
   );
 }

@@ -4,10 +4,11 @@ How a pack becomes the app. Read this once; after that you only need `PROMPT.md`
 
 ## The loop
 
-1. Copy `PROMPT.md` into any strong AI, fill in the three placeholders at the bottom.
+1. Copy `AI_CONTENT_PROMPT.md` into any strong AI, fill in the four placeholders at the bottom.
 2. Save the reply as `content/<subject>/ch<NN>-<slug>.json`.
-3. Either send me the file (it ships in the build, everyone gets it) or import it in the
-   app under **Study → Import chapter** (personal to that device, works offline).
+3. Sign in with your administrator account and publish it under **Settings → Admin**
+   (choose the JSON file or paste its contents). Students cannot import or alter
+   shared chapters.
 4. The build validates every file. A bad field fails the build with the exact path —
    `sections.2.digest: String must contain at least 1 character(s)` — so nothing broken
    ever reaches a student.

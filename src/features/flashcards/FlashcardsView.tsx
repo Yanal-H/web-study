@@ -6,8 +6,7 @@ import { Dialog } from '../../design/Dialog';
 import { useToast } from '../../design/Toast';
 import { IconFlashcards, IconUpload, IconDownload, IconPlus } from '../../design/icons';
 import ActivityCalendar from '../dashboard/ActivityCalendar';
-import { allCards } from '../../content/loader';
-import { useUserContentVersion } from '../../content/userContent';
+import { allCards, getChapter } from '../../content/loader';
 import {
   collectItems,
   buildQueue,
@@ -32,10 +31,18 @@ type Mode = 'home' | 'review' | 'browse' | 'occlusion';
 
 export default function FlashcardsView() {
   const state = useStore();
-  const uv = useUserContentVersion();
   const toast = useToast();
   // a deck path handed over from the reader ("Review these cards") preselects it
-  const presetDeck = ((useLocation().state ?? null) as { deck?: string } | null)?.deck ?? '';
+  const location = useLocation();
+  const handoff = (location.state ?? null) as { deck?: string } | null;
+  const queryChapter = new URLSearchParams(location.search).get('chapter');
+  const queryChapterDeck = queryChapter
+    ? (() => {
+        const chapter = getChapter(queryChapter);
+        return chapter?.deck || (chapter ? `${chapter.subject}::${chapter.title}` : '');
+      })()
+    : '';
+  const presetDeck = handoff?.deck || queryChapterDeck;
   const [mode, setMode] = useState<Mode>('home');
   const [queue, setQueue] = useState<ReviewItem[]>([]);
   const [scope, setScope] = useState<'all' | 'due'>('due');
@@ -50,10 +57,10 @@ export default function FlashcardsView() {
   // personal cards still live in the local store; content cards come from the engine
   const userItems = useMemo(
     () => collectItems().filter((i) => i.source === 'user'),
-    [uv, state.flashcards, state.schemaVersion, sv]
+    [state.flashcards, state.schemaVersion, sv]
   );
   const userStats = useMemo(() => queueStats(userItems), [userItems, state.study.cardSched]);
-  const contentCount = useMemo(() => allCards().length, [uv]);
+  const contentCount = useMemo(() => allCards().length, [sv]);
 
   const refreshDecks = useCallback(async () => {
     await whenContentReady();

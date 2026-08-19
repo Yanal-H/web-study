@@ -2,8 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { useParams, useNavigate } from 'react-router-dom';
 import { getChapter, chapterCards, chapterMcqs, listChapters } from '../../content/loader';
-import { useUserContentVersion } from '../../content/userContent';
-import { useStore } from '../../state/useStore';
+import { useStore, useStoreVersion } from '../../state/useStore';
 import { chapterProgress } from './progress';
 import { update } from '../../state/store';
 import { makeUserCard } from '../flashcards/makeCard';
@@ -104,11 +103,24 @@ function ClozePopover({ deckRoot }: { deckRoot: string }) {
 export default function ReaderView() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const uv = useUserContentVersion();
-  const chapter = useMemo(() => (id ? getChapter(decodeURIComponent(id)) : undefined), [id, uv]);
-  const [tab, setTab] = useState<Tab>('read');
+  const storeVersion = useStoreVersion();
+  const chapter = useMemo(() => (id ? getChapter(decodeURIComponent(id)) : undefined), [id, storeVersion]);
+  const [tab, setTab] = useState<Tab>(() => {
+    if (!id) return 'read';
+    const saved = sessionStorage.getItem(`foundation_reader_tab_${id}`);
+    return saved === 'cards' || saved === 'questions' ? saved : 'read';
+  });
   const [focus, setFocus] = useState(false);
   const [progress, setProgress] = useState(0);
+
+  useEffect(() => {
+    if (!id) return;
+    try {
+      sessionStorage.setItem(`foundation_reader_tab_${id}`, tab);
+    } catch {
+      /* storage is a convenience; the reader still works without it */
+    }
+  }, [id, tab]);
 
   // reading progress from window scroll, and remember where you left off per chapter
   useEffect(() => {
@@ -153,7 +165,7 @@ export default function ReaderView() {
     const all = listChapters().filter((c) => c.subject === chapter.subject);
     const i = all.findIndex((c) => c.id === chapter.id);
     return { prev: i > 0 ? all[i - 1] : undefined, next: i >= 0 && i < all.length - 1 ? all[i + 1] : undefined };
-  }, [chapter, uv]);
+  }, [chapter, storeVersion]);
 
   if (!chapter) {
     return (
@@ -193,7 +205,6 @@ export default function ReaderView() {
         <div>
           <div className="card-eyebrow">
             {chapter.subject}
-            {chapter.origin === 'personal' ? ' · Imported' : ''}
             {chapter.estMinutes ? ` · ${chapter.estMinutes} min read` : ''}
           </div>
           <h1>{chapter.title}</h1>
@@ -406,6 +417,23 @@ function ReadTab({
                   ))}
                 </ul>
               </div>
+            )}
+
+            {s.extraKnowledge.length > 0 && (
+              <aside className="knowledge-box" aria-label="Additional knowledge">
+                <div className="knowledge-title">Knowledge extension</div>
+                {s.extraKnowledge.map((note, i) => (
+                  <article
+                    className="knowledge-note"
+                    key={`${note.title}-${i}`}
+                    lang={note.language === 'zh' ? 'zh' : 'en'}
+                  >
+                    <strong>{note.title}</strong>
+                    <div className="md" dangerouslySetInnerHTML={{ __html: renderRich(note.body, lex) }} />
+                    {note.source && <div className="knowledge-source">Source: {note.source}</div>}
+                  </article>
+                ))}
+              </aside>
             )}
 
             {s.tables.map((t, i) => (

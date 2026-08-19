@@ -18,7 +18,7 @@ Everything is under `src/`. Shared building blocks first, then each tab.
 | Fonts (self-hosted) | `src/design/fonts.css`, `public/fonts/*` | Fraunces / Inter / JetBrains Mono / Great Vibes. |
 | App shell, routing, nav, ⌘K wiring, keyboard shortcuts | `src/app/App.tsx`, `src/app/routes.tsx` | The frame around every tab. |
 | State + migrations (localStorage) | `src/state/store.ts`, `src/state/constants.ts`, `src/state/types.ts`, `src/state/useStore.ts`, `src/state/theme.ts` | Persistence, the migration chain, the `useStore()` hook. |
-| Passphrase gate + pre-paint theme | `index.html` | The lock screen + flash-free theme. |
+| Sign-in pre-paint shell + theme | `index.html` | The loading shell + flash-free theme. |
 | Watermark seal | `src/features/gate/Watermark.tsx`, `.../watermark.css` | Per-buyer signature + install id. |
 | Feature styles (most page CSS) | `src/features/features.css` | One stylesheet for dashboard/reader/flashcards/qbank/etc. |
 
@@ -32,8 +32,9 @@ Everything is under `src/`. Shared building blocks first, then each tab.
   14-day forecast, weak spots, next-best-action. All figures come from real data.
 
 ### Study (Library + Reader)
-- **Files:** `src/features/study/StudyView.tsx` (library + import), `src/features/study/ReaderView.tsx` (reader), `src/features/study/progress.ts` (per-chapter %).
-- Content pipeline it reads from: `src/content/schema.ts` (Zod), `src/content/loader.ts` (build-time glob), `src/content/userContent.ts` (runtime import). Chapters live in `content/**/*.json`.
+- **Files:** `src/features/study/StudyView.tsx` (shared library), `src/features/study/ReaderView.tsx` (reader), `src/features/study/progress.ts` (per-chapter %).
+- Content pipeline: `src/content/schema.ts` (Zod) → `src/lib/publish.ts` (admin validation/publish) → `src/data/remoteContent.ts` / `src/data/bootstrap.ts` → `src/content/loader.ts`. Chapters authored in `content/**/*.json` can be seeded with `npm run upload:content`; the live app publishes them from **Settings → Admin**.
+- Students can read only the shared curriculum. The database RLS policy in `supabase/setup.sql`, not a browser flag, enforces it.
 - Reader has: TOC, reading-progress bar, Focus mode, Print, mark-read, [[wikilinks]], tables, figures.
 
 ### Flashcards

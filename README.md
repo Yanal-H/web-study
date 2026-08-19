@@ -1,6 +1,6 @@
 # Foundation · Med School Toolkit
 
-An offline-first study website — a textbook **Reader**, **Recall-grade flashcards**
+An online-to-study, privacy-first website — a textbook **Reader**, **Recall-grade flashcards**
 (with image occlusion), a **quiz-template-grade Q-Bank** (MCQ + EMQ), notes,
 planner, calculators and more. **by Yanal · Cairo 2026.**
 
@@ -48,23 +48,25 @@ npm run make:schema      # emit content/_schema/chapter.schema.json + template.j
   with a versioned, additive, lossless migration chain (v1 → v7). Never resets;
   corrupt data is backed up, not destroyed. A tiny reactive layer (`useStore`,
   `commit`) drives React re-renders.
-- **Content** (`src/content/`, `content/`) — chapters authored as JSON, validated
-  by one canonical **Zod schema** at build time and at runtime import. Loaded via
-  `import.meta.glob` (inlined, offline). See _Adding content_.
+- **Content** (`src/content/`, `content/`) — chapters authored as JSON and
+  validated by one canonical **Zod schema**. Administrators publish validated
+  packs to Supabase; signed-in students receive those packs in memory only. See
+  _Adding content_.
 - **Design** (`src/design/`) — token system (elevated tinted neutrals + one teal
   accent, light/dark parity), primitives, ⌘K command palette, self-hosted fonts.
 - **Features** (`src/features/`) — dashboard, study (Library + Reader), flashcards
   (SM-2+ engine, occlusion, Anki TSV/CSV), qbank (MCQ/EMQ engine), planner, notes,
   calculators, mnemonics, resources, settings.
-- **Offline** — a lean service worker (`public/sw.js`) caches the shell and, after
-  first paint, every route chunk (incl. the content bundle) is warmed. Personal
-  imports live in localStorage, so they are available offline and survive redeploys.
+- **Offline** — a lean service worker (`public/sw.js`) caches only the app shell.
+  Shared chapters are deliberately excluded; learner progress, notes and personal
+  cards persist locally and survive redeploys.
 
 ## Adding content
 
-**Build-time (shipped).** Drop a file at `content/<subject>/<chapter>.json`. On the
-next build it appears in the site — Reader sections, flashcards, and questions —
-**with no code changes**. Author against the emitted contract:
+**Source-controlled packs.** Drop a file at `content/<subject>/<chapter>.json`.
+It is validated on build, then seed it to Supabase with `npm run upload:content`.
+After first deployment, administrators can publish the same JSON directly from
+the app without a redeploy. Author against the emitted contract:
 
 ```bash
 npm run make:schema     # writes content/_schema/chapter.schema.json + template.json
@@ -78,10 +80,15 @@ Point your editor's JSON Schema at `chapter.schema.json`, or copy `template.json
 `keyFacts`, `teachingPoint`, difficulty, optional figure) and `emqs[]`
 (`foundation.emq/v1`: shared option bank + stems). Figures require `alt` text.
 
-**Runtime (personal).** In the app: **Study → Import chapter** (paste or file). The
-same Zod schema validates it in the browser — all-or-nothing — and stores it under
-a **separate** namespaced key (`foundation_user_content_v1`), so a redeploy never
-clobbers personal imports.
+**Runtime (shared, administrator-only).** Sign in as an administrator and open
+**Settings → Admin**. Choose one or more JSON files on Windows/Android, or paste
+one pack directly. The same Zod schema validates every pack before it is written
+to Supabase; the database policy then rejects every student write. Students only
+receive the published curriculum. See `authoring/AI_CONTENT_PROMPT.md` for a
+ready-to-use AI authoring prompt, including optional Chinese/bilingual knowledge
+extensions.
+
+For future AI-led maintenance, start with [AI_MAINTAINER_GUIDE.md](AI_MAINTAINER_GUIDE.md).
 
 ## How migrations work
 
@@ -123,8 +130,8 @@ Personal data (progress, notes, personal cards) lives in IndexedDB and needs no
 connection. A device upgrading from an older build has its stored chapters purged
 at boot, so the copy an earlier version left behind is actually removed. On a redeploy, `index.html`
 is served `no-cache` so the new shell loads; a `vite:preloadError` guard reloads
-once if a lazy chunk hash changed. Open sessions and personal imports are never
-lost across a redeploy.
+once if a lazy chunk hash changed. Open sessions and learner-owned progress,
+notes and cards are never lost across a redeploy.
 
 ## Reference / legacy files (kept during migration)
 

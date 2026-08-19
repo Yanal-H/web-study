@@ -8,23 +8,24 @@
 --   2. A table holding the chapter packs, readable only by signed-in students.
 --   3. An admin list, so only you can publish or change content.
 --
--- IMPORTANT: change the two values in the "SETTINGS" block below before running.
+-- These settings match the Foundation student deployment.
 
 -- ============================================================================
 -- SETTINGS — edit these two lines
 -- ============================================================================
--- The email domain your students use. Anyone else is refused at sign-up.
+-- The base email domain your students use. Addresses on a subdomain such as
+-- student@s2.students.example.edu are accepted too.
 --   e.g. 'student.cu.edu.eg'
 -- Leave as '' to allow any domain (not recommended).
 create or replace function public.allowed_email_domain()
 returns text language sql immutable as $$
-  select 'CHANGE-ME.edu'::text;
+  select 'students.kasralainy.edu.eg'::text;
 $$;
 
 -- Your own email address — the only account allowed to publish content.
 create or replace function public.admin_emails()
 returns text[] language sql immutable as $$
-  select array['you@CHANGE-ME.edu']::text[];
+  select array['yanal_g_hussein@students.kasralainy.edu.eg']::text[];
 $$;
 
 
@@ -54,7 +55,10 @@ begin
     return new;
   end if;
 
-  if lower(new.email) like '%@' || lower(allowed) then
+  -- Accept the base domain and its subdomains (for example
+  -- student@students.example.edu and student@s2.students.example.edu).
+  if lower(new.email) like '%@' || lower(allowed)
+    or lower(new.email) like '%@%.' || lower(allowed) then
     return new;
   end if;
   raise exception 'Email domain not allowed. Use your @% address.', allowed

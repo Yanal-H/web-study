@@ -1,8 +1,7 @@
 import { useMemo, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { useStore } from '../../state/useStore';
+import { useStore, useStoreVersion } from '../../state/useStore';
 import { Card, Button, Stat, Segmented } from '../../design/primitives';
-import { useUserContentVersion } from '../../content/userContent';
 import { allMcqs, allEmqs, getChapter } from '../../content/loader';
 
 /** Chapter title for an id, falling back to the id when a pack has been removed. */
@@ -36,7 +35,7 @@ const POOLS: Array<{ value: Special; label: string }> = [
 
 export default function QbankView() {
   const state = useStore();
-  const uv = useUserContentVersion();
+  const storeVersion = useStoreVersion();
   // a chapter/subject handed over from Study or Subjects preselects the filters
   const preset = (useLocation().state ?? null) as { chapterId?: string; subject?: string } | null;
   const [screen, setScreen] = useState<Screen>(getSession() ? 'run' : 'setup');
@@ -47,8 +46,8 @@ export default function QbankView() {
   const [difficulties, setDifficulties] = useState<number[]>([1, 2, 3]);
   const [size, setSize] = useState<number>(20);
 
-  const bank = useMemo(() => allMcqs(), [uv]);
-  const emqs = useMemo(() => allEmqs(), [uv]);
+  const bank = useMemo(() => allMcqs(), [storeVersion]);
+  const emqs = useMemo(() => allEmqs(), [storeVersion]);
   const subjects = useMemo(() => [...new Set(bank.map((q) => q.subject))].sort(), [bank]);
   /** chapters within the chosen subject, with how many questions each holds */
   const chapters = useMemo(() => {
@@ -76,7 +75,7 @@ export default function QbankView() {
     difficulties,
     special,
   };
-  const available = useMemo(() => poolCount(filter), [subject, difficulties, special, uv]);
+  const available = useMemo(() => poolCount(filter), [subject, difficulties, special, storeVersion]);
 
   function toggleDiff(d: number) {
     setDifficulties((cur) => (cur.includes(d) ? cur.filter((x) => x !== d) : [...cur, d]).sort());
