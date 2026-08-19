@@ -1,0 +1,35 @@
+{
+  "subject": "Surgery",
+  "questions": [
+    {
+      "type": "single",
+      "difficulty": 1,
+      "stem": "Which growth factor is the primary driver of fibroblast activity and collagen synthesis during wound healing?",
+      "options": [
+        {
+          "text": "TGF-β (Transforming Growth Factor beta)",
+          "correct": true,
+          "why": "TGF-β is the main signal driving fibroblast collagen production."
+        },
+        {
+          "text": "VEGF (Vascular Endothelial Growth Factor)",
+          "correct": false,
+          "why": "VEGF primarily drives angiogenesis, not fibroblast collagen production."
+        },
+        {
+          "text": "TNF-α (Tumor Necrosis Factor alpha)",
+          "correct": false,
+          "why": "TNF-α is an inflammatory cytokine and does not stimulate collagen synthesis."
+        }
+      ],
+      "explanation": [
+        "TGF-β stimulates fibroblasts to produce collagen and extracellular matrix.",
+        "VEGF is responsible for endothelial cell migration and capillary growth."
+      ],
+      "keyFacts": [
+        "TGF-β is critical for fibroblast migration and matrix deposition."
+      ],
+      "teachingPoint": "TGF-β is the central cytokine driving tissue fibrosis and scarring."
+    }
+  ]
+}

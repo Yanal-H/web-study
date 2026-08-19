@@ -84,12 +84,12 @@ export default function ReviewSession({
       undo.current.push(gradeItem(item, g, S, idx));
       setTally((t) => ({ ...t, reviewed: t.reviewed + 1, [g]: (t as any)[g] + 1 }));
       setImpact({ g, key: Date.now() });
-    sfx.grade(g);
+      sfx.grade(g);
       setCombo((c) => {
-      const n = g === 'good' || g === 'easy' ? c + 1 : 0;
-      if (n >= 3) sfx.combo(n);
-      return n;
-    });
+        const n = g === 'good' || g === 'easy' ? c + 1 : 0;
+        if (n >= 3) sfx.combo(n);
+        return n;
+      });
       setRevealed(false);
       setTyped('');
       setHint(false);

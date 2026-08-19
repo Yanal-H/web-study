@@ -1,0 +1,18 @@
+{
+  "deckName": "Surgery::Wound Healing",
+  "cards": [
+    {
+      "type": "basic",
+      "front": "What is the primary cell driving wound contraction?",
+      "back": "Myofibroblast",
+      "extra": "Myofibroblasts contain alpha-smooth muscle actin.",
+      "hint": "Contraction is active and muscular-like",
+      "difficulty": 1
+    },
+    {
+      "type": "cloze",
+      "cloze": "Wound contraction is driven by {{c1::myofibroblasts}}.",
+      "difficulty": 1
+    }
+  ]
+}

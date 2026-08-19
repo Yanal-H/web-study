@@ -306,6 +306,14 @@ The Magic Link template still has its default contents. Do Step 4b.
 You are on Supabase's built-in sender, which allows only a couple of messages an
 hour. Do Step 4b. Also check spam.
 
+**Brevo SMTP verification emails or sign-in codes are not arriving at all**
+If emails do not arrive after setting up Custom SMTP:
+- Check that the sender email address in Supabase SMTP Settings exactly matches the verified Sender email in Brevo.
+- Check that the SMTP key was entered in the Password field, not your Brevo login password.
+- Verify that the SMTP port is set to `587` (TLS) or `465` (SSL).
+- In the Supabase project dashboard under **Authentication -> Email Templates -> Magic Link**, ensure the body uses `{{ .Token }}` to render the numeric OTP code, not `{{ .ConfirmationURL }}`.
+
+
 **My changes never seem to appear on the site**
 You are almost certainly on a per-deployment URL. See Step 4c.
 
