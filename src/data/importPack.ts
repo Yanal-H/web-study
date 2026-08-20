@@ -70,8 +70,8 @@ export function replacementPlan(
  * Chapter metadata — the reader's half of a pack, plus the authored pack itself.
  *
  * `pack` is kept because chapters no longer ship inside the JS bundle: this row is
- * now the device's only copy of the authored chapter, and it is what the reader
- * hydrates from when the student is offline. The card and MCQ *stores* remain the
+ * the session's authored chapter copy, and it is what the reader hydrates after
+ * authenticated sync. The card and MCQ *stores* remain the
  * query path for the due queue and deck counts — those never read this field.
  */
 export function chapterMeta(pack: Chapter) {

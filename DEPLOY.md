@@ -169,8 +169,12 @@ sign-in and silently receive nothing.
 Its stock template also sends a **link**, not a code, and points that link at
 `http://localhost:3000` — an address that only works on a developer's machine.
 
-Connecting your own sender fixes all three problems at once. **Brevo** is used
-here because its free tier does not require you to own a website domain.
+Connecting your own sender fixes the Supabase demo-sender restriction. **Brevo**
+can relay the messages, but relay acceptance is not the same as inbox delivery.
+For a real student cohort, use a sender on a domain you own and authenticate that
+domain in Brevo with DKIM and DMARC. A free Gmail/Yahoo sender can be verified as
+a sender, but you cannot authenticate the Gmail/Yahoo domain yourself; an
+institutional student mail server may therefore quarantine or reject it.
 
 ### 1. Create the Brevo account
 
@@ -179,7 +183,7 @@ here because its free tier does not require you to own a website domain.
 ### 2. Verify who the email comes from
 
 1. Your name (top right) → **Senders, Domains & Dedicated IPs** → **Senders** tab
-2. **Add a sender** — From name `Foundation`, From email your own address
+2. **Add a sender** — From name `Foundation`, preferably an address on a domain you own
 3. Save, then enter the code Brevo emails you. A green tick means done.
 
 ### 3. Take the SMTP details
@@ -203,6 +207,25 @@ here because its free tier does not require you to own a website domain.
 | Password | the **SMTP key** |
 
 Save.
+
+### 4a. Authenticate the sending domain for student delivery
+
+If your sender uses a domain you own:
+
+1. Brevo → **Settings → Senders, Domains, IPs → Domains**.
+2. Add the domain after the `@` in your sender address.
+3. Follow Brevo's setup to publish the Brevo verification, DKIM, and DMARC DNS records.
+4. Wait until Brevo shows the domain as **Authenticated**.
+5. Keep the sender email in Supabase on that authenticated domain.
+
+Brevo's current walkthrough is:
+[Authenticate your domain with Brevo](https://help.brevo.com/hc/en-us/articles/12163873383186-Authenticate-your-domain-with-Brevo-Brevo-code-DKIM-DMARC).
+
+If your sender is a Gmail/Yahoo address, this authentication is not possible
+because you do not control their DNS. It may work for Gmail recipients but fail
+at the university gateway. Before inviting the cohort, move to a domain you own,
+or ask the university mail administrator to allowlist the actual sender/domain
+shown in the Brevo delivery event.
 
 ### 5. Switch the email to a code
 
@@ -266,8 +289,9 @@ configured in Supabase (eight digits on the current deployment).
 ### How much email will you actually send?
 
 One message per *new* sign-in, not per visit: sessions persist and refresh, so a
-student signs in once and stays signed in. Onboarding 1000 students over a week
-is roughly 150 emails a day, comfortably inside Brevo's free 300/day.
+student signs in once and stays signed in. Check the current Brevo plan allowance
+and Supabase Auth rate limits before inviting a large cohort; do not assume a
+free-tier number will remain unchanged.
 
 ---
 
@@ -363,6 +387,38 @@ If emails do not arrive after setting up Custom SMTP:
 - Check that the SMTP key was entered in the Password field, not your Brevo login password.
 - Verify that the SMTP port is set to `587` (TLS) or `465` (SSL).
 - In the Supabase project dashboard under **Authentication -> Email Templates -> Magic Link**, ensure the body uses `{{ .Token }}` to render the numeric OTP code, not `{{ .ConfirmationURL }}`.
+
+**The administrator's Gmail receives codes but `@students.kasralainy.edu.eg` does not**
+
+This symptom is not an app email-format failure if
+`select public.email_is_allowed('example@students.kasralainy.edu.eg');` returns
+`true`. Diagnose one fresh request in this order:
+
+1. Supabase → **Logs → Auth**. Filter to the request time. If SMTP handover or a
+   database trigger failed, fix that error first.
+2. Brevo → **Transactional → Logs**. Search for the complete student address.
+3. If there is no Brevo row, Supabase did not hand the message to Brevo; recheck
+   Custom SMTP and the Supabase Auth log.
+4. **Delivered** means the university server accepted it. Ask the student to
+   check Junk/Spam, then ask university IT to check quarantine for that exact
+   timestamp and recipient.
+5. **Deferred** or **Soft Bounce** means the university gateway delayed/rejected
+   it temporarily. Open the event, copy its SMTP response, and give that response
+   to university IT.
+6. **Blocked** or **Hard Bounce** means Brevo will not deliver it until the address
+   or blocked-domain condition is corrected. Review Brevo's blocked contacts and
+   the event reason before retrying.
+7. If the sender is Gmail/Yahoo, replace it with a sender on a domain you own and
+   authenticate that domain in Brevo with DKIM and DMARC. This is the most likely
+   fix when Gmail receives mail but the institution does not.
+
+Do not keep pressing Resend while diagnosing. Supabase normally allows another
+OTP request to the same address only after 60 seconds, and repeated bounces can
+damage sender reputation.
+
+Official references: [Supabase Auth email troubleshooting](https://supabase.com/docs/guides/troubleshooting/not-receiving-auth-emails-from-the-supabase-project-OFSNzw),
+[Supabase Auth rate limits](https://supabase.com/docs/guides/auth/rate-limits), and
+[Brevo transactional logs](https://help.brevo.com/hc/en-us/articles/360021533839-Manage-your-transactional-logs-and-email-previews).
 
 
 **My changes never seem to appear on the site**

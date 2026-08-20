@@ -10,12 +10,17 @@
 // and no password reset flow to build.
 
 import { useEffect, useRef, useState } from 'react';
-import { isSupportedOtpLength, OTP_MAX_LENGTH, sendCode, verifyCode } from './session';
+import {
+  isSupportedOtpLength,
+  OTP_MAX_LENGTH,
+  OTP_RESEND_SECONDS,
+  sendCode,
+  verifyCode,
+  type AuthFailureReason,
+} from './session';
 import { ALLOWED_EMAIL_DOMAIN, authConfigured } from '../../lib/supabase';
 
 type Step = 'email' | 'code';
-
-const RESEND_SECONDS = 30;
 
 export default function SignIn() {
   const [step, setStep] = useState<Step>('email');
@@ -23,8 +28,10 @@ export default function SignIn() {
   const [code, setCode] = useState('');
   const [busy, setBusy] = useState(false);
   const [err, setErr] = useState<string | null>(null);
+  const [failureReason, setFailureReason] = useState<AuthFailureReason | null>(null);
   const [note, setNote] = useState<string | null>(null);
   const [cooldown, setCooldown] = useState(0);
+  const [deliverySlow, setDeliverySlow] = useState(false);
 
   const emailRef = useRef<HTMLInputElement>(null);
   const codeRef = useRef<HTMLInputElement>(null);
@@ -51,30 +58,44 @@ export default function SignIn() {
     return () => clearTimeout(t);
   }, [cooldown]);
 
+  useEffect(() => {
+    if (step !== 'code') {
+      setDeliverySlow(false);
+      return;
+    }
+    const timer = setTimeout(() => setDeliverySlow(true), 45_000);
+    return () => clearTimeout(timer);
+  }, [step, note]);
+
   async function submitEmail(e?: React.FormEvent) {
     e?.preventDefault();
     if (busy) return;
     setBusy(true);
     setErr(null);
+    setFailureReason(null);
     const res = await sendCode(email);
     setBusy(false);
     if (!res.ok) {
       setErr(res.message || 'Could not send the code.');
+      setFailureReason(res.reason || 'DELIVERY_FAILED');
       return;
     }
     setStep('code');
-    setCooldown(RESEND_SECONDS);
-    setNote(`We sent a sign-in code to ${email.trim().toLowerCase()}.`);
+    setDeliverySlow(false);
+    setCooldown(OTP_RESEND_SECONDS);
+    setNote(`Request accepted for ${email.trim().toLowerCase()}. Check your inbox and Junk or Spam.`);
   }
 
   async function submitCode(value: string) {
     if (busy) return;
     setBusy(true);
     setErr(null);
+    setFailureReason(null);
     const res = await verifyCode(email, value);
     setBusy(false);
     if (!res.ok) {
       setErr(res.message || 'That code is not right.');
+      setFailureReason(res.reason || 'INVALID_CODE');
       setCode('');
       codeRef.current?.focus();
       return;
@@ -96,13 +117,16 @@ export default function SignIn() {
     if (cooldown > 0 || busy) return;
     setBusy(true);
     setErr(null);
+    setFailureReason(null);
     const res = await sendCode(email);
     setBusy(false);
     if (res.ok) {
-      setCooldown(RESEND_SECONDS);
+      setCooldown(OTP_RESEND_SECONDS);
+      setDeliverySlow(false);
       setNote('New code sent.');
     } else {
       setErr(res.message || 'Could not resend the code.');
+      setFailureReason(res.reason || 'DELIVERY_FAILED');
     }
   }
 
@@ -147,6 +171,7 @@ export default function SignIn() {
               onChange={(e) => {
                 setEmail(e.target.value);
                 setErr(null);
+                setFailureReason(null);
               }}
             />
             <button className="signin-btn" type="submit" disabled={busy || !email.trim()}>
@@ -202,12 +227,20 @@ export default function SignIn() {
               Use a different email
             </button>
           </div>
+          {deliverySlow && (
+            <p className="signin-hint" role="status">
+              Still waiting? Check Junk or Spam. If this happens only to student addresses, ask the
+              administrator to find this address in Brevo Transactional logs; the event will say
+              Delivered, Deferred, Blocked, Soft Bounce, or Hard Bounce.
+            </p>
+          )}
         </>
       )}
 
       {err && (
         <div className="signin-err" role="alert">
           {err}
+          {failureReason && <small style={{ display: 'block', marginTop: 6 }}>Support code: {failureReason}</small>}
         </div>
       )}
     </Shell>

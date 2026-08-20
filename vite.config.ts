@@ -8,8 +8,9 @@ import { join, resolve } from 'node:path';
 import { createHash } from 'node:crypto';
 
 /**
- * Emit an offline precache manifest into the built service worker so a freshly
- * installed app can reach every route and read the shipped content fully offline.
+ * Emit an app-shell precache manifest into the built service worker so a freshly
+ * installed app can reach every route. Authenticated chapter responses are
+ * cross-origin and deliberately excluded from this build output and cache.
  * It scans the real dist output (which includes public/ copies), so it needs no
  * hand-kept list of hashed filenames, and it rewrites CACHE_VERSION with a build
  * hash so a new deploy re-installs the SW and repopulates the cache. Strictly
@@ -32,8 +33,8 @@ function precacheManifest(): Plugin {
           else if (!rel.endsWith('.map')) urls.push(rel);
         }
       };
-      // Every route/vendor/content chunk (assets), the self-hosted fonts, and the UI
-      // icons — enough to boot every page and study shipped content with no network.
+      // Every route/vendor chunk (assets), self-hosted font and UI icon. This boots
+      // the shell offline but does not make protected study material available.
       for (const top of ['assets', 'fonts', 'icons']) {
         const d = join(dist, top);
         if (existsSync(d)) walk(d, `/${top}`);
@@ -54,7 +55,7 @@ function precacheManifest(): Plugin {
 }
 
 // Foundation · Med School Toolkit — Vite build.
-// Static, offline-first single-page app. No runtime third-party network fetches.
+// Static single-page shell with authenticated Supabase content requests at runtime.
 export default defineConfig({
   plugins: [react(), precacheManifest()],
   resolve: {
@@ -71,9 +72,8 @@ export default defineConfig({
         entryFileNames: 'assets/[name]-[hash].js',
         chunkFileNames: 'assets/[name]-[hash].js',
         assetFileNames: 'assets/[name]-[hash][extname]',
-        // Keep the shipped chapter data (~1.5 MB of JSON) and the vendor libraries in
-        // their own immutable chunks, so app-code changes never rebust their cache and
-        // the shell script parses without the content payload inlined.
+        // Keep vendor libraries in their own immutable chunk. Chapter JSON is not
+        // shipped in production; test-only content imports remain isolated if seen.
         manualChunks(id) {
           if (id.includes('/content/') && id.endsWith('.json')) return 'content-data';
           if (id.includes('node_modules')) return 'vendor';

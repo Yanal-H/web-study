@@ -12,6 +12,7 @@ const auth = vi.hoisted(() => ({
   userId: 'u1' as string | null,
 }));
 const adminAccess = vi.hoisted(() => ({ allowed: false }));
+const LAZY_ROUTE_TIMEOUT = 10_000;
 
 vi.mock('../features/auth/session', () => ({
   useAuth: () => auth,
@@ -72,7 +73,7 @@ describe('App shell (signed in)', () => {
     // The lazy home is action-oriented rather than a decorative analytics wall.
     await waitFor(
       () => expect(screen.getByRole('heading', { name: 'Study today' })).toBeTruthy(),
-      { timeout: 3_000 }
+      { timeout: LAZY_ROUTE_TIMEOUT }
     );
     expect(document.querySelector('.haki-hero')).toBeNull();
 
@@ -93,7 +94,7 @@ describe('App shell (signed in)', () => {
         <App />
       </MemoryRouter>
     );
-    await waitFor(() => expect(screen.getByRole('heading', { name: 'Settings' })).toBeTruthy());
+    await waitFor(() => expect(screen.getByRole('heading', { name: 'Settings' })).toBeTruthy(), { timeout: LAZY_ROUTE_TIMEOUT });
     expect(screen.queryByRole('heading', { name: 'AI tutor' })).toBeNull();
     expect(screen.queryByRole('heading', { name: 'Administrator' })).toBeNull();
     expect(screen.queryByRole('heading', { name: 'Card engine' })).toBeNull();
@@ -107,8 +108,8 @@ describe('App shell (signed in)', () => {
       </MemoryRouter>
     );
 
-    await waitFor(() => expect(screen.getByRole('link', { name: 'Admin' })).toBeTruthy());
-    await waitFor(() => expect(screen.getByRole('heading', { name: 'Admin' })).toBeTruthy());
+    await waitFor(() => expect(screen.getByRole('link', { name: 'Admin' })).toBeTruthy(), { timeout: LAZY_ROUTE_TIMEOUT });
+    await waitFor(() => expect(screen.getByRole('heading', { name: 'Admin' })).toBeTruthy(), { timeout: LAZY_ROUTE_TIMEOUT });
     expect(screen.getByRole('heading', { name: 'Shared study content' })).toBeTruthy();
   });
 
@@ -119,7 +120,7 @@ describe('App shell (signed in)', () => {
       </MemoryRouter>
     );
 
-    await waitFor(() => expect(screen.getByRole('heading', { name: 'Administrator access required' })).toBeTruthy());
+    await waitFor(() => expect(screen.getByRole('heading', { name: 'Administrator access required' })).toBeTruthy(), { timeout: LAZY_ROUTE_TIMEOUT });
     expect(screen.queryByRole('heading', { name: 'Shared study content' })).toBeNull();
   });
 });

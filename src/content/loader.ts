@@ -26,8 +26,8 @@ export interface LoadedChapter extends Chapter {
 // free download for anyone who opened the URL — no sign-in required — and it is
 // exactly what the move to authenticated content was meant to stop.
 //
-// Chapters now arrive from the content store for a signed-in student, are written
-// into IndexedDB, and are hydrated back into this in-memory list at boot. The list
+// Chapters now arrive from the content store for a signed-in student, remain in
+// session memory, and are hydrated into this derived list after sync. The list
 // stays synchronous because the reader, study library and mnemonics all read it
 // during render; only where it is FILLED FROM has changed.
 

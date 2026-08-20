@@ -14,7 +14,8 @@ import { applyHaki } from '../state/haki';
 import HakiField from '../features/effects/HakiField';
 import FocusTimer from '../features/timer/FocusTimer';
 import MusicPlayer from '../features/music/MusicPlayer';
-import { ensureContentLoaded } from '../data/bootstrap';
+import { ensureContentLoaded, rehydrateChapters } from '../data/bootstrap';
+import { requestPersistence } from '../lib/blobs';
 import { useAuth } from '../features/auth/session';
 import SignIn from '../features/auth/SignIn';
 import { checkAdmin } from '../lib/admin';
@@ -173,7 +174,6 @@ function Shell({ userId }: { userId: string }) {
       const report = await m.syncPublishedContent().catch(() => null);
       if (!alive) return;
 
-      const { rehydrateChapters } = await import('../data/bootstrap');
       const count = await rehydrateChapters().catch(() => 0);
       const { invalidateDeckTree } = await import('../data/session');
       invalidateDeckTree();
@@ -195,7 +195,7 @@ function Shell({ userId }: { userId: string }) {
   // Idempotent and silent on Chromium; requested once at boot for every student,
   // not only those who upload a file to the library.
   useEffect(() => {
-    void import('../lib/blobs').then((m) => m.requestPersistence()).catch(() => {});
+    void requestPersistence().catch(() => {});
   }, []);
 
   // A failed storage write (quota, private mode) is broadcast by the store; warn the

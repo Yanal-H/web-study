@@ -11,7 +11,7 @@ vi.mock('../../lib/supabase', () => ({
   authConfigured: () => true,
 }));
 
-const { sendCode, verifyCode } = await import('./session');
+const { describeSendError, OTP_RESEND_SECONDS, sendCode, verifyCode } = await import('./session');
 
 beforeEach(() => {
   signInWithOtp.mockReset();
@@ -83,16 +83,19 @@ describe('verifyCode — code length follows the email provider configuration', 
 });
 
 describe('sendCode — turning server refusals into something readable', () => {
-  it('explains a domain rejection, including Supabase’s generic wording', async () => {
-    for (const message of [
-      'Email domain not allowed. Use your @x address.',
-      'Database error saving new user',
-    ]) {
-      signInWithOtp.mockResolvedValueOnce({ error: { message } });
-      const res = await sendCode('outsider@example.com');
-      expect(res.ok).toBe(false);
-      expect(res.message).toContain('students.kasralainy.edu.eg');
-    }
+  it('explains an explicit domain rejection', async () => {
+    signInWithOtp.mockResolvedValueOnce({ error: { message: 'Email domain not allowed. Use your @x address.' } });
+    const res = await sendCode('outsider@example.com');
+    expect(res.ok).toBe(false);
+    expect(res.reason).toBe('DOMAIN_NOT_ALLOWED');
+    expect(res.message).toContain('students.kasralainy.edu.eg');
+  });
+
+  it('does not mislabel a generic database-trigger failure as a bad domain', async () => {
+    signInWithOtp.mockResolvedValueOnce({ error: { message: 'Database error saving new user' } });
+    const res = await sendCode('student@students.kasralainy.edu.eg');
+    expect(res.reason).toBe('ACCOUNT_CREATION_FAILED');
+    expect(res.message).toMatch(/Auth logs/i);
   });
 
   it('explains a rate limit as something to wait out', async () => {
@@ -101,13 +104,25 @@ describe('sendCode — turning server refusals into something readable', () => {
     });
     const res = await sendCode('student@students.kasralainy.edu.eg');
     expect(res.ok).toBe(false);
-    expect(res.message).toMatch(/wait a minute/i);
+    expect(res.reason).toBe('RATE_LIMITED');
+    expect(res.message).toMatch(/wait one minute/i);
   });
 
   it('falls back to a plain message for anything else', async () => {
     signInWithOtp.mockResolvedValueOnce({ error: { message: 'some unexpected failure' } });
     const res = await sendCode('student@students.kasralainy.edu.eg');
     expect(res.ok).toBe(false);
-    expect(res.message).toMatch(/could not send the code/i);
+    expect(res.reason).toBe('DELIVERY_FAILED');
+    expect(res.message).toMatch(/email service/i);
+  });
+
+  it('distinguishes missing SMTP and disabled signup by stable provider codes', () => {
+    expect(describeSendError({ code: 'email_address_not_authorized' }).reason).toBe('SMTP_NOT_CONFIGURED');
+    expect(describeSendError({ code: 'signup_disabled' }).reason).toBe('SIGNUP_DISABLED');
+    expect(describeSendError({ code: 'over_email_send_rate_limit' }).reason).toBe('RATE_LIMITED');
+  });
+
+  it('does not offer resend before Supabase accepts another request', () => {
+    expect(OTP_RESEND_SECONDS).toBe(60);
   });
 });
