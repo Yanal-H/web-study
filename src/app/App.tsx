@@ -39,7 +39,7 @@ function BrandMark({ size = 40 }: { size?: number }) {
 }
 
 const PRIMARY = ['', 'study', 'subjects', 'flashcards', 'qbank'];
-const TOOLS = ['planner', 'notes', 'calculators', 'mnemonics', 'resources'];
+const TOOLS = ['planner', 'notes', 'calculators', 'mnemonics', 'resources', 'community'];
 
 export default function App() {
   return (
@@ -98,7 +98,7 @@ function Shell() {
   useEffect(() => {
     const GO: Record<string, string> = {
       d: '/', s: '/study', q: '/qbank', f: '/flashcards', b: '/subjects',
-      p: '/planner', n: '/notes', c: '/calculators', m: '/mnemonics', r: '/resources', e: '/settings',
+      p: '/planner', n: '/notes', c: '/calculators', m: '/mnemonics', r: '/resources', o: '/community', e: '/settings',
     };
     const onKey = (e: KeyboardEvent) => {
       const target = e.target as HTMLElement;

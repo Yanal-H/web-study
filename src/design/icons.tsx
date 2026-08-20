@@ -95,6 +95,12 @@ export const IconResources = (p: IconProps) => (
     <path d="M12 12v8M9 17l3-3 3 3" />
   </Svg>
 );
+export const IconCommunity = (p: IconProps) => (
+  <Svg {...p}>
+    <path d="M20 11.5a7.5 7.5 0 0 1-11.7 6.2L4 19l1.4-3.3A7.5 7.5 0 1 1 20 11.5Z" />
+    <path d="M8.5 11.5h.01M12 11.5h.01M15.5 11.5h.01" strokeWidth={2.6} />
+  </Svg>
+);
 export const IconSettings = (p: IconProps) => (
   <Svg {...p}>
     <circle cx="12" cy="12" r="3" />
@@ -239,5 +245,6 @@ export const NAV_ICONS: Record<string, (p: IconProps) => JSX.Element> = {
   calculators: IconCalculators,
   mnemonics: IconMnemonics,
   resources: IconResources,
+  community: IconCommunity,
   settings: IconSettings,
 };

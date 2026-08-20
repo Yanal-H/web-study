@@ -27,8 +27,10 @@ export function useAuth(): AuthState {
   });
 
   useEffect(() => {
-    if (!supabase) return;
+    const client = supabase;
+    if (!client) return;
     let alive = true;
+    let claimedForUserId: string | null = null;
 
     const apply = (session: Session | null) => {
       if (!alive) return;
@@ -37,13 +39,25 @@ export function useAuth(): AuthState {
         email: session?.user.email ?? null,
         userId: session?.user.id ?? null,
       });
+
+      // A roster entitlement may be added after this student created their
+      // account. Claiming is safe to retry: the SQL function only considers a
+      // row whose email matches this signed session and never lets the browser
+      // choose a department or channel. Older deployments simply return an RPC
+      // error until the community-foundation migration is installed; sign-in
+      // must remain fully functional in that state.
+      if (session && claimedForUserId !== session.user.id) {
+        claimedForUserId = session.user.id;
+        void client.rpc('claim_my_community_memberships').then(() => {}, () => {});
+      }
+      if (!session) claimedForUserId = null;
     };
 
-    void supabase.auth.getSession().then(({ data }) => apply(data.session));
+    void client.auth.getSession().then(({ data }) => apply(data.session));
 
     // Fires on sign-in, sign-out, token refresh and — importantly — when another
     // tab signs out, so every open tab locks together.
-    const { data: sub } = supabase.auth.onAuthStateChange((_event, session) => apply(session));
+    const { data: sub } = client.auth.onAuthStateChange((_event, session) => apply(session));
 
     return () => {
       alive = false;

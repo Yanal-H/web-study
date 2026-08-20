@@ -4421,3 +4421,14 @@
   color: var(--text-faint);
   font-size: 12px;
 }
+
+/* ---- Private department community ---- */
+.community-layout { display: grid; grid-template-columns: minmax(180px, 240px) minmax(0, 1fr); gap: var(--sp-4); align-items: start; }
+.community-channels { border: 1px solid var(--border-soft); border-radius: var(--radius); padding: 6px; background: var(--surface-1); position: sticky; top: 16px; }
+.community-channel { width: 100%; display: flex; align-items: flex-start; gap: 8px; padding: 10px; border: 0; border-radius: var(--radius-sm); background: transparent; color: var(--text-dim); text-align: left; cursor: pointer; }
+.community-channel:hover, .community-channel.active { background: var(--accent-soft); color: var(--text); }
+.community-channel > span:first-child { color: var(--accent); font-weight: 700; }
+.community-channel strong, .community-channel small { display: block; }.community-channel small { margin-top: 2px; color: var(--text-faint); font-size: 11px; }
+.community-thread { min-width: 0; }.community-thread-head { display: flex; justify-content: space-between; gap: 12px; align-items: flex-start; margin-bottom: var(--sp-3); }.community-thread-head h2 { margin: 0; font-size: 19px; }.community-thread-head p { margin: 4px 0 0; color: var(--text-dim); font-size: 13.5px; }
+.community-compose { display: grid; gap: 10px; margin-bottom: var(--sp-4); }.community-compose .textarea { min-height: 82px; resize: vertical; }.community-feed { display: grid; gap: 10px; }.community-message { padding: 14px 16px; border: 1px solid var(--border-soft); border-radius: var(--radius); background: var(--surface-1); }.community-message--moderated { border-left: 3px solid var(--warning); }.community-message-meta { display: flex; align-items: center; flex-wrap: wrap; gap: 7px; font-size: 13px; }.community-message-meta span { color: var(--text-faint); }.community-message p { white-space: pre-wrap; overflow-wrap: anywhere; line-height: 1.58; margin: 9px 0; }.community-message-actions { display: flex; gap: 4px; }.community-alert { margin-bottom: var(--sp-4); border-color: var(--warning); background: var(--warning-soft); }
+@media (max-width: 720px) { .community-layout { grid-template-columns: 1fr; }.community-channels { position: static; display: flex; overflow-x: auto; padding: 5px; }.community-channel { width: auto; min-width: max-content; }.community-thread-head { margin-top: 4px; } }

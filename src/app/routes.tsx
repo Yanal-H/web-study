@@ -30,6 +30,7 @@ export const ROUTES: RouteDef[] = [
   route('calculators', 'Calculators', () => import('../features/calculators/CalculatorsView')),
   route('mnemonics', 'Mnemonics', () => import('../features/mnemonics/MnemonicsView')),
   route('resources', 'Resources', () => import('../features/resources/ResourcesView')),
+  route('community', 'Community', () => import('../features/community/CommunityView')),
   route('settings', 'Settings', () => import('../features/settings/SettingsView')),
 ];
 
