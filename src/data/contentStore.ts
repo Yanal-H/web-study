@@ -29,15 +29,28 @@ export interface MemRow {
 /** One in-memory table, keyed the way its IndexedDB counterpart is. */
 class Table {
   private rows = new Map<string, MemRow>();
+  private groups = new Map<string, Set<string>>();
 
-  constructor(private keyPath: 'id' | 'imageId') {}
+  constructor(
+    private keyPath: 'id' | 'imageId',
+    private groupOf?: (row: MemRow) => string | undefined
+  ) {}
 
   key(row: MemRow): string {
     return String(row[this.keyPath]);
   }
 
   put(row: MemRow): void {
-    this.rows.set(this.key(row), row);
+    const key = this.key(row);
+    const previous = this.rows.get(key);
+    if (previous) this.removeFromGroup(key, previous);
+    this.rows.set(key, row);
+    const group = this.groupOf?.(row);
+    if (group) {
+      const keys = this.groups.get(group) ?? new Set<string>();
+      keys.add(key);
+      this.groups.set(group, keys);
+    }
   }
 
   get(key: string): MemRow | undefined {
@@ -45,11 +58,19 @@ class Table {
   }
 
   delete(key: string): void {
+    const previous = this.rows.get(key);
+    if (previous) this.removeFromGroup(key, previous);
     this.rows.delete(key);
   }
 
   all(): MemRow[] {
     return [...this.rows.values()];
+  }
+
+  forGroup(group: string): MemRow[] {
+    const keys = this.groups.get(group);
+    if (!keys) return [];
+    return [...keys].map((key) => this.rows.get(key)).filter((row): row is MemRow => !!row);
   }
 
   get size(): number {
@@ -58,13 +79,22 @@ class Table {
 
   clear(): void {
     this.rows.clear();
+    this.groups.clear();
+  }
+
+  private removeFromGroup(key: string, row: MemRow): void {
+    const group = this.groupOf?.(row);
+    if (!group) return;
+    const keys = this.groups.get(group);
+    keys?.delete(key);
+    if (keys?.size === 0) this.groups.delete(group);
   }
 }
 
 export const chapters = new Table('id');
-export const cards = new Table('id');
-export const mcqs = new Table('id');
-export const media = new Table('imageId');
+export const cards = new Table('id', (row) => String(row.chapterId || '') || undefined);
+export const mcqs = new Table('id', (row) => String(row.chapterId || '') || undefined);
+export const media = new Table('imageId', (row) => String(row.imageId || '').split(':')[0] || undefined);
 
 const TABLES: Record<string, Table> = {
   chapters,
@@ -86,6 +116,30 @@ export function isContentStore(store: string): boolean {
 /** Drop every chapter from memory — on sign-out, or before a fresh download. */
 export function clearContent(): void {
   for (const t of Object.values(TABLES)) t.clear();
+}
+
+/** Rows owned by one chapter, resolved through bounded secondary indexes. */
+export function chapterRows(chapterId: string): {
+  cards: MemRow[];
+  mcqs: MemRow[];
+  media: MemRow[];
+} {
+  return {
+    cards: cards.forGroup(chapterId),
+    mcqs: mcqs.forGroup(chapterId),
+    media: media.forGroup(chapterId),
+  };
+}
+
+/** Remove one unpublished chapter from session memory and return its card ids. */
+export function removeChapter(chapterId: string): string[] {
+  const owned = chapterRows(chapterId);
+  const cardIds = owned.cards.map((row) => String(row.id));
+  for (const row of owned.cards) cards.delete(String(row.id));
+  for (const row of owned.mcqs) mcqs.delete(String(row.id));
+  for (const row of owned.media) media.delete(String(row.imageId));
+  chapters.delete(chapterId);
+  return cardIds;
 }
 
 /* ------------------------------------------------------- deck queries

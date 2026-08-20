@@ -13,12 +13,12 @@ import {
   SCHEDULING,
   bulkPut,
   deleteKeys,
-  getAllRows,
   openDB,
   req,
   type Scheduling,
   type StoredCard,
 } from './db';
+import { chapterRows } from './contentStore';
 import { newScheduling } from './fsrs';
 import type { Chapter } from '../content/schema';
 // From ./deck, not ./loader: loader eagerly globs every chapter JSON, and this
@@ -164,11 +164,7 @@ export async function importPack(
   }
 
   const seeded = await seedScheduling(cards);
-  const [storedCards, storedMcqs, storedMedia] = await Promise.all([
-    getAllRows<{ id: string; chapterId: string }>(CARDS),
-    getAllRows<{ id: string; chapterId: string }>(MCQS),
-    getAllRows<{ imageId: string }>(MEDIA),
-  ]);
+  const owned = chapterRows(pack.id);
   const removed = replacementPlan(
     pack.id,
     {
@@ -176,7 +172,11 @@ export async function importPack(
       mcqIds: new Set(mcqs.map((question) => question.id)),
       mediaIds: new Set(images.map(([id]) => `${pack.id}:${id}`)),
     },
-    { cards: storedCards, mcqs: storedMcqs, media: storedMedia }
+    {
+      cards: owned.cards as Array<{ id: string; chapterId: string }>,
+      mcqs: owned.mcqs as Array<{ id: string; chapterId: string }>,
+      media: owned.media as Array<{ imageId: string }>,
+    }
   );
   await Promise.all([
     deleteKeys(CARDS, removed.cards),

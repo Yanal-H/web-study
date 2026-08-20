@@ -20,9 +20,11 @@
 
 import type { Chapter } from '../content/schema';
 import { ChapterSchema } from '../content/schema';
+import { setLoadedChapters } from '../content/loader';
 import { importPackIntoSession } from './importClient';
 import { supabase } from '../lib/supabase';
-import { clearContent } from './contentStore';
+import { clearContent, removeChapter } from './contentStore';
+import { planContentSync, type ManifestRow } from './remoteContentPlan';
 
 // Which chapters this SESSION has already downloaded. Deliberately a plain
 // variable rather than localStorage: content lives in memory only, so a new page
@@ -31,6 +33,7 @@ import { clearContent } from './contentStore';
 let sessionManifest: Record<string, string> = {};
 let syncInFlight: Promise<SyncReport> | null = null;
 let lastSyncReport: SyncReport | null = null;
+const PACK_BATCH_SIZE = 25;
 
 export interface RemoteItem {
   id: string;
@@ -78,6 +81,9 @@ export function forgetContent(): void {
   sessionManifest = {};
   lastSyncReport = null;
   clearContent();
+  // The reader keeps a synchronous derived list; clear that too so a second
+  // account on the same browser cannot see the previous session's titles/text.
+  setLoadedChapters([]);
 }
 
 /**
@@ -110,63 +116,55 @@ async function runPublishedContentSync(): Promise<SyncReport> {
 
   report.configured = true;
   const manifest = sessionManifest;
-  const seen = new Set<string>();
+  const manifestRows = rows as ManifestRow[];
+  const plan = planContentSync(manifestRows, manifest, PACK_BATCH_SIZE);
+  const revisionById = new Map(manifestRows.map((row) => [row.id, row.revision]));
 
-  for (const row of rows as Array<{ id: string; revision: string }>) {
-    if (!row || typeof row.id !== 'string' || typeof row.revision !== 'string') continue;
-    seen.add(row.id);
-    if (manifest[row.id] === row.revision) continue; // already have this revision
-
-    try {
-      const { data: full, error: e2 } = await supabase
+  // Fetch changed packs in bounded groups. The previous one-request-per-chapter
+  // loop multiplied latency and Supabase request volume as the library grew.
+  // Import remains sequential inside each group to cap transient mobile memory.
+  for (const ids of plan.batches) {
+    const { data: fullRows, error: packError } = await supabase
         .from('chapters')
-        .select('pack')
-        .eq('id', row.id)
+        .select('id, revision, pack')
+        .in('id', ids)
         .eq('status', 'published')
-        .single();
-      if (e2 || !full) throw new Error('fetch failed');
+        .returns<Array<{ id: string; revision: string; pack: unknown }>>();
 
-      const parsed = ChapterSchema.safeParse((full as { pack: unknown }).pack);
-      if (!parsed.success) throw new Error('pack failed validation');
-
-      await importPackIntoSession(parsed.data as Chapter);
-      manifest[row.id] = row.revision;
-      report.imported.push(row.id);
-    } catch {
-      report.failed.push(row.id);
+    if (packError || !fullRows) {
+      report.failed.push(...ids);
+      continue;
     }
-  }
 
-  // Chapters the server no longer carries.
-  for (const id of Object.keys(manifest)) {
-    if (!seen.has(id)) {
-      delete manifest[id];
-      report.removed.push(id);
-    }
-  }
-
-  if (report.removed.length) {
-    // Delete their rows too, so an unpublished chapter stops appearing in decks
-    // and the due queue instead of lingering as ghost rows.
-    //
-    // Guarded on a CLEAN sync: if any chapter failed to download, the manifest is
-    // an incomplete picture of what the server holds, and reconciling against it
-    // would delete material that is still published. Better a ghost row until the
-    // next sync than deleting a student's chapter by mistake.
-    if (report.failed.length === 0) {
+    const returned = new Set(fullRows.map((row) => row.id));
+    report.failed.push(...ids.filter((id) => !returned.has(id)));
+    for (const full of fullRows) {
       try {
-        const { reconcileShipped } = await import('./reconcile');
-        const { rehydrateChapters } = await import('./bootstrap');
-        await rehydrateChapters();
-        const { listChapters } = await import('../content/loader');
-        await reconcileShipped(listChapters() as Chapter[]);
+        const expectedRevision = revisionById.get(full.id);
+        if (!expectedRevision || full.revision !== expectedRevision) throw new Error('revision changed during sync');
+        const parsed = ChapterSchema.safeParse(full.pack);
+        if (!parsed.success || parsed.data.id !== full.id) throw new Error('pack failed validation');
+        await importPackIntoSession(parsed.data as Chapter);
+        manifest[full.id] = full.revision;
+        report.imported.push(full.id);
       } catch {
-        // Cleanup is housekeeping, never a correctness requirement.
+        report.failed.push(full.id);
       }
     }
   }
 
-  if (report.failed.length === 0 && seen.size > 0) {
+  // Chapters the server no longer carries.
+  for (const id of plan.removed) {
+    const cardIds = removeChapter(id);
+    if (cardIds.length) {
+      const { deleteKeys, SCHEDULING } = await import('./db');
+      await deleteKeys(SCHEDULING, cardIds).catch(() => {});
+    }
+    delete manifest[id];
+    report.removed.push(id);
+  }
+
+  if (report.failed.length === 0 && plan.seen.size > 0) {
     const { purgeOrphanScheduling } = await import('./db');
     await purgeOrphanScheduling().catch(() => 0);
   }

@@ -1,13 +1,7 @@
-// Boot the card engine from what is already on this device.
-//
-// Chapters no longer ship inside the JavaScript bundle — they are fetched for a
-// signed-in student and written into IndexedDB (see remoteContent.ts). So boot is
-// now a HYDRATION step, not an import step: read the chapters already stored and
-// hand them to the in-memory list the reader renders from.
-//
-// This is what keeps the app offline-first despite content living behind
-// sign-in: after the first authenticated load, everything needed is on the
-// device and boot never touches the network.
+// Hydrate the reader from this signed-in session's in-memory content tables.
+// Authored chapters never persist on the device; the first pass is empty, then
+// remoteContent imports authenticated packs and calls this again. Keeping the
+// bridge here lets the reader remain synchronous without weakening that rule.
 
 import type { Chapter } from '../content/schema';
 import { setLoadedChapters } from '../content/loader';
@@ -49,7 +43,7 @@ export function chapterRevision(c: {
 }
 
 export interface BootstrapReport {
-  /** Chapters hydrated into memory from the device. */
+  /** Chapters hydrated into the reader from session memory. */
   chapters: number;
   cards: number;
 }
@@ -62,7 +56,7 @@ export type BootstrapPhase =
 
 let inFlight: Promise<BootstrapReport> | null = null;
 
-/** Resolves once the stored chapters are in memory. */
+/** Resolves once the session's current chapter tables are reflected in the reader. */
 export function whenContentReady(): Promise<BootstrapReport> {
   return inFlight ?? ensureContentLoaded();
 }

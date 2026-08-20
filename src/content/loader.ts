@@ -32,6 +32,7 @@ export interface LoadedChapter extends Chapter {
 // during render; only where it is FILLED FROM has changed.
 
 let LOADED: LoadedChapter[] = [];
+let CONTENT_VERSION = 0;
 
 /**
  * Replace the in-memory chapter list. Called after hydrating from IndexedDB and
@@ -39,6 +40,12 @@ let LOADED: LoadedChapter[] = [];
  */
 export function setLoadedChapters(chapters: Chapter[]): void {
   LOADED = chapters.map((c) => ({ ...c, origin: 'shared' as const }));
+  CONTENT_VERSION++;
+}
+
+/** Monotonic session version used to reuse derived indexes until content changes. */
+export function contentVersion(): number {
+  return CONTENT_VERSION;
 }
 
 /** How many chapters are currently loaded — used by boot to decide what to show. */

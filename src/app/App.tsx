@@ -253,7 +253,7 @@ function Shell({ userId }: { userId: string }) {
           id: d.id,
           label: d.title.length > 80 ? d.title.slice(0, 80) + '…' : d.title,
           hint: m.KIND_LABEL[d.kind],
-          run: () => navigate(d.route.replace(/#.*$/, '')),
+          run: () => navigate(d.route),
         }))
       );
     });

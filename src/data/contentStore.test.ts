@@ -66,6 +66,32 @@ describe('contentStore — tables', () => {
     expect(mem.chapters.size).toBe(0);
     expect(mem.media.size).toBe(0);
   });
+
+  it('indexes rows by chapter and keeps the index correct on overwrite', () => {
+    mem.cards.put(card('c1', 'A', 'ana-ch1'));
+    mem.cards.put(card('c2', 'B', 'sur-ch1'));
+    mem.cards.put(card('c1', 'C', 'sur-ch1'));
+
+    expect(mem.chapterRows('ana-ch1').cards).toHaveLength(0);
+    expect(mem.chapterRows('sur-ch1').cards.map((row) => row.id).sort()).toEqual(['c1', 'c2']);
+  });
+
+  it('removes exactly one chapter and returns its card ids', () => {
+    mem.chapters.put({ id: 'ana-ch1' });
+    mem.chapters.put({ id: 'sur-ch1' });
+    mem.cards.put(card('c1', 'A', 'ana-ch1'));
+    mem.cards.put(card('c2', 'B', 'sur-ch1'));
+    mem.mcqs.put({ id: 'q1', chapterId: 'ana-ch1' });
+    mem.media.put({ imageId: 'ana-ch1:figure', src: 'x' });
+
+    expect(mem.removeChapter('ana-ch1')).toEqual(['c1']);
+    expect(mem.cards.get('c1')).toBeUndefined();
+    expect(mem.mcqs.get('q1')).toBeUndefined();
+    expect(mem.media.get('ana-ch1:figure')).toBeUndefined();
+    expect(mem.chapters.get('ana-ch1')).toBeUndefined();
+    expect(mem.cards.get('c2')).toBeDefined();
+    expect(mem.chapters.get('sur-ch1')).toBeDefined();
+  });
 });
 
 describe('contentStore — deck queries', () => {

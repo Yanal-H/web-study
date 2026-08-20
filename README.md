@@ -135,6 +135,10 @@ is served `no-cache` so the new shell loads; a `vite:preloadError` guard reloads
 once if a lazy chunk hash changed. Open sessions and learner-owned progress,
 notes and cards are never lost across a redeploy.
 
+Chapter synchronization first requests a small revision manifest, then downloads
+changed packs in bounded groups. Reopening search reuses a revision-aware index;
+the worker receives only searchable text, not figures, explanations or progress.
+
 ## Reference / legacy files (kept during migration)
 
 - `Foundation__Med_School_Toolkit-8.html` — the shipped single-file app; source of
