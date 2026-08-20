@@ -5,6 +5,7 @@ import { useToast } from '../../design/Toast';
 import { checkAdmin } from '../../lib/admin';
 import { supabase } from '../../lib/supabase';
 import { useAuth } from '../auth/session';
+import CommunityAdmin from './CommunityAdmin';
 
 type Channel = { id: string; name: string; description: string | null; channel_type: string; academic_year: string | null };
 type Message = { id: string; channel_id: string; author_id: string; author_alias: string; body: string; status: 'visible' | 'hidden' | 'deleted'; created_at: string; edited_at: string | null };
@@ -31,6 +32,7 @@ export default function CommunityView() {
   const [more, setMore] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
   const [problem, setProblem] = useState<string | null>(null);
+  const [managing, setManaging] = useState(false);
 
   const selected = useMemo(() => channels.find((channel) => channel.id === channelId) ?? null, [channels, channelId]);
 
@@ -121,10 +123,12 @@ export default function CommunityView() {
 
   return (
     <>
-      <header className="page-head">
-        <h1>Community</h1>
-        <div className="sub">Private department discussions. Use your public alias; be helpful, precise, and respectful.</div>
+      <header className="page-head row spread" style={{ alignItems: 'flex-end' }}>
+        <div><h1>{managing ? 'Community administration' : 'Community'}</h1>
+        <div className="sub">{managing ? 'Departments, channels, and private student roster.' : 'Private department discussions. Use your public alias; be helpful, precise, and respectful.'}</div></div>
+        {isAdmin && <Button onClick={() => setManaging((value) => !value)}>{managing ? 'Back to discussions' : 'Manage community'}</Button>}
       </header>
+      {managing && isAdmin ? <CommunityAdmin onStructureChanged={() => void loadChannels()} /> : <>
       {problem && <Card className="community-alert"><strong>Community unavailable.</strong> {problem}</Card>}
       {loading ? <Card>Loading your channels…</Card> : channels.length === 0 ? (
         <Card><EmptyState icon={<IconResources size={22} />} title="No community channels assigned yet">Your administrator controls department access from the private roster.</EmptyState></Card>
@@ -156,6 +160,7 @@ export default function CommunityView() {
           </section>
         </div>
       )}
+      </>}
     </>
   );
 }
