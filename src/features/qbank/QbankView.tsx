@@ -1,11 +1,13 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useStore, useStoreVersion } from '../../state/useStore';
 import { Card, Button, Stat, Segmented } from '../../design/primitives';
-import { allMcqs, allEmqs, getChapter } from '../../content/loader';
+import { allMcqs, allEmqs } from '../../content/loader';
+import { getCatalogChapter } from '../../content/catalog';
+import { ensureContentKind } from '../../data/remoteContent';
 
 /** Chapter title for an id, falling back to the id when a pack has been removed. */
-const chapterTitle = (id: string) => getChapter(id)?.title ?? id;
+const chapterTitle = (id: string) => getCatalogChapter(id)?.title ?? id;
 import {
   buildPool,
   poolCount,
@@ -45,6 +47,16 @@ export default function QbankView() {
   const [chapter, setChapter] = useState<string>(preset?.chapterId ?? '');
   const [difficulties, setDifficulties] = useState<number[]>([1, 2, 3]);
   const [size, setSize] = useState<number>(20);
+  const [loadingBank, setLoadingBank] = useState(true);
+  const [bankLoadFailed, setBankLoadFailed] = useState(false);
+
+  useEffect(() => {
+    let alive = true;
+    void ensureContentKind('questions')
+      .then((report) => { if (alive) setBankLoadFailed(report.failed.length > 0); })
+      .finally(() => { if (alive) setLoadingBank(false); });
+    return () => { alive = false; };
+  }, []);
 
   const bank = useMemo(() => allMcqs(), [storeVersion]);
   const emqs = useMemo(() => allEmqs(), [storeVersion]);
@@ -78,6 +90,27 @@ export default function QbankView() {
   // The pool is small and the filter is a fresh object each render; calculate it
   // directly so the displayed count always follows every selected filter.
   const available = poolCount(filter);
+
+  if (loadingBank) {
+    return (
+      <>
+        <header className="page-head"><h1>Question Bank</h1></header>
+        <Card><div className="route-fallback">Loading questions…</div></Card>
+      </>
+    );
+  }
+
+  if (bankLoadFailed) {
+    return (
+      <>
+        <header className="page-head"><h1>Question Bank</h1></header>
+        <Card>
+          <p>Questions could not be downloaded. Check your connection and try again.</p>
+          <Button variant="primary" onClick={() => window.location.reload()}>Try again</Button>
+        </Card>
+      </>
+    );
+  }
 
   function toggleDiff(d: number) {
     setDifficulties((cur) => (cur.includes(d) ? cur.filter((x) => x !== d) : [...cur, d]).sort());

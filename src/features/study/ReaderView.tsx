@@ -1,7 +1,9 @@
 import { useEffect, useMemo, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { useParams, useNavigate } from 'react-router-dom';
-import { getChapter, chapterCards, chapterMcqs, listChapters } from '../../content/loader';
+import { getChapter, chapterCards, chapterMcqs } from '../../content/loader';
+import { getCatalogChapter, listCatalogChapters } from '../../content/catalog';
+import { ensureChapterBody } from '../../data/remoteContent';
 import { useStore, useStoreVersion } from '../../state/useStore';
 import { chapterLearningProgress } from './progress';
 import { update } from '../../state/store';
@@ -36,7 +38,7 @@ function MasteryRing({ chapter }: { chapter: NonNullable<ReturnType<typeof getCh
 /** Resolve a [[wikilink]] target to a chapter route (matches chapter or section title). */
 function resolveWikilink(target: string): string | null {
   const t = target.trim().toLowerCase();
-  for (const ch of listChapters()) {
+  for (const ch of listCatalogChapters()) {
     if (ch.title.toLowerCase() === t) return `/study/${encodeURIComponent(ch.id)}`;
     for (const s of ch.sections) {
       if (s.title.toLowerCase() === t) return `/study/${encodeURIComponent(ch.id)}`;
@@ -104,7 +106,10 @@ export default function ReaderView() {
   const { id } = useParams();
   const navigate = useNavigate();
   const storeVersion = useStoreVersion();
-  const chapter = useMemo(() => (id ? getChapter(decodeURIComponent(id)) : undefined), [id, storeVersion]);
+  const chapterId = id ? decodeURIComponent(id) : '';
+  const chapter = useMemo(() => (chapterId ? getChapter(chapterId) : undefined), [chapterId, storeVersion]);
+  const [loadingChapter, setLoadingChapter] = useState(true);
+  const [chapterLoadFailed, setChapterLoadFailed] = useState(false);
   const [tab, setTab] = useState<Tab>(() => {
     if (!id) return 'read';
     const saved = sessionStorage.getItem(`foundation_reader_tab_${id}`);
@@ -112,6 +117,20 @@ export default function ReaderView() {
   });
   const [focus, setFocus] = useState(false);
   const [progress, setProgress] = useState(0);
+
+  useEffect(() => {
+    let alive = true;
+    setLoadingChapter(true);
+    setChapterLoadFailed(false);
+    if (!chapterId) {
+      setLoadingChapter(false);
+      return;
+    }
+    void ensureChapterBody(chapterId)
+      .then((report) => { if (alive) setChapterLoadFailed(report.failed.includes(chapterId)); })
+      .finally(() => { if (alive) setLoadingChapter(false); });
+    return () => { alive = false; };
+  }, [chapterId]);
 
   useEffect(() => {
     if (!id) return;
@@ -162,19 +181,33 @@ export default function ReaderView() {
   // (computed before the early return so hook order is stable)
   const siblings = useMemo(() => {
     if (!chapter) return { prev: undefined, next: undefined };
-    const all = listChapters().filter((c) => c.subject === chapter.subject);
+    const all = listCatalogChapters().filter((c) => c.subject === chapter.subject);
     const i = all.findIndex((c) => c.id === chapter.id);
     return { prev: i > 0 ? all[i - 1] : undefined, next: i >= 0 && i < all.length - 1 ? all[i + 1] : undefined };
   }, [chapter, storeVersion]);
+
+  if (!chapter && loadingChapter) {
+    const catalog = getCatalogChapter(chapterId);
+    return (
+      <>
+        <header className="page-head">
+          <h1>{catalog?.title || 'Loading chapter…'}</h1>
+          <div className="sub">Downloading this chapter securely…</div>
+        </header>
+        <Card><div className="route-fallback">Loading…</div></Card>
+      </>
+    );
+  }
 
   if (!chapter) {
     return (
       <>
         <header className="page-head">
-          <h1>Chapter not found</h1>
-          <div className="sub">It may have been removed.</div>
+          <h1>{chapterLoadFailed ? 'Could not load chapter' : 'Chapter not found'}</h1>
+          <div className="sub">{chapterLoadFailed ? 'Check your connection and try again.' : 'It may have been removed.'}</div>
         </header>
         <Card>
+          {chapterLoadFailed && <Button variant="primary" onClick={() => window.location.reload()}>Try again</Button>}
           <Button onClick={() => navigate('/study')}>Back to library</Button>
         </Card>
       </>

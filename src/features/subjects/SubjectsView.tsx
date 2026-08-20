@@ -7,9 +7,9 @@ import { Button, IconButton, Card, Field, Input, EmptyState, ProgressRing } from
 import { Dialog } from '../../design/Dialog';
 import { useToast } from '../../design/Toast';
 import { IconPlus, IconEdit, IconTrash, IconSubjects, IconChevron, IconStudy } from '../../design/icons';
-import { allCards, allMcqs } from '../../content/loader';
+import { listCatalogChapters } from '../../content/catalog';
 import { deckStats } from '../../data/session';
-import { whenContentReady } from '../../data/bootstrap';
+import { whenPublishedContentReady } from '../../data/remoteContent';
 import type { Subject } from '../../state/types';
 
 export default function SubjectsView() {
@@ -24,7 +24,7 @@ export default function SubjectsView() {
   const [engine, setEngine] = useState<Record<string, { learned: number; due: number; total: number }>>({});
   useEffect(() => {
     let alive = true;
-    void whenContentReady().then(async () => {
+    void whenPublishedContentReady().then(async () => {
       const names = state.subjects.map((s) => s.name);
       const out: Record<string, { learned: number; due: number; total: number }> = {};
       for (const name of names) {
@@ -42,15 +42,11 @@ export default function SubjectsView() {
   // content available per subject (cards + questions) — powers each card's stats
   const bySubject = useMemo(() => {
     const m = new Map<string, { cards: number; mcqs: number }>();
-    for (const c of allCards()) {
-      const e = m.get(c.subject) || { cards: 0, mcqs: 0 };
-      e.cards++;
-      m.set(c.subject, e);
-    }
-    for (const q of allMcqs()) {
-      const e = m.get(q.subject) || { cards: 0, mcqs: 0 };
-      e.mcqs++;
-      m.set(q.subject, e);
+    for (const chapter of listCatalogChapters()) {
+      const e = m.get(chapter.subject) || { cards: 0, mcqs: 0 };
+      e.cards += chapter.counts.cards;
+      e.mcqs += chapter.counts.mcqs;
+      m.set(chapter.subject, e);
     }
     return m;
   }, [sv]);

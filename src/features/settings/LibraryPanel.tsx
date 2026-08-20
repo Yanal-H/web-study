@@ -5,6 +5,7 @@ import { countStore, clearAll, CARDS, MCQS, CHAPTERS, MEDIA, REVIEWS, SCHEDULING
 import { deckStats } from '../../data/session';
 import { rehydrateChapters } from '../../data/bootstrap';
 import { resetContentSync, syncPublishedContent } from '../../data/remoteContent';
+import { listCatalogChapters } from '../../content/catalog';
 
 /**
  * What the card engine is holding. Every figure here is a `count()` over an
@@ -26,7 +27,16 @@ export default function LibraryPanel() {
         countStore(REVIEWS),
         countStore(SCHEDULING),
       ]);
-      setCounts({ chapters, cards, mcqs, media, reviews, sched });
+      const catalog = listCatalogChapters();
+      setCounts({
+        chapters: catalog.length,
+        cards: catalog.reduce((sum, chapter) => sum + chapter.counts.cards, 0),
+        mcqs: catalog.reduce((sum, chapter) => sum + chapter.counts.mcqs, 0),
+        loadedChapters: chapters,
+        loadedCards: cards,
+        loadedMcqs: mcqs,
+        media, reviews, sched,
+      });
       setStats(await deckStats(''));
     } catch (e) {
       toast(`Card engine unavailable: ${(e as Error).message}`, 'error');
@@ -37,7 +47,7 @@ export default function LibraryPanel() {
     void refresh();
   }, [refresh]);
 
-  /** Re-download every chapter from the content store, keeping scheduling rows. */
+  /** Refresh identities and discard open bodies, keeping scheduling rows. */
   async function rebuild() {
     setBusy(true);
     resetContentSync();
@@ -48,7 +58,7 @@ export default function LibraryPanel() {
     if (report.skipped === 'signed-out') toast('Sign in first to download chapters.', 'error');
     else if (!report.configured) toast('No content store is set up for this site.', 'error');
     else if (report.failed.length) toast(`${report.failed.length} chapter(s) failed to download.`, 'error');
-    else toast(`Re-downloaded ${report.imported.length} chapter(s)`, 'success');
+    else toast(`Refreshed ${report.catalogued.length} published chapter(s)`, 'success');
   }
 
   /** Clear everything on the device, including review history, then re-download. */
@@ -68,8 +78,8 @@ export default function LibraryPanel() {
     <Card className="settings-section">
       <h2>Card engine</h2>
       <p className="muted" style={{ fontSize: 13.5, marginTop: -6 }}>
-        Chapters, cards, questions and scheduling live in an indexed database on this device.
-        The due queue is a range scan, so it stays fast however many cards you add.
+        Published chapter identities and deck counts load first. Full text, cards and questions are
+        downloaded securely only when you open the matching study feature; personal scheduling stays on this device.
       </p>
 
       {counts && (
@@ -77,7 +87,7 @@ export default function LibraryPanel() {
           <Metric label="Chapters" value={counts.chapters} />
           <Metric label="Cards" value={counts.cards} />
           <Metric label="Questions" value={counts.mcqs} />
-          <Metric label="Diagrams" value={counts.media} />
+          <Metric label="Bodies open" value={counts.loadedChapters} />
           <Metric label="Scheduled" value={counts.sched} />
           <Metric label="Reviews logged" value={counts.reviews} />
         </div>
@@ -91,23 +101,21 @@ export default function LibraryPanel() {
 
       {busy && (
         <div className="muted" style={{ fontSize: 13, marginTop: 12 }}>
-          Downloading chapters…
+          Refreshing library catalog…
         </div>
       )}
 
       <div className="row wrap" style={{ gap: 10, marginTop: 14 }}>
         <Button onClick={() => void rebuild()} disabled={busy}>
-          Re-import chapters
+          Refresh catalog
         </Button>
         <Button variant="ghost" onClick={() => void wipe()} disabled={busy}>
           Rebuild from scratch
         </Button>
       </div>
       <p className="muted" style={{ fontSize: 12.5, marginTop: 8 }}>
-        Re-importing downloads the chapters again and overwrites their text and cards, but keeps
-        every scheduling row, so your progress survives. Rebuilding from scratch clears the review
-        history too. Both need a connection because shared chapters are refreshed from the protected store
-        each session.
+        Refreshing clears open chapter bodies and reloads the protected catalog while keeping progress.
+        Rebuilding from scratch also clears scheduling and review history. Both require a connection.
       </p>
     </Card>
   );

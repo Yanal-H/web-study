@@ -192,7 +192,7 @@ export async function importPack(
  * Existing rows are left exactly as they are — re-importing a pack must never
  * reset a student's progress.
  */
-export async function seedScheduling(cards: StoredCard[]): Promise<number> {
+export async function seedScheduling(cards: Array<Pick<StoredCard, 'id' | 'deck'>>): Promise<number> {
   const db = await openDB();
   let seeded = 0;
   for (let i = 0; i < cards.length; i += CHUNK) {

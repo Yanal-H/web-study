@@ -71,6 +71,13 @@ export const MEDIA = 'media';
 export const REVIEWS = 'reviews';
 
 import * as mem from './contentStore';
+import {
+  catalogDeckCounts,
+  catalogDeckKeys,
+  catalogDecksUnder,
+  isAuthorizedCard,
+  isCatalogInitialized,
+} from '../content/catalog';
 import { scopedDatabaseName } from '../lib/storageScope';
 
 let dbPromise: Promise<IDBDatabase> | null = null;
@@ -280,17 +287,17 @@ function activeRowsInRange(idx: IDBIndex, range: IDBValidKey | IDBKeyRange): Pro
 
 /** Every distinct deck path that has at least one card. */
 export async function allDeckKeys(): Promise<string[]> {
-  return mem.allDeckKeys();
+  return isCatalogInitialized() ? catalogDeckKeys() : mem.allDeckKeys();
 }
 
 /** A deck path and every path nested beneath it. */
 export async function decksUnder(deck: string): Promise<string[]> {
-  return mem.decksUnder(deck);
+  return isCatalogInitialized() ? catalogDecksUnder(deck) : mem.decksUnder(deck);
 }
 
 /** Card counts per deck path. */
 export async function deckCounts(): Promise<Record<string, number>> {
-  return mem.deckCounts();
+  return isCatalogInitialized() ? catalogDeckCounts() : mem.deckCounts();
 }
 
 /* --------------------------------------------------------------- reads */
@@ -451,7 +458,7 @@ export async function resetEngineProgress(): Promise<void> {
 
 /** Remove durable schedules whose authorised card bodies no longer exist. */
 export async function purgeOrphanScheduling(): Promise<number> {
-  if (mem.cards.size === 0) return 0;
+  if (!isCatalogInitialized()) return 0;
   const db = await openDB();
   const t = db.transaction([SCHEDULING], 'readwrite');
   const store = t.objectStore(SCHEDULING);
@@ -462,7 +469,7 @@ export async function purgeOrphanScheduling(): Promise<number> {
       const cursor = request.result;
       if (!cursor) return resolve();
       const row = cursor.value as Scheduling;
-      if (!mem.hasCard(row.cardId)) { cursor.delete(); removed++; }
+      if (!isAuthorizedCard(row.cardId)) { cursor.delete(); removed++; }
       cursor.continue();
     };
     request.onerror = () => reject(request.error);

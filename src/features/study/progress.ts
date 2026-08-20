@@ -5,7 +5,8 @@
 // Keeping the two calculations explicit prevents the retired SM-2 map from
 // silently becoming a second source of truth for shared cards.
 import { state } from '../../state/store';
-import { chapterMcqs, deckRoot, type LoadedChapter } from '../../content/loader';
+import type { LoadedChapter } from '../../content/loader';
+import type { ChapterCatalogEntry } from '../../content/catalog';
 import { deckStats } from '../../data/session';
 
 export interface ChapterProgress {
@@ -21,7 +22,10 @@ export interface ChapterProgress {
 export type ChapterLearningProgress = Omit<ChapterProgress, 'cardsDue'>;
 
 /** Synchronous progress whose source is the user-scoped app state. */
-export function chapterLearningProgress(ch: LoadedChapter): ChapterLearningProgress {
+type ProgressChapter = Pick<LoadedChapter, 'id' | 'sections' | 'mcqs' | 'deck' | 'subject' | 'title'>
+  | ChapterCatalogEntry;
+
+export function chapterLearningProgress(ch: ProgressChapter): ChapterLearningProgress {
   const prog = state.study.progress[ch.id] || {};
   const readMap: Record<string, boolean> = prog.sections || {};
   const sectionsTotal = ch.sections.length;
@@ -30,7 +34,7 @@ export function chapterLearningProgress(ch: LoadedChapter): ChapterLearningProgr
   let attempted = 0;
   let correct = 0;
   let total = 0;
-  for (const q of chapterMcqs(ch)) {
+  for (const q of ch.mcqs) {
     const p = state.study.mcqPerf[q.id];
     if (p && p.attempts > 0) {
       attempted++;
@@ -50,7 +54,7 @@ export function chapterLearningProgress(ch: LoadedChapter): ChapterLearningProgr
 }
 
 /** Combine app-state learning progress with an FSRS count already loaded by the view. */
-export function chapterProgress(ch: LoadedChapter, cardsDue: number): ChapterProgress {
+export function chapterProgress(ch: ProgressChapter, cardsDue: number): ChapterProgress {
   return { ...chapterLearningProgress(ch), cardsDue };
 }
 
@@ -58,10 +62,10 @@ export function chapterProgress(ch: LoadedChapter, cardsDue: number): ChapterPro
  * Load all chapter card counts together so the Study screen performs one
  * coordinated refresh rather than each chapter owning an independent effect.
  */
-export async function chapterCardDueCounts(chapters: LoadedChapter[]): Promise<Record<string, number>> {
+export async function chapterCardDueCounts(chapters: ProgressChapter[]): Promise<Record<string, number>> {
   const rows = await Promise.all(
     chapters.map(async (chapter) => {
-      const stats = await deckStats(deckRoot(chapter));
+      const stats = await deckStats(chapter.deck || `${chapter.subject}::${chapter.title}`);
       return [chapter.id, stats.due + stats.neu] as const;
     })
   );

@@ -2,12 +2,12 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useStore, useStoreVersion } from '../../state/useStore';
 import { deckStats } from '../../data/session';
-import { whenContentReady } from '../../data/bootstrap';
+import { whenPublishedContentReady } from '../../data/remoteContent';
 import { Button, Card, EmptyState } from '../../design/primitives';
 import { IconFlashcards, IconQbank, IconStudy, IconTarget } from '../../design/icons';
 import { todayProgress, weakMcqs } from '../../lib/stats';
 import { collectItems, queueStats } from '../flashcards/deck';
-import { allMcqs, getChapter } from '../../content/loader';
+import { getCatalogChapter, listCatalogChapters } from '../../content/catalog';
 import { isDue as mcqDue } from '../qbank/perf';
 import WelcomeTour from '../onboarding/WelcomeTour';
 
@@ -32,7 +32,7 @@ export default function DashboardView() {
 
   useEffect(() => {
     let alive = true;
-    void whenContentReady()
+    void whenPublishedContentReady()
       .then(() => deckStats(''))
       .then((next) => alive && setEngineQueue(next))
       .catch(() => {});
@@ -44,7 +44,8 @@ export default function DashboardView() {
     new: userQueue.neu + engineQueue.neu,
     total: userQueue.total + engineQueue.total,
   };
-  const questionDue = allMcqs()
+  const catalogQuestions = listCatalogChapters().flatMap((chapter) => chapter.mcqs);
+  const questionDue = catalogQuestions
     .filter((question) => state.study.mcqPerf[question.id] && mcqDue(question.id)).length;
   const weak = weakMcqs(state.study.mcqPerf, 3);
   const goal = todayProgress(state);
@@ -53,7 +54,7 @@ export default function DashboardView() {
     const progress = state.study.progress || {};
     return Object.entries(progress)
       .filter(([, item]: [string, any]) => item?.lastOpened)
-      .map(([id, item]: [string, any]) => ({ id, chapter: getChapter(id), lastOpened: item.lastOpened as string }))
+      .map(([id, item]: [string, any]) => ({ id, chapter: getCatalogChapter(id), lastOpened: item.lastOpened as string }))
       .filter((item) => item.chapter)
       .sort((a, b) => (a.lastOpened < b.lastOpened ? 1 : -1))
       .slice(0, 3);
@@ -161,7 +162,7 @@ export default function DashboardView() {
                 <p>Based on questions answered at least twice.</p>
                 <div className="weak-list">
                   {weak.map((item) => {
-                    const question = allMcqs().find((candidate) => candidate.id === item.qid);
+                    const question = catalogQuestions.find((candidate) => candidate.id === item.qid);
                     return (
                       <div key={item.qid} className="weak-item">
                         <div><strong>{question?.subject || 'Question bank'}</strong><span>{Math.round(item.accuracy * 100)}% correct across {item.attempts} attempts</span></div>

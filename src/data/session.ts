@@ -21,6 +21,7 @@ import {
 } from './db';
 import { schedule, newScheduling } from './fsrs';
 import { hasCard } from './contentStore';
+import { isAuthorizedCard, isCatalogInitialized } from '../content/catalog';
 
 export interface EngineItem {
   cardId: string;
@@ -139,7 +140,7 @@ export async function deckTree(now = Date.now()): Promise<EngineDeckNode[]> {
       const c = cur.result;
       if (!c) return resolve();
       const row = c.value as Scheduling;
-      if (!row.suspended && hasCard(row.cardId)) {
+      if (!row.suspended && (isCatalogInitialized() ? isAuthorizedCard(row.cardId) : hasCard(row.cardId))) {
         const t = tally.get(row.deck) || { total: 0, due: 0, neu: 0 };
         t.total++;
         if (row.state === 'new') t.neu++;

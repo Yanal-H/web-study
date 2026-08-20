@@ -6,6 +6,7 @@ import { Dialog } from '../../design/Dialog';
 import { IconPlus, IconTrash, IconMnemonics } from '../../design/icons';
 import { useToast } from '../../design/Toast';
 import { listChapters } from '../../content/loader';
+import { ensureContentKind } from '../../data/remoteContent';
 
 interface Mnem {
   id: string;
@@ -35,6 +36,10 @@ export default function MnemonicsView() {
   const [adding, setAdding] = useState(false);
   const [quiz, setQuiz] = useState(false);
   const [query, setQuery] = useState('');
+
+  useEffect(() => {
+    void ensureContentKind('mnemonics');
+  }, []);
 
   const list: Mnem[] = useMemo(() => {
     const mine: Mnem[] = (Array.isArray(state.mnemonics) ? state.mnemonics : []).map((m: any) => ({

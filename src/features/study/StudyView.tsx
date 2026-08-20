@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { listChapters, type LoadedChapter } from '../../content/loader';
+import { listCatalogChapters, type ChapterCatalogEntry } from '../../content/catalog';
 import { useStore, useStoreVersion } from '../../state/useStore';
 import { chapterCardDueCounts, chapterProgress } from './progress';
 import { Card, Button, Badge, EmptyState } from '../../design/primitives';
@@ -13,7 +13,7 @@ export default function StudyView() {
   // Content hydration calls notify() once authenticated packs have arrived.
   // Key this memo to that version so a direct visit to /study cannot get stuck
   // with the empty library that rendered before the background download ended.
-  const chapters = useMemo(() => listChapters(), [storeVersion]);
+  const chapters = useMemo(() => listCatalogChapters(), [storeVersion]);
   // a subject handed over from the Subjects page narrows the library
   const presetSubject = ((useLocation().state ?? null) as { subject?: string } | null)?.subject ?? '';
   const [filterSubject, setFilterSubject] = useState<string>(presetSubject);
@@ -36,7 +36,7 @@ export default function StudyView() {
   }, [chapters, storeVersion]);
 
   const recent = useMemo(() => {
-    let best: { ch: LoadedChapter; when: string } | null = null;
+    let best: { ch: ChapterCatalogEntry; when: string } | null = null;
     for (const ch of chapters) {
       const when = state.study.progress[ch.id]?.lastOpened;
       if (when && (!best || when > best.when)) best = { ch, when };
@@ -45,7 +45,7 @@ export default function StudyView() {
   }, [chapters, state.study.progress, state.schemaVersion]);
 
   const bySubject = useMemo(() => {
-    const map = new Map<string, LoadedChapter[]>();
+    const map = new Map<string, ChapterCatalogEntry[]>();
     for (const c of chapters) {
       if (filterSubject && c.subject !== filterSubject) continue;
       if (!map.has(c.subject)) map.set(c.subject, []);
@@ -120,10 +120,10 @@ export default function StudyView() {
                     </div>
                   </div>
                   <div className="row wrap" style={{ gap: 6 }}>
-                    <Badge>{c.sections.length} sections</Badge>
-                    <Badge tone="accent">{c.cards.length} cards</Badge>
-                    <Badge tone="info">{c.mcqs.length} MCQs</Badge>
-                    {c.emqs.length > 0 && <Badge tone="warning">{c.emqs.length} EMQs</Badge>}
+                    <Badge>{c.counts.sections} sections</Badge>
+                    <Badge tone="accent">{c.counts.cards} cards</Badge>
+                    <Badge tone="info">{c.counts.mcqs} MCQs</Badge>
+                    {c.counts.emqs > 0 && <Badge tone="warning">{c.counts.emqs} EMQs</Badge>}
                   </div>
                   <ChapterProgressBar chapter={c} cardsDue={cardDue?.[c.id]} cardDueFailed={cardDueFailed} />
                 </Card>
@@ -140,7 +140,7 @@ function ChapterProgressBar({
   cardsDue,
   cardDueFailed,
 }: {
-  chapter: LoadedChapter;
+  chapter: ChapterCatalogEntry;
   cardsDue?: number;
   cardDueFailed: boolean;
 }) {

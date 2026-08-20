@@ -19,6 +19,7 @@ import { requestPersistence } from '../lib/blobs';
 import { useAuth } from '../features/auth/session';
 import SignIn from '../features/auth/SignIn';
 import { checkAdmin } from '../lib/admin';
+import { catalogChapterCount } from '../content/catalog';
 
 function BrandMark({ size = 40 }: { size?: number }) {
   return (
@@ -158,12 +159,10 @@ function Shell({ userId }: { userId: string }) {
     return () => document.removeEventListener('keydown', onKey);
   }, [navigate]);
 
-  // Download this session's chapters.
+  // Load this session's authenticated chapter catalog.
   //
-  // Content is held in memory only, so every visit starts empty and fetches
-  // again — that is the deliberate cost of keeping no copy on the device. Before
-  // downloading, remove any library left on disk by an older build, so upgrading
-  // actually takes the copy away instead of leaving it behind.
+  // Catalog metadata and any bodies opened later are held in memory only. Before
+  // syncing, remove any authored library left on disk by an older build.
   const [content, setContent] = useState<'loading' | 'ready' | 'offline' | 'empty'>('loading');
   useEffect(() => {
     let alive = true;
@@ -174,7 +173,8 @@ function Shell({ userId }: { userId: string }) {
       const report = await m.syncPublishedContent().catch(() => null);
       if (!alive) return;
 
-      const count = await rehydrateChapters().catch(() => 0);
+      await rehydrateChapters().catch(() => 0);
+      const count = catalogChapterCount();
       const { invalidateDeckTree } = await import('../data/session');
       invalidateDeckTree();
       notify();
@@ -246,6 +246,8 @@ function Shell({ userId }: { userId: string }) {
     if (!cmdOpen) return;
     let alive = true;
     void import('../lib/searchIndex').then(async (m) => {
+      const { ensureContentKind } = await import('../data/remoteContent');
+      await ensureContentKind('all');
       const docs = await m.buildIndex(state.notes);
       if (!alive) return;
       setSearchFn(() => (query: string) =>

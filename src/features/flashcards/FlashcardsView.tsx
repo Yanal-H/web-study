@@ -6,7 +6,8 @@ import { Dialog } from '../../design/Dialog';
 import { useToast } from '../../design/Toast';
 import { IconFlashcards, IconUpload, IconPlus } from '../../design/icons';
 import ActivityCalendar from '../dashboard/ActivityCalendar';
-import { allCards, getChapter } from '../../content/loader';
+import { allCards } from '../../content/loader';
+import { catalogCardCount, getCatalogChapter } from '../../content/catalog';
 import {
   collectItems,
   buildQueue,
@@ -18,7 +19,7 @@ import {
 import { engineQueue, mergeTrees, findNode } from './engineBridge';
 import { MAX_STUDY_ALL_CARDS, deckTree as engineDeckTree, type EngineDeckNode } from '../../data/session';
 import { whenContentReady } from '../../data/bootstrap';
-import { whenPublishedContentReady } from '../../data/remoteContent';
+import { ensureContentKind, ensureDeckContent, whenPublishedContentReady } from '../../data/remoteContent';
 import DeckBrowser from './DeckBrowser';
 import ReviewSession from './ReviewSession';
 import { isChapterPackJson, parseDelimited, importCards } from './anki';
@@ -39,8 +40,8 @@ export default function FlashcardsView() {
   const queryChapter = new URLSearchParams(location.search).get('chapter');
   const queryChapterDeck = queryChapter
     ? (() => {
-        const chapter = getChapter(queryChapter);
-        return chapter?.deck || (chapter ? `${chapter.subject}::${chapter.title}` : '');
+        const chapter = getCatalogChapter(queryChapter);
+        return chapter?.deck || '';
       })()
     : '';
   const presetDeck = handoff?.deck || queryChapterDeck;
@@ -62,7 +63,7 @@ export default function FlashcardsView() {
     [state.flashcards, state.schemaVersion, sv]
   );
   const userStats = useMemo(() => queueStats(userItems), [userItems, state.study.cardSched]);
-  const contentCount = useMemo(() => allCards().length, [sv]);
+  const contentCount = useMemo(() => catalogCardCount() || allCards().length, [sv]);
 
   const refreshDecks = useCallback(async () => {
     await whenContentReady();
@@ -99,6 +100,8 @@ export default function FlashcardsView() {
       // The downloaded pack must be in THIS page's memory before scheduling rows
       // are turned into review cards. This prevents “540 due, but no cards”.
       await whenPublishedContentReady();
+      const load = await ensureDeckContent(path);
+      if (load.failed.length) throw new Error('card bodies unavailable');
       const S = state.settings.scheduler;
       const how = force ?? scope;
       const fromEngine = await engineQueue(path, {
@@ -205,7 +208,7 @@ export default function FlashcardsView() {
             <Button size="sm" onClick={() => setMode('occlusion')}>
               Image occlusion
             </Button>
-            <Button size="sm" onClick={() => setMode('browse')}>
+            <Button size="sm" onClick={() => void ensureContentKind('cards').then(() => setMode('browse'))}>
               Browse
             </Button>
             <Button size="sm" variant="ghost" onClick={() => setImporting(true)}>
