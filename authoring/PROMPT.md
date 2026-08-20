@@ -231,7 +231,7 @@ established knowledge for a final-year medical student" >>>
 ## Then
 
 Save the reply as `<subject>-ch<N>-<slug>.json`, then sign in with your
-administrator account and open **Settings → Admin**. Choose the file or paste
+administrator account and open **Admin → Shared study content**. Choose the file or paste
 its contents to validate and publish it to the whole cohort. Students cannot
 import or alter shared chapters.
 

@@ -1,13 +1,9 @@
 {
-  "$ref": "#/definitions/FoundationChapter",
+  "$ref": "#/definitions/FoundationFlashcardDeck",
   "definitions": {
-    "FoundationChapter": {
+    "FoundationFlashcardDeck": {
       "type": "object",
       "properties": {
-        "schema": {
-          "type": "string",
-          "const": "foundation.study-module/v1"
-        },
         "id": {
           "type": "string",
           "pattern": "^[a-z0-9]+-ch\\d+-[a-z0-9-]+$"
@@ -327,6 +323,10 @@
           },
           "default": []
         },
+        "schema": {
+          "type": "string",
+          "const": "foundation.flashcard-deck/v1"
+        },
         "cards": {
           "type": "array",
           "items": {
@@ -504,275 +504,16 @@
             ],
             "additionalProperties": false
           },
-          "default": []
-        },
-        "mcqs": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "properties": {
-              "schema": {
-                "type": "string",
-                "const": "foundation.mcq/v2"
-              },
-              "id": {
-                "type": "string",
-                "minLength": 1
-              },
-              "type": {
-                "type": "string",
-                "enum": [
-                  "single",
-                  "multi"
-                ],
-                "default": "single"
-              },
-              "moduleId": {
-                "type": "string"
-              },
-              "subject": {
-                "type": "string"
-              },
-              "sectionTag": {
-                "type": "string"
-              },
-              "sectionId": {
-                "type": "string"
-              },
-              "difficulty": {
-                "type": "number",
-                "enum": [
-                  1,
-                  2,
-                  3
-                ]
-              },
-              "highYield": {
-                "type": "boolean"
-              },
-              "stem": {
-                "type": "string",
-                "minLength": 1
-              },
-              "options": {
-                "type": "array",
-                "items": {
-                  "type": "object",
-                  "properties": {
-                    "id": {
-                      "type": "string",
-                      "minLength": 1
-                    },
-                    "text": {
-                      "type": "string",
-                      "minLength": 1
-                    },
-                    "correct": {
-                      "type": "boolean"
-                    },
-                    "why": {
-                      "type": "string",
-                      "minLength": 1
-                    }
-                  },
-                  "required": [
-                    "id",
-                    "text",
-                    "correct",
-                    "why"
-                  ],
-                  "additionalProperties": false
-                },
-                "minItems": 2,
-                "maxItems": 6
-              },
-              "explanation": {
-                "type": "array",
-                "items": {
-                  "type": "string",
-                  "minLength": 1
-                },
-                "minItems": 1
-              },
-              "keyFacts": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                },
-                "default": []
-              },
-              "teachingPoint": {
-                "type": "string"
-              },
-              "tags": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "figure": {
-                "type": "object",
-                "properties": {
-                  "id": {
-                    "type": "string"
-                  },
-                  "kind": {
-                    "type": "string",
-                    "enum": [
-                      "image",
-                      "described"
-                    ],
-                    "default": "described"
-                  },
-                  "src": {
-                    "type": "string"
-                  },
-                  "alt": {
-                    "type": "string",
-                    "minLength": 1
-                  },
-                  "caption": {
-                    "type": "string"
-                  },
-                  "described": {
-                    "type": "string"
-                  },
-                  "width": {
-                    "type": "number",
-                    "exclusiveMinimum": 0
-                  },
-                  "height": {
-                    "type": "number",
-                    "exclusiveMinimum": 0
-                  }
-                },
-                "required": [
-                  "alt"
-                ],
-                "additionalProperties": false
-              }
-            },
-            "required": [
-              "id",
-              "difficulty",
-              "stem",
-              "options",
-              "explanation"
-            ],
-            "additionalProperties": false
-          },
-          "default": []
-        },
-        "emqs": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "properties": {
-              "schema": {
-                "type": "string",
-                "const": "foundation.emq/v1"
-              },
-              "id": {
-                "type": "string",
-                "minLength": 1
-              },
-              "type": {
-                "type": "string",
-                "const": "emq",
-                "default": "emq"
-              },
-              "theme": {
-                "type": "string",
-                "minLength": 1
-              },
-              "instruction": {
-                "type": "string"
-              },
-              "sectionId": {
-                "type": "string"
-              },
-              "difficulty": {
-                "type": "number",
-                "enum": [
-                  1,
-                  2,
-                  3
-                ]
-              },
-              "options": {
-                "type": "array",
-                "items": {
-                  "type": "object",
-                  "properties": {
-                    "id": {
-                      "type": "string",
-                      "minLength": 1
-                    },
-                    "text": {
-                      "type": "string",
-                      "minLength": 1
-                    }
-                  },
-                  "required": [
-                    "id",
-                    "text"
-                  ],
-                  "additionalProperties": false
-                },
-                "minItems": 2
-              },
-              "stems": {
-                "type": "array",
-                "items": {
-                  "type": "object",
-                  "properties": {
-                    "id": {
-                      "type": "string"
-                    },
-                    "stem": {
-                      "type": "string",
-                      "minLength": 1
-                    },
-                    "answer": {
-                      "type": "string",
-                      "minLength": 1
-                    },
-                    "why": {
-                      "type": "string"
-                    }
-                  },
-                  "required": [
-                    "stem",
-                    "answer"
-                  ],
-                  "additionalProperties": false
-                },
-                "minItems": 1
-              },
-              "keyFacts": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              }
-            },
-            "required": [
-              "id",
-              "theme",
-              "options",
-              "stems"
-            ],
-            "additionalProperties": false
-          },
-          "default": []
+          "minItems": 1
         }
       },
       "required": [
-        "schema",
         "id",
         "subject",
         "title",
-        "sections"
+        "sections",
+        "schema",
+        "cards"
       ],
       "additionalProperties": false
     }

@@ -8,6 +8,11 @@ import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { zodToJsonSchema } from 'zod-to-json-schema';
 import { ChapterSchema } from '../src/content/schema';
+import {
+  FlashcardDeckDocumentSchema,
+  McqBankDocumentSchema,
+  StudyMaterialDocumentSchema,
+} from '../src/content/importFormats';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const outDir = join(root, 'content', '_schema');
@@ -18,6 +23,16 @@ const jsonSchema = zodToJsonSchema(ChapterSchema, {
   $refStrategy: 'none',
 });
 writeFileSync(join(outDir, 'chapter.schema.json'), JSON.stringify(jsonSchema, null, 2) + '\n');
+
+const standaloneSchemas = [
+  ['study-material.schema.json', 'FoundationStudyMaterial', StudyMaterialDocumentSchema],
+  ['flashcard-deck.schema.json', 'FoundationFlashcardDeck', FlashcardDeckDocumentSchema],
+  ['mcq-bank.schema.json', 'FoundationMcqBank', McqBankDocumentSchema],
+] as const;
+for (const [file, name, schema] of standaloneSchemas) {
+  const emitted = zodToJsonSchema(schema, { name, $refStrategy: 'none' });
+  writeFileSync(join(outDir, file), JSON.stringify(emitted, null, 2) + '\n');
+}
 
 // A documented, minimal, VALID example authors can copy. Field intents live in
 // _docs (ignored by the schema's passthrough-free objects? no — kept in a sibling
@@ -143,4 +158,4 @@ const template = {
 };
 writeFileSync(join(outDir, 'template.json'), JSON.stringify(template, null, 2) + '\n');
 
-console.log('wrote content/_schema/chapter.schema.json and content/_schema/template.json');
+console.log('wrote canonical and standalone schemas plus content/_schema/template.json');

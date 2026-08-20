@@ -320,12 +320,12 @@ and run it again.
    appears (eight digits on the current deployment).
 3. You should land on the dashboard, and your chapters should appear in **Study**
    within a few seconds.
-4. Open **Settings → Admin**. It should say **Administrator**. If it says
-   *Student*, your email is not in `admin_emails()` — re-run Step 2 with the
-   right address.
+4. Open **Admin**. The protected control centre should appear. If it says
+   *Administrator access required*, your email is not in `admin_emails()` —
+   re-run Step 2 with the right address.
 
-From now on you can publish new chapters straight from **Settings → Admin →
-Publish**, without touching the command line or redeploying.
+From now on you can publish new chapters straight from **Admin → Shared study
+content**, without touching the command line or redeploying.
 
 ---
 
@@ -378,7 +378,7 @@ The domain in Step 2 does not match their address exactly. Run
 `select public.allowed_email_domain();` and compare it character by character
 with what comes after the `@` in their email.
 
-**Settings → Admin says "Student" when it should say Administrator**
+**Admin says “Administrator access required” for the administrator account**
 Your email is not in `admin_emails()`. Re-run the SQL from Step 2 with the
 correct address — re-running is safe.
 

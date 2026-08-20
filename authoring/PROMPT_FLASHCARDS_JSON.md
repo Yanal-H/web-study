@@ -8,15 +8,15 @@ no emoji, and accurate established medical knowledge only.
 Create a flashcard pack on TOPIC: <TOPIC> for SUBJECT: <SUBJECT>. Source
 material: <PASTE SOURCE OR WRITE ESTABLISHED KNOWLEDGE>.
 
-Use a valid Foundation chapter shell:
+Use the standalone flashcard-deck format:
 {
-  "schema":"foundation.study-module/v1",
-  "id":"<subject>-ch<N>-<topic-slug>",
+  "schema":"foundation.flashcard-deck/v1",
+  "id":"<subject>-ch<N>-<topic-slug>-cards",
   "subject":"<SUBJECT>",
   "title":"<TOPIC>",
   "deck":"<SUBJECT>::<TOPIC>",
   "sections":[{"id":"s1","n":"1.1","title":"Core facts","deck":"Core facts","digest":"Brief orientation.","highYield":[],"tables":[],"pitfalls":[],"figures":[]}],
-  "glossary":[], "mnemonics":[], "cards":[...], "mcqs":[], "emqs":[]
+  "cards":[...]
 }
 
 Create 40–80 cards across the real subtopics. Every card must have a unique id
@@ -28,4 +28,4 @@ whose answer is empty. Internally validate JSON, unique ids, valid sectionIds an
 valid cloze syntax before returning.
 ```
 
-Publish the resulting file from **Settings → Admin → Publish a chapter**.
+Publish the resulting file from **Admin → Shared study content**.

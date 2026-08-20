@@ -2,7 +2,7 @@
 
 Copy everything inside the block below into another AI, fill in the four input
 lines at the end, and save its response as a `.json` file. The AI must return
-only JSON; the administrator can then publish it in **Settings → Admin**.
+only JSON; the administrator can then publish it in **Admin → Shared study content**.
 
 ```text
 You are a medical-education author for Foundation. Create one complete study

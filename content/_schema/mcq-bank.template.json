@@ -1,35 +1,52 @@
 {
+  "schema": "foundation.mcq-bank/v1",
+  "id": "sur-ch1-wound-healing-mcqs",
   "subject": "Surgery",
+  "title": "Wound Healing Questions",
+  "deck": "Surgery::Wound Healing",
+  "sections": [
+    {
+      "id": "core",
+      "title": "Core concepts",
+      "digest": "A concise orientation to wound healing for this question-bank chapter."
+    }
+  ],
   "questions": [
     {
+      "schema": "foundation.mcq/v2",
+      "id": "sur-ch1-wound-healing-mcqs-mcq-001",
       "type": "single",
+      "sectionId": "core",
       "difficulty": 1,
       "stem": "Which growth factor is the primary driver of fibroblast activity and collagen synthesis during wound healing?",
       "options": [
         {
-          "text": "TGF-β (Transforming Growth Factor beta)",
+          "id": "a",
+          "text": "TGF-β (transforming growth factor beta)",
           "correct": true,
           "why": "TGF-β is the main signal driving fibroblast collagen production."
         },
         {
-          "text": "VEGF (Vascular Endothelial Growth Factor)",
+          "id": "b",
+          "text": "VEGF (vascular endothelial growth factor)",
           "correct": false,
           "why": "VEGF primarily drives angiogenesis, not fibroblast collagen production."
         },
         {
-          "text": "TNF-α (Tumor Necrosis Factor alpha)",
+          "id": "c",
+          "text": "TNF-α (tumour necrosis factor alpha)",
           "correct": false,
-          "why": "TNF-α is an inflammatory cytokine and does not stimulate collagen synthesis."
+          "why": "TNF-α is an inflammatory cytokine and is not the primary signal for collagen synthesis."
         }
       ],
       "explanation": [
         "TGF-β stimulates fibroblasts to produce collagen and extracellular matrix.",
-        "VEGF is responsible for endothelial cell migration and capillary growth."
+        "VEGF principally supports endothelial migration and capillary growth."
       ],
       "keyFacts": [
-        "TGF-β is critical for fibroblast migration and matrix deposition."
+        "TGF-β is important for fibroblast migration and matrix deposition."
       ],
-      "teachingPoint": "TGF-β is the central cytokine driving tissue fibrosis and scarring."
+      "teachingPoint": "TGF-β is a central cytokine in tissue fibrosis and scarring."
     }
   ]
 }

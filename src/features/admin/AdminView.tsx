@@ -59,7 +59,7 @@ export default function AdminView() {
 
       <Card className="settings-section" id="admin-content">
         <h2>Shared study content</h2>
-        <p className="section-lead">Validate and publish complete chapter packs for the cohort.</p>
+        <p className="section-lead">Validate and publish complete chapters, study guides, flashcard decks, or MCQ banks.</p>
         <PublishPanel />
       </Card>
 
@@ -212,7 +212,7 @@ function PublishPanel() {
     <>
       <AdminRow
         label="1. Validate and save drafts"
-        desc="Choose one or more complete chapter JSON packs. The entire selection is validated before any draft is saved."
+        desc="Choose one or more supported JSON files. Every file is normalised into a complete chapter, and the entire selection must pass before anything is saved."
       >
         <div className="row wrap" style={{ gap: 8 }}>
           <input
@@ -224,7 +224,7 @@ function PublishPanel() {
             onChange={(event) => void publishFiles(event)}
           />
           <Button variant="primary" disabled={busy} onClick={() => fileRef.current?.click()}>
-            {busy ? 'Validating…' : 'Choose JSON packs'}
+            {busy ? 'Validating…' : 'Choose JSON files'}
           </Button>
           <Button disabled={busy} onClick={() => setPasteOpen((open) => !open)}>
             {pasteOpen ? 'Cancel paste' : 'Paste JSON'}
@@ -235,7 +235,7 @@ function PublishPanel() {
       {pasteOpen && (
         <div style={{ marginTop: 10 }}>
           <label className="muted" style={{ fontSize: 12.5, display: 'block', marginBottom: 6 }}>
-            Paste one complete chapter pack. The same validation is used on Windows and tablets.
+            Paste one chapter, study-material, flashcard-deck, or MCQ-bank document. The same validation is used on Windows and tablets.
           </label>
           <textarea
             className="input"
@@ -246,6 +246,9 @@ function PublishPanel() {
             onChange={(event) => setPaste(event.target.value)}
             style={{ width: '100%', fontFamily: 'var(--font-mono, monospace)', fontSize: 12.5 }}
           />
+          <div className="muted" style={{ fontSize: 12, marginTop: 6 }}>
+            Accepted schemas: foundation.study-module/v1 · foundation.study-material/v1 · foundation.flashcard-deck/v1 · foundation.mcq-bank/v1
+          </div>
           <div className="row" style={{ gap: 8, marginTop: 8, justifyContent: 'flex-end' }}>
             <Button variant="primary" disabled={busy || !paste.trim()} onClick={() => void stagePasted()}>
               {busy ? 'Validating…' : 'Validate and save draft'}

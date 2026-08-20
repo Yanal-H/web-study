@@ -1,16 +1,35 @@
 {
-  "deckName": "Surgery::Wound Healing",
+  "schema": "foundation.flashcard-deck/v1",
+  "id": "sur-ch1-wound-healing-cards",
+  "subject": "Surgery",
+  "title": "Wound Healing Flashcards",
+  "deck": "Surgery::Wound Healing",
+  "sections": [
+    {
+      "id": "core",
+      "title": "Core facts",
+      "digest": "A concise orientation to wound healing for the flashcard chapter."
+    }
+  ],
   "cards": [
     {
+      "schema": "foundation.card/v2",
+      "id": "sur-ch1-wound-healing-cards-card-001",
       "type": "basic",
+      "sectionId": "core",
+      "deck": "Core facts",
       "front": "What is the primary cell driving wound contraction?",
       "back": "Myofibroblast",
       "extra": "Myofibroblasts contain alpha-smooth muscle actin.",
-      "hint": "Contraction is active and muscular-like",
+      "hint": "Contraction is active and muscular-like.",
       "difficulty": 1
     },
     {
+      "schema": "foundation.card/v2",
+      "id": "sur-ch1-wound-healing-cards-card-002",
       "type": "cloze",
+      "sectionId": "core",
+      "deck": "Core facts",
       "cloze": "Wound contraction is driven by {{c1::myofibroblasts}}.",
       "difficulty": 1
     }

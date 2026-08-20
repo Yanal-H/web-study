@@ -1,0 +1,342 @@
+{
+  "$ref": "#/definitions/FoundationStudyMaterial",
+  "definitions": {
+    "FoundationStudyMaterial": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+-ch\\d+-[a-z0-9-]+$"
+        },
+        "subject": {
+          "type": "string",
+          "minLength": 1
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source": {
+          "type": "object",
+          "properties": {
+            "book": {
+              "type": "string"
+            },
+            "chapter": {
+              "type": [
+                "string",
+                "number"
+              ]
+            },
+            "title": {
+              "type": "string"
+            },
+            "pages": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": true
+        },
+        "brand": {
+          "type": "string"
+        },
+        "estMinutes": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "deck": {
+          "type": "string"
+        },
+        "objectives": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": []
+        },
+        "summary": {
+          "type": "string"
+        },
+        "glossary": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "term": {
+                "type": "string",
+                "minLength": 1
+              },
+              "kind": {
+                "type": "string",
+                "enum": [
+                  "drug",
+                  "organism",
+                  "cell",
+                  "mediator",
+                  "condition",
+                  "test",
+                  "procedure",
+                  "structure",
+                  "value",
+                  "warning"
+                ]
+              },
+              "def": {
+                "type": "string"
+              },
+              "aliases": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "default": []
+              }
+            },
+            "required": [
+              "term"
+            ],
+            "additionalProperties": false
+          },
+          "default": []
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": []
+        },
+        "outline": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": []
+        },
+        "images": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "src": {
+                "type": "string",
+                "minLength": 1
+              },
+              "w": {
+                "type": "number"
+              },
+              "h": {
+                "type": "number"
+              },
+              "alt": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "src"
+            ],
+            "additionalProperties": false
+          },
+          "default": {}
+        },
+        "sections": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "n": {
+                "type": "string"
+              },
+              "title": {
+                "type": "string",
+                "minLength": 1
+              },
+              "digest": {
+                "type": "string",
+                "minLength": 1
+              },
+              "highYield": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "default": []
+              },
+              "tables": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "title": {
+                      "type": "string"
+                    },
+                    "columns": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "minItems": 1
+                    },
+                    "rows": {
+                      "type": "array",
+                      "items": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  },
+                  "required": [
+                    "columns",
+                    "rows"
+                  ],
+                  "additionalProperties": false
+                },
+                "default": []
+              },
+              "pitfalls": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "default": []
+              },
+              "figures": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "kind": {
+                      "type": "string",
+                      "enum": [
+                        "image",
+                        "described"
+                      ],
+                      "default": "described"
+                    },
+                    "src": {
+                      "type": "string"
+                    },
+                    "alt": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "caption": {
+                      "type": "string"
+                    },
+                    "described": {
+                      "type": "string"
+                    },
+                    "width": {
+                      "type": "number",
+                      "exclusiveMinimum": 0
+                    },
+                    "height": {
+                      "type": "number",
+                      "exclusiveMinimum": 0
+                    }
+                  },
+                  "required": [
+                    "alt"
+                  ],
+                  "additionalProperties": false
+                },
+                "default": []
+              },
+              "extraKnowledge": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "title": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "body": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "language": {
+                      "type": "string",
+                      "enum": [
+                        "en",
+                        "zh",
+                        "bilingual"
+                      ],
+                      "default": "en"
+                    },
+                    "source": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "title",
+                    "body"
+                  ],
+                  "additionalProperties": false
+                },
+                "default": []
+              },
+              "deck": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "id",
+              "title",
+              "digest"
+            ],
+            "additionalProperties": false
+          },
+          "minItems": 1
+        },
+        "mnemonics": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "cue": {
+                "type": "string",
+                "minLength": 1
+              },
+              "expansion": {
+                "type": "string",
+                "minLength": 1
+              },
+              "for": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "cue",
+              "expansion"
+            ],
+            "additionalProperties": false
+          },
+          "default": []
+        },
+        "schema": {
+          "type": "string",
+          "const": "foundation.study-material/v1"
+        }
+      },
+      "required": [
+        "id",
+        "subject",
+        "title",
+        "sections",
+        "schema"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}

@@ -57,9 +57,10 @@ describe('content schema', () => {
           difficulty: 1,
           stem: 'stem?',
           options: [
-            { text: 'a', correct: true },
-            { text: 'b', correct: true },
+            { id: 'a', text: 'a', correct: true, why: 'First rationale.' },
+            { id: 'b', text: 'b', correct: true, why: 'Second rationale.' },
           ],
+          explanation: ['Only one option may be correct.'],
         },
       ],
     };
@@ -114,7 +115,7 @@ describe('runtime import (all-or-nothing, namespaced)', () => {
     subject: 'Imported',
     title: 'Demo chapter',
     sections: [{ id: 's1', title: 'Intro', digest: 'Lead sentence.' }],
-    cards: [{ type: 'basic', front: 'Q', back: 'A' }],
+    cards: [{ id: 'imported-ch1-demo-card-001', type: 'basic', sectionId: 's1', front: 'Q', back: 'A' }],
     mcqs: [],
   });
 

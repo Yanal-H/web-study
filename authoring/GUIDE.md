@@ -8,7 +8,7 @@ your task: `PROMPT_STUDY_GUIDE_JSON.md`, `PROMPT_FLASHCARDS_JSON.md`,
 
 1. Copy `AI_CONTENT_PROMPT.md` into any strong AI, fill in the four placeholders at the bottom.
 2. Save the reply as `content/<subject>/ch<NN>-<slug>.json`.
-3. Sign in with your administrator account and publish it under **Settings → Admin**
+3. Sign in with your administrator account and publish it under **Admin → Shared study content**
    (choose the JSON file or paste its contents). Students cannot import or alter
    shared chapters.
 4. The build validates every file. A bad field fails the build with the exact path —
@@ -29,7 +29,7 @@ your task: `PROMPT_STUDY_GUIDE_JSON.md`, `PROMPT_FLASHCARDS_JSON.md`,
 | `sections[].figures` | Figure block (described figures render as prose to draw) |
 | `glossary` | Glossary panel **and** the colour lexicon for the whole app |
 | `mnemonics` | Mnemonics tab, tap to reveal |
-| `cards` | Flashcards, filed into the deck tree, scheduled by SM-2+ |
+| `cards` | Flashcards, filed into the deck tree, scheduled by FSRS |
 | `mcqs`, `emqs` | Question bank, all modes |
 | `summary` | End of the reader |
 
@@ -72,15 +72,13 @@ Default to described figures — they need no files and work offline:
 If you do have an image, put the file in `public/content-images/` and reference it as
 `"src": "/content-images/name.png"` with `"kind": "image"`. `alt` is always required.
 
-## Adding to a chapter that already exists
+## Updating a chapter that already exists
 
-Same prompt, but replace the last block with:
-
-> Extend the existing chapter `<chapterId>`. Return only a JSON object with the keys
-> `id` and the arrays you are adding (`cards`, `mcqs`, `emqs`, `glossary`). Continue the
-> id numbering from `<last id>`. Do not repeat existing items.
-
-Send me that and I will merge it in.
+Download or copy the complete current chapter and give it to the AI together with
+the approved additions. Require the AI to return the **complete updated chapter**,
+preserve every existing stable ID, assign chapter-prefixed IDs only to new items,
+and change only the fields you authorised. Partial fragments are rejected because
+publishing one as a replacement could silently erase the rest of the chapter.
 
 ## Volume that actually covers a topic
 
@@ -106,3 +104,25 @@ Prints one line per chapter with its counts, or the exact failing field.
 
 The machine-readable contract lives in `content/_schema/chapter.schema.json`, and a
 valid worked example in `content/_schema/template.json`.
+
+## Supported import files
+
+The administrator can upload or paste four validated JSON schemas:
+
+| Purpose | Schema | Template |
+|---|---|---|
+| Complete mixed chapter | `foundation.study-module/v1` | `content/_schema/template.json` |
+| Study guide only | `foundation.study-material/v1` | `content/_schema/study-material.template.json` |
+| Flashcards only | `foundation.flashcard-deck/v1` | `content/_schema/flashcard-deck.template.json` |
+| MCQs/EMQs only | `foundation.mcq-bank/v1` | `content/_schema/mcq-bank.template.json` |
+
+Every file must still identify a complete student-visible chapter with `id`,
+`subject`, `title`, and at least one section. Cards and questions require stable,
+chapter-prefixed IDs and real section references. MCQ options require IDs and a
+rationale, and every MCQ requires an explanation. These rules preserve student
+review history when content is reordered or updated.
+
+The three specialised schemas are normalised into the canonical chapter schema
+before a draft reaches Supabase. Old fragments containing only `deckName`,
+`questions`, or `chapterId` are deliberately rejected because they do not contain
+enough metadata to create a safe chapter.

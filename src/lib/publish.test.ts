@@ -1,4 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
+import flashcardTemplate from '../../content/_schema/flashcard-deck.template.json';
 
 // The publish path is the same whether a pack arrives as a file or as pasted
 // text, so these cover both. What matters is that nothing invalid reaches the
@@ -53,6 +54,24 @@ describe('publishPack — nothing invalid reaches the store', () => {
     expect(res.message).toMatch(/saved.*draft/i);
     expect(upsert).toHaveBeenCalledOnce();
     expect(upsert.mock.calls[0]![0][0]).toMatchObject({ id: validPack.id, title: validPack.title });
+  });
+
+  it('normalises a standalone flashcard deck before staging it', async () => {
+    const res = await stagePacks([{ name: 'cards.json', text: JSON.stringify(flashcardTemplate) }]);
+    expect(res.ok).toBe(true);
+    const staged = upsert.mock.calls[0]![0][0].pack;
+    expect(staged.schema).toBe('foundation.study-module/v1');
+    expect(staged.cards).toHaveLength(2);
+    expect(staged.mcqs).toEqual([]);
+  });
+
+  it('rejects a flashcard without a stable id before contacting Supabase', async () => {
+    const broken = structuredClone(flashcardTemplate) as unknown as { cards: Array<{ id?: string }> };
+    delete broken.cards[0]!.id;
+    const res = await stagePacks([{ name: 'cards.json', text: JSON.stringify(broken) }]);
+    expect(res.ok).toBe(false);
+    expect(res.issues?.join(' ')).toMatch(/flashcard id is required/i);
+    expect(upsert).not.toHaveBeenCalled();
   });
 
   it('stores a revision that changes when the content does', async () => {

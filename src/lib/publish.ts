@@ -1,7 +1,9 @@
 // Administrator content lifecycle. The browser validates every candidate first,
 // while Supabase RLS and RPCs remain the real authorisation/atomicity boundary.
 
-import { ChapterSchema, formatZodError, type Chapter } from '../content/schema';
+import type { Chapter } from '../content/schema';
+import { normaliseContentDocument } from '../content/importFormats';
+import { batchSemanticIssues } from '../content/validation';
 import { supabase } from './supabase';
 
 export type ContentStatus = 'draft' | 'published' | 'archived';
@@ -52,35 +54,6 @@ function describeError(message: string): string {
   return message;
 }
 
-function semanticIssues(pack: Chapter): string[] {
-  const issues: string[] = [];
-  const unique = (values: Array<string | undefined>, label: string) => {
-    const seen = new Set<string>();
-    for (const value of values) {
-      if (!value) { issues.push(`${label} needs a stable id.`); continue; }
-      if (seen.has(value)) issues.push(`Duplicate ${label} id “${value}”.`);
-      seen.add(value);
-    }
-  };
-  const sectionIds = new Set(pack.sections.map((section) => section.id));
-  unique(pack.sections.map((section) => section.id), 'section');
-  unique(pack.cards.map((card) => card.id), 'flashcard');
-  unique(pack.mcqs.map((question) => question.id), 'MCQ');
-  unique(pack.emqs.map((question) => question.id), 'EMQ');
-  for (const [index, card] of pack.cards.entries()) {
-    if (card.sectionId && !sectionIds.has(card.sectionId)) issues.push(`cards.${index}.sectionId does not match a section.`);
-  }
-  for (const [index, question] of pack.mcqs.entries()) {
-    if (question.sectionId && !sectionIds.has(question.sectionId)) issues.push(`mcqs.${index}.sectionId does not match a section.`);
-    const optionIds = question.options.map((option) => option.id).filter(Boolean) as string[];
-    if (new Set(optionIds).size !== optionIds.length) issues.push(`mcqs.${index} has duplicate option ids.`);
-  }
-  for (const [index, question] of pack.emqs.entries()) {
-    if (question.sectionId && !sectionIds.has(question.sectionId)) issues.push(`emqs.${index}.sectionId does not match a section.`);
-  }
-  return issues;
-}
-
 function validateRawPacks(rawPacks: RawPack[]): { packs?: Chapter[]; issues?: string[] } {
   const packs: Chapter[] = [];
   const issues: string[] = [];
@@ -92,19 +65,14 @@ function validateRawPacks(rawPacks: RawPack[]): { packs?: Chapter[]; issues?: st
       issues.push(`${raw.name}: not valid JSON.`);
       continue;
     }
-    const check = ChapterSchema.safeParse(parsed);
-    if (!check.success) {
-      issues.push(...formatZodError(check.error).map((issue) => `${raw.name}: ${issue}`));
+    const check = normaliseContentDocument(parsed);
+    if (!check.ok) {
+      issues.push(...check.issues.map((issue) => `${raw.name}: ${issue}`));
       continue;
     }
-    issues.push(...semanticIssues(check.data).map((issue) => `${raw.name}: ${issue}`));
-    packs.push(check.data);
+    packs.push(check.chapter);
   }
-  const ids = new Set<string>();
-  for (const pack of packs) {
-    if (ids.has(pack.id)) issues.push(`The selected batch includes chapter “${pack.id}” more than once.`);
-    ids.add(pack.id);
-  }
+  issues.push(...batchSemanticIssues(packs));
   return issues.length ? { issues } : { packs };
 }
 

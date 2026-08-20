@@ -81,9 +81,11 @@ Point your editor's JSON Schema at `chapter.schema.json`, or copy `template.json
 (`foundation.emq/v1`: shared option bank + stems). Figures require `alt` text.
 
 **Runtime (shared, administrator-only).** Sign in as an administrator and open
-**Settings → Admin**. Choose one or more JSON files on Windows/Android, or paste
-one pack directly. The same Zod schema validates every pack before it is written
-to Supabase; the database policy then rejects every student write. Students only
+**Admin → Shared study content**. Choose one or more JSON files on Windows/Android,
+or paste one document directly. Complete chapters, study guides, flashcard decks,
+and MCQ banks are accepted; specialised files are normalised into the canonical
+chapter contract before anything is written to Supabase. The database policy then
+rejects every student write. Students only
 receive the published curriculum. See `authoring/AI_CONTENT_PROMPT.md` for a
 ready-to-use AI authoring prompt, including optional Chinese/bilingual knowledge
 extensions.
@@ -92,7 +94,7 @@ For future AI-led maintenance, start with [AI_MAINTAINER_GUIDE.md](AI_MAINTAINER
 
 ## How migrations work
 
-`SCHEMA_VERSION` (currently 7) versions the state blob. `runMigrations` is additive:
+`SCHEMA_VERSION` (currently 8) versions the state blob. `runMigrations` is additive:
 it only fills missing keys and upgrades shapes, never removing user data. Each load
 runs the full chain, so data from the original single-file app (v1) upgrades to the
 current shape with zero loss; a written round-trip re-reads identically. Content

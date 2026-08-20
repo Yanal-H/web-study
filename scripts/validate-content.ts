@@ -7,6 +7,7 @@ import { readdirSync, statSync, readFileSync } from 'node:fs';
 import { join, dirname, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { ChapterSchema, formatZodError } from '../src/content/schema';
+import { chapterSemanticIssues } from '../src/content/validation';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const contentDir = join(root, 'content');
@@ -51,6 +52,13 @@ for (const file of files) {
     continue;
   }
   const ch = result.data;
+  const semantic = chapterSemanticIssues(ch);
+  if (semantic.length) {
+    failed++;
+    console.error(`\n✗ ${rel}`);
+    for (const line of semantic) console.error(`    ${line}`);
+    continue;
+  }
   if (ids.has(ch.id)) {
     failed++;
     console.error(`\n✗ ${rel}\n    duplicate chapter id "${ch.id}" (also in ${ids.get(ch.id)})`);

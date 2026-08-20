@@ -41,11 +41,23 @@ export const FigureSchema = z
 export type Figure = z.infer<typeof FigureSchema>;
 
 /* ---- TABLE ---- every ≥3-item comparison becomes a table */
-export const TableSchema = z.object({
-  title: z.string().optional(),
-  columns: z.array(z.string()).min(1),
-  rows: z.array(z.array(z.string())),
-});
+export const TableSchema = z
+  .object({
+    title: z.string().optional(),
+    columns: z.array(z.string()).min(1),
+    rows: z.array(z.array(z.string())),
+  })
+  .superRefine((table, ctx) => {
+    table.rows.forEach((row, index) => {
+      if (row.length !== table.columns.length) {
+        ctx.addIssue({
+          code: 'custom',
+          message: `row has ${row.length} cells but the table has ${table.columns.length} columns`,
+          path: ['rows', index],
+        });
+      }
+    });
+  });
 export type Table = z.infer<typeof TableSchema>;
 
 /* ---- TERM KIND ---- the concept classes the reader colours consistently.
@@ -111,11 +123,14 @@ export type Section = z.infer<typeof SectionSchema>;
 /* ---- OCCLUSION MASK ---- a box over a diagram, in 0-1 fractions of its size */
 export const MaskSchema = z.object({
   id: z.string().min(1),
-  x: z.number(),
-  y: z.number(),
-  w: z.number(),
-  h: z.number(),
+  x: z.number().min(0).max(1),
+  y: z.number().min(0).max(1),
+  w: z.number().positive().max(1),
+  h: z.number().positive().max(1),
   label: z.string().optional(),
+}).superRefine((mask, ctx) => {
+  if (mask.x + mask.w > 1) ctx.addIssue({ code: 'custom', message: 'mask extends beyond the image width', path: ['w'] });
+  if (mask.y + mask.h > 1) ctx.addIssue({ code: 'custom', message: 'mask extends beyond the image height', path: ['h'] });
 });
 export type Mask = z.infer<typeof MaskSchema>;
 
@@ -133,7 +148,7 @@ export type PackImage = z.infer<typeof PackImageSchema>;
 export const CardSchema = z
   .object({
     schema: z.literal('foundation.card/v2').optional(),
-    id: z.string().optional(),
+    id: z.string({ required_error: 'flashcard id is required' }).min(1, 'flashcard id is required'),
     type: z.enum(['basic', 'reversed', 'cloze', 'type', 'image', 'occlusion']),
     /** section id this card belongs to (legacy key: tag) */
     tag: z.string().optional(),
@@ -195,11 +210,11 @@ export type Card = z.infer<typeof CardSchema>;
 
 /* ---- MCQ (foundation.mcq/v2) ---- */
 export const OptionSchema = z.object({
-  id: z.string().optional(),
+  id: z.string({ required_error: 'option id is required' }).min(1, 'option id is required'),
   text: z.string().min(1),
   correct: z.boolean(),
   /** why this option is right OR wrong */
-  why: z.string().optional(),
+  why: z.string().min(1, 'every option needs a rationale'),
 });
 export type Option = z.infer<typeof OptionSchema>;
 
@@ -216,7 +231,7 @@ export const McqSchema = z
     highYield: z.boolean().optional(),
     stem: z.string().min(1),
     options: z.array(OptionSchema).min(2).max(6),
-    explanation: z.array(z.string()).default([]),
+    explanation: z.array(z.string().min(1)).min(1, 'MCQ explanation is required'),
     keyFacts: z.array(z.string()).default([]),
     teachingPoint: z.string().optional(),
     tags: z.array(z.string()).optional(),

@@ -72,8 +72,8 @@ describe('answer correctness (single + multi)', () => {
     difficulty: 1,
     stem: 's',
     options: [
-      { id: 'a', text: 'a', correct: true },
-      { id: 'b', text: 'b', correct: false },
+      { id: 'a', text: 'a', correct: true, why: 'Correct.' },
+      { id: 'b', text: 'b', correct: false, why: 'Incorrect.' },
     ],
     explanation: [],
     keyFacts: [],
@@ -84,9 +84,9 @@ describe('answer correctness (single + multi)', () => {
     difficulty: 2,
     stem: 's',
     options: [
-      { id: 'a', text: 'a', correct: true },
-      { id: 'b', text: 'b', correct: true },
-      { id: 'c', text: 'c', correct: false },
+      { id: 'a', text: 'a', correct: true, why: 'Correct.' },
+      { id: 'b', text: 'b', correct: true, why: 'Also correct.' },
+      { id: 'c', text: 'c', correct: false, why: 'Incorrect.' },
     ],
     explanation: [],
     keyFacts: [],

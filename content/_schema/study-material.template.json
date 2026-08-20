@@ -1,17 +1,26 @@
 {
-  "chapterId": "ana-ch1-upper-limb",
+  "schema": "foundation.study-material/v1",
+  "id": "ana-ch1-biceps-brachii-study",
+  "subject": "Anatomy",
+  "title": "Biceps Brachii Study Guide",
+  "estMinutes": 10,
+  "deck": "Anatomy::Biceps Brachii",
+  "objectives": [
+    "Describe the principal actions of biceps brachii."
+  ],
   "sections": [
     {
-      "id": "s-new-1",
-      "n": "1.4",
-      "title": "Biceps Brachii",
+      "id": "actions",
+      "n": "1.1",
+      "title": "Actions",
       "digest": "The **biceps brachii** is a two-headed muscle that supinates the forearm and flexes the elbow.",
       "highYield": [
-        "Primary action is supination of the flexed forearm."
+        "Its most powerful action is supination of the flexed forearm."
       ],
       "pitfalls": [
         "Do not confuse biceps brachii with brachialis, which is a pure elbow flexor."
       ]
     }
-  ]
+  ],
+  "summary": "Biceps brachii is principally a forearm supinator and elbow flexor."
 }
