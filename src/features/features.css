@@ -4530,6 +4530,19 @@
   font-size: 12px;
 }
 
+/* Administrator control centre: counts only, never student-identifying data. */
+.admin-overview { display: grid; gap: var(--sp-4); }
+.admin-overview h2 { margin: 0; }
+.admin-metrics { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: var(--sp-3); }
+.admin-metric { min-width: 0; padding: var(--sp-3); border: 1px solid var(--border-soft); border-radius: var(--r-md); background: var(--surface-2); display: grid; gap: 4px; }
+.admin-metric span, .admin-metric small { color: var(--text-faint); font-size: 12px; line-height: 1.35; }
+.admin-metric strong { font-size: 22px; line-height: 1.1; overflow-wrap: anywhere; }
+.admin-metric--warning { border-color: color-mix(in srgb, var(--warning) 45%, var(--border-soft)); }
+.admin-metric--danger { border-color: color-mix(in srgb, var(--error) 45%, var(--border-soft)); }
+.admin-next-action { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: var(--sp-3); padding: var(--sp-3); border-radius: var(--r-md); background: var(--accent-soft); }
+@media (max-width: 900px) { .admin-metrics { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (max-width: 560px) { .admin-metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); } .admin-next-action { align-items: flex-start; } }
+
 /* ---- Private department community ---- */
 .community-layout { display: grid; grid-template-columns: minmax(180px, 240px) minmax(0, 1fr); gap: var(--sp-4); align-items: start; }
 .community-channels { border: 1px solid var(--border-soft); border-radius: var(--radius); padding: 6px; background: var(--surface-1); position: sticky; top: 16px; }

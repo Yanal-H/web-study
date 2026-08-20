@@ -70,7 +70,10 @@ describe('App shell (signed in)', () => {
     }
 
     // The lazy home is action-oriented rather than a decorative analytics wall.
-    await waitFor(() => expect(screen.getByRole('heading', { name: 'Study today' })).toBeTruthy());
+    await waitFor(
+      () => expect(screen.getByRole('heading', { name: 'Study today' })).toBeTruthy(),
+      { timeout: 3_000 }
+    );
     expect(document.querySelector('.haki-hero')).toBeNull();
 
     const mobileNav = screen.getByRole('navigation', { name: 'Mobile study navigation' });

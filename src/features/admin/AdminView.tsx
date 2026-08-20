@@ -8,6 +8,7 @@ import { AI_MODELS, getAiConfig, setAiConfig } from '../../lib/ai';
 import { archiveChapter, listContent, publishDrafts, restoreChapter, stagePacks, type ContentItem } from '../../lib/publish';
 import { useAuth } from '../auth/session';
 import LibraryPanel from '../settings/LibraryPanel';
+import OperationsSnapshotView from './OperationsSnapshot';
 
 /**
  * Operational controls live on one explicit administrator route. Hiding this
@@ -51,10 +52,12 @@ export default function AdminView() {
     <>
       <header className="page-head">
         <h1>Admin</h1>
-        <div className="sub">Publish validated content, manage community access, and inspect local content health.</div>
+        <div className="sub">Run content, community, and release operations from one protected control centre.</div>
       </header>
 
-      <Card className="settings-section">
+      <OperationsSnapshotView />
+
+      <Card className="settings-section" id="admin-content">
         <h2>Shared study content</h2>
         <p className="section-lead">Validate and publish complete chapter packs for the cohort.</p>
         <PublishPanel />
