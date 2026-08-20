@@ -29,8 +29,14 @@ export function getPerf(qid: string): McqPerf {
 }
 
 /** Record an attempt. Leitner-style spacing on the question; persists + notifies. */
-export function recordResult(qid: string, ok: boolean, confidence?: number | null) {
+/**
+ * Record an attempt once. `attemptId` makes an interrupted/restored results
+ * screen idempotent: a question in the same saved session cannot be counted
+ * twice, while a later session still creates a new attempt normally.
+ */
+export function recordResult(qid: string, ok: boolean, confidence?: number | null, attemptId?: string): boolean {
   const p = state.study.mcqPerf[qid] || blankPerf();
+  if (attemptId && p.lastAttemptId === attemptId) return false;
   p.seen++;
   p.attempts++;
   if (ok) {
@@ -46,8 +52,10 @@ export function recordResult(qid: string, ok: boolean, confidence?: number | nul
   const box = Math.min(MCQ_BOX_DAYS.length - 1, p.consecutiveCorrect);
   p.nextDue = ok ? Date.now() + MCQ_BOX_DAYS[box]! * DAY_MS : Date.now() + 8 * 60 * 1000;
   p.mastery = deriveMastery(p);
+  if (attemptId) p.lastAttemptId = attemptId;
   state.study.mcqPerf[qid] = p;
   commit();
+  return true;
 }
 
 export function toggleFlag(qid: string): boolean {

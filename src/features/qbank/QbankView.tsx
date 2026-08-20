@@ -75,7 +75,9 @@ export default function QbankView() {
     difficulties,
     special,
   };
-  const available = useMemo(() => poolCount(filter), [subject, difficulties, special, storeVersion]);
+  // The pool is small and the filter is a fresh object each render; calculate it
+  // directly so the displayed count always follows every selected filter.
+  const available = poolCount(filter);
 
   function toggleDiff(d: number) {
     setDifficulties((cur) => (cur.includes(d) ? cur.filter((x) => x !== d) : [...cur, d]).sort());

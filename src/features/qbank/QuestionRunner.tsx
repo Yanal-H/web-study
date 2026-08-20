@@ -31,12 +31,13 @@ export default function QuestionRunner({ onExit }: { onExit: () => void }) {
   const [chosen, setChosen] = useState<string[]>([]);
   const [submitted, setSubmitted] = useState(false);
   const [confidence, setConfidence] = useState<number | null>(null);
-  const [showResults, setShowResults] = useState(false);
+  const [showResults, setShowResults] = useState(() => Boolean(getSession()?.resultsCommittedAt));
   const [surge, setSurge] = useState<null | 'ok' | 'no'>(null);
   const [autoRun, setAutoRun] = useState(false);
   const [, force] = useState(0);
   const qStart = useRef(Date.now());
   const autoTimer = useRef<number | null>(null);
+  const finalizing = useRef(false);
   const immediate = session ? session.mode !== 'exam' : true;
 
   const mcqCfg = state.settings.mcq as Record<string, unknown>;
@@ -206,10 +207,16 @@ export default function QuestionRunner({ onExit }: { onExit: () => void }) {
   }
 
   function finish() {
-    // commit perf for every answered question (once), then show results
-    for (const qid of Object.keys(session!.answers)) {
-      const a = session!.answers[qid]!;
-      recordResult(qid, a.correct, a.confidence ?? null);
+    // `recordResult` is keyed by this session/question pair, so restore, timer
+    // and double-click paths cannot duplicate performance history. Persist the
+    // completion marker only after the result loop has finished.
+    if (!session!.resultsCommittedAt && !finalizing.current) {
+      finalizing.current = true;
+      for (const qid of Object.keys(session!.answers)) {
+        const a = session!.answers[qid]!;
+        recordResult(qid, a.correct, a.confidence ?? null, `${session!.id}:${qid}`);
+      }
+      record({ ...session!, resultsCommittedAt: Date.now() });
     }
     setShowResults(true);
   }

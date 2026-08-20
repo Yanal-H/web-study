@@ -12,6 +12,8 @@ import {
   MEDIA,
   SCHEDULING,
   bulkPut,
+  deleteKeys,
+  getAllRows,
   openDB,
   req,
   type Scheduling,
@@ -34,6 +36,35 @@ export interface ImportProgress {
 }
 
 const idle = () => new Promise<void>((r) => setTimeout(r, 0));
+
+export interface ReplacementPlan {
+  cards: string[];
+  mcqs: string[];
+  media: string[];
+}
+
+/**
+ * A pack revision is authoritative for that chapter only. Updated rows retain
+ * their IDs and personal scheduling; rows removed by the author are deleted so
+ * they cannot remain as ghost cards/questions in a live student session.
+ */
+export function replacementPlan(
+  chapterId: string,
+  expected: { cardIds: Set<string>; mcqIds: Set<string>; mediaIds: Set<string> },
+  stored: {
+    cards: Array<{ id: string; chapterId: string }>;
+    mcqs: Array<{ id: string; chapterId: string }>;
+    media: Array<{ imageId: string }>;
+  }
+): ReplacementPlan {
+  return {
+    cards: stored.cards.filter((row) => row.chapterId === chapterId && !expected.cardIds.has(row.id)).map((row) => row.id),
+    mcqs: stored.mcqs.filter((row) => row.chapterId === chapterId && !expected.mcqIds.has(row.id)).map((row) => row.id),
+    media: stored.media
+      .filter((row) => row.imageId.startsWith(`${chapterId}:`) && !expected.mediaIds.has(row.imageId))
+      .map((row) => row.imageId),
+  };
+}
 
 /**
  * Chapter metadata — the reader's half of a pack, plus the authored pack itself.
@@ -133,6 +164,26 @@ export async function importPack(
   }
 
   const seeded = await seedScheduling(cards);
+  const [storedCards, storedMcqs, storedMedia] = await Promise.all([
+    getAllRows<{ id: string; chapterId: string }>(CARDS),
+    getAllRows<{ id: string; chapterId: string }>(MCQS),
+    getAllRows<{ imageId: string }>(MEDIA),
+  ]);
+  const removed = replacementPlan(
+    pack.id,
+    {
+      cardIds: new Set(cards.map((card) => card.id)),
+      mcqIds: new Set(mcqs.map((question) => question.id)),
+      mediaIds: new Set(images.map(([id]) => `${pack.id}:${id}`)),
+    },
+    { cards: storedCards, mcqs: storedMcqs, media: storedMedia }
+  );
+  await Promise.all([
+    deleteKeys(CARDS, removed.cards),
+    deleteKeys(SCHEDULING, removed.cards),
+    deleteKeys(MCQS, removed.mcqs),
+    deleteKeys(MEDIA, removed.media),
+  ]);
   return { cards: cards.length, mcqs: mcqs.length, seeded };
 }
 

@@ -47,6 +47,15 @@ describe('MCQ pool building', () => {
     expect(buildPool({ special: 'due' }).length).toBeGreaterThan(0);
   });
 
+  it('does not count a restored results commit twice', () => {
+    const qid = bank()[0]!.id;
+    expect(recordResult(qid, true, null, 'session-1:' + qid)).toBe(true);
+    expect(recordResult(qid, true, null, 'session-1:' + qid)).toBe(false);
+    expect(state.study.mcqPerf[qid]!.attempts).toBe(1);
+    expect(recordResult(qid, true, null, 'session-2:' + qid)).toBe(true);
+    expect(state.study.mcqPerf[qid]!.attempts).toBe(2);
+  });
+
   it('respects limit and shuffle keeps the same set', () => {
     const limited = buildPool({ limit: 5 });
     expect(limited).toHaveLength(5);

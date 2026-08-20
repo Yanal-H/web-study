@@ -34,6 +34,8 @@ export interface McqSession {
   startedAt: number;
   timedEndsAt?: number; // whole-set timer (exam)
   perQSeconds?: number;
+  /** Set before performance is committed, so re-opening results cannot double-count answers. */
+  resultsCommittedAt?: number;
 }
 
 export type BankQuestion = Mcq & { chapterId: string; subject: string };
