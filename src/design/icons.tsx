@@ -247,4 +247,5 @@ export const NAV_ICONS: Record<string, (p: IconProps) => JSX.Element> = {
   resources: IconResources,
   community: IconCommunity,
   settings: IconSettings,
+  admin: IconSettings,
 };

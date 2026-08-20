@@ -17,6 +17,7 @@ import MusicPlayer from '../features/music/MusicPlayer';
 import { ensureContentLoaded } from '../data/bootstrap';
 import { useAuth } from '../features/auth/session';
 import SignIn from '../features/auth/SignIn';
+import { checkAdmin } from '../lib/admin';
 
 function BrandMark({ size = 40 }: { size?: number }) {
   return (
@@ -38,8 +39,14 @@ function BrandMark({ size = 40 }: { size?: number }) {
   );
 }
 
-const PRIMARY = ['', 'study', 'subjects', 'flashcards', 'qbank'];
-const TOOLS = ['planner', 'notes', 'calculators', 'mnemonics', 'resources', 'community'];
+const PRIMARY = ['', 'study', 'flashcards', 'qbank', 'community'];
+const TOOLS = ['planner', 'notes', 'calculators', 'mnemonics', 'resources'];
+const MOBILE_TABS = [
+  { path: '', label: 'Home' },
+  { path: 'study', label: 'Study' },
+  { path: 'flashcards', label: 'Review' },
+  { path: 'qbank', label: 'Questions' },
+];
 
 export default function App() {
   return (
@@ -66,20 +73,36 @@ function Gate() {
 
   if (auth.phase === 'checking') return null; // #boot is still showing
   if (auth.phase === 'signed-out') return <SignIn />;
-  return <Shell />;
+  return <Shell userId={auth.userId!} />;
 }
 
-function Shell() {
+function Shell({ userId }: { userId: string }) {
   const [navOpen, setNavOpen] = useState(false);
   const [cmdOpen, setCmdOpen] = useState(false);
   const [helpOpen, setHelpOpen] = useState(false);
+  const [toolsOpen, setToolsOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
   const state = useStore();
+  const [isAdmin, setIsAdmin] = useState(false);
+
+  useEffect(() => {
+    let alive = true;
+    void checkAdmin().then((allowed) => {
+      if (alive) setIsAdmin(allowed);
+    });
+    return () => {
+      alive = false;
+    };
+  }, [userId]);
 
   useEffect(() => {
     applyTheme();
   }, [state.theme]);
+
+  useEffect(() => {
+    if (TOOLS.some((path) => location.pathname.startsWith(`/${path}`))) setToolsOpen(true);
+  }, [location.pathname]);
 
   useEffect(() => {
     applyHaki();
@@ -97,7 +120,7 @@ function Shell() {
   const gTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   useEffect(() => {
     const GO: Record<string, string> = {
-      d: '/', s: '/study', q: '/qbank', f: '/flashcards', b: '/subjects',
+      d: '/', s: '/study', q: '/qbank', f: '/flashcards',
       p: '/planner', n: '/notes', c: '/calculators', m: '/mnemonics', r: '/resources', o: '/community', e: '/settings',
     };
     const onKey = (e: KeyboardEvent) => {
@@ -187,7 +210,7 @@ function Shell() {
 
   const commands = useMemo<Command[]>(() => {
     const dark = state.theme !== 'paper';
-    const navCmds: Command[] = ROUTES.filter((r) => !r.hidden).map((r) => {
+    const navCmds: Command[] = ROUTES.filter((r) => !r.hidden && (!r.adminOnly || isAdmin)).map((r) => {
       const Icon = NAV_ICONS[r.path];
       return {
         id: 'nav-' + (r.path || 'dashboard'),
@@ -214,7 +237,7 @@ function Shell() {
         run: () => setHelpOpen(true),
       },
     ];
-  }, [navigate, state.theme]);
+  }, [isAdmin, navigate, state.theme]);
 
   // Global ⌘K content search — lazy-loaded so the content index stays out of the
   // initial bundle. Built when the palette opens.
@@ -245,12 +268,17 @@ function Shell() {
       {ROUTES.filter((r) => PRIMARY.includes(r.path)).map((r) => (
         <NavItem key={r.path} path={r.path} label={r.label} onGo={() => setNavOpen(false)} />
       ))}
-      <div className="nav-group-label">Tools</div>
-      {ROUTES.filter((r) => TOOLS.includes(r.path)).map((r) => (
+      <details className="nav-more" open={toolsOpen} onToggle={(event) => setToolsOpen(event.currentTarget.open)}>
+        <summary>More tools</summary>
+        {ROUTES.filter((r) => TOOLS.includes(r.path)).map((r) => (
+          <NavItem key={r.path} path={r.path} label={r.label} onGo={() => setNavOpen(false)} />
+        ))}
+      </details>
+      <div className="nav-group-label">Account</div>
+      {ROUTES.filter((r) => r.path === 'settings').map((r) => (
         <NavItem key={r.path} path={r.path} label={r.label} onGo={() => setNavOpen(false)} />
       ))}
-      <div className="nav-group-label">System</div>
-      {ROUTES.filter((r) => r.path === 'settings').map((r) => (
+      {isAdmin && ROUTES.filter((r) => r.path === 'admin').map((r) => (
         <NavItem key={r.path} path={r.path} label={r.label} onGo={() => setNavOpen(false)} />
       ))}
     </>
@@ -332,6 +360,8 @@ function Shell() {
         <MusicPlayer />
       </div>
 
+      <MobileTabBar onOpenMenu={() => setNavOpen(true)} />
+
       <Watermark />
 
       {content !== 'ready' && <ContentStatus status={content} />}
@@ -393,11 +423,37 @@ function NavItem({ path, label, onGo }: { path: string; label: string; onGo: () 
   );
 }
 
+/** Primary study actions stay one thumb-reach away on phones and tablets. */
+function MobileTabBar({ onOpenMenu }: { onOpenMenu: () => void }) {
+  return (
+    <nav className="mobile-tabbar no-print" aria-label="Mobile study navigation">
+      {MOBILE_TABS.map(({ path, label }) => {
+        const Icon = NAV_ICONS[path];
+        return (
+          <NavLink
+            key={path || 'home'}
+            to={'/' + path}
+            end={path === ''}
+            className={({ isActive }) => 'mobile-tab' + (isActive ? ' active' : '')}
+          >
+            {Icon && <Icon size={19} />}
+            <span>{label}</span>
+          </NavLink>
+        );
+      })}
+      <button type="button" className="mobile-tab" onClick={onOpenMenu} aria-label="Open more study tools">
+        <IconMenu size={19} />
+        <span>More</span>
+      </button>
+    </nav>
+  );
+}
+
 function ShortcutsHelp({ onClose }: { onClose: () => void }) {
   const rows: Array<[string, string]> = [
     ['⌘K / Ctrl+K', 'Open the command palette'],
     ['g then s / q / f', 'Go to Study / Questions / Flashcards'],
-    ['g then d / b / p', 'Go to Dashboard / Subjects / Planner'],
+    ['g then d / p / n', 'Go to Dashboard / Planner / Notes'],
     ['?', 'Show this help'],
     ['↑ ↓', 'Move within the palette'],
     ['↵', 'Run the selected command'],

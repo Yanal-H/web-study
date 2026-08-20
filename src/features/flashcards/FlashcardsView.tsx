@@ -4,7 +4,7 @@ import { useStore, useStoreVersion } from '../../state/useStore';
 import { Card, Button, Stat, Segmented } from '../../design/primitives';
 import { Dialog } from '../../design/Dialog';
 import { useToast } from '../../design/Toast';
-import { IconFlashcards, IconUpload, IconDownload, IconPlus } from '../../design/icons';
+import { IconFlashcards, IconUpload, IconPlus } from '../../design/icons';
 import ActivityCalendar from '../dashboard/ActivityCalendar';
 import { allCards, getChapter } from '../../content/loader';
 import {
@@ -21,7 +21,7 @@ import { whenContentReady } from '../../data/bootstrap';
 import { whenPublishedContentReady } from '../../data/remoteContent';
 import DeckBrowser from './DeckBrowser';
 import ReviewSession from './ReviewSession';
-import { exportTSV, isChapterPackJson, parseDelimited, importCards } from './anki';
+import { isChapterPackJson, parseDelimited, importCards } from './anki';
 import { makeUserCard } from './makeCard';
 
 // Heavy, occasionally-used views load on demand (Phase 6 perf).
@@ -113,14 +113,14 @@ export default function FlashcardsView() {
       const q = [...fromEngine, ...fromUser];
       if (q.length === 0) {
         toast(how === 'all'
-          ? 'No reviewable cards are loaded. Re-import chapters in Settings → Card engine.'
+          ? 'No reviewable cards are loaded. Refresh the app; if this continues, ask the administrator to rebuild the content library.'
           : path ? 'Nothing is due in that topic. Choose All to study it anyway.' : 'Nothing is due. Choose All to study every card.');
         return;
       }
       setQueue(q);
       setMode('review');
     } catch {
-      toast('Could not open the cards. Check your connection, then use Settings → Card engine → Re-import chapters.', 'error');
+      toast('Could not open the cards. Check your connection and refresh; if this continues, ask the administrator.', 'error');
     } finally {
       setStarting(false);
     }
@@ -210,7 +210,6 @@ export default function FlashcardsView() {
             <Button size="sm" variant="ghost" onClick={() => setImporting(true)}>
               <IconUpload size={15} /> Import
             </Button>
-            <ExportButton />
           </div>
         </Card>
       </div>
@@ -251,31 +250,6 @@ function scopeOf(tree: any[], deck: string, _user: ReviewItem[]) {
   return node
     ? { due: node.due, neu: node.neu, total: node.total }
     : { due: 0, neu: 0, total: 0 };
-}
-
-function ExportButton() {
-  const state = useStore();
-  const toast = useToast();
-  function run() {
-    if (state.flashcards.length === 0) {
-      toast('No personal cards to export.');
-      return;
-    }
-    const tsv = exportTSV(state.flashcards);
-    const blob = new Blob([tsv], { type: 'text/tab-separated-values' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `foundation-cards-${new Date().toISOString().slice(0, 10)}.tsv`;
-    a.click();
-    URL.revokeObjectURL(url);
-    toast('Cards exported', 'success');
-  }
-  return (
-    <Button size="sm" onClick={run}>
-      <IconDownload size={15} /> Export
-    </Button>
-  );
 }
 
 function CreateCardDialog({ onClose, deck: initialDeck }: { onClose: () => void; deck?: string }) {
@@ -355,7 +329,7 @@ function ImportDialog({ onClose }: { onClose: () => void }) {
 
   function run() {
     if (chapterPack) {
-      toast('This is a study-pack JSON. Publish it from Settings → Admin, not Flashcards → Import.', 'error');
+      toast('This is a shared study pack, not a personal card file. Ask an administrator to publish it.', 'error');
       return;
     }
     if (preview.length === 0) {
@@ -400,7 +374,7 @@ function ImportDialog({ onClose }: { onClose: () => void }) {
       <p className="muted" style={{ fontSize: 13, marginTop: -4 }}>
         This importer is for card files only: columns are front, back, tags, type and optional deck.
         Cloze rows use <code>{'{{c1::…}}'}</code> in the front column. To add study text,
-        sections and MCQs, use your administrator account in Settings → Admin → Publish a chapter.
+        sections and questions, publish the complete pack from the Admin page.
       </p>
       <textarea
         className="textarea"
@@ -416,7 +390,7 @@ function ImportDialog({ onClose }: { onClose: () => void }) {
       )}
       {chapterPack && (
         <div className="ai-err" style={{ marginTop: 8 }}>
-          Study-pack JSON detected. Nothing will be imported here: open Settings → Admin and publish the pack there.
+          Shared study pack detected. Nothing will be imported into personal cards; an administrator can publish it from Admin.
         </div>
       )}
     </Dialog>

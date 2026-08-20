@@ -30,7 +30,7 @@ const STEPS: Step[] = [
   {
     icon: <IconSparkle size={26} />,
     title: 'Welcome to Foundation',
-    body: 'Your offline-first study base — textbook reading, spaced-repetition flashcards, a question bank with an AI tutor, a planner and more. It keeps working with no connection once loaded.',
+    body: 'Your focused medical study base — textbook reading, spaced-repetition flashcards, questions, notes and planning. Published chapters load securely while you are online; your personal progress stays on this device.',
   },
   {
     icon: <IconStudy size={26} />,
@@ -49,7 +49,7 @@ const STEPS: Step[] = [
   {
     icon: <IconQbank size={26} />,
     title: 'Question Bank — test yourself',
-    body: 'Single-best-answer, multi-answer and EMQ questions with a rationale for every option. Turn on the AI tutor in Settings for a hint, a full explanation, or a chat about any question.',
+    body: 'Single-best-answer, multi-answer and EMQ questions with written rationales. Choose a topic, answer, review the explanation and keep moving.',
     go: '/qbank',
     cta: 'Open Questions',
   },

@@ -103,7 +103,8 @@ async function runPublishedContentSync(): Promise<SyncReport> {
   // Manifest first — id and revision only, never the pack bodies.
   const { data: rows, error } = await supabase
     .from('chapters')
-    .select('id, revision, updated_at');
+    .select('id, revision, updated_at')
+    .eq('status', 'published');
 
   if (error || !rows) return { ...report, skipped: 'unreachable' };
 
@@ -121,6 +122,7 @@ async function runPublishedContentSync(): Promise<SyncReport> {
         .from('chapters')
         .select('pack')
         .eq('id', row.id)
+        .eq('status', 'published')
         .single();
       if (e2 || !full) throw new Error('fetch failed');
 

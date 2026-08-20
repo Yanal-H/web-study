@@ -1,4 +1,4 @@
-import { createContext, useCallback, useContext, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useStore } from '../../state/useStore';
 import { state as liveState, activeStateKey, commit, update, reloadState, Store, runMigrations } from '../../state/store';
 import { setTheme, isDark } from '../../state/theme';
@@ -11,22 +11,17 @@ import {
   applyMeasure,
   applyDyslexiaFont,
 } from './appearance';
-import { Card, Button, Segmented, Input, Select } from '../../design/primitives';
+import { Card, Button, Segmented, Input } from '../../design/primitives';
 import { useToast } from '../../design/Toast';
-import { IconDownload, IconUpload, IconSun, IconMoon, IconSparkle } from '../../design/icons';
+import { IconDownload, IconUpload } from '../../design/icons';
 import { sfx } from '../../lib/sound';
-import { getAiConfig, setAiConfig, AI_MODELS } from '../../lib/ai';
-import { checkAdmin } from '../../lib/admin';
-import { listPublished, publishPack, unpublishPack } from '../../lib/publish';
 import { useAuth, signOut } from '../auth/session';
 import { authConfigured } from '../../lib/supabase';
-import type { RemoteItem } from '../../data/remoteContent';
 import { replayTour } from '../onboarding/WelcomeTour';
 import { resetEngineProgress } from '../../data/db';
 import { invalidateDeckTree } from '../../data/session';
 import { usage, requestPersistence, formatBytes } from '../../lib/blobs';
 import { looksLikeStateBackup, redactBackup } from './backup';
-import LibraryPanel from './LibraryPanel';
 
 /** Storage usage + whether the origin is protected from eviction, with a way to ask. */
 function StorageMeter() {
@@ -82,73 +77,6 @@ function StorageMeter() {
   );
 }
 
-/**
- * The administrator surface.
- *
- * There is no key to type: whether this account may publish is decided by the
- * database policy against the signed-in identity, and we simply ask it. That
- * means the controls below only appear for an account the SERVER agrees is an
- * administrator — and even if this check were bypassed, every write would still
- * be refused.
- */
-function AdminPanel() {
-  const auth = useAuth();
-  const [admin, setAdminState] = useState<boolean | null>(null);
-
-  useEffect(() => {
-    let alive = true;
-    if (auth.phase !== 'signed-in') {
-      setAdminState(false);
-      return;
-    }
-    void checkAdmin().then((v) => {
-      if (alive) setAdminState(v);
-    });
-    return () => {
-      alive = false;
-    };
-  }, [auth.phase, auth.userId]);
-
-  if (!authConfigured()) {
-    return (
-      <Row
-        label="Administrator"
-        desc="Sign-in is not set up on this deployment yet — see DEPLOY.md."
-      >
-        <span className="muted">Not configured</span>
-      </Row>
-    );
-  }
-
-  if (admin === null) {
-    return (
-      <Row label="Administrator" desc="Checking your access.">
-        <span className="muted">Checking…</span>
-      </Row>
-    );
-  }
-
-  if (!admin) {
-    return (
-      <Row
-        label="Administrator"
-        desc="This account cannot change shared content. That is decided on the server, so it is the same on every device you sign in from."
-      >
-        <span className="muted">Student</span>
-      </Row>
-    );
-  }
-
-  return (
-    <>
-      <Row label="Administrator" desc={`Signed in as ${auth.email ?? 'admin'} — you can publish chapters.`}>
-        <span className="muted">Administrator</span>
-      </Row>
-      <PublishPanel />
-    </>
-  );
-}
-
 /** Who is signed in on this device, and the way out. */
 function AccountPanel() {
   const auth = useAuth();
@@ -167,7 +95,7 @@ function AccountPanel() {
 
   return (
     <>
-      <Row label="Signed in as" desc="Your chapters and questions are tied to this account.">
+      <Row label="Signed in as" desc="Your personal progress, notes, cards, and files stay separate from other accounts on this device.">
         <span style={{ fontSize: 14 }}>{auth.email || '—'}</span>
       </Row>
       <Row
@@ -188,206 +116,13 @@ function AccountPanel() {
   );
 }
 
-/**
- * Publish chapters to the whole cohort without a redeploy.
- *
- * Everything here is admin-only in the UI and re-authorised by the server, so a
- * student who forces the admin flag on their own device still cannot publish.
- * Students' own notes, cards and progress are never touched by any of this.
- */
-function PublishPanel() {
-  const toast = useToast();
-  const [items, setItems] = useState<RemoteItem[] | null>(null);
-  const [configured, setConfigured] = useState<boolean | null>(null);
-  const [busy, setBusy] = useState(false);
-  const [issues, setIssues] = useState<string[] | null>(null);
-  const [paste, setPaste] = useState('');
-  const [pasteOpen, setPasteOpen] = useState(false);
-  const fileRef = useRef<HTMLInputElement>(null);
-
-  const refresh = useCallback(async () => {
-    const res = await listPublished();
-    setConfigured(res.configured);
-    setItems(res.items);
-  }, []);
-
-  useEffect(() => {
-    void refresh();
-  }, [refresh]);
-
-  async function onFile(e: React.ChangeEvent<HTMLInputElement>) {
-    const files = Array.from(e.target.files || []);
-    if (files.length === 0) return;
-    setBusy(true);
-    setIssues(null);
-    let ok = 0;
-    const failures: string[] = [];
-    for (const file of files) {
-      const res = await publishPack(await file.text());
-      if (res.ok) ok++;
-      else {
-        failures.push(`${file.name}: ${res.message}`);
-        if (res.issues?.length) setIssues(res.issues.slice(0, 12));
-      }
-    }
-    setBusy(false);
-    if (fileRef.current) fileRef.current.value = '';
-    await refresh();
-    if (ok) toast(`Published ${ok} chapter${ok === 1 ? '' : 's'}`, 'success');
-    if (failures.length) toast(failures[0]!, 'error');
-  }
-
-  /**
-   * Publish from pasted text rather than a file.
-   *
-   * On a tablet an authored chapter usually arrives as text in a chat, and
-   * turning that into a .json file on disk is genuinely awkward — enough friction
-   * to stop content getting published at all. Pasting removes the step. The pack
-   * goes through exactly the same validation either way.
-   */
-  async function publishPasted() {
-    const text = paste.trim();
-    if (!text) return;
-    setBusy(true);
-    setIssues(null);
-    const res = await publishPack(text);
-    setBusy(false);
-    if (res.ok) {
-      setPaste('');
-      setPasteOpen(false);
-      await refresh();
-      toast(res.message, 'success');
-    } else {
-      if (res.issues?.length) setIssues(res.issues.slice(0, 12));
-      toast(res.message, 'error');
-    }
-  }
-
-  async function remove(id: string) {
-    setBusy(true);
-    const res = await unpublishPack(id);
-    setBusy(false);
-    await refresh();
-    toast(res.message, res.ok ? 'success' : 'error');
-  }
-
-  if (configured === false) {
-    return (
-      <Row
-        label="Shared chapters"
-        desc="Not set up on this deployment yet. Add the Supabase keys in your hosting settings and run supabase/setup.sql — see DEPLOY.md."
-      >
-        <Button onClick={() => void refresh()}>Check again</Button>
-      </Row>
-    );
-  }
-
-  return (
-    <>
-      <Row
-        label="Publish study guide, flashcards and MCQs"
-        desc="Send one complete JSON pack to everyone. It may contain reading sections, flashcards, MCQs and EMQs; it is validated before storage, so a broken pack can never reach a student. Only administrators can change it."
-      >
-        <div className="row" style={{ gap: 8 }}>
-          <input
-            ref={fileRef}
-            type="file"
-            accept="application/json,text/json,.json"
-            multiple
-            hidden
-            onChange={(e) => void onFile(e)}
-          />
-          <Button variant="primary" disabled={busy} onClick={() => fileRef.current?.click()}>
-            {busy ? 'Publishing…' : 'Choose pack JSON'}
-          </Button>
-          <Button disabled={busy} onClick={() => setPasteOpen((v) => !v)}>
-            {pasteOpen ? 'Cancel paste' : 'Paste instead'}
-          </Button>
-        </div>
-      </Row>
-
-      {pasteOpen && (
-        <div style={{ marginTop: 10 }}>
-          <label className="muted" style={{ fontSize: 12.5, display: 'block', marginBottom: 6 }}>
-            Paste one chapter&rsquo;s JSON. Useful on a tablet, where saving a file first is fiddly.
-          </label>
-          <textarea
-            className="input"
-            rows={8}
-            spellCheck={false}
-            placeholder={'{\n  "schema": "foundation.study-module/v1",\n  "id": "sur-ch2-…",\n  …\n}'}
-            value={paste}
-            onChange={(e) => setPaste(e.target.value)}
-            style={{ width: '100%', fontFamily: 'var(--font-mono, monospace)', fontSize: 12.5 }}
-          />
-          <div className="row" style={{ gap: 8, marginTop: 8, justifyContent: 'flex-end' }}>
-            <Button variant="primary" disabled={busy || !paste.trim()} onClick={() => void publishPasted()}>
-              {busy ? 'Publishing…' : 'Publish this chapter'}
-            </Button>
-          </div>
-        </div>
-      )}
-
-      <p className="muted" style={{ fontSize: 12.5, margin: '4px 0 10px' }}>
-        Windows: choose one or more <code>.json</code> files. Honor Magic Pro 3: open this page in
-        Chrome, choose the file from Files, or paste the AI output directly. Use your administrator
-        account; a student account cannot publish.
-      </p>
-
-      {issues && (
-        <div className="ai-err" style={{ marginTop: 8 }}>
-          <strong>That pack was rejected:</strong>
-          <ul style={{ margin: '6px 0 0', paddingLeft: 18 }}>
-            {issues.map((i) => (
-              <li key={i}>{i}</li>
-            ))}
-          </ul>
-        </div>
-      )}
-
-      <Row label="Published chapters" desc="Live for the whole cohort right now.">
-        <div style={{ display: 'grid', gap: 6, justifyItems: 'end' }}>
-          {items === null && <span className="muted">Loading…</span>}
-          {items !== null && items.length === 0 && (
-            <span className="muted">Nothing published yet.</span>
-          )}
-          {items?.map((it) => (
-            <div key={it.id} className="row" style={{ gap: 8, alignItems: 'center' }}>
-              <span style={{ fontSize: 13 }}>{it.id}</span>
-              <Button size="sm" disabled={busy} onClick={() => void remove(it.id)}>
-                Unpublish
-              </Button>
-            </div>
-          ))}
-        </div>
-      </Row>
-    </>
-  );
-}
-
 function Switch({ checked, onChange, label }: { checked: boolean; onChange: (v: boolean) => void; label: string }) {
   return (
     <button className="switch" role="switch" aria-checked={checked} aria-label={label} onClick={() => onChange(!checked)} />
   );
 }
 
-const SECTIONS = [
-  { id: 'account', label: 'Account' },
-  { id: 'appearance', label: 'Appearance' },
-  { id: 'study', label: 'Study' },
-  { id: 'questions', label: 'Questions' },
-  { id: 'ai', label: 'AI tutor' },
-  { id: 'library', label: 'Library' },
-  { id: 'data', label: 'Data' },
-  { id: 'admin', label: 'Admin' },
-];
-
-/** The active filter, so every Row can hide itself without threading a prop. */
-const FilterContext = createContext('');
-
 function Row({ label, desc, children }: { label: string; desc?: string; children: React.ReactNode }) {
-  const q = useContext(FilterContext);
-  if (q && !`${label} ${desc ?? ''}`.toLowerCase().includes(q)) return null;
   return (
     <div className="setting-row">
       <div>
@@ -405,14 +140,10 @@ export default function SettingsView() {
   const fileRef = useRef<HTMLInputElement>(null);
   const [confirmReset, setConfirmReset] = useState(false);
 
-  const [filter, setFilter] = useState('');
-  const q = filter.trim().toLowerCase();
-
   const appearance = state.settings.appearance;
   const scheduler = state.settings.scheduler;
   const mcq = state.settings.mcq;
   const goals = state.settings.goals;
-  const ai = getAiConfig();
 
   function setAppearance<K extends string>(key: K, value: unknown) {
     update((s) => {
@@ -437,7 +168,7 @@ export default function SettingsView() {
     a.download = `foundation-study-backup-${new Date().toISOString().slice(0, 10)}.json`;
     a.click();
     URL.revokeObjectURL(url);
-    toast('Backup downloaded — your API key is never included', 'success');
+    toast('Personal backup downloaded', 'success');
   }
 
   function importData(file: File) {
@@ -525,36 +256,11 @@ export default function SettingsView() {
   }
 
   return (
-    <FilterContext.Provider value={q}>
+    <>
       <header className="page-head">
         <h1>Settings</h1>
-        <div className="sub">Appearance, study defaults, your library and your data.</div>
+        <div className="sub">Your account, study preferences, accessibility, and personal backup.</div>
       </header>
-
-      <div className="settings-bar no-print">
-        <input
-          className="input settings-filter"
-          placeholder="Filter settings…"
-          value={filter}
-          aria-label="Filter settings"
-          onChange={(e) => setFilter(e.target.value)}
-        />
-        <nav className="settings-jump" aria-label="Settings sections">
-          {SECTIONS.map((sec) => (
-            // Buttons, not anchors: under HashRouter an href="#set-…" would be read
-            // as a route change and drop you on the Not-found page.
-            <button
-              key={sec.id}
-              type="button"
-              onClick={() =>
-                document.getElementById(`set-${sec.id}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
-              }
-            >
-              {sec.label}
-            </button>
-          ))}
-        </nav>
-      </div>
 
       <Card className="settings-section" id="set-account">
         <h2>Account</h2>
@@ -794,54 +500,10 @@ export default function SettingsView() {
         </Row>
       </Card>
 
-      <Card className="settings-section" id="set-ai">
-        <h2>
-          <IconSparkle size={18} style={{ verticalAlign: -3, marginRight: 6, color: 'var(--accent)' }} />
-          AI tutor
-        </h2>
-        <p className="section-lead">
-          On by default. If your school has set up the shared AI server, it just works — no key needed.
-          Otherwise add your own Anthropic key below and it activates for you. The <strong>Hint</strong>,
-          <strong> Show explanation</strong> and <strong>Ask AI</strong> buttons are on every question and
-          flashcard; nothing is sent anywhere until you press one, and the rest of the app is fully offline.
-        </p>
-        <Row label="Enable AI tutor" desc="Adds live hints and explanations to the question bank.">
-          <Switch label="Enable AI tutor" checked={ai.enabled} onChange={(v) => setAiConfig({ enabled: v })} />
-        </Row>
-        <Row label="Your API key" desc="Optional when the shared server is set up. Your own Anthropic key, stored only on this device.">
-          <Input
-            type="password"
-            placeholder="sk-ant-… (leave blank to use the shared server)"
-            autoComplete="off"
-            value={ai.apiKey}
-            style={{ width: 240, fontFamily: 'var(--font-mono)', fontSize: 12.5 }}
-            onChange={(e) => setAiConfig({ apiKey: e.target.value })}
-          />
-        </Row>
-        <Row label="Model" desc="Opus gives the deepest explanations. If your key cannot use Opus, it falls back to Sonnet automatically.">
-          <Select value={ai.model} onChange={(e) => setAiConfig({ model: e.target.value })} style={{ minWidth: 240 }}>
-            {AI_MODELS.map((m) => (
-              <option key={m.value} value={m.value}>
-                {m.label}
-              </option>
-            ))}
-          </Select>
-        </Row>
-        <p className="muted" style={{ fontSize: 12.5, marginTop: 4 }}>
-          The key never leaves your browser except in the direct call to the model. AI answers are generated
-          live and clearly labelled — always check them against the written rationale, which is the source of
-          truth.
-        </p>
-      </Card>
-
-      <div id="set-library">
-        <LibraryPanel />
-      </div>
-
       <Card className="settings-section" id="set-data">
-        <h2>Your data</h2>
+        <h2>Backup &amp; transfer</h2>
         <p className="muted" style={{ fontSize: 13.5, marginTop: -6 }}>
-          Everything is stored locally on this device. Back it up or move it between devices here.
+          Your personal progress, notes, cards, and settings are stored in this browser. Download a backup before changing devices or clearing browser data.
         </p>
         <StorageMeter />
         <div className="row wrap" style={{ gap: 10, marginTop: 8 }}>
@@ -885,24 +547,6 @@ export default function SettingsView() {
         )}
       </Card>
 
-      <Card className="settings-section" id="set-admin">
-        <h2>Administrator</h2>
-        <p className="section-lead">
-          Your account — not this device — decides who may publish. It is checked in the database against
-          the signed-in identity, so it is the same wherever you sign in, and editing anything in this
-          browser changes nothing. Everyone else just studies: their own progress and notes stay on their
-          device, and they cannot change the shared material.
-        </p>
-        <AdminPanel />
-      </Card>
-
-      <div className="row" style={{ justifyContent: 'space-between', color: 'var(--text-faint)', fontSize: 12 }}>
-        <span>
-          {isDark() ? <IconMoon size={13} /> : <IconSun size={13} />} Foundation · schema v
-          {state.schemaVersion}
-        </span>
-        <span style={{ fontFamily: 'var(--font-signature)', fontSize: 18 }}>Yanal</span>
-      </div>
-    </FilterContext.Provider>
+    </>
   );
 }

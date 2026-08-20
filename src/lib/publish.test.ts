@@ -10,7 +10,7 @@ vi.mock('./supabase', () => ({
   supabase: { from: () => ({ upsert }) },
 }));
 
-const { publishPack } = await import('./publish');
+const { publishPack, stagePacks } = await import('./publish');
 
 const validPack = {
   schema: 'foundation.study-module/v1',
@@ -29,7 +29,7 @@ describe('publishPack — nothing invalid reaches the store', () => {
   it('refuses text that is not JSON at all, without calling the server', async () => {
     const res = await publishPack('this is not json');
     expect(res.ok).toBe(false);
-    expect(res.message).toMatch(/not valid JSON/i);
+    expect(res.issues?.join(' ')).toMatch(/not valid JSON/i);
     expect(upsert).not.toHaveBeenCalled();
   });
 
@@ -47,25 +47,36 @@ describe('publishPack — nothing invalid reaches the store', () => {
     expect(upsert).not.toHaveBeenCalled();
   });
 
-  it('publishes a valid pack and reports its title back', async () => {
+  it('stages a valid pack for review before it can reach students', async () => {
     const res = await publishPack(JSON.stringify(validPack));
     expect(res.ok).toBe(true);
-    expect(res.message).toContain('A Test Chapter');
+    expect(res.message).toMatch(/saved.*draft/i);
     expect(upsert).toHaveBeenCalledOnce();
+    expect(upsert.mock.calls[0]![0][0]).toMatchObject({ id: validPack.id, title: validPack.title });
   });
 
   it('stores a revision that changes when the content does', async () => {
     await publishPack(JSON.stringify(validPack));
-    const first = upsert.mock.calls[0]![0].revision;
+    const first = upsert.mock.calls[0]![0][0].revision;
 
     upsert.mockClear();
     await publishPack(JSON.stringify({ ...validPack, title: 'A Different Title' }));
-    const second = upsert.mock.calls[0]![0].revision;
+    const second = upsert.mock.calls[0]![0][0].revision;
 
     // Students skip a download when the revision matches, so an unchanged
     // revision after an edit means they would never receive the correction.
     expect(first).toBeTruthy();
     expect(second).not.toBe(first);
+  });
+
+  it('does not stage any pack when one item in a multi-file batch is invalid', async () => {
+    const res = await stagePacks([
+      { name: 'valid.json', text: JSON.stringify(validPack) },
+      { name: 'broken.json', text: JSON.stringify({ ...validPack, id: 'not valid' }) },
+    ]);
+    expect(res.ok).toBe(false);
+    expect(res.issues?.join(' ')).toMatch(/broken\.json.*id/i);
+    expect(upsert).not.toHaveBeenCalled();
   });
 });
 
@@ -77,7 +88,7 @@ describe('publishPack — explaining a refusal from the database', () => {
     expect(res.message).toMatch(/administrator/i);
   });
 
-  it('says to run the setup when the table does not exist', async () => {
+  it('says to run the setup when a required table does not exist', async () => {
     upsert.mockResolvedValueOnce({ error: { message: 'relation "public.chapters" does not exist' } });
     const res = await publishPack(JSON.stringify(validPack));
     expect(res.message).toMatch(/setup\.sql/);

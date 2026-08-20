@@ -40,16 +40,15 @@ export default function AiTutor({ cacheKey, explainPrompt, hintPrompt, canHint =
 
   const shown = useMemo(() => turns.filter((t) => !t.hidden), [turns]);
 
-  const NOT_READY = 'Turn on the AI tutor and add your API key in Settings to use this.';
+  // Keep inactive paid/technical controls out of the study flow. Administrators
+  // can opt in from the protected Admin area; disabled AI should occupy no space
+  // and make no network request.
+  if (!aiReady()) return null;
 
   const apiMessages = (extra: Turn[] = []): AiMessage[] =>
     [...turns, ...extra].map((t) => ({ role: t.role, content: t.content }));
 
   async function seed(kind: 'hint' | 'explain') {
-    if (!aiReady()) {
-      setErr(NOT_READY);
-      return;
-    }
     const prompt = kind === 'hint' ? hintPrompt! : explainPrompt;
     if (kind === 'explain') {
       const cached = aiCacheGet(cacheKey);
@@ -78,10 +77,6 @@ export default function AiTutor({ cacheKey, explainPrompt, hintPrompt, canHint =
   }
 
   function openChat() {
-    if (!aiReady()) {
-      setErr(NOT_READY);
-      return;
-    }
     if (turns.length === 0) {
       setTurns([
         { role: 'user', content: `${contextForChat}\n\nI want to discuss this.`, hidden: true },

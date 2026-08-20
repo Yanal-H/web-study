@@ -75,8 +75,7 @@ export default function StudyView() {
             icon={<IconStudy size={22} />}
             title="No chapters yet"
           >
-            Your administrator has not published any chapters yet, or the library is still loading.
-            Administrators can upload a validated chapter from Settings → Admin.
+            No study material is available yet. Refresh once, then ask the administrator if the library remains empty.
           </EmptyState>
         </Card>
       ) : (

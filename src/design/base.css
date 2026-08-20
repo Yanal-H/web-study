@@ -145,6 +145,36 @@ hr {
   padding: var(--sp-4) var(--sp-3) var(--sp-2);
 }
 
+.nav-more {
+  margin-top: var(--sp-2);
+}
+
+.nav-more summary {
+  cursor: pointer;
+  list-style: none;
+  padding: 9px 12px;
+  color: var(--text-muted);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  border-radius: var(--radius-sm);
+}
+
+.nav-more summary::-webkit-details-marker {
+  display: none;
+}
+
+.nav-more summary::after {
+  content: '+';
+  float: right;
+  color: var(--text-faint);
+}
+
+.nav-more[open] summary::after {
+  content: '\2212';
+}
+
 .navitem {
   display: flex;
   align-items: center;
@@ -372,6 +402,9 @@ hr {
 .topbar {
   display: none;
 }
+.mobile-tabbar {
+  display: none;
+}
 .scrim {
   display: none;
 }
@@ -444,9 +477,48 @@ hr {
     pointer-events: auto;
   }
   .main {
-    padding: var(--sp-5) 18px var(--sp-8);
+    padding: var(--sp-5) 18px calc(var(--sp-8) + 76px);
   }
   .main::before {
     height: 220px;
   }
+  .mobile-tabbar {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 70;
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    min-height: 64px;
+    padding: 6px max(10px, env(safe-area-inset-right)) calc(6px + env(safe-area-inset-bottom)) max(10px, env(safe-area-inset-left));
+    border-top: 1px solid var(--border);
+    background: color-mix(in srgb, var(--bg-2) 92%, transparent);
+    box-shadow: 0 -12px 28px -24px rgba(0, 0, 0, .6);
+    backdrop-filter: blur(14px);
+  }
+  .mobile-tab {
+    display: grid;
+    place-items: center;
+    align-content: center;
+    gap: 3px;
+    min-width: 0;
+    padding: 4px 2px;
+    border: 0;
+    border-radius: var(--radius-sm);
+    background: transparent;
+    color: var(--text-faint);
+    cursor: pointer;
+    font: inherit;
+    font-size: 10.5px;
+    font-weight: 650;
+    line-height: 1.1;
+    text-decoration: none;
+  }
+  .mobile-tab:hover,
+  .mobile-tab.active {
+    color: var(--accent);
+    background: var(--accent-soft);
+  }
+  .mobile-tab svg { flex: 0 0 auto; }
 }
