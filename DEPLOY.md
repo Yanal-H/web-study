@@ -94,6 +94,20 @@ select public.allowed_email_domain();
 
 It should print your domain.
 
+### Step 2b — Apply the Batch 1 security migration
+
+After the setup and community SQL files, open a new SQL Editor query and copy
+**the entire contents** of:
+
+`supabase/migrations/202608200001_batch1_security.sql`
+
+Paste all of it and click **Run**. Do not start from a middle line. It adds the
+read-time student-domain check, closes student message metadata updates, applies
+community posting/reporting limits, and creates the private AI quota function.
+
+**Worked when:** the query says `Success. No rows returned`. Keep shared AI
+disabled if this migration has not completed successfully.
+
 ---
 
 ## Step 3 — Get your two keys
@@ -395,9 +409,10 @@ students cannot load chapters at all, so resume it before term restarts.
 | Student progress and review history | That student's device | Yes |
 | Notes and personal cards | That student's device | Yes |
 
-Progress, review history, notes and personal cards are never uploaded, not
-visible to you, and not visible to anyone else. The only thing that travels is
-the chapters you publish, in one direction: you publish, students receive.
+Progress, review history, notes, personal cards and files are never uploaded.
+They are partitioned by the signed-in Supabase user on the device. The account
+that already owns data from an older build claims the legacy storage once; later
+accounts on the same browser receive separate state and IndexedDB databases.
 
 ### Watch your Supabase usage
 
@@ -419,6 +434,17 @@ and it can be built.
 The AI tutor works with no setup — each student can paste their own Anthropic
 key in Settings, which costs you nothing.
 
-If you would rather provide it for everyone, add `ANTHROPIC_API_KEY` in Vercel
-(Step 4) and redeploy. **This one does cost money**, charged per question asked,
-so leave it unset unless you intend to pay for it.
+If you would rather provide it for everyone, first complete Step 2b. Then add
+the following server variables in Vercel and redeploy:
+
+| Name | Value |
+|---|---|
+| `AI_PROXY_ENABLED` | `true` |
+| `ANTHROPIC_API_KEY` | your server-only Anthropic key |
+| `SUPABASE_URL` | the same project URL used by the app |
+| `SUPABASE_ANON_KEY` | the public anon key |
+
+The endpoint requires a signed-in session and enforces input/output limits,
+database-backed per-user quotas, and a short IP rate window. **This still costs
+money**, so leave `AI_PROXY_ENABLED=false` unless you have intentionally approved
+the budget. Never put the Anthropic key in a `VITE_` variable.

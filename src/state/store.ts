@@ -7,6 +7,7 @@
 
 import type { AppState, AppSettings, McqPerf, Mastery } from './types';
 import { LS_KEY, THEME_KEY, SCHEMA_VERSION, SETTINGS_DEFAULTS, COLORS, SEED_SUBJECTS } from './constants';
+import { getActiveStorageOwner, scopedLocalStorageKey } from '../lib/storageScope';
 
 /* ---- STORAGE WRAPPER (namespaced, quota-safe) ---- */
 export const Store = {
@@ -236,8 +237,15 @@ export function deepMergeSettings(def: any, cur: any): any {
   return out;
 }
 
+/** The active account's state key. Never resolves while signed out. */
+export function activeStateKey(): string {
+  return scopedLocalStorageKey(LS_KEY);
+}
+
 export function load(): AppState {
-  const raw = Store.get(LS_KEY);
+  if (!getActiveStorageOwner()) return defaultState();
+  const key = activeStateKey();
+  const raw = Store.get(key);
   if (raw) {
     try {
       return runMigrations(JSON.parse(raw));
@@ -246,7 +254,7 @@ export function load(): AppState {
       // timestamped backup so nothing is destroyed, then start fresh.
       console.warn('Could not load saved data; backing it up before falling back', e);
       try {
-        Store.set(LS_KEY + '__corrupt_' + Date.now(), raw);
+        Store.set(key + '__corrupt_' + Date.now(), raw);
       } catch {
         /* ignore */
       }
@@ -275,9 +283,12 @@ function notifyStorageError() {
 
 let saveTimer: ReturnType<typeof setTimeout> | null = null;
 export function save() {
+  if (!getActiveStorageOwner()) return;
   if (saveTimer) clearTimeout(saveTimer);
   saveTimer = setTimeout(() => {
-    const ok = Store.set(LS_KEY, JSON.stringify(state));
+    saveTimer = null;
+    if (!getActiveStorageOwner()) return;
+    const ok = Store.set(activeStateKey(), JSON.stringify(state));
     Store.set(THEME_KEY, state.theme);
     if (!ok) notifyStorageError();
   }, 150);
@@ -286,7 +297,9 @@ export function save() {
 /** Persist synchronously (no debounce) — useful for tests and beforeunload. */
 export function saveNow() {
   if (saveTimer) clearTimeout(saveTimer);
-  const ok = Store.set(LS_KEY, JSON.stringify(state));
+  saveTimer = null;
+  if (!getActiveStorageOwner()) return;
+  const ok = Store.set(activeStateKey(), JSON.stringify(state));
   Store.set(THEME_KEY, state.theme);
   if (!ok) notifyStorageError();
 }
@@ -299,6 +312,13 @@ export function markActivity() {
 /** Re-read from storage into the live state (used by tests). */
 export function reloadState(): AppState {
   state = load();
+  return state;
+}
+
+/** Re-load the singleton after the storage owner changes. */
+export function reloadStateForAccount(): AppState {
+  state = load();
+  notify();
   return state;
 }
 

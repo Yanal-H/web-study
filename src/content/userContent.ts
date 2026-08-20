@@ -6,6 +6,7 @@
 // and server-authorised. Do not add new features that depend on this module.
 import { useSyncExternalStore } from 'react';
 import { ChapterSchema, formatZodError, type Chapter } from './schema';
+import { scopedLocalStorageKey } from '../lib/storageScope';
 
 const USER_KEY = 'foundation_user_content_v1';
 
@@ -16,7 +17,7 @@ interface UserStore {
 
 function read(): UserStore {
   try {
-    const raw = localStorage.getItem(USER_KEY);
+    const raw = localStorage.getItem(scopedLocalStorageKey(USER_KEY));
     if (!raw) return { version: 1, chapters: [] };
     const parsed = JSON.parse(raw);
     if (!parsed || !Array.isArray(parsed.chapters)) return { version: 1, chapters: [] };
@@ -28,7 +29,7 @@ function read(): UserStore {
 
 function write(store: UserStore) {
   try {
-    localStorage.setItem(USER_KEY, JSON.stringify(store));
+    localStorage.setItem(scopedLocalStorageKey(USER_KEY), JSON.stringify(store));
   } catch (e) {
     console.warn('could not persist user content', e);
   }

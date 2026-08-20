@@ -1,7 +1,6 @@
 import { createContext, useCallback, useContext, useEffect, useRef, useState } from 'react';
 import { useStore } from '../../state/useStore';
-import { state as liveState, commit, update, reloadState, Store, runMigrations } from '../../state/store';
-import { LS_KEY } from '../../state/constants';
+import { state as liveState, activeStateKey, commit, update, reloadState, Store, runMigrations } from '../../state/store';
 import { setTheme, isDark } from '../../state/theme';
 import { getHaki, setHaki, type HakiLevel } from '../../state/haki';
 import {
@@ -471,13 +470,14 @@ export default function SettingsView() {
         return;
       }
       // Only now do we touch storage: back up the current blob first.
+      const stateKey = activeStateKey();
       const prior = JSON.stringify(liveState);
-      Store.set(LS_KEY + '__preimport_' + Date.now(), prior);
+      Store.set(stateKey + '__preimport_' + Date.now(), prior);
       const serialised = JSON.stringify(migrated);
-      const wrote = Store.set(LS_KEY, serialised);
+      const wrote = Store.set(stateKey, serialised);
       // Verify the write actually landed; if not, restore and report the failure.
-      if (!wrote || Store.get(LS_KEY) !== serialised) {
-        Store.set(LS_KEY, prior);
+      if (!wrote || Store.get(stateKey) !== serialised) {
+        Store.set(stateKey, prior);
         toast('Import could not be saved — your data is unchanged.', 'error');
         return;
       }
@@ -493,7 +493,7 @@ export default function SettingsView() {
   async function resetProgress() {
     // back up first, then clear ALL progress across both scheduling systems —
     // keep subjects, notes, imported content and settings.
-    Store.set(LS_KEY + '__prereset_' + Date.now(), JSON.stringify(liveState));
+    Store.set(activeStateKey() + '__prereset_' + Date.now(), JSON.stringify(liveState));
     update((s) => {
       s.activity = {};
       s.study.progress = {};

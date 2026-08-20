@@ -40,21 +40,6 @@ if (ap) {
 applyHaki();
 installAudioUnlock();
 
-// Remove any chapter content left on disk by an older build.
-//
-// Runs unconditionally at boot, BEFORE any sign-in check: a student who never
-// signs in again would otherwise keep a full copy of the library forever, which
-// is precisely what the online-only design exists to prevent. Personal progress,
-// review history and notes are not touched.
-void import('./data/db')
-  .then((m) => m.purgePersistedContent())
-  .then((n) => {
-    if (n > 0) console.info(`Removed ${n} stored content row(s) — Foundation no longer keeps chapters on the device.`);
-  })
-  .catch(() => {
-    // No IndexedDB, or it is locked. Nothing to clean up that we can reach.
-  });
-
 /**
  * Complete a sign-in that arrived as a link in an email.
  *

@@ -20,24 +20,30 @@ returns text[] language sql immutable as $$
   select array['yanalhassoneh987@gmail.com']::text[];
 $$;
 
+create or replace function public.email_is_allowed(p_email text)
+returns boolean language sql stable set search_path = '' as $$
+  select coalesce(
+    lower(btrim(p_email)) = any (select lower(unnest(public.admin_emails())))
+    or public.allowed_email_domain() is null
+    or public.allowed_email_domain() = ''
+    or lower(btrim(p_email)) like '%@' || lower(public.allowed_email_domain())
+    or lower(btrim(p_email)) like '%@%.' || lower(public.allowed_email_domain()),
+    false
+  );
+$$;
+
 create or replace function public.enforce_email_domain()
-returns trigger language plpgsql security definer as $$
-declare
-  allowed text := public.allowed_email_domain();
+returns trigger language plpgsql security definer set search_path = '' as $$
 begin
-  if allowed is null or allowed = '' then return new; end if;
-  if lower(new.email) = any (select lower(unnest(public.admin_emails()))) then return new; end if;
-  if lower(new.email) like '%@' || lower(allowed)
-    or lower(new.email) like '%@%.' || lower(allowed) then return new;
-  end if;
-  raise exception 'Email domain not allowed. Use your @% address.', allowed
+  if public.email_is_allowed(new.email) then return new; end if;
+  raise exception 'Email domain not allowed. Use your @% address.', public.allowed_email_domain()
     using errcode = 'check_violation';
 end;
 $$;
 
 drop trigger if exists enforce_email_domain_trigger on auth.users;
 create trigger enforce_email_domain_trigger
-  before insert on auth.users
+  before insert or update of email on auth.users
   for each row execute function public.enforce_email_domain();
 
 -- Expected results:

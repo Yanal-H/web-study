@@ -71,6 +71,7 @@ export const MEDIA = 'media';
 export const REVIEWS = 'reviews';
 
 import * as mem from './contentStore';
+import { scopedDatabaseName } from '../lib/storageScope';
 
 let dbPromise: Promise<IDBDatabase> | null = null;
 
@@ -81,7 +82,7 @@ export function openDB(): Promise<IDBDatabase> {
       reject(new Error('This browser has no IndexedDB.'));
       return;
     }
-    const req = indexedDB.open(DB_NAME, DB_VERSION);
+    const req = indexedDB.open(scopedDatabaseName(DB_NAME), DB_VERSION);
     req.onupgradeneeded = () => {
       const db = req.result;
       if (!db.objectStoreNames.contains(CHAPTERS)) {
@@ -125,6 +126,7 @@ export function openDB(): Promise<IDBDatabase> {
 
 /** Test hook: forget the cached connection. */
 export function resetConnection() {
+  void dbPromise?.then((db) => db.close(), () => {});
   dbPromise = null;
 }
 

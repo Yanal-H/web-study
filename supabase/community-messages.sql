@@ -130,14 +130,10 @@ create policy community_messages_insert on public.community_messages for insert 
   author_id = (select auth.uid()) and status = 'visible'
   and (select private.can_access_community_channel(channel_id))
 );
+-- Students cannot update messages. The previous 15-minute policy also allowed a
+-- direct REST caller to mutate server-owned alias/channel/timestamp metadata.
+-- If editing is added later, use a narrow RPC that accepts only the new body.
 drop policy if exists community_messages_author_edit on public.community_messages;
-create policy community_messages_author_edit on public.community_messages for update to authenticated using (
-  author_id = (select auth.uid()) and status = 'visible'
-  and created_at > now() - interval '15 minutes'
-) with check (
-  author_id = (select auth.uid()) and status = 'visible'
-  and (select private.can_access_community_channel(channel_id))
-);
 drop policy if exists community_messages_admin_moderate on public.community_messages;
 create policy community_messages_admin_moderate on public.community_messages for update to authenticated using (
   (select private.is_root_admin())

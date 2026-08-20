@@ -3,7 +3,9 @@
 // Metadata and payload sit in separate object stores so listing a library of
 // 500 MB of PDFs does not read a single byte of file data.
 
-const DB_NAME = 'foundation_files_v1';
+import { scopedDatabaseName } from './storageScope';
+
+export const FILE_DB_NAME = 'foundation_files_v1';
 const DB_VERSION = 1;
 const META = 'meta';
 const DATA = 'data';
@@ -32,7 +34,7 @@ function openDB(): Promise<IDBDatabase> {
       reject(new Error('This browser has no IndexedDB, so large files cannot be stored.'));
       return;
     }
-    const req = indexedDB.open(DB_NAME, DB_VERSION);
+    const req = indexedDB.open(scopedDatabaseName(FILE_DB_NAME), DB_VERSION);
     req.onupgradeneeded = () => {
       const db = req.result;
       if (!db.objectStoreNames.contains(META)) {
@@ -46,6 +48,12 @@ function openDB(): Promise<IDBDatabase> {
     req.onerror = () => reject(req.error);
   });
   return dbPromise;
+}
+
+/** Close the current account's file database before an account switch. */
+export function resetFileConnection(): void {
+  void dbPromise?.then((db) => db.close(), () => {});
+  dbPromise = null;
 }
 
 function tx<T>(stores: string[], mode: IDBTransactionMode, run: (t: IDBTransaction) => IDBRequest<T>): Promise<T> {

@@ -11,24 +11,26 @@ this folder was removed rather than kept as a second, competing backend.
 
 ## AI tutor proxy — `api/ai.ts`
 
-Lets every student use the AI tutor without pasting their own API key. The
-Anthropic key lives only in a server environment variable; it is never shipped
-to the browser.
+Optional shared-credit AI tutor. It is disabled by default and fails closed if
+authentication or the database quota check is unavailable. The Anthropic key
+lives only in a server environment variable; it is never shipped to the browser.
 
-**Turn it on:** add `ANTHROPIC_API_KEY` in the Vercel project's environment
-variables, then redeploy.
+**Turn it on only after the Batch 1 SQL migration is deployed:** add
+`AI_PROXY_ENABLED=true`, `ANTHROPIC_API_KEY`, `SUPABASE_URL`, and
+`SUPABASE_ANON_KEY` in Vercel, then redeploy. The anon key is public by design;
+the Anthropic key is not.
 
 **This one costs money** — Anthropic charges per request. Leave it unset unless
 you intend to pay for the cohort's usage.
 
-**If you leave it unset:** the endpoint returns 503 and students are told they
-can add their **own** key in Settings → AI tutor, which calls Anthropic directly
-from their browser and costs you nothing. Everything else in the app is
-unaffected.
+**If you leave it disabled:** the endpoint returns 503 without contacting
+Anthropic. Students may still use their own key if you keep that UI enabled.
 
 ### Notes
 
-- Model is capped to Opus 5 / Sonnet 5 / Haiku 4.5, and `max_tokens` is capped.
-- Requests must be same-origin.
-- That is a deterrent suited to a class cohort, not hardened auth. If the
-  audience grows large or public, add rate-limiting before relying on it.
+- A valid Supabase bearer token and same-origin browser request are required.
+- Body, message, input and output sizes are capped.
+- Database-backed per-user quotas and a short per-instance IP window run before
+  Anthropic is called.
+- The server owns the system prompt; arbitrary client system prompts are ignored.
+- The endpoint times out and fails closed if quota protection is unavailable.

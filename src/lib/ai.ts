@@ -4,6 +4,8 @@
 // after a deliberate click by someone who has entered their own key.
 
 import { state as liveState, update } from '../state/store';
+import { scopedLocalStorageKey } from './storageScope';
+import { supabase } from './supabase';
 
 export interface AiConfig {
   enabled: boolean;
@@ -17,10 +19,9 @@ export const AI_MODELS: Array<{ value: string; label: string }> = [
   { value: 'claude-haiku-4-5-20251001', label: 'Claude Haiku 4.5 — fast, cheap' },
 ];
 
-// On by default and defaulting to the deepest model, so the tutor is ready the
-// moment a key is added. With no key nothing is ever sent (aiReady stays false),
-// so the app is still fully offline until a key is entered.
-const DEFAULTS: AiConfig = { enabled: true, apiKey: '', model: AI_MODELS[0]!.value };
+// Paid AI is opt-in. New accounts start disabled and use the cheapest supported
+// model when enabled. The server proxy has a separate deployment kill switch.
+const DEFAULTS: AiConfig = { enabled: false, apiKey: '', model: 'claude-haiku-4-5-20251001' };
 
 export function getAiConfig(): AiConfig {
   const raw = (liveState.settings as Record<string, unknown>).ai as Partial<AiConfig> | undefined;
@@ -33,24 +34,6 @@ export function setAiConfig(patch: Partial<AiConfig>): void {
     Object.assign(cur, patch);
   });
 }
-
-// One-time: move a config still on the old cheap default onto Opus, so existing
-// setups get the deepest explanations. Guarded by a flag so a later, deliberate
-// choice of a different model is never overridden.
-(function upgradeToOpusOnce() {
-  if (typeof localStorage === 'undefined') return;
-  const FLAG = 'foundation_ai_opus_default_v1';
-  try {
-    if (localStorage.getItem(FLAG)) return;
-    const raw = (liveState.settings as Record<string, unknown>).ai as Partial<AiConfig> | undefined;
-    if (raw && (!raw.model || raw.model === 'claude-haiku-4-5-20251001')) {
-      setAiConfig({ model: 'claude-opus-5' });
-    }
-    localStorage.setItem(FLAG, '1');
-  } catch {
-    /* best-effort */
-  }
-})();
 
 /**
  * True when the tutor is switched on. A request then goes through the server proxy
@@ -70,7 +53,7 @@ const CACHE_MAX = 300;
 
 function loadCache(): Record<string, string> {
   try {
-    return JSON.parse(localStorage.getItem(CACHE_KEY) || '{}');
+    return JSON.parse(localStorage.getItem(scopedLocalStorageKey(CACHE_KEY)) || '{}');
   } catch {
     return {};
   }
@@ -86,7 +69,7 @@ export function aiCacheSet(key: string, value: string): void {
   const keys = Object.keys(c);
   if (keys.length > CACHE_MAX) delete c[keys[0]!];
   try {
-    localStorage.setItem(CACHE_KEY, JSON.stringify(c));
+    localStorage.setItem(scopedLocalStorageKey(CACHE_KEY), JSON.stringify(c));
   } catch {
     /* storage full — the cache is a nicety, not critical */
   }
@@ -169,24 +152,29 @@ async function rawProxy(
 ): Promise<RawResult> {
   const NO_SERVER = 'The AI tutor is not set up on the server — add your own API key in Settings to use it now.';
   try {
+    const sessionResult = await supabase?.auth.getSession();
+    const accessToken = sessionResult?.data.session?.access_token;
+    if (!accessToken) {
+      return { ok: false, error: fail('http', 'Sign in again before using the AI tutor.') };
+    }
     const res = await fetch('/api/ai', {
       method: 'POST',
       signal: opts.signal,
-      headers: { 'content-type': 'application/json' },
+      headers: { 'content-type': 'application/json', authorization: `Bearer ${accessToken}` },
       body: JSON.stringify({ system, messages, model, maxTokens: opts.maxTokens ?? 1000 }),
     });
     // A static host with no function returns HTML for /api/ai; treat non-JSON as "no server".
     if (!(res.headers.get('content-type') || '').includes('application/json')) {
       return { ok: false, error: fail('http', NO_SERVER) };
     }
-    const data = await res.json();
+    const responseData = (await res.json()) as { error?: { message?: string } };
     if (!res.ok) {
-      let detail = data?.error?.message || `Request failed (${res.status}).`;
+      let detail = responseData.error?.message || `Request failed (${res.status}).`;
       if (res.status === 503 || res.status === 404) detail = NO_SERVER;
       const downgradeable = res.status === 403 || /model|permission|tier|entitl/i.test(detail);
       return { ok: false, error: fail('http', detail), downgradeable };
     }
-    const text = textFrom(data);
+    const text = textFrom(responseData);
     if (!text) return { ok: false, error: fail('parse', 'The tutor returned an empty reply.') };
     return { ok: true, text };
   } catch (e) {

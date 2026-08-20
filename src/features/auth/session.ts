@@ -9,6 +9,7 @@
 import { useEffect, useState } from 'react';
 import type { Session } from '@supabase/supabase-js';
 import { supabase, ALLOWED_EMAIL_DOMAIN } from '../../lib/supabase';
+import { switchUserStorage } from '../../lib/userStorage';
 
 export type AuthPhase = 'checking' | 'signed-out' | 'signed-in';
 
@@ -31,9 +32,22 @@ export function useAuth(): AuthState {
     if (!client) return;
     let alive = true;
     let claimedForUserId: string | null = null;
+    let applyVersion = 0;
+    let activeUserId: string | null = null;
 
-    const apply = (session: Session | null) => {
+    const apply = async (session: Session | null) => {
+      const thisApply = ++applyVersion;
+      const nextUserId = session?.user.id ?? null;
+      if (alive && nextUserId !== activeUserId) {
+        // Unmount every account-specific route while local state and IndexedDB
+        // connections change. This also clears component-local drafts.
+        setState({ phase: 'checking', email: null, userId: null });
+      }
+      await switchUserStorage(nextUserId);
+      // A newer auth event won while the storage switch was queued.
+      if (thisApply !== applyVersion) return;
       if (!alive) return;
+      activeUserId = nextUserId;
       setState({
         phase: session ? 'signed-in' : 'signed-out',
         email: session?.user.email ?? null,
@@ -57,7 +71,9 @@ export function useAuth(): AuthState {
 
     // Fires on sign-in, sign-out, token refresh and — importantly — when another
     // tab signs out, so every open tab locks together.
-    const { data: sub } = client.auth.onAuthStateChange((_event, session) => apply(session));
+    const { data: sub } = client.auth.onAuthStateChange((_event, session) => {
+      void apply(session);
+    });
 
     return () => {
       alive = false;
@@ -170,4 +186,5 @@ export async function signOut(): Promise<void> {
   const { clearAdminCache } = await import('../../lib/admin');
   clearAdminCache();
   await supabase?.auth.signOut();
+  await switchUserStorage(null);
 }

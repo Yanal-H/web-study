@@ -12,6 +12,7 @@
     "typecheck": "tsc --noEmit",
     "lint": "eslint . --ext .ts,.tsx",
     "test": "vitest run",
+    "check:secrets": "node scripts/check-secrets.mjs",
     "validate:content": "vite-node scripts/validate-content.ts",
     "make:schema": "vite-node scripts/make-schema.ts",
     "upload:content": "vite-node scripts/upload-content.ts"

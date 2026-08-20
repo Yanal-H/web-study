@@ -28,6 +28,26 @@ returns text[] language sql immutable as $$
   select array['yanalhassoneh987@gmail.com']::text[];
 $$;
 
+create or replace function public.email_is_allowed(p_email text)
+returns boolean language sql stable set search_path = '' as $$
+  select coalesce(
+    lower(btrim(p_email)) = any (select lower(unnest(public.admin_emails())))
+    or public.allowed_email_domain() is null
+    or public.allowed_email_domain() = ''
+    or lower(btrim(p_email)) like '%@' || lower(public.allowed_email_domain())
+    or lower(btrim(p_email)) like '%@%.' || lower(public.allowed_email_domain()),
+    false
+  );
+$$;
+
+create or replace function public.is_allowed_learner()
+returns boolean language sql stable security definer set search_path = '' as $$
+  select exists (
+    select 1 from auth.users
+    where id = auth.uid() and public.email_is_allowed(email)
+  );
+$$;
+
 
 -- ============================================================================
 -- 1. Domain restriction (enforced on the server, not in the browser)
@@ -37,38 +57,17 @@ $$;
 -- the insert outright, which is what makes "only my cohort" actually true.
 
 create or replace function public.enforce_email_domain()
-returns trigger language plpgsql security definer as $$
-declare
-  allowed text := public.allowed_email_domain();
+returns trigger language plpgsql security definer set search_path = '' as $$
 begin
-  if allowed is null or allowed = '' then
-    return new;  -- no restriction configured
-  end if;
-
-  -- Administrators are always allowed, whatever domain they use.
-  --
-  -- Without this you can lock yourself out of your own site: the restriction
-  -- applies to every new account including yours, so an owner whose address is a
-  -- personal one (gmail, outlook) while students use a university domain could
-  -- never sign in to publish anything.
-  if lower(new.email) = any (select lower(unnest(public.admin_emails()))) then
-    return new;
-  end if;
-
-  -- Accept the base domain and its subdomains (for example
-  -- student@students.example.edu and student@s2.students.example.edu).
-  if lower(new.email) like '%@' || lower(allowed)
-    or lower(new.email) like '%@%.' || lower(allowed) then
-    return new;
-  end if;
-  raise exception 'Email domain not allowed. Use your @% address.', allowed
+  if public.email_is_allowed(new.email) then return new; end if;
+  raise exception 'Email domain not allowed. Use your @% address.', public.allowed_email_domain()
     using errcode = 'check_violation';
 end;
 $$;
 
 drop trigger if exists enforce_email_domain_trigger on auth.users;
 create trigger enforce_email_domain_trigger
-  before insert on auth.users
+  before insert or update of email on auth.users
   for each row execute function public.enforce_email_domain();
 
 
@@ -90,13 +89,13 @@ create table if not exists public.chapters (
 
 alter table public.chapters enable row level security;
 
--- Read: any signed-in user. (Sign-up is already domain-restricted above, so
--- "signed in" and "is one of my students" mean the same thing.)
+-- Read: only a currently eligible signed-in learner/admin. Checking at read time
+-- also covers older/manual accounts and later email changes.
 drop policy if exists chapters_read on public.chapters;
 create policy chapters_read on public.chapters
   for select
   to authenticated
-  using (true);
+  using ((select public.is_allowed_learner()));
 
 -- Write: administrators only. A student who flips an "admin" flag in their own
 -- browser still fails here, because this is evaluated in the database against
