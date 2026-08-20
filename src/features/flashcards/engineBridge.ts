@@ -46,6 +46,8 @@ export interface EngineQueueOptions {
   reviewLimit: number;
   /** "study all" ignores the daily caps and takes unseen cards too */
   includeAll?: boolean;
+  /** Upper bound for an explicit Study All batch. */
+  allLimit?: number;
 }
 
 /** A batch of engine cards for a deck subtree, ready to review. */
@@ -54,6 +56,7 @@ export async function engineQueue(deck: string, opts: EngineQueueOptions): Promi
     newLimit: opts.newLimit,
     reviewLimit: opts.reviewLimit,
     includeAll: opts.includeAll,
+    allLimit: opts.allLimit,
   });
   return rows.map(toReviewItem);
 }

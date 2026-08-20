@@ -35,13 +35,18 @@ export interface QueueOptions {
   now?: number;
   /** true ignores scheduling and returns every active card in the deck. */
   includeAll?: boolean;
+  /** Safety bound for an explicit Study All session. */
+  allLimit?: number;
 }
+
+/** Large enough for focused study, small enough for Windows/tablet memory and undo. */
+export const MAX_STUDY_ALL_CARDS = 250;
 
 /** Due cards first, then unseen ones, capped by the daily limits. */
 export async function buildQueue(deck: string, opts: QueueOptions): Promise<EngineItem[]> {
   const now = opts.now ?? Date.now();
   const rows = opts.includeAll
-    ? await allActiveBatch(deck, Number.MAX_SAFE_INTEGER)
+    ? await allActiveBatch(deck, opts.allLimit ?? MAX_STUDY_ALL_CARDS)
     : [
         ...(await nextDueBatch(deck, now, opts.reviewLimit)),
         ...(await nextNewBatch(deck, opts.newLimit)),

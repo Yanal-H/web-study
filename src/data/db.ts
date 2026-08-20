@@ -242,7 +242,7 @@ export async function dueCount(deck: string, now: number): Promise<number> {
   const t = db.transaction([SCHEDULING], 'readonly');
   const idx = t.objectStore(SCHEDULING).index('deck_due');
   let total = 0;
-  for (const d of decks) total += await req(idx.count(IDBKeyRange.bound([d, 1], [d, now])));
+  for (const d of decks) total += await activeRowsInRange(idx, IDBKeyRange.bound([d, 1], [d, now]));
   return total;
 }
 
@@ -252,8 +252,23 @@ export async function newCount(deck: string): Promise<number> {
   const t = db.transaction([SCHEDULING], 'readonly');
   const idx = t.objectStore(SCHEDULING).index('deck_state');
   let total = 0;
-  for (const d of decks) total += await req(idx.count(IDBKeyRange.only([d, 'new'])));
+  for (const d of decks) total += await activeRowsInRange(idx, IDBKeyRange.only([d, 'new']));
   return total;
+}
+
+/** Index counts include suspended rows; queue badges must match what can open. */
+function activeRowsInRange(idx: IDBIndex, range: IDBValidKey | IDBKeyRange): Promise<number> {
+  return new Promise((resolve, reject) => {
+    let total = 0;
+    const cursor = idx.openCursor(range);
+    cursor.onsuccess = () => {
+      const current = cursor.result;
+      if (!current) return resolve(total);
+      if (!(current.value as Scheduling).suspended) total++;
+      current.continue();
+    };
+    cursor.onerror = () => reject(cursor.error);
+  });
 }
 
 /* --------------------------------------------------------------- decks

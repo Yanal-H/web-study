@@ -3,6 +3,7 @@ import { state, commit } from '../../state/store';
 import { type Grade, type CardSched } from '../../lib/scheduler';
 import { gradeItem, undoGrade, gradePreview, type ReviewItem, type GradeUndo } from './deck';
 import { Button, ProgressRing } from '../../design/primitives';
+import { useToast } from '../../design/Toast';
 import { IconFlag, IconCheck, IconChevron } from '../../design/icons';
 import { chapterImage } from '../../content/loader';
 import { renderRich, renderInline } from '../../lib/lexicon';
@@ -61,6 +62,8 @@ export default function ReviewSession({
   const [swipeHint, setSwipeHint] = useState<Grade | null>(null);
   const [impact, setImpact] = useState<{ g: Grade; key: number } | null>(null);
   const [combo, setCombo] = useState(0);
+  const [mutating, setMutating] = useState(false);
+  const toast = useToast();
 
   const done = idx >= queue.length;
   const item = queue[idx];
@@ -79,33 +82,54 @@ export default function ReviewSession({
   const cardState = item?.sched?.state ?? (state.study.cardSched[item?.key ?? ''] as CardSched | undefined)?.state ?? 'new';
 
   const grade = useCallback(
-    (g: Grade) => {
-      if (!item) return;
-      undo.current.push(gradeItem(item, g, S, idx));
-      setTally((t) => ({ ...t, reviewed: t.reviewed + 1, [g]: (t as any)[g] + 1 }));
-      setImpact({ g, key: Date.now() });
-      sfx.grade(g);
-      setCombo((c) => {
-        const n = g === 'good' || g === 'easy' ? c + 1 : 0;
-        if (n >= 3) sfx.combo(n);
-        return n;
-      });
-      setRevealed(false);
-      setTyped('');
-      setHint(false);
-      setIdx((i) => i + 1);
+    async (g: Grade) => {
+      if (!item || mutating) return;
+      setMutating(true);
+      try {
+        const graded = await gradeItem(item, g, S, idx);
+        undo.current.push(graded);
+        setTally((t) => ({ ...t, reviewed: t.reviewed + 1, [g]: t[g] + 1 }));
+        setImpact({ g, key: Date.now() });
+        sfx.grade(g);
+        setCombo((c) => {
+          const n = g === 'good' || g === 'easy' ? c + 1 : 0;
+          if (n >= 3) sfx.combo(n);
+          return n;
+        });
+        setRevealed(false);
+        setTyped('');
+        setHint(false);
+        setIdx((i) => i + 1);
+      } catch {
+        toast('Could not save this grade. Please try again.', 'error');
+      } finally {
+        setMutating(false);
+      }
     },
-    [item, idx, S]
+    [item, idx, S, mutating, toast]
   );
 
-  const doUndo = useCallback(() => {
+  const doUndo = useCallback(async () => {
+    if (mutating) return;
     const last = undo.current.pop();
     if (!last) return;
-    undoGrade(last);
-    setIdx(last.idx);
-    setRevealed(true);
-    setTally((t) => ({ ...t, reviewed: Math.max(0, t.reviewed - 1) }));
-  }, []);
+    setMutating(true);
+    try {
+      await undoGrade(last);
+      setIdx(last.idx);
+      setRevealed(true);
+      setTally((t) => ({
+        ...t,
+        reviewed: Math.max(0, t.reviewed - 1),
+        [last.grade]: Math.max(0, t[last.grade] - 1),
+      }));
+    } catch {
+      undo.current.push(last);
+      toast('Could not undo the grade. Please try again.', 'error');
+    } finally {
+      setMutating(false);
+    }
+  }, [mutating, toast]);
 
   const toggleFlag = useCallback(() => {
     if (!item) return;
@@ -132,9 +156,9 @@ export default function ReviewSession({
         setRevealed(true);
       } else if (revealed && ['1', '2', '3', '4'].includes(e.key)) {
         const gr = GRADES.find((x) => x.key === e.key);
-        if (gr) grade(gr.g);
+        if (gr) void grade(gr.g);
       } else if (e.key.toLowerCase() === 'u') {
-        doUndo();
+        void doUndo();
       } else if (e.key.toLowerCase() === 'f') {
         toggleFlag();
       } else if (e.key.toLowerCase() === 'h') {
@@ -169,9 +193,9 @@ export default function ReviewSession({
       if (Math.abs(dx) > 60 || Math.abs(dy) > 60) setRevealed(true);
       return;
     }
-    if (dy < -60 && Math.abs(dy) > Math.abs(dx)) grade('easy');
-    else if (dx > 70) grade('good');
-    else if (dx < -70) grade('again');
+    if (dy < -60 && Math.abs(dy) > Math.abs(dx)) void grade('easy');
+    else if (dx > 70) void grade('good');
+    else if (dx < -70) void grade('again');
   }
 
   if (done) {
@@ -208,13 +232,13 @@ export default function ReviewSession({
       {impact && <div key={impact.key} className={`impact-flash impact-${impact.g}`} aria-hidden="true" />}
       <div className="review-top">
         <div className="row" style={{ gap: 6 }}>
-          <Button variant="ghost" size="sm" onClick={onExit}>
+          <Button variant="ghost" size="sm" onClick={onExit} disabled={mutating}>
             <IconChevron size={15} style={{ transform: 'rotate(180deg)' }} /> Decks
           </Button>
           <button
             className="btn btn--ghost btn--sm"
-            onClick={doUndo}
-            disabled={undo.current.length === 0}
+            onClick={() => void doUndo()}
+            disabled={undo.current.length === 0 || mutating}
             aria-label="Previous card"
             title="Back to the previous card (u)"
           >
@@ -334,7 +358,13 @@ export default function ReviewSession({
       ) : (
         <div className="grade-row">
           {GRADES.map((gr) => (
-            <button key={gr.g} className="grade-btn" style={{ ['--gt' as string]: gr.tone }} onClick={() => grade(gr.g)}>
+            <button
+              key={gr.g}
+              className="grade-btn"
+              style={{ ['--gt' as string]: gr.tone }}
+              onClick={() => void grade(gr.g)}
+              disabled={mutating}
+            >
               <span className="grade-label">{gr.label}</span>
               <span className="grade-interval">{gradePreview(item!, S, gr.g)}</span>
               <span className="grade-sub">{gr.hint}</span>

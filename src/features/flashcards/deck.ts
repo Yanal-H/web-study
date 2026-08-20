@@ -312,6 +312,7 @@ export interface GradeUndo {
   /** the FSRS row, for engine cards */
   prevSched?: Scheduling;
   idx: number;
+  grade: Grade;
 }
 
 /**
@@ -320,41 +321,39 @@ export interface GradeUndo {
  * Engine cards go to FSRS in IndexedDB; cards still held in the local store keep
  * the SM-2+ path, so a session can mix both without the caller caring which.
  */
-export function gradeItem(
+export async function gradeItem(
   item: ReviewItem,
   g: Grade,
   settings: Parameters<typeof scheduleCard>[0],
   idx: number
-): GradeUndo {
+): Promise<GradeUndo> {
   if (item.source === 'engine' && item.sched) {
     const prevSched = item.sched;
-    void import('../../data/session').then(async (m) => {
-      const next = await m.rateCard(
-        { cardId: item.key.replace(/^engine:/, ''), deck: item.deck, sched: prevSched, card: {} as never },
-        RATING[g]
-      );
-      item.sched = next;
-      m.invalidateDeckTree();
-    });
+    const m = await import('../../data/session');
+    const next = await m.rateCard(
+      { cardId: item.key.replace(/^engine:/, ''), deck: item.deck, sched: prevSched, card: {} as never },
+      RATING[g]
+    );
+    item.sched = next;
+    m.invalidateDeckTree();
     markActivity();
     commit();
-    return { item, prevSched, idx };
+    return { item, prevSched, idx, grade: g };
   }
   const prev = state.study.cardSched[item.key] as CardSched | undefined;
   const next = scheduleCard(settings, itemSched(item), g);
   persistGrade(item, next);
-  return { item, prev, idx };
+  return { item, prev, idx, grade: g };
 }
 
 /** Put a graded card back the way it was. */
-export function undoGrade(u: GradeUndo) {
+export async function undoGrade(u: GradeUndo): Promise<void> {
   if (u.item.source === 'engine' && u.prevSched) {
     const prevSched = u.prevSched;
     u.item.sched = prevSched;
-    void import('../../data/session').then((m) => {
-      void m.restoreScheduling(prevSched);
-      m.invalidateDeckTree();
-    });
+    const m = await import('../../data/session');
+    await m.restoreScheduling(prevSched);
+    m.invalidateDeckTree();
     return;
   }
   restoreSched(u.item, u.prev);

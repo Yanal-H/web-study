@@ -16,7 +16,7 @@ import {
   type ReviewItem,
 } from './deck';
 import { engineQueue, mergeTrees, findNode } from './engineBridge';
-import { deckTree as engineDeckTree, type EngineDeckNode } from '../../data/session';
+import { MAX_STUDY_ALL_CARDS, deckTree as engineDeckTree, type EngineDeckNode } from '../../data/session';
 import { whenContentReady } from '../../data/bootstrap';
 import { whenPublishedContentReady } from '../../data/remoteContent';
 import DeckBrowser from './DeckBrowser';
@@ -105,11 +105,12 @@ export default function FlashcardsView() {
         newLimit: how === 'due' ? S.newPerDay : 9999,
         reviewLimit: how === 'due' ? S.reviewsPerDay : 9999,
         includeAll: how === 'all',
+        allLimit: how === 'all' ? MAX_STUDY_ALL_CARDS : undefined,
       });
       const userPool = path ? itemsInDeck(userItems, path) : userItems;
       const fromUser = how === 'due'
         ? buildQueue(userPool, { newLimit: S.newPerDay, reviewLimit: S.reviewsPerDay })
-        : [...userPool];
+        : userPool.slice(0, Math.max(0, MAX_STUDY_ALL_CARDS - fromEngine.length));
       const q = [...fromEngine, ...fromUser];
       if (q.length === 0) {
         toast(how === 'all'
@@ -190,7 +191,7 @@ export default function FlashcardsView() {
             onChange={setScope}
             options={[
               { value: 'due', label: `Due (${scopedStats.due + scopedStats.neu})` },
-              { value: 'all', label: `All (${scopedStats.total})` },
+              { value: 'all', label: `All (${scopedStats.total}${scopedStats.total > MAX_STUDY_ALL_CARDS ? ` · first ${MAX_STUDY_ALL_CARDS}` : ''})` },
             ]}
             ariaLabel="Review scope"
           />
