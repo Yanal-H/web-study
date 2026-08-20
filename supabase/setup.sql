@@ -25,7 +25,7 @@ $$;
 -- Your own email address — the only account allowed to publish content.
 create or replace function public.admin_emails()
 returns text[] language sql immutable as $$
-  select array['yanal_g_hussein@students.kasralainy.edu.eg']::text[];
+  select array['yanalhassoneh987@gmail.com']::text[];
 $$;
 
 

@@ -210,10 +210,31 @@ The "Set up custom SMTP to edit templates" notice is now gone.
 Do not hard-code a length in the template: this deployment accepts both the
 current eight-digit Brevo/Supabase code and the older six-digit format.
 
-To make new emails contain **six digits only**, open **Authentication → Email →
-OTP length** in Supabase and set it to `6`, then save. Brevo only delivers the
-message; Supabase generates the code. The application still accepts eight-digit
-codes so an older email cannot be rejected by the browser.
+**Important:** paste this HTML into Supabase's **Authentication → Email
+Templates → Magic Link** editor. Do not paste it into a Brevo campaign or Brevo
+template. Supabase replaces `{{ .Token }}` before handing the email to Brevo.
+If the received email literally shows `{{ .Token }}`, the HTML was entered in
+Brevo or the wrong Supabase template; move it to the Supabase Magic Link
+template, save it, and request a new code.
+
+To make new emails contain **six digits only**, change the hosted Supabase Auth
+configuration. This cannot be done with SQL: Brevo only delivers the message,
+while Supabase Auth generates the token outside your Postgres database. Create a
+Supabase personal access token, replace the two placeholders below, and run this
+from a terminal (never in the browser or Vercel):
+
+```powershell
+$headers = @{ Authorization = "Bearer <SUPABASE_PERSONAL_ACCESS_TOKEN>"; "Content-Type" = "application/json" }
+$body = @{ mailer_otp_length = 6 } | ConvertTo-Json
+Invoke-RestMethod -Method Patch -Uri "https://api.supabase.com/v1/projects/<PROJECT_REF>/config/auth" -Headers $headers -Body $body
+```
+
+`<PROJECT_REF>` is the first part of your Project URL (for example, `abc123` in
+`https://abc123.supabase.co`). Supabase's Management API accepts
+`mailer_otp_length`; six is the standard email OTP length. The app accepts both
+six- and eight-digit codes so an older email cannot be rejected by the browser.
+If you only need the owner/domain correction, run
+`supabase/fix-yanal-auth.sql` in the Supabase SQL editor.
 
 ### 6. Raise the rate limit
 

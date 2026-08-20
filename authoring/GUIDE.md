@@ -1,6 +1,8 @@
 # Authoring guide
 
-How a pack becomes the app. Read this once; after that you only need `PROMPT.md`.
+How a pack becomes the app. Read this once; then use the prompt that matches
+your task: `PROMPT_STUDY_GUIDE_JSON.md`, `PROMPT_FLASHCARDS_JSON.md`,
+`PROMPT_MCQS_JSON.md`, or the combined `AI_CONTENT_PROMPT.md`.
 
 ## The loop
 

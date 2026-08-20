@@ -286,8 +286,8 @@ function PublishPanel() {
   return (
     <>
       <Row
-        label="Publish a chapter"
-        desc="Send a chapter pack to everyone. It is validated before it is stored, so a broken file can never reach a student. Students receive the shared curriculum on their next load; only administrators can change it."
+        label="Publish study guide, flashcards and MCQs"
+        desc="Send one complete JSON pack to everyone. It may contain reading sections, flashcards, MCQs and EMQs; it is validated before storage, so a broken pack can never reach a student. Only administrators can change it."
       >
         <div className="row" style={{ gap: 8 }}>
           <input

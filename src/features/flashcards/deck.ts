@@ -51,6 +51,22 @@ export interface ReviewItem {
 /** Deck every personal card lands in unless it carries its own path. */
 export const USER_DECK = 'My cards';
 
+/** Old/manual imports can contain unexpected values; never let one crash review. */
+function text(value: unknown): string | undefined {
+  return typeof value === 'string' ? value : undefined;
+}
+
+function deckName(value: unknown): string {
+  const valueText = text(value)?.trim();
+  return valueText || USER_DECK;
+}
+
+function userCardType(value: unknown): RenderCard['type'] {
+  return value === 'cloze' || value === 'reversed' || value === 'type' || value === 'image' || value === 'occlusion'
+    ? value
+    : 'basic';
+}
+
 function schedFor(key: string): CardSched {
   return (state.study.cardSched[key] as CardSched) || { state: 'new' };
 }
@@ -104,14 +120,14 @@ export function collectItems(filter?: { subject?: string; chapterId?: string }):
           key: `user:${c.id}#${i}`,
           source: 'user',
           subject: anyC.subject,
-          deck: anyC.deck || USER_DECK,
+          deck: deckName(anyC.deck),
           card: {
             type: 'occlusion',
             image: anyC.image,
             regions: anyC.regions,
             regionIndex: i,
-            back: r.label,
-            extra: anyC.extra,
+            back: text(r.label),
+            extra: text(anyC.extra),
           },
         });
       });
@@ -120,16 +136,16 @@ export function collectItems(filter?: { subject?: string; chapterId?: string }):
         key: `user:${c.id}`,
         source: 'user',
         subject: anyC.subject,
-        deck: anyC.deck || USER_DECK,
+        deck: deckName(anyC.deck),
         card: {
-          type: anyC.type || 'basic',
-          front: c.front,
-          back: c.back,
-          cloze: c.cloze,
-          extra: anyC.extra,
-          hint: anyC.hint,
+          type: userCardType(anyC.type),
+          front: text(c.front),
+          back: text(c.back),
+          cloze: text(c.cloze),
+          extra: text(anyC.extra),
+          hint: text(anyC.hint),
           image: anyC.image,
-          tags: c.tags,
+          tags: Array.isArray(c.tags) ? c.tags.filter((tag): tag is string => typeof tag === 'string') : [],
         },
       });
     }

@@ -91,3 +91,13 @@ describe('deck tree', () => {
     expect(itemsInDeck(items, 'Anatomy')).toHaveLength(1);
   });
 });
+
+describe('legacy import safety', () => {
+  it('normalises a malformed user deck instead of crashing the review screen', () => {
+    state.flashcards = [
+      { id: 'bad', front: 'Question', back: 'Answer', deck: { unexpected: true } } as any,
+    ];
+    const item = collectItems().find((entry) => entry.key === 'user:bad');
+    expect(item).toMatchObject({ deck: 'My cards', card: { type: 'basic', front: 'Question', back: 'Answer' } });
+  });
+});

@@ -20,7 +20,7 @@ import { deckTree as engineDeckTree, type EngineDeckNode } from '../../data/sess
 import { whenContentReady } from '../../data/bootstrap';
 import DeckBrowser from './DeckBrowser';
 import ReviewSession from './ReviewSession';
-import { exportTSV, parseDelimited, importCards } from './anki';
+import { exportTSV, isChapterPackJson, parseDelimited, importCards } from './anki';
 import { makeUserCard } from './makeCard';
 
 // Heavy, occasionally-used views load on demand (Phase 6 perf).
@@ -336,9 +336,14 @@ function ImportDialog({ onClose }: { onClose: () => void }) {
   const toast = useToast();
   const [text, setText] = useState('');
   const fileRef = useRef<HTMLInputElement>(null);
-  const preview = useMemo(() => parseDelimited(text), [text]);
+  const chapterPack = useMemo(() => isChapterPackJson(text), [text]);
+  const preview = useMemo(() => (chapterPack ? [] : parseDelimited(text)), [text, chapterPack]);
 
   function run() {
+    if (chapterPack) {
+      toast('This is a study-pack JSON. Publish it from Settings → Admin, not Flashcards → Import.', 'error');
+      return;
+    }
     if (preview.length === 0) {
       toast('Nothing to import.');
       return;
@@ -350,7 +355,7 @@ function ImportDialog({ onClose }: { onClose: () => void }) {
 
   return (
     <Dialog
-      title="Import cards (TSV/CSV)"
+      title="Import cards (TSV/CSV only)"
       onClose={onClose}
       footer={
         <div className="row spread">
@@ -379,7 +384,9 @@ function ImportDialog({ onClose }: { onClose: () => void }) {
       }
     >
       <p className="muted" style={{ fontSize: 13, marginTop: -4 }}>
-        Columns: front, back, tags, type. Cloze rows use <code>{'{{c1::…}}'}</code> in the front column.
+        This importer is for card files only: columns are front, back, tags, type and optional deck.
+        Cloze rows use <code>{'{{c1::…}}'}</code> in the front column. To add study text,
+        sections and MCQs, use your administrator account in Settings → Admin → Publish a chapter.
       </p>
       <textarea
         className="textarea"
@@ -391,6 +398,11 @@ function ImportDialog({ onClose }: { onClose: () => void }) {
       {preview.length > 0 && (
         <div className="muted" style={{ fontSize: 12.5, marginTop: 8 }}>
           {preview.length} card{preview.length === 1 ? '' : 's'} detected.
+        </div>
+      )}
+      {chapterPack && (
+        <div className="ai-err" style={{ marginTop: 8 }}>
+          Study-pack JSON detected. Nothing will be imported here: open Settings → Admin and publish the pack there.
         </div>
       )}
     </Dialog>

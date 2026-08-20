@@ -35,7 +35,7 @@ describe('sendCode — the browser must not decide who may sign in', () => {
     expect(res.ok).toBe(true);
   });
 
-  it('sends an in-domain address too', async () => {
+  it('sends the configured owner/student domain too', async () => {
     const res = await sendCode('student@students.kasralainy.edu.eg');
     expect(signInWithOtp).toHaveBeenCalledOnce();
     expect(res.ok).toBe(true);

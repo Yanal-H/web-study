@@ -11,6 +11,7 @@ import {
   getScheduling,
   nextDueBatch,
   nextNewBatch,
+  allActiveBatch,
   putScheduling,
   dueCount,
   newCount,
@@ -31,16 +32,19 @@ export interface QueueOptions {
   newLimit: number;
   reviewLimit: number;
   now?: number;
-  /** true pulls unseen cards even when nothing is due */
-  includeNew?: boolean;
+  /** true ignores scheduling and returns every active card in the deck. */
+  includeAll?: boolean;
 }
 
 /** Due cards first, then unseen ones, capped by the daily limits. */
 export async function buildQueue(deck: string, opts: QueueOptions): Promise<EngineItem[]> {
   const now = opts.now ?? Date.now();
-  const due = await nextDueBatch(deck, now, opts.reviewLimit);
-  const fresh = opts.includeNew === false ? [] : await nextNewBatch(deck, opts.newLimit);
-  const rows = [...due, ...fresh];
+  const rows = opts.includeAll
+    ? await allActiveBatch(deck, Number.MAX_SAFE_INTEGER)
+    : [
+        ...(await nextDueBatch(deck, now, opts.reviewLimit)),
+        ...(await nextNewBatch(deck, opts.newLimit)),
+      ];
   if (rows.length === 0) return [];
 
   const cards = await getCards(rows.map((r) => r.cardId));

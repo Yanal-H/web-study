@@ -53,6 +53,7 @@ export async function engineQueue(deck: string, opts: EngineQueueOptions): Promi
   const rows = await engineBuildQueue(deck, {
     newLimit: opts.newLimit,
     reviewLimit: opts.reviewLimit,
+    includeAll: opts.includeAll,
   });
   return rows.map(toReviewItem);
 }

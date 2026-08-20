@@ -207,6 +207,32 @@ export async function nextNewBatch(deck: string, limit: number): Promise<Schedul
   return out;
 }
 
+/**
+ * Every active card in a deck subtree. This is intentionally used only by
+ * “Study all”, where the student explicitly asks to ignore the due schedule.
+ */
+export async function allActiveBatch(deck: string, limit: number): Promise<Scheduling[]> {
+  const decks = new Set(deck ? await decksUnder(deck) : await allDeckKeys());
+  if (!decks.size || limit <= 0) return [];
+
+  const db = await openDB();
+  const t = db.transaction([SCHEDULING], 'readonly');
+  const store = t.objectStore(SCHEDULING);
+  const out: Scheduling[] = [];
+  await new Promise<void>((resolve, reject) => {
+    const cur = store.openCursor();
+    cur.onsuccess = () => {
+      const cursor = cur.result;
+      if (!cursor || out.length >= limit) return resolve();
+      const row = cursor.value as Scheduling;
+      if (decks.has(row.deck) && !row.suspended) out.push(row);
+      cursor.continue();
+    };
+    cur.onerror = () => reject(cur.error);
+  });
+  return out;
+}
+
 /** Count due cards for a deck subtree without loading a single card. */
 export async function dueCount(deck: string, now: number): Promise<number> {
   const decks = deck ? await decksUnder(deck) : await allDeckKeys();
