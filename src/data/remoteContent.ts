@@ -20,7 +20,7 @@
 
 import type { Chapter } from '../content/schema';
 import { ChapterSchema } from '../content/schema';
-import { importPackOffThread } from './importClient';
+import { importPackIntoSession } from './importClient';
 import { supabase } from '../lib/supabase';
 import { clearContent } from './contentStore';
 
@@ -29,6 +29,8 @@ import { clearContent } from './contentStore';
 // load starts with nothing and must download again. Persisting this would make
 // the app think it holds chapters it no longer has.
 let sessionManifest: Record<string, string> = {};
+let syncInFlight: Promise<SyncReport> | null = null;
+let lastSyncReport: SyncReport | null = null;
 
 export interface RemoteItem {
   id: string;
@@ -68,11 +70,13 @@ export function isSharedStoreConfigured(): boolean {
  */
 export function resetContentSync(): void {
   sessionManifest = {};
+  lastSyncReport = null;
 }
 
 /** Drop every chapter from memory. Called on sign-out. */
 export function forgetContent(): void {
   sessionManifest = {};
+  lastSyncReport = null;
   clearContent();
 }
 
@@ -88,7 +92,7 @@ export function forgetContent(): void {
  * reaching a student is a content-integrity problem, and it is worth the few
  * milliseconds to check twice.
  */
-export async function syncPublishedContent(): Promise<SyncReport> {
+async function runPublishedContentSync(): Promise<SyncReport> {
   const report: SyncReport = { configured: false, imported: [], removed: [], failed: [] };
   if (!supabase) return { ...report, skipped: 'not-configured' };
 
@@ -123,7 +127,7 @@ export async function syncPublishedContent(): Promise<SyncReport> {
       const parsed = ChapterSchema.safeParse((full as { pack: unknown }).pack);
       if (!parsed.success) throw new Error('pack failed validation');
 
-      await importPackOffThread(parsed.data as Chapter);
+      await importPackIntoSession(parsed.data as Chapter);
       manifest[row.id] = row.revision;
       report.imported.push(row.id);
     } catch {
@@ -160,7 +164,30 @@ export async function syncPublishedContent(): Promise<SyncReport> {
     }
   }
 
+  if (report.failed.length === 0 && seen.size > 0) {
+    const { purgeOrphanScheduling } = await import('./db');
+    await purgeOrphanScheduling().catch(() => 0);
+  }
   return report;
+}
+
+/** One shared sync at a time; every study surface waits on the same promise. */
+export function syncPublishedContent(): Promise<SyncReport> {
+  if (syncInFlight) return syncInFlight;
+  syncInFlight = runPublishedContentSync()
+    .then((report) => {
+      lastSyncReport = report;
+      return report;
+    })
+    .finally(() => { syncInFlight = null; });
+  return syncInFlight;
+}
+
+/** Resolve when this session's cards are actually present in page memory. */
+export function whenPublishedContentReady(): Promise<SyncReport> {
+  if (syncInFlight) return syncInFlight;
+  if (lastSyncReport) return Promise.resolve(lastSyncReport);
+  return syncPublishedContent();
 }
 
 /**

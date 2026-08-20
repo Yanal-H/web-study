@@ -431,3 +431,25 @@ export async function resetEngineProgress(): Promise<void> {
   for (const s of stores) t.objectStore(s).clear();
   await done(t);
 }
+
+/** Remove durable schedules whose authorised card bodies no longer exist. */
+export async function purgeOrphanScheduling(): Promise<number> {
+  if (mem.cards.size === 0) return 0;
+  const db = await openDB();
+  const t = db.transaction([SCHEDULING], 'readwrite');
+  const store = t.objectStore(SCHEDULING);
+  let removed = 0;
+  await new Promise<void>((resolve, reject) => {
+    const request = store.openCursor();
+    request.onsuccess = () => {
+      const cursor = request.result;
+      if (!cursor) return resolve();
+      const row = cursor.value as Scheduling;
+      if (!mem.hasCard(row.cardId)) { cursor.delete(); removed++; }
+      cursor.continue();
+    };
+    request.onerror = () => reject(request.error);
+  });
+  await done(t);
+  return removed;
+}

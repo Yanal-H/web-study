@@ -37,6 +37,8 @@ describe('contentStore — tables', () => {
     mem.cards.put(card('c1', 'Anatomy::Upper limb'));
     expect(mem.cards.get('c1')).toMatchObject({ id: 'c1' });
     expect(mem.cards.get('nope')).toBeUndefined();
+    expect(mem.hasCard('c1')).toBe(true);
+    expect(mem.hasCard('nope')).toBe(false);
   });
 
   it('overwrites by id rather than duplicating, so re-import is idempotent', () => {

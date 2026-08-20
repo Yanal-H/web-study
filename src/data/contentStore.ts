@@ -121,6 +121,11 @@ export function deckCounts(): Record<string, number> {
   return out;
 }
 
+/** Whether an authorised card body is present in this page's session. */
+export function hasCard(id: string): boolean {
+  return cards.get(id) !== undefined;
+}
+
 /** Ids of the MCQs belonging to a chapter. */
 export function mcqIdsForChapter(chapterId: string): string[] {
   return mcqs

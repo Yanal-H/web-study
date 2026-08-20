@@ -18,6 +18,7 @@ import {
 import { engineQueue, mergeTrees, findNode } from './engineBridge';
 import { deckTree as engineDeckTree, type EngineDeckNode } from '../../data/session';
 import { whenContentReady } from '../../data/bootstrap';
+import { whenPublishedContentReady } from '../../data/remoteContent';
 import DeckBrowser from './DeckBrowser';
 import ReviewSession from './ReviewSession';
 import { exportTSV, isChapterPackJson, parseDelimited, importCards } from './anki';
@@ -49,6 +50,7 @@ export default function FlashcardsView() {
   const [deck, setDeck] = useState(presetDeck);
   const [creating, setCreating] = useState(false);
   const [importing, setImporting] = useState(false);
+  const [starting, setStarting] = useState(false);
 
   const [engineTree, setEngineTree] = useState<EngineDeckNode[]>([]);
   const [engineStats, setEngineStats] = useState({ due: 0, neu: 0, total: 0 });
@@ -64,6 +66,7 @@ export default function FlashcardsView() {
 
   const refreshDecks = useCallback(async () => {
     await whenContentReady();
+    await whenPublishedContentReady();
     const tree = await engineDeckTree();
     setEngineTree(tree);
     setEngineStats(
@@ -76,7 +79,7 @@ export default function FlashcardsView() {
 
   useEffect(() => {
     if (mode === 'home') void refreshDecks();
-  }, [mode, refreshDecks]);
+  }, [mode, refreshDecks, sv]);
 
   const tree = useMemo(
     () => mergeTrees(engineTree, buildDeckTree(userItems)),
@@ -90,26 +93,37 @@ export default function FlashcardsView() {
   const scopedStats = deck ? scopeOf(tree, deck, userItems) : stats;
 
   async function start(path = deck, force?: 'all' | 'due') {
-    const S = state.settings.scheduler;
-    const how = force ?? scope;
-    // engine cards in batches, personal cards from the local store
-    const fromEngine = await engineQueue(path, {
-      newLimit: how === 'due' ? S.newPerDay : 9999,
-      reviewLimit: how === 'due' ? S.reviewsPerDay : 9999,
-      includeAll: how === 'all',
-    });
-    const userPool = path ? itemsInDeck(userItems, path) : userItems;
-    const fromUser =
-      how === 'due'
+    if (starting) return;
+    setStarting(true);
+    try {
+      // The downloaded pack must be in THIS page's memory before scheduling rows
+      // are turned into review cards. This prevents “540 due, but no cards”.
+      await whenPublishedContentReady();
+      const S = state.settings.scheduler;
+      const how = force ?? scope;
+      const fromEngine = await engineQueue(path, {
+        newLimit: how === 'due' ? S.newPerDay : 9999,
+        reviewLimit: how === 'due' ? S.reviewsPerDay : 9999,
+        includeAll: how === 'all',
+      });
+      const userPool = path ? itemsInDeck(userItems, path) : userItems;
+      const fromUser = how === 'due'
         ? buildQueue(userPool, { newLimit: S.newPerDay, reviewLimit: S.reviewsPerDay })
         : [...userPool];
-    const q = [...fromEngine, ...fromUser];
-    if (q.length === 0) {
-      toast(path ? 'Nothing due in that deck — switch to All.' : 'Nothing due — try “Study all”.');
-      return;
+      const q = [...fromEngine, ...fromUser];
+      if (q.length === 0) {
+        toast(how === 'all'
+          ? 'No reviewable cards are loaded. Re-import chapters in Settings → Card engine.'
+          : path ? 'Nothing is due in that topic. Choose All to study it anyway.' : 'Nothing is due. Choose All to study every card.');
+        return;
+      }
+      setQueue(q);
+      setMode('review');
+    } catch {
+      toast('Could not open the cards. Check your connection, then use Settings → Card engine → Re-import chapters.', 'error');
+    } finally {
+      setStarting(false);
     }
-    setQueue(q);
-    setMode('review');
   }
 
   async function studyDeck(path: string) {
@@ -180,8 +194,8 @@ export default function FlashcardsView() {
             ]}
             ariaLabel="Review scope"
           />
-          <Button variant="primary" block style={{ marginTop: 14 }} onClick={() => void start()}>
-            <IconFlashcards size={18} /> Start review
+          <Button variant="primary" block style={{ marginTop: 14 }} disabled={starting} onClick={() => void start()}>
+            <IconFlashcards size={18} /> {starting ? 'Loading cards…' : 'Start review'}
           </Button>
           <div className="row wrap" style={{ gap: 8, marginTop: 12 }}>
             <Button size="sm" onClick={() => setCreating(true)}>
