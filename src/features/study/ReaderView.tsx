@@ -3,7 +3,7 @@ import { createPortal } from 'react-dom';
 import { useParams, useNavigate } from 'react-router-dom';
 import { getChapter, chapterCards, chapterMcqs, listChapters } from '../../content/loader';
 import { useStore, useStoreVersion } from '../../state/useStore';
-import { chapterProgress } from './progress';
+import { chapterLearningProgress } from './progress';
 import { update } from '../../state/store';
 import { makeUserCard } from '../flashcards/makeCard';
 import ListenButton from '../tts/ListenButton';
@@ -20,7 +20,7 @@ type Tab = 'read' | 'cards' | 'questions';
 /** A live chapter-mastery ring: sections read blended with question accuracy. */
 function MasteryRing({ chapter }: { chapter: NonNullable<ReturnType<typeof getChapter>> }) {
   useStore(); // re-render as reading/answering progresses
-  const p = chapterProgress(chapter);
+  const p = chapterLearningProgress(chapter);
   const mastery = p.mcqAccuracy == null ? p.readPct : p.readPct * 0.5 + p.mcqAccuracy * 0.5;
   return (
     <div className="mastery-ring no-print" title="Chapter mastery: reading blended with question accuracy">

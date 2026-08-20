@@ -1,8 +1,8 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { listChapters, type LoadedChapter } from '../../content/loader';
 import { useStore, useStoreVersion } from '../../state/useStore';
-import { chapterProgress } from './progress';
+import { chapterCardDueCounts, chapterProgress } from './progress';
 import { Card, Button, Badge, EmptyState } from '../../design/primitives';
 import { IconStudy, IconChevron } from '../../design/icons';
 
@@ -17,6 +17,23 @@ export default function StudyView() {
   // a subject handed over from the Subjects page narrows the library
   const presetSubject = ((useLocation().state ?? null) as { subject?: string } | null)?.subject ?? '';
   const [filterSubject, setFilterSubject] = useState<string>(presetSubject);
+  const [cardDue, setCardDue] = useState<Record<string, number> | null>(null);
+  const [cardDueFailed, setCardDueFailed] = useState(false);
+
+  useEffect(() => {
+    let alive = true;
+    setCardDueFailed(false);
+    void chapterCardDueCounts(chapters)
+      .then((counts) => {
+        if (alive) setCardDue(counts);
+      })
+      .catch(() => {
+        if (alive) setCardDueFailed(true);
+      });
+    return () => {
+      alive = false;
+    };
+  }, [chapters, storeVersion]);
 
   const recent = useMemo(() => {
     let best: { ch: LoadedChapter; when: string } | null = null;
@@ -108,7 +125,7 @@ export default function StudyView() {
                     <Badge tone="info">{c.mcqs.length} MCQs</Badge>
                     {c.emqs.length > 0 && <Badge tone="warning">{c.emqs.length} EMQs</Badge>}
                   </div>
-                  <ChapterProgressBar chapter={c} />
+                  <ChapterProgressBar chapter={c} cardsDue={cardDue?.[c.id]} cardDueFailed={cardDueFailed} />
                 </Card>
               ))}
             </div>
@@ -118,8 +135,16 @@ export default function StudyView() {
     </>
   );
 }
-function ChapterProgressBar({ chapter }: { chapter: LoadedChapter }) {
-  const p = chapterProgress(chapter);
+function ChapterProgressBar({
+  chapter,
+  cardsDue,
+  cardDueFailed,
+}: {
+  chapter: LoadedChapter;
+  cardsDue?: number;
+  cardDueFailed: boolean;
+}) {
+  const p = chapterProgress(chapter, cardsDue ?? 0);
   return (
     <div style={{ marginTop: 12 }}>
       <div className="qb-bar-track" style={{ height: 6 }}>
@@ -128,7 +153,7 @@ function ChapterProgressBar({ chapter }: { chapter: LoadedChapter }) {
       <div className="row spread" style={{ marginTop: 6, fontSize: 12, color: 'var(--text-faint)' }}>
         <span>{Math.round(p.readPct * 100)}% read</span>
         <span>
-          {p.cardsDue} due
+          {cardsDue == null ? (cardDueFailed ? 'Card count unavailable' : 'Checking cards…') : `${p.cardsDue} due`}
           {p.mcqAccuracy != null ? ` · ${Math.round(p.mcqAccuracy * 100)}% MCQ` : ''}
         </span>
       </div>
