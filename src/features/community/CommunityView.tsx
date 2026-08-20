@@ -1,11 +1,12 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { Badge, Button, Card, EmptyState, Textarea } from '../../design/primitives';
+import { Badge, Button, Card, EmptyState, Tabs, Textarea } from '../../design/primitives';
 import { IconFlag, IconResources } from '../../design/icons';
 import { useToast } from '../../design/Toast';
 import { checkAdmin } from '../../lib/admin';
 import { supabase } from '../../lib/supabase';
 import { useAuth } from '../auth/session';
 import CommunityAdmin from './CommunityAdmin';
+import IntelligencePanel from './IntelligencePanel';
 
 type Channel = { id: string; name: string; description: string | null; channel_type: string; academic_year: string | null };
 type Message = { id: string; channel_id: string; author_id: string; author_alias: string; body: string; status: 'visible' | 'hidden' | 'deleted'; created_at: string; edited_at: string | null };
@@ -33,6 +34,8 @@ export default function CommunityView() {
   const [isAdmin, setIsAdmin] = useState(false);
   const [problem, setProblem] = useState<string | null>(null);
   const [managing, setManaging] = useState(false);
+  const [section, setSection] = useState<'discussion' | 'intelligence'>('discussion');
+  const [live, setLive] = useState(false);
 
   const selected = useMemo(() => channels.find((channel) => channel.id === channelId) ?? null, [channels, channelId]);
 
@@ -80,6 +83,15 @@ export default function CommunityView() {
   useEffect(() => {
     if (channelId) void loadMessages(channelId);
     else setMessages([]);
+  }, [channelId, loadMessages]);
+  useEffect(() => {
+    const client = supabase;
+    if (!client || !channelId) return;
+    setLive(false);
+    const subscription = client.channel(`messages:${channelId}`)
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'community_messages', filter: `channel_id=eq.${channelId}` }, () => void loadMessages(channelId))
+      .subscribe((status) => setLive(status === 'SUBSCRIBED'));
+    return () => { setLive(false); void client.removeChannel(subscription); };
   }, [channelId, loadMessages]);
 
   async function post(body: string) {
@@ -140,7 +152,9 @@ export default function CommunityView() {
             </button>)}
           </aside>
           <section className="community-thread">
-            <div className="community-thread-head"><div><h2>{selected ? `# ${selected.name}` : 'Discussion'}</h2><p>{selected?.description || 'Department discussion'}</p></div><Badge tone="info">Private</Badge></div>
+            <div className="community-thread-head"><div><h2>{selected ? `# ${selected.name}` : 'Discussion'}</h2><p>{selected?.description || 'Department discussion'}</p></div><div className="row"><Badge tone="info">Private</Badge><Badge dot tone={live ? 'success' : 'default'}>{live ? 'Live' : 'Refresh available'}</Badge></div></div>
+            <Tabs value={section} onChange={setSection} tabs={[{ value: 'discussion', label: 'Discussion' }, { value: 'intelligence', label: 'Daily intelligence' }]} />
+            {section === 'discussion' ? <div className="community-discussion">
             <Composer disabled={!channelId || loadingMessages} onPost={post} />
             <div className="community-feed" aria-live="polite">
               {loadingMessages && messages.length === 0 ? <Card>Loading messages…</Card> : messages.length === 0 ? <Card><EmptyState title="Start the conversation">Ask a clear question or share a useful study insight.</EmptyState></Card> : messages.map((message) => (
@@ -157,6 +171,7 @@ export default function CommunityView() {
               ))}
             </div>
             {more && <Button disabled={loadingMessages} onClick={() => channelId && void loadMessages(channelId, messages.length)}>Load earlier messages</Button>}
+            </div> : channelId && <IntelligencePanel channelId={channelId} isAdmin={isAdmin} />}
           </section>
         </div>
       )}
