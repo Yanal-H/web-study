@@ -230,11 +230,10 @@ established knowledge for a final-year medical student" >>>
 
 ## Then
 
-Save the reply as `<subject>-ch<N>-<slug>.json` and either:
-
-- send me the file and I will add it to the build (best — it ships to everyone), or
-- open the app → **Study** → **Import chapter** and pick the file (personal, only on
-  that device, survives reload and works offline).
+Save the reply as `<subject>-ch<N>-<slug>.json`, then sign in with your
+administrator account and open **Settings → Admin**. Choose the file or paste
+its contents to validate and publish it to the whole cohort. Students cannot
+import or alter shared chapters.
 
 If anything in the file is wrong, the app tells you the exact field and line rather than
 failing silently.

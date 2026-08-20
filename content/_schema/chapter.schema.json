@@ -255,6 +255,40 @@
                 },
                 "default": []
               },
+              "extraKnowledge": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "title": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "body": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "language": {
+                      "type": "string",
+                      "enum": [
+                        "en",
+                        "zh",
+                        "bilingual"
+                      ],
+                      "default": "en"
+                    },
+                    "source": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "title",
+                    "body"
+                  ],
+                  "additionalProperties": false
+                },
+                "default": []
+              },
               "deck": {
                 "type": "string"
               }

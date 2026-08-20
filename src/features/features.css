@@ -4390,3 +4390,34 @@
 @media print {
   .content-status { display: none; }
 }
+
+/* ---- Optional, validated enrichment below an authored section ---- */
+.knowledge-box {
+  margin: 14px 0;
+  padding: 14px 16px;
+  border: 1px solid color-mix(in srgb, var(--accent) 34%, var(--border));
+  border-left: 3px solid var(--accent);
+  border-radius: var(--radius-sm);
+  background: color-mix(in srgb, var(--accent) 6%, var(--surface-1));
+}
+.knowledge-title {
+  margin-bottom: 8px;
+  color: var(--accent);
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.knowledge-note + .knowledge-note {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border-soft);
+}
+.knowledge-note > strong { font-size: 14px; }
+.knowledge-note .md { margin-top: 4px; }
+.knowledge-note .md > :last-child { margin-bottom: 0; }
+.knowledge-source {
+  margin-top: 6px;
+  color: var(--text-faint);
+  font-size: 12px;
+}

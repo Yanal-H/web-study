@@ -106,7 +106,8 @@ export default function LibraryPanel() {
       <p className="muted" style={{ fontSize: 12.5, marginTop: 8 }}>
         Re-importing downloads the chapters again and overwrites their text and cards, but keeps
         every scheduling row, so your progress survives. Rebuilding from scratch clears the review
-        history too. Both need a connection; your existing chapters keep working offline.
+        history too. Both need a connection because shared chapters are refreshed from the protected store
+        each session.
       </p>
     </Card>
   );

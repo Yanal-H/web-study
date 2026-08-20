@@ -78,6 +78,31 @@ describe('content schema', () => {
     };
     expect(ChapterSchema.safeParse(chapter).success).toBe(false);
   });
+
+  it('keeps an optional Chinese knowledge extension with the published section', () => {
+    const chapter = {
+      schema: 'foundation.study-module/v1',
+      id: 'test-ch1-bilingual',
+      subject: 'Test',
+      title: 'Demo',
+      sections: [
+        {
+          id: 's1',
+          title: 'Intro',
+          digest: 'Core explanation.',
+          extraKnowledge: [
+            {
+              title: 'Chinese terminology',
+              body: '心肌梗死（myocardial infarction）应与心绞痛区分。',
+              language: 'zh',
+            },
+          ],
+        },
+      ],
+    };
+    const parsed = ChapterSchema.parse(chapter);
+    expect(parsed.sections[0]!.extraKnowledge[0]!.language).toBe('zh');
+  });
 });
 
 describe('runtime import (all-or-nothing, namespaced)', () => {

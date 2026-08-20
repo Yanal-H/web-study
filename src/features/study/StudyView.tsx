@@ -1,21 +1,19 @@
 import { useMemo, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { listChapters, type LoadedChapter } from '../../content/loader';
-import { useUserContentVersion, importChapterJson, removeUserChapter } from '../../content/userContent';
-import { useStore } from '../../state/useStore';
+import { useStore, useStoreVersion } from '../../state/useStore';
 import { chapterProgress } from './progress';
-import { Card, Button, Badge, IconButton, EmptyState, Textarea } from '../../design/primitives';
-import { Dialog } from '../../design/Dialog';
-import { useToast } from '../../design/Toast';
-import { IconStudy, IconUpload, IconTrash, IconChevron } from '../../design/icons';
+import { Card, Button, Badge, EmptyState } from '../../design/primitives';
+import { IconStudy, IconChevron } from '../../design/icons';
 
 export default function StudyView() {
   const navigate = useNavigate();
-  const toast = useToast();
-  const uv = useUserContentVersion();
   const state = useStore();
-  const chapters = useMemo(() => listChapters(), [uv]);
-  const [importing, setImporting] = useState(false);
+  const storeVersion = useStoreVersion();
+  // Content hydration calls notify() once authenticated packs have arrived.
+  // Key this memo to that version so a direct visit to /study cannot get stuck
+  // with the empty library that rendered before the background download ended.
+  const chapters = useMemo(() => listChapters(), [storeVersion]);
   // a subject handed over from the Subjects page narrows the library
   const presetSubject = ((useLocation().state ?? null) as { subject?: string } | null)?.subject ?? '';
   const [filterSubject, setFilterSubject] = useState<string>(presetSubject);
@@ -46,9 +44,6 @@ export default function StudyView() {
           <h1>Study</h1>
           <div className="sub">Your library of chapters — read, then drill.</div>
         </div>
-        <Button variant="ghost" size="sm" onClick={() => setImporting(true)}>
-          <IconUpload size={15} /> Import your own
-        </Button>
       </header>
 
       {filterSubject && (
@@ -79,13 +74,9 @@ export default function StudyView() {
           <EmptyState
             icon={<IconStudy size={22} />}
             title="No chapters yet"
-            action={
-              <Button variant="primary" onClick={() => setImporting(true)}>
-                <IconUpload size={17} /> Import a chapter
-              </Button>
-            }
           >
-            Chapters you have been given appear here. You can also import your own.
+            Your administrator has not published any chapters yet, or the library is still loading.
+            Administrators can upload a validated chapter from Settings → Admin.
           </EmptyState>
         </Card>
       ) : (
@@ -106,23 +97,11 @@ export default function StudyView() {
                   <div className="row spread" style={{ alignItems: 'flex-start' }}>
                     <div style={{ minWidth: 0 }}>
                       <div className="card-eyebrow">
-                        {c.origin === 'personal' ? 'Imported' : 'Chapter'}
+                        Chapter
                         {c.estMinutes ? ` · ${c.estMinutes} min` : ''}
                       </div>
                       <h3 style={{ margin: '2px 0 8px', fontSize: 'var(--fs-md)' }}>{c.title}</h3>
                     </div>
-                    {c.origin === 'personal' && (
-                      <IconButton
-                        label="Remove imported chapter"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          removeUserChapter(c.id);
-                          toast('Imported chapter removed');
-                        }}
-                      >
-                        <IconTrash size={15} />
-                      </IconButton>
-                    )}
                   </div>
                   <div className="row wrap" style={{ gap: 6 }}>
                     <Badge>{c.sections.length} sections</Badge>
@@ -137,12 +116,9 @@ export default function StudyView() {
           </section>
         ))
       )}
-
-      {importing && <ImportDialog onClose={() => setImporting(false)} />}
     </>
   );
 }
-
 function ChapterProgressBar({ chapter }: { chapter: LoadedChapter }) {
   const p = chapterProgress(chapter);
   return (
@@ -161,90 +137,3 @@ function ChapterProgressBar({ chapter }: { chapter: LoadedChapter }) {
   );
 }
 
-function ImportDialog({ onClose }: { onClose: () => void }) {
-  const toast = useToast();
-  const navigate = useNavigate();
-  const [text, setText] = useState('');
-  const [errors, setErrors] = useState<string[]>([]);
-
-  function doImport() {
-    const res = importChapterJson(text);
-    if (res.ok && res.chapter) {
-      toast(`Imported “${res.chapter.title}”`, 'success');
-      onClose();
-      navigate(`/study/${encodeURIComponent(res.chapter.id)}`);
-    } else {
-      setErrors(res.errors ?? ['Import failed']);
-    }
-  }
-
-  function onFile(file: File) {
-    const reader = new FileReader();
-    reader.onload = () => setText(String(reader.result));
-    reader.readAsText(file);
-  }
-
-  return (
-    <Dialog
-      title="Import chapter JSON"
-      onClose={onClose}
-      footer={
-        <div className="row spread">
-          <label className="btn btn--ghost" style={{ cursor: 'pointer' }}>
-            <IconUpload size={16} /> Choose file
-            <input
-              type="file"
-              accept="application/json"
-              hidden
-              onChange={(e) => {
-                const f = e.target.files?.[0];
-                if (f) onFile(f);
-                e.target.value = '';
-              }}
-            />
-          </label>
-          <Button variant="primary" disabled={!text.trim()} onClick={doImport}>
-            Validate & import
-          </Button>
-        </div>
-      }
-    >
-      <p className="muted" style={{ fontSize: 13.5, marginTop: -4 }}>
-        Paste a chapter JSON (or choose a file). It is validated against the content schema in your
-        browser — all-or-nothing, and stored separately from shipped content so a redeploy never
-        overwrites it.
-      </p>
-      <Textarea
-        value={text}
-        onChange={(e) => {
-          setText(e.target.value);
-          setErrors([]);
-        }}
-        placeholder='{ "schema": "foundation.study-module/v1", "id": "subject-ch1-slug", … }'
-        style={{ minHeight: 220, fontFamily: 'var(--font-mono)', fontSize: 12.5 }}
-      />
-      {errors.length > 0 && (
-        <div
-          style={{
-            marginTop: 12,
-            padding: '12px 14px',
-            border: '1px solid var(--error)',
-            background: 'var(--error-soft)',
-            borderRadius: 'var(--radius-sm)',
-            maxHeight: 180,
-            overflowY: 'auto',
-          }}
-        >
-          <div style={{ fontWeight: 600, color: 'var(--error)', marginBottom: 6, fontSize: 13 }}>
-            {errors.length} problem{errors.length === 1 ? '' : 's'} — nothing was imported
-          </div>
-          <ul style={{ margin: 0, paddingLeft: 18, fontSize: 12.5, fontFamily: 'var(--font-mono)' }}>
-            {errors.map((er, i) => (
-              <li key={i}>{er}</li>
-            ))}
-          </ul>
-        </div>
-      )}
-    </Dialog>
-  );
-}

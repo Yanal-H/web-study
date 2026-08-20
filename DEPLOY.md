@@ -77,7 +77,9 @@ write them, and the restriction to your email domain.
    ```
 
    For example, if your university issues addresses like
-   `yasmin@med.cu.edu.eg`, the domain is `med.cu.edu.eg`.
+   `yasmin@med.cu.edu.eg`, the domain is `med.cu.edu.eg`. The setup also
+   accepts subdomains, so `yasmin@s2.med.cu.edu.eg` works when the configured
+   domain is `med.cu.edu.eg`.
 
    Use the domain **exactly** as it appears after the `@`, with no `@` and no
    spaces. Get this wrong and nobody — including you — can sign in.
@@ -120,12 +122,17 @@ what it is allowed to do is decided by the rules you ran in Step 2.
    |---|---|
    | `VITE_SUPABASE_URL` | the Project URL from Step 3 |
    | `VITE_SUPABASE_ANON_KEY` | the anon public key from Step 3 |
-   | `VITE_ALLOWED_EMAIL_DOMAIN` | your domain, e.g. `med.cu.edu.eg` |
+   | `VITE_ALLOWED_EMAIL_DOMAIN` | your base domain, e.g. `med.cu.edu.eg` |
 
    `VITE_ALLOWED_EMAIL_DOMAIN` is **cosmetic** — it fills in the sign-in hint and
    the placeholder, nothing more. Who may actually sign in is decided by the
    database (Step 2), which is also the only place that knows your admin list.
    Changing or removing this variable does not weaken access control.
+
+   Keep this value as the base domain (`students.kasralainy.edu.eg`), not the
+   `s2.` prefix. The database rule accepts both
+   `student@students.kasralainy.edu.eg` and
+   `student@s2.students.kasralainy.edu.eg`.
 
 3. **Redeploy — this is the step people miss.** Environment variables are read
    when the site is *built*, so the running site knows nothing about them until
@@ -199,7 +206,35 @@ The "Set up custom SMTP to edit templates" notice is now gone.
   <p>If you didn't ask for this, you can ignore this email.</p>
   ```
 
-`{{ .Token }}` is the part that matters — it inserts the six digits.
+`{{ .Token }}` is the part that matters — it inserts the verification code.
+Do not hard-code a length in the template: this deployment accepts both the
+current eight-digit Brevo/Supabase code and the older six-digit format.
+
+**Important:** paste this HTML into Supabase's **Authentication → Email
+Templates → Magic Link** editor. Do not paste it into a Brevo campaign or Brevo
+template. Supabase replaces `{{ .Token }}` before handing the email to Brevo.
+If the received email literally shows `{{ .Token }}`, the HTML was entered in
+Brevo or the wrong Supabase template; move it to the Supabase Magic Link
+template, save it, and request a new code.
+
+To make new emails contain **six digits only**, change the hosted Supabase Auth
+configuration. This cannot be done with SQL: Brevo only delivers the message,
+while Supabase Auth generates the token outside your Postgres database. Create a
+Supabase personal access token, replace the two placeholders below, and run this
+from a terminal (never in the browser or Vercel):
+
+```powershell
+$headers = @{ Authorization = "Bearer <SUPABASE_PERSONAL_ACCESS_TOKEN>"; "Content-Type" = "application/json" }
+$body = @{ mailer_otp_length = 6 } | ConvertTo-Json
+Invoke-RestMethod -Method Patch -Uri "https://api.supabase.com/v1/projects/<PROJECT_REF>/config/auth" -Headers $headers -Body $body
+```
+
+`<PROJECT_REF>` is the first part of your Project URL (for example, `abc123` in
+`https://abc123.supabase.co`). Supabase's Management API accepts
+`mailer_otp_length`; six is the standard email OTP length. The app accepts both
+six- and eight-digit codes so an older email cannot be rejected by the browser.
+If you only need the owner/domain correction, run
+`supabase/fix-yanal-auth.sql` in the Supabase SQL editor.
 
 ### 6. Raise the rate limit
 
@@ -211,7 +246,8 @@ sender. Raise it (100/hour is sensible for a cohort).
 **Authentication → URL Configuration → Site URL** — set it to the permanent
 Vercel address from Step 4c, never a per-deployment one.
 
-**Worked when:** request a code and the email arrives with six large digits.
+**Worked when:** request a code and the email arrives with the large digits
+configured in Supabase (eight digits on the current deployment).
 
 ### How much email will you actually send?
 
@@ -266,7 +302,8 @@ and run it again.
 ## Step 6 — Sign in and check
 
 1. Open your site, enter **your own** email (the one you put in `admin_emails`).
-2. Click **Send me a code**, check your inbox, type the 6 digits.
+2. Click **Send me a code**, check your inbox, and enter the code exactly as it
+   appears (eight digits on the current deployment).
 3. You should land on the dashboard, and your chapters should appear in **Study**
    within a few seconds.
 4. Open **Settings → Admin**. It should say **Administrator**. If it says

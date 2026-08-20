@@ -6,8 +6,7 @@ import { Dialog } from '../../design/Dialog';
 import { useToast } from '../../design/Toast';
 import { IconFlashcards, IconUpload, IconDownload, IconPlus } from '../../design/icons';
 import ActivityCalendar from '../dashboard/ActivityCalendar';
-import { allCards } from '../../content/loader';
-import { useUserContentVersion } from '../../content/userContent';
+import { allCards, getChapter } from '../../content/loader';
 import {
   collectItems,
   buildQueue,
@@ -21,7 +20,7 @@ import { deckTree as engineDeckTree, type EngineDeckNode } from '../../data/sess
 import { whenContentReady } from '../../data/bootstrap';
 import DeckBrowser from './DeckBrowser';
 import ReviewSession from './ReviewSession';
-import { exportTSV, parseDelimited, importCards } from './anki';
+import { exportTSV, isChapterPackJson, parseDelimited, importCards } from './anki';
 import { makeUserCard } from './makeCard';
 
 // Heavy, occasionally-used views load on demand (Phase 6 perf).
@@ -32,10 +31,18 @@ type Mode = 'home' | 'review' | 'browse' | 'occlusion';
 
 export default function FlashcardsView() {
   const state = useStore();
-  const uv = useUserContentVersion();
   const toast = useToast();
   // a deck path handed over from the reader ("Review these cards") preselects it
-  const presetDeck = ((useLocation().state ?? null) as { deck?: string } | null)?.deck ?? '';
+  const location = useLocation();
+  const handoff = (location.state ?? null) as { deck?: string } | null;
+  const queryChapter = new URLSearchParams(location.search).get('chapter');
+  const queryChapterDeck = queryChapter
+    ? (() => {
+        const chapter = getChapter(queryChapter);
+        return chapter?.deck || (chapter ? `${chapter.subject}::${chapter.title}` : '');
+      })()
+    : '';
+  const presetDeck = handoff?.deck || queryChapterDeck;
   const [mode, setMode] = useState<Mode>('home');
   const [queue, setQueue] = useState<ReviewItem[]>([]);
   const [scope, setScope] = useState<'all' | 'due'>('due');
@@ -50,10 +57,10 @@ export default function FlashcardsView() {
   // personal cards still live in the local store; content cards come from the engine
   const userItems = useMemo(
     () => collectItems().filter((i) => i.source === 'user'),
-    [uv, state.flashcards, state.schemaVersion, sv]
+    [state.flashcards, state.schemaVersion, sv]
   );
   const userStats = useMemo(() => queueStats(userItems), [userItems, state.study.cardSched]);
-  const contentCount = useMemo(() => allCards().length, [uv]);
+  const contentCount = useMemo(() => allCards().length, [sv]);
 
   const refreshDecks = useCallback(async () => {
     await whenContentReady();
@@ -329,9 +336,14 @@ function ImportDialog({ onClose }: { onClose: () => void }) {
   const toast = useToast();
   const [text, setText] = useState('');
   const fileRef = useRef<HTMLInputElement>(null);
-  const preview = useMemo(() => parseDelimited(text), [text]);
+  const chapterPack = useMemo(() => isChapterPackJson(text), [text]);
+  const preview = useMemo(() => (chapterPack ? [] : parseDelimited(text)), [text, chapterPack]);
 
   function run() {
+    if (chapterPack) {
+      toast('This is a study-pack JSON. Publish it from Settings → Admin, not Flashcards → Import.', 'error');
+      return;
+    }
     if (preview.length === 0) {
       toast('Nothing to import.');
       return;
@@ -343,7 +355,7 @@ function ImportDialog({ onClose }: { onClose: () => void }) {
 
   return (
     <Dialog
-      title="Import cards (TSV/CSV)"
+      title="Import cards (TSV/CSV only)"
       onClose={onClose}
       footer={
         <div className="row spread">
@@ -372,7 +384,9 @@ function ImportDialog({ onClose }: { onClose: () => void }) {
       }
     >
       <p className="muted" style={{ fontSize: 13, marginTop: -4 }}>
-        Columns: front, back, tags, type. Cloze rows use <code>{'{{c1::…}}'}</code> in the front column.
+        This importer is for card files only: columns are front, back, tags, type and optional deck.
+        Cloze rows use <code>{'{{c1::…}}'}</code> in the front column. To add study text,
+        sections and MCQs, use your administrator account in Settings → Admin → Publish a chapter.
       </p>
       <textarea
         className="textarea"
@@ -384,6 +398,11 @@ function ImportDialog({ onClose }: { onClose: () => void }) {
       {preview.length > 0 && (
         <div className="muted" style={{ fontSize: 12.5, marginTop: 8 }}>
           {preview.length} card{preview.length === 1 ? '' : 's'} detected.
+        </div>
+      )}
+      {chapterPack && (
+        <div className="ai-err" style={{ marginTop: 8 }}>
+          Study-pack JSON detected. Nothing will be imported here: open Settings → Admin and publish the pack there.
         </div>
       )}
     </Dialog>

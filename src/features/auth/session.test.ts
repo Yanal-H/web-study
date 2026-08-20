@@ -3,18 +3,21 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 // A configured Supabase client, stubbed. These tests are about which decisions
 // sendCode makes locally versus delegating to the server — not about the network.
 const signInWithOtp = vi.hoisted(() => vi.fn());
+const verifyOtp = vi.hoisted(() => vi.fn());
 
 vi.mock('../../lib/supabase', () => ({
-  supabase: { auth: { signInWithOtp } },
+  supabase: { auth: { signInWithOtp, verifyOtp } },
   ALLOWED_EMAIL_DOMAIN: 'students.kasralainy.edu.eg',
   authConfigured: () => true,
 }));
 
-const { sendCode } = await import('./session');
+const { sendCode, verifyCode } = await import('./session');
 
 beforeEach(() => {
   signInWithOtp.mockReset();
   signInWithOtp.mockResolvedValue({ error: null });
+  verifyOtp.mockReset();
+  verifyOtp.mockResolvedValue({ error: null });
 });
 
 describe('sendCode — the browser must not decide who may sign in', () => {
@@ -32,7 +35,7 @@ describe('sendCode — the browser must not decide who may sign in', () => {
     expect(res.ok).toBe(true);
   });
 
-  it('sends an in-domain address too', async () => {
+  it('sends the configured owner/student domain too', async () => {
     const res = await sendCode('student@students.kasralainy.edu.eg');
     expect(signInWithOtp).toHaveBeenCalledOnce();
     expect(res.ok).toBe(true);
@@ -55,6 +58,27 @@ describe('sendCode — what it still refuses locally', () => {
       expect(res.ok).toBe(false);
     }
     expect(signInWithOtp).not.toHaveBeenCalled();
+  });
+});
+
+describe('verifyCode — code length follows the email provider configuration', () => {
+  it.each(['123456', '12345678'])('accepts a %s token', async (token) => {
+    const res = await verifyCode('student@students.kasralainy.edu.eg', token);
+    expect(res.ok).toBe(true);
+    expect(verifyOtp).toHaveBeenCalledWith({
+      email: 'student@students.kasralainy.edu.eg',
+      token,
+      type: 'email',
+    });
+  });
+
+  it('refuses incomplete and unsupported token lengths without a network call', async () => {
+    for (const token of ['12345', '1234567', '123456789']) {
+      const res = await verifyCode('student@students.kasralainy.edu.eg', token);
+      expect(res.ok).toBe(false);
+      expect(res.message).toMatch(/6- or 8-digit/i);
+    }
+    expect(verifyOtp).not.toHaveBeenCalled();
   });
 });
 

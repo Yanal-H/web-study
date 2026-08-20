@@ -6,7 +6,6 @@ import { Dialog } from '../../design/Dialog';
 import { IconPlus, IconTrash, IconMnemonics } from '../../design/icons';
 import { useToast } from '../../design/Toast';
 import { listChapters } from '../../content/loader';
-import { useUserContentVersion } from '../../content/userContent';
 
 interface Mnem {
   id: string;
@@ -32,7 +31,6 @@ function contentMnemonics(): Mnem[] {
 export default function MnemonicsView() {
   const state = useStore();
   const v = useStoreVersion();
-  const uv = useUserContentVersion();
   const toast = useToast();
   const [adding, setAdding] = useState(false);
   const [quiz, setQuiz] = useState(false);
@@ -50,7 +48,7 @@ export default function MnemonicsView() {
     return q
       ? all.filter((m) => `${m.title} ${m.text} ${m.source ?? ''}`.toLowerCase().includes(q))
       : all;
-  }, [state.mnemonics, v, uv, query]);
+  }, [v, query]);
 
   // group the content ones by subject for a book-like layout; mine sit up top
   const mine = list.filter((m) => m.ownable);

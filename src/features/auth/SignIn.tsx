@@ -1,4 +1,4 @@
-// Sign-in screen: email address, then a 6-digit code.
+// Sign-in screen: email address, then the emailed verification code.
 //
 // Codes rather than magic links, on purpose. Students share and open links from
 // WhatsApp and Instagram, whose in-app browsers frequently break magic links or
@@ -10,7 +10,7 @@
 // and no password reset flow to build.
 
 import { useEffect, useRef, useState } from 'react';
-import { sendCode, verifyCode } from './session';
+import { isSupportedOtpLength, OTP_MAX_LENGTH, sendCode, verifyCode } from './session';
 import { ALLOWED_EMAIL_DOMAIN, authConfigured } from '../../lib/supabase';
 
 type Step = 'email' | 'code';
@@ -64,7 +64,7 @@ export default function SignIn() {
     }
     setStep('code');
     setCooldown(RESEND_SECONDS);
-    setNote(`We sent a 6-digit code to ${email.trim().toLowerCase()}.`);
+    setNote(`We sent a sign-in code to ${email.trim().toLowerCase()}.`);
   }
 
   async function submitCode(value: string) {
@@ -83,12 +83,13 @@ export default function SignIn() {
   }
 
   function onCodeChange(raw: string) {
-    const digits = raw.replace(/\D/g, '').slice(0, 6);
+    const digits = raw.replace(/\D/g, '').slice(0, OTP_MAX_LENGTH);
     setCode(digits);
     setErr(null);
-    // Submit as soon as six digits exist, whether typed, pasted, or autofilled
-    // from the OS notification — no "now press the button" step.
-    if (digits.length === 6) void submitCode(digits);
+    // Brevo/Supabase on this project issues eight-digit tokens. A six-digit
+    // project remains supported through the button below; submitting it here
+    // would reject an eight-digit code halfway through typing it.
+    if (digits.length === OTP_MAX_LENGTH) void submitCode(digits);
   }
 
   async function resend() {
@@ -157,11 +158,10 @@ export default function SignIn() {
         <>
           <p className="signin-lead">{note}</p>
           <p className="signin-hint">
-            Type the 6-digit code below. If the email has a sign-in link instead, opening that
-            works too.
+            Enter the 6- or 8-digit code exactly as it appears in your email.
           </p>
           <label className="signin-label" htmlFor="signin-code">
-            6-digit code
+            Sign-in code
           </label>
           <input
             ref={codeRef}
@@ -171,8 +171,8 @@ export default function SignIn() {
             inputMode="numeric"
             // Lets iOS and Android offer the code straight from the notification.
             autoComplete="one-time-code"
-            maxLength={6}
-            placeholder="000000"
+            maxLength={OTP_MAX_LENGTH}
+            placeholder="00000000"
             aria-describedby="signin-help"
             value={code}
             onChange={(e) => onCodeChange(e.target.value)}
@@ -180,7 +180,7 @@ export default function SignIn() {
           <button
             className="signin-btn"
             type="button"
-            disabled={busy || code.length !== 6}
+            disabled={busy || !isSupportedOtpLength(code.length)}
             onClick={() => void submitCode(code)}
           >
             {busy ? 'Checking…' : 'Sign in'}

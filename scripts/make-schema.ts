@@ -61,6 +61,14 @@ const template = {
           described: 'Prose fallback when no image asset exists.',
         },
       ],
+      extraKnowledge: [
+        {
+          title: 'Optional bilingual knowledge extension',
+          body: 'Use short, source-grounded enrichment. For Chinese support, write the Chinese term with its English equivalent.',
+          language: 'bilingual',
+          source: 'Optional source or terminology reference',
+        },
+      ],
     },
   ],
   glossary: [

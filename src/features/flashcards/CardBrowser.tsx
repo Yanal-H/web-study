@@ -1,8 +1,7 @@
 import { useMemo, useState } from 'react';
-import { useStore } from '../../state/useStore';
+import { useStore, useStoreVersion } from '../../state/useStore';
 import { update } from '../../state/store';
 import { allCards } from '../../content/loader';
-import { useUserContentVersion } from '../../content/userContent';
 import { Card, Button, Input, Segmented, Badge, IconButton, EmptyState } from '../../design/primitives';
 import { Dialog } from '../../design/Dialog';
 import { useToast } from '../../design/Toast';
@@ -20,7 +19,7 @@ interface Row {
 
 export default function CardBrowser({ onBack }: { onBack: () => void }) {
   const state = useStore();
-  const uv = useUserContentVersion();
+  const storeVersion = useStoreVersion();
   const toast = useToast();
   const [q, setQ] = useState('');
   const [filter, setFilter] = useState<'all' | 'mine' | 'content'>('all');
@@ -53,7 +52,7 @@ export default function CardBrowser({ onBack }: { onBack: () => void }) {
       });
     }
     return out;
-  }, [state.flashcards, uv]);
+  }, [storeVersion]);
 
   const shown = useMemo(() => {
     const needle = q.trim().toLowerCase();

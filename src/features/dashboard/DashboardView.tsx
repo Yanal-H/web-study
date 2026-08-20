@@ -10,7 +10,6 @@ import { computeStreak, forecast, weakMcqs, todayProgress } from '../../lib/stat
 import { collectItems, queueStats } from '../flashcards/deck';
 import { allMcqs, getChapter } from '../../content/loader';
 import { isDue as mcqDue } from '../qbank/perf';
-import { useUserContentVersion } from '../../content/userContent';
 import Hero from './Hero';
 import ActivityCalendar from './ActivityCalendar';
 import WelcomeTour from '../onboarding/WelcomeTour';
@@ -19,14 +18,13 @@ export default function DashboardView() {
   const state = useStore();
   const navigate = useNavigate();
 
-  const uv = useUserContentVersion();
   const streak = computeStreak(state.activity);
   // unified due across everything: flashcards (content + user) + MCQ reviews
   const sv = useStoreVersion();
   // personal cards from the local store, shipped cards from the engine (IndexedDB)
   const userDeck = useMemo(
     () => collectItems().filter((i) => i.source === 'user'),
-    [uv, state.flashcards, state.schemaVersion, sv]
+    [state.flashcards, state.schemaVersion, sv]
   );
   const userDue = queueStats(userDeck);
   const [engineDue, setEngineDue] = useState({ due: 0, neu: 0, total: 0 });
@@ -39,13 +37,16 @@ export default function DashboardView() {
     return () => {
       alive = false;
     };
-  }, [sv, uv]);
+  }, [sv]);
   const due = {
     due: userDue.due + engineDue.due,
     neu: userDue.neu + engineDue.neu,
     total: userDue.total + engineDue.total,
   };
-  const mcqDueCount = useMemo(() => allMcqs().filter((q) => state.study.mcqPerf[q.id] && mcqDue(q.id)).length, [uv, state.study.mcqPerf]);
+  const mcqDueCount = useMemo(
+    () => allMcqs().filter((q) => state.study.mcqPerf[q.id] && mcqDue(q.id)).length,
+    [sv]
+  );
   const fc = forecast(state.flashcards, 14);
   const weak = weakMcqs(state.study.mcqPerf);
   const goal = todayProgress(state);
@@ -64,7 +65,7 @@ export default function DashboardView() {
       .filter((r) => r.ch)
       .sort((a, b) => (a.lastOpened < b.lastOpened ? 1 : -1))
       .slice(0, 3);
-  }, [state.study.progress, sv, uv]);
+  }, [sv]);
 
   // planner tasks due today or overdue and still open
   const todayTasks = useMemo(() => {

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { exportTSV, parseDelimited } from './anki';
+import { exportTSV, isChapterPackJson, parseDelimited } from './anki';
 import type { Flashcard } from '../../state/types';
 
 describe('Anki TSV round-trip', () => {
@@ -28,5 +28,15 @@ describe('Anki TSV round-trip', () => {
   it('treats {{c1::…}} rows as cloze even without a type column', () => {
     const parsed = parseDelimited('The {{c1::heart}} pumps blood');
     expect(parsed[0]!.type).toBe('cloze');
+  });
+
+  it('skips Anki metadata and incomplete basic cards', () => {
+    const parsed = parseDelimited('#separator:tab\nfront\tback\ttags\ttype\nQ\tA\tmedicine\tbasic\nNo answer\t\t\tbasic');
+    expect(parsed).toEqual([expect.objectContaining({ front: 'Q', back: 'A' })]);
+  });
+
+  it('recognises a study-pack JSON so the UI can send it to the safe publisher', () => {
+    expect(isChapterPackJson('{"schema":"foundation.study-module/v1","sections":[],"mcqs":[]}')).toBe(true);
+    expect(isChapterPackJson('front\tback\nQ\tA')).toBe(false);
   });
 });

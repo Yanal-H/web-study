@@ -60,9 +60,24 @@ export interface ParsedCard {
   deck?: string;
 }
 
+/** A chapter pack belongs in the administrator publisher, never the card TSV importer. */
+export function isChapterPackJson(text: string): boolean {
+  try {
+    const value = JSON.parse(text) as { schema?: unknown; sections?: unknown; mcqs?: unknown };
+    return (
+      value?.schema === 'foundation.study-module/v1' ||
+      (Array.isArray(value?.sections) && Array.isArray(value?.mcqs))
+    );
+  } catch {
+    return false;
+  }
+}
+
 /** Parse TSV or CSV text into cards. Auto-detects delimiter and an optional header. */
 export function parseDelimited(text: string): ParsedCard[] {
-  const lines = text.split(/\r?\n/).filter((l) => l.trim().length > 0);
+  // Anki exports may start with metadata rows such as `#separator:tab`.
+  // They are instructions for Anki, never cards.
+  const lines = text.split(/\r?\n/).filter((l) => l.trim().length > 0 && !l.trimStart().startsWith('#'));
   if (lines.length === 0) return [];
   const delim = lines[0]!.includes('\t') ? '\t' : ',';
   let start = 0;
@@ -79,7 +94,10 @@ export function parseDelimited(text: string): ParsedCard[] {
     const isCloze = typeCol === 'cloze' || /\{\{c\d+::/.test(front);
     if (!front) continue;
     if (isCloze) cards.push({ type: 'cloze', cloze: front, tags, deck });
-    else cards.push({ type: 'basic', front, back, tags, deck });
+    // A basic card without an answer cannot be reviewed meaningfully and was a
+    // common source of apparently "broken" imported cards. Leave it out rather
+    // than storing a row that later surprises the learner.
+    else if (back) cards.push({ type: 'basic', front, back, tags, deck });
   }
   return cards;
 }
@@ -96,7 +114,7 @@ export function importCards(parsed: ParsedCard[]): number {
       back: p.back,
       cloze: p.cloze,
       tags: p.tags,
-      deck: p.deck,
+      deck: typeof p.deck === 'string' && p.deck.trim() ? p.deck.trim() : undefined,
       ef: state.settings.scheduler.easeStart,
       interval: 0,
       reps: 0,

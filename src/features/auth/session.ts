@@ -60,7 +60,20 @@ export interface AuthResult {
 }
 
 /**
- * Send a 6-digit sign-in code to this address.
+ * Supabase projects can be configured to issue either six- or eight-digit
+ * email tokens. Brevo only delivers the email; it does not decide the token
+ * length. Accept both supported formats so a template/provider change cannot
+ * lock the cohort out at the browser before Supabase verifies the real token.
+ */
+export const OTP_LENGTHS = [6, 8] as const;
+export const OTP_MAX_LENGTH = Math.max(...OTP_LENGTHS);
+
+export function isSupportedOtpLength(length: number): boolean {
+  return OTP_LENGTHS.includes(length as (typeof OTP_LENGTHS)[number]);
+}
+
+/**
+ * Send a sign-in code to this address.
  *
  * `shouldCreateUser` stays true so a student never has to "register" separately —
  * first sign-in creates the account. Whether that account is ALLOWED is decided
@@ -115,14 +128,16 @@ export async function verifyCode(emailRaw: string, codeRaw: string): Promise<Aut
   const email = emailRaw.trim().toLowerCase();
   const token = codeRaw.replace(/\D/g, '');
   if (!supabase) return { ok: false, message: 'Sign-in is not set up on this deployment yet.' };
-  if (token.length !== 6) return { ok: false, message: 'Enter the 6-digit code from your email.' };
+  if (!isSupportedOtpLength(token.length)) {
+    return { ok: false, message: 'Enter the 6- or 8-digit code from your email.' };
+  }
 
   const { error } = await supabase.auth.verifyOtp({ email, token, type: 'email' });
   if (error) {
-    if (/expired/i.test(error.message)) {
-      return { ok: false, message: 'That code has expired. Send a new one.' };
+    if (/expired/i.test(error.message) && !/invalid|incorrect|wrong/i.test(error.message)) {
+      return { ok: false, message: 'That code has expired. Send a new one and use the newest code.' };
     }
-    return { ok: false, message: 'That code is not right. Check it and try again.' };
+    return { ok: false, message: 'That code is not right. Check the latest email and try again.' };
   }
   return { ok: true };
 }

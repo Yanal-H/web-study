@@ -7,7 +7,7 @@ import { z } from 'zod';
  * single source of truth is used three ways:
  *   1. build-time validation (scripts/validate-content.ts) — invalid JSON fails the build,
  *   2. JSON-Schema + template emission (scripts/make-schema.ts),
- *   3. runtime import validation in the browser (src/content/userContent.ts).
+ *   3. administrator-side publish validation in the browser (src/lib/publish.ts).
  *
  * It extends the existing tags — foundation.study-module/v1 (chapter),
  * foundation.card/v2, foundation.mcq/v2 — rather than reinventing them.
@@ -78,6 +78,18 @@ export const GlossaryEntrySchema = z.object({
 });
 export type GlossaryEntry = z.infer<typeof GlossaryEntrySchema>;
 
+/* ---- EXTRA KNOWLEDGE ---- optional authored enrichment below a section.
+ * This keeps bilingual (including Chinese) explanations in the same validated,
+ * publishable pack as the core curriculum rather than hiding them in a separate
+ * unreviewed note or a paid runtime AI request. */
+export const ExtraKnowledgeSchema = z.object({
+  title: z.string().min(1),
+  body: z.string().min(1),
+  language: z.enum(['en', 'zh', 'bilingual']).default('en'),
+  source: z.string().optional(),
+});
+export type ExtraKnowledge = z.infer<typeof ExtraKnowledgeSchema>;
+
 /* ---- SECTION ---- summarised digest + exam-facing extras */
 export const SectionSchema = z.object({
   id: z.string().min(1),
@@ -89,6 +101,8 @@ export const SectionSchema = z.object({
   tables: z.array(TableSchema).default([]),
   pitfalls: z.array(z.string()).default([]),
   figures: z.array(FigureSchema).default([]),
+  /** Optional concise enrichment, including Chinese or bilingual terminology. */
+  extraKnowledge: z.array(ExtraKnowledgeSchema).default([]),
   /** deck label for this section's cards; defaults to the section title */
   deck: z.string().optional(),
 });

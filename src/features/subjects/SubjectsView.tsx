@@ -8,7 +8,6 @@ import { Dialog } from '../../design/Dialog';
 import { useToast } from '../../design/Toast';
 import { IconPlus, IconEdit, IconTrash, IconSubjects, IconChevron, IconStudy } from '../../design/icons';
 import { allCards, allMcqs } from '../../content/loader';
-import { useUserContentVersion } from '../../content/userContent';
 import { deckStats } from '../../data/session';
 import { whenContentReady } from '../../data/bootstrap';
 import type { Subject } from '../../state/types';
@@ -17,7 +16,6 @@ export default function SubjectsView() {
   const state = useStore();
   const toast = useToast();
   const navigate = useNavigate();
-  const uv = useUserContentVersion();
   const sv = useStoreVersion();
   const [editing, setEditing] = useState<Subject | null>(null);
   const [creating, setCreating] = useState(false);
@@ -39,7 +37,7 @@ export default function SubjectsView() {
       alive = false;
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [uv, sv, state.subjects.length]);
+  }, [sv, state.subjects.length]);
 
   // content available per subject (cards + questions) — powers each card's stats
   const bySubject = useMemo(() => {
@@ -55,7 +53,7 @@ export default function SubjectsView() {
       m.set(q.subject, e);
     }
     return m;
-  }, [uv]);
+  }, [sv]);
 
   function remove(id: string) {
     update((s) => {

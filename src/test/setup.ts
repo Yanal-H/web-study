@@ -12,3 +12,8 @@ if (!window.matchMedia) {
     dispatchEvent: () => false,
   })) as unknown as typeof window.matchMedia;
 }
+
+// jsdom has no Canvas implementation. The animated Haki field already treats a
+// missing 2D context as an optional visual enhancement, so model that supported
+// fallback here instead of letting jsdom throw and abort lazy-route tests.
+HTMLCanvasElement.prototype.getContext = (() => null) as typeof HTMLCanvasElement.prototype.getContext;

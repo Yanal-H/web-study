@@ -1,6 +1,9 @@
-// Typed content loader. Build-time content is globbed and validated; personal
-// (imported) content is merged on top. Shipped and personal content are kept
-// clearly separated by `origin`.
+// Typed content loader for administrator-published content.
+//
+// Students can keep personal study data (progress, notes and review history),
+// but chapter packs always come from the shared, administrator-controlled
+// store. Legacy device-only imports are deliberately not merged here: a student
+// must never be able to shadow or alter the curriculum seen in the app.
 import {
   type Chapter,
   type Card,
@@ -8,10 +11,9 @@ import {
   type Emq,
   type GlossaryEntry,
 } from './schema';
-import { getUserChapters } from './userContent';
 import { cardDeckPath } from './deck';
 
-export type ContentOrigin = 'shipped' | 'personal';
+export type ContentOrigin = 'shared';
 
 export interface LoadedChapter extends Chapter {
   origin: ContentOrigin;
@@ -36,7 +38,7 @@ let LOADED: LoadedChapter[] = [];
  * after new content is imported.
  */
 export function setLoadedChapters(chapters: Chapter[]): void {
-  LOADED = chapters.map((c) => ({ ...c, origin: 'shipped' as const }));
+  LOADED = chapters.map((c) => ({ ...c, origin: 'shared' as const }));
 }
 
 /** How many chapters are currently loaded — used by boot to decide what to show. */
@@ -44,12 +46,9 @@ export function loadedCount(): number {
   return LOADED.length;
 }
 
-/** All chapters: store content first, then personal (personal id shadows a store id). */
+/** All chapters currently authorised by the shared content store. */
 export function listChapters(): LoadedChapter[] {
-  const personal = getUserChapters().map((c) => ({ ...c, origin: 'personal' as const }));
-  const personalIds = new Set(personal.map((c) => c.id));
-  const base = LOADED.filter((c) => !personalIds.has(c.id));
-  return [...base, ...personal];
+  return LOADED;
 }
 
 export function getChapter(id: string): LoadedChapter | undefined {
@@ -100,7 +99,7 @@ export function allEmqs(): Array<Emq & { chapterId: string; subject: string }> {
   );
 }
 
-/** Every authored glossary entry across all chapters (personal shadows shipped). */
+/** Every authored glossary entry across the shared curriculum. */
 export function allGlossary(): Array<GlossaryEntry & { chapterId: string }> {
   return listChapters().flatMap((ch) =>
     ch.glossary.map((g) => ({ ...g, chapterId: ch.id }))
