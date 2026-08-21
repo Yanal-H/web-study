@@ -53,8 +53,9 @@ export default function QuestionRunner({ onExit }: { onExit: () => void }) {
 
   // restore an already-answered question when navigating back
   useEffect(() => {
-    if (!session) return;
-    const prev = session.answers[session.ids[session.index]!];
+    const current = getSession();
+    if (!current) return;
+    const prev = current.answers[current.ids[current.index]!];
     if (prev) {
       setChosen(prev.chosen);
       setSubmitted(immediate); // show feedback for answered in immediate modes
@@ -66,7 +67,7 @@ export default function QuestionRunner({ onExit }: { onExit: () => void }) {
     }
     qStart.current = Date.now();
     cancelAuto();
-  }, [session?.index]);
+  }, [session?.id, session?.index, immediate]);
 
   useEffect(() => () => cancelAuto(), []);
 
@@ -80,6 +81,9 @@ export default function QuestionRunner({ onExit }: { onExit: () => void }) {
       } else force((n) => n + 1);
     }, 1000);
     return () => clearInterval(t);
+    // finish intentionally uses the current render's session; depending on the
+    // function itself would recreate this one-second interval on every tick.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [session?.timedEndsAt]);
 
   const options: Option[] = useMemo(() => {
@@ -94,7 +98,7 @@ export default function QuestionRunner({ onExit }: { onExit: () => void }) {
       return arr;
     }
     return opts;
-  }, [q?.id, state.settings.mcq.shuffleOptions]);
+  }, [q, state.settings.mcq.shuffleOptions]);
 
   // keyboard-first: 1–6 or A–F pick an option, Enter/→ moves on, F flags
   useEffect(() => {

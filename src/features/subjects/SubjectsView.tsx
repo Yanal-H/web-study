@@ -41,6 +41,7 @@ export default function SubjectsView() {
 
   // content available per subject (cards + questions) — powers each card's stats
   const bySubject = useMemo(() => {
+    void sv;
     const m = new Map<string, { cards: number; mcqs: number }>();
     for (const chapter of listCatalogChapters()) {
       const e = m.get(chapter.subject) || { cards: 0, mcqs: 0 };

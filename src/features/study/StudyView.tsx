@@ -13,7 +13,7 @@ export default function StudyView() {
   // Content hydration calls notify() once authenticated packs have arrived.
   // Key this memo to that version so a direct visit to /study cannot get stuck
   // with the empty library that rendered before the background download ended.
-  const chapters = useMemo(() => listCatalogChapters(), [storeVersion]);
+  const chapters = useMemo(() => { void storeVersion; return listCatalogChapters(); }, [storeVersion]);
   // a subject handed over from the Subjects page narrows the library
   const presetSubject = ((useLocation().state ?? null) as { subject?: string } | null)?.subject ?? '';
   const [filterSubject, setFilterSubject] = useState<string>(presetSubject);
@@ -42,7 +42,7 @@ export default function StudyView() {
       if (when && (!best || when > best.when)) best = { ch, when };
     }
     return best?.ch;
-  }, [chapters, state.study.progress, state.schemaVersion]);
+  }, [chapters, state.study.progress]);
 
   const bySubject = useMemo(() => {
     const map = new Map<string, ChapterCatalogEntry[]>();

@@ -42,6 +42,7 @@ export default function MnemonicsView() {
   }, []);
 
   const list: Mnem[] = useMemo(() => {
+    void v;
     const mine: Mnem[] = (Array.isArray(state.mnemonics) ? state.mnemonics : []).map((m: any) => ({
       id: m.id,
       title: m.title || m.key || 'Mnemonic',
@@ -53,7 +54,7 @@ export default function MnemonicsView() {
     return q
       ? all.filter((m) => `${m.title} ${m.text} ${m.source ?? ''}`.toLowerCase().includes(q))
       : all;
-  }, [v, query]);
+  }, [state.mnemonics, v, query]);
 
   // group the content ones by subject for a book-like layout; mine sit up top
   const mine = list.filter((m) => m.ownable);

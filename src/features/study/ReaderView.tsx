@@ -107,7 +107,10 @@ export default function ReaderView() {
   const navigate = useNavigate();
   const storeVersion = useStoreVersion();
   const chapterId = id ? decodeURIComponent(id) : '';
-  const chapter = useMemo(() => (chapterId ? getChapter(chapterId) : undefined), [chapterId, storeVersion]);
+  const chapter = useMemo(() => {
+    void storeVersion;
+    return chapterId ? getChapter(chapterId) : undefined;
+  }, [chapterId, storeVersion]);
   const [loadingChapter, setLoadingChapter] = useState(true);
   const [chapterLoadFailed, setChapterLoadFailed] = useState(false);
   const [tab, setTab] = useState<Tab>(() => {
@@ -180,6 +183,7 @@ export default function ReaderView() {
   // neighbouring chapters in the same subject, for a "keep moving" pager
   // (computed before the early return so hook order is stable)
   const siblings = useMemo(() => {
+    void storeVersion;
     if (!chapter) return { prev: undefined, next: undefined };
     const all = listCatalogChapters().filter((c) => c.subject === chapter.subject);
     const i = all.findIndex((c) => c.id === chapter.id);
@@ -310,7 +314,7 @@ function ReadTab({
     const found = new Set<TermKind>();
     for (const m of html.matchAll(/class="t t-([a-z]+)"/g)) found.add(m[1] as TermKind);
     return [...found];
-  }, [ch.id, lex]);
+  }, [ch.sections, lex]);
 
   // scroll-spy: highlight the section currently in view in the TOC
   useEffect(() => {
@@ -328,7 +332,7 @@ function ReadTab({
       if (el) obs.observe(el);
     });
     return () => obs.disconnect();
-  }, [ch.id]);
+  }, [ch.sections]);
 
   function toggleRead(sectionId: string) {
     update((s) => {

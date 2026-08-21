@@ -140,6 +140,25 @@ export function catalogFromChapter(pack: Chapter, revision = 'session'): Chapter
   };
 }
 
+const sameIds = (left: string[], right: string[]) => {
+  if (left.length !== right.length) return false;
+  const expected = new Set(left);
+  return expected.size === left.length && right.every((id) => expected.has(id));
+};
+
+/** Refuse a body whose identities/counts disagree with its authenticated catalog row. */
+export function catalogMatchesChapter(entry: ChapterCatalogEntry, pack: Chapter): boolean {
+  return entry.id === pack.id
+    && entry.counts.sections === pack.sections.length
+    && entry.counts.cards === pack.cards.length
+    && entry.counts.mcqs === pack.mcqs.length
+    && entry.counts.emqs === pack.emqs.length
+    && entry.counts.mnemonics === pack.mnemonics.length
+    && sameIds(entry.sections.map((section) => section.id), pack.sections.map((section) => section.id))
+    && sameIds(entry.cards.map((card) => card.id), pack.cards.map((card) => card.id))
+    && sameIds(entry.mcqs.map((question) => question.id), pack.mcqs.map((question) => question.id));
+}
+
 type CatalogRow = Record<string, unknown>;
 
 const text = (value: unknown) => (typeof value === 'string' ? value : '');

@@ -117,6 +117,28 @@ function Shell({ userId }: { userId: string }) {
     else setTimeout(run, 1200);
   }, []);
 
+  // Refresh the small catalog when a student returns to the app. This makes a
+  // newly published chapter appear without a forced reload while avoiding a
+  // polling loop or repeated Supabase traffic during an active study session.
+  useEffect(() => {
+    let lastCheck = Date.now();
+    const MIN_REFRESH_MS = 60_000;
+    const refreshCatalog = () => {
+      if (document.visibilityState === 'hidden' || Date.now() - lastCheck < MIN_REFRESH_MS) return;
+      lastCheck = Date.now();
+      void import('../data/remoteContent').then(({ syncPublishedContent }) => syncPublishedContent()).catch(() => {});
+    };
+    const onVisible = () => { if (document.visibilityState === 'visible') refreshCatalog(); };
+    window.addEventListener('focus', refreshCatalog);
+    window.addEventListener('online', refreshCatalog);
+    document.addEventListener('visibilitychange', onVisible);
+    return () => {
+      window.removeEventListener('focus', refreshCatalog);
+      window.removeEventListener('online', refreshCatalog);
+      document.removeEventListener('visibilitychange', onVisible);
+    };
+  }, []);
+
   // global keyboard shortcuts — including chorded "g then <key>" navigation
   const gChord = useRef(false);
   const gTimer = useRef<ReturnType<typeof setTimeout> | null>(null);

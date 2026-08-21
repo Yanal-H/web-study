@@ -1,6 +1,15 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import type { DeckNode } from './deck';
 import { IconChevron, IconFlashcards } from '../../design/icons';
+
+function defaultOpen(nodes: DeckNode[]): Set<string> {
+  const open = new Set<string>();
+  for (const node of nodes) {
+    open.add(node.path);
+    for (const child of node.children) open.add(child.path);
+  }
+  return open;
+}
 
 /**
  * Deck browser: decks, sub-decks and sub-sub-decks with rolled-up counts.
@@ -19,15 +28,13 @@ export default function DeckTree({
   onStudy: (path: string) => void;
 }) {
   // top two levels open by default — deep enough to orient, shallow enough to scan
-  const initial = useMemo(() => {
-    const open = new Set<string>();
-    for (const n of nodes) {
-      open.add(n.path);
-      for (const c of n.children) open.add(c.path);
-    }
-    return open;
-  }, [nodes.length]);
-  const [open, setOpen] = useState<Set<string>>(initial);
+  const [open, setOpen] = useState<Set<string>>(() => defaultOpen(nodes));
+
+  // Async catalog arrival must open its top levels too; useState's initializer
+  // runs only on the first empty render.
+  useEffect(() => {
+    setOpen((current) => new Set([...current, ...defaultOpen(nodes)]));
+  }, [nodes]);
 
   function toggle(path: string) {
     setOpen((prev) => {

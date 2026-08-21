@@ -10,6 +10,8 @@ interface ToastItem {
 
 const ToastCtx = createContext<(msg: string, tone?: ToastTone) => void>(() => {});
 
+// Hook and provider intentionally share the private context.
+// eslint-disable-next-line react-refresh/only-export-components
 export function useToast() {
   return useContext(ToastCtx);
 }

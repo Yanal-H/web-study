@@ -128,6 +128,15 @@ function PublishPanel() {
   const [selectedDraftIds, setSelectedDraftIds] = useState<string[]>([]);
   const fileRef = useRef<HTMLInputElement>(null);
 
+  const refreshStudentCatalog = async () => {
+    const { syncPublishedContent } = await import('../../data/remoteContent');
+    await syncPublishedContent().catch(() => null);
+  };
+
+  const announceContentChange = () => {
+    window.dispatchEvent(new CustomEvent('foundation:admin-content-changed'));
+  };
+
   const refresh = useCallback(async () => {
     const result = await listContent();
     setConfigured(result.configured);
@@ -174,26 +183,36 @@ function PublishPanel() {
     if (!selectedDraftIds.length || !window.confirm(`Publish ${selectedDraftIds.length} selected draft(s) for every eligible student?`)) return;
     setBusy(true);
     const result = await publishDrafts(selectedDraftIds);
-    setBusy(false);
-    if (result.ok) { await refresh(); toast(result.message, 'success'); }
+    if (result.ok) {
+      await Promise.all([refresh(), refreshStudentCatalog()]);
+      announceContentChange();
+      toast(result.message, result.verified === false ? 'default' : 'success');
+    }
     else toast(result.message, 'error');
+    setBusy(false);
   }
 
   async function archive(id: string) {
     if (!window.confirm(`Archive ${id}? Students will no longer receive it, but it can be restored later.`)) return;
     setBusy(true);
     const result = await archiveChapter(id);
-    setBusy(false);
-    if (result.ok) await refresh();
+    if (result.ok) {
+      await Promise.all([refresh(), refreshStudentCatalog()]);
+      announceContentChange();
+    }
     toast(result.message, result.ok ? 'success' : 'error');
+    setBusy(false);
   }
 
   async function restore(id: string) {
     setBusy(true);
     const result = await restoreChapter(id);
-    setBusy(false);
-    if (result.ok) await refresh();
+    if (result.ok) {
+      await Promise.all([refresh(), refreshStudentCatalog()]);
+      announceContentChange();
+    }
     toast(result.message, result.ok ? 'success' : 'error');
+    setBusy(false);
   }
 
   function toggleDraft(id: string) {

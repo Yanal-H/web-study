@@ -1,6 +1,7 @@
 import { beforeEach, describe, expect, it } from 'vitest';
 import {
   catalogChapterIdsForDeck,
+  catalogMatchesChapter,
   catalogDeckCounts,
   clearContentCatalog,
   isAuthorizedCard,
@@ -41,5 +42,23 @@ describe('authenticated content catalog', () => {
 
     expect(await allDeckKeys()).toEqual(['Surgery::Wounds::Healing']);
     expect(await deckCounts()).toEqual({ 'Surgery::Wounds::Healing': 2 });
+  });
+
+  it('rejects a body that disagrees with its catalog identities', () => {
+    const chapter = {
+      schema: 'foundation.study-module/v1' as const,
+      id: 'sur-ch1-test', subject: 'Surgery', title: 'Test',
+      sections: [{ id: 's1', title: 'One', digest: 'Text', highYield: [], tables: [], pitfalls: [], figures: [], extraKnowledge: [] }],
+      cards: [], mcqs: [], emqs: [], mnemonics: [], objectives: [], glossary: [], tags: [], outline: [], images: {},
+    };
+    const entry = {
+      ...parseCatalogRows([{
+        id: chapter.id, revision: 'r1', subject: chapter.subject, title: chapter.title,
+        deck: 'Surgery::Test', section_index: [{ id: 'different', title: 'One' }],
+        card_index: [], mcq_index: [], section_count: 1, card_count: 0, mcq_count: 0,
+        emq_count: 0, mnemonic_count: 0,
+      }])[0]!,
+    };
+    expect(catalogMatchesChapter(entry, chapter)).toBe(false);
   });
 });

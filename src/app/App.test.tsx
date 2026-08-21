@@ -13,6 +13,7 @@ const auth = vi.hoisted(() => ({
 }));
 const adminAccess = vi.hoisted(() => ({ allowed: false }));
 const LAZY_ROUTE_TIMEOUT = 10_000;
+const ROUTER_FUTURE = { v7_startTransition: true, v7_relativeSplatPath: true } as const;
 
 vi.mock('../features/auth/session', () => ({
   useAuth: () => auth,
@@ -34,7 +35,7 @@ beforeEach(() => {
 describe('App shell (signed in)', () => {
   it('renders the brand, full nav, and the lazy dashboard route', async () => {
     render(
-      <MemoryRouter initialEntries={['/']}>
+      <MemoryRouter initialEntries={['/']} future={ROUTER_FUTURE}>
         <App />
       </MemoryRouter>
     );
@@ -90,7 +91,7 @@ describe('App shell (signed in)', () => {
 
   it('renders a lazy non-index route', async () => {
     render(
-      <MemoryRouter initialEntries={['/settings']}>
+      <MemoryRouter initialEntries={['/settings']} future={ROUTER_FUTURE}>
         <App />
       </MemoryRouter>
     );
@@ -103,7 +104,7 @@ describe('App shell (signed in)', () => {
   it('shows the operations route only to a server-confirmed administrator', async () => {
     adminAccess.allowed = true;
     render(
-      <MemoryRouter initialEntries={['/admin']}>
+      <MemoryRouter initialEntries={['/admin']} future={ROUTER_FUTURE}>
         <App />
       </MemoryRouter>
     );
@@ -115,7 +116,7 @@ describe('App shell (signed in)', () => {
 
   it('denies a student who enters the admin URL directly', async () => {
     render(
-      <MemoryRouter initialEntries={['/admin']}>
+      <MemoryRouter initialEntries={['/admin']} future={ROUTER_FUTURE}>
         <App />
       </MemoryRouter>
     );
@@ -131,7 +132,7 @@ describe('App shell (signed out)', () => {
   it('shows sign-in and none of the app', () => {
     auth.phase = 'signed-out';
     render(
-      <MemoryRouter initialEntries={['/']}>
+      <MemoryRouter initialEntries={['/']} future={ROUTER_FUTURE}>
         <App />
       </MemoryRouter>
     );
@@ -145,7 +146,7 @@ describe('App shell (signed out)', () => {
   it('renders nothing at all while the stored session is still being read', () => {
     auth.phase = 'checking';
     const { container } = render(
-      <MemoryRouter initialEntries={['/']}>
+      <MemoryRouter initialEntries={['/']} future={ROUTER_FUTURE}>
         <App />
       </MemoryRouter>
     );

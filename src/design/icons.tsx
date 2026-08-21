@@ -234,6 +234,8 @@ export const IconStop = (p: IconProps) => (
   </Svg>
 );
 
+// Static component registry consumed by the shell navigation.
+// eslint-disable-next-line react-refresh/only-export-components
 export const NAV_ICONS: Record<string, (p: IconProps) => JSX.Element> = {
   '': IconDashboard,
   study: IconStudy,

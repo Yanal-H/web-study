@@ -21,6 +21,8 @@ export interface PublishResult {
   ok: boolean;
   message: string;
   issues?: string[];
+  /** A successful publish is read back from the live table before confirmation. */
+  verified?: boolean;
 }
 
 export interface RawPack {
@@ -121,12 +123,57 @@ export function publishPack(rawJson: string): Promise<PublishResult> {
   return stagePacks([{ name: 'Pasted chapter', text: rawJson }]);
 }
 
+export interface PublicationVerification {
+  verified: boolean;
+  missing: string[];
+  unavailable: boolean;
+}
+
+/** Confirm selected ids are now visible in the published table for this admin. */
+export async function verifyPublishedChapters(ids: string[]): Promise<PublicationVerification> {
+  if (!supabase) return { verified: false, missing: ids, unavailable: true };
+  const unique = [...new Set(ids.filter(Boolean))];
+  if (!unique.length) return { verified: true, missing: [], unavailable: false };
+  const { data, error } = await supabase.from('chapters')
+    .select('id')
+    .in('id', unique)
+    .eq('status', 'published');
+  if (error || !data) return { verified: false, missing: unique, unavailable: true };
+  const found = new Set((data as Array<{ id: string }>).map((row) => row.id));
+  const missing = unique.filter((id) => !found.has(id));
+  return { verified: missing.length === 0, missing, unavailable: false };
+}
+
 /** Publish selected drafts in one server transaction. */
 export async function publishDrafts(ids: string[]): Promise<PublishResult> {
   if (!supabase) return { ok: false, message: 'Sign-in is not set up on this deployment yet.' };
-  const { data, error } = await supabase.rpc('publish_chapter_drafts', { p_ids: ids });
+  const unique = [...new Set(ids.filter(Boolean))];
+  if (!unique.length) return { ok: false, message: 'Select at least one draft to publish.' };
+  const { data, error } = await supabase.rpc('publish_chapter_drafts', { p_ids: unique });
   if (error) return { ok: false, message: describeError(error.message) };
-  return { ok: true, message: `Published ${Number(data) || ids.length} chapter${ids.length === 1 ? '' : 's'} for students.` };
+  const rawCount = Number(data);
+  const count = Number.isFinite(rawCount) && rawCount >= 0 ? Math.floor(rawCount) : 0;
+  const verification = await verifyPublishedChapters(unique);
+  if (verification.verified) {
+    const transactionNote = count === unique.length ? '' : ` The transaction updated ${count}; all ${unique.length} selected chapters are live.`;
+    return {
+      ok: true,
+      verified: true,
+      message: `Published and verified ${unique.length} chapter${unique.length === 1 ? '' : 's'} for students.${transactionNote}`,
+    };
+  }
+  if (verification.unavailable) {
+    return {
+      ok: true,
+      verified: false,
+      message: `The publish transaction updated ${count} chapter${count === 1 ? '' : 's'}, but the confirmation read was unavailable. Refresh the control centre before publishing again.`,
+    };
+  }
+  return {
+    ok: true,
+    verified: false,
+    message: `Publishing completed, but ${verification.missing.length} selected chapter${verification.missing.length === 1 ? '' : 's'} did not appear live. Do not republish; refresh and inspect delivery health.`,
+  };
 }
 
 export async function archiveChapter(id: string): Promise<PublishResult> {

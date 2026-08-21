@@ -35,7 +35,10 @@ export default function NotesView() {
   const toast = useToast();
   const v = useStoreVersion();
   // key on the store version, not state.notes — the object is mutated in place
-  const notes = useMemo(() => readNotes(state.notes), [state.notes, v]);
+  const notes = useMemo(() => {
+    void v;
+    return readNotes(state.notes);
+  }, [state.notes, v]);
   const [activeId, setActiveId] = useState<string | null>(notes[0]?.id ?? null);
   const [mode, setMode] = useState<'edit' | 'preview'>('edit');
   const [query, setQuery] = useState('');

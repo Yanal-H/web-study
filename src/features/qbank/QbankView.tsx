@@ -58,8 +58,8 @@ export default function QbankView() {
     return () => { alive = false; };
   }, []);
 
-  const bank = useMemo(() => allMcqs(), [storeVersion]);
-  const emqs = useMemo(() => allEmqs(), [storeVersion]);
+  const bank = useMemo(() => { void storeVersion; return allMcqs(); }, [storeVersion]);
+  const emqs = useMemo(() => { void storeVersion; return allEmqs(); }, [storeVersion]);
   const subjects = useMemo(() => [...new Set(bank.map((q) => q.subject))].sort(), [bank]);
   /** chapters within the chosen subject, with how many questions each holds */
   const chapters = useMemo(() => {

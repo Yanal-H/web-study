@@ -97,7 +97,7 @@ if (!container) throw new Error('Root container #root not found');
 void consumeAuthFromUrl().finally(() => {
   createRoot(container).render(
     <React.StrictMode>
-      <HashRouter>
+      <HashRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
         <App />
       </HashRouter>
     </React.StrictMode>

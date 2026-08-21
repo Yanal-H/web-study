@@ -27,6 +27,7 @@ export default function CardBrowser({ onBack }: { onBack: () => void }) {
   const [editing, setEditing] = useState<Row | null>(null);
 
   const rows = useMemo<Row[]>(() => {
+    void storeVersion;
     const out: Row[] = [];
     for (const c of allCards()) {
       out.push({
@@ -52,7 +53,7 @@ export default function CardBrowser({ onBack }: { onBack: () => void }) {
       });
     }
     return out;
-  }, [storeVersion]);
+  }, [state.flashcards, storeVersion]);
 
   const shown = useMemo(() => {
     const needle = q.trim().toLowerCase();

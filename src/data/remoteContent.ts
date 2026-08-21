@@ -5,7 +5,7 @@ import type { Chapter } from '../content/schema';
 import { ChapterSchema } from '../content/schema';
 import { setLoadedChapters } from '../content/loader';
 import {
-  catalogChapterIdsForDeck, catalogFromChapter, clearContentCatalog,
+  catalogChapterIdsForDeck, catalogFromChapter, catalogMatchesChapter, clearContentCatalog,
   getCatalogChapter, isCatalogInitialized, listCatalogChapters, parseCatalogRows, setContentCatalog,
 } from '../content/catalog';
 import { importPackIntoSession } from './importClient';
@@ -78,11 +78,15 @@ async function runCatalogSync(): Promise<SyncReport | null> {
   const entries = parseCatalogRows(data);
   if (entries.length !== data.length) return null;
 
-  const previous = new Set(listCatalogChapters().map((chapter) => chapter.id));
+  const previousEntries = listCatalogChapters();
+  const previousById = new Map(previousEntries.map((chapter) => [chapter.id, chapter]));
+  const previous = new Set(previousById.keys());
   const next = new Set(entries.map((chapter) => chapter.id));
   const removed = [...previous].filter((id) => !next.has(id));
+  const changed = entries.filter((chapter) => previousById.get(chapter.id)?.revision !== chapter.revision);
+  const nextById = new Map(entries.map((chapter) => [chapter.id, chapter]));
   for (const [id, revision] of Object.entries(loadedManifest)) {
-    const entry = entries.find((chapter) => chapter.id === id);
+    const entry = nextById.get(id);
     if (!entry || entry.revision !== revision) {
       removeChapter(id);
       delete loadedManifest[id];
@@ -90,11 +94,15 @@ async function runCatalogSync(): Promise<SyncReport | null> {
   }
 
   setContentCatalog(entries);
-  await seedScheduling(entries.flatMap((chapter) => chapter.cards));
-  const { purgeOrphanScheduling } = await import('./db');
-  await purgeOrphanScheduling().catch(() => 0);
-  await rehydrateChapters();
-  notify();
+  if (changed.length || removed.length) {
+    await seedScheduling(changed.flatMap((chapter) => chapter.cards));
+    const { purgeOrphanScheduling } = await import('./db');
+    await purgeOrphanScheduling().catch(() => 0);
+    await rehydrateChapters();
+    const { invalidateDeckTree } = await import('./session');
+    invalidateDeckTree();
+    notify();
+  }
   return {
     configured: true, catalogued: entries.map((chapter) => chapter.id),
     imported: [], removed, failed: [],
@@ -192,7 +200,8 @@ async function runBodyLoad(ids: string[]): Promise<BodyLoadReport> {
       try {
         const entry = getCatalogChapter(row.id);
         const parsed = ChapterSchema.safeParse(row.pack);
-        if (!entry || row.revision !== entry.revision || !parsed.success || parsed.data.id !== row.id) {
+        if (!entry || row.revision !== entry.revision || !parsed.success
+          || parsed.data.id !== row.id || !catalogMatchesChapter(entry, parsed.data)) {
           throw new Error('invalid or changed pack');
         }
         await importPackIntoSession(parsed.data);

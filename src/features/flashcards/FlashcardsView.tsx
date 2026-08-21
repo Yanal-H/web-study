@@ -59,11 +59,19 @@ export default function FlashcardsView() {
 
   // personal cards still live in the local store; content cards come from the engine
   const userItems = useMemo(
-    () => collectItems().filter((i) => i.source === 'user'),
+    () => {
+      void state.flashcards;
+      void state.schemaVersion;
+      void sv;
+      return collectItems().filter((i) => i.source === 'user');
+    },
     [state.flashcards, state.schemaVersion, sv]
   );
-  const userStats = useMemo(() => queueStats(userItems), [userItems, state.study.cardSched]);
-  const contentCount = useMemo(() => catalogCardCount() || allCards().length, [sv]);
+  const userStats = useMemo(() => queueStats(userItems), [userItems]);
+  const contentCount = useMemo(() => {
+    void sv;
+    return catalogCardCount() || allCards().length;
+  }, [sv]);
 
   const refreshDecks = useCallback(async () => {
     await whenContentReady();
@@ -84,7 +92,7 @@ export default function FlashcardsView() {
 
   const tree = useMemo(
     () => mergeTrees(engineTree, buildDeckTree(userItems)),
-    [engineTree, userItems, state.study.cardSched]
+    [engineTree, userItems]
   );
   const stats = {
     due: engineStats.due + userStats.due,

@@ -5,6 +5,8 @@ import { Button } from '../../design/primitives';
 import { update } from '../../state/store';
 import { IconStudy, IconFlashcards, IconQbank, IconPlanner, IconSparkle } from '../../design/icons';
 
+// Small state actions intentionally live beside the only component that owns them.
+// eslint-disable-next-line react-refresh/only-export-components
 export function markOnboarded(): void {
   update((s) => {
     (s.settings as Record<string, unknown>).onboarded = true;
@@ -12,6 +14,7 @@ export function markOnboarded(): void {
 }
 
 /** Reset so the tour shows again on the next dashboard visit. */
+// eslint-disable-next-line react-refresh/only-export-components
 export function replayTour(): void {
   update((s) => {
     (s.settings as Record<string, unknown>).onboarded = false;
