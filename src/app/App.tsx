@@ -1,4 +1,4 @@
-import { Suspense, useEffect, useMemo, useRef, useState } from 'react';
+import { Suspense, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { NavLink, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import { ROUTES, prefetchRoutes } from './routes';
 import Watermark from '../features/gate/Watermark';
@@ -20,6 +20,7 @@ import { useAuth } from '../features/auth/session';
 import SignIn from '../features/auth/SignIn';
 import { checkAdmin } from '../lib/admin';
 import { catalogChapterCount } from '../content/catalog';
+import { contentStatusAfterSync, contentStatusForKnownCatalog, type ContentStatus } from './contentStatus';
 
 function BrandMark({ size = 40 }: { size?: number }) {
   return (
@@ -87,6 +88,11 @@ function Shell({ userId }: { userId: string }) {
   const navigate = useNavigate();
   const state = useStore();
   const [isAdmin, setIsAdmin] = useState(false);
+  const [content, setContent] = useState<ContentStatus>('loading');
+
+  const applyContentSyncStatus = useCallback((report: Parameters<typeof contentStatusAfterSync>[0]) => {
+    setContent(contentStatusAfterSync(report, catalogChapterCount()));
+  }, []);
 
   useEffect(() => {
     let alive = true;
@@ -126,7 +132,9 @@ function Shell({ userId }: { userId: string }) {
     const refreshCatalog = () => {
       if (document.visibilityState === 'hidden' || Date.now() - lastCheck < MIN_REFRESH_MS) return;
       lastCheck = Date.now();
-      void import('../data/remoteContent').then(({ syncPublishedContent }) => syncPublishedContent()).catch(() => {});
+      void import('../data/remoteContent')
+        .then(async ({ syncPublishedContent }) => applyContentSyncStatus(await syncPublishedContent().catch(() => null)))
+        .catch(() => applyContentSyncStatus(null));
     };
     const onVisible = () => { if (document.visibilityState === 'visible') refreshCatalog(); };
     window.addEventListener('focus', refreshCatalog);
@@ -137,7 +145,7 @@ function Shell({ userId }: { userId: string }) {
       window.removeEventListener('online', refreshCatalog);
       document.removeEventListener('visibilitychange', onVisible);
     };
-  }, []);
+  }, [applyContentSyncStatus]);
 
   // global keyboard shortcuts — including chorded "g then <key>" navigation
   const gChord = useRef(false);
@@ -185,7 +193,6 @@ function Shell({ userId }: { userId: string }) {
   //
   // Catalog metadata and any bodies opened later are held in memory only. Before
   // syncing, remove any authored library left on disk by an older build.
-  const [content, setContent] = useState<'loading' | 'ready' | 'offline' | 'empty'>('loading');
   useEffect(() => {
     let alive = true;
     void (async () => {
@@ -196,20 +203,23 @@ function Shell({ userId }: { userId: string }) {
       if (!alive) return;
 
       await rehydrateChapters().catch(() => 0);
-      const count = catalogChapterCount();
       const { invalidateDeckTree } = await import('../data/session');
       invalidateDeckTree();
       notify();
-
-      if (!report || report.skipped === 'offline' || report.skipped === 'unreachable') {
-        setContent(count > 0 ? 'ready' : 'offline');
-      } else {
-        setContent(count > 0 ? 'ready' : 'empty');
-      }
+      applyContentSyncStatus(report);
     })();
     return () => {
       alive = false;
     };
+  }, [applyContentSyncStatus]);
+
+  // The admin publisher updates this session's catalog before it announces the
+  // change. Reflect that immediately so the obsolete "No chapters yet" banner
+  // cannot cover a library that has just become available.
+  useEffect(() => {
+    const onAdminContentChanged = () => setContent(contentStatusForKnownCatalog(catalogChapterCount()));
+    window.addEventListener('foundation:admin-content-changed', onAdminContentChanged);
+    return () => window.removeEventListener('foundation:admin-content-changed', onAdminContentChanged);
   }, []);
 
   // Ask the browser to keep this origin's data even under storage pressure. Without
@@ -404,7 +414,7 @@ function Shell({ userId }: { userId: string }) {
  * rather than an empty library that looks broken. Their own progress and notes
  * are on the device and still there, which the message says.
  */
-function ContentStatus({ status }: { status: 'loading' | 'offline' | 'empty' }) {
+function ContentStatus({ status }: { status: Exclude<ContentStatus, 'ready'> }) {
   if (status === 'loading') {
     return (
       <div className="content-status" role="status">
