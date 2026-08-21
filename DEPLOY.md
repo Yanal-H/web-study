@@ -353,6 +353,34 @@ content**, without touching the command line or redeploying.
 
 ---
 
+## Step 6b — Install it on Windows or an Honor tablet
+
+Do this only after the permanent Vercel address is working in Step 6.
+
+### Windows (Microsoft Edge or Google Chrome)
+
+1. Open the permanent site address.
+2. In Edge, click **⋯ → Apps → Install Foundation**. In Chrome, click the install
+   icon at the right side of the address bar, or **⋮ → Cast, save and share →
+   Install page as app**.
+3. Confirm **Install**. Foundation now opens from the Start menu like an app.
+
+### Honor tablet (Chrome)
+
+1. Open the permanent site address in Chrome.
+2. Tap **⋮ → Add to Home screen → Install**.
+3. Confirm. Open Foundation from the new home-screen icon.
+
+The installed shell checks for a new deployment when it returns online or comes
+back to the foreground. It may reload once to activate an update. Personal
+progress, notes and cards remain saved. Published chapters still require an
+internet connection and are deliberately not stored in the app cache.
+
+**Worked when:** Foundation opens without the normal browser address bar and its
+gold **F** icon appears in the Start menu or on the tablet home screen.
+
+---
+
 ## Step 7 — Give it to your students
 
 Send them the URL. That is all they need. They sign in with their university

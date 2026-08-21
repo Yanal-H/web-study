@@ -4,7 +4,7 @@
   "trailingSlash": false,
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
-  "rewrites": [{ "source": "/((?!api/|assets/|sw.js|favicon.ico).*)", "destination": "/index.html" }],
+  "rewrites": [{ "source": "/((?!api/|assets/|fonts/|sw.js|theme-init.js|manifest.webmanifest|app-icon.svg|favicon.ico).*)", "destination": "/index.html" }],
   "headers": [
     {
       "source": "/(.*)",
@@ -26,6 +26,10 @@
     },
     {
       "source": "/sw.js",
+      "headers": [{ "key": "Cache-Control", "value": "no-cache" }]
+    },
+    {
+      "source": "/manifest.webmanifest",
       "headers": [{ "key": "Cache-Control", "value": "no-cache" }]
     },
     {

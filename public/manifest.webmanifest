@@ -1,0 +1,21 @@
+{
+  "id": "/",
+  "name": "Foundation · Med School Toolkit",
+  "short_name": "Foundation",
+  "description": "A secure medical study toolkit for reading, flashcards, questions, notes and planning.",
+  "start_url": "/#/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#0b0c10",
+  "theme_color": "#0e1217",
+  "orientation": "any",
+  "categories": ["education", "medical", "productivity"],
+  "icons": [
+    {
+      "src": "/app-icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

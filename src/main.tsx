@@ -25,6 +25,7 @@ import {
 } from './features/settings/appearance';
 import { applyHaki } from './state/haki';
 import { installAudioUnlock } from './lib/sound';
+import { registerAppShellWorker } from './lib/serviceWorker';
 
 // Apply persisted appearance preferences before first paint of the app tree.
 const ap = state.settings?.appearance;
@@ -104,14 +105,8 @@ void consumeAuthFromUrl().finally(() => {
   );
 });
 
-// Register the offline service worker (production builds only; dev has no /sw.js).
-if ('serviceWorker' in navigator && import.meta.env.PROD) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/sw.js').catch((err) => {
-      console.warn('Service worker registration failed', err);
-    });
-  });
-}
+// Register only in production; the development server has no stable /sw.js.
+if (import.meta.env.PROD) registerAppShellWorker();
 
 // Stale-chunk recovery: after a redeploy, a lazy import may 404 because its hashed
 // filename changed. Reload ONCE to fetch the fresh shell (index.html is served

@@ -57,9 +57,10 @@ npm run make:schema      # emit content/_schema/chapter.schema.json + template.j
 - **Features** (`src/features/`) — dashboard, study (Library + Reader), flashcards
   (SM-2+ engine, occlusion, Anki TSV/CSV), qbank (MCQ/EMQ engine), planner, notes,
   calculators, mnemonics, resources, settings.
-- **Offline** — a lean service worker (`public/sw.js`) caches only the app shell.
-  Shared chapters are deliberately excluded; learner progress, notes and personal
-  cards persist locally and survive redeploys.
+- **Installable shell** — a lean service worker (`public/sw.js`) and web-app
+  manifest make Foundation installable on Windows and Android/Honor devices.
+  Shared chapters are deliberately excluded from the cache; learner progress,
+  notes and personal cards persist locally and survive redeploys.
 
 ## Adding content
 
@@ -131,9 +132,11 @@ enforces it; do not relax that rule.
 Personal data (progress, notes, personal cards) lives in IndexedDB and needs no
 connection. A device upgrading from an older build has its stored chapters purged
 at boot, so the copy an earlier version left behind is actually removed. On a redeploy, `index.html`
-is served `no-cache` so the new shell loads; a `vite:preloadError` guard reloads
-once if a lazy chunk hash changed. Open sessions and learner-owned progress,
-notes and cards are never lost across a redeploy.
+is served `no-cache` so the new shell loads. Installed apps perform a throttled
+update check when they reconnect or return to the foreground, and reload once
+when a new worker takes control. A `vite:preloadError` guard also recovers if a
+lazy chunk hash changed. Open sessions and learner-owned progress, notes and
+cards are never lost across a redeploy.
 
 Chapter synchronization first requests a small revision manifest, then downloads
 changed packs in bounded groups. Reopening search reuses a revision-aware index;
