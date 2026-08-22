@@ -192,14 +192,27 @@ one sitting) is fully addressed; day-scoped burying is a follow-up that needs a
 Both `burySiblings` and `leechThreshold` are now actually reachable in Settings;
 they shipped in the defaults and were exposed nowhere. 16 tests.
 
-### 🔜 Batch 10 — Custom study: cram before an exam · care: HIGH
+### ✅ Batch 10 — Custom study: cram before an exam · care: HIGH
 Anki's filtered decks, scoped to what a medical student actually needs the
 night before a paper: study a tag or chapter ahead of schedule, redo today's
 failures, or take an extra N cards beyond the daily cap. The hard requirement
 is that a cram session must NOT corrupt real scheduling — previewing a card
 ahead of time cannot silently reset its interval.
 
-### ⬜ Batch 11 — Statistics that tell the truth · care: STANDARD
+**Shipped.** A Cram session takes a whole deck ignoring due dates and the daily
+cap, and writes **nothing** — no scheduling row, no daily ledger, no review log.
+`cramGrade` only decides whether a card comes round again inside the sitting
+(Again ~1 min, Hard ~5 min, Good/Easy retired), which is a queue decision and
+the only kind this mode is allowed to make. The screen says so plainly, and Undo
+is disabled because there is nothing to undo. Five tests pin the promise,
+including one asserting the scheduler is never called and one asserting a normal
+session still does write — a silent leak here would quietly reset months of
+scheduling.
+
+Not yet done from this batch: study-by-tag, study-ahead-by-N-days, and
+"redo today's failures" as separate entry points.
+
+### 🔜 Batch 11 — Statistics that tell the truth · care: STANDARD
 True retention (what proportion you actually recall when due) against desired
 retention, a forecast of the coming workload, and the answer-button spread.
 This is how a student knows whether the system is working, and it is the

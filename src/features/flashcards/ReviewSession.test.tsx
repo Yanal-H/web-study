@@ -32,6 +32,11 @@ vi.mock('./deck', () => ({
   gradePreview: () => '1 min',
   itemState: () => 'new',
   toggleSuspend: vi.fn(async () => true),
+  // The real one: Again/Hard come back shortly, Good/Easy retire for the session.
+  cramGrade: (g: string, now = Date.now()) =>
+    g === 'again' || g === 'hard'
+      ? { due: now + (g === 'again' ? 60_000 : 300_000), cardState: 'learning' }
+      : { due: now + 365 * 86_400_000, cardState: 'review' },
 }));
 
 // Everything below is chrome this test does not exercise.
@@ -237,5 +242,48 @@ describe('sibling cards are held back', () => {
     render(<ReviewSession queue={[card('a', 'Card A'), card('b', 'Card B')]} onExit={() => {}} />);
     await gradeCard('Good');
     expect(screen.getByText('Card B')).toBeTruthy();
+  });
+});
+
+describe('cram mode writes nothing', () => {
+  // The whole promise of cram is that a student can go through a chapter the
+  // night before an exam and their real schedule is untouched. If that promise
+  // is broken it is broken silently — months of scheduling quietly reset.
+  it('never calls the scheduler at all', async () => {
+    render(<ReviewSession queue={[card('c1', 'Front A'), card('c2', 'Front B')]} cram onExit={() => {}} />);
+
+    await gradeCard('Good');
+    await gradeCard('Again');
+
+    expect(gradeItemLive).not.toHaveBeenCalled();
+  });
+
+  it('says plainly that it does not count', async () => {
+    render(<ReviewSession queue={[card('c1', 'Front A')]} cram onExit={() => {}} />);
+    expect(screen.getByText(/Nothing you answer here changes your real schedule/i)).toBeTruthy();
+  });
+
+  it('still re-shows a card you got wrong — practice, not a slideshow', async () => {
+    render(<ReviewSession queue={[card('c1', 'Front A')]} cram onExit={() => {}} />);
+    await gradeCard('Again');
+    expect(screen.queryByText('Front A')).toBeNull();
+
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(61 * 1000);
+    });
+    expect(screen.getByText('Front A')).toBeTruthy();
+  });
+
+  it('retires a card answered well, and finishes', async () => {
+    render(<ReviewSession queue={[card('c1', 'Front A')]} cram onExit={() => {}} />);
+    await gradeCard('Easy');
+    expect(screen.getByText('Cram complete')).toBeTruthy();
+    expect(screen.getByText(/schedule is exactly as you left it/i)).toBeTruthy();
+  });
+
+  it('a normal session still DOES write — cram must not leak into it', async () => {
+    render(<ReviewSession queue={[card('c1', 'Front A')]} onExit={() => {}} />);
+    await gradeCard('Good');
+    expect(gradeItemLive).toHaveBeenCalledTimes(1);
   });
 });

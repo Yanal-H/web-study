@@ -452,6 +452,27 @@ export async function toggleSuspend(item: ReviewItem): Promise<boolean> {
   return nowSuspended;
 }
 
+/**
+ * Grade a card in CRAM mode: work out where it would go, and write nothing.
+ *
+ * The night before an exam a student wants to go through a chapter again
+ * without their real schedule paying for it. Anki calls this a filtered deck
+ * with rescheduling off. Nothing here touches the scheduling row, the daily
+ * ledger, or the review log — the only thing it decides is whether the card
+ * should come round again inside this sitting, which is a queue decision and
+ * nothing more.
+ *
+ * "Again" and "Hard" bring the card back shortly; "Good" and "Easy" retire it
+ * for the session. A cram that never re-showed the cards you just failed would
+ * be a slideshow, not practice.
+ */
+export function cramGrade(g: Grade, now = Date.now()): { due: number; cardState: string } {
+  const soon = g === 'again' ? 60_000 : g === 'hard' ? 5 * 60_000 : 0;
+  return soon > 0
+    ? { due: now + soon, cardState: 'learning' }
+    : { due: now + 365 * 86_400_000, cardState: 'review' };
+}
+
 /** Put a graded card back the way it was. */
 export async function undoGrade(u: GradeUndo): Promise<void> {
   // Give the day's allowance back first. Without this, Undo silently costs a
