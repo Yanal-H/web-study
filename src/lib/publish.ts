@@ -30,6 +30,48 @@ export interface RawPack {
   text: string;
 }
 
+/**
+ * Give every card and question a permanent id before the chapter is stored.
+ *
+ * This is the most important thing this module does for a student's progress.
+ * Card ids are optional when authoring, and an unlabelled card falls back to an
+ * id built from its POSITION in the array (`chapter-card-004`). Insert one card
+ * at the top of a chapter, re-publish, and every card below it shifts a slot —
+ * so every id changes, every scheduling row is orphaned, and the whole chapter
+ * comes back as brand new. A student loses months of progress and nothing
+ * anywhere says so.
+ *
+ * Stamping at this boundary fixes the ids into the stored pack, so the next
+ * edit — insert, delete, reorder — leaves every existing card's id untouched.
+ *
+ * The numbering deliberately reproduces the historical positional scheme for a
+ * pack that carries no ids at all, so chapters already on students' devices keep
+ * matching their existing scheduling rows. Cards added later take the first
+ * unused slot rather than colliding with a stamped one.
+ */
+export function stampIds(pack: Chapter): Chapter {
+  const stamp = <T extends { id?: string }>(rows: T[], kind: string): T[] => {
+    const used = new Set(rows.map((r) => r.id).filter(Boolean) as string[]);
+    let n = 0;
+    return rows.map((r) => {
+      if (r.id) return r;
+      let id: string;
+      do {
+        n++;
+        id = `${pack.id}-${kind}-${String(n).padStart(3, '0')}`;
+      } while (used.has(id));
+      used.add(id);
+      return { ...r, id };
+    });
+  };
+  return {
+    ...pack,
+    cards: stamp(pack.cards, 'card'),
+    mcqs: stamp(pack.mcqs, 'mcq'),
+    emqs: stamp(pack.emqs, 'emq'),
+  };
+}
+
 function revisionOf(pack: Chapter): string {
   const s = JSON.stringify(pack);
   let h = 2166136261;
@@ -72,7 +114,9 @@ function validateRawPacks(rawPacks: RawPack[]): { packs?: Chapter[]; issues?: st
       issues.push(...check.issues.map((issue) => `${raw.name}: ${issue}`));
       continue;
     }
-    packs.push(check.chapter);
+    // Stamp before anything hashes or stores the pack, so the revision, the
+    // stored row and every device's import all describe the SAME ids.
+    packs.push(stampIds(check.chapter));
   }
   issues.push(...batchSemanticIssues(packs));
   return issues.length ? { issues } : { packs };

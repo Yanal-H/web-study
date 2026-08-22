@@ -13,8 +13,29 @@ import type { Scheduling, CardState } from './db';
 
 const DAY = 86_400_000;
 const REQUEST_RETENTION = 0.9;
-const LEARN_STEPS = [1, 10]; // minutes
-const RELEARN_STEPS = [10]; // minutes
+/**
+ * The short steps a card runs through before it graduates, in minutes.
+ *
+ * These are the STUDENT'S setting, passed in by the caller. They used to be
+ * fixed here, which meant Settings offered "learning steps" and quietly did
+ * nothing for every content card — the majority of a deck — while personal
+ * cards obeyed it. The defaults match the shipped settings, so anyone who never
+ * touched the setting sees no change at all.
+ */
+export interface Steps {
+  learn: number[];
+  relearn: number[];
+}
+
+export const DEFAULT_STEPS: Steps = { learn: [1, 10], relearn: [10] };
+
+/** Guard a setting saved as empty, which would graduate a new card on sight. */
+function stepsOf(steps: Steps | undefined): Steps {
+  return {
+    learn: steps?.learn?.length ? steps.learn : DEFAULT_STEPS.learn,
+    relearn: steps?.relearn?.length ? steps.relearn : DEFAULT_STEPS.relearn,
+  };
+}
 const FACTOR = 19 / 81;
 const DECAY = -0.5;
 
@@ -83,11 +104,17 @@ export function newScheduling(cardId: string, deck: string): Scheduling {
 }
 
 /** Apply a rating and return the card's new scheduling state. */
-export function schedule(s: Scheduling, rating: 1 | 2 | 3 | 4, now: number): Scheduling {
+export function schedule(
+  s: Scheduling,
+  rating: 1 | 2 | 3 | 4,
+  now: number,
+  stepSettings?: Steps
+): Scheduling {
   const out: Scheduling = { ...s, reps: s.reps + 1, lastReviewed: now };
+  const S_STEPS = stepsOf(stepSettings);
 
   if (s.state === 'new' || s.state === 'learning' || s.state === 'relearning') {
-    const steps = s.state === 'relearning' ? RELEARN_STEPS : LEARN_STEPS;
+    const steps = s.state === 'relearning' ? S_STEPS.relearn : S_STEPS.learn;
 
     if (rating === 1) {
       // Again — back to the first step
@@ -133,7 +160,7 @@ export function schedule(s: Scheduling, rating: 1 | 2 | 3 | 4, now: number): Sch
     out.state = 'relearning';
     out.lapses = s.lapses + 1;
     out.stepIndex = 0;
-    out.due = now + RELEARN_STEPS[0]! * 60_000;
+    out.due = now + S_STEPS.relearn[0]! * 60_000;
   } else {
     out.state = 'review';
     out.due = now + intervalDays(S2) * DAY;
@@ -142,7 +169,11 @@ export function schedule(s: Scheduling, rating: 1 | 2 | 3 | 4, now: number): Sch
 }
 
 /** What each button would do, for the interval preview under the grade row. */
-export function previewIntervals(s: Scheduling, now: number): Record<1 | 2 | 3 | 4, string> {
+export function previewIntervals(
+  s: Scheduling,
+  now: number,
+  stepSettings?: Steps
+): Record<1 | 2 | 3 | 4, string> {
   const fmt = (ms: number) => {
     const mins = Math.round(ms / 60_000);
     if (mins < 60) return `${Math.max(1, mins)} min`;
@@ -155,7 +186,7 @@ export function previewIntervals(s: Scheduling, now: number): Record<1 | 2 | 3 |
     return `${(days / 365.25).toFixed(1)} y`;
   };
   const out = {} as Record<1 | 2 | 3 | 4, string>;
-  for (const g of [1, 2, 3, 4] as const) out[g] = fmt(schedule(s, g, now).due - now);
+  for (const g of [1, 2, 3, 4] as const) out[g] = fmt(schedule(s, g, now, stepSettings).due - now);
   return out;
 }
 

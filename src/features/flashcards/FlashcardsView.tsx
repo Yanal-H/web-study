@@ -1,6 +1,7 @@
 import { lazy, Suspense, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useStore, useStoreVersion } from '../../state/useStore';
+import { todayStr } from '../../state/store';
 import { Card, Button, Stat, Segmented } from '../../design/primitives';
 import { Dialog } from '../../design/Dialog';
 import { useToast } from '../../design/Toast';
@@ -15,7 +16,9 @@ import {
   buildDeckTree,
   itemsInDeck,
   type ReviewItem,
+  intakeOf,
 } from './deck';
+import { remainingToday, budgetAfter, budgetSpent, servable } from './dailyLimits';
 import { engineQueue, mergeTrees, findNode } from './engineBridge';
 import { MAX_STUDY_ALL_CARDS, deckTree as engineDeckTree, type EngineDeckNode } from '../../data/session';
 import { whenContentReady } from '../../data/bootstrap';
@@ -112,15 +115,26 @@ export default function FlashcardsView() {
       if (load.failed.length) throw new Error('card bodies unavailable');
       const S = state.settings.scheduler;
       const how = force ?? scope;
+      // The daily limits are per DAY, not per session: spend what is LEFT of
+      // today rather than handing out a fresh allowance every time Start is
+      // pressed, and let the two card pools share one budget instead of each
+      // taking the full limit. "Study all" deliberately ignores the cap — the
+      // student asked for everything.
+      const budget = remainingToday(state.study.daily, S, todayStr());
+      if (how === 'due' && budgetSpent(budget)) {
+        toast('That’s your daily limit — come back tomorrow, or use “All” to keep going.');
+        return;
+      }
       const fromEngine = await engineQueue(path, {
-        newLimit: how === 'due' ? S.newPerDay : 9999,
-        reviewLimit: how === 'due' ? S.reviewsPerDay : 9999,
+        newLimit: how === 'due' ? budget.newLeft : 9999,
+        reviewLimit: how === 'due' ? budget.reviewLeft : 9999,
         includeAll: how === 'all',
         allLimit: how === 'all' ? MAX_STUDY_ALL_CARDS : undefined,
       });
       const userPool = path ? itemsInDeck(userItems, path) : userItems;
+      const left = budgetAfter(budget, intakeOf(fromEngine));
       const fromUser = how === 'due'
-        ? buildQueue(userPool, { newLimit: S.newPerDay, reviewLimit: S.reviewsPerDay })
+        ? buildQueue(userPool, { newLimit: left.newLeft, reviewLimit: left.reviewLeft })
         : userPool.slice(0, Math.max(0, MAX_STUDY_ALL_CARDS - fromEngine.length));
       const q = [...fromEngine, ...fromUser];
       if (q.length === 0) {
@@ -201,7 +215,12 @@ export default function FlashcardsView() {
             value={scope}
             onChange={setScope}
             options={[
-              { value: 'due', label: `Due (${scopedStats.due + scopedStats.neu})` },
+              // What a session would really serve, not the whole backlog: with a
+              // daily cap the backlog is a promise the session does not keep.
+              {
+                value: 'due',
+                label: `Due (${servable(scopedStats, remainingToday(state.study.daily, state.settings.scheduler, todayStr()))})`,
+              },
               { value: 'all', label: `All (${scopedStats.total}${scopedStats.total > MAX_STUDY_ALL_CARDS ? ` · first ${MAX_STUDY_ALL_CARDS}` : ''})` },
             ]}
             ariaLabel="Review scope"
@@ -209,6 +228,7 @@ export default function FlashcardsView() {
           <Button variant="primary" block style={{ marginTop: 14 }} disabled={starting} onClick={() => void start()}>
             <IconFlashcards size={18} /> {starting ? 'Loading cards…' : 'Start review'}
           </Button>
+          <DailyAllowance />
           <div className="row wrap" style={{ gap: 8, marginTop: 12 }}>
             <Button size="sm" onClick={() => setCreating(true)}>
               <IconPlus size={15} /> New card
@@ -406,5 +426,32 @@ function ImportDialog({ onClose }: { onClose: () => void }) {
         </div>
       )}
     </Dialog>
+  );
+}
+
+/**
+ * Today's remaining allowance, in one line under the Start button.
+ *
+ * Without this the daily cap is invisible: a student who has used it up presses
+ * Start, is told "nothing due", and concludes the app is broken.
+ */
+function DailyAllowance() {
+  const state = useStore();
+  const S = state.settings.scheduler;
+  const budget = remainingToday(state.study.daily, S, todayStr());
+  if (!(S.newPerDay > 0 || S.reviewsPerDay > 0)) return null;
+
+  if (budgetSpent(budget)) {
+    return (
+      <div className="daily-allowance is-spent">
+        Daily limit reached — a fresh {S.newPerDay} new and {S.reviewsPerDay} reviews tomorrow. Use
+        <strong> All</strong> to keep going now.
+      </div>
+    );
+  }
+  return (
+    <div className="daily-allowance">
+      Left today: <strong>{budget.newLeft}</strong> new · <strong>{budget.reviewLeft}</strong> reviews
+    </div>
   );
 }
