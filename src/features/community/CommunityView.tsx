@@ -48,7 +48,7 @@ export default function CommunityView() {
       checkAdmin(),
     ]);
     if (error) {
-      setProblem('Community is not set up in Supabase yet. Run the SQL files listed in supabase/COMMUNITY_SETUP.md, in order — it takes about two minutes and only has to be done once.');
+      setProblem('Community is not set up in Supabase yet. Paste supabase/community-ALL-IN-ONE.sql into the Supabase SQL editor and run it — one file, once, about two minutes.');
       setChannels([]);
     } else {
       const next = (data ?? []) as Channel[];
