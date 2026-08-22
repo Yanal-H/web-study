@@ -165,24 +165,29 @@
   align-items: center;
   gap: 3px;
   padding: 12px 6px;
-  border: 1px solid var(--border);
+  border: 1px solid color-mix(in srgb, var(--gt) 30%, var(--border));
   border-bottom: 3px solid var(--gt);
   border-radius: var(--radius-sm);
-  background: var(--surface-2);
+  /* Each grade is unmistakably its own colour — a faint wash of the grade tone,
+     the label in full tone. Again/Hard/Good/Easy read at a glance. */
+  background: color-mix(in srgb, var(--gt) 9%, var(--surface-2));
   color: var(--text);
   cursor: pointer;
   font-family: inherit;
   transition: background var(--dur-fast) var(--ease), transform var(--dur-fast) var(--ease);
 }
 .grade-btn:hover {
-  background: var(--surface-hover);
+  background: color-mix(in srgb, var(--gt) 17%, var(--surface-2));
 }
 .grade-btn:active {
   transform: translateY(1px);
 }
 .grade-label {
-  font-weight: 600;
+  font-weight: 700;
   font-size: 14px;
+  font-family: var(--font-display);
+  letter-spacing: -0.01em;
+  color: var(--gt);
 }
 .grade-interval {
   font-size: 11.5px;
@@ -445,7 +450,17 @@
 }
 .flashcard.is-open {
   border-color: color-mix(in srgb, var(--accent) 45%, var(--border));
-  box-shadow: var(--shadow-lg), 0 0 40px -22px var(--accent-glow);
+  box-shadow: var(--shadow-hero), 0 0 44px -20px var(--accent-glow);
+}
+/* A card you keep forgetting carries a faint crimson aura — quiet tension before
+   you reveal it, stronger once it is open. The Haki influence, felt not shown. */
+.flashcard.is-difficult {
+  border-color: color-mix(in srgb, var(--accent) 30%, var(--border));
+  box-shadow: var(--shadow), 0 0 34px -24px var(--accent-glow);
+}
+.flashcard.is-difficult.is-open {
+  border-color: color-mix(in srgb, var(--accent) 55%, var(--border));
+  box-shadow: var(--shadow-hero), 0 0 56px -18px var(--accent-glow);
 }
 .fc-deck {
   position: absolute;
