@@ -31,6 +31,7 @@ vi.mock('./deck', () => ({
   undoGrade: vi.fn(async () => {}),
   gradePreview: () => '1 min',
   itemState: () => 'new',
+  toggleSuspend: vi.fn(async () => true),
 }));
 
 // Everything below is chrome this test does not exercise.
@@ -178,5 +179,31 @@ describe('a due learning card is shown promptly, not parked behind the whole dec
     // rather than waiting for the other four to be cleared first.
     await gradeCard('Easy');
     expect(screen.getByText('Card 0')).toBeTruthy();
+  });
+});
+
+describe('suspending the card on screen', () => {
+  it('takes it out of the session and moves on', async () => {
+    render(<ReviewSession queue={[card('c1', 'Bad card'), card('c2', 'Good card')]} onExit={() => {}} />);
+    expect(screen.getByText('Bad card')).toBeTruthy();
+
+    await act(async () => {
+      screen.getByRole('button', { name: /Suspend/i }).click();
+    });
+
+    expect(screen.queryByText('Bad card')).toBeNull();
+    expect(screen.getByText('Good card')).toBeTruthy();
+  });
+
+  it('does not come back on a timer — a suspended card is not a waiting one', async () => {
+    render(<ReviewSession queue={[card('c1', 'Bad card')]} onExit={() => {}} />);
+    await act(async () => {
+      screen.getByRole('button', { name: /Suspend/i }).click();
+    });
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(5 * MIN);
+    });
+    expect(screen.queryByText('Bad card')).toBeNull();
+    expect(screen.getByText('Session complete')).toBeTruthy();
   });
 });

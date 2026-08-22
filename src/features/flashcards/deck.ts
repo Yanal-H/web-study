@@ -399,7 +399,8 @@ export async function gradeItemLive(
       { cardId: item.key.replace(/^engine:/, ''), deck: item.deck, sched: prevSched, card: {} as never },
       RATING[g],
       undefined,
-      stepsFrom(settings)
+      stepsFrom(settings),
+      { leechThreshold: settings.leechThreshold, leechAction: settings.leechAction }
     );
     item.sched = next;
     m.invalidateDeckTree();
@@ -422,6 +423,33 @@ export async function gradeItemLive(
     due: next.due || 0,
     cardState: next.state || 'review',
   };
+}
+
+/**
+ * Suspend the card on screen (or bring it back). Returns what happened so the
+ * caller can tell the student, and undo it if they hit the wrong button.
+ *
+ * Only engine cards have a scheduling row to flag; a personal card is marked in
+ * the store instead, which its own queue builder already honours.
+ */
+export async function toggleSuspend(item: ReviewItem): Promise<boolean> {
+  if (item.source === 'engine' && item.sched) {
+    const m = await import('../../data/session');
+    const next = await m.setSuspended(item.sched, !item.sched.suspended);
+    item.sched = next;
+    m.invalidateDeckTree();
+    commit();
+    return !!next.suspended;
+  }
+  const cur = itemSched(item);
+  const nowSuspended = cur.state !== 'suspended';
+  persistGrade(item, {
+    ...cur,
+    // Remember what it was, so unsuspending resumes rather than restarts.
+    state: nowSuspended ? 'suspended' : ((cur._prevState as CardState) ?? 'review'),
+    _prevState: nowSuspended ? cur.state : undefined,
+  });
+  return nowSuspended;
 }
 
 /** Put a graded card back the way it was. */

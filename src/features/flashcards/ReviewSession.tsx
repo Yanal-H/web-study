@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { state, commit } from '../../state/store';
 import { type Grade, type CardSched } from '../../lib/scheduler';
-import { gradeItemLive, undoGrade, gradePreview, itemState, type ReviewItem, type GradeUndo } from './deck';
+import { gradeItemLive, undoGrade, gradePreview, itemState, toggleSuspend, type ReviewItem, type GradeUndo } from './deck';
 import {
   initLive, placeGraded, promoteDue, nextDueAt, isDueSoon, isComplete, reinsertForUndo,
   aheadCounts, type LiveState,
@@ -183,6 +183,28 @@ export default function ReviewSession({
     };
   }, [revalidate]);
 
+  /**
+   * Take this card out of rotation. A student meeting a card that is wrong,
+   * badly worded or simply not on their exam had no way to stop seeing it.
+   * It skips to the next card, because the suspended one is no longer studiable.
+   */
+  const suspendCurrent = useCallback(async () => {
+    if (!item || mutating) return;
+    setMutating(true);
+    try {
+      const nowSuspended = await toggleSuspend(item);
+      if (nowSuspended) {
+        setLive((prev) => ({ ready: prev.ready.slice(1), waiting: prev.waiting }));
+        setRevealed(false);
+        toast('Card suspended — it will not come back until you unsuspend it.');
+      }
+    } catch {
+      toast('Could not suspend this card. Please try again.', 'error');
+    } finally {
+      setMutating(false);
+    }
+  }, [item, mutating, toast]);
+
   const toggleFlag = useCallback(() => {
     if (!item) return;
     const s = (state.study.cardSched[item.key] as CardSched) || {};
@@ -211,6 +233,8 @@ export default function ReviewSession({
         if (gr) void grade(gr.g);
       } else if (e.key.toLowerCase() === 'u') {
         void doUndo();
+      } else if (e.key === '!') {
+        void suspendCurrent();
       } else if (e.key.toLowerCase() === 'f') {
         toggleFlag();
       } else if (e.key.toLowerCase() === 'h') {
@@ -219,7 +243,7 @@ export default function ReviewSession({
     };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
-  }, [done, revealed, grade, doUndo, toggleFlag, onExit]);
+  }, [done, revealed, grade, doUndo, toggleFlag, suspendCurrent, onExit]);
 
   // touch swipe
   const touch = useRef<{ x: number; y: number } | null>(null);
@@ -353,6 +377,14 @@ export default function ReviewSession({
             style={{ color: flagged ? 'var(--warning)' : undefined }}
           >
             <IconFlag size={17} />
+          </button>
+          <button
+            className="btn btn--ghost btn--sm"
+            onClick={() => void suspendCurrent()}
+            disabled={mutating}
+            title="Stop showing this card until you bring it back (!)"
+          >
+            Suspend
           </button>
         </div>
       </div>

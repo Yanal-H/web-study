@@ -10,6 +10,7 @@
 // away on its first sight.
 
 import type { Scheduling, CardState } from './db';
+import { judgeLapse, type LeechSettings } from '../features/flashcards/leech';
 
 const DAY = 86_400_000;
 const REQUEST_RETENTION = 0.9;
@@ -108,7 +109,8 @@ export function schedule(
   s: Scheduling,
   rating: 1 | 2 | 3 | 4,
   now: number,
-  stepSettings?: Steps
+  stepSettings?: Steps,
+  leech?: LeechSettings
 ): Scheduling {
   const out: Scheduling = { ...s, reps: s.reps + 1, lastReviewed: now };
   const S_STEPS = stepsOf(stepSettings);
@@ -161,6 +163,10 @@ export function schedule(
     out.lapses = s.lapses + 1;
     out.stepIndex = 0;
     out.due = now + S_STEPS.relearn[0]! * 60_000;
+    // Leech handling used to live only in the SM-2+ scheduler, so a content
+    // card — most of a medical deck — could be forgotten any number of times
+    // and never be taken out of the daily queue. Same rule for both engines now.
+    if (leech && judgeLapse(out.lapses, leech).kind === 'suspend') out.suspended = 1;
   } else {
     out.state = 'review';
     out.due = now + intervalDays(S2) * DAY;
