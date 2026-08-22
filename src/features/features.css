@@ -4732,3 +4732,31 @@
   font-variant-numeric: tabular-nums;
   color: var(--text-faint);
 }
+
+/* ---- Card info dialog (Batch 12) ----
+   A record to scan, then the two things you can do about it. Deliberately
+   plain: this is where a student decides whether a card is worth keeping. */
+.card-info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 10px;
+  margin: 12px 0;
+}
+.card-info-grid > div {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.card-info-grid span {
+  font-size: 11.5px;
+  color: var(--text-faint);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.card-info-grid strong {
+  font-size: 17px;
+  font-variant-numeric: tabular-nums;
+}
+.card-info-actions {
+  margin-top: 4px;
+}
