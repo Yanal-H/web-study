@@ -6,6 +6,7 @@ import {
   initLive, placeGraded, promoteDue, nextDueAt, isDueSoon, isComplete, reinsertForUndo,
   aheadCounts, type LiveState,
 } from './liveQueue';
+import { buryFrom, countSiblings } from './siblings';
 import { Button, ProgressRing } from '../../design/primitives';
 import { useToast } from '../../design/Toast';
 import { IconFlag, IconCheck, IconChevron } from '../../design/icons';
@@ -99,10 +100,19 @@ export default function ReviewSession({
         // learning step can be put back into this session rather than lost.
         const res = await gradeItemLive(cur, g, S);
         undo.current.push(res.undo);
-        setLive((prev) => ({
-          ready: prev.ready.slice(1),
-          waiting: placeGraded(prev.waiting, cur, { due: res.due, state: res.cardState }, Date.now()),
-        }));
+        setLive((prev) => {
+          const rest = prev.ready.slice(1);
+          const waiting = placeGraded(prev.waiting, cur, { due: res.due, state: res.cardState }, Date.now());
+          // Bury the siblings — the other regions of this same diagram. Seeing
+          // them back to back is answered from the card just seen, not from
+          // memory, which teaches the scheduler the wrong thing. Their schedules
+          // are untouched; they simply do not come up again this sitting.
+          if (!S.burySiblings) return { ready: rest, waiting };
+          return {
+            ready: buryFrom(rest, cur),
+            waiting: waiting.filter((w) => buryFrom([w.item], cur).length > 0),
+          };
+        });
         setTally((t) => ({ ...t, reviewed: t.reviewed + 1, [g]: t[g] + 1 }));
         setImpact({ g, key: Date.now() });
         sfx.grade(g);
@@ -114,6 +124,14 @@ export default function ReviewSession({
         setRevealed(false);
         setTyped('');
         setHint(false);
+        if (S.burySiblings) {
+          const buried = countSiblings(live.ready.slice(1), cur);
+          if (buried > 0) {
+            toast(
+              `${buried} more from this card's diagram held back for the rest of this session — answering them now would just be copying.`
+            );
+          }
+        }
       } catch {
         toast('Could not save this grade. Please try again.', 'error');
       } finally {

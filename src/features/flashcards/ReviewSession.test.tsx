@@ -45,7 +45,7 @@ vi.mock('../../content/loader', () => ({ chapterImage: () => undefined }));
 vi.mock('../../lib/lexicon', () => ({ renderRich: (s: string) => s, renderInline: (s: string) => s }));
 vi.mock('../../lib/useLexicon', () => ({ globalIndex: () => ({}) }));
 vi.mock('../../state/store', () => ({
-  state: { settings: { scheduler: { learningSteps: [1, 10], relearnSteps: [10] } }, study: { cardSched: {} } },
+  state: { settings: { scheduler: { learningSteps: [1, 10], relearnSteps: [10], burySiblings: true } }, study: { cardSched: {} } },
   commit: vi.fn(),
 }));
 
@@ -205,5 +205,37 @@ describe('suspending the card on screen', () => {
     });
     expect(screen.queryByText('Bad card')).toBeNull();
     expect(screen.getByText('Session complete')).toBeTruthy();
+  });
+});
+
+describe('sibling cards are held back', () => {
+  // One occluded diagram becomes many cards. Answering the second straight
+  // after the first is copying, not recall — and it teaches the scheduler the
+  // card is known when it is not.
+  const region = (n: number): ReviewItem =>
+    ({
+      key: `user:heart#${n}`,
+      source: 'user',
+      deck: 'D',
+      card: { type: 'occlusion', front: `Region ${n}`, back: 'answer' },
+    }) as ReviewItem;
+
+  it('the other regions of the same diagram do not come up this session', async () => {
+    render(
+      <ReviewSession queue={[region(0), region(1), region(2), card('other', 'Unrelated card')]} onExit={() => {}} />
+    );
+    expect(screen.getByText('Region 0')).toBeTruthy();
+
+    await gradeCard('Good');
+
+    // Regions 1 and 2 are held back; the unrelated card is untouched.
+    expect(screen.queryByText('Region 1')).toBeNull();
+    expect(screen.getByText('Unrelated card')).toBeTruthy();
+  });
+
+  it('leaves ordinary cards completely alone', async () => {
+    render(<ReviewSession queue={[card('a', 'Card A'), card('b', 'Card B')]} onExit={() => {}} />);
+    await gradeCard('Good');
+    expect(screen.getByText('Card B')).toBeTruthy();
   });
 });

@@ -448,6 +448,25 @@ export default function SettingsView() {
             onChange={(e) => update((s) => (s.settings.scheduler.reviewsPerDay = parseInt(e.target.value) || 0))}
           />
         </Row>
+        <Row
+          label="Hold back sibling cards"
+          desc="After a card from a diagram, keep its other regions for another session — answering them straight after is copying, not recall."
+        >
+          <Switch
+            label="Hold back sibling cards"
+            checked={!!scheduler.burySiblings}
+            onChange={(v) => update((s) => (s.settings.scheduler.burySiblings = v))}
+          />
+        </Row>
+        <Row label="Leech threshold" desc="Lapses before a card is set aside as a leech. 0 turns this off.">
+          <Input
+            type="number"
+            min={0}
+            style={{ width: 110 }}
+            value={scheduler.leechThreshold}
+            onChange={(e) => update((s) => (s.settings.scheduler.leechThreshold = parseInt(e.target.value) || 0))}
+          />
+        </Row>
       </Card>
 
       <Card className="settings-section" id="set-questions">

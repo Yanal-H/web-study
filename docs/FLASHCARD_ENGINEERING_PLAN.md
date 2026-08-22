@@ -168,15 +168,31 @@ the `!` shortcut in review — suspending changes only that flag, leaving interv
 ease and history intact so unsuspending resumes rather than restarts.
 22 tests. Gate: 339 green (47 files), build ok, eslint 0.
 
-### 🔜 Batch 9 — Bury siblings · care: HIGH
+### ✅ Batch 9 — Bury siblings · care: HIGH
 `burySiblings: true` ships in the defaults and has **zero implementation**.
 Siblings are cards from one note: every cloze deletion in a paragraph, every
 region of one occluded diagram. Seeing them back-to-back is both wasted
 repetitions and false confidence — the second one is answered from the first,
 not from memory. This app leans hard on image occlusion, so it matters more
-here than in a plain text deck. Bury for the rest of the day, not forever.
+here than in a plain text deck.
 
-### ⬜ Batch 10 — Custom study: cram before an exam · care: HIGH
+**Shipped.** `siblings.ts` derives what a card was cut from — the regions of one
+personal occlusion image share a key prefix, content occlusion cards share an
+image id within a chapter — and returns null for anything else rather than
+inventing a group, because guessing would bury unrelated cards. Grading now
+drops the siblings from the rest of the sitting and says so once.
+
+Scope, honestly: this buries for the **rest of the session**, where Anki buries
+until the next day. That is deliberate — `.claude/rules/flashcards.md` forbids
+changing a persisted schedule to achieve a queue behaviour, and a day-scoped
+bury needs its own stored state. The harm being fixed (siblings back-to-back in
+one sitting) is fully addressed; day-scoped burying is a follow-up that needs a
+`buriedUntil` field, not a due-date rewrite.
+
+Both `burySiblings` and `leechThreshold` are now actually reachable in Settings;
+they shipped in the defaults and were exposed nowhere. 16 tests.
+
+### 🔜 Batch 10 — Custom study: cram before an exam · care: HIGH
 Anki's filtered decks, scoped to what a medical student actually needs the
 night before a paper: study a tag or chapter ahead of schedule, redo today's
 failures, or take an extra N cards beyond the daily cap. The hard requirement
