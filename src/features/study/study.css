@@ -73,6 +73,7 @@
   scroll-margin-top: 20px;
 }
 .reader-section h2 {
+  position: relative;
   font-size: clamp(1.35rem, 3vw, 1.7rem);
   border-bottom: 1px solid var(--border-soft);
   padding-bottom: 10px;
@@ -80,6 +81,19 @@
   display: flex;
   align-items: center;
   gap: 10px;
+}
+/* A short crimson signal-lead under each section heading — the app's pulse
+   motif, kept to the edge so long reading stays calm. */
+.reader-section h2::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -1px;
+  width: 46px;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--grad-haki);
+  box-shadow: 0 0 10px var(--haki-glow);
 }
 .reader-section h2 .sec-n {
   display: inline-grid;
