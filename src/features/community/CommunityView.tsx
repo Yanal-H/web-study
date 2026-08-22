@@ -23,6 +23,36 @@ function readableTime(value: string) {
   return date.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
 }
 
+/**
+ * Say what actually went wrong, not what usually goes wrong.
+ *
+ * This used to report one guess — "not set up yet" — for every possible
+ * failure, which is fine when the guess is right and actively misleading when
+ * it is not: someone re-runs the setup they have already run and gets the same
+ * message, with no way to tell the two situations apart. Postgres already knows
+ * the answer and puts it in the error code, so pass it on.
+ */
+function describeChannelError(error: { code?: string; message?: string }): string {
+  const code = error.code ?? '';
+  const detail = error.message ? ` (${error.message})` : '';
+
+  // 42P01 undefined_table — the setup genuinely has not been run.
+  if (code === '42P01' || /relation .* does not exist/i.test(error.message ?? '')) {
+    return 'The community tables do not exist in Supabase yet. Open your Supabase project → SQL Editor → New query, paste in supabase/community-ALL-IN-ONE.sql, and press Run. It is one file, it only has to be done once, and it is safe to run again.';
+  }
+  // 42501 insufficient_privilege / RLS refusal — the tables exist.
+  if (code === '42501' || /permission|row-level security|policy/i.test(error.message ?? '')) {
+    return `The community tables exist, but this account is not allowed to read them. That is a roster problem, not a setup one: your email needs to be in the private roster. ${detail}`;
+  }
+  if (/jwt|expired|not authenticated/i.test(error.message ?? '')) {
+    return 'Your sign-in has expired. Sign out and back in, then try again.';
+  }
+  if (/fetch|network|failed to fetch/i.test(error.message ?? '')) {
+    return 'Could not reach Supabase. Check your connection and try again.';
+  }
+  return `Community could not load${detail}${code ? ` [${code}]` : ''}. If this persists, send this whole message on — the code names the cause.`;
+}
+
 export default function CommunityView() {
   const { userId } = useAuth();
   const toast = useToast();
@@ -48,7 +78,7 @@ export default function CommunityView() {
       checkAdmin(),
     ]);
     if (error) {
-      setProblem('Community is not set up in Supabase yet. Paste supabase/community-ALL-IN-ONE.sql into the Supabase SQL editor and run it — one file, once, about two minutes.');
+      setProblem(describeChannelError(error));
       setChannels([]);
     } else {
       const next = (data ?? []) as Channel[];
