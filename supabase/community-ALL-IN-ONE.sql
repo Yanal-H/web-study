@@ -895,6 +895,23 @@ create index if not exists community_daily_logs_by_day
 create index if not exists community_daily_logs_by_author
   on public.community_daily_logs (author_id, log_date desc);
 
+-- Which year a student is in.
+--
+-- The year lives on department_memberships, NOT on community_profiles — a
+-- student belongs to a department FOR a year, and the profile is only their
+-- alias. A student can hold more than one membership, so this takes the active
+-- one, most recent first, which keeps the answer deterministic rather than
+-- whichever row the planner happened to return.
+create or replace function private.current_academic_year(p_user_id uuid)
+returns text language sql stable security definer set search_path = '' as $$
+  select membership.academic_year
+  from public.department_memberships membership
+  where membership.user_id = p_user_id
+    and membership.status = 'active'
+  order by membership.created_at desc
+  limit 1;
+$$;
+
 -- The author and their alias are SERVER-owned, exactly as they are for chat
 -- messages. A browser sends whatever it likes; this overwrites it with the
 -- authenticated user's real id and their safe public alias, so one student can
@@ -911,10 +928,7 @@ begin
       perform private.ensure_community_profile(auth.uid());
       new.author_alias := private.current_community_alias(auth.uid());
     end if;
-    new.academic_year := (
-      select profile.academic_year from public.community_profiles profile
-      where profile.user_id = auth.uid()
-    );
+    new.academic_year := private.current_academic_year(auth.uid());
   else
     new.updated_at := now();
   end if;
@@ -937,10 +951,7 @@ create policy community_daily_logs_read on public.community_daily_logs
   for select to authenticated using (
     (select private.is_root_admin())
     or author_id = (select auth.uid())
-    or academic_year is not distinct from (
-      select profile.academic_year from public.community_profiles profile
-      where profile.user_id = (select auth.uid())
-    )
+    or academic_year is not distinct from (select private.current_academic_year((select auth.uid())))
   );
 
 -- WRITE: only ever your own row, and only under your own identity. A client

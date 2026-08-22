@@ -58,6 +58,16 @@ export interface ReviewLog {
   ts: number;
   /** milliseconds spent on the card */
   ms?: number;
+  /**
+   * The card's state BEFORE this review. Added later and therefore optional:
+   * rows written before it exists simply lack it, and the statistics say so
+   * rather than quietly mixing them in.
+   *
+   * Without this a learning step and a real review are indistinguishable in the
+   * log, and true retention — which is only meaningful for cards that were
+   * actually due — cannot be computed at all.
+   */
+  prevState?: CardState;
 }
 
 export const DB_NAME = 'foundation';
