@@ -76,6 +76,32 @@ describe('promoteDue — the one-minute card comes back on time', () => {
     expect(after.waiting.map((e) => e.item.key)).toEqual(['c']);
   });
 
+  it('shows a promoted card NEXT, not at the back of the deck', () => {
+    // The defect: a promoted card used to be appended, so with forty cards left
+    // a one-minute step did not come back for forty cards — which a student
+    // cannot tell apart from it never coming back at all.
+    const s: LiveState = {
+      ready: [item('onScreen'), item('next1'), item('next2')],
+      waiting: [{ item: item('owed'), due: T0 }],
+    };
+    const after = promoteDue(s, T0 + 1000);
+    expect(after.ready.map((i) => i.key)).toEqual(['onScreen', 'owed', 'next1', 'next2']);
+  });
+
+  it('never displaces the card currently on screen', () => {
+    // A timer firing must not swap out the card someone is mid-answer on.
+    const s: LiveState = {
+      ready: [item('onScreen')],
+      waiting: [{ item: item('owed'), due: T0 }],
+    };
+    expect(promoteDue(s, T0 + 1000).ready[0]!.key).toBe('onScreen');
+  });
+
+  it('promotes straight to the front when nothing is on screen', () => {
+    const s: LiveState = { ready: [], waiting: [{ item: item('owed'), due: T0 }] };
+    expect(promoteDue(s, T0 + 1000).ready.map((i) => i.key)).toEqual(['owed']);
+  });
+
   it('is a no-op when nothing is due (returns the same reference)', () => {
     const s: LiveState = { ready: [], waiting: [{ item: item('a'), due: T0 + 60_000 }] };
     expect(promoteDue(s, T0)).toBe(s);
