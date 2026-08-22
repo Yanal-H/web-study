@@ -19,7 +19,7 @@ vi.mock('../../content/loader', () => ({
 }));
 
 vi.mock('../../state/useStore', () => ({
-  useStore: () => ({ flashcards: [] }),
+  useStore: () => ({ flashcards: [], study: { cardSched: {} } }),
   useStoreVersion: () => 0,
 }));
 
@@ -64,7 +64,7 @@ describe('CardBrowser — no cap, just a window', () => {
 
   it('search still narrows the (unwindowed) full set', () => {
     render(<CardBrowser onBack={() => {}} />);
-    fireEvent.change(screen.getByPlaceholderText('Search cards…'), { target: { value: 'Card 0007' } });
+    fireEvent.change(screen.getByPlaceholderText(/^Search/), { target: { value: 'Card 0007' } });
     // Exactly one card's front contains this exact needle.
     expect(screen.getByText('Card 0007')).toBeTruthy();
   });

@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react';
 import { useStore, useStoreVersion } from '../../state/useStore';
 import { update } from '../../state/store';
 import { allCards } from '../../content/loader';
+import { buildMatcher } from './search';
 import { Card, Button, Input, Segmented, Badge, IconButton, EmptyState, VirtualList } from '../../design/primitives';
 import { Dialog } from '../../design/Dialog';
 import { useToast } from '../../design/Toast';
@@ -16,6 +17,12 @@ const ROW_BOX_HEIGHT = 64;
 const ROW_GAP = 8;
 const ROW_HEIGHT = ROW_BOX_HEIGHT + ROW_GAP;
 
+/** The scheduling facts search needs, for whichever store owns this card. */
+function schedFacts(sched: Record<string, unknown> | undefined, key: string) {
+  const s = sched?.[key] as { state?: string; due?: number } | undefined;
+  return { state: s?.state ?? 'new', due: s?.due ?? 0, suspended: s?.state === 'suspended' };
+}
+
 interface Row {
   key: string;
   source: 'content' | 'user';
@@ -24,6 +31,11 @@ interface Row {
   front: string;
   back: string;
   subject?: string;
+  deck?: string;
+  tags?: string[];
+  state?: string;
+  due?: number;
+  suspended?: boolean;
 }
 
 export default function CardBrowser({ onBack }: { onBack: () => void }) {
@@ -34,6 +46,9 @@ export default function CardBrowser({ onBack }: { onBack: () => void }) {
   const [filter, setFilter] = useState<'all' | 'mine' | 'content'>('all');
   const [selected, setSelected] = useState<Set<string>>(new Set());
   const [editing, setEditing] = useState<Row | null>(null);
+
+  // Read once per rebuild; a store mid-migration may not have it yet.
+  const cardSched = state.study?.cardSched as Record<string, unknown> | undefined;
 
   const rows = useMemo<Row[]>(() => {
     void storeVersion;
@@ -47,6 +62,9 @@ export default function CardBrowser({ onBack }: { onBack: () => void }) {
         front: c.type === 'cloze' ? c.cloze || '' : c.front || '',
         back: c.back || '',
         subject: c.subject,
+        deck: c.deck || `${c.subject}::${c.chapterId}`,
+        tags: c.tags,
+        ...schedFacts(cardSched, `content:${c.id}`),
       });
     }
     for (const c of state.flashcards) {
@@ -59,18 +77,22 @@ export default function CardBrowser({ onBack }: { onBack: () => void }) {
         front: anyC.type === 'cloze' ? c.cloze || '' : c.front || '',
         back: c.back || '',
         subject: anyC.subject,
+        deck: anyC.deck || 'My cards',
+        tags: c.tags,
+        ...schedFacts(cardSched, `user:${c.id}`),
       });
     }
     return out;
-  }, [state.flashcards, storeVersion]);
+  }, [state.flashcards, cardSched, storeVersion]);
 
   const shown = useMemo(() => {
-    const needle = q.trim().toLowerCase();
+    // Anki's query language, not a substring match: in a library of thousands
+    // "artery" matches four hundred cards and there is no way to say which.
+    const match = buildMatcher(q);
     return rows.filter((r) => {
       if (filter === 'mine' && r.source !== 'user') return false;
       if (filter === 'content' && r.source !== 'content') return false;
-      if (!needle) return true;
-      return (r.front + ' ' + r.back).toLowerCase().includes(needle);
+      return match(r);
     });
   }, [rows, q, filter]);
 
@@ -109,7 +131,7 @@ export default function CardBrowser({ onBack }: { onBack: () => void }) {
       </header>
 
       <div className="row wrap" style={{ gap: 10, marginBottom: 14 }}>
-        <Input placeholder="Search cards…" value={q} onChange={(e) => setQ(e.target.value)} style={{ maxWidth: 320 }} />
+        <Input placeholder="Search — try deck:anatomy is:due -tag:leech" value={q} onChange={(e) => setQ(e.target.value)} style={{ maxWidth: 320 }} />
         <Segmented
           value={filter}
           onChange={setFilter}
