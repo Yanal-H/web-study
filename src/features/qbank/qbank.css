@@ -168,12 +168,10 @@
 .qb-option.correct {
   border-color: var(--success);
   background: var(--success-soft);
-  box-shadow: inset 3px 0 0 var(--success);
 }
 .qb-option.incorrect {
   border-color: var(--error);
   background: var(--error-soft);
-  box-shadow: inset 3px 0 0 var(--error);
 }
 .qb-mark {
   color: var(--text-faint);
