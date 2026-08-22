@@ -4,25 +4,34 @@ If Community says **"Community unavailable"**, the tables do not exist in your
 Supabase project yet. Nothing is broken in the app — this is a one-time setup
 step, and it takes about two minutes.
 
-## What to do
+## The short way (recommended)
 
-1. Open your Supabase project → **SQL Editor** → **New query**.
-2. Open each file below, copy its whole contents into the editor, and press
-   **Run**. Do them **in this order** — each one builds on the last.
+Open your Supabase project → **SQL Editor** → **New query**. Paste the whole of
+**`supabase/community-ALL-IN-ONE.sql`** in, and press **Run**.
+
+That is the entire setup. It is one file containing all five community pieces in
+the right order, and it is safe to run again as many times as you like.
+
+> One thing must already be done first: **`supabase/setup.sql`**, which creates
+> the chapters table and the admin rules. If your students can already sign in
+> and read chapters, you have run it.
+
+## The long way (the same thing, one file at a time)
+
+If you would rather see each piece go in separately, run these in this order.
+Each builds on the last, and each is safe to run twice.
 
 | # | File | What it adds |
 |---|------|--------------|
-| 1 | `supabase/setup.sql` | The base tables and admin rules. You have likely run this already; running it again is safe. |
-| 2 | `supabase/community-foundation.sql` | Departments, channels, student profiles and the private roster. |
-| 3 | `supabase/community-messages.sql` | The chat itself: messages, edit history, reports. |
-| 4 | `supabase/community-admin.sql` | The moderation and roster screens. |
-| 5 | `supabase/community-intelligence.sql` | The daily intelligence panel. |
-| 6 | `supabase/community-daily-logs.sql` | **Today's lectures** — what the year covered, and the administrator's digest. |
+| 1 | `supabase/community-foundation.sql` | Departments, channels, student profiles and the private roster. |
+| 2 | `supabase/community-messages.sql` | The chat itself: messages, edit history, reports. |
+| 3 | `supabase/community-admin.sql` | The moderation and roster screens. |
+| 4 | `supabase/community-intelligence.sql` | The daily intelligence panel. |
+| 5 | `supabase/community-daily-logs.sql` | **Today's lectures** — what the year covered, and the administrator's digest. |
 
-Every file is safe to run twice. If one has already been applied, running it
-again changes nothing.
+## Then
 
-3. Reload the app. Community will load.
+Reload the app. Community will load.
 
 ## Then: let students in
 
