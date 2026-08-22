@@ -59,8 +59,12 @@ digest: `DailyLogPanel.tsx` + `dailyLog.ts`. Database side: the
 Primitive component looks: `src/design/primitives.css`.
 
 ### Change one feature's styling
-`src/features/features.css` today (all feature CSS is here — search for the
-feature's class prefix). See the hotspot note in `ARCHITECTURE.md`.
+`src/features/<name>/<name>.css` — each feature owns its stylesheet. App-wide
+furniture (sections, list rows, page titles, the dock, the full-screen viewer,
+route transitions) is in `src/features/shell.css`; markdown body styles shared by
+the reader, notes and AI panels are in `src/design/markdown.css`. All are
+imported from `src/main.tsx`, and that import order is the cascade order — add a
+new stylesheet in its feature's place rather than re-sorting the list.
 
 ### Change the mobile navigation / app shell
 `src/app/App.tsx` (nav, shell, command palette). Routes: `src/app/routes.tsx`.

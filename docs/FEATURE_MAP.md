@@ -82,5 +82,7 @@ decides who may sign in — see `src/lib/supabase.ts` and `supabase/setup.sql`.
 | Publishing content to the cohort | `src/lib/publish.ts` |
 | Reactive store, migrations | `src/state/store.ts`, `src/state/constants.ts` |
 | Design tokens & primitives | `src/design/base.css`, `src/design/primitives.{tsx,css}` |
-| All feature styles (one file — see hotspot) | `src/features/features.css` |
+| Feature styles (one file per feature) | `src/features/<name>/<name>.css` |
+| App-shell / shared styles | `src/features/shell.css` |
+| Shared markdown body styles | `src/design/markdown.css` |
 | Content schema (Zod) | `src/content/schema.ts` |

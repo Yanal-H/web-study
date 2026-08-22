@@ -1,0 +1,249 @@
+/* Mnemonics.
+   Reveal cards and the self-test.
+
+   Imported from src/main.tsx. The import order there is the cascade order —
+   these files were split out of one features.css and a few rules still rely on
+   it, so add an import in place rather than re-sorting the list. */
+
+/* ---- MNEMONICS reveal cards ---- */
+.mnem-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: var(--sp-4);
+}
+.mnem-card {
+  position: relative;
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius);
+  background: var(--surface-1);
+  padding: var(--sp-4);
+  cursor: pointer;
+  overflow: hidden;
+  transition: border-color var(--transition), transform var(--transition), box-shadow var(--transition);
+}
+.mnem-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--border-strong);
+  box-shadow: var(--card-glow);
+}
+.mnem-cue {
+  font-family: var(--font-display);
+  font-size: var(--fs-lg);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  background: var(--grad-haki);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.mnem-exp {
+  margin-top: 8px;
+  font-size: 13.5px;
+  color: var(--text-dim);
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: max-height var(--dur-slow) var(--ease), opacity var(--dur-slow) var(--ease);
+}
+.mnem-card.open .mnem-exp {
+  max-height: 220px;
+  opacity: 1;
+}
+.mnem-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 12px;
+}
+.mnem-hint {
+  font-size: 11.5px;
+  color: var(--text-faint);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+/* ---- mnemonic self-test ---- */
+.mnem-quiz {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  background: var(--bg);
+  display: flex;
+  flex-direction: column;
+  animation: viewerIn 160ms var(--ease) both;
+}
+.mq-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border);
+  font-variant-numeric: tabular-nums;
+  color: var(--text-dim);
+  font-size: 13px;
+}
+.mq-card {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  padding: 24px;
+  text-align: center;
+  cursor: pointer;
+}
+.mq-cue {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(2rem, 7vw, 3.6rem);
+  letter-spacing: -0.02em;
+  background: var(--grad-haki);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+.mq-exp {
+  max-width: 640px;
+  font-size: clamp(1.1rem, 3vw, 1.5rem);
+  line-height: 1.5;
+  text-wrap: balance;
+  animation: fcReveal 240ms var(--ease) both;
+}
+.mq-hint {
+  color: var(--text-faint);
+  font-size: 14px;
+}
+.mq-actions {
+  display: flex;
+  gap: 12px;
+}
+.mq-done {
+  flex: 1;
+  display: grid;
+  place-content: center;
+  text-align: center;
+}
+.mq-score {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(3rem, 12vw, 6rem);
+  background: var(--grad-haki);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+
+/* ===================================================================
+   ACTIVITY CALENDAR — dated contribution grid, glass + glow
+   =================================================================== */
+.acal {
+  position: relative;
+}
+.acal-scroll {
+  overflow-x: auto;
+  padding-bottom: 4px;
+  scrollbar-width: thin;
+}
+.acal-grid {
+  display: grid;
+  gap: 3px;
+  min-width: 520px;
+}
+.acal-corner,
+.acal-month,
+.acal-wd {
+  font-size: 10px;
+  color: var(--text-faint);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+.acal-month {
+  padding-bottom: 3px;
+  align-self: end;
+}
+.acal-wd {
+  display: grid;
+  place-items: center start;
+  padding-right: 4px;
+}
+.acal-cell {
+  aspect-ratio: 1;
+  border-radius: 3px;
+  background: var(--heat-0);
+  transition: transform var(--dur-fast) var(--ease), box-shadow var(--dur-fast) var(--ease);
+  min-height: 12px;
+}
+.acal-cell.empty {
+  background: transparent;
+}
+.acal-cell.future {
+  background: repeating-linear-gradient(
+    45deg,
+    var(--heat-0),
+    var(--heat-0) 2px,
+    transparent 2px,
+    transparent 4px
+  );
+  opacity: 0.5;
+}
+/* five heat levels, each hotter and more luminous than the last */
+.acal-cell.lvl-1 { background: color-mix(in srgb, var(--accent) 26%, var(--heat-0)); }
+.acal-cell.lvl-2 { background: color-mix(in srgb, var(--accent) 48%, var(--heat-0)); }
+.acal-cell.lvl-3 {
+  background: color-mix(in srgb, var(--accent) 72%, var(--heat-0));
+  box-shadow: 0 0 6px -1px var(--accent-glow);
+}
+.acal-cell.lvl-4 {
+  background: var(--accent);
+  box-shadow: 0 0 10px -1px var(--accent-glow), 0 0 2px var(--accent) inset;
+}
+.acal-cell:hover {
+  transform: scale(1.35);
+  z-index: 2;
+  box-shadow: 0 0 0 1.5px var(--accent), 0 4px 12px -4px var(--accent-glow);
+}
+.acal-cell.today {
+  box-shadow: 0 0 0 1.5px var(--accent);
+}
+.acal-cell.today.lvl-0 {
+  box-shadow: 0 0 0 1.5px color-mix(in srgb, var(--accent) 60%, transparent);
+}
+.acal-tip {
+  position: absolute;
+  transform: translate(-50%, calc(-100% - 8px));
+  background: var(--surface-3);
+  border: 1px solid var(--border-strong);
+  color: var(--text);
+  font-size: 12px;
+  padding: 5px 9px;
+  border-radius: 7px;
+  white-space: nowrap;
+  pointer-events: none;
+  z-index: 5;
+  box-shadow: var(--shadow-lg);
+  font-variant-numeric: tabular-nums;
+}
+.acal-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 12px;
+  font-size: 11.5px;
+  color: var(--text-faint);
+  flex-wrap: wrap;
+}
+.acal-legend {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.acal-legend i {
+  width: 11px;
+  height: 11px;
+  border-radius: 3px;
+  display: inline-block;
+}

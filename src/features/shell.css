@@ -1,0 +1,499 @@
+/* App shell and shared page furniture.
+   Sections, list rows, page titles, route transitions, the full-screen viewer,
+   the dock, and the content-status strip. Anything a single feature owns lives
+   in that feature's own .css instead.
+
+   Imported from src/main.tsx. The import order there is the cascade order —
+   these files were split out of one features.css and a few rules still rely on
+   it, so add an import in place rather than re-sorting the list. */
+
+/* ---- SECTION ---- */
+.section {
+  margin-top: var(--sp-6);
+}
+.section-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: var(--sp-3);
+  gap: 12px;
+}
+.section-head h2 {
+  font-size: var(--fs-xl);
+  margin: 0;
+}
+.section-head .see {
+  font-size: 13px;
+  color: var(--text-dim);
+}
+
+.cols {
+  display: grid;
+  gap: var(--sp-4);
+}
+.cols-2 {
+  grid-template-columns: 1fr 1fr;
+}
+.cols-3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+.stat-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: var(--sp-3);
+}
+@media (max-width: 720px) {
+  .cols-2,
+  .cols-3 {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ---- LIST ROWS ---- */
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+/* A virtualized .list: VirtualList renders a plain scrollable block, not a
+   flex column, because a flex `gap` would add its own spacing between the
+   padding spacers and the rendered rows and throw off the windowing math.
+   Each row supplies its own bottom margin instead (see CardBrowser.tsx). */
+.list--virtual {
+  display: block;
+}
+
+.list-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-sm);
+  background: var(--surface-2);
+  transition: border-color var(--transition);
+}
+.list-row:hover {
+  border-color: var(--border);
+}
+.list-row .lr-main {
+  flex: 1;
+  min-width: 0;
+}
+.list-row .lr-title {
+  font-weight: 500;
+  font-size: 14.5px;
+}
+.list-row .lr-sub {
+  font-size: 12.5px;
+  color: var(--text-faint);
+  margin-top: 2px;
+}
+.list-row .lr-actions {
+  display: flex;
+  gap: 4px;
+  opacity: 0.7;
+}
+.list-row:hover .lr-actions {
+  opacity: 1;
+}
+.swatch {
+  width: 12px;
+  height: 12px;
+  border-radius: 4px;
+  flex: 0 0 auto;
+}
+
+/* ---- full-screen viewer ---- */
+.viewer {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg);
+  animation: viewerIn 180ms var(--ease) both;
+}
+@keyframes viewerIn {
+  from { opacity: 0; transform: scale(0.99); }
+  to { opacity: 1; transform: none; }
+}
+.viewer-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface-1);
+}
+.viewer-title {
+  font-weight: 650;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.viewer-body {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  overflow: auto;
+}
+.viewer-frame {
+  flex: 1;
+  border: 0;
+  width: 100%;
+  height: 100%;
+}
+.viewer-img {
+  margin: auto;
+  max-width: 100%;
+  max-height: 100%;
+}
+.viewer-text {
+  flex: 1;
+  margin: 0;
+  padding: 24px;
+  white-space: pre-wrap;
+  font-family: var(--font-mono);
+  font-size: 13.5px;
+  line-height: 1.65;
+  overflow: auto;
+}
+.viewer-msg {
+  margin: auto;
+  text-align: center;
+  color: var(--text-dim);
+  padding: 40px;
+}
+
+/* ===================================================================
+   DOCK — focus timer + music, present on every page
+   =================================================================== */
+.dock {
+  position: fixed;
+  right: 18px;
+  bottom: 18px;
+  z-index: 60;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+  pointer-events: none;
+}
+.dock > * {
+  pointer-events: auto;
+}
+.timer-fab,
+.music-fab {
+  display: grid;
+  place-items: center;
+  min-width: 44px;
+  height: 44px;
+  padding: 0 12px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+  color: var(--text-dim);
+  cursor: pointer;
+  box-shadow: var(--shadow);
+  transition: all var(--dur-fast) var(--ease);
+}
+.timer-fab:hover,
+.music-fab:hover {
+  color: var(--text);
+  border-color: var(--border-strong);
+  transform: translateY(-2px);
+}
+.timer-fab.running {
+  border-color: transparent;
+  background: var(--grad-haki);
+  color: #fff;
+  box-shadow: 0 0 26px -8px var(--haki-glow);
+}
+.timer-fab-time {
+  font-family: var(--font-mono);
+  font-size: 13.5px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+.music-fab.spinning svg {
+  animation: spin 4.5s linear infinite;
+}
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.timer-panel,
+.music-panel {
+  width: 268px;
+  padding: 14px;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  background: var(--surface-1);
+  box-shadow: var(--shadow-lg);
+  animation: dockIn 200ms var(--ease) both;
+}
+@keyframes dockIn {
+  from { opacity: 0; transform: translateY(10px) scale(0.98); }
+  to { opacity: 1; transform: none; }
+}
+.tp-head,
+.mp-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+.tp-title,
+.mp-title {
+  font-size: 11.5px;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--text-faint);
+}
+.tp-x,
+.mp-x {
+  border: 0;
+  background: none;
+  color: var(--text-faint);
+  cursor: pointer;
+  padding: 2px;
+  border-radius: 6px;
+}
+.tp-x:hover,
+.mp-x:hover {
+  color: var(--text);
+  background: var(--surface-hover);
+}
+
+/* ---- page titles carry the haki, not just the hero ---- */
+.page-head h1 {
+  background: var(--grad-haki);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  background-size: 220% 100%;
+  animation: titleFlow 14s ease-in-out infinite;
+}
+@keyframes titleFlow {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+:root[data-haki='off'] .page-head h1,
+:root.reduce-motion .page-head h1 {
+  animation: none;
+}
+/* the sweep under a title reads as the strike that made it */
+.page-head h1::after {
+  background: var(--grad-haki);
+}
+.mp-eq .select {
+  width: 100%;
+  font-size: 12px;
+  padding: 5px 8px;
+}
+.mp-fmt {
+  display: inline-block;
+  margin-right: 6px;
+  padding: 1px 5px;
+  border-radius: 4px;
+  font-size: 9.5px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  background: var(--surface-3);
+  color: var(--text-faint);
+}
+.mp-fmt.bad {
+  background: var(--error-soft);
+  color: var(--error);
+}
+.qb-source {
+  font-size: 11.5px;
+  color: var(--text-faint);
+  text-align: right;
+  max-width: 55%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+@media (max-width: 560px) {
+  .qb-source { display: none; }
+}
+.mnem-src {
+  font-size: 10.5px;
+  color: var(--text-faint);
+  max-width: 60%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ---- Route/page transition: a crisp, quick fade + small rise, no blur ---- */
+.route-view {
+  animation: routeIn 0.24s ease-out both;
+  will-change: opacity, transform;
+}
+@keyframes routeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+:root.reduce-motion .route-view {
+  animation: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .route-view {
+    animation: none;
+  }
+}
+
+/* ---- Haki drawer: a charged edge + staggered nav reveal ---- */
+.sidebar-edge {
+  display: none;
+}
+@media (max-width: 900px) {
+  .sidebar-edge {
+    display: block;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 2px;
+    background: linear-gradient(180deg, transparent, var(--accent), transparent);
+    opacity: 0;
+    box-shadow: 0 0 18px 2px var(--accent-glow);
+  }
+  .sidebar.open .sidebar-edge {
+    animation: hakiEdge 0.7s ease-out both;
+  }
+  @keyframes hakiEdge {
+    0% {
+      opacity: 0;
+      transform: scaleY(0.2);
+    }
+    40% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0.55;
+      transform: scaleY(1);
+    }
+  }
+  .sidebar.open nav .navitem {
+    animation: navItemIn 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+  .sidebar.open nav .navitem:nth-child(2) { animation-delay: 0.03s; }
+  .sidebar.open nav .navitem:nth-child(3) { animation-delay: 0.06s; }
+  .sidebar.open nav .navitem:nth-child(4) { animation-delay: 0.09s; }
+  .sidebar.open nav .navitem:nth-child(5) { animation-delay: 0.12s; }
+  .sidebar.open nav .navitem:nth-child(6) { animation-delay: 0.15s; }
+  .sidebar.open nav .navitem:nth-child(7) { animation-delay: 0.18s; }
+  .sidebar.open nav .navitem:nth-child(n + 8) { animation-delay: 0.21s; }
+  @keyframes navItemIn {
+    from {
+      opacity: 0;
+      transform: translateX(-14px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+  .menu-btn {
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    background: var(--accent-soft) !important;
+    border-color: var(--accent) !important;
+    color: var(--accent) !important;
+  }
+}
+
+/* ---- In-app session swaps (no URL change) get the same gentle fade ---- */
+.qb-run,
+.qb-results,
+.review-page {
+  animation: routeIn 0.24s ease-out both;
+}
+:root.reduce-motion .qb-run,
+:root.reduce-motion .qb-results,
+:root.reduce-motion .review-page {
+  animation: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .qb-run,
+  .qb-results,
+  .review-page {
+    animation: none;
+  }
+}
+
+/* ------------------------------------------------------- content status
+
+   Foundation downloads its chapters each session rather than keeping them on the
+   device, so "still loading" and "no connection" are states students will
+   actually meet. Fixed to the bottom so it never displaces what they are
+   reading, and out of the way of the dock. */
+
+.content-status {
+  position: fixed;
+  left: 50%;
+  bottom: 18px;
+  transform: translateX(-50%);
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  max-width: min(560px, calc(100vw - 32px));
+  padding: 11px 16px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+  color: var(--text-dim);
+  box-shadow: 0 12px 40px -18px rgba(0, 0, 0, 0.7);
+  font-size: 13.5px;
+  line-height: 1.5;
+}
+
+/* A warning needs room to explain itself, so it stops being a pill. */
+.content-status--warn {
+  border-radius: var(--radius-2, 12px);
+  border-color: var(--warning);
+  background: var(--warning-soft);
+  color: var(--text);
+  flex-wrap: wrap;
+}
+
+.content-status strong {
+  color: var(--text);
+}
+
+.content-spinner {
+  width: 14px;
+  height: 14px;
+  flex: none;
+  border-radius: 50%;
+  border: 2px solid var(--border-strong);
+  border-top-color: var(--accent);
+  animation: contentSpin 0.8s linear infinite;
+}
+@keyframes contentSpin {
+  to { transform: rotate(360deg); }
+}
+:root.reduce-motion .content-spinner {
+  animation-duration: 2.4s;
+}
+@media (prefers-reduced-motion: reduce) {
+  .content-spinner { animation-duration: 2.4s; }
+}
+
+@media print {
+  .content-status { display: none; }
+}

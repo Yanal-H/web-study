@@ -1,0 +1,70 @@
+/* Markdown rendering.
+   Shared by Notes, the chapter reader, the AI panels and the knowledge box, so
+   it sits in the design layer rather than inside one feature. It is imported
+   before the feature stylesheets on purpose: a feature that wants different
+   type inside its own markdown surface overrides these, not the other way
+   round. */
+
+/* markdown render */
+.md {
+  line-height: 1.7;
+}
+.md .md-h {
+  font-family: var(--font-display);
+  margin: 1.1em 0 0.4em;
+}
+.md .md-p {
+  margin: 0 0 0.8em;
+}
+.md .md-ul,
+.md .md-ol {
+  margin: 0 0 0.8em;
+  padding-left: 1.4em;
+}
+.md .md-pre {
+  background: var(--bg-2);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+  overflow-x: auto;
+  font-size: 13px;
+}
+.md code {
+  background: var(--surface-2);
+  border: 1px solid var(--border-soft);
+  border-radius: 5px;
+  padding: 1px 5px;
+}
+.md .md-pre code {
+  background: none;
+  border: none;
+  padding: 0;
+}
+.md .cloze {
+  background: var(--accent-soft);
+  color: var(--accent);
+  border-radius: 4px;
+  padding: 0 4px;
+  font-weight: 500;
+}
+.md .wikilink {
+  color: var(--accent);
+  border-bottom: 1px dashed var(--accent);
+  text-decoration: none;
+}
+.md .md-callout {
+  border-left: 3px solid var(--accent);
+  background: var(--surface-2);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  padding: 10px 14px;
+  margin: 0 0 0.8em;
+}
+.md .md-callout--warning {
+  border-left-color: var(--warning);
+}
+.md .md-callout--tip {
+  border-left-color: var(--success);
+}
+.md .md-callout--important {
+  border-left-color: var(--error);
+}

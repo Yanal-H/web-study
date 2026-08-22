@@ -1,0 +1,499 @@
+/* Study — library and chapter reader.
+   Reader body and its semantic blocks, objectives and summary, mastery ring,
+   chapter pager, cloze popover, the reading-comfort options, and the validated
+   enrichment box.
+
+   Imported from src/main.tsx. The import order there is the cascade order —
+   these files were split out of one features.css and a few rules still rely on
+   it, so add an import in place rather than re-sorting the list. */
+
+/* ---- READER ---- */
+.reader-layout {
+  display: grid;
+  grid-template-columns: 210px 1fr;
+  gap: var(--sp-5);
+  align-items: start;
+}
+@media (max-width: 860px) {
+  .reader-layout {
+    grid-template-columns: 1fr;
+  }
+  .reader-toc {
+    position: static !important;
+    display: none;
+  }
+}
+.reader-toc {
+  position: sticky;
+  top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  border-right: 1px solid var(--border-soft);
+  padding-right: 12px;
+}
+.toc-link {
+  font-size: 13px;
+  color: var(--text-dim);
+  padding: 6px 8px;
+  border-radius: 7px;
+  text-decoration: none;
+  border-left: 2px solid transparent;
+}
+.toc-link:hover {
+  background: var(--surface-hover);
+  color: var(--text);
+  text-decoration: none;
+}
+.toc-link.active {
+  color: var(--accent);
+  border-left-color: var(--accent);
+  background: var(--accent-soft);
+  font-weight: 600;
+}
+.reader-body {
+  min-width: 0;
+  /* Reading measure, set from Settings → Appearance. Shorter lines are easier
+     for the eye to track back to the next line. */
+  max-width: var(--reader-measure, 70ch);
+  font-size: 1.05rem;
+}
+.reader-body .md {
+  line-height: 1.8;
+}
+.reader-body .md p {
+  margin: 0 0 1em;
+}
+.reader-body .md strong {
+  color: var(--text);
+  font-weight: 700;
+}
+.reader-section {
+  margin-bottom: var(--sp-6);
+  scroll-margin-top: 20px;
+}
+.reader-section h2 {
+  font-size: clamp(1.35rem, 3vw, 1.7rem);
+  border-bottom: 1px solid var(--border-soft);
+  padding-bottom: 10px;
+  margin-bottom: var(--sp-4);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.reader-section h2 .sec-n {
+  display: inline-grid;
+  place-items: center;
+  min-width: 34px;
+  height: 26px;
+  padding: 0 8px;
+  border-radius: 8px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  flex: 0 0 auto;
+}
+.hy-box {
+  background: var(--surface-1);
+  border: 1px solid var(--border-soft);
+  border-left: 3px solid var(--accent);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  padding: 12px 16px;
+  margin: var(--sp-3) 0;
+}
+.hy-box .hy-title {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  color: var(--accent);
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+.hy-box ul {
+  margin: 0;
+  padding-left: 18px;
+}
+.hy-box li {
+  margin-bottom: 4px;
+  font-size: 14px;
+}
+.reader-table-wrap {
+  margin: var(--sp-4) 0;
+}
+.reader-table-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-dim);
+  margin-bottom: 6px;
+}
+.reader-table {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 13.5px;
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+.reader-table th {
+  background: var(--surface-2);
+  text-align: left;
+  font-weight: 600;
+  color: var(--text);
+}
+.reader-table th,
+.reader-table td {
+  border: 1px solid var(--border-soft);
+  padding: 8px 11px;
+  vertical-align: top;
+}
+.reader-table tbody tr:nth-child(even) {
+  background: var(--surface-1);
+}
+.reader-figure {
+  margin: var(--sp-4) 0;
+}
+.reader-figure img {
+  max-width: 100%;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-soft);
+}
+.described-figure {
+  border: 1px dashed var(--border);
+  border-radius: var(--radius-sm);
+  padding: 16px;
+  background: var(--surface-1);
+  color: var(--text-dim);
+  font-size: 13.5px;
+  font-style: italic;
+}
+.reader-figure figcaption {
+  font-size: 12.5px;
+  color: var(--text-faint);
+  margin-top: 6px;
+}
+.reading-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  background: var(--grad-haki);
+  background-size: 200% 100%;
+  box-shadow: 0 0 12px var(--haki-glow), 0 0 4px var(--haki-red);
+  z-index: 50;
+  transition: width 80ms linear;
+  animation: hakiSweep 2.6s linear infinite;
+}
+:root[data-haki='off'] .reading-progress {
+  background: var(--accent);
+  box-shadow: none;
+  animation: none;
+}
+.reader-focus .reader-toc {
+  display: none;
+}
+.reader-focus .reader-layout {
+  grid-template-columns: 1fr;
+}
+.reader-focus .reader-body {
+  max-width: 720px;
+  margin: 0 auto;
+}
+.read-on {
+  font-weight: 600;
+}
+
+@media print {
+  .sidebar,
+  .topbar,
+  .scrim,
+  .watermark,
+  .no-print,
+  .reading-progress {
+    display: none !important;
+  }
+  .app {
+    grid-template-columns: 1fr !important;
+  }
+  .main::before {
+    display: none;
+  }
+  .reader-layout {
+    grid-template-columns: 1fr !important;
+  }
+  .reader-toc {
+    display: none !important;
+  }
+  body {
+    background: #fff;
+    color: #000;
+  }
+}
+
+/* ---- reader: objectives, summary, tab leads, deck chips ---- */
+.obj-box {
+  border: 1px solid var(--border-soft);
+  border-left: 3px solid var(--accent);
+  background: linear-gradient(100deg, var(--accent-soft), transparent 70%);
+  border-radius: var(--r-md);
+  padding: 14px 18px;
+  margin-bottom: var(--sp-4);
+}
+.obj-title {
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+.obj-list {
+  margin: 0;
+  padding-left: 20px;
+  display: grid;
+  gap: 5px;
+  font-size: 14.5px;
+  line-height: 1.55;
+  color: var(--text-dim);
+}
+.obj-list li::marker {
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+}
+.summary-box {
+  border-radius: var(--r-md);
+  border: 1px solid var(--border-soft);
+  background: var(--surface-1);
+  padding: 16px 20px;
+}
+.tab-lead {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  padding: 14px 18px;
+  margin-bottom: var(--sp-4);
+  border-radius: var(--r-md);
+  border: 1px solid var(--border-soft);
+  background: var(--surface-1);
+}
+.tab-lead-title {
+  font-weight: 650;
+  font-size: 15.5px;
+}
+.deck-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: var(--sp-4);
+}
+.deck-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 5px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--border-soft);
+  background: var(--surface-2);
+  font-size: 12.5px;
+  color: var(--text-dim);
+}
+.deck-chip b {
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---- reader mastery ring ---- */
+.mastery-ring {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 0 0 auto;
+}
+.mastery-meta {
+  font-size: 12px;
+  color: var(--text-dim);
+  line-height: 1.5;
+  text-align: right;
+}
+@media (max-width: 640px) {
+  .mastery-ring { display: none; }
+}
+
+/* ---- Filter pill (Study, narrowed to a subject) ---- */
+.filter-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 8px 7px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--surface-1);
+  font-size: 13.5px;
+}
+.filter-pill strong {
+  color: var(--accent);
+}
+.filter-pill-x {
+  border: none;
+  background: var(--accent-soft);
+  color: var(--accent);
+  border-radius: 999px;
+  padding: 4px 12px;
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.filter-pill-x:hover {
+  background: var(--accent);
+  color: var(--accent-contrast);
+}
+
+/* ---- Reader chapter pager: keep moving through a subject ---- */
+.chapter-pager {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--sp-3);
+  margin-top: var(--sp-6);
+  padding-top: var(--sp-5);
+  border-top: 1px solid var(--border-soft);
+}
+.cp-card {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 14px 16px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border-soft);
+  background: var(--surface-1);
+  cursor: pointer;
+  transition: transform var(--transition), border-color var(--transition), box-shadow var(--transition);
+}
+.cp-next {
+  text-align: right;
+  align-items: flex-end;
+}
+.cp-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--accent);
+  box-shadow: 0 14px 30px -22px var(--accent-glow);
+}
+.cp-dir {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 700;
+  color: var(--accent);
+}
+.cp-title {
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.25;
+}
+@media (max-width: 560px) {
+  .chapter-pager {
+    grid-template-columns: 1fr;
+  }
+  .cp-next {
+    text-align: left;
+    align-items: flex-start;
+  }
+}
+
+/* ---- Reader selection → cloze card popover ---- */
+.cloze-pop {
+  position: fixed;
+  transform: translate(-50%, -100%);
+  z-index: 80;
+  animation: routeIn 0.14s ease-out both;
+}
+.cloze-pop-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--accent);
+  background: var(--accent);
+  color: var(--accent-contrast);
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 10px 24px -10px var(--accent-glow);
+  white-space: nowrap;
+}
+.cloze-pop-btn:hover {
+  filter: brightness(1.06);
+}
+
+/* ---------------------------------------------------------------- reading comfort
+
+   Three opt-in controls for long reading sessions (Settings → Appearance). Each
+   is scoped to reading surfaces only: the app chrome, brand and accent colours
+   are deliberately left alone, so turning these on changes how the *text* reads
+   and nothing about the identity of the app. */
+
+/* Warm tone — a paper-like wash behind the chapter reader. Applied as a tint over
+   the existing surface rather than by rewriting theme tokens, so it composes with
+   both light and dark without needing a second palette. */
+:root[data-readtone='sepia'] .reader-body {
+  background: linear-gradient(0deg, rgba(190, 145, 70, 0.07), rgba(190, 145, 70, 0.07));
+  color: color-mix(in srgb, var(--text) 92%, #6b4f26);
+  border-radius: var(--radius-2, 12px);
+  padding: var(--sp-3, 14px) var(--sp-4, 18px);
+}
+:root[data-readtone='sepia'] .reader-body .md strong {
+  color: color-mix(in srgb, var(--text) 85%, #5a3f1c);
+}
+
+/* Dyslexia-friendly face. Uses stacks already present on the device — nothing is
+   downloaded, so this works offline like the rest of the app. Scoped to body copy
+   and card/question faces; headings keep the brand type so the page still reads
+   as Foundation. */
+:root.dyslexia-font .reader-body .md,
+:root.dyslexia-font .reader-body p,
+:root.dyslexia-font .reader-body li,
+:root.dyslexia-font .card-face,
+:root.dyslexia-font .qb-stem,
+:root.dyslexia-font .answer-box {
+  font-family: 'Comic Neue', 'OpenDyslexic', 'Comic Sans MS', 'Trebuchet MS', var(--font-body, sans-serif);
+  letter-spacing: 0.02em;
+  word-spacing: 0.08em;
+  line-height: 1.9;
+}
+
+/* ---- Optional, validated enrichment below an authored section ---- */
+.knowledge-box {
+  margin: 14px 0;
+  padding: 14px 16px;
+  border: 1px solid color-mix(in srgb, var(--accent) 34%, var(--border));
+  border-left: 3px solid var(--accent);
+  border-radius: var(--radius-sm);
+  background: color-mix(in srgb, var(--accent) 6%, var(--surface-1));
+}
+.knowledge-title {
+  margin-bottom: 8px;
+  color: var(--accent);
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.knowledge-note + .knowledge-note {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border-soft);
+}
+.knowledge-note > strong { font-size: 14px; }
+.knowledge-note .md { margin-top: 4px; }
+.knowledge-note .md > :last-child { margin-bottom: 0; }
+.knowledge-source {
+  margin-top: 6px;
+  color: var(--text-faint);
+  font-size: 12px;
+}

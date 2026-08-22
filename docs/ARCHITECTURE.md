@@ -126,10 +126,13 @@ serves. `vercel.json` holds the rewrites and the strict CSP. A service worker
 (`public/sw.js`) caches the shell for offline use; scheduling and content
 services never cache Supabase responses to disk.
 
-## Known hotspot
+## Styling
 
-`src/features/features.css` (~4.7k lines) holds every feature's styles in one
-file — the one place in the live app where a small change means opening a large
-file. `CHANGE_GUIDE.md` records the incremental split plan; it is deferred
-because CSS order is cascade-sensitive and a live medical app warrants visual
-QA per screen before it lands.
+Each feature owns its stylesheet at `src/features/<name>/<name>.css`. App-wide
+furniture (sections, list rows, page titles, the dock, the full-screen viewer,
+route transitions) lives in `src/features/shell.css`, and markdown body styles
+shared by the reader, notes and AI panels live in `src/design/markdown.css`.
+Everything is imported from `src/main.tsx`, and **that import order is the
+cascade order** — it reproduces the order the rules had in the single
+`features.css` these files were split out of, so a few rules still lean on it.
+Add a new stylesheet in its feature's place; don't re-sort the list.

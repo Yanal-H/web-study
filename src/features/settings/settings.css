@@ -1,0 +1,186 @@
+/* Settings.
+   Rows and groups, jump bar and filter, storage meter.
+
+   Imported from src/main.tsx. The import order there is the cascade order —
+   these files were split out of one features.css and a few rules still rely on
+   it, so add an import in place rather than re-sorting the list. */
+
+/* ---- SETTINGS ---- */
+.settings-section {
+  margin-bottom: var(--sp-5);
+}
+.settings-section h2 {
+  font-size: var(--fs-lg);
+  margin-bottom: var(--sp-3);
+}
+.setting-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border-soft);
+}
+.setting-row:last-child {
+  border-bottom: none;
+}
+.setting-row .sr-label {
+  font-size: 14px;
+  font-weight: 500;
+}
+.setting-row .sr-desc {
+  font-size: 12.5px;
+  color: var(--text-faint);
+  margin-top: 2px;
+}
+.setting-row .sr-control {
+  flex: 0 0 auto;
+  min-width: 130px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* toggle switch */
+.switch {
+  --w: 42px;
+  width: var(--w);
+  height: 24px;
+  border-radius: 999px;
+  background: var(--border-strong);
+  border: none;
+  position: relative;
+  cursor: pointer;
+  transition: background var(--transition);
+  flex: 0 0 auto;
+}
+.switch[aria-checked='true'] {
+  background: var(--accent);
+}
+.switch::after {
+  content: '';
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #fff;
+  transition: transform var(--transition);
+}
+.switch[aria-checked='true']::after {
+  transform: translateX(18px);
+}
+
+/* placeholder pages (Study/Flashcards/Qbank get full engines in later phases) */
+.soon {
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius);
+  background:
+    radial-gradient(500px 200px at 80% -30%, var(--accent-soft), transparent 60%), var(--surface-1);
+  padding: var(--sp-6);
+}
+.soon .soon-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--accent);
+  background: var(--accent-soft);
+  padding: 4px 10px;
+  border-radius: 999px;
+  margin-bottom: var(--sp-3);
+}
+.soon ul {
+  margin: var(--sp-3) 0 0;
+  padding-left: 1.2em;
+  color: var(--text-dim);
+  font-size: 14px;
+  line-height: 1.9;
+}
+
+.count-pill {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-dim);
+  background: var(--surface-2);
+  border: 1px solid var(--border-soft);
+  border-radius: 999px;
+  padding: 2px 9px;
+}
+
+/* ---- settings: jump bar, filter, section leads ---- */
+.settings-bar {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 10px 0 12px;
+  margin-bottom: 4px;
+  background: linear-gradient(var(--bg) 72%, transparent);
+  backdrop-filter: blur(6px);
+}
+.settings-filter {
+  max-width: 260px;
+}
+.settings-jump {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+.settings-jump a,
+.settings-jump button {
+  font-size: 12.5px;
+  padding: 5px 11px;
+  border-radius: 999px;
+  border: 1px solid var(--border-soft);
+  background: var(--surface-1);
+  color: var(--text-dim);
+  text-decoration: none;
+  cursor: pointer;
+  transition: all var(--dur-fast) var(--ease);
+}
+.settings-jump a:hover,
+.settings-jump button:hover {
+  color: var(--text);
+  border-color: var(--accent);
+}
+.section-lead {
+  margin: -6px 0 12px;
+  font-size: 13px;
+  color: var(--text-faint);
+  line-height: 1.5;
+}
+.settings-section {
+  scroll-margin-top: 72px;
+}
+#set-library {
+  scroll-margin-top: 72px;
+}
+@media (max-width: 640px) {
+  .settings-filter {
+    max-width: 100%;
+    width: 100%;
+  }
+}
+
+/* ---- Settings storage meter ---- */
+.storage-meter {
+  margin: 12px 0 4px;
+}
+.storage-track {
+  height: 8px;
+  border-radius: 999px;
+  background: var(--surface-2);
+  overflow: hidden;
+  border: 1px solid var(--border-soft);
+}
+.storage-fill {
+  height: 100%;
+  background: var(--grad-accent, var(--accent));
+  border-radius: 999px;
+  transition: width var(--transition);
+}

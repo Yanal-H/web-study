@@ -1,0 +1,1119 @@
+/* Flashcards.
+   Review page and card stage, grading feedback, image occlusion, the card
+   engine panel, the AI tutor block, Progress bars and the card info dialog.
+
+   Imported from src/main.tsx. The import order there is the cascade order —
+   these files were split out of one features.css and a few rules still rely on
+   it, so add an import in place rather than re-sorting the list. */
+
+/* ---- FORECAST BARS ---- */
+.forecast {
+  display: flex;
+  align-items: flex-end;
+  gap: 5px;
+  height: 92px;
+}
+.forecast .fbar {
+  flex: 1;
+  background: var(--accent-soft);
+  border-radius: 5px 5px 0 0;
+  min-height: 3px;
+  position: relative;
+  transition: height var(--dur-slow) var(--ease);
+}
+.forecast .fbar > span {
+  position: absolute;
+  bottom: -18px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-size: 9.5px;
+  color: var(--text-faint);
+}
+.forecast .fbar.today {
+  background: var(--accent);
+}
+
+/* ---- FLASHCARD REVIEW ---- */
+.review-page {
+  max-width: 720px;
+  margin: 0 auto;
+}
+.review-wrap {
+  max-width: 680px;
+  margin: 0 auto;
+}
+.review-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+.review-progress {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--text-dim);
+}
+.review-bar {
+  height: 4px;
+  background: var(--surface-2);
+  border-radius: 999px;
+  overflow: hidden;
+  margin-bottom: var(--sp-4);
+}
+.review-bar-fill {
+  height: 100%;
+  background: var(--accent);
+  transition: width var(--dur) var(--ease);
+}
+.flashcard {
+  position: relative;
+  background: var(--surface-1);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: clamp(20px, 4vw, 40px);
+  min-height: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  box-shadow: var(--shadow);
+  cursor: pointer;
+  user-select: none;
+  overflow: hidden;
+}
+.flashcard-face {
+  width: 100%;
+}
+.fc-text {
+  font-size: clamp(1.05rem, 2.6vw, 1.35rem);
+  line-height: 1.5;
+  text-align: center;
+}
+.fc-back {
+  text-align: center;
+}
+.fc-extra {
+  margin-top: 12px;
+  font-size: 14px;
+  color: var(--text-dim);
+}
+.fc-hint {
+  margin-top: 10px;
+  font-size: 14px;
+  color: var(--accent);
+  text-align: center;
+}
+.fc-image {
+  max-width: 100%;
+  max-height: 340px;
+  border-radius: var(--radius-sm);
+  display: block;
+  margin: 0 auto;
+}
+.flashcard hr {
+  margin: var(--sp-4) 0;
+  border-top-color: var(--border-soft);
+}
+.cloze {
+  background: var(--accent-soft);
+  color: var(--accent);
+  border-radius: 4px;
+  padding: 0 5px;
+  font-weight: 600;
+}
+.cloze-blank {
+  background: var(--surface-3);
+  border-bottom: 2px solid var(--accent);
+  border-radius: 4px;
+  padding: 0 8px;
+  color: var(--text-faint);
+  font-weight: 600;
+}
+.type-verdict {
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+.type-verdict.ok {
+  color: var(--success);
+}
+.type-verdict.no {
+  color: var(--error);
+}
+.hint-btn {
+  align-self: center;
+  margin-top: 16px;
+}
+.review-actions {
+  margin-top: var(--sp-4);
+}
+.kbd-inline {
+  margin-left: 8px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  opacity: 0.7;
+}
+.grade-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  margin-top: var(--sp-4);
+}
+.grade-btn {
+  --gt: var(--accent);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  padding: 12px 6px;
+  border: 1px solid var(--border);
+  border-bottom: 3px solid var(--gt);
+  border-radius: var(--radius-sm);
+  background: var(--surface-2);
+  color: var(--text);
+  cursor: pointer;
+  font-family: inherit;
+  transition: background var(--dur-fast) var(--ease), transform var(--dur-fast) var(--ease);
+}
+.grade-btn:hover {
+  background: var(--surface-hover);
+}
+.grade-btn:active {
+  transform: translateY(1px);
+}
+.grade-label {
+  font-weight: 600;
+  font-size: 14px;
+}
+.grade-interval {
+  font-size: 11.5px;
+  color: var(--text-dim);
+  font-family: var(--font-mono);
+}
+.grade-key {
+  font-size: 10px;
+  color: var(--text-faint);
+}
+.review-hints {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  margin-top: var(--sp-4);
+  font-size: 12px;
+  color: var(--text-faint);
+  flex-wrap: wrap;
+}
+.swipe-hint {
+  position: absolute;
+  top: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 700;
+  font-size: 13px;
+  padding: 4px 14px;
+  border-radius: 999px;
+  z-index: 3;
+}
+.swipe-good {
+  color: var(--grade-good);
+  background: var(--success-soft);
+}
+.swipe-again {
+  color: var(--grade-again);
+  background: var(--error-soft);
+}
+.swipe-easy {
+  color: var(--grade-easy);
+  background: var(--info-soft);
+}
+.review-summary {
+  text-align: center;
+  padding: var(--sp-7) var(--sp-4);
+  max-width: 460px;
+  margin: 0 auto;
+}
+
+/* Today's remaining daily allowance, under the Start button. Quiet by default;
+   it only speaks up once the limit is actually reached. */
+.daily-allowance {
+  margin-top: 10px;
+  font-size: 12.5px;
+  color: var(--text-dim, var(--muted));
+  text-align: center;
+  line-height: 1.5;
+}
+.daily-allowance strong {
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+}
+.daily-allowance.is-spent {
+  color: var(--muted);
+  background: color-mix(in srgb, var(--warning) 10%, transparent);
+  border: 1px solid color-mix(in srgb, var(--warning) 26%, transparent);
+  border-radius: var(--radius-sm, 8px);
+  padding: 8px 10px;
+}
+
+/* Cram banner: a session that deliberately writes nothing must say so, or a
+   student cannot tell practice from the reviews their schedule depends on. */
+.cram-banner {
+  margin-bottom: 10px;
+  padding: 8px 12px;
+  border-radius: var(--radius-sm, 8px);
+  font-size: 12.5px;
+  color: var(--text);
+  background: color-mix(in srgb, var(--accent) 10%, transparent);
+  border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent);
+}
+.cram-banner strong {
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  font-size: 11.5px;
+  margin-right: 4px;
+}
+
+/* Live-queue breather: shown while a just-learned card waits to come back
+   within the session. The countdown ring ticks each second (see ReviewSession). */
+.review-duesoon {
+  text-align: center;
+  padding: var(--sp-7) var(--sp-4);
+  max-width: 460px;
+  margin: 0 auto;
+  animation: dueSoonIn 320ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+.review-duesoon-ring {
+  display: flex;
+  justify-content: center;
+}
+@keyframes dueSoonIn {
+  from { opacity: 0; transform: translateY(8px) scale(0.98); }
+  to { opacity: 1; transform: none; }
+}
+
+/* ---- grade impact strike ---- */
+.impact-flash {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+  animation: impactFade 460ms ease forwards;
+}
+.impact-again {
+  background: radial-gradient(120% 90% at 50% 50%, transparent 52%, var(--error) 130%);
+}
+.impact-hard {
+  background: radial-gradient(120% 90% at 50% 50%, transparent 55%, var(--warning) 130%);
+}
+.impact-good {
+  background: radial-gradient(120% 90% at 50% 50%, transparent 55%, var(--success) 130%);
+}
+.impact-easy {
+  background: radial-gradient(120% 90% at 50% 50%, transparent 55%, var(--info) 130%);
+}
+@keyframes impactFade {
+  0% {
+    opacity: 0.85;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+.combo-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-right: 10px;
+  padding: 2px 9px;
+  border-radius: 999px;
+  background: var(--haki-glow);
+  color: #fff;
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 700;
+  box-shadow: 0 0 14px var(--haki-glow);
+  animation: comboPop 320ms var(--ease-spring);
+}
+@keyframes comboPop {
+  from {
+    transform: scale(0.6);
+    opacity: 0;
+  }
+}
+
+/* Narrow phones: the four grade buttons have to fit one row. Kept here, ahead
+   of the card-stage block below that widens the gap again on larger screens —
+   that ordering is deliberate and predates the split. */
+@media (max-width: 520px) {
+  .grade-row {
+    gap: 5px;
+  }
+  .grade-btn {
+    padding: 10px 3px;
+  }
+}
+
+/* ---- OCCLUSION ---- */
+.occ-view,
+.occ-editor {
+  position: relative;
+  display: inline-block;
+  max-width: 100%;
+  line-height: 0;
+}
+.occ-view img,
+.occ-editor img {
+  max-width: 100%;
+  max-height: 380px;
+  border-radius: var(--radius-sm);
+}
+.occ-editor {
+  cursor: crosshair;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+.occ-mask {
+  position: absolute;
+  background: var(--accent);
+  border-radius: 4px;
+  display: grid;
+  place-items: center;
+  color: var(--accent-contrast);
+  font-weight: 700;
+  line-height: 1;
+  font-size: 14px;
+}
+.occ-mask.revealed {
+  background: transparent;
+  border: 2px solid var(--accent);
+  color: var(--text);
+}
+.occ-mask.revealed span {
+  background: var(--surface-1);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 12px;
+}
+.occ-box {
+  position: absolute;
+  border: 2px solid var(--accent);
+  background: var(--accent-soft);
+  border-radius: 3px;
+}
+.occ-box span {
+  position: absolute;
+  top: -9px;
+  left: -9px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: var(--accent-contrast);
+  font-size: 11px;
+  display: grid;
+  place-items: center;
+  line-height: 1;
+}
+.occ-box.draft {
+  border-style: dashed;
+}
+
+/* ---- flashcard stage: bigger, calmer, with a deck trail ---- */
+.review-page,
+.review-wrap {
+  max-width: 820px;
+}
+.flashcard {
+  min-height: 360px;
+  padding: clamp(24px, 5vw, 52px);
+  border-radius: var(--radius-lg);
+  background:
+    radial-gradient(120% 90% at 50% -20%, color-mix(in srgb, var(--accent) 7%, transparent), transparent 62%),
+    var(--surface-1);
+  transition: box-shadow var(--dur) var(--ease), transform var(--dur) var(--ease),
+    border-color var(--dur) var(--ease);
+  animation: fcEnter 300ms var(--ease) both;
+}
+@keyframes fcEnter {
+  from { opacity: 0; transform: translateY(14px) scale(0.985); }
+  to { opacity: 1; transform: none; }
+}
+.flashcard:hover {
+  border-color: var(--border-strong);
+  box-shadow: var(--shadow-lg);
+}
+.flashcard.is-open {
+  border-color: color-mix(in srgb, var(--accent) 45%, var(--border));
+  box-shadow: var(--shadow-lg), 0 0 40px -22px var(--accent-glow);
+}
+.fc-deck {
+  position: absolute;
+  top: 14px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-size: 11.5px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  padding: 0 16px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.fc-deck-sep {
+  margin: 0 6px;
+  opacity: 0.6;
+}
+.fc-deck-leaf {
+  color: var(--text-dim);
+  font-weight: 650;
+}
+.fc-text {
+  font-size: clamp(1.15rem, 3vw, 1.55rem);
+  line-height: 1.45;
+  letter-spacing: -0.005em;
+  text-wrap: balance;
+}
+.flashcard hr {
+  border: 0;
+  border-top: 1px solid var(--border-soft);
+  margin: 22px 0;
+}
+.flashcard.is-open .fc-back {
+  animation: fcReveal 280ms var(--ease) both;
+}
+@keyframes fcReveal {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: none; }
+}
+.grade-row {
+  gap: 10px;
+}
+.grade-btn {
+  transition: transform var(--dur-fast) var(--ease), box-shadow var(--dur-fast) var(--ease),
+    border-color var(--dur-fast) var(--ease);
+}
+.grade-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px -14px var(--gt);
+}
+.grade-btn:active {
+  transform: translateY(0) scale(0.985);
+}
+
+/* ===================================================================
+   FILE LIBRARY — offline books, PDFs and slides
+   =================================================================== */
+.drop-zone {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding: 20px 22px;
+  border: 1.5px dashed var(--border-strong);
+  border-radius: var(--r-lg, var(--radius-lg));
+  background: var(--surface-1);
+  transition: all var(--dur) var(--ease);
+}
+.drop-zone.over {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+  box-shadow: 0 0 40px -18px var(--accent-glow);
+}
+.dz-title {
+  font-weight: 650;
+  font-size: 15.5px;
+}
+.dz-sub {
+  color: var(--text-faint);
+  font-size: 13px;
+  margin-top: 3px;
+}
+.space-bar {
+  position: relative;
+  margin-top: 12px;
+  height: 24px;
+  border-radius: 999px;
+  background: var(--surface-2);
+  border: 1px solid var(--border-soft);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+}
+.space-bar span {
+  position: relative;
+  z-index: 1;
+  padding: 0 12px;
+  font-size: 12px;
+  color: var(--text-dim);
+  font-variant-numeric: tabular-nums;
+}
+.space-fill {
+  position: absolute;
+  inset: 0 auto 0 0;
+  background: var(--grad-haki);
+  opacity: 0.28;
+  transition: width var(--dur) var(--ease);
+}
+.file-list {
+  display: grid;
+  gap: 6px;
+  margin-top: 14px;
+}
+.file-row {
+  display: grid;
+  grid-template-columns: 44px 1fr auto auto;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  border: 1px solid var(--border-soft);
+  border-radius: var(--r-md);
+  background: var(--surface-1);
+  transition: all var(--dur-fast) var(--ease);
+}
+.file-row:hover {
+  border-color: var(--border-strong);
+  background: var(--surface-2);
+}
+.file-ext {
+  display: grid;
+  place-items: center;
+  height: 38px;
+  border-radius: 8px;
+  font-size: 10.5px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  color: var(--accent-contrast);
+  background: var(--grad-haki);
+}
+.file-ext.ext-image {
+  background: linear-gradient(135deg, var(--k-mediator), var(--k-cell));
+}
+.file-ext.ext-other {
+  background: linear-gradient(135deg, var(--text-faint), var(--border-strong));
+}
+.file-main {
+  text-align: left;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  min-width: 0;
+  padding: 0;
+  color: inherit;
+}
+.file-name {
+  display: block;
+  font-weight: 550;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.file-main:hover .file-name {
+  color: var(--accent);
+}
+.file-meta {
+  display: block;
+  font-size: 12px;
+  color: var(--text-faint);
+  margin-top: 2px;
+}
+
+/* ---- authored occlusion figures (content packs) ---- */
+.occ-figure {
+  width: 100%;
+}
+.occ-label {
+  text-align: center;
+  font-size: 13px;
+  color: var(--text-faint);
+  margin-bottom: 10px;
+  letter-spacing: 0.03em;
+}
+.occ-view img {
+  border-radius: var(--r-md);
+  background: #fff;
+}
+.occ-mask.other {
+  background: color-mix(in srgb, var(--text-faint) 78%, transparent);
+  border-radius: 3px;
+  transition: opacity var(--dur) var(--ease);
+}
+.occ-mask.other.revealed {
+  opacity: 0.12;
+}
+.occ-mask.target {
+  background: color-mix(in srgb, var(--haki-red) 82%, transparent);
+  border: 2px solid var(--lightning);
+  color: #fff;
+  display: grid;
+  place-items: center;
+  font-weight: 800;
+  border-radius: 4px;
+  box-shadow: 0 0 18px -4px var(--haki-glow);
+}
+.occ-mask.target.revealed {
+  background: color-mix(in srgb, var(--success) 22%, transparent);
+  border-color: var(--success);
+  color: var(--text);
+  font-size: 12.5px;
+  padding: 2px;
+  text-align: center;
+  line-height: 1.15;
+}
+
+/* ---- card engine panel ---- */
+.engine-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(96px, 1fr));
+  gap: 8px;
+  margin-top: 12px;
+}
+.engine-cell {
+  padding: 10px 12px;
+  border-radius: var(--r-md);
+  border: 1px solid var(--border-soft);
+  background: var(--surface-1);
+}
+.engine-value {
+  font-size: 20px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+}
+.engine-label {
+  font-size: 11.5px;
+  color: var(--text-faint);
+  margin-top: 2px;
+}
+
+/* ---- review card: state, history and what each answer costs ---- */
+.fc-state {
+  position: absolute;
+  top: 40px;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  padding: 0 16px;
+}
+.fc-chip {
+  font-size: 10.5px;
+  letter-spacing: 0.03em;
+  padding: 2px 8px;
+  border-radius: 999px;
+  border: 1px solid var(--border-soft);
+  background: var(--surface-2);
+  color: var(--text-faint);
+  white-space: nowrap;
+}
+.fc-chip.st-new {
+  color: var(--info);
+  border-color: color-mix(in srgb, var(--info) 45%, transparent);
+}
+.fc-chip.st-learning,
+.fc-chip.st-relearning {
+  color: var(--warning);
+  border-color: color-mix(in srgb, var(--warning) 45%, transparent);
+}
+.fc-chip.st-review {
+  color: var(--success);
+  border-color: color-mix(in srgb, var(--success) 45%, transparent);
+}
+.flashcard {
+  padding-top: clamp(64px, 8vw, 84px);
+}
+.rc-counts {
+  display: inline-flex;
+  gap: 5px;
+  margin-right: 10px;
+  font-variant-numeric: tabular-nums;
+}
+.rc-counts span {
+  min-width: 22px;
+  text-align: center;
+  padding: 1px 5px;
+  border-radius: 5px;
+  font-size: 11.5px;
+  font-weight: 700;
+}
+.rc-new {
+  color: var(--info);
+  background: var(--info-soft);
+}
+.rc-learn {
+  color: var(--warning);
+  background: var(--warning-soft);
+}
+.rc-due {
+  color: var(--success);
+  background: var(--success-soft);
+}
+.grade-sub {
+  display: block;
+  font-size: 10.5px;
+  color: var(--text-faint);
+  margin-top: 1px;
+}
+.grade-interval {
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--gt);
+}
+
+/* ---- dated 14-day forecast ---- */
+.forecast2 {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 1fr;
+  gap: 3px;
+  margin-top: 16px;
+  align-items: end;
+}
+.fcol {
+  display: grid;
+  gap: 4px;
+  justify-items: center;
+}
+.fcol-bar-wrap {
+  height: 84px;
+  width: 100%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+.fcol-bar {
+  width: 60%;
+  min-height: 2px;
+  border-radius: 4px 4px 2px 2px;
+  background: color-mix(in srgb, var(--accent) 42%, var(--surface-3));
+  position: relative;
+  transition: height var(--dur-slow) var(--ease), background var(--dur-fast) var(--ease);
+}
+.fcol.today .fcol-bar {
+  background: var(--grad-haki);
+  box-shadow: 0 0 12px -3px var(--accent-glow);
+}
+.fcol:hover .fcol-bar {
+  background: var(--accent);
+}
+.fcol-n {
+  position: absolute;
+  top: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--text-dim);
+  font-variant-numeric: tabular-nums;
+}
+.fcol-wd {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--text-faint);
+  text-transform: uppercase;
+}
+.fcol-wd.wknd {
+  color: var(--accent);
+}
+.fcol-dom {
+  font-size: 10px;
+  color: var(--text-faint);
+  font-variant-numeric: tabular-nums;
+}
+.fcol.today .fcol-dom {
+  color: var(--accent);
+  font-weight: 700;
+}
+
+/* ---- AI tutor block in flashcard review ---- */
+.fc-ai {
+  margin: 12px 0 2px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.fc-ai .ai-panel {
+  width: 100%;
+}
+
+/* =========================================================================
+   AI tutor — reusable panel with hint / explanation / follow-up chat
+   ========================================================================= */
+.ai-tutor {
+  margin: 14px 0 2px;
+}
+.ai-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.ai-btn--solid {
+  background: var(--grad-accent, var(--accent));
+  border-color: transparent;
+  color: var(--accent-contrast);
+}
+.ai-btn--solid:hover:not(:disabled) {
+  filter: brightness(1.06);
+  background: var(--grad-accent, var(--accent));
+  color: var(--accent-contrast);
+}
+
+.ai-thread {
+  border: 1px solid color-mix(in srgb, var(--accent) 34%, var(--border));
+  border-radius: var(--radius);
+  background:
+    radial-gradient(120% 100% at 0% 0%, color-mix(in srgb, var(--accent) 8%, transparent), transparent 60%),
+    var(--surface-1);
+  overflow: hidden;
+  box-shadow: 0 18px 44px -30px var(--accent-glow);
+  animation: routeIn 0.26s ease both;
+}
+.ai-thread-head {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 14px;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--accent);
+  border-bottom: 1px solid var(--border-soft);
+  background: color-mix(in srgb, var(--accent) 6%, transparent);
+}
+.ai-messages {
+  max-height: 460px;
+  overflow-y: auto;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.ai-msg {
+  border-radius: 14px;
+  padding: 12px 15px;
+  font-size: 14.5px;
+  line-height: 1.72;
+  max-width: 92%;
+}
+.ai-msg--bot {
+  background: var(--surface-2);
+  border: 1px solid var(--border-soft);
+  align-self: flex-start;
+  border-top-left-radius: 5px;
+  color: var(--text);
+}
+.ai-msg--me {
+  background: var(--accent-soft);
+  border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent);
+  color: var(--text);
+  align-self: flex-end;
+  border-top-right-radius: 5px;
+  white-space: pre-wrap;
+}
+
+/* readable, beautiful rendering of the explanation markdown */
+.ai-msg--bot.md > :first-child { margin-top: 0; }
+.ai-msg--bot.md > :last-child { margin-bottom: 0; }
+.ai-msg--bot.md h1,
+.ai-msg--bot.md h2,
+.ai-msg--bot.md h3,
+.ai-msg--bot.md h4 {
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 650;
+  margin: 14px 0 6px;
+  color: var(--text);
+  letter-spacing: -0.01em;
+}
+.ai-msg--bot.md h1:first-child,
+.ai-msg--bot.md h2:first-child { margin-top: 0; }
+.ai-msg--bot.md p { margin: 8px 0; }
+.ai-msg--bot.md strong { color: var(--accent); font-weight: 650; }
+.ai-msg--bot.md ul,
+.ai-msg--bot.md ol { margin: 8px 0; padding-left: 20px; }
+.ai-msg--bot.md li { margin: 4px 0; }
+.ai-msg--bot.md li::marker { color: var(--accent); }
+.ai-msg--bot.md code {
+  font-family: var(--font-mono);
+  font-size: 0.88em;
+  background: var(--surface-1);
+  border: 1px solid var(--border-soft);
+  border-radius: 5px;
+  padding: 1px 5px;
+}
+.ai-msg--bot.md hr { border: none; border-top: 1px solid var(--border-soft); margin: 12px 0; }
+
+/* typing indicator */
+.ai-typing {
+  display: inline-flex;
+  gap: 5px;
+  align-items: center;
+}
+.ai-typing span {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent);
+  opacity: 0.5;
+  animation: aiDot 1s ease-in-out infinite;
+}
+.ai-typing span:nth-child(2) { animation-delay: 0.15s; }
+.ai-typing span:nth-child(3) { animation-delay: 0.3s; }
+@keyframes aiDot {
+  0%, 100% { opacity: 0.3; transform: translateY(0); }
+  50% { opacity: 1; transform: translateY(-3px); }
+}
+:root.reduce-motion .ai-typing span { animation: none; }
+
+.ai-compose {
+  display: flex;
+  gap: 8px;
+  padding: 12px 14px;
+  border-top: 1px solid var(--border-soft);
+  background: var(--surface-1);
+}
+.ai-input { flex: 1; }
+.ai-err {
+  padding: 8px 14px;
+  font-size: 13px;
+  color: var(--error);
+  background: color-mix(in srgb, var(--error) 8%, transparent);
+}
+
+/* ---- Answer box: the brief rationale + AI buttons, below the answer card ---- */
+.qb-main {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+.answer-box {
+  margin-top: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: stretch;
+}
+.answer-box .ai-tutor { margin: 0; }
+.answer-note {
+  padding: 12px 15px;
+  border-radius: var(--radius-sm);
+  background: var(--surface-2);
+  border: 1px solid var(--border-soft);
+  font-size: 14px;
+  line-height: 1.62;
+}
+.answer-note > :first-child { margin-top: 0; }
+.answer-note > :last-child { margin-bottom: 0; }
+
+/* inline "enable AI in Settings" hint shown under the buttons when no key is set */
+.ai-err--inline {
+  flex-basis: 100%;
+  background: none;
+  padding: 6px 2px 0;
+  color: var(--text-dim);
+}
+
+/* ---- Progress: forecast and history bars ----
+   Deliberately plain bars rather than a chart library: the shapes a student
+   needs to read are "is a wall coming" and "did I keep up", both of which are
+   legible at this size without axes or a legend. */
+.stats-bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 4px;
+  height: 128px;
+  padding-top: 8px;
+}
+.stats-bar {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  height: 100%;
+  min-width: 0;
+}
+.stats-bar-fill {
+  display: block;
+  width: 100%;
+  min-height: 2px;
+  border-radius: 3px 3px 0 0;
+  background: var(--accent);
+  opacity: 0.85;
+  transition: height var(--dur) var(--ease);
+}
+.stats-bar-fill.is-done {
+  background: var(--k-success, var(--grade-good));
+}
+.stats-bar small {
+  margin-top: 5px;
+  font-size: 10px;
+  color: var(--text-faint);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+.stats-spread {
+  display: grid;
+  gap: 8px;
+  margin-top: 8px;
+}
+.stats-spread-row {
+  display: grid;
+  grid-template-columns: 54px 1fr 44px;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+}
+.stats-spread-row .ssr-track {
+  height: 8px;
+  border-radius: 999px;
+  background: var(--surface-2);
+  overflow: hidden;
+}
+.stats-spread-row .ssr-track > span {
+  display: block;
+  height: 100%;
+  border-radius: 999px;
+  transition: width var(--dur) var(--ease);
+}
+.stats-spread-row .ssr-num {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-faint);
+}
+
+/* ---- Card info dialog (Batch 12) ----
+   A record to scan, then the two things you can do about it. Deliberately
+   plain: this is where a student decides whether a card is worth keeping. */
+.card-info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 10px;
+  margin: 12px 0;
+}
+.card-info-grid > div {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.card-info-grid span {
+  font-size: 11.5px;
+  color: var(--text-faint);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.card-info-grid strong {
+  font-size: 17px;
+  font-variant-numeric: tabular-nums;
+}
+.card-info-actions {
+  margin-top: 4px;
+}

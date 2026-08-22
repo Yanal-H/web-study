@@ -1,0 +1,71 @@
+/* Resources.
+   Letter tiles and the file library.
+
+   Imported from src/main.tsx. The import order there is the cascade order —
+   these files were split out of one features.css and a few rules still rely on
+   it, so add an import in place rather than re-sorting the list. */
+
+/* ---- RESOURCES letter tiles ---- */
+.res-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: var(--sp-3);
+}
+.res-tile {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius);
+  background: var(--surface-1);
+  text-decoration: none;
+  color: var(--text);
+  transition: border-color var(--transition), transform var(--transition), box-shadow var(--transition);
+}
+.res-tile:hover {
+  text-decoration: none;
+  transform: translateY(-2px);
+  border-color: var(--border-strong);
+  box-shadow: var(--card-glow);
+}
+.res-letter {
+  width: 42px;
+  height: 42px;
+  flex: 0 0 auto;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 20px;
+  color: #fff;
+  background: var(--grad-haki);
+  box-shadow: 0 6px 16px -8px var(--haki-glow);
+}
+.res-main {
+  min-width: 0;
+  flex: 1;
+}
+.res-title {
+  font-weight: 600;
+  font-size: 14.5px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.res-host {
+  font-size: 12px;
+  color: var(--accent);
+}
+.res-note {
+  font-size: 12px;
+  color: var(--text-faint);
+}
+.res-del {
+  opacity: 0;
+  transition: opacity var(--transition);
+}
+.res-tile:hover .res-del {
+  opacity: 0.8;
+}

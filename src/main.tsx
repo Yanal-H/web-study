@@ -7,7 +7,28 @@ import './design/tokens.css';
 import './design/base.css';
 import './design/primitives.css';
 import './design/lexicon.css';
-import './features/features.css';
+import './design/markdown.css';
+// Feature styles. This list IS the cascade order — it reproduces the order the
+// rules had in the single features.css these files were split out of, so add a
+// new import in its feature's place rather than re-sorting the list.
+import './features/shell.css';
+import './features/dashboard/dashboard.css';
+import './features/subjects/subjects.css';
+import './features/planner/planner.css';
+import './features/notes/notes.css';
+import './features/calculators/calculators.css';
+import './features/settings/settings.css';
+import './features/mnemonics/mnemonics.css';
+import './features/resources/resources.css';
+import './features/study/study.css';
+import './features/flashcards/flashcards.css';
+import './features/qbank/qbank.css';
+import './features/timer/timer.css';
+import './features/music/music.css';
+import './features/tts/tts.css';
+import './features/onboarding/onboarding.css';
+import './features/community/community.css';
+import './features/admin/admin.css';
 import './features/dashboard/hero.css';
 import './features/effects/effects.css';
 import './features/gate/watermark.css';

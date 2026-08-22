@@ -1,0 +1,12 @@
+/* Read-aloud.
+   The Listen button.
+
+   Imported from src/main.tsx. The import order there is the cascade order —
+   these files were split out of one features.css and a few rules still rely on
+   it, so add an import in place rather than re-sorting the list. */
+
+/* ---- Read-aloud (Listen) button ---- */
+.listen-btn.on {
+  color: var(--accent);
+  border-color: var(--accent);
+}

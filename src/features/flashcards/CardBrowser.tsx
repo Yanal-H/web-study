@@ -12,7 +12,7 @@ import { IconTrash, IconEdit, IconFlashcards } from '../../design/icons';
 /**
  * Each row's own box height, plus the gap below it — together they must equal
  * the slot height VirtualList reserves per item, or its windowing math and the
- * actual rendered layout drift apart. See .list--virtual in features.css.
+ * actual rendered layout drift apart. See .list--virtual in shell.css.
  */
 const ROW_BOX_HEIGHT = 64;
 const ROW_GAP = 8;
