@@ -218,16 +218,38 @@ retention, a forecast of the coming workload, and the answer-button spread.
 This is how a student knows whether the system is working, and it is the
 evidence needed before touching FSRS parameters.
 
-### ⬜ Batch 12 — Per-card operations · care: STANDARD
-Card info (full review history), set due date, forget/reset, and reposition a
-new card. Each is one card at a time and by explicit request — never a mass
-reschedule (see `.claude/rules/data-safety.md`).
+### ✅ Batch 12 — Per-card operations · care: STANDARD
+**Shipped.** `cardOps.ts` (pure, 16 tests) plus a Card info dialog reachable
+from every row in Browse. Shows the card's own record — reviews, lapses, recall
+when due, median time, first and last seen — then the two things a student can
+do about it:
 
-### ⬜ Batch 13 — Browse: search syntax and flags · care: STANDARD
-Browse filters by plain substring. Anki's `deck:`, `tag:`, `is:due`,
-`is:new`, `is:suspended`, `flag:` make a large library navigable. Flags are
-currently one boolean; Anki has several colours, which students use for
-"ask a tutor" / "revisit" / "exam-critical".
+- **Show it again in N days.** Stability is left alone, so the interval *after*
+  that is still worked out from real answers rather than a number typed once.
+- **Forget.** Back to never-seen, but the lapse and rep counts are KEPT by
+  default: a leech that is forgotten must not return with a clean record and
+  quietly start eating the queue again. `resetCounts` allows the other
+  behaviour explicitly.
+
+Neither touches the review log, and neither un-suspends a card as a side
+effect. Both act on one card from one explicit press — never across a set.
+Lapse counting is careful: failing a one-minute learning step is part of
+learning the card, not a lapse, so only failures of a genuinely due card count.
+
+Not done from this batch: repositioning a new card in the new-card order.
+
+### ✅ Batch 13 — Browse: search syntax and flags · care: STANDARD
+**Shipped.** `search.ts` (pure, 21 tests) wired into Browse: `deck:`, `tag:`,
+`is:due|new|learning|review|suspended`, `flag:`, quoted phrases, and a leading
+`-` to negate any term. Terms are ANDed, as in Anki, so a student who has used
+Anki already knows it.
+
+Two rules that matter because getting them wrong is quiet: a tag matches
+EXACTLY, so `tag:high` does not drag in every `high-yield` card; and a
+suspended card is never reported as due, because the queue skips it and a
+search that disagreed would promise cards no session hands over.
+
+Not done from this batch: multi-colour flags (still one boolean).
 
 ---
 

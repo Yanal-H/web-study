@@ -3,6 +3,7 @@ import { useStore, useStoreVersion } from '../../state/useStore';
 import { update } from '../../state/store';
 import { allCards } from '../../content/loader';
 import { buildMatcher } from './search';
+import CardInfoDialog from './CardInfoDialog';
 import { Card, Button, Input, Segmented, Badge, IconButton, EmptyState, VirtualList } from '../../design/primitives';
 import { Dialog } from '../../design/Dialog';
 import { useToast } from '../../design/Toast';
@@ -46,6 +47,7 @@ export default function CardBrowser({ onBack }: { onBack: () => void }) {
   const [filter, setFilter] = useState<'all' | 'mine' | 'content'>('all');
   const [selected, setSelected] = useState<Set<string>>(new Set());
   const [editing, setEditing] = useState<Row | null>(null);
+  const [inspecting, setInspecting] = useState<Row | null>(null);
 
   // Read once per rebuild; a store mid-migration may not have it yet.
   const cardSched = state.study?.cardSched as Record<string, unknown> | undefined;
@@ -184,6 +186,13 @@ export default function CardBrowser({ onBack }: { onBack: () => void }) {
                   {r.back}
                 </div>
               </div>
+              <button
+                className="btn btn--ghost btn--sm"
+                onClick={() => setInspecting(r)}
+                title="History, and what to do with this card"
+              >
+                Info
+              </button>
               {r.source === 'user' && (
                 <IconButton label="Edit card" onClick={() => setEditing(r)}>
                   <IconEdit size={15} />
@@ -195,6 +204,13 @@ export default function CardBrowser({ onBack }: { onBack: () => void }) {
       )}
 
       {editing && <EditDialog row={editing} onClose={() => setEditing(null)} />}
+      {inspecting && (
+        <CardInfoDialog
+          cardKey={inspecting.key}
+          front={inspecting.front}
+          onClose={() => setInspecting(null)}
+        />
+      )}
     </>
   );
 }
