@@ -5,7 +5,9 @@ import type {
   TextareaHTMLAttributes,
   ReactNode,
 } from 'react';
+import { useCallback, useState } from 'react';
 import { useCountUp } from '../lib/anim';
+import { windowFor } from '../lib/virtualList';
 
 /** Animated integer that counts up on mount. */
 export function CountUp({ value }: { value: number }) {
@@ -294,6 +296,50 @@ export function Stat({
         {display}
         {unit && <span className="unit">{unit}</span>}
       </div>
+    </div>
+  );
+}
+
+/* ---- VIRTUAL LIST ---- */
+/**
+ * Renders only the rows near the viewport of a long, uniform-height list,
+ * inside a scrollable pane, so a list of any size costs the same to render
+ * as a screenful. Rows must all be the same height — pass it explicitly
+ * rather than measuring, so the scroll math stays exact.
+ *
+ * This is what makes Browse cards scale past a few hundred rows: capping the
+ * list at a fixed count instead of virtualizing it means anything past the
+ * cap simply cannot be found, however good the search box is.
+ */
+export function VirtualList<T>({
+  items,
+  itemHeight,
+  height,
+  overscan = 6,
+  renderItem,
+  className,
+}: {
+  items: T[];
+  /** px — every row must be exactly this tall */
+  itemHeight: number;
+  /** px — the scrollable viewport's fixed height */
+  height: number;
+  overscan?: number;
+  renderItem: (item: T, index: number) => ReactNode;
+  className?: string;
+}) {
+  const [scrollTop, setScrollTop] = useState(0);
+  const onScroll = useCallback((e: React.UIEvent<HTMLDivElement>) => {
+    setScrollTop(e.currentTarget.scrollTop);
+  }, []);
+
+  const { start, end, topPad, bottomPad } = windowFor(scrollTop, height, itemHeight, items.length, overscan);
+
+  return (
+    <div className={className} style={{ height, overflowY: 'auto' }} onScroll={onScroll}>
+      {topPad > 0 && <div style={{ height: topPad }} aria-hidden="true" />}
+      {items.slice(start, end).map((item, i) => renderItem(item, start + i))}
+      {bottomPad > 0 && <div style={{ height: bottomPad }} aria-hidden="true" />}
     </div>
   );
 }

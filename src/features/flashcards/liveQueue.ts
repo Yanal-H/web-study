@@ -57,12 +57,27 @@ export function placeGraded(
   return [...waiting, { item, due: next.due }].sort((a, b) => a.due - b.due);
 }
 
-/** Move every waiting card that is now due into ready, keeping order. Pure. */
+/**
+ * Move every waiting card whose time has come back into ready. Pure.
+ *
+ * A promoted card goes NEXT — straight after the card on screen — not onto the
+ * end of the deck. Appending it meant a student with forty cards left graded
+ * "Again", waited the minute, and still did not see that card again until they
+ * had cleared everything else, which is indistinguishable from it never coming
+ * back. A one-minute step is a promise about one minute, not about queue length.
+ *
+ * The card currently on screen (`ready[0]`) is never displaced: a timer firing
+ * must not swap out the card someone is in the middle of answering.
+ */
 export function promoteDue(state: LiveState, now: number): LiveState {
   const dueNow = state.waiting.filter((e) => e.due <= now);
   if (dueNow.length === 0) return state;
+  const promoted = dueNow.map((e) => e.item);
   return {
-    ready: [...state.ready, ...dueNow.map((e) => e.item)],
+    ready:
+      state.ready.length > 0
+        ? [state.ready[0]!, ...promoted, ...state.ready.slice(1)]
+        : promoted,
     waiting: state.waiting.filter((e) => e.due > now),
   };
 }

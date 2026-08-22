@@ -151,7 +151,10 @@ export default function ReviewSession({
   // One timer for the earliest waiting card. It fires once, revalidates, and is
   // superseded whenever the queue changes (generation guard) — no polling loop.
   useEffect(() => {
-    if (live.ready.length > 0) return;
+    // Runs whenever ANYTHING is waiting — not only once the deck has emptied.
+    // Gating this on an empty deck meant a card owed in a minute simply sat
+    // there while the student worked through the rest, so on a real deck it
+    // never came back at all.
     const na = nextDueAt(live.waiting);
     if (na == null) return;
     const gen = ++timerGen.current;
