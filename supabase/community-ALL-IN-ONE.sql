@@ -976,3 +976,49 @@ create policy community_daily_logs_delete on public.community_daily_logs
 
 grant select, insert, update, delete on public.community_daily_logs to authenticated;
 
+
+-- ---------------------------------------------------------------------------
+-- POLICY HELPERS MUST BE CALLABLE BY THE ROLE THE POLICY RUNS AS
+-- ---------------------------------------------------------------------------
+--
+-- community-foundation.sql revokes everything in the private schema from
+-- `authenticated`, which is right for the roster table and wrong for the
+-- handful of functions the policies themselves call: an RLS policy is evaluated
+-- as the requesting role, so revoking these did not secure anything, it stopped
+-- every community query working with "permission denied for function
+-- is_root_admin".
+--
+-- USAGE on a schema conveys nothing about the objects in it — per-object
+-- privileges still decide everything, so private.community_entitlements stays
+-- unreadable. Only the helpers policies reference are granted; trigger
+-- functions and the unused can_curate_department stay locked. Nothing in
+-- `private` is reachable over the API regardless, because PostgREST exposes
+-- only the schemas it is configured for.
+
+grant usage on schema private to authenticated;
+
+do $$
+declare
+  fn text;
+  target regprocedure;
+begin
+  foreach fn in array array[
+    'is_root_admin',
+    'can_access_community_channel',
+    'is_active_channel_member',
+    'is_active_department_member',
+    'current_academic_year'
+  ]
+  loop
+    for target in
+      select p.oid::regprocedure
+      from pg_proc p
+      join pg_namespace n on n.oid = p.pronamespace
+      where n.nspname = 'private' and p.proname = fn
+    loop
+      execute format('grant execute on function %s to authenticated', target);
+    end loop;
+  end loop;
+end
+$$;
+
