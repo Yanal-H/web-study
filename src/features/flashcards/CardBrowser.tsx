@@ -2,10 +2,19 @@ import { useMemo, useState } from 'react';
 import { useStore, useStoreVersion } from '../../state/useStore';
 import { update } from '../../state/store';
 import { allCards } from '../../content/loader';
-import { Card, Button, Input, Segmented, Badge, IconButton, EmptyState } from '../../design/primitives';
+import { Card, Button, Input, Segmented, Badge, IconButton, EmptyState, VirtualList } from '../../design/primitives';
 import { Dialog } from '../../design/Dialog';
 import { useToast } from '../../design/Toast';
 import { IconTrash, IconEdit, IconFlashcards } from '../../design/icons';
+
+/**
+ * Each row's own box height, plus the gap below it — together they must equal
+ * the slot height VirtualList reserves per item, or its windowing math and the
+ * actual rendered layout drift apart. See .list--virtual in features.css.
+ */
+const ROW_BOX_HEIGHT = 64;
+const ROW_GAP = 8;
+const ROW_HEIGHT = ROW_BOX_HEIGHT + ROW_GAP;
 
 interface Row {
   key: string;
@@ -125,9 +134,17 @@ export default function CardBrowser({ onBack }: { onBack: () => void }) {
           </EmptyState>
         </Card>
       ) : (
-        <div className="list">
-          {shown.slice(0, 400).map((r) => (
-            <div className="list-row" key={r.key}>
+        // Windowed, not capped: a shared cohort library can hold thousands of
+        // cards, and a card past a fixed cut-off used to be simply unreachable
+        // in Browse. VirtualList renders only the rows near the viewport, so
+        // the full list is always scrollable to and searchable, at any size.
+        <VirtualList
+          className="list--virtual"
+          items={shown}
+          itemHeight={ROW_HEIGHT}
+          height={Math.min(shown.length * ROW_HEIGHT, 560)}
+          renderItem={(r) => (
+            <div className="list-row" key={r.key} style={{ height: ROW_BOX_HEIGHT, marginBottom: ROW_GAP, boxSizing: 'border-box' }}>
               {r.source === 'user' && (
                 <input
                   type="checkbox"
@@ -141,11 +158,9 @@ export default function CardBrowser({ onBack }: { onBack: () => void }) {
                 <div className="lr-title" style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
                   {r.front}
                 </div>
-                {r.back && (
-                  <div className="lr-sub" style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                    {r.back}
-                  </div>
-                )}
+                <div className="lr-sub" style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                  {r.back}
+                </div>
               </div>
               {r.source === 'user' && (
                 <IconButton label="Edit card" onClick={() => setEditing(r)}>
@@ -153,13 +168,8 @@ export default function CardBrowser({ onBack }: { onBack: () => void }) {
                 </IconButton>
               )}
             </div>
-          ))}
-          {shown.length > 400 && (
-            <div className="muted" style={{ textAlign: 'center', fontSize: 13, padding: 10 }}>
-              Showing first 400 of {shown.length}. Refine your search.
-            </div>
           )}
-        </div>
+        />
       )}
 
       {editing && <EditDialog row={editing} onClose={() => setEditing(null)} />}

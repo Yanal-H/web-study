@@ -94,8 +94,39 @@ pushed to it; and only the total was reversed in the tally, not the graded count
 13 tests cover undo from waiting, from ready after promotion, from a completed
 session, and on a card that graduated out of the session.
 
-### 🔜 Batch 6 — Deck browser virtualisation (see task backlog) · care: STANDARD
-Large decks render without jank; import stays worker-side.
+### ✅ Batch 6 — Deck browser virtualisation (see task backlog) · care: STANDARD
+
+**Shipped.** The "worker-side import" half of this task was already done (H5).
+The remaining defect: `CardBrowser` ("Browse cards") hard-capped its list at
+400 rows — `shown.slice(0, 400)` — so any card past the cut-off was simply
+unreachable, with no way to find it except guessing a search term that
+happened to narrow the list below 400. For a shared cohort library that can
+hold thousands of cards, that is not a performance shortcut, it is cards
+nobody can open.
+
+- `src/lib/virtualList.ts` — pure windowing arithmetic (`windowFor`): given a
+  scroll position, a fixed row height and a row count, which slice of indices
+  needs to exist in the DOM. Unit-tested directly, no DOM involved.
+- `src/design/primitives.tsx` — `VirtualList`, a thin generic component over
+  that arithmetic: a scrollable pane of a fixed height, rendering only the
+  windowed slice with top/bottom spacer divs so scrollbar size and position
+  stay correct.
+- `CardBrowser.tsx` — the 400-row cap is gone; the full card list (any size)
+  renders through `VirtualList`. Row height and the list container's layout
+  were made explicit (`.list--virtual`, no flex `gap`) so the windowing math
+  and the actual rendered layout can't drift apart.
+- `DeckBrowser.tsx` (the drill-down deck tree) was deliberately left as is: it
+  renders one tree level at a time, which stays small under realistic decks —
+  unlike Browse's flat list, which is the whole shared bank at once. Revisit if
+  a single flat "My cards" bucket of personal cards ever grows large enough to
+  need the same treatment.
+
+**Proof:** `virtualList.test.ts` (8 tests, pure arithmetic) plus
+`CardBrowser.test.tsx`, which renders 5,000 synthetic cards and asserts card
+#4990 is absent at first render and appears only once scrolled to — the exact
+shape of the regression this fixes.
+
+Gate: tsc clean, build ok, 315 tests green (45 files), eslint 0 problems.
 
 ### ✅ Batch 7 — Import robustness & progress preservation · care: HIGH
 **Shipped.** seedScheduling was already correct — existing rows are never reset, and

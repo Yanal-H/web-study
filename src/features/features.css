@@ -261,6 +261,14 @@
   flex-direction: column;
   gap: 8px;
 }
+/* A virtualized .list: VirtualList renders a plain scrollable block, not a
+   flex column, because a flex `gap` would add its own spacing between the
+   padding spacers and the rendered rows and throw off the windowing math.
+   Each row supplies its own bottom margin instead (see CardBrowser.tsx). */
+.list--virtual {
+  display: block;
+}
+
 .list-row {
   display: flex;
   align-items: center;
