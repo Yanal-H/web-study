@@ -81,3 +81,16 @@
   font-display: swap;
   src: url('/fonts/great-vibes-400.woff2') format('woff2');
 }
+
+/*
+ * Archivo (variable, latin) — the display face: wordmark, hero, headings.
+ * A confident grotesque with real character; replaces the serif display.
+ * One variable file covers weights 500–900. OFL, self-hosted like the rest.
+ */
+@font-face {
+  font-family: 'Archivo';
+  font-style: normal;
+  font-weight: 500 900;
+  font-display: swap;
+  src: url('/fonts/archivo-var.woff2') format('woff2');
+}

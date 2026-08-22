@@ -28,6 +28,7 @@
 }
 .btn:hover {
   background: var(--surface-hover);
+  border-color: var(--border-strong);
 }
 .btn:active {
   transform: translateY(1px);
@@ -37,13 +38,25 @@
   cursor: not-allowed;
 }
 .btn--primary {
-  --btn-bg: var(--accent);
   --btn-fg: var(--accent-contrast);
   --btn-bd: transparent;
-  box-shadow: 0 6px 20px -10px var(--accent-glow);
+  /* A milled crimson: a lit top edge, a gradient body, and a controlled glow —
+     tactile, not a flat fill. */
+  background: linear-gradient(180deg, color-mix(in srgb, var(--accent) 88%, #fff), var(--accent-strong));
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.18) inset,
+    0 10px 26px -12px var(--accent-glow);
 }
 .btn--primary:hover {
-  background: var(--accent-strong);
+  background: linear-gradient(180deg, color-mix(in srgb, var(--accent) 96%, #fff), var(--accent));
+  border-color: transparent;
+  transform: translateY(-1px);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.22) inset,
+    0 14px 32px -12px var(--accent-glow);
+}
+.btn--primary:active {
+  transform: translateY(0);
 }
 .btn--ghost {
   --btn-bg: transparent;
