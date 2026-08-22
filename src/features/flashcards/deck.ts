@@ -399,7 +399,8 @@ export async function gradeItemLive(
       { cardId: item.key.replace(/^engine:/, ''), deck: item.deck, sched: prevSched, card: {} as never },
       RATING[g],
       undefined,
-      stepsFrom(settings)
+      stepsFrom(settings),
+      { leechThreshold: settings.leechThreshold, leechAction: settings.leechAction }
     );
     item.sched = next;
     m.invalidateDeckTree();
@@ -422,6 +423,54 @@ export async function gradeItemLive(
     due: next.due || 0,
     cardState: next.state || 'review',
   };
+}
+
+/**
+ * Suspend the card on screen (or bring it back). Returns what happened so the
+ * caller can tell the student, and undo it if they hit the wrong button.
+ *
+ * Only engine cards have a scheduling row to flag; a personal card is marked in
+ * the store instead, which its own queue builder already honours.
+ */
+export async function toggleSuspend(item: ReviewItem): Promise<boolean> {
+  if (item.source === 'engine' && item.sched) {
+    const m = await import('../../data/session');
+    const next = await m.setSuspended(item.sched, !item.sched.suspended);
+    item.sched = next;
+    m.invalidateDeckTree();
+    commit();
+    return !!next.suspended;
+  }
+  const cur = itemSched(item);
+  const nowSuspended = cur.state !== 'suspended';
+  persistGrade(item, {
+    ...cur,
+    // Remember what it was, so unsuspending resumes rather than restarts.
+    state: nowSuspended ? 'suspended' : ((cur._prevState as CardState) ?? 'review'),
+    _prevState: nowSuspended ? cur.state : undefined,
+  });
+  return nowSuspended;
+}
+
+/**
+ * Grade a card in CRAM mode: work out where it would go, and write nothing.
+ *
+ * The night before an exam a student wants to go through a chapter again
+ * without their real schedule paying for it. Anki calls this a filtered deck
+ * with rescheduling off. Nothing here touches the scheduling row, the daily
+ * ledger, or the review log — the only thing it decides is whether the card
+ * should come round again inside this sitting, which is a queue decision and
+ * nothing more.
+ *
+ * "Again" and "Hard" bring the card back shortly; "Good" and "Easy" retire it
+ * for the session. A cram that never re-showed the cards you just failed would
+ * be a slideshow, not practice.
+ */
+export function cramGrade(g: Grade, now = Date.now()): { due: number; cardState: string } {
+  const soon = g === 'again' ? 60_000 : g === 'hard' ? 5 * 60_000 : 0;
+  return soon > 0
+    ? { due: now + soon, cardState: 'learning' }
+    : { due: now + 365 * 86_400_000, cardState: 'review' };
 }
 
 /** Put a graded card back the way it was. */

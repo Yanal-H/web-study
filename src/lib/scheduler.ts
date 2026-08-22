@@ -2,6 +2,7 @@
 // from the shipped app's engine, made pure: it takes the scheduler settings and a
 // card's scheduling state and returns a NEW state. No globals, so it is unit-testable.
 import type { SchedulerSettings } from '../state/types';
+import { judgeLapse } from '../features/flashcards/leech';
 
 export const DAY_MS = 86400000;
 export const MIN_MS = 60000;
@@ -113,10 +114,14 @@ export function scheduleCard(
       c.lapses = (c.lapses || 0) + 1;
       c.ef = Math.max(S.easeFloor, c.ef! + S.againDelta);
       c._lapsed = Math.max(S.minInterval, Math.round(prevInterval * S.lapseMult));
-      if (c.lapses >= S.leechThreshold) {
+      // One shared rule for both schedulers — see features/flashcards/leech.ts.
+      // This path used to own the only implementation, which is why content
+      // cards could never become leeches however often they were forgotten.
+      const verdict = judgeLapse(c.lapses, S);
+      if (verdict.kind !== 'none') {
         if (!c.tags) c.tags = [];
         if (!c.tags.includes('leech')) c.tags.push('leech');
-        if (S.leechAction === 'suspend') c.state = 'suspended';
+        if (verdict.kind === 'suspend') c.state = 'suspended';
       }
       if (c.state !== 'suspended') {
         c.state = 'relearning';

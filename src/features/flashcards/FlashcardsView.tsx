@@ -32,7 +32,7 @@ import { makeUserCard } from './makeCard';
 const OcclusionEditor = lazy(() => import('./OcclusionEditor').then((m) => ({ default: m.OcclusionEditor })));
 const CardBrowser = lazy(() => import('./CardBrowser'));
 
-type Mode = 'home' | 'review' | 'browse' | 'occlusion';
+type Mode = 'home' | 'review' | 'cram' | 'browse' | 'occlusion';
 
 export default function FlashcardsView() {
   const state = useStore();
@@ -152,12 +152,54 @@ export default function FlashcardsView() {
     }
   }
 
+  /**
+   * Go through a deck again without the schedule paying for it — the night
+   * before an exam. Ignores due dates and the daily cap on purpose, and grades
+   * in this session write nothing at all (see ReviewSession's `cram`).
+   */
+  async function startCram(path = deck) {
+    if (starting) return;
+    setStarting(true);
+    try {
+      await whenPublishedContentReady();
+      const load = await ensureDeckContent(path);
+      if (load.failed.length) throw new Error('card bodies unavailable');
+      const userPool = path ? itemsInDeck(userItems, path) : userItems;
+      const q = [
+        ...(await engineQueue(path, {
+          newLimit: 9999,
+          reviewLimit: 9999,
+          includeAll: true,
+          allLimit: MAX_STUDY_ALL_CARDS,
+        })),
+        ...userPool.slice(0, MAX_STUDY_ALL_CARDS),
+      ];
+      if (q.length === 0) {
+        toast(path ? 'That deck is empty.' : 'No cards yet — import or create some.');
+        return;
+      }
+      setQueue(q);
+      setMode('cram');
+    } catch {
+      toast('Could not load those cards. Check your connection and try again.', 'error');
+    } finally {
+      setStarting(false);
+    }
+  }
+
   async function studyDeck(path: string) {
     setDeck(path);
     const node = findNode(tree, path);
     await start(path, node && node.due + node.neu > 0 ? 'due' : 'all');
   }
 
+  if (mode === 'cram') {
+    return (
+      <div className="review-page">
+        <ReviewSession queue={queue} cram onExit={() => setMode('home')} />
+      </div>
+    );
+  }
   if (mode === 'review') {
     return (
       <div className="review-page">
@@ -229,6 +271,16 @@ export default function FlashcardsView() {
             <IconFlashcards size={18} /> {starting ? 'Loading cards…' : 'Start review'}
           </Button>
           <DailyAllowance />
+          <Button
+            size="sm"
+            block
+            style={{ marginTop: 8 }}
+            disabled={starting}
+            onClick={() => void startCram()}
+            title="Practice a deck without changing your schedule"
+          >
+            Cram this deck (no effect on schedule)
+          </Button>
           <div className="row wrap" style={{ gap: 8, marginTop: 12 }}>
             <Button size="sm" onClick={() => setCreating(true)}>
               <IconPlus size={15} /> New card

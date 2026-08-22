@@ -139,10 +139,95 @@ positional scheme exactly for an unstamped pack (so chapters already on devices 
 matching) and giving later additions the first unused slot. The CLI uploader stamps
 identically so both paths agree on a chapter's revision.
 
-### ⬜ Batches 8–15 — TBD · care: mixed (tag each when defined)
-Remaining hardening (analytics accuracy, suspend/bury, filtered decks, leech
-handling, performance at cohort scale, accessibility of the review UI). Define
-each precisely when it becomes next, against the code as it then stands.
+---
+
+## Batches 8+ — closing the gap with Anki
+
+Defined against the Anki manual (deck options, leeches, filtered decks, stats)
+and an audit of what this repo actually implements. Several "settings" here are
+offered in the UI and wired to nothing, which is worse than not offering them:
+a student changes a number and believes something happened.
+
+### ✅ Batch 8 — Leeches reach every card, and cards can be suspended · care: HIGH
+`leechThreshold`/`leechAction` are implemented **only in the SM-2+ path**
+(`lib/scheduler.ts`), so personal cards can become leeches and content cards —
+the overwhelming majority of a student's deck — never can. Same shape as the
+Batch 4 defect. Anki's rule: a lapse counter increments on failing a review
+card; at the threshold (default 8) the note is tagged `leech` and the card
+suspended; it is re-flagged every half-threshold thereafter. The data layer
+already honours `suspended` everywhere (every queue query skips it) but nothing
+ever SETS it for engine cards, and a student has no way to suspend one by hand.
+
+**Shipped.** `leech.ts` holds the one rule both schedulers now call: fires on the
+threshold and every half-threshold after, tags or suspends per the setting, and
+is inert when the threshold is 0 or the caller passes nothing (so untouched call
+sites behave exactly as before). The engine suspends a card that crosses the
+threshold; SM-2+ was refactored onto the same function rather than keeping its
+own copy. `setSuspended` / `toggleSuspend` give a student a Suspend button and
+the `!` shortcut in review — suspending changes only that flag, leaving interval,
+ease and history intact so unsuspending resumes rather than restarts.
+22 tests. Gate: 339 green (47 files), build ok, eslint 0.
+
+### ✅ Batch 9 — Bury siblings · care: HIGH
+`burySiblings: true` ships in the defaults and has **zero implementation**.
+Siblings are cards from one note: every cloze deletion in a paragraph, every
+region of one occluded diagram. Seeing them back-to-back is both wasted
+repetitions and false confidence — the second one is answered from the first,
+not from memory. This app leans hard on image occlusion, so it matters more
+here than in a plain text deck.
+
+**Shipped.** `siblings.ts` derives what a card was cut from — the regions of one
+personal occlusion image share a key prefix, content occlusion cards share an
+image id within a chapter — and returns null for anything else rather than
+inventing a group, because guessing would bury unrelated cards. Grading now
+drops the siblings from the rest of the sitting and says so once.
+
+Scope, honestly: this buries for the **rest of the session**, where Anki buries
+until the next day. That is deliberate — `.claude/rules/flashcards.md` forbids
+changing a persisted schedule to achieve a queue behaviour, and a day-scoped
+bury needs its own stored state. The harm being fixed (siblings back-to-back in
+one sitting) is fully addressed; day-scoped burying is a follow-up that needs a
+`buriedUntil` field, not a due-date rewrite.
+
+Both `burySiblings` and `leechThreshold` are now actually reachable in Settings;
+they shipped in the defaults and were exposed nowhere. 16 tests.
+
+### ✅ Batch 10 — Custom study: cram before an exam · care: HIGH
+Anki's filtered decks, scoped to what a medical student actually needs the
+night before a paper: study a tag or chapter ahead of schedule, redo today's
+failures, or take an extra N cards beyond the daily cap. The hard requirement
+is that a cram session must NOT corrupt real scheduling — previewing a card
+ahead of time cannot silently reset its interval.
+
+**Shipped.** A Cram session takes a whole deck ignoring due dates and the daily
+cap, and writes **nothing** — no scheduling row, no daily ledger, no review log.
+`cramGrade` only decides whether a card comes round again inside the sitting
+(Again ~1 min, Hard ~5 min, Good/Easy retired), which is a queue decision and
+the only kind this mode is allowed to make. The screen says so plainly, and Undo
+is disabled because there is nothing to undo. Five tests pin the promise,
+including one asserting the scheduler is never called and one asserting a normal
+session still does write — a silent leak here would quietly reset months of
+scheduling.
+
+Not yet done from this batch: study-by-tag, study-ahead-by-N-days, and
+"redo today's failures" as separate entry points.
+
+### 🔜 Batch 11 — Statistics that tell the truth · care: STANDARD
+True retention (what proportion you actually recall when due) against desired
+retention, a forecast of the coming workload, and the answer-button spread.
+This is how a student knows whether the system is working, and it is the
+evidence needed before touching FSRS parameters.
+
+### ⬜ Batch 12 — Per-card operations · care: STANDARD
+Card info (full review history), set due date, forget/reset, and reposition a
+new card. Each is one card at a time and by explicit request — never a mass
+reschedule (see `.claude/rules/data-safety.md`).
+
+### ⬜ Batch 13 — Browse: search syntax and flags · care: STANDARD
+Browse filters by plain substring. Anki's `deck:`, `tag:`, `is:due`,
+`is:new`, `is:suspended`, `flag:` make a large library navigable. Flags are
+currently one boolean; Anki has several colours, which students use for
+"ask a tutor" / "revisit" / "exam-critical".
 
 ---
 

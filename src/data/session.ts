@@ -18,6 +18,7 @@ import {
   type StoredCard,
 } from './db';
 import { schedule, newScheduling, type Steps } from './fsrs';
+import type { LeechSettings } from '../features/flashcards/leech';
 import { hasCard } from './contentStore';
 import { isAuthorizedCard, isCatalogInitialized } from '../content/catalog';
 
@@ -64,11 +65,30 @@ export async function rateCard(
   item: EngineItem,
   rating: 1 | 2 | 3 | 4,
   ms?: number,
-  steps?: Steps
+  steps?: Steps,
+  leech?: LeechSettings
 ): Promise<Scheduling> {
   const now = Date.now();
-  const next = schedule(item.sched, rating, now, steps);
+  const next = schedule(item.sched, rating, now, steps, leech);
   await putScheduling(next, { cardId: item.cardId, deck: item.deck, rating, ts: now, ms });
+  return next;
+}
+
+/**
+ * Take a card out of the rotation, or put it back.
+ *
+ * Every queue query already skips suspended rows — this is the only thing that
+ * ever SET the flag by hand. A student who keeps meeting a card that is wrong,
+ * badly worded, or simply not on their exam had no way to stop seeing it short
+ * of deleting content they do not own.
+ *
+ * Suspending changes only this flag: the card's interval, ease and history are
+ * left exactly as they are, so unsuspending resumes where it left off rather
+ * than starting the card over.
+ */
+export async function setSuspended(sched: Scheduling, suspended: boolean): Promise<Scheduling> {
+  const next: Scheduling = { ...sched, suspended: suspended ? 1 : 0 };
+  await putScheduling(next);
   return next;
 }
 

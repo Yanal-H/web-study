@@ -1,11 +1,12 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { state, commit } from '../../state/store';
 import { type Grade, type CardSched } from '../../lib/scheduler';
-import { gradeItemLive, undoGrade, gradePreview, itemState, type ReviewItem, type GradeUndo } from './deck';
+import { gradeItemLive, undoGrade, gradePreview, itemState, toggleSuspend, cramGrade, type ReviewItem, type GradeUndo } from './deck';
 import {
   initLive, placeGraded, promoteDue, nextDueAt, isDueSoon, isComplete, reinsertForUndo,
   aheadCounts, type LiveState,
 } from './liveQueue';
+import { buryFrom, countSiblings } from './siblings';
 import { Button, ProgressRing } from '../../design/primitives';
 import { useToast } from '../../design/Toast';
 import { IconFlag, IconCheck, IconChevron } from '../../design/icons';
@@ -52,9 +53,12 @@ function clozeBack(s: string): string {
 export default function ReviewSession({
   queue,
   onExit,
+  cram = false,
 }: {
   queue: ReviewItem[];
   onExit: () => void;
+  /** Practice only: nothing is written to the student's schedule. */
+  cram?: boolean;
 }) {
   const S = state.settings.scheduler;
   // A LIVE queue, not a frozen array walked by an index. A card graded "Again"
@@ -97,12 +101,24 @@ export default function ReviewSession({
       try {
         // Persist BEFORE advancing, and learn where the card landed, so a short
         // learning step can be put back into this session rather than lost.
-        const res = await gradeItemLive(cur, g, S);
-        undo.current.push(res.undo);
-        setLive((prev) => ({
-          ready: prev.ready.slice(1),
-          waiting: placeGraded(prev.waiting, cur, { due: res.due, state: res.cardState }, Date.now()),
-        }));
+        // Cram writes nothing: no schedule, no daily ledger, no review log.
+        const res = cram
+          ? { ...cramGrade(g), undo: null }
+          : await gradeItemLive(cur, g, S);
+        if (res.undo) undo.current.push(res.undo);
+        setLive((prev) => {
+          const rest = prev.ready.slice(1);
+          const waiting = placeGraded(prev.waiting, cur, { due: res.due, state: res.cardState }, Date.now());
+          // Bury the siblings — the other regions of this same diagram. Seeing
+          // them back to back is answered from the card just seen, not from
+          // memory, which teaches the scheduler the wrong thing. Their schedules
+          // are untouched; they simply do not come up again this sitting.
+          if (!S.burySiblings) return { ready: rest, waiting };
+          return {
+            ready: buryFrom(rest, cur),
+            waiting: waiting.filter((w) => buryFrom([w.item], cur).length > 0),
+          };
+        });
         setTally((t) => ({ ...t, reviewed: t.reviewed + 1, [g]: t[g] + 1 }));
         setImpact({ g, key: Date.now() });
         sfx.grade(g);
@@ -114,13 +130,21 @@ export default function ReviewSession({
         setRevealed(false);
         setTyped('');
         setHint(false);
+        if (S.burySiblings) {
+          const buried = countSiblings(live.ready.slice(1), cur);
+          if (buried > 0) {
+            toast(
+              `${buried} more from this card's diagram held back for the rest of this session — answering them now would just be copying.`
+            );
+          }
+        }
       } catch {
         toast('Could not save this grade. Please try again.', 'error');
       } finally {
         setMutating(false);
       }
     },
-    [live, S, mutating, toast]
+    [live, S, mutating, toast, cram]
   );
 
   const doUndo = useCallback(async () => {
@@ -183,6 +207,28 @@ export default function ReviewSession({
     };
   }, [revalidate]);
 
+  /**
+   * Take this card out of rotation. A student meeting a card that is wrong,
+   * badly worded or simply not on their exam had no way to stop seeing it.
+   * It skips to the next card, because the suspended one is no longer studiable.
+   */
+  const suspendCurrent = useCallback(async () => {
+    if (!item || mutating) return;
+    setMutating(true);
+    try {
+      const nowSuspended = await toggleSuspend(item);
+      if (nowSuspended) {
+        setLive((prev) => ({ ready: prev.ready.slice(1), waiting: prev.waiting }));
+        setRevealed(false);
+        toast('Card suspended — it will not come back until you unsuspend it.');
+      }
+    } catch {
+      toast('Could not suspend this card. Please try again.', 'error');
+    } finally {
+      setMutating(false);
+    }
+  }, [item, mutating, toast]);
+
   const toggleFlag = useCallback(() => {
     if (!item) return;
     const s = (state.study.cardSched[item.key] as CardSched) || {};
@@ -211,6 +257,8 @@ export default function ReviewSession({
         if (gr) void grade(gr.g);
       } else if (e.key.toLowerCase() === 'u') {
         void doUndo();
+      } else if (e.key === '!') {
+        void suspendCurrent();
       } else if (e.key.toLowerCase() === 'f') {
         toggleFlag();
       } else if (e.key.toLowerCase() === 'h') {
@@ -219,7 +267,7 @@ export default function ReviewSession({
     };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
-  }, [done, revealed, grade, doUndo, toggleFlag, onExit]);
+  }, [done, revealed, grade, doUndo, toggleFlag, suspendCurrent, onExit]);
 
   // touch swipe
   const touch = useRef<{ x: number; y: number } | null>(null);
@@ -255,7 +303,8 @@ export default function ReviewSession({
     return (
       <div className="review-summary">
         <ProgressRing value={acc} size={120} label={`${Math.round(acc * 100)}%`} sublabel="recalled" />
-        <h2 style={{ marginTop: 18 }}>Session complete</h2>
+        <h2 style={{ marginTop: 18 }}>{cram ? 'Cram complete' : 'Session complete'}</h2>
+        {cram && <p className="muted">Your schedule is exactly as you left it.</p>}
         <p className="muted">
           {tally.reviewed} card{tally.reviewed === 1 ? '' : 's'} reviewed
         </p>
@@ -315,6 +364,11 @@ export default function ReviewSession({
   return (
     <div className="review-wrap">
       {impact && <div key={impact.key} className={`impact-flash impact-${impact.g}`} aria-hidden="true" />}
+      {cram && (
+        <div className="cram-banner" role="status">
+          <strong>Cram</strong> — practice only. Nothing you answer here changes your real schedule.
+        </div>
+      )}
       <div className="review-top">
         <div className="row" style={{ gap: 6 }}>
           <Button variant="ghost" size="sm" onClick={onExit} disabled={mutating}>
@@ -323,7 +377,7 @@ export default function ReviewSession({
           <button
             className="btn btn--ghost btn--sm"
             onClick={() => void doUndo()}
-            disabled={undo.current.length === 0 || mutating}
+            disabled={cram || undo.current.length === 0 || mutating}
             aria-label="Previous card"
             title="Back to the previous card (u)"
           >
@@ -353,6 +407,14 @@ export default function ReviewSession({
             style={{ color: flagged ? 'var(--warning)' : undefined }}
           >
             <IconFlag size={17} />
+          </button>
+          <button
+            className="btn btn--ghost btn--sm"
+            onClick={() => void suspendCurrent()}
+            disabled={mutating}
+            title="Stop showing this card until you bring it back (!)"
+          >
+            Suspend
           </button>
         </div>
       </div>
