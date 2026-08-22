@@ -424,9 +424,7 @@ export default function ReviewSession({
 
       <div
         key={item!.key}
-        className={`flashcard${revealed ? ' is-open' : ''}${
-          cardState === 'relearning' || (item!.sched?.lapses ?? 0) >= 2 ? ' is-difficult' : ''
-        }`}
+        className={`flashcard${revealed ? ' is-open' : ''}`}
         onClick={() => !revealed && setRevealed(true)}
         onTouchStart={onTouchStart}
         onTouchMove={onTouchMove}
