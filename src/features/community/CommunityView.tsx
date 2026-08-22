@@ -7,6 +7,7 @@ import { supabase } from '../../lib/supabase';
 import { useAuth } from '../auth/session';
 import CommunityAdmin from './CommunityAdmin';
 import IntelligencePanel from './IntelligencePanel';
+import DailyLogPanel from './DailyLogPanel';
 
 type Channel = { id: string; name: string; description: string | null; channel_type: string; academic_year: string | null };
 type Message = { id: string; channel_id: string; author_id: string; author_alias: string; body: string; status: 'visible' | 'hidden' | 'deleted'; created_at: string; edited_at: string | null };
@@ -34,7 +35,7 @@ export default function CommunityView() {
   const [isAdmin, setIsAdmin] = useState(false);
   const [problem, setProblem] = useState<string | null>(null);
   const [managing, setManaging] = useState(false);
-  const [section, setSection] = useState<'discussion' | 'intelligence'>('discussion');
+  const [section, setSection] = useState<'discussion' | 'logs' | 'intelligence'>('discussion');
   const [live, setLive] = useState(false);
 
   const selected = useMemo(() => channels.find((channel) => channel.id === channelId) ?? null, [channels, channelId]);
@@ -47,7 +48,7 @@ export default function CommunityView() {
       checkAdmin(),
     ]);
     if (error) {
-      setProblem('Community is not set up yet. Ask the administrator to run community-foundation.sql and community-messages.sql.');
+      setProblem('Community is not set up in Supabase yet. Run the SQL files listed in supabase/COMMUNITY_SETUP.md, in order — it takes about two minutes and only has to be done once.');
       setChannels([]);
     } else {
       const next = (data ?? []) as Channel[];
@@ -153,7 +154,7 @@ export default function CommunityView() {
           </aside>
           <section className="community-thread">
             <div className="community-thread-head"><div><h2>{selected ? `# ${selected.name}` : 'Discussion'}</h2><p>{selected?.description || 'Department discussion'}</p></div><div className="row"><Badge tone="info">Private</Badge><Badge dot tone={live ? 'success' : 'default'}>{live ? 'Live' : 'Refresh available'}</Badge></div></div>
-            <Tabs value={section} onChange={setSection} tabs={[{ value: 'discussion', label: 'Discussion' }, { value: 'intelligence', label: 'Daily intelligence' }]} />
+            <Tabs value={section} onChange={setSection} tabs={[{ value: 'discussion', label: 'Discussion' }, { value: 'logs', label: "Today's lectures" }, { value: 'intelligence', label: 'Daily intelligence' }]} />
             {section === 'discussion' ? <div className="community-discussion">
             <Composer disabled={!channelId || loadingMessages} onPost={post} />
             <div className="community-feed" aria-live="polite">
@@ -171,7 +172,7 @@ export default function CommunityView() {
               ))}
             </div>
             {more && <Button disabled={loadingMessages} onClick={() => channelId && void loadMessages(channelId, messages.length)}>Load earlier messages</Button>}
-            </div> : channelId && <IntelligencePanel channelId={channelId} isAdmin={isAdmin} />}
+            </div> : section === 'logs' ? <DailyLogPanel isAdmin={isAdmin} /> : channelId && <IntelligencePanel channelId={channelId} isAdmin={isAdmin} />}
           </section>
         </div>
       )}
