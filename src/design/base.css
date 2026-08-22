@@ -39,28 +39,6 @@ body {
   line-height: 1.55;
 }
 
-/* A barely-there film of grain over the whole stage — near-black surfaces read
-   as milled/paper rather than flat digital black. Fixed, behind all content,
-   never intercepts input. Lightest in light theme. */
-body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  background-image: var(--grain);
-  background-size: 140px 140px;
-  opacity: 0.05;
-  mix-blend-mode: soft-light;
-}
-:root[data-theme='light'] body::before,
-:root[data-theme='paper'] body::before {
-  opacity: 0.03;
-}
-:root.reduce-motion body::before {
-  /* static texture is fine with reduced motion; nothing to change, kept for clarity */
-}
-
 a {
   color: var(--accent);
   text-decoration: none;
@@ -74,14 +52,11 @@ h2,
 h3,
 h4 {
   font-family: var(--font-display);
-  font-weight: 700;
-  letter-spacing: -0.022em;
-  line-height: 1.12;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  line-height: 1.15;
   margin: 0 0 0.4em;
   color: var(--text);
-}
-h1 {
-  font-weight: 800;
 }
 
 p {
