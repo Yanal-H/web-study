@@ -9,6 +9,23 @@ This file is the standing brief. Read it, and the rule files under `.claude/rule
 before changing anything. The repository — not any prior chat, summary, or plan
 document — is the source of truth. Inspect the code before you assume how it works.
 
+## Work with minimum necessary context
+
+The app is feature-first React/TypeScript under `src/` (not a monolith — if the
+repo ever looks like one, you are looking at dead files, not the app). For any
+task:
+
+1. Identify the feature.
+2. Open `docs/FEATURE_MAP.md` → the files it names for that feature.
+3. Open `docs/CHANGE_GUIDE.md` → the 2–4 files for that kind of change.
+4. Read those files and their direct imports. **Stop there.**
+
+Do **not** scan the whole repository for every request, and do not read
+unrelated features, generated output (`dist/`), or `node_modules`. `docs/ARCHITECTURE.md`
+is the one-screen map when you need the big picture. This discipline is the
+point of those docs — keep them accurate when you change architecture, and a
+future session's cost stays low.
+
 ## Commands (the acceptance gate)
 
 Run all four before committing. None may regress.
