@@ -29,9 +29,25 @@ Each builds on the last, and each is safe to run twice.
 | 4 | `supabase/community-intelligence.sql` | The daily intelligence panel. |
 | 5 | `supabase/community-daily-logs.sql` | **Today's lectures** — what the year covered, and the administrator's digest. |
 
+## If you see "permission denied for function is_root_admin"
+
+That was a bug in an earlier version of the setup, and it means the tables were
+created correctly — only the policies could not call their own helpers. Run
+**`supabase/community-FIX-PERMISSIONS.sql`** once and it is resolved. The
+current `community-ALL-IN-ONE.sql` already includes the fix, so a fresh setup
+never hits it.
+
 ## Then
 
 Reload the app. Community will load.
+
+## If you see "permission denied for function is_root_admin"
+
+That was a bug in an earlier version of the setup, and it means the tables were
+created correctly — only the policies could not call their own helpers. Run
+**`supabase/community-FIX-PERMISSIONS.sql`** once and it is resolved. The
+current `community-ALL-IN-ONE.sql` already includes the fix, so a fresh setup
+never hits it.
 
 ## Then: let students in
 
