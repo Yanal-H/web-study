@@ -31,8 +31,9 @@ import { makeUserCard } from './makeCard';
 // Heavy, occasionally-used views load on demand (Phase 6 perf).
 const OcclusionEditor = lazy(() => import('./OcclusionEditor').then((m) => ({ default: m.OcclusionEditor })));
 const CardBrowser = lazy(() => import('./CardBrowser'));
+const StatsPanel = lazy(() => import('./StatsPanel'));
 
-type Mode = 'home' | 'review' | 'cram' | 'browse' | 'occlusion';
+type Mode = 'home' | 'review' | 'cram' | 'browse' | 'stats' | 'occlusion';
 
 export default function FlashcardsView() {
   const state = useStore();
@@ -207,6 +208,12 @@ export default function FlashcardsView() {
       </div>
     );
   }
+  if (mode === 'stats')
+    return (
+      <Suspense fallback={<div className="route-fallback">Loading…</div>}>
+        <StatsPanel onBack={() => setMode('home')} />
+      </Suspense>
+    );
   if (mode === 'browse')
     return (
       <Suspense fallback={<div className="route-fallback">Loading…</div>}>
@@ -284,6 +291,9 @@ export default function FlashcardsView() {
           <div className="row wrap" style={{ gap: 8, marginTop: 12 }}>
             <Button size="sm" onClick={() => setCreating(true)}>
               <IconPlus size={15} /> New card
+            </Button>
+            <Button size="sm" onClick={() => setMode('stats')}>
+              Progress
             </Button>
             <Button size="sm" onClick={() => setMode('occlusion')}>
               Image occlusion

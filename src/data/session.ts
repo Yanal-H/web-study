@@ -70,7 +70,7 @@ export async function rateCard(
 ): Promise<Scheduling> {
   const now = Date.now();
   const next = schedule(item.sched, rating, now, steps, leech);
-  await putScheduling(next, { cardId: item.cardId, deck: item.deck, rating, ts: now, ms });
+  await putScheduling(next, { cardId: item.cardId, deck: item.deck, rating, ts: now, ms, prevState: item.sched.state });
   return next;
 }
 
