@@ -4623,3 +4623,40 @@
 .community-report-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 14px; align-items: center; padding: 12px 2px; border-bottom: 1px solid var(--border-soft); }.community-report-row:last-child { border-bottom: 0; }.community-report-row p { margin: 4px 0; white-space: pre-wrap; overflow-wrap: anywhere; }.community-report-row small { color: var(--text-faint); }
 @media (max-width: 620px) { .community-report-row { grid-template-columns: 1fr; } }
 .community-thread > .tabs { margin-bottom: var(--sp-4); }.community-discussion { display: grid; gap: var(--sp-3); }.community-discussion .community-compose { margin-bottom: 0; }.intelligence-panel { display: grid; gap: var(--sp-3); }.intelligence-card { display: grid; gap: 10px; padding: 16px 18px; border: 1px solid var(--border-soft); border-radius: var(--radius); background: var(--surface-1); }.intelligence-card--archived { opacity: .68; }.intelligence-card h3 { margin: 0; font-size: 19px; }.intelligence-summary { margin: 0; color: var(--text-dim); font-weight: 550; line-height: 1.55; }.intelligence-body > :first-child { margin-top: 0; }.intelligence-body > :last-child { margin-bottom: 0; }.intelligence-editor { display: grid; gap: 12px; border-color: color-mix(in srgb, var(--accent) 36%, var(--border)); }.intelligence-editor h3 { margin: 0; }.intelligence-editor .textarea { min-height: 90px; resize: vertical; }
+
+
+/* ---- Daily study logs ----
+   Deliberately not styled like chat: these are filed records the administrator
+   reads a whole day of at once, so they favour scanning over conversation. */
+.daily-log-form {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 8px;
+}
+.daily-log-topic {
+  padding-top: 10px;
+  margin-top: 10px;
+  border-top: 1px solid var(--border-soft);
+}
+.daily-log-topic:first-of-type {
+  border-top: 0;
+  margin-top: 4px;
+}
+.daily-log-topic h3 {
+  margin: 0 0 6px;
+  font-size: 15px;
+  font-weight: 650;
+}
+.daily-log-entry {
+  padding: 8px 0 0;
+}
+.daily-log-entry strong {
+  font-size: 12.5px;
+  color: var(--accent);
+}
+.daily-log-entry p {
+  margin: 2px 0 0;
+  font-size: 14px;
+  line-height: 1.55;
+  white-space: pre-wrap;
+}
