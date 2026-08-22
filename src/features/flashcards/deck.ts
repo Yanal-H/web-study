@@ -1,12 +1,13 @@
 // Flashcard deck: unifies shipped/imported content cards and the user's own cards
 // into one review queue under the SM-2+ scheduler. Content cards are scheduled by
 // id in state.study.cardSched (additive, v7); user cards keep their own fields.
-import { state, commit, markActivity } from '../../state/store';
+import { state, commit, markActivity, todayStr } from '../../state/store';
 import { allCards } from '../../content/loader';
-import type { CardSched, Grade } from '../../lib/scheduler';
+import type { CardSched, CardState, Grade } from '../../lib/scheduler';
+import { recordGrade, refundGrade, type DailyLedger } from './dailyLimits';
 import { cardIsDue, isNewCard, scheduleCard, gradeLabel } from '../../lib/scheduler';
 import type { Scheduling } from '../../data/db';
-import { previewIntervals as fsrsPreview } from '../../data/fsrs';
+import { previewIntervals as fsrsPreview, type Steps } from '../../data/fsrs';
 
 export interface OcclusionRegion {
   x: number;
@@ -151,6 +152,28 @@ export function collectItems(filter?: { subject?: string; chapterId?: string }):
     }
   }
   return items;
+}
+
+/**
+ * A card's scheduling state, whichever scheduler owns it: engine cards carry
+ * their FSRS row, everything else is looked up in the store. Both use the same
+ * vocabulary, so callers can treat them alike.
+ */
+export function itemState(item: ReviewItem): CardState | undefined {
+  return (item.sched?.state as CardState | undefined) ?? schedFor(item.key).state;
+}
+
+/** How much of a day's allowance a built queue would spend. */
+export function intakeOf(items: ReviewItem[]): { neu: number; due: number } {
+  let neu = 0;
+  let due = 0;
+  for (const it of items) {
+    const st = itemState(it);
+    if (!st || st === 'new') neu++;
+    else if (st === 'review') due++;
+    // learning/relearning carry over from an earlier day; they are not charged again
+  }
+  return { neu, due };
 }
 
 export function itemSched(item: ReviewItem): CardSched {
@@ -305,6 +328,27 @@ export function deckPaths(nodes: DeckNode[]): string[] {
 /** Anki's ratings, which is what FSRS takes. */
 const RATING: Record<Grade, 1 | 2 | 3 | 4> = { again: 1, hard: 2, good: 3, easy: 4 };
 
+/**
+ * The student's configured learning steps, in the shape the engine takes.
+ * Settings has always offered these; the engine hard-coded its own, so the
+ * setting silently applied to personal cards only.
+ */
+function stepsFrom(settings: Parameters<typeof scheduleCard>[0]): Steps {
+  return { learn: settings.learningSteps, relearn: settings.relearnSteps };
+}
+
+/**
+ * Charge a grade to today's allowance, judged by the card's state BEFORE it was
+ * graded, so a live-queue re-show costs nothing — see dailyLimits.spends.
+ */
+function chargeDaily(prevState: CardState | undefined) {
+  state.study.daily = recordGrade(
+    state.study.daily as Partial<DailyLedger> | undefined,
+    prevState,
+    todayStr()
+  );
+}
+
 export interface GradeUndo {
   item: ReviewItem;
   /** the SM-2 row, for content and personal cards */
@@ -313,6 +357,8 @@ export interface GradeUndo {
   prevSched?: Scheduling;
   idx: number;
   grade: Grade;
+  /** the state the card was in BEFORE grading — what the daily ledger charged */
+  prevState?: CardState;
 }
 
 /**
@@ -327,33 +373,75 @@ export async function gradeItem(
   settings: Parameters<typeof scheduleCard>[0],
   idx: number
 ): Promise<GradeUndo> {
+  return (await gradeItemLive(item, g, settings, idx)).undo;
+}
+
+/**
+ * Grade a card and report WHERE IT LANDED — the new due time and state — so the
+ * caller can decide whether it belongs back in this session (a short learning
+ * step) or is finished for now. The live review queue needs that answer
+ * synchronously; without it a card graded "Again" is rescheduled correctly for a
+ * minute's time and then never looked at again.
+ *
+ * Persists before returning, so the rating is safe even if the UI advances the
+ * instant this resolves.
+ */
+export async function gradeItemLive(
+  item: ReviewItem,
+  g: Grade,
+  settings: Parameters<typeof scheduleCard>[0],
+  idx = -1
+): Promise<{ undo: GradeUndo; due: number; cardState: string }> {
   if (item.source === 'engine' && item.sched) {
     const prevSched = item.sched;
     const m = await import('../../data/session');
     const next = await m.rateCard(
       { cardId: item.key.replace(/^engine:/, ''), deck: item.deck, sched: prevSched, card: {} as never },
-      RATING[g]
+      RATING[g],
+      undefined,
+      stepsFrom(settings)
     );
     item.sched = next;
     m.invalidateDeckTree();
+    chargeDaily(prevSched.state);
     markActivity();
     commit();
-    return { item, prevSched, idx, grade: g };
+    return {
+      undo: { item, prevSched, idx, grade: g, prevState: prevSched.state },
+      due: next.due || 0,
+      cardState: next.state || 'review',
+    };
   }
   const prev = state.study.cardSched[item.key] as CardSched | undefined;
+  const before = itemSched(item).state;
   const next = scheduleCard(settings, itemSched(item), g);
-  persistGrade(item, next);
-  return { item, prev, idx, grade: g };
+  chargeDaily(before);
+  persistGrade(item, next); // commits, so the ledger lands in the same write
+  return {
+    undo: { item, prev, idx, grade: g, prevState: before },
+    due: next.due || 0,
+    cardState: next.state || 'review',
+  };
 }
 
 /** Put a graded card back the way it was. */
 export async function undoGrade(u: GradeUndo): Promise<void> {
+  // Give the day's allowance back first. Without this, Undo silently costs a
+  // new-card slot every time it is used: grade, undo, grade again, and two of
+  // twenty new cards are gone for one card.
+  state.study.daily = refundGrade(
+    state.study.daily as Partial<DailyLedger> | undefined,
+    u.prevState,
+    todayStr()
+  );
+
   if (u.item.source === 'engine' && u.prevSched) {
     const prevSched = u.prevSched;
     u.item.sched = prevSched;
     const m = await import('../../data/session');
     await m.restoreScheduling(prevSched);
     m.invalidateDeckTree();
+    commit();
     return;
   }
   restoreSched(u.item, u.prev);
@@ -366,17 +454,17 @@ export function gradePreview(
   g: Grade
 ): string {
   if (item.source === 'engine' && item.sched) {
-    return enginePreview(item.sched)[RATING[g]];
+    return enginePreview(item.sched, stepsFrom(settings))[RATING[g]];
   }
   return gradeLabel(settings, itemSched(item), g);
 }
 
 /** Cached FSRS previews — recomputed only when the card changes. */
 let previewFor: { cardId: string; at: number; out: Record<1 | 2 | 3 | 4, string> } | null = null;
-function enginePreview(sched: Scheduling): Record<1 | 2 | 3 | 4, string> {
+function enginePreview(sched: Scheduling, steps: Steps): Record<1 | 2 | 3 | 4, string> {
   if (previewFor && previewFor.cardId === sched.cardId && previewFor.at === sched.due)
     return previewFor.out;
-  const out = fsrsPreview(sched, Date.now());
+  const out = fsrsPreview(sched, Date.now(), steps);
   previewFor = { cardId: sched.cardId, at: sched.due, out };
   return out;
 }

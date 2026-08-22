@@ -1,7 +1,11 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { state, commit } from '../../state/store';
 import { type Grade, type CardSched } from '../../lib/scheduler';
-import { gradeItem, undoGrade, gradePreview, type ReviewItem, type GradeUndo } from './deck';
+import { gradeItemLive, undoGrade, gradePreview, itemState, type ReviewItem, type GradeUndo } from './deck';
+import {
+  initLive, placeGraded, promoteDue, nextDueAt, isDueSoon, isComplete, reinsertForUndo,
+  aheadCounts, type LiveState,
+} from './liveQueue';
 import { Button, ProgressRing } from '../../design/primitives';
 import { useToast } from '../../design/Toast';
 import { IconFlag, IconCheck, IconChevron } from '../../design/icons';
@@ -53,7 +57,10 @@ export default function ReviewSession({
   onExit: () => void;
 }) {
   const S = state.settings.scheduler;
-  const [idx, setIdx] = useState(0);
+  // A LIVE queue, not a frozen array walked by an index. A card graded "Again"
+  // is rescheduled a minute out and must come back inside this same session;
+  // the old forward-only index could never revisit it, so it silently never did.
+  const [live, setLive] = useState<LiveState>(() => initLive(queue));
   const [revealed, setRevealed] = useState(false);
   const [typed, setTyped] = useState('');
   const [hint, setHint] = useState(false);
@@ -63,31 +70,39 @@ export default function ReviewSession({
   const [impact, setImpact] = useState<{ g: Grade; key: number } | null>(null);
   const [combo, setCombo] = useState(0);
   const [mutating, setMutating] = useState(false);
+  const [, setTick] = useState(0); // ticks each second only while waiting
+  const timerGen = useRef(0); // supersedes a stale next-due timer
   const toast = useToast();
 
-  const done = idx >= queue.length;
-  const item = queue[idx];
+  const item = live.ready[0];
+  const done = isComplete(live);
+  const dueSoon = isDueSoon(live);
 
   // what is still ahead in this session, by card state
-  const ahead = queue.slice(idx).reduce(
-    (a, it) => {
-      const st = it.sched?.state ?? (state.study.cardSched[it.key] as CardSched | undefined)?.state;
-      if (!st || st === 'new') a.neu++;
-      else if (st === 'learning' || st === 'relearning') a.learn++;
-      else a.due++;
-      return a;
-    },
-    { neu: 0, learn: 0, due: 0 }
-  );
-  const cardState = item?.sched?.state ?? (state.study.cardSched[item?.key ?? ''] as CardSched | undefined)?.state ?? 'new';
+  const ahead = aheadCounts(live, itemState);
+  const cardState = (item ? itemState(item) : undefined) ?? 'new';
+  const remaining = live.ready.length + live.waiting.length;
+  const progress = tally.reviewed + remaining > 0 ? tally.reviewed / (tally.reviewed + remaining) : 0;
+
+  /** Move any waiting card that has come due back into the ready queue. */
+  const revalidate = useCallback(() => {
+    setLive((prev) => promoteDue(prev, Date.now()));
+  }, []);
 
   const grade = useCallback(
     async (g: Grade) => {
-      if (!item || mutating) return;
+      const cur = live.ready[0];
+      if (!cur || mutating) return;
       setMutating(true);
       try {
-        const graded = await gradeItem(item, g, S, idx);
-        undo.current.push(graded);
+        // Persist BEFORE advancing, and learn where the card landed, so a short
+        // learning step can be put back into this session rather than lost.
+        const res = await gradeItemLive(cur, g, S);
+        undo.current.push(res.undo);
+        setLive((prev) => ({
+          ready: prev.ready.slice(1),
+          waiting: placeGraded(prev.waiting, cur, { due: res.due, state: res.cardState }, Date.now()),
+        }));
         setTally((t) => ({ ...t, reviewed: t.reviewed + 1, [g]: t[g] + 1 }));
         setImpact({ g, key: Date.now() });
         sfx.grade(g);
@@ -99,14 +114,13 @@ export default function ReviewSession({
         setRevealed(false);
         setTyped('');
         setHint(false);
-        setIdx((i) => i + 1);
       } catch {
         toast('Could not save this grade. Please try again.', 'error');
       } finally {
         setMutating(false);
       }
     },
-    [item, idx, S, mutating, toast]
+    [live, S, mutating, toast]
   );
 
   const doUndo = useCallback(async () => {
@@ -116,13 +130,16 @@ export default function ReviewSession({
     setMutating(true);
     try {
       await undoGrade(last);
-      setIdx(last.idx);
+      // Back to the front of ready, and out of waiting if a timer had parked it
+      // there — or back from an already-complete session.
+      setLive((prev) => reinsertForUndo(prev, last.item));
       setRevealed(true);
       setTally((t) => ({
         ...t,
         reviewed: Math.max(0, t.reviewed - 1),
         [last.grade]: Math.max(0, t[last.grade] - 1),
       }));
+      setCombo(0); // the streak is no longer something the student earned
     } catch {
       undo.current.push(last);
       toast('Could not undo the grade. Please try again.', 'error');
@@ -130,6 +147,38 @@ export default function ReviewSession({
       setMutating(false);
     }
   }, [mutating, toast]);
+
+  // One timer for the earliest waiting card. It fires once, revalidates, and is
+  // superseded whenever the queue changes (generation guard) — no polling loop.
+  useEffect(() => {
+    if (live.ready.length > 0) return;
+    const na = nextDueAt(live.waiting);
+    if (na == null) return;
+    const gen = ++timerGen.current;
+    const to = setTimeout(() => {
+      if (gen === timerGen.current) revalidate();
+    }, Math.max(0, na - Date.now()) + 50);
+    return () => clearTimeout(to);
+  }, [live, revalidate]);
+
+  // Keep the countdown honest while waiting.
+  useEffect(() => {
+    if (!dueSoon) return;
+    const iv = setInterval(() => setTick((n) => n + 1), 1000);
+    return () => clearInterval(iv);
+  }, [dueSoon]);
+
+  // Returning to the tab re-checks due times at once, rather than trusting a
+  // timer that a backgrounded tab may have throttled.
+  useEffect(() => {
+    const on = () => revalidate();
+    window.addEventListener('focus', on);
+    document.addEventListener('visibilitychange', on);
+    return () => {
+      window.removeEventListener('focus', on);
+      document.removeEventListener('visibilitychange', on);
+    };
+  }, [revalidate]);
 
   const toggleFlag = useCallback(() => {
     if (!item) return;
@@ -220,6 +269,39 @@ export default function ReviewSession({
     );
   }
 
+  // Nothing ready, but a card graded "Again" is due back within this session.
+  // Hold on a live countdown rather than ending — this is the whole point of the
+  // live queue: the one-minute card comes back on its own.
+  if (dueSoon) {
+    const na = nextDueAt(live.waiting);
+    const secs = na != null ? Math.max(0, Math.ceil((na - Date.now()) / 1000)) : 0;
+    return (
+      <div className="review-duesoon">
+        <div className="review-duesoon-ring">
+          <ProgressRing
+            value={secs > 0 ? 1 - Math.min(1, secs / 60) : 1}
+            size={112}
+            label={secs > 0 ? `${secs}s` : 'now'}
+            sublabel="next card"
+          />
+        </div>
+        <h2 style={{ marginTop: 18 }}>Nice — quick breather</h2>
+        <p className="muted">
+          {live.waiting.length} card{live.waiting.length === 1 ? '' : 's'} you just learned
+          {live.waiting.length === 1 ? ' comes' : ' come'} back in a moment.
+        </p>
+        <div className="row" style={{ gap: 10, justifyContent: 'center', marginTop: 18, flexWrap: 'wrap' }}>
+          <Button variant="primary" onClick={revalidate}>
+            <IconCheck size={16} /> Check now
+          </Button>
+          <Button variant="ghost" onClick={onExit}>
+            End session
+          </Button>
+        </div>
+      </div>
+    );
+  }
+
   const c = item!.card;
   const flagged = !!(state.study.cardSched[item!.key] as CardSched | undefined)?.flagged;
   // text to read aloud: the prompt before you flip, the answer after
@@ -252,7 +334,7 @@ export default function ReviewSession({
             <span className="rc-learn">{ahead.learn}</span>
             <span className="rc-due">{ahead.due}</span>
           </span>
-          {idx + 1} / {queue.length}
+          {remaining} left
         </div>
         <div className="row" style={{ gap: 6 }}>
           {!revealed && (
@@ -272,7 +354,7 @@ export default function ReviewSession({
         </div>
       </div>
       <div className="review-bar">
-        <div className="review-bar-fill" style={{ width: `${(idx / queue.length) * 100}%` }} />
+        <div className="review-bar-fill" style={{ width: `${progress * 100}%` }} />
       </div>
 
       <div

@@ -1311,6 +1311,45 @@
   margin: 0 auto;
 }
 
+/* Today's remaining daily allowance, under the Start button. Quiet by default;
+   it only speaks up once the limit is actually reached. */
+.daily-allowance {
+  margin-top: 10px;
+  font-size: 12.5px;
+  color: var(--text-dim, var(--muted));
+  text-align: center;
+  line-height: 1.5;
+}
+.daily-allowance strong {
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+}
+.daily-allowance.is-spent {
+  color: var(--muted);
+  background: color-mix(in srgb, var(--warning) 10%, transparent);
+  border: 1px solid color-mix(in srgb, var(--warning) 26%, transparent);
+  border-radius: var(--radius-sm, 8px);
+  padding: 8px 10px;
+}
+
+/* Live-queue breather: shown while a just-learned card waits to come back
+   within the session. The countdown ring ticks each second (see ReviewSession). */
+.review-duesoon {
+  text-align: center;
+  padding: var(--sp-7) var(--sp-4);
+  max-width: 460px;
+  margin: 0 auto;
+  animation: dueSoonIn 320ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+.review-duesoon-ring {
+  display: flex;
+  justify-content: center;
+}
+@keyframes dueSoonIn {
+  from { opacity: 0; transform: translateY(8px) scale(0.98); }
+  to { opacity: 1; transform: none; }
+}
+
 /* ---- grade impact strike ---- */
 .impact-flash {
   position: fixed;

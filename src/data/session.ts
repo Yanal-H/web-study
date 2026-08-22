@@ -13,13 +13,11 @@ import {
   nextNewBatch,
   allActiveBatch,
   putScheduling,
-  dueCount,
-  newCount,
   deckCounts,
   type Scheduling,
   type StoredCard,
 } from './db';
-import { schedule, newScheduling } from './fsrs';
+import { schedule, newScheduling, type Steps } from './fsrs';
 import { hasCard } from './contentStore';
 import { isAuthorizedCard, isCatalogInitialized } from '../content/catalog';
 
@@ -65,10 +63,11 @@ export async function buildQueue(deck: string, opts: QueueOptions): Promise<Engi
 export async function rateCard(
   item: EngineItem,
   rating: 1 | 2 | 3 | 4,
-  ms?: number
+  ms?: number,
+  steps?: Steps
 ): Promise<Scheduling> {
   const now = Date.now();
-  const next = schedule(item.sched, rating, now);
+  const next = schedule(item.sched, rating, now, steps);
   await putScheduling(next, { cardId: item.cardId, deck: item.deck, rating, ts: now, ms });
   return next;
 }
@@ -89,6 +88,19 @@ export interface DeckStats {
 }
 
 /** Counts for a deck subtree, all from index ranges. */
+/**
+ * How much a deck holds, and how much of it is actually studiable now.
+ *
+ * `due` and `neu` come from the SAME pass that builds the deck tree, because
+ * they must agree with what a session will serve. They used to come from
+ * dueCount/newCount, which count raw index entries and so counted SUSPENDED
+ * cards — while nextDueBatch and the deck tree both skip them. The Dashboard
+ * promised more due cards than the session ever handed over, and disagreed with
+ * the Flashcards page about the same deck.
+ *
+ * `total` stays the library count: how many cards are filed here at all,
+ * suspended or not. That is a different question from "what can I study".
+ */
 export async function deckStats(deck: string, now = Date.now()): Promise<DeckStats> {
   const counts = await deckCounts();
   const prefix = `${deck}::`;
@@ -98,8 +110,32 @@ export async function deckStats(deck: string, now = Date.now()): Promise<DeckSta
         0
       )
     : Object.values(counts).reduce((n, c) => n + c, 0);
-  const [due, neu] = await Promise.all([dueCount(deck, now), newCount(deck)]);
+  const { due, neu } = queueCountsFromTree(await deckTree(now), deck);
   return { due, neu, total };
+}
+
+/**
+ * Sum a deck subtree's queue counts out of an already-built tree. Pure, so the
+ * arithmetic is tested without IndexedDB. An empty deck path means "everything",
+ * which is the roots summed — not a lookup that would find nothing.
+ */
+export function queueCountsFromTree(
+  tree: EngineDeckNode[],
+  deck: string
+): { due: number; neu: number } {
+  if (!deck) {
+    return tree.reduce((a, n) => ({ due: a.due + n.due, neu: a.neu + n.neu }), { due: 0, neu: 0 });
+  }
+  const find = (ns: EngineDeckNode[]): EngineDeckNode | undefined => {
+    for (const n of ns) {
+      if (n.path === deck) return n;
+      const hit = find(n.children);
+      if (hit) return hit;
+    }
+    return undefined;
+  };
+  const node = find(tree);
+  return node ? { due: node.due, neu: node.neu } : { due: 0, neu: 0 };
 }
 
 /* ------------------------------------------------------- deck tree */
