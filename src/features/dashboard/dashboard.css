@@ -76,8 +76,6 @@
 .daily-goal-track { display: block; height: 6px; margin-top: 9px; overflow: hidden; border-radius: 999px; background: var(--surface-3); }
 .daily-goal-track > span { display: block; height: 100%; min-width: 2px; border-radius: inherit; background: var(--grad-accent); transition: width var(--transition); }
 .study-next {
-  position: relative;
-  overflow: hidden;
   display: grid;
   grid-template-columns: auto minmax(0, 1fr) auto;
   align-items: center;
@@ -86,25 +84,7 @@
   border: 1px solid color-mix(in srgb, var(--accent) 35%, var(--border));
   border-radius: var(--radius-lg);
   background: radial-gradient(600px 180px at 92% 0%, var(--accent-soft), transparent 72%), var(--surface-1);
-  box-shadow: var(--shadow-hero);
-}
-/* The signature: a crimson ECG pulse traces across the command-centre hero —
-   flat baseline, QRS impact, resonance. Fades in from the right, never competes
-   with the copy (which sits above it). */
-.study-next::after {
-  content: '';
-  position: absolute;
-  inset: 0 0 0 30%;
-  z-index: 0;
-  pointer-events: none;
-  opacity: 0.5;
-  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 240 48' preserveAspectRatio='none'%3E%3Cpolyline points='0,24 52,24 58,21 64,24 90,24 96,8 101,41 106,24 124,24 132,24 138,12 144,24 150,35 156,24 163,14 169,24 175,33 181,24 187,17 193,24 199,30 205,24 212,21 218,24 240,24' fill='none' stroke='%23ff1f47' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat center / 100% 62%;
-  -webkit-mask: linear-gradient(90deg, transparent, #000 55%);
-  mask: linear-gradient(90deg, transparent, #000 55%);
-}
-.study-next > * {
-  position: relative;
-  z-index: 1;
+  box-shadow: var(--shadow);
 }
 .study-next-icon, .review-row-icon {
   display: grid;
